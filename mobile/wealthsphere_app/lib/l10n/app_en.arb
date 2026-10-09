@@ -68,7 +68,7 @@
   "@staleBannerText": {
     "description": "Banner shown when data is older than expected"
   },
-  "staleBannerWithAge": "Showing data from {age}. It may be out of date.",
+  "staleBannerWithAge": "{age}. It may be out of date.",
   "@staleBannerWithAge": {
     "description": "Stale banner with a localised age",
     "placeholders": {

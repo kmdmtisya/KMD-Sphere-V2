@@ -1,9 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'app_routes.dart';
 import 'app_shell.dart';
 import 'app_tab.dart';
+import 'gallery/gallery_screen.dart';
 import 'placeholder_screens.dart';
 
 /// The route registry.
@@ -59,7 +61,10 @@ final Map<AppTab, RouteBase Function()> tabRoutes =
     };
 
 /// Builds the app router. Exposed as a function so tests can start at any location.
-GoRouter createRouter({String initialLocation = AppRoutes.home}) {
+GoRouter createRouter({
+  String initialLocation = AppRoutes.home,
+  bool enableGallery = kDebugMode,
+}) {
   return GoRouter(
     initialLocation: initialLocation,
     // The bare host opens Home.
@@ -74,6 +79,11 @@ GoRouter createRouter({String initialLocation = AppRoutes.home}) {
             StatefulShellBranch(routes: [tabRoutes[tab]!()]),
         ],
       ),
+      if (enableGallery)
+        GoRoute(
+          path: AppRoutes.gallery,
+          builder: (context, state) => const GalleryScreen(),
+        ),
     ],
   );
 }

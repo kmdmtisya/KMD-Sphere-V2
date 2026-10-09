@@ -22,6 +22,44 @@ class StatusBanner extends StatelessWidget {
   final String? actionLabel;
   final VoidCallback? onAction;
 
+  /// Icon, message and optional action. With large text the action drops below the message so a
+  /// long label never pushes the row past the screen edge.
+  Widget _layout(BuildContext context, WealthColors colors) {
+    final hasAction = actionLabel != null && onAction != null;
+    final stacked = MediaQuery.textScalerOf(context).scale(1) > 1.3;
+    final action = hasAction
+        ? TextButton(
+            onPressed: onAction,
+            style: TextButton.styleFrom(foregroundColor: colors.onStaleBanner),
+            child: Text(actionLabel!),
+          )
+        : null;
+    final message = Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, size: 20, color: colors.onStaleBanner),
+        const SizedBox(width: AppSpacing.xs),
+        Expanded(
+          child: Text(
+            this.message,
+            style: context.wealthText.caption.copyWith(
+              color: colors.onStaleBanner,
+            ),
+          ),
+        ),
+        if (!stacked && action != null) action,
+      ],
+    );
+    if (!stacked || action == null) return message;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        message,
+        Align(alignment: AlignmentDirectional.centerEnd, child: action),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final colors = context.wealthColors;
@@ -35,28 +73,7 @@ class StatusBanner extends StatelessWidget {
             horizontal: AppSpacing.m,
             vertical: AppSpacing.xs,
           ),
-          child: Row(
-            children: [
-              Icon(icon, size: 20, color: colors.onStaleBanner),
-              const SizedBox(width: AppSpacing.xs),
-              Expanded(
-                child: Text(
-                  message,
-                  style: context.wealthText.caption.copyWith(
-                    color: colors.onStaleBanner,
-                  ),
-                ),
-              ),
-              if (actionLabel != null && onAction != null)
-                TextButton(
-                  onPressed: onAction,
-                  style: TextButton.styleFrom(
-                    foregroundColor: colors.onStaleBanner,
-                  ),
-                  child: Text(actionLabel!),
-                ),
-            ],
-          ),
+          child: _layout(context, colors),
         ),
       ),
     );

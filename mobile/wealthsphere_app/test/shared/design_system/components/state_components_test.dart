@@ -24,6 +24,26 @@ void main() {
       expect(retried, 1);
     });
 
+    testWidgets(
+      'banner with retry does not overflow at 2.0x on a small phone',
+      (tester) async {
+        await tester.pumpApp(
+          page(
+            Column(
+              children: [
+                OfflineBanner(onRetry: () {}),
+                StaleDataBanner(asOf: now, now: now, onRetry: () {}),
+              ],
+            ),
+          ),
+          textScale: 2.0,
+          surfaceSize: const Size(320, 568),
+        );
+        expect(tester.takeException(), isNull);
+        expect(find.text('Try again'), findsNWidgets(2));
+      },
+    );
+
     testWidgets('no retry button without a handler', (tester) async {
       await tester.pumpApp(page(const OfflineBanner()));
       expect(find.text('Try again'), findsNothing);

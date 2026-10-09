@@ -281,13 +281,13 @@
   - [x] P02-T07.3 Per-feature route registry contract
   - [x] P02-T07.4 Scope parsing
   - [x] P02-T07.5 Navigation tests
-- [ ] **P02-T08** · Component gallery, goldens and design-system documentation · `NOT_STARTED` ⬜
+- [x] **P02-T08** · Component gallery, goldens and design-system documentation · `COMPLETED` ✅
   - Deps: P02-T05, P02-T06, P02-T07 · Wave: W5 · Track: MOB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P02-T08.1 Gallery screen
-  - [ ] P02-T08.2 Goldens
-  - [ ] P02-T08.3 design-system.md
+  - Started: 2026-10-09T22:18:32+04:00 · Completed: 2026-10-09T22:56:23+04:00 · Duration: 37m 51s · Blocker: —
+  - Evidence: PR #16. Debug-only /_gallery (registered only when enableGallery/kDebugMode; test asserts it is absent when disabled and a gallery link then shows not-found) reachable from More; shows 8 sections covering every component and chart with theme, text scale 1.0/1.5/2.0 and RTL toggles; all content DEMO-labelled fixtures. 28 section goldens (7 sections x light/dark x 1x/2x) generated on the CI Linux runner, reviewed visually, committed under test/app/goldens and compared by CI (mobile gate green); they skip on non-Linux. docs/design/design-system.md: principles, light/dark token tables with measured contrast (from test/helpers/contrast.dart), spacing/motion/size tokens, component catalogue with rules, do/don't list, test and golden procedure. The gallery found three defects, fixed with tests/goldens: StatusBanner retry overflowed at 2.0x on 320dp (regression test added), stale-banner text read 'Showing data from As of 5 hours ago', and WealthSummaryCard did not fill the row width. Local: 576 passed, 34 golden tests skipped on Windows; format and analyze clean. Mutation (gallery guard forced on) was caught. Visual sign-off against the concept board is the P02 gate review and is not claimed here.
+  - [x] P02-T08.1 Gallery screen
+  - [x] P02-T08.2 Goldens
+  - [x] P02-T08.3 design-system.md
 - [ ] **P02-GATE** · UX Gate 1 review · `NOT_STARTED` ⬜
   - Deps: P02-T01, P02-T02, P02-T03, P02-T04, P02-T05, P02-T06, P02-T07, P02-T08 · Wave: W6 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-01.5
   - Started: — · Completed: — · Duration: — · Blocker: —

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -163,6 +164,13 @@ class MorePlaceholder extends ConsumerWidget {
           onPressed: () => context.push(AppRoutes.calculator),
           child: Text(l10n.moreCalculator),
         ),
+        if (kDebugMode) ...[
+          const SizedBox(height: AppSpacing.s),
+          OutlinedButton(
+            onPressed: () => context.push(AppRoutes.gallery),
+            child: const Text('Component gallery (debug)'),
+          ),
+        ],
         const SizedBox(height: AppSpacing.xl),
         Text(l10n.themeLabel, style: context.wealthText.caption),
         const SizedBox(height: AppSpacing.xs),
