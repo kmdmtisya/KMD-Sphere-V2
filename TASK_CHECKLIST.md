@@ -288,11 +288,11 @@
   - [x] P02-T08.1 Gallery screen
   - [x] P02-T08.2 Goldens
   - [x] P02-T08.3 design-system.md
-- [ ] **P02-GATE** · UX Gate 1 review · `NOT_STARTED` ⬜
+- [ ] **P02-GATE** · UX Gate 1 review · `IN_PROGRESS` 🔄
   - Deps: P02-T01, P02-T02, P02-T03, P02-T04, P02-T05, P02-T06, P02-T07, P02-T08 · Wave: W6 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-01.5
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-09T23:36:18+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P02-GATE.1 Run gates
+  - [x] P02-GATE.1 Run gates
   - [ ] P02-GATE.2 Demo gallery
   - [ ] P02-GATE.3 Record approval
 
