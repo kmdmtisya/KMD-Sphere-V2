@@ -152,34 +152,34 @@
   - [x] P01-T10.1 Ubuntu job
   - [x] P01-T10.2 macOS iOS build job
   - [x] P01-T10.3 Artifact upload of failed golden diffs
-- [ ] **P01-T11** · Security and supply-chain baseline in CI · `IN_PROGRESS` 🔄
+- [x] **P01-T11** · Security and supply-chain baseline in CI · `COMPLETED` ✅
   - Deps: P01-T09, P01-T10 · Wave: W5 · Track: SEC · Size: M · Approval: no
-  - Started: 2026-10-09T16:21:26+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-09T16:21:26+04:00 · Completed: 2026-10-09T16:45:28+04:00 · Duration: 24m 02s · Blocker: —
+  - Evidence: Run 37931445813 (https://github.com/kmdmtisya/KMD-Sphere-V2/actions/runs/37931445813) success on 13bc785: gitleaks (fetch-depth 0, 'no leaks found'), pip-audit + OSV-Scanner (67 Python + 105 Dart packages, no vulnerabilities), CodeQL python security-extended (SARIF uploaded), Trivy fs vuln+secret+misconfig HIGH/CRITICAL (none), CycloneDX SBOM artifact 'sbom-cyclonedx' (492 components, non-empty check). Scanner binaries downloaded with SHA-256 verification (osv-scanner, trivy, syft 'OK'); all 10 third-party action refs pinned to commit SHAs; dependabot.yml (actions, uv, pub, docker-compose; first PRs #1-#3 opened); SECURITY.md. SEEDED SECRET TEST: random fake key on throwaway branch test/seeded-secret, run 37931671715: job 'secret scan (gitleaks)' FAILED with generic-api-key in backend/seeded_secret_test.py, overall run failure; local pre-commit gitleaks hook also blocked the commit (needed SKIP=gitleaks to push it); branch deleted, seeded file never on main. Local gitleaks history scan: 15 commits, no leaks; its working-tree triage found 1 tracked finding (JWT-shaped test fixture) which was fixed by building it at runtime instead of suppressing the rule. Limit: container image scanning is added with the Dockerfiles in P12-T04 (no images exist yet), so QG-08.4 is not ticked
   - [x] P01-T11.1 Secret scanning
   - [x] P01-T11.2 Python and Dart dependency audit
   - [x] P01-T11.3 SAST
   - [x] P01-T11.4 Container image scan
   - [x] P01-T11.5 SBOM and Dependabot
-- [ ] **P01-T12** · Observability baseline · `IN_PROGRESS` 🔄
+- [x] **P01-T12** · Observability baseline · `COMPLETED` ✅
   - Deps: P01-T07 · Wave: W5 · Track: BE · Size: M · Approval: no
-  - Started: 2026-10-09T16:21:26+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-09T16:21:26+04:00 · Completed: 2026-10-09T16:45:28+04:00 · Duration: 24m 02s · Blocker: —
+  - Evidence: OpenTelemetry tracing+metrics (FastAPI instrumentation, per-app providers, OTLP/HTTP export when OTEL_EXPORTER_OTLP_ENDPOINT set), token-protected /metrics (404 without METRICS_TOKEN, 401 wrong token, Prometheus text with token; not in OpenAPI), JSON logs with trace_id/span_id, mandatory redaction module (credentials, tokens, JWTs, URL/DSN credentials incl. empty-username redis URLs, financial values) applied to messages, extras and exception text. CK-B: ruff format/check clean, mypy strict 'no issues in 29 files', pytest 102 passed, coverage 96.5%; redaction suite is table-driven (15 leak cases, 5 clean-text cases, key detection, recursion, end-to-end log line) and found a real gap (redis://:password@host) that was fixed. LIVE COLLECTOR CHECK: otel-collector (compose profile observability) received spans named 'GET /openapi.json' with service.name=wealthsphere-api and metrics http.server.duration, http.server.response.size, http.server.active_requests; server log lines carried the matching trace_id. docs/observability.md documents schema, redaction rules, collector use. CI backend run 37931445974 success. Evidence for QG-08.6 (baseline mechanism)
   - [x] P01-T12.1 OTel instrumentation
   - [x] P01-T12.2 Prometheus metrics
   - [x] P01-T12.3 Redaction filter and tests
   - [x] P01-T12.4 Document log schema
-- [ ] **P01-T13** · Developer standards and workflow · `IN_PROGRESS` 🔄
+- [x] **P01-T13** · Developer standards and workflow · `COMPLETED` ✅
   - Deps: P01-T09, P01-T10 · Wave: W5 · Track: DOC · Size: S · Approval: no
-  - Started: 2026-10-09T16:21:26+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-09T16:21:26+04:00 · Completed: 2026-10-09T16:45:28+04:00 · Duration: 24m 02s · Blocker: —
+  - Evidence: CONTRIBUTING.md (task workflow, checks, branches, conventional commits incl. 'track' type, PR rules), .github/pull_request_template.md (CLAUDE.md Definition of Done checklist, quality gates, evidence), .pre-commit-config.yaml (12 hooks: yaml/json/merge-conflict/private-key/large-file/EOF/whitespace, ruff check+format, conventional-commit, dart format, tracker validate, gitleaks). 'pre-commit run --all-files': all hooks Passed. Negative tests: ruff-check failed on unused import (F401); ruff-format rewrote unformatted code; conventional-commit hook accepted feat/track/fix messages and rejected 'added some stuff' and 'Feature/new thing'; a real 'git commit' with a bad message was rejected (HEAD unchanged); gitleaks hook blocked the seeded secret and fails closed when the binary is missing. The real commit 13bc785 ran all hooks
   - [x] P01-T13.1 CONTRIBUTING and PR template
   - [x] P01-T13.2 pre-commit hooks
   - [x] P01-T13.3 Branch/commit conventions
-- [ ] **P01-T14** · OpenAPI export and contract-check tooling · `IN_PROGRESS` 🔄
+- [x] **P01-T14** · OpenAPI export and contract-check tooling · `COMPLETED` ✅
   - Deps: P01-T07, P01-T09 · Wave: W5 · Track: BE · Size: S · Approval: no
-  - Started: 2026-10-09T16:21:26+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-09T16:21:26+04:00 · Completed: 2026-10-09T16:45:29+04:00 · Duration: 24m 03s · Blocker: —
+  - Evidence: scripts/export_openapi.py (write and --check modes, hermetic settings, deterministic sorted JSON) and committed backend/openapi.json; backend/.spectral.yaml (spectral:oas + house rules: money fields must be string, operation summary, versioned paths); Spectral 6.17.0 'No results with a severity of warn or higher' after documenting the API (contact, servers, tags, typed health responses). NEGATIVE TEST: deliberately bad spec was flagged: amount, net_worth and market_value typed number (error), unversioned path /portfolios (error), string-typed balance accepted. backend/tests/test_openapi_contract.py (7 tests: committed contract matches app, deterministic, OpenAPI 3.1, versioned paths, unique operationIds and summaries, money fields never numbers, /metrics excluded). CI backend run 37931445974 success includes 'OpenAPI contract is up to date' and the Spectral step. Evidence for QG-01.3 groundwork (contract tooling)
   - [x] P01-T14.1 Export script
   - [x] P01-T14.2 Spectral ruleset
   - [x] P01-T14.3 CI step
