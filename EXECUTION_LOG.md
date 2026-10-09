@@ -326,3 +326,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-09T19:26:47+04:00 — USER DECISION — phase P02 approved (after the tracker test suite)
 - User instruction 'tests first, then approve P02': the tracker test suite (PR #10) merged first; P02 (Flutter Design System, UX Gate 1) then approved. Entry gate P01-GATE is complete. No P02 task has been started.
+
+### 2026-10-09T19:32:17+04:00 — START P02-T01
+- Design tokens with contrast and guard tests
+- prerequisites verified COMPLETED
+
+### 2026-10-09T19:32:17+04:00 — START P02-T03
+- Money model and formatting primitives
+- prerequisites verified COMPLETED

@@ -216,9 +216,9 @@
 - Exit gates: QG-01.5 — required by `P02-GATE` (Gates-done)
 - Release gates: —
 
-- [ ] **P02-T01** · Design tokens with contrast and guard tests · `NOT_STARTED` ⬜
+- [ ] **P02-T01** · Design tokens with contrast and guard tests · `IN_PROGRESS` 🔄
   - Deps: P01-T06, P01-T10, P01-GATE · Wave: W1 · Track: MOB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-09T19:32:17+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P02-T01.1 Brand palette incl. derived text-safe shades
   - [ ] P02-T01.2 WealthColors light/dark
@@ -234,9 +234,9 @@
   - [ ] P02-T02.3 Typography and tabular figures
   - [ ] P02-T02.4 ThemeModeController and persistence
   - [ ] P02-T02.5 Deterministic golden font
-- [ ] **P02-T03** · Money model and formatting primitives · `NOT_STARTED` ⬜
+- [ ] **P02-T03** · Money model and formatting primitives · `IN_PROGRESS` 🔄
   - Deps: P01-T06, P01-T03, P01-GATE · Wave: W1 · Track: MOB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-09T19:32:17+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P02-T03.1 Money value object and JSON from string
   - [ ] P02-T03.2 MoneyFormatter
