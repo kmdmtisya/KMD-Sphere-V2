@@ -7,13 +7,13 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-09T17:55:33+04:00 by `scripts/track.py`._
+_Generated at 2026-10-09T18:14:49+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
 | QG-01 | Architecture and Design | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
-| QG-02 | Code Quality | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
-| QG-03 | Automated Testing | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
+| QG-02 | Code Quality | 🔄 IN_PROGRESS | 1/6 | Unassigned | — |
+| QG-03 | Automated Testing | 🔄 IN_PROGRESS | 1/6 | Unassigned | — |
 | QG-04 | Android Platform | 🔄 IN_PROGRESS | 1/7 | Unassigned | — |
 | QG-05 | iOS Platform | 🔄 IN_PROGRESS | 1/6 | Unassigned | — |
 | QG-06 | Financial Accuracy and Data Integrity | ⬜ NOT_STARTED | 0/7 | Unassigned | — |
@@ -25,9 +25,9 @@ _Generated at 2026-10-09T17:55:33+04:00 by `scripts/track.py`._
 | QG-12 | Production Release Readiness | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
 
 Waivers: 0 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 2/81.
+Criteria satisfied overall: 4/81.
 
-Current phase **P01** exit-gate criteria outstanding: QG-01.1, QG-01.2, QG-02.1, QG-02.2, QG-02.3, QG-02.4, QG-02.5, QG-02.6, QG-03.1, QG-03.6, QG-04.1, QG-04.2, QG-05.1, QG-08.3, QG-08.4, QG-08.6, QG-10.1, QG-10.3.
+Current phase **P01** exit-gate criteria outstanding: QG-01.1, QG-01.2, QG-02.1, QG-02.2, QG-02.4, QG-02.5, QG-02.6, QG-03.1, QG-04.1, QG-04.2, QG-05.1, QG-08.3, QG-08.4, QG-08.6, QG-10.1, QG-10.3.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -52,17 +52,17 @@ Approved By: —
 
 - [ ] QG-02.1 Formatting and linting checks pass · Required: P01 · By: P01-T09,P01-T10
 - [ ] QG-02.2 Static type checks pass · Required: P01 · By: P01-T09
-- [ ] QG-02.3 No unresolved critical or high-severity code-quality issues · Required: P01 · By: P01-T15
+- [x] QG-02.3 No unresolved critical or high-severity code-quality issues · Required: P01 · By: P01-T15 · Evidence: No unresolved critical/high code-quality issues: ruff (rules incl. flake8-bandit S, bugbear, asyncio) clean; mypy --strict 'no issues found in 30 source files'; CodeQL python security-extended on PR #4 and main: 0 open code-scanning alerts (GitHub API); Trivy HIGH/CRITICAL: none; dependency audit (pip-audit, OSV): none. Required-check gates now block merges (ruleset 'main protection') · Verified: 2026-10-09T18:14:49+04:00
 - [ ] QG-02.4 No hardcoded credentials or secrets · Required: P01 · By: P01-T11 · CRITICAL
 - [ ] QG-02.5 Code reviews are completed for relevant changes · Required: P01 · By: P01-T15
 - [ ] QG-02.6 No unexplained technical debt introduced · Required: P01 · By: P01-T13
 
-Status: NOT_STARTED  
+Status: IN_PROGRESS  
 Owner: Unassigned  
-Start Timestamp: —  
+Start Timestamp: 2026-10-09T18:14:49+04:00  
 End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Verification Timestamp: 2026-10-09T18:14:49+04:00  
+Evidence: 1/6 criteria verified; latest QG-02.3 at 2026-10-09T18:14:49+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -74,14 +74,14 @@ Approved By: —
 - [ ] QG-03.3 Relevant end-to-end tests pass · Required: P09 · By: P09-T10
 - [ ] QG-03.4 Critical financial calculations achieve 100% requirement/edge-case coverage through documented test cases · Required: P06 · By: P06-T10 · CRITICAL
 - [ ] QG-03.5 At least 85% automated line coverage for business-critical backend modules, without using coverage as a substitute for meaningful tests · Required: P06 · By: P06-T10
-- [ ] QG-03.6 No unresolved critical test failures · Required: P01 · By: P01-T15
+- [x] QG-03.6 No unresolved critical test failures · Required: P01 · By: P01-T15 · Evidence: No unresolved critical test failures: backend 109 passed (96.6% coverage, 0 skipped in CI incl. integration against service containers), mobile flutter test passed, all four required checks green on PR #4 (backend gate, mobile gate, security gate, tracker validate); a deliberately failing check on throwaway PR #5 made 'backend gate' fail and the merge was refused by the base-branch policy · Verified: 2026-10-09T18:14:49+04:00
 
-Status: NOT_STARTED  
+Status: IN_PROGRESS  
 Owner: Unassigned  
-Start Timestamp: —  
+Start Timestamp: 2026-10-09T18:14:49+04:00  
 End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Verification Timestamp: 2026-10-09T18:14:49+04:00  
+Evidence: 1/6 criteria verified; latest QG-03.6 at 2026-10-09T18:14:49+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —

@@ -218,3 +218,18 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-09T17:55:33+04:00 — START P01-T15
 - Quality-gate CI integration and merge protection
 - prerequisites verified COMPLETED
+
+### 2026-10-09T18:14:49+04:00 — QG CHECK QG-02.3
+- evidence: No unresolved critical/high code-quality issues: ruff (rules incl. flake8-bandit S, bugbear, asyncio) clean; mypy --strict 'no issues found in 30 source files'; CodeQL python security-extended on PR #4 and main: 0 open code-scanning alerts (GitHub API); Trivy HIGH/CRITICAL: none; dependency audit (pip-audit, OSV): none. Required-check gates now block merges (ruleset 'main protection')
+
+### 2026-10-09T18:14:49+04:00 — QG CHECK QG-03.6
+- evidence: No unresolved critical test failures: backend 109 passed (96.6% coverage, 0 skipped in CI incl. integration against service containers), mobile flutter test passed, all four required checks green on PR #4 (backend gate, mobile gate, security gate, tracker validate); a deliberately failing check on throwaway PR #5 made 'backend gate' fail and the merge was refused by the base-branch policy
+
+### 2026-10-09T18:14:49+04:00 — AWAITING_VERIFICATION P01-T15
+- evidence: Ruleset 'main protection' (id 24794631, enforcement active, bypass actors: none): deletion and force-push blocked, pull request required (0 approvals, threads resolved), required checks 'backend gate','mobile gate','security gate','tracker validate'. PROOF: (1) direct push to main rejected: 'GH013 Repository rule violations: Changes must be made through a pull request; 4 of 4 required status checks are expected'; (2) throwaway PR #5 with unformatted code: 'lint, types, tests, migrations' failed, mergeStateStatus BLOCKED, 'gh pr merge' refused ('the base branch policy prohibits the merge'), PR closed unmerged, branch deleted. Workflows rebuilt as always-run + change-detection + gate jobs (a first version failed because gate jobs inherited a non-existent working directory; found by CI on PR #4 and fixed before the rule was enabled). New tracker.yml; CODEOWNERS; scripts/coverage_by_module.py + backend/coverage-policy.toml (per-module table in job summary, 85% floor for business-critical modules once they exist; 7 tests); ADR-0008 (Proposed); generated coverage.xml mistakenly committed and removed/ignored. AWAITING: QG-02.5 (code reviews) cannot be ticked honestly until the user decides whether the compensating controls in ADR-0008 are acceptable (0 required approvals because the sole maintainer cannot approve own PRs)
+
+### 2026-10-09T18:14:59+04:00 — Merge protection enabled and proven (P01-T15)
+- GitHub ruleset 'main protection' (id 24794631) active with no bypass actors: PR required, force-push/deletion blocked, required checks backend gate, mobile gate, security gate, tracker validate.
+- Proof 1: direct push to main rejected (GH013). Proof 2: throwaway PR #5 with a failing check could not be merged (mergeStateStatus BLOCKED); closed unmerged.
+- Not tested on purpose: the --admin override of gh pr merge (a success would have put bad code on main); the no-bypass property rests on the ruleset's empty bypass list.
+- Open items for the user: (a) decide whether ADR-0008's compensating controls satisfy QG-02.5 (required approvals are 0 because the sole maintainer cannot approve own PRs); (b) Dependabot security alerts are disabled on the repository; (c) private vulnerability reporting (SECURITY.md) is not enabled; (d) Dependabot PRs #1-#3 await review.
