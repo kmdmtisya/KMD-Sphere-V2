@@ -10,8 +10,22 @@ from app.main import create_app
 
 
 def make_settings(**overrides: object) -> Settings:
-    """Settings that ignore any local .env so tests never depend on developer secrets."""
-    values: dict[str, object] = {"environment": "test", **overrides}
+    """Hermetic settings: ignore the local .env and any ambient environment variables, so tests
+    behave identically on a developer machine and in CI (where POSTGRES_* etc. are set)."""
+    values: dict[str, object] = {
+        "environment": "test",
+        "log_level": "INFO",
+        "postgres_user": "",
+        "postgres_password": "",
+        "postgres_db": "",
+        "postgres_host": "127.0.0.1",
+        "postgres_port": 5433,
+        "redis_password": "",
+        "redis_host": "127.0.0.1",
+        "redis_port": 6380,
+        "readiness_timeout_seconds": 2.0,
+        **overrides,
+    }
     return Settings(_env_file=None, **values)  # type: ignore[arg-type]
 
 

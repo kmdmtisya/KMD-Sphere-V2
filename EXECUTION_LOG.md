@@ -143,3 +143,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-09T14:59:06+04:00 — COMPLETE P01-T07
 - duration: 14m 13s
 - evidence: backend/ (uv, Python 3.13.15): app factory, GET /health/live + /health/ready, pydantic-settings config with no default secrets, JSON logging with correlation_id, X-Correlation-ID accept/generate/echo (malformed IDs replaced), RFC 7807 problem+json (404/405/422/500; validation never echoes input; 500 generic). CK-B: ruff format --check OK, ruff check OK, mypy strict 'no issues in 17 files', pytest 26 passed (incl. integration test against live docker stack), coverage 99%. Live uvicorn check: ready 200 with DB+Redis up; stopping Redis -> 503 {redis: failed}; restart -> 200; no password found in server log. Defects found and fixed during the task: localhost resolved to IPv6 and timed out against Docker's IPv4 bind (default hosts now 127.0.0.1); ruff src setting misclassified first-party imports; asserts in production code replaced by cast; asyncpg-stubs added
+
+### 2026-10-09T15:34:51+04:00 — START P01-T08
+- SQLAlchemy 2 and Alembic baseline
+- prerequisites verified COMPLETED
+
+### 2026-10-09T15:34:51+04:00 — START P01-T09
+- CI pipeline: backend
+- prerequisites verified COMPLETED

@@ -32,6 +32,9 @@ class Settings(BaseSettings):
     redis_port: int = 6380
 
     readiness_timeout_seconds: float = 2.0
+    db_pool_size: int = 5
+    db_max_overflow: int = 5
+    db_connect_timeout_seconds: float = 5.0
 
     @property
     def database_dsn(self) -> str:
@@ -41,6 +44,11 @@ class Settings(BaseSettings):
             f"postgresql://{user}:{password}@{self.postgres_host}:{self.postgres_port}"
             f"/{self.postgres_db}"
         )
+
+    @property
+    def sqlalchemy_url(self) -> str:
+        """Async SQLAlchemy URL (asyncpg driver). Contains credentials: never log it."""
+        return self.database_dsn.replace("postgresql://", "postgresql+asyncpg://", 1)
 
     @property
     def redis_url(self) -> str:

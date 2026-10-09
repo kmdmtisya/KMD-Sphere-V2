@@ -3,16 +3,18 @@ import logging
 
 import httpx
 
+from app.core.config import Settings
 from app.core.correlation import correlation_id_var
 from app.core.logging import CorrelationIdFilter, JsonFormatter
 from tests.conftest import make_settings
 
 
 def test_no_default_secrets() -> None:
-    s = make_settings()
-    assert s.postgres_password.get_secret_value() == ""
-    assert s.redis_password.get_secret_value() == ""
-    assert s.postgres_user == ""
+    # The class defaults themselves (independent of any environment) must not contain secrets.
+    fields = Settings.model_fields
+    assert fields["postgres_password"].default.get_secret_value() == ""
+    assert fields["redis_password"].default.get_secret_value() == ""
+    assert fields["postgres_user"].default == ""
 
 
 def test_secrets_are_masked_in_repr() -> None:

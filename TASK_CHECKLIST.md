@@ -130,17 +130,17 @@
   - [x] P01-T07.3 Logging and correlation-ID middleware
   - [x] P01-T07.4 Error model
   - [x] P01-T07.5 Test setup incl. async client
-- [ ] **P01-T08** · SQLAlchemy 2 and Alembic baseline · `NOT_STARTED` ⬜
+- [ ] **P01-T08** · SQLAlchemy 2 and Alembic baseline · `IN_PROGRESS` 🔄
   - Deps: P01-T07 · Wave: W4 · Track: DB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-09T15:34:51+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P01-T08.1 Async engine/session factory
   - [ ] P01-T08.2 Declarative base with naming conventions and UUID/NUMERIC types
   - [ ] P01-T08.3 Baseline migration
   - [ ] P01-T08.4 Test DB fixture and single-head test
-- [ ] **P01-T09** · CI pipeline: backend · `NOT_STARTED` ⬜
+- [ ] **P01-T09** · CI pipeline: backend · `IN_PROGRESS` 🔄
   - Deps: P01-T07 · Wave: W4 · Track: INF · Size: S · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-09T15:34:51+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P01-T09.1 Workflow with service containers
   - [ ] P01-T09.2 Caching
