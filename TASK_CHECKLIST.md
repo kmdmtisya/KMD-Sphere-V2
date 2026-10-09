@@ -344,16 +344,16 @@
   - [x] P03-T04.4 Calculate to ForecastRepository
   - [x] P03-T04.5 Keyboard handling
   - [x] P03-T04.6 Tests
-- [ ] **P03-T05** · Wealth Forecast (screen 10) · `NOT_STARTED` ⬜
+- [ ] **P03-T05** · Wealth Forecast (screen 10) · `IN_PROGRESS` 🔄
   - Deps: P03-T04 · Wave: W3 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T02:04:39+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P03-T05.1 Scenario cards and selection
-  - [ ] P03-T05.2 Comparison chart
-  - [ ] P03-T05.3 Contributions vs growth
-  - [ ] P03-T05.4 Nominal/real toggle
-  - [ ] P03-T05.5 Assumptions panel
-  - [ ] P03-T05.6 Tests
+  - [x] P03-T05.1 Scenario cards and selection
+  - [x] P03-T05.2 Comparison chart
+  - [x] P03-T05.3 Contributions vs growth
+  - [x] P03-T05.4 Nominal/real toggle
+  - [x] P03-T05.5 Assumptions panel
+  - [x] P03-T05.6 Tests
 - [ ] **P03-T06** · AI Wealth Copilot (screen 6) · `NOT_STARTED` ⬜
   - Deps: P03-T01 · Wave: W2 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

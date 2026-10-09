@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../features/calculator/presentation/calculator_screen.dart';
+import '../features/calculator/presentation/forecast/forecast_screen.dart';
 import '../features/dashboard/presentation/home_screen.dart';
 import '../features/portfolios/presentation/portfolio_overview_screen.dart';
 import 'app_routes.dart';
@@ -55,7 +56,7 @@ final Map<AppTab, RouteBase Function()> tabRoutes =
             routes: [
               GoRoute(
                 path: 'forecast',
-                builder: (context, state) => const ForecastPlaceholder(),
+                builder: (context, state) => const ForecastScreen(),
               ),
             ],
           ),
