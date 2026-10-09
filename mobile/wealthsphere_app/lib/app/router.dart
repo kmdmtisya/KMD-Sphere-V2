@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../features/ai_wealth/presentation/ai_wealth_screen.dart';
 import '../features/calculator/presentation/calculator_screen.dart';
 import '../features/calculator/presentation/forecast/forecast_screen.dart';
 import '../features/dashboard/presentation/home_screen.dart';
@@ -36,7 +37,7 @@ final Map<AppTab, RouteBase Function()> tabRoutes =
       ),
       AppTab.ai: () => GoRoute(
         path: AppRoutes.ai,
-        builder: (context, state) => AiPlaceholder(
+        builder: (context, state) => AiWealthScreen(
           scope: AiScope.tryParse(
             state.uri.queryParameters[AppRoutes.aiScopeParam],
           ),

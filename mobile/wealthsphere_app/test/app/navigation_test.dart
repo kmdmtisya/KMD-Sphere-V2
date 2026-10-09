@@ -210,7 +210,8 @@ void main() {
           const AiScope(AiScopeKind.portfolio, 'p-1'),
         ),
       );
-      expect(find.text('Context: portfolio:p-1'), findsOneWidget);
+      // An id the app has no name for is shown as an id, never as raw query text.
+      expect(find.text('Context: Portfolio p-1'), findsOneWidget);
       expect(
         tester.widget<NavigationBar>(find.byType(NavigationBar)).selectedIndex,
         2,
@@ -233,14 +234,21 @@ void main() {
             queryParameters: {'scope': raw},
           ).toString(),
         );
-        expect(find.textContaining('Context:'), findsNothing, reason: raw);
+        // The hostile value is dropped: the chat falls back to all portfolios.
+        expect(
+          find.text('Context: All portfolios'),
+          findsOneWidget,
+          reason: raw,
+        );
         expect(find.textContaining('script'), findsNothing, reason: raw);
+        expect(find.textContaining('../'), findsNothing, reason: raw);
+        expect(find.textContaining('bogus'), findsNothing, reason: raw);
       }
     });
 
-    testWidgets('no scope means no context chip', (tester) async {
+    testWidgets('no scope means all portfolios', (tester) async {
       await pumpRouterApp(tester, initialLocation: AppRoutes.ai);
-      expect(find.textContaining('Context:'), findsNothing);
+      expect(find.text('Context: All portfolios'), findsOneWidget);
     });
   });
 

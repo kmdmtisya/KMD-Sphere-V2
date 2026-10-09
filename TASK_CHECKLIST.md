@@ -354,16 +354,16 @@
   - [x] P03-T05.4 Nominal/real toggle
   - [x] P03-T05.5 Assumptions panel
   - [x] P03-T05.6 Tests
-- [ ] **P03-T06** · AI Wealth Copilot (screen 6) · `NOT_STARTED` ⬜
+- [x] **P03-T06** · AI Wealth Copilot (screen 6) · `COMPLETED` ✅
   - Deps: P03-T01 · Wave: W2 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P03-T06.1 Empty state and suggestions
-  - [ ] P03-T06.2 Scope chip
-  - [ ] P03-T06.3 Four-section answer renderer
-  - [ ] P03-T06.4 Streaming and stop
-  - [ ] P03-T06.5 Refusal/failure/offline states
-  - [ ] P03-T06.6 Tests
+  - Started: 2026-10-10T02:27:43+04:00 · Completed: 2026-10-10T02:45:40+04:00 · Duration: 17m 57s · Blocker: —
+  - Evidence: PR #25. AiWealthScreen (features/ai_wealth/presentation) replaces the AI placeholder: empty state with the fixture intro, DEMO notice, suggested-question chips; scope chip (All portfolios / a named portfolio / This forecast / Goal <id>) read from the route, changeable and removable via a bottom sheet, sent with each question and shown with 'Context:'; thread with user bubbles and four labelled answer sections (Observed data, Calculated, Assumptions, AI interpretation) plus EvidenceSourceChips and a DataAsOfLabel; streaming consumed via CopilotController folding Stream<ChatEvent> into ChatTurn, with a Stop button (keeps partial content, marks it 'Stopped. The answer may be incomplete.') and a single SemanticsService.sendAnnouncement per completed/stopped/failed turn (not per token); refusal rendered in a distinct bordered style, never as an answer; failure keeps the turn with an inline Retry that replaces it; offline shows OfflineBanner and disables the composer and suggestion chips; persistent footer ('Informational only... No trades are executed.'); small screens/2.0x text move the context chip and footer into the scrolling list so only the composer stays pinned (fixed an overflow found by the layout matrix). A guard test scans lib/features/ai_wealth for hard-coded multi-word string literals (there are none; every shown word is from l10n or the repository). Tests: 27 in ai_wealth_screen_test (empty state, full four-section answer with sources, progress rows, stop mid-stream with announcement, refusal, demo failure script, transport failure with generic message and working retry, unscripted question, multiple turns, scope display/change/remove/consolidated, offline before and mid-conversation, semantics, 320dp x light/dark x LTR/RTL x 1.0/2.0x with an answer and a refusal); navigation_test's AI scope tests updated for the real labels (hostile/invalid scopes now fall back to 'All portfolios' instead of showing nothing). Suite 770 passing (34 goldens skipped on Windows). Mutants (scope delete guard, composer enabled flag, stop() no-op, wrong announcement) caught. format/analyze clean, CI green. Conversation is in-memory only, as specified; not run on an emulator yet (P03-T07).
+  - [x] P03-T06.1 Empty state and suggestions
+  - [x] P03-T06.2 Scope chip
+  - [x] P03-T06.3 Four-section answer renderer
+  - [x] P03-T06.4 Streaming and stop
+  - [x] P03-T06.5 Refusal/failure/offline states
+  - [x] P03-T06.6 Tests
 - [ ] **P03-T07** · Journeys, accessibility sweep and device QA · `NOT_STARTED` ⬜
   - Deps: P03-T02, P03-T03, P03-T05, P03-T06 · Wave: W4 · Track: QA · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

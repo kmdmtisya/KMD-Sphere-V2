@@ -100,6 +100,7 @@ class ChatTurn {
     this.refusal,
     this.error,
     this.done = false,
+    this.stopped = false,
   }) : progress = List.unmodifiable(progress),
        sections = List.unmodifiable(sections),
        sources = List.unmodifiable(sources);
@@ -111,6 +112,9 @@ class ChatTurn {
   final String? refusal;
   final String? error;
   final bool done;
+
+  /// The user stopped the answer before it finished.
+  final bool stopped;
 
   bool get failed => error != null;
   bool get refused => refusal != null;
@@ -125,6 +129,12 @@ class ChatTurn {
     DoneEvent() => _copy(done: true),
   };
 
+  /// A copy marked as stopped by the user (whatever arrived so far is kept).
+  ChatTurn stop() => _copy(done: true, stopped: true);
+
+  /// A copy marked as failed with [message] (a transport error, not an assistant answer).
+  ChatTurn fail(String message) => _copy(error: message, done: true);
+
   ChatTurn _copy({
     List<ToolProgressEvent>? progress,
     List<AnswerSection>? sections,
@@ -132,6 +142,7 @@ class ChatTurn {
     String? refusal,
     String? error,
     bool? done,
+    bool? stopped,
   }) => ChatTurn(
     question: question,
     progress: progress ?? this.progress,
@@ -140,5 +151,6 @@ class ChatTurn {
     refusal: refusal ?? this.refusal,
     error: error ?? this.error,
     done: done ?? this.done,
+    stopped: stopped ?? this.stopped,
   );
 }
