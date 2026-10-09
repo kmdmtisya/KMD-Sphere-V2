@@ -281,9 +281,9 @@
   - [x] P02-T07.3 Per-feature route registry contract
   - [x] P02-T07.4 Scope parsing
   - [x] P02-T07.5 Navigation tests
-- [ ] **P02-T08** · Component gallery, goldens and design-system documentation · `NOT_STARTED` ⬜
+- [ ] **P02-T08** · Component gallery, goldens and design-system documentation · `IN_PROGRESS` 🔄
   - Deps: P02-T05, P02-T06, P02-T07 · Wave: W5 · Track: MOB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-09T22:18:32+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P02-T08.1 Gallery screen
   - [ ] P02-T08.2 Goldens

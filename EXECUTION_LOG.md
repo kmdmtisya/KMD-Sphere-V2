@@ -385,3 +385,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-09T22:09:32+04:00 — COMPLETE P02-T06
 - duration: 27m 02s
 - evidence: PR #15. DEC-13 confirmed by user: fl_chart. lib/shared/design_system/charts: ChartPoint/ChartSeries/ForecastPoint/ForecastSeries/AllocationSlice (Decimal; double only at plotting coordinates), ChartSemantics (rose/fell/flat/single/empty summaries from supplied points, exact above 2^53), ChartFrame (summary semantics + View as table toggle + empty state), PerformanceLineChart (tooltip, loading skeleton, reduced motion), AllocationDonutChart + AllocationLegend (palette + labels + percentages, tap to highlight), ForecastComparisonChart (selected solid, others dashed/thinner, max 3, legend). charts_test.dart covers summaries, empty/single-point, tooltips, table toggle, legend, and a 3-chart light/dark x LTR/RTL x 1.0/2.0x matrix (which caught and led to a fix of a legend overflow). 6 golden images (3 charts x light/dark) were generated on the CI Linux runner, reviewed visually, committed, and compared by CI (mobile gate green); goldens are skipped on non-Linux. Local: 565 passed, 6 skipped; format and analyze clean. Mutations (summary direction, dash style, tooltip date, sorted-points assert) were caught. TalkBack read-through of the summaries not yet done (UI_EXECUTION_PLAN step 6 asks for one) and is deferred to P02-T08/the P02 gate.
+
+### 2026-10-09T22:18:32+04:00 — START P02-T08
+- Component gallery, goldens and design-system documentation
+- prerequisites verified COMPLETED

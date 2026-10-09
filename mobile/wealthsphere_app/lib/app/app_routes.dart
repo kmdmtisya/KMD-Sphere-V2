@@ -15,6 +15,9 @@ abstract final class AppRoutes {
   static const String calculator = '/more/calculator';
   static const String forecast = '/more/calculator/forecast';
 
+  /// Debug-only component gallery. Not registered in release builds.
+  static const String gallery = '/_gallery';
+
   /// The query parameter that carries the AI chat context.
   static const String aiScopeParam = 'scope';
 

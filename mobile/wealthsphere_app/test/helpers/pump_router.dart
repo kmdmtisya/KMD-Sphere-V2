@@ -14,10 +14,14 @@ Future<GoRouter> pumpRouterApp(
   Size surfaceSize = const Size(390, 844),
   double textScale = 1.0,
   TextDirection textDirection = TextDirection.ltr,
+  bool enableGallery = true,
 }) async {
   await tester.binding.setSurfaceSize(surfaceSize);
   addTearDown(() => tester.binding.setSurfaceSize(null));
-  final router = createRouter(initialLocation: initialLocation);
+  final router = createRouter(
+    initialLocation: initialLocation,
+    enableGallery: enableGallery,
+  );
   addTearDown(router.dispose);
   await tester.pumpWidget(
     ProviderScope(
