@@ -324,16 +324,16 @@
   - [x] P03-T02.4 Customise mode
   - [x] P03-T02.5 Pull-to-refresh and states
   - [x] P03-T02.6 Tests
-- [ ] **P03-T03** · Portfolio Overview (screen 4) · `NOT_STARTED` ⬜
+- [ ] **P03-T03** · Portfolio Overview (screen 4) · `IN_PROGRESS` 🔄
   - Deps: P03-T01 · Wave: W2 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T01:05:01+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P03-T03.1 Switcher and header
-  - [ ] P03-T03.2 Chart and donut
-  - [ ] P03-T03.3 Metrics grid with definitions
-  - [ ] P03-T03.4 Holdings preview
-  - [ ] P03-T03.5 Contextual AI link
-  - [ ] P03-T03.6 Tests
+  - [x] P03-T03.1 Switcher and header
+  - [x] P03-T03.2 Chart and donut
+  - [x] P03-T03.3 Metrics grid with definitions
+  - [x] P03-T03.4 Holdings preview
+  - [x] P03-T03.5 Contextual AI link
+  - [x] P03-T03.6 Tests
 - [ ] **P03-T04** · Compounding Calculator (screen 9) · `NOT_STARTED` ⬜
   - Deps: P03-T01 · Wave: W2 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
