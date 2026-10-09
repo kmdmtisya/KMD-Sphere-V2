@@ -1,6 +1,6 @@
 # ADR-0008: Quality-gate policy and merge protection
 
-Status: Proposed (decision on review rules requested from the user)
+Status: Accepted (user approval, 2026-10-09; the review controls in section 3 were explicitly accepted)
 
 ## Context
 QUALITY_GATES.md defines 12 platform quality gates (QG-01..QG-12). They only mean something if failing checks block merges and if evidence is recorded honestly. The repository is public and currently has one maintainer; commits are authored with that maintainer's GitHub account.

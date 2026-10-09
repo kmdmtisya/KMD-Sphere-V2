@@ -11,4 +11,4 @@ Format: Context / Decision / Consequences. Status values: Proposed, Accepted, Su
 | [0005](0005-repository-layout.md) | Repository layout | Accepted |
 | [0006](0006-rounding-conventions.md) | Rounding conventions | Accepted |
 | [0007](0007-test-strategy.md) | Test strategy | Accepted |
-| [0008](0008-quality-gate-policy.md) | Quality-gate policy and merge protection | Proposed |
+| [0008](0008-quality-gate-policy.md) | Quality-gate policy and merge protection | Accepted |
