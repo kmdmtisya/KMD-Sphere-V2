@@ -285,9 +285,9 @@
   - Deps: P02-T05, P02-T06, P02-T07 · Wave: W5 · Track: MOB · Size: M · Approval: no
   - Started: 2026-10-09T22:18:32+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P02-T08.1 Gallery screen
-  - [ ] P02-T08.2 Goldens
-  - [ ] P02-T08.3 design-system.md
+  - [x] P02-T08.1 Gallery screen
+  - [x] P02-T08.2 Goldens
+  - [x] P02-T08.3 design-system.md
 - [ ] **P02-GATE** · UX Gate 1 review · `NOT_STARTED` ⬜
   - Deps: P02-T01, P02-T02, P02-T03, P02-T04, P02-T05, P02-T06, P02-T07, P02-T08 · Wave: W6 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-01.5
   - Started: — · Completed: — · Duration: — · Blocker: —

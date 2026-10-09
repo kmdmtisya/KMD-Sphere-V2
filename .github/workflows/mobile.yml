@@ -73,15 +73,6 @@ jobs:
       - name: Analyze
         run: flutter analyze
 
-      # TEMPORARY (P02-T08): generate golden baselines on Linux; removed again before merge.
-      - name: Generate goldens (temporary)
-        run: flutter test --update-goldens --tags golden
-      - name: Upload generated goldens (temporary)
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
-        with:
-          name: generated-goldens
-          path: mobile/wealthsphere_app/test/**/goldens/*.png
-
       # Goldens are only authoritative on this Linux job (see dart_test.yaml).
       - name: Test (unit, widget and golden)
         run: flutter test --coverage
