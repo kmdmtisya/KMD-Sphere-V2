@@ -977,5 +977,129 @@
   "inputGrowthBelowBase": "Growth return can't be lower than the base return.",
   "@inputGrowthBelowBase": {
     "description": "Validation message"
+  },
+  "forecastNoResultTitle": "No forecast yet",
+  "@forecastNoResultTitle": {
+    "description": "Forecast screen without a result"
+  },
+  "forecastNoResultMessage": "Enter your numbers in the calculator to see a projection.",
+  "@forecastNoResultMessage": {
+    "description": "Forecast screen without a result"
+  },
+  "openCalculator": "Open calculator",
+  "@openCalculator": {
+    "description": "Button to the calculator"
+  },
+  "scenarioConservative": "Conservative",
+  "@scenarioConservative": {
+    "description": "Scenario name"
+  },
+  "scenarioBase": "Base",
+  "@scenarioBase": {
+    "description": "Scenario name"
+  },
+  "scenarioGrowth": "Growth",
+  "@scenarioGrowth": {
+    "description": "Scenario name"
+  },
+  "forecastScenariosTitle": "Scenarios",
+  "@forecastScenariosTitle": {
+    "description": "Title above the scenario cards"
+  },
+  "forecastChartTitle": "Scenarios compared",
+  "@forecastChartTitle": {
+    "description": "Title of the comparison chart"
+  },
+  "forecastFinalValue": "Projected value after {years}",
+  "@forecastFinalValue": {
+    "description": "Label of the final value",
+    "placeholders": {
+      "years": {
+        "type": "String"
+      }
+    }
+  },
+  "forecastNominal": "Nominal",
+  "@forecastNominal": {
+    "description": "Toggle: values before inflation"
+  },
+  "forecastReal": "Today's money",
+  "@forecastReal": {
+    "description": "Toggle: inflation-adjusted values"
+  },
+  "forecastValuesLabel": "Show values",
+  "@forecastValuesLabel": {
+    "description": "Label of the nominal/real toggle"
+  },
+  "forecastContributions": "Your contributions",
+  "@forecastContributions": {
+    "description": "Contributions part of the bar"
+  },
+  "forecastGrowth": "Investment growth",
+  "@forecastGrowth": {
+    "description": "Growth part of the bar"
+  },
+  "forecastBreakdownTitle": "Contributions and growth",
+  "@forecastBreakdownTitle": {
+    "description": "Title of the breakdown"
+  },
+  "forecastBreakdownNominalNote": "Shown before inflation.",
+  "@forecastBreakdownNominalNote": {
+    "description": "Note that the breakdown is nominal"
+  },
+  "forecastBreakdownSpoken": "{contributions} from your contributions and {growth} from investment growth",
+  "@forecastBreakdownSpoken": {
+    "description": "Spoken breakdown",
+    "placeholders": {
+      "contributions": {
+        "type": "String"
+      },
+      "growth": {
+        "type": "String"
+      }
+    }
+  },
+  "forecastAssumptionsTitle": "Assumptions",
+  "@forecastAssumptionsTitle": {
+    "description": "Title of the assumptions panel"
+  },
+  "forecastAssumptionsSummary": "Projections are not guaranteed. They use the assumptions below, which may not hold.",
+  "@forecastAssumptionsSummary": {
+    "description": "Always-visible assumptions summary"
+  },
+  "forecastDemoMismatch": "Demo projection for the default inputs. Your own inputs are used once the app is connected.",
+  "@forecastDemoMismatch": {
+    "description": "Demo mismatch notice"
+  },
+  "editAssumptions": "Edit assumptions",
+  "@editAssumptions": {
+    "description": "Back to the calculator"
+  },
+  "askAiForecast": "Ask AI about this forecast",
+  "@askAiForecast": {
+    "description": "Opens AI scoped to the forecast"
+  },
+  "assumptionYears": "Investment period",
+  "@assumptionYears": {
+    "description": "Assumption label"
+  },
+  "assumptionReturns": "Return assumptions",
+  "@assumptionReturns": {
+    "description": "Assumption label"
+  },
+  "assumptionReturnsValue": "{conservative} / {base} / {growth} a year (conservative / base / growth)",
+  "@assumptionReturnsValue": {
+    "description": "Assumption value",
+    "placeholders": {
+      "conservative": {
+        "type": "String"
+      },
+      "base": {
+        "type": "String"
+      },
+      "growth": {
+        "type": "String"
+      }
+    }
   }
 }
