@@ -27,7 +27,7 @@ The `gitleaks` hook needs the gitleaks binary (`winget install Gitleaks.Gitleaks
 | Backend (`backend`) | `uv run ruff format --check . && uv run ruff check . && uv run mypy && uv run pytest --cov` |
 | Migrations (`backend`) | `uv run alembic upgrade head && uv run alembic check && uv run alembic downgrade base && uv run alembic upgrade head` |
 | API contract (`backend`) | `uv run python ../scripts/export_openapi.py --check` and Spectral (`docs/ci.md`) |
-| Tracking (repo root) | `python scripts/track.py validate` |
+| Tracking (repo root) | `python scripts/track.py validate`, and after changing `scripts/track.py`: `uv run --project backend python -m pytest tests/tracker -q` |
 
 CI runs the same checks (`docs/ci.md`). Tests are never deleted or weakened to make a build pass.
 

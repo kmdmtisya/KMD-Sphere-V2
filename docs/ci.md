@@ -12,7 +12,7 @@ Workflows live in `.github/workflows/`. Each workflow runs on every pull request
 | `backend.yml` | **`backend gate`** | Same gate pattern as mobile |
 | `security.yml` | secret scan, dependency audit, CodeQL, Trivy, SBOM | See `SECURITY.md` |
 | `security.yml` | **`security gate`** | Fails unless all five security jobs succeeded |
-| `tracker.yml` | **`tracker validate`** | `python scripts/track.py validate` |
+| `tracker.yml` | **`tracker validate`** | `python scripts/track.py validate` and the tracker test suite (`tests/tracker`, 88 tests: lifecycle, validation, quality gates, robustness) |
 
 ## Required checks (ruleset "main protection")
 `backend gate`, `mobile gate`, `security gate` and `tracker validate` must pass before a pull request can merge to `main`; direct pushes, force-pushes and deletion of `main` are blocked and there are no bypass actors (ADR-0008). Every workflow runs on every pull request and decides internally whether its heavy jobs are needed, so a required check never stays pending.

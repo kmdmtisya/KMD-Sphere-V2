@@ -22,3 +22,10 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Execution tracker consistency (tasks, dependencies, waves, quality gates, timestamps)
         run: python3 scripts/track.py validate
+
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          python-version: "3.13"
+
+      - name: Tracker test suite (lifecycle, validation, quality gates, robustness)
+        run: uvx --python 3.13 --with pytest==8.* pytest tests/tracker -q
