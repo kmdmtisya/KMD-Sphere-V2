@@ -364,12 +364,12 @@
   - [x] P03-T06.4 Streaming and stop
   - [x] P03-T06.5 Refusal/failure/offline states
   - [x] P03-T06.6 Tests
-- [ ] **P03-T07** · Journeys, accessibility sweep and device QA · `NOT_STARTED` ⬜
+- [ ] **P03-T07** · Journeys, accessibility sweep and device QA · `IN_PROGRESS` 🔄
   - Deps: P03-T02, P03-T03, P03-T05, P03-T06 · Wave: W4 · Track: QA · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T02:52:46+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P03-T07.1 Write journeys
-  - [ ] P03-T07.2 Accessibility sweep
+  - [x] P03-T07.1 Write journeys
+  - [x] P03-T07.2 Accessibility sweep
   - [ ] P03-T07.3 Manual QA checklist on devices
 - [ ] **P03-GATE** · UX Gate 2 review · `NOT_STARTED` ⬜
   - Deps: P03-T01, P03-T02, P03-T03, P03-T04, P03-T05, P03-T06, P03-T07 · Wave: W5 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-04.4, QG-05.3

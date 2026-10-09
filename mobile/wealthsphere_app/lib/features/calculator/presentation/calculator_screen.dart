@@ -353,6 +353,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                         ),
                       ),
                     FilledButton(
+                      key: const ValueKey('calculate'),
                       onPressed: _loading ? null : _calculate,
                       child: _loading
                           ? Row(
