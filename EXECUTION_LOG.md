@@ -176,3 +176,9 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-09T15:52:49+04:00 — COMPLETE P01-T16
 - duration: 6m 46s
 - evidence: User approved docs/quality-targets.md in chat ('Approve'): DEC-15 (Android 8.0/API 26+, iOS 16.0+), DEC-16 (mobile, API, database targets and design workload), DEC-17 (AI evaluation datasets and thresholds incl. zero-tolerance list). QG-04.3 and QG-05.2 verified with this document as evidence · Approved by: user (mtisya@gmail.com)
+
+### 2026-10-09T16:01:28+04:00 — Approved platform minimums applied and verified (follow-on to P01-T16)
+- Android minSdk 26 set in mobile/wealthsphere_app/android/app/build.gradle.kts; built APK reports minSdkVersion 26, targetSdkVersion 36 (aapt2 badging).
+- iOS IPHONEOS_DEPLOYMENT_TARGET 16.0 set in all three Runner build configurations.
+- Verification: dart format, flutter analyze, flutter test local pass; GitHub Actions run 37926752270 success (format/analyze/test, android debug build, ios compile on macOS).
+- Decision register updated: DEC-01, DEC-06, DEC-07, DEC-15, DEC-16, DEC-17 resolved. This changes configuration produced by completed task P01-T06; recorded here rather than reopening it.
