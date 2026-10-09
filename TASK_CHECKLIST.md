@@ -183,10 +183,10 @@
   - [x] P01-T14.1 Export script
   - [x] P01-T14.2 Spectral ruleset
   - [x] P01-T14.3 CI step
-- [ ] **P01-T15** · Quality-gate CI integration and merge protection · `AWAITING_VERIFICATION` 🔎
+- [x] **P01-T15** · Quality-gate CI integration and merge protection · `COMPLETED` ✅
   - Deps: P01-T09, P01-T10, P01-T11, P01-T13 · Wave: W6 · Track: INF · Size: M · Approval: no · Gates-done: QG-02.3, QG-02.5, QG-03.6
-  - Started: 2026-10-09T17:55:33+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: Ruleset 'main protection' (id 24794631, enforcement active, bypass actors: none): deletion and force-push blocked, pull request required (0 approvals, threads resolved), required checks 'backend gate','mobile gate','security gate','tracker validate'. PROOF: (1) direct push to main rejected: 'GH013 Repository rule violations: Changes must be made through a pull request; 4 of 4 required status checks are expected'; (2) throwaway PR #5 with unformatted code: 'lint, types, tests, migrations' failed, mergeStateStatus BLOCKED, 'gh pr merge' refused ('the base branch policy prohibits the merge'), PR closed unmerged, branch deleted. Workflows rebuilt as always-run + change-detection + gate jobs (a first version failed because gate jobs inherited a non-existent working directory; found by CI on PR #4 and fixed before the rule was enabled). New tracker.yml; CODEOWNERS; scripts/coverage_by_module.py + backend/coverage-policy.toml (per-module table in job summary, 85% floor for business-critical modules once they exist; 7 tests); ADR-0008 (Proposed); generated coverage.xml mistakenly committed and removed/ignored. AWAITING: QG-02.5 (code reviews) cannot be ticked honestly until the user decides whether the compensating controls in ADR-0008 are acceptable (0 required approvals because the sole maintainer cannot approve own PRs)
+  - Started: 2026-10-09T17:55:33+04:00 · Completed: 2026-10-09T18:24:49+04:00 · Duration: 29m 16s · Blocker: —
+  - Evidence: Merge protection live and proven (PR #4, ruleset 24794631; direct push rejected with GH013; failing-check PR #5 blocked and closed unmerged); required checks backend gate, mobile gate, security gate, tracker validate green on PRs #4 and #6; per-module coverage policy; CODEOWNERS; tracker workflow; ADR-0008 accepted by user. Criteria verified: QG-02.3, QG-03.6, QG-02.5 (user accepted the compensating review controls)
   - [x] P01-T15.1 Required checks and branch protection
   - [x] P01-T15.2 CODEOWNERS and review rule
   - [x] P01-T15.3 Coverage report
