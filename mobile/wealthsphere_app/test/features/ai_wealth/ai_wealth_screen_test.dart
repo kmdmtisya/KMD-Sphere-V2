@@ -336,6 +336,23 @@ void main() {
       );
     });
 
+    testWidgets('the newest answer is scrolled into view', (tester) async {
+      await pumpAi(tester, size: const Size(360, 700));
+      await tester.tap(find.text(performance));
+      await tester.pumpAndSettle();
+      await tester.enterText(
+        find.byType(TextField),
+        'Show me a failing request (demo)',
+      );
+      await tester.pump();
+      await tester.tap(find.byIcon(Icons.arrow_upward_rounded));
+      await tester.pumpAndSettle();
+      final retry = find.text('Try again');
+      expect(retry, findsOneWidget, reason: 'built because it is in view');
+      final list = tester.getRect(find.byType(ListView));
+      expect(list.contains(tester.getCenter(retry)), isTrue);
+    });
+
     testWidgets('several turns stay in the conversation', (tester) async {
       await pumpAi(tester);
       await tester.tap(find.text(performance));

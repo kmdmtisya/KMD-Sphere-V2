@@ -47,6 +47,30 @@ class AiWealthScreen extends ConsumerStatefulWidget {
 
 class _AiWealthScreenState extends ConsumerState<AiWealthScreen> {
   AiScope? _scope;
+  final _scroll = ScrollController();
+
+  @override
+  void dispose() {
+    _scroll.dispose();
+    super.dispose();
+  }
+
+  /// Keeps the newest part of the conversation in view as it streams in.
+  void _followLatest() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || !_scroll.hasClients) return;
+      final end = _scroll.position.maxScrollExtent;
+      if (MediaQuery.disableAnimationsOf(context)) {
+        _scroll.jumpTo(end);
+      } else {
+        _scroll.animateTo(
+          end,
+          duration: AppMotion.fast,
+          curve: AppMotion.curve,
+        );
+      }
+    });
+  }
 
   @override
   void initState() {
@@ -131,6 +155,7 @@ class _AiWealthScreenState extends ConsumerState<AiWealthScreen> {
 
     // Announce the end of an answer once, not every streamed piece.
     ref.listen(copilotControllerProvider, (previous, next) {
+      if (next.turns.isNotEmpty) _followLatest();
       if (previous?.streaming == true &&
           !next.streaming &&
           next.turns.isNotEmpty) {
@@ -185,6 +210,7 @@ class _AiWealthScreenState extends ConsumerState<AiWealthScreen> {
           if (!online) const OfflineBanner(),
           Expanded(
             child: ListView(
+              controller: _scroll,
               padding: const EdgeInsetsDirectional.all(AppSpacing.m),
               children: [
                 if (compact) ...[chip, const SizedBox(height: AppSpacing.s)],

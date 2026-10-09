@@ -364,12 +364,12 @@
   - [x] P03-T06.4 Streaming and stop
   - [x] P03-T06.5 Refusal/failure/offline states
   - [x] P03-T06.6 Tests
-- [ ] **P03-T07** · Journeys, accessibility sweep and device QA · `NOT_STARTED` ⬜
+- [ ] **P03-T07** · Journeys, accessibility sweep and device QA · `BLOCKED` ⛔
   - Deps: P03-T02, P03-T03, P03-T05, P03-T06 · Wave: W4 · Track: QA · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T02:52:46+04:00 · Completed: — · Duration: — · Blocker: Waiting on manual device QA (P03-T07.3): the checklist in docs/design/qa-gate2.md needs a person at small/large Android and iOS devices (TalkBack/VoiceOver, safe areas, keyboard, real restart, concept-board comparison); iOS hardware outstanding (TD-09). Done so far (PR #26): 5/5 integration journeys pass on the Android emulator (API 37); accessibility sweep 40/40 in CI; suite 811 passing.
   - Evidence: —
-  - [ ] P03-T07.1 Write journeys
-  - [ ] P03-T07.2 Accessibility sweep
+  - [x] P03-T07.1 Write journeys
+  - [x] P03-T07.2 Accessibility sweep
   - [ ] P03-T07.3 Manual QA checklist on devices
 - [ ] **P03-GATE** · UX Gate 2 review · `NOT_STARTED` ⬜
   - Deps: P03-T01, P03-T02, P03-T03, P03-T04, P03-T05, P03-T06, P03-T07 · Wave: W5 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-04.4, QG-05.3
