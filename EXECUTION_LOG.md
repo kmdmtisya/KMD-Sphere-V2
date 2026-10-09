@@ -302,3 +302,14 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 - Fresh local run: backend ruff/mypy/openapi check/pytest 109 passed (97.0% coverage, per-module policy OK); mobile dart format/analyze/test pass; tracker validate OK; gitleaks 26 commits no leaks.
 - New docs/tech-debt.md records 11 known shortcuts (notably TD-05: tracker lacks an automated test suite, to be added before P02; TD-03: iOS Xcode unpinned; TD-06: 0 required approvals).
 - P01-GATE awaits the user's phase-exit approval (sub-task P01-GATE.3 is ticked only on approval).
+
+### 2026-10-09T18:57:36+04:00 — AWAITING_VERIFICATION P01-GATE
+- evidence: Gate summary presented: 16/16 P01 tasks complete with evidence; 19/19 P01 quality criteria satisfied (QG-02 PASSED); fresh run: backend 109 tests, 97.0% coverage, ruff/mypy/OpenAPI check clean; mobile format/analyze/test pass; tracker validate OK; gitleaks 26 commits no leaks; CI green on main; merge protection live (PRs #4-#8). QG-08.4 rescoped to P12 by user decision; tech-debt register (11 items) reviewed
+
+### 2026-10-09T18:57:36+04:00 — COMPLETE P01-GATE
+- duration: 23m 20s
+- evidence: User approved the P01 phase gate in chat ('P01 phase gate Approved'). P01 exit criteria satisfied: QG-01.1-2, QG-02.1-6, QG-03.1/6, QG-04.1-3, QG-05.1-2, QG-08.3/6, QG-10.1/3 · Approved by: user (mtisya@gmail.com)
+
+### 2026-10-09T18:57:37+04:00 — PHASE P01 CLOSED — exit gate approved by user
+- P01 (Repository, Environment & Engineering Foundation) complete: 17/17 tasks including the gate. No later phase has been approved yet; P02, P04 and P12 are eligible to start once the user approves them.
+- Open follow-ups recorded in docs/tech-debt.md (notably TD-05 tracker test suite, recommended before P02) and user-side items (Dependabot alerts, private vulnerability reporting, Dependabot PRs #1-#3).
