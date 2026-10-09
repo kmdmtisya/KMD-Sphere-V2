@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../l10n/generated/app_localizations.dart';
+import '../shared/design_system/tokens/tokens.dart';
 import 'router.dart';
 
 class WealthSphereApp extends ConsumerWidget {
@@ -16,7 +17,7 @@ class WealthSphereApp extends ConsumerWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData(
         useMaterial3: true,
-        colorSchemeSeed: const Color(0xFF2563EB),
+        colorSchemeSeed: BrandPalette.blue600,
       ),
     );
   }

@@ -216,15 +216,15 @@
 - Exit gates: QG-01.5 — required by `P02-GATE` (Gates-done)
 - Release gates: —
 
-- [ ] **P02-T01** · Design tokens with contrast and guard tests · `NOT_STARTED` ⬜
+- [x] **P02-T01** · Design tokens with contrast and guard tests · `COMPLETED` ✅
   - Deps: P01-T06, P01-T10, P01-GATE · Wave: W1 · Track: MOB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P02-T01.1 Brand palette incl. derived text-safe shades
-  - [ ] P02-T01.2 WealthColors light/dark
-  - [ ] P02-T01.3 Spacing/radii/motion/breakpoints
-  - [ ] P02-T01.4 Contrast test
-  - [ ] P02-T01.5 Guard test
+  - Started: 2026-10-09T19:32:17+04:00 · Completed: 2026-10-09T19:52:27+04:00 · Duration: 20m 10s · Blocker: —
+  - Evidence: lib/shared/design_system/tokens: BrandPalette (only file with colour literals; 8 approved brand tokens + derived text-safe and dark-mode shades), WealthColors ThemeExtension light/dark (27 roles + 6-hue chart palette, copyWith/lerp, context.wealthColors with fallback), AppSpacing/AppRadii/AppElevation/AppMotion (reduced-motion aware)/AppBreakpoints. Contrast test (WCAG 2.x, both themes): every text role >= 4.5:1 and every icon/border/chart role >= 3:1 on scaffold, surface and elevated surfaces (159 tests in the tokens suite, mostly per-role contrast checks); it caught a real defect before commit (dark-mode border 2.83:1 on elevated surfaces -> new slate450 #7A8BA3, 3.89:1) and documents why derived shades exist (brand teal 3.74, muted grey 4.43, gold 1.79 on light; blue/red/teal fail on navy). Gold accent is fill-with-onAccent-text only on light (explicit test). Style guard (test/guards): fails on Color(0x..) outside brand_palette.dart, Color.fromARGB/RGBO, Colors.<name>, EdgeInsets.only(left/right)/fromLTRB, Alignment.*Left/Right, TextAlign.left/right, Positioned(left/right), BorderRadius.only(top/bottom Left/Right) and double/num in formatting code; scanner itself unit-tested (detects, ignores comments/URLs/directional APIs, correct line numbers). lib/app/app.dart literal replaced by token. MUTATION CHECK: reverting light textMuted to raw #64748B failed contrast_test; a Color(0xFF...) added to a feature file failed the style guard. CK-M: dart format clean, flutter analyze no issues, flutter test 230 passed locally. PR #12 CI all green: 'format, analyze, test (incl. goldens)', 'android debug build', 'ios compile (no codesign)', security gate, tracker validate (mobile run 37954230356). Evidence toward QG-01.5 (design system, verified at P02-T08)
+  - [x] P02-T01.1 Brand palette incl. derived text-safe shades
+  - [x] P02-T01.2 WealthColors light/dark
+  - [x] P02-T01.3 Spacing/radii/motion/breakpoints
+  - [x] P02-T01.4 Contrast test
+  - [x] P02-T01.5 Guard test
 - [ ] **P02-T02** · Themes, typography and theme-mode persistence · `NOT_STARTED` ⬜
   - Deps: P02-T01 · Wave: W2 · Track: MOB · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
@@ -234,14 +234,14 @@
   - [ ] P02-T02.3 Typography and tabular figures
   - [ ] P02-T02.4 ThemeModeController and persistence
   - [ ] P02-T02.5 Deterministic golden font
-- [ ] **P02-T03** · Money model and formatting primitives · `NOT_STARTED` ⬜
+- [x] **P02-T03** · Money model and formatting primitives · `COMPLETED` ✅
   - Deps: P01-T06, P01-T03, P01-GATE · Wave: W1 · Track: MOB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P02-T03.1 Money value object and JSON from string
-  - [ ] P02-T03.2 MoneyFormatter
-  - [ ] P02-T03.3 PercentFormatter and date labels
-  - [ ] P02-T03.4 Edge-case unit tests
+  - Started: 2026-10-09T19:32:17+04:00 · Completed: 2026-10-09T19:52:27+04:00 · Duration: 20m 10s · Blocker: —
+  - Evidence: lib/shared/design_system/formatting: Money (Decimal + currency, strict JSON: amount must be a string, JSON numbers/exponents/whitespace/'+5'/'.5' rejected, 3-10 char upper-case codes, numeric equality and hash), CurrencyInfo (ISO 4217 minor units: JPY/KRW 0, KWD/BHD/OMR/JOD/TND 3, BTC/ETH 8; symbols only where unambiguous), NumberStyle (locale separators, en_IN lakh grouping from the locale pattern, non-Latin digit sets, sign rules), MoneyFormatter (half-up ties away from zero per ADR-0006, fractionDigits override, symbol/code/none, sign auto/always/never, compact K/M/B/T with promotion e.g. 999,950 -> $1M, negative zero suppressed), PercentFormatter (percentage points, locale % placement), RelativeAge + DateLabels (never throw; ISO fallback before initializeDateLabels(), called from main()). Tests (60 tests in the formatting suite, each with several assertions): exact decimal ties that doubles get wrong (1.005->1.01, 2.675->2.68), values beyond 2^53 (9,007,199,254,740,993.01 and 22-digit amounts) exact, -0.004 shows no minus, JPY 2.5->3 and -2.5->-3, KWD 1.0005->1.001, de/fr/en_IN/ar locale output, ar_EG renders Arabic-Indic digits, JSON round-trip loses no digit. Defect found by tests and fixed: DateFormat threw LocaleDataException before date data was loaded (now initializeDateLabels + non-throwing fallback). Style guard forbids double/num in formatting code. MUTATION CHECK: changing round to truncate failed money_formatter_test; introducing toDouble() in money.dart failed the style guard. CK-M: format clean, analyze no issues, 230 tests passed; PR #12 CI green (mobile run 37954230356). Evidence toward QG-06.2 (decimal/rounding tests) for the client side
+  - [x] P02-T03.1 Money value object and JSON from string
+  - [x] P02-T03.2 MoneyFormatter
+  - [x] P02-T03.3 PercentFormatter and date labels
+  - [x] P02-T03.4 Edge-case unit tests
 - [ ] **P02-T04** · Status and state widgets · `NOT_STARTED` ⬜
   - Deps: P02-T02, P02-T03 · Wave: W3 · Track: MOB · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
