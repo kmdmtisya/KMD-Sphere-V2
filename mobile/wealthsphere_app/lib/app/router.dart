@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../features/dashboard/presentation/home_screen.dart';
+import '../features/portfolios/presentation/portfolio_overview_screen.dart';
 import 'app_routes.dart';
 import 'app_shell.dart';
 import 'app_tab.dart';
@@ -23,7 +24,7 @@ final Map<AppTab, RouteBase Function()> tabRoutes =
       ),
       AppTab.portfolio: () => GoRoute(
         path: AppRoutes.portfolio,
-        builder: (context, state) => const PortfolioPlaceholder(),
+        builder: (context, state) => const PortfolioOverviewScreen(),
         routes: [
           GoRoute(
             path: 'holdings',

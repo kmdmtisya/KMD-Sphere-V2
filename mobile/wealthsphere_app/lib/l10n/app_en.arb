@@ -770,5 +770,77 @@
   "pullToRefresh": "Pull down to refresh",
   "@pullToRefresh": {
     "description": "Hint for refreshing"
+  },
+  "allocationTitle": "Allocation",
+  "@allocationTitle": {
+    "description": "Title of the allocation section"
+  },
+  "allocationCentreLabel": "Total",
+  "@allocationCentreLabel": {
+    "description": "Label inside the allocation donut"
+  },
+  "performanceTitle": "Performance",
+  "@performanceTitle": {
+    "description": "Title of the performance metrics section"
+  },
+  "metricTotalReturn": "Total return",
+  "@metricTotalReturn": {
+    "description": "Metric label"
+  },
+  "metricTotalReturnDef": "How much your investments have gained or lost overall, as a percentage of what you put in.",
+  "@metricTotalReturnDef": {
+    "description": "Definition"
+  },
+  "metricCagr": "Annualised return (CAGR)",
+  "@metricCagr": {
+    "description": "Metric label"
+  },
+  "metricCagrDef": "The yearly growth rate that would take your starting value to today's value, smoothing out the ups and downs.",
+  "@metricCagrDef": {
+    "description": "Definition"
+  },
+  "metricDividendYield": "Dividend yield",
+  "@metricDividendYield": {
+    "description": "Metric label"
+  },
+  "metricDividendYieldDef": "Income paid out over the last year, as a percentage of the current value.",
+  "@metricDividendYieldDef": {
+    "description": "Definition"
+  },
+  "metricVolatility": "Volatility",
+  "@metricVolatility": {
+    "description": "Metric label"
+  },
+  "metricVolatilityDef": "How much the value has moved up and down. Higher means bumpier.",
+  "@metricVolatilityDef": {
+    "description": "Definition"
+  },
+  "topHoldingsTitle": "Top holdings",
+  "@topHoldingsTitle": {
+    "description": "Title of the holdings preview"
+  },
+  "viewAllHoldings": "View all holdings",
+  "@viewAllHoldings": {
+    "description": "Link to the full holdings list"
+  },
+  "askAiPortfolio": "Ask AI about this portfolio",
+  "@askAiPortfolio": {
+    "description": "Opens the AI tab scoped to the portfolio"
+  },
+  "noInvestmentsTitle": "No investments yet",
+  "@noInvestmentsTitle": {
+    "description": "Empty portfolio title"
+  },
+  "noInvestmentsMessage": "Add your first investment to see your portfolio here.",
+  "@noInvestmentsMessage": {
+    "description": "Empty portfolio message"
+  },
+  "addInvestment": "Add investment",
+  "@addInvestment": {
+    "description": "Add investment button (disabled in demo)"
+  },
+  "demoNotConnected": "Not available in demo mode",
+  "@demoNotConnected": {
+    "description": "Hint for actions disabled in demo"
   }
 }

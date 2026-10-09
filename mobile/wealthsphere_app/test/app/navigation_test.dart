@@ -73,7 +73,10 @@ void main() {
     ) async {
       await pumpRouterApp(tester);
       await tapTab(tester, 'Portfolio');
-      await tester.tap(find.text('Holdings'));
+      await tester.scrollUntilVisible(find.text('View all holdings'), 300);
+      await tester.ensureVisible(find.text('View all holdings'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('View all holdings'));
       await tester.pumpAndSettle();
       expect(find.byType(BackButton), findsOneWidget);
 
@@ -160,7 +163,10 @@ void main() {
     ) async {
       final router = await pumpRouterApp(tester);
       await tapTab(tester, 'Portfolio');
-      await tester.tap(find.text('Holdings'));
+      await tester.scrollUntilVisible(find.text('View all holdings'), 300);
+      await tester.ensureVisible(find.text('View all holdings'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('View all holdings'));
       await tester.pumpAndSettle();
       await tester.tap(find.byType(BackButton));
       await tester.pumpAndSettle();

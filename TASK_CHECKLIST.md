@@ -324,16 +324,16 @@
   - [x] P03-T02.4 Customise mode
   - [x] P03-T02.5 Pull-to-refresh and states
   - [x] P03-T02.6 Tests
-- [ ] **P03-T03** · Portfolio Overview (screen 4) · `NOT_STARTED` ⬜
+- [x] **P03-T03** · Portfolio Overview (screen 4) · `COMPLETED` ✅
   - Deps: P03-T01 · Wave: W2 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P03-T03.1 Switcher and header
-  - [ ] P03-T03.2 Chart and donut
-  - [ ] P03-T03.3 Metrics grid with definitions
-  - [ ] P03-T03.4 Holdings preview
-  - [ ] P03-T03.5 Contextual AI link
-  - [ ] P03-T03.6 Tests
+  - Started: 2026-10-10T01:05:01+04:00 · Completed: 2026-10-10T01:24:04+04:00 · Duration: 19m 03s · Blocker: —
+  - Evidence: PR #22. PortfolioOverviewScreen (features/portfolios/presentation) replaces the Portfolio placeholder: PortfolioSwitcher in the app bar (3 portfolios plus consolidated, selection in selectedPortfolioIdProvider shared with the AI scope), value and P/L with ChangeIndicator, PeriodSelector (1M 3M 6M 1Y ALL) with PerformanceLineChart, AllocationDonutChart with legend and the total in the centre, four performance MetricCards each with a definition tooltip (values supplied by the repository), top-5 InvestmentRow preview with native-currency values, View all holdings -> /portfolio/holdings, Ask AI about this portfolio -> /ai?scope=portfolio:<id>, loading skeletons, per-section error with retry, empty portfolio state with a disabled Add investment button, pull to refresh. Tests (24 in portfolio_overview_screen_test; suite 674 passing, 34 goldens skipped on Windows): consolidated content, switching to Growth/Retirement/Income and back updates every section, shared selection provider, period swap, empty state, isolated metrics failure with retry, all-sections failure, skeletons, refresh reloads all five sections, navigation and scope carrying (consolidated id is a valid AiScope), switcher announcement, 320dp x light/dark x LTR/RTL x 1.0/2.0x including after switching. Mutants (scope id, preview size, empty-state condition, missing refresh invalidation) caught after strengthening the refresh test. Existing navigation tests updated for the real Portfolio content (View all holdings button). format/analyze clean, CI green. Not run on an emulator yet (P03-T07).
+  - [x] P03-T03.1 Switcher and header
+  - [x] P03-T03.2 Chart and donut
+  - [x] P03-T03.3 Metrics grid with definitions
+  - [x] P03-T03.4 Holdings preview
+  - [x] P03-T03.5 Contextual AI link
+  - [x] P03-T03.6 Tests
 - [ ] **P03-T04** · Compounding Calculator (screen 9) · `NOT_STARTED` ⬜
   - Deps: P03-T01 · Wave: W2 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
