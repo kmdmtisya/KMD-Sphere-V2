@@ -1,0 +1,82 @@
+# WealthSphere — Execution Log
+
+Append-only chronological record. Entries are added by `scripts/track.py` (start, check, verify, complete, block, unblock, approve-phase). Decisions, issues and verification notes may also be appended manually in the same format: `### <ISO 8601 timestamp with offset> — <TITLE>` followed by bullets.
+
+Timestamps below the baseline entries come from the system clock. Baseline entries derive from file modification times or shell output and are labelled as such.
+
+### Baseline — before tracking existed (derived from file modification times)
+- 2026-10-09T12:02:40+04:00 to 2026-10-09T12:03:09+04:00: the five source documents were placed in `docs/` (file mtimes).
+- No source code, tests, CI, containers or infrastructure exist.
+
+### 2026-10-09T12:17:24+04:00 — UI execution plan drafted (file mtime of docs/UI_EXECUTION_PLAN.md)
+- Supplementary plan covering the design system and five priority screens; now superseded by EXECUTION_PLAN.md as the authority. Linked to P00-T03.
+
+### 2026-10-09T12:27:16+04:00 — START P00-T01 / P00-T02 (shell `date -Iseconds` captured at the start of the planning task)
+- Reconciled repository: only `docs/` present; not a git repo.
+- Toolchain probe: Flutter 3.47.5, Dart 3.13.4, Python 3.14.5, uv 0.12.20, Docker CLI 29.5.3 (daemon unresponsive), Git 2.56.0, Node 24.16, gh 2.101; Terraform missing; Android toolchain `[!]`.
+- Measured WCAG contrast of brand tokens; several fail as text (see EXECUTION_PLAN.md §2, D5).
+- Read the concept board from the PDF (page 8); found navigation mismatch with the written spec (D2) and a Buy button conflicting with the no-trade rule (D6).
+
+### 2026-10-09T12:38:12+04:00 — AWAITING_VERIFICATION P00-T01, P00-T02, P00-T03
+- Tracking documents generated; roadmap = 15 phases, 153 tasks, 572 subtasks.
+- Awaiting user review. No application feature work has been started.
+
+### 2026-10-09T12:49:00+04:00 — PLAN CHANGE — quality-gate framework integrated (P00-T04 added; P00-T02 revised)
+- Trigger: user supplied spec section 8 'Mandatory Platform Quality Gates' (QG-01..QG-12, enforcement, tracking, CI integration, completion rules). Work began 2026-10-09T12:41:42+04:00 (shell `date -Iseconds`).
+- Added QUALITY_GATES.md as the authoritative register: 12 gates, 81 criteria (each with Required-at phase, evidence task, CRITICAL flag), owner/timestamp/evidence/blocking/approval fields, waiver register. All gates NOT_STARTED; no criterion ticked.
+- Renamed the earlier command suites QG-M/G/I/B/DB/API/S/INF/TRK to CK-* to avoid clashing with QG-01..QG-12.
+- Roadmap: +4 tasks (P00-T04 framework, P01-T15 CI merge protection, P01-T16 supported platforms and measurable targets, P13-T11 final gate re-verification) -> 157 tasks. Phase gates now carry Gates-done; release tasks P12-T11, P14-T03, P14-T07 carry Gates-start; entry gates enforced as dependencies of wave-1 tasks (documented exception P06-T01).
+- Decision register +4: DEC-15 supported OS versions, DEC-16 performance targets, DEC-17 AI evaluation thresholds, DEC-18 gate and risk owners.
+
+### 2026-10-09T12:49:00+04:00 — VERIFICATION NOTES — tracker quality-gate commands tested on scratch copies (real files untouched)
+- Verified refusals: complete of a task whose Gates-done are unsatisfied; qg check without evidence; QG-12.1 while earlier criteria are open; waiver of a CRITICAL criterion; waiver with a past expiry; qg pass with open criteria; qg check on a FAILED gate before resolve.
+- Verified behaviours: qg fail --blocks refuses start of only the listed task while an independent task continues; resolve then re-check with fresh evidence; qg require exit codes (0 satisfied, 1 not); validate detects a forged PASSED gate, an expired waiver and (as warning) a COMPLETED task whose criteria were later un-ticked.
+- Defects found by these tests and fixed in scripts/track.py: (1) failing/blocking a never-started gate left no Start Timestamp, so validate failed after resolve; (2) `status`/`qg status` crashed printing emoji on a piped Windows console (now forces UTF-8).
+- Generated files validated: `python scripts/track.py validate` -> see next entry.
+
+### 2026-10-09T12:49:08+04:00 — AWAITING_VERIFICATION P00-T01..T04 — tracking documents regenerated with quality gates
+- `python scripts/track.py validate`: OK — 157 tasks, 15 phases, 12 quality gates / 81 criteria, no dependency cycles; every criterion is bound to a phase exit gate or release task.
+- State: 0 tasks completed, 4 awaiting user verification (P00-T01..T04), 0 gate criteria verified. No application feature work has been started. Awaiting user review and approval of the plan and quality-gate framework.
+
+### 2026-10-09T13:40:12+04:00 — COMPLETE P00-T01
+- duration: 1h 12m 56s
+- evidence: User verified the reviewed plan and quality-gate framework in chat ('I have Verified, lets proceed') · Approved by: user (mtisya@gmail.com)
+
+### 2026-10-09T13:40:12+04:00 — COMPLETE P00-T02
+- duration: 1h 12m 56s
+- evidence: User verified the reviewed plan and quality-gate framework in chat ('I have Verified, lets proceed') · Approved by: user (mtisya@gmail.com)
+
+### 2026-10-09T13:40:13+04:00 — COMPLETE P00-T03
+- duration: n/a (start not recorded)
+- evidence: User verified the reviewed plan and quality-gate framework in chat ('I have Verified, lets proceed') · Approved by: user (mtisya@gmail.com)
+
+### 2026-10-09T13:40:13+04:00 — COMPLETE P00-T04
+- duration: 58m 31s
+- evidence: User verified the reviewed plan and quality-gate framework in chat ('I have Verified, lets proceed') · Approved by: user (mtisya@gmail.com)
+
+### 2026-10-09T13:40:13+04:00 — START P00-GATE
+- Plan approval gate
+- prerequisites verified COMPLETED
+
+### 2026-10-09T13:40:13+04:00 — AWAITING_VERIFICATION P00-GATE
+- evidence: Plan summary presented; user approved without changes
+
+### 2026-10-09T13:40:14+04:00 — COMPLETE P00-GATE
+- duration: 0m 01s
+- evidence: User approval given in chat; no change requests · Approved by: user (mtisya@gmail.com)
+
+### 2026-10-09T13:40:14+04:00 — PHASE APPROVED P01
+- approved by user (mtisya@gmail.com)
+- Repository, Environment & Engineering Foundation
+
+### 2026-10-09T13:40:20+04:00 — START P01-T01
+- Verify local environment readiness
+- prerequisites verified COMPLETED
+
+### 2026-10-09T13:40:20+04:00 — START P01-T02
+- Initialise repository and governance files
+- prerequisites verified COMPLETED
+
+### 2026-10-09T13:43:16+04:00 — COMPLETE P01-T01
+- duration: 2m 56s
+- evidence: docker info -> server 29.5.3 answers; flutter doctor all [√] after installing Android platform 36 + build-tools 28.0.3 via sdkmanager (licences already accepted); emulator Pixel_8_Pro booted (sys.boot_completed=1, adb device emulator-5554, Android 17 API 37); Terraform 1.16.5 installed via winget; Python 3.14.5, uv 0.12.20; versions recorded in docs/dev-setup.md
