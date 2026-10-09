@@ -85,25 +85,25 @@
   - [x] P01-T02.2 Add .gitignore/.editorconfig/README
   - [x] P01-T02.3 Move CLAUDE.md to root and fix paths (D8)
   - [x] P01-T02.4 Extract concept board PNG from the PDF
-- [ ] **P01-T03** · Record foundational ADRs · `IN_PROGRESS` 🔄
+- [ ] **P01-T03** · Record foundational ADRs · `AWAITING_VERIFICATION` 🔎
   - Deps: P01-T02 · Wave: W2 · Track: DOC · Size: S · Approval: yes
   - Started: 2026-10-09T14:07:34+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P01-T03.1 ADR-0001 UI-first (D1)
-  - [ ] P01-T03.2 ADR-0002 navigation (D2)
-  - [ ] P01-T03.3 ADR-0003 client money (D4)
-  - [ ] P01-T03.4 ADR-0004 backend layout and tooling (DEC-07)
-  - [ ] P01-T03.5 ADR-0005 repo layout
-  - [ ] P01-T03.6 ADR-0006 rounding conventions (DEC-06)
-  - [ ] P01-T03.7 ADR-0007 test strategy
-- [ ] **P01-T04** · Write architecture and governance documents · `IN_PROGRESS` 🔄
+  - Evidence: docs/adr/0001..0007 + README written (Context/Decision/Consequences); ADR-0006 records DEC-06 = ROUND_HALF_UP with full internal precision, boundary-only rounding, minor units per ISO 4217, largest-remainder allocation, tie-case tests; ADR-0004 records DEC-07 tooling (uv, ruff, mypy, pytest). All ADRs are Proposed pending user review
+  - [x] P01-T03.1 ADR-0001 UI-first (D1)
+  - [x] P01-T03.2 ADR-0002 navigation (D2)
+  - [x] P01-T03.3 ADR-0003 client money (D4)
+  - [x] P01-T03.4 ADR-0004 backend layout and tooling (DEC-07)
+  - [x] P01-T03.5 ADR-0005 repo layout
+  - [x] P01-T03.6 ADR-0006 rounding conventions (DEC-06)
+  - [x] P01-T03.7 ADR-0007 test strategy
+- [x] **P01-T04** · Write architecture and governance documents · `COMPLETED` ✅
   - Deps: P01-T02 · Wave: W2 · Track: DOC · Size: M · Approval: no
-  - Started: 2026-10-09T14:07:34+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P01-T04.1 architecture.md (modules, data flow, boundaries)
-  - [ ] P01-T04.2 security.md (controls, secrets, threat-model stub)
-  - [ ] P01-T04.3 api-conventions.md (versioning, errors, pagination, money as strings, idempotency)
-  - [ ] P01-T04.4 ai-governance.md (tool contract, evidence rules)
+  - Started: 2026-10-09T14:07:34+04:00 · Completed: 2026-10-09T14:25:55+04:00 · Duration: 18m 21s · Blocker: —
+  - Evidence: docs/architecture.md (context, 11 modules + boundaries, mobile/data/request/AI flows), docs/security.md (control table mapped to tasks, secrets, data classes), docs/api-conventions.md (versioning, money as strings, RFC 7807, idempotency, pagination, health, SSE), docs/ai-governance.md (tool allow-list, four-section answers, prohibitions); each cites its source sections and ADRs; AI governance states allow-list, audit and no-SQL rules (acceptance criteria reviewed against guide sections 4, 8, 9, 12)
+  - [x] P01-T04.1 architecture.md (modules, data flow, boundaries)
+  - [x] P01-T04.2 security.md (controls, secrets, threat-model stub)
+  - [x] P01-T04.3 api-conventions.md (versioning, errors, pagination, money as strings, idempotency)
+  - [x] P01-T04.4 ai-governance.md (tool contract, evidence rules)
 - [x] **P01-T05** · Docker Compose development stack · `COMPLETED` ✅
   - Deps: P01-T01, P01-T02 · Wave: W2 · Track: INF · Size: M · Approval: no
   - Started: 2026-10-09T14:07:34+04:00 · Completed: 2026-10-09T14:23:16+04:00 · Duration: 15m 42s · Blocker: —

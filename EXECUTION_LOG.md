@@ -116,3 +116,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-09T14:23:56+04:00 — COMPLETE P01-T06
 - duration: 16m 22s
 - evidence: flutter create --org com.kmdmtisya (applicationId com.kmdmtisya.wealthsphere_app); deps via flutter pub add: flutter_riverpod 3.4.3, go_router 18, freezed 4.0.2/json_serializable 6.14, decimal, intl, fl_chart 1.2, shared_preferences; Dio/secure storage/local_auth intentionally absent (D9); strict analysis_options, gen-l10n (app_en.arb), test/helpers/pump_app.dart (theme/text-scale/RTL/overrides), dart_test.yaml golden tag; dart format clean, flutter analyze 'No issues found', flutter test 1/1 passed; flutter build apk --debug OK (after installing NDK 28.2.13676358); installed on emulator-5554 (Android 17) and screenshot shows WealthSphere shell with tagline (first cold start +44s)
+
+### 2026-10-09T14:25:55+04:00 — COMPLETE P01-T04
+- duration: 18m 21s
+- evidence: docs/architecture.md (context, 11 modules + boundaries, mobile/data/request/AI flows), docs/security.md (control table mapped to tasks, secrets, data classes), docs/api-conventions.md (versioning, money as strings, RFC 7807, idempotency, pagination, health, SSE), docs/ai-governance.md (tool allow-list, four-section answers, prohibitions); each cites its source sections and ADRs; AI governance states allow-list, audit and no-SQL rules (acceptance criteria reviewed against guide sections 4, 8, 9, 12)
+
+### 2026-10-09T14:25:55+04:00 — AWAITING_VERIFICATION P01-T03
+- evidence: docs/adr/0001..0007 + README written (Context/Decision/Consequences); ADR-0006 records DEC-06 = ROUND_HALF_UP with full internal precision, boundary-only rounding, minor units per ISO 4217, largest-remainder allocation, tie-case tests; ADR-0004 records DEC-07 tooling (uv, ruff, mypy, pytest). All ADRs are Proposed pending user review
