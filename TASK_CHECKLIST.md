@@ -192,10 +192,10 @@
   - [ ] P01-T15.3 Coverage report
   - [ ] P01-T15.4 Tracker validation job
   - [ ] P01-T15.5 ADR-0008
-- [ ] **P01-T16** · Define supported platforms and measurable quality targets · `AWAITING_VERIFICATION` 🔎
+- [x] **P01-T16** · Define supported platforms and measurable quality targets · `COMPLETED` ✅
   - Deps: P01-T03 · Wave: W3 · Track: DOC · Size: M · Approval: yes · Gates-done: QG-04.3, QG-05.2
-  - Started: 2026-10-09T15:46:03+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: docs/quality-targets.md drafted: platform support (Android API 26+, iOS 16+, reference devices), mobile performance/stability targets with measurement methods, API and database SLOs, design workload assumptions, coverage policy, AI evaluation datasets with zero-tolerance list, validation schedule, 5 decisions requested. Platform defaults read from the generated project (Flutter minSdk 24, iOS 15.0). Status PROPOSED: awaiting user approval; QG-04.3 and QG-05.2 are not ticked until approved
+  - Started: 2026-10-09T15:46:03+04:00 · Completed: 2026-10-09T15:52:49+04:00 · Duration: 6m 46s · Blocker: —
+  - Evidence: User approved docs/quality-targets.md in chat ('Approve'): DEC-15 (Android 8.0/API 26+, iOS 16.0+), DEC-16 (mobile, API, database targets and design workload), DEC-17 (AI evaluation datasets and thresholds incl. zero-tolerance list). QG-04.3 and QG-05.2 verified with this document as evidence · Approved by: user (mtisya@gmail.com)
   - [x] P01-T16.1 Platform support matrix
   - [x] P01-T16.2 Mobile performance targets
   - [x] P01-T16.3 API/database SLOs

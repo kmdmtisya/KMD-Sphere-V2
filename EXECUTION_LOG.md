@@ -166,3 +166,13 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-09T15:46:57+04:00 — AWAITING_VERIFICATION P01-T16
 - evidence: docs/quality-targets.md drafted: platform support (Android API 26+, iOS 16+, reference devices), mobile performance/stability targets with measurement methods, API and database SLOs, design workload assumptions, coverage policy, AI evaluation datasets with zero-tolerance list, validation schedule, 5 decisions requested. Platform defaults read from the generated project (Flutter minSdk 24, iOS 15.0). Status PROPOSED: awaiting user approval; QG-04.3 and QG-05.2 are not ticked until approved
+
+### 2026-10-09T15:52:49+04:00 — QG CHECK QG-04.3
+- evidence: docs/quality-targets.md section 1: supported Android versions documented (minimum Android 8.0 / API 26, target level tracked against Google Play policy, reference devices); approved by user 2026-10-09
+
+### 2026-10-09T15:52:49+04:00 — QG CHECK QG-05.2
+- evidence: docs/quality-targets.md section 1: supported iOS versions and devices documented (minimum iOS 16.0, iPhone SE 3rd gen / iPhone 15 / Pro Max classes, update policy); approved by user 2026-10-09
+
+### 2026-10-09T15:52:49+04:00 — COMPLETE P01-T16
+- duration: 6m 46s
+- evidence: User approved docs/quality-targets.md in chat ('Approve'): DEC-15 (Android 8.0/API 26+, iOS 16.0+), DEC-16 (mobile, API, database targets and design workload), DEC-17 (AI evaluation datasets and thresholds incl. zero-tolerance list). QG-04.3 and QG-05.2 verified with this document as evidence · Approved by: user (mtisya@gmail.com)

@@ -7,15 +7,15 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-09T15:46:57+04:00 by `scripts/track.py`._
+_Generated at 2026-10-09T15:52:49+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
 | QG-01 | Architecture and Design | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
 | QG-02 | Code Quality | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
 | QG-03 | Automated Testing | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
-| QG-04 | Android Platform | ⬜ NOT_STARTED | 0/7 | Unassigned | — |
-| QG-05 | iOS Platform | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
+| QG-04 | Android Platform | 🔄 IN_PROGRESS | 1/7 | Unassigned | — |
+| QG-05 | iOS Platform | 🔄 IN_PROGRESS | 1/6 | Unassigned | — |
 | QG-06 | Financial Accuracy and Data Integrity | ⬜ NOT_STARTED | 0/7 | Unassigned | — |
 | QG-07 | AI Reliability and Investment Intelligence | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
 | QG-08 | Security and Privacy | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
@@ -25,9 +25,9 @@ _Generated at 2026-10-09T15:46:57+04:00 by `scripts/track.py`._
 | QG-12 | Production Release Readiness | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
 
 Waivers: 0 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 0/81.
+Criteria satisfied overall: 2/81.
 
-Current phase **P01** exit-gate criteria outstanding: QG-01.1, QG-01.2, QG-02.1, QG-02.2, QG-02.3, QG-02.4, QG-02.5, QG-02.6, QG-03.1, QG-03.6, QG-04.1, QG-04.2, QG-04.3, QG-05.1, QG-05.2, QG-08.3, QG-08.4, QG-08.6, QG-10.1, QG-10.3.
+Current phase **P01** exit-gate criteria outstanding: QG-01.1, QG-01.2, QG-02.1, QG-02.2, QG-02.3, QG-02.4, QG-02.5, QG-02.6, QG-03.1, QG-03.6, QG-04.1, QG-04.2, QG-05.1, QG-08.3, QG-08.4, QG-08.6, QG-10.1, QG-10.3.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -90,18 +90,18 @@ Approved By: —
 
 - [ ] QG-04.1 Android application builds successfully · Required: P01 · By: P01-T06
 - [ ] QG-04.2 Flutter analysis and tests pass · Required: P01 · By: P01-T10
-- [ ] QG-04.3 Supported Android versions are explicitly documented · Required: P01 · By: P01-T16
+- [x] QG-04.3 Supported Android versions are explicitly documented · Required: P01 · By: P01-T16 · Evidence: docs/quality-targets.md section 1: supported Android versions documented (minimum Android 8.0 / API 26, target level tracked against Google Play policy, reference devices); approved by user 2026-10-09 · Verified: 2026-10-09T15:52:48+04:00
 - [ ] QG-04.4 Navigation, responsive layouts, accessibility and lifecycle behaviour are verified · Required: P03 · By: P03-T07
 - [ ] QG-04.5 Secure storage and biometric authentication work correctly · Required: P04 · By: P04-T07
 - [ ] QG-04.6 App startup, crash behaviour and memory consumption meet approved performance targets · Required: P13 · By: P13-T04
 - [ ] QG-04.7 Release signing and Google Play requirements are validated · Required: P14 · By: P14-T02
 
-Status: NOT_STARTED  
+Status: IN_PROGRESS  
 Owner: Unassigned  
-Start Timestamp: —  
+Start Timestamp: 2026-10-09T15:52:48+04:00  
 End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Verification Timestamp: 2026-10-09T15:52:48+04:00  
+Evidence: 1/7 criteria verified; latest QG-04.3 at 2026-10-09T15:52:48+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -109,18 +109,18 @@ Approved By: —
 ### QG-05: iOS Platform
 
 - [ ] QG-05.1 iOS application builds successfully using the supported Xcode toolchain · Required: P01 · By: P01-T10
-- [ ] QG-05.2 Supported iOS versions and devices are documented · Required: P01 · By: P01-T16
+- [x] QG-05.2 Supported iOS versions and devices are documented · Required: P01 · By: P01-T16 · Evidence: docs/quality-targets.md section 1: supported iOS versions and devices documented (minimum iOS 16.0, iPhone SE 3rd gen / iPhone 15 / Pro Max classes, update policy); approved by user 2026-10-09 · Verified: 2026-10-09T15:52:49+04:00
 - [ ] QG-05.3 Navigation, safe areas, accessibility and lifecycle behaviour are verified · Required: P03 · By: P03-T07
 - [ ] QG-05.4 Face ID/Touch ID and Keychain storage work correctly · Required: P04 · By: P04-T07
 - [ ] QG-05.5 App startup, crash behaviour and memory consumption meet approved performance targets · Required: P13 · By: P13-T04
 - [ ] QG-05.6 App signing, provisioning, privacy declarations and App Store requirements are validated · Required: P14 · By: P14-T02,P14-T05
 
-Status: NOT_STARTED  
+Status: IN_PROGRESS  
 Owner: Unassigned  
-Start Timestamp: —  
+Start Timestamp: 2026-10-09T15:52:49+04:00  
 End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Verification Timestamp: 2026-10-09T15:52:49+04:00  
+Evidence: 1/6 criteria verified; latest QG-05.2 at 2026-10-09T15:52:49+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —

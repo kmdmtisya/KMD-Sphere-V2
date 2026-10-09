@@ -227,22 +227,22 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 
 | ID | Decision / input needed | Needed by | Owner | State |
 |---|---|---|---|---|
-| DEC-01 | App identifiers (organisation reverse-domain, Android applicationId, iOS bundle ID) | P01-T06 | User | Open |
+| DEC-01 | App identifiers (organisation reverse-domain, Android applicationId, iOS bundle ID) | P01-T06 | User | Resolved: com.kmdmtisya |
 | DEC-02 | Cloud provider (AWS / GCP / OCI), region(s) and data-residency approach (UAE/Kenya users) | P12-T01 | User | Open |
 | DEC-03 | Forecast numbers in the demo UI. Resolved by structure: canned fixtures in P03 (no maths in Dart), real engine from P06-T01 wired in P09-T03. User may pull P06-T01/T02 earlier. | P03-T04 | Plan | Resolved (override allowed) |
 | DEC-04 | Market-data and research providers, budget and licence terms | P08-T01 | User | Open |
 | DEC-05 | LLM provider, model, monthly budget and API-key custody (docs name OpenAI first) | P10-T01 | User | Open |
-| DEC-06 | Money rounding convention (half-up vs half-even) and minor-unit handling | P01-T03 | User + Claude | Open |
-| DEC-07 | Backend tooling: uv + ruff + mypy + pytest (proposed) | P01-T03 | Claude proposes | Proposed |
+| DEC-06 | Money rounding convention (half-up vs half-even) and minor-unit handling | P01-T03 | User + Claude | Resolved: ROUND_HALF_UP (ADR-0006) |
+| DEC-07 | Backend tooling: uv + ruff + mypy + pytest (proposed) | P01-T03 | Claude proposes | Resolved: uv, ruff, mypy, pytest (ADR-0004) |
 | DEC-08 | Push-notification path (FCM + APNs) and Firebase project | P09-T08 | User | Open |
 | DEC-09 | Apple Developer and Google Play accounts / legal entity (long lead time: start during P09) | P14-T01 | User | Open |
 | DEC-10 | Jurisdictions, regulatory classification and disclaimer wording (legal review) | P11-T10 / P13-T05 | User + legal | Open |
 | DEC-11 | Penetration-test provider (external vs internal) | P13-T03 | User | Open |
 | DEC-12 | Offline cache storage (encrypted Drift vs alternatives) | P09-T06 | Claude proposes, user approves | Open |
 | DEC-13 | Charts library: fl_chart (open-source, proposed) vs Syncfusion (licence) | P02-T06 | User | Proposed |
-| DEC-15 | Supported Android versions (minimum API level) and iOS versions/devices | P01-T16 | User | Open |
-| DEC-16 | Measurable performance targets: app start-up, memory, crash rate, API p95/p99 SLOs, database query thresholds | P01-T16 | User | Open |
-| DEC-17 | AI evaluation datasets and acceptance thresholds for QG-07 | P01-T16 / P10-T09 | User + Claude | Open |
+| DEC-15 | Supported Android versions (minimum API level) and iOS versions/devices | P01-T16 | User | Resolved: Android 8.0 (API 26), iOS 16.0 |
+| DEC-16 | Measurable performance targets: app start-up, memory, crash rate, API p95/p99 SLOs, database query thresholds | P01-T16 | User | Resolved: targets approved (design workload to be revisited at P06 baseline) |
+| DEC-17 | AI evaluation datasets and acceptance thresholds for QG-07 | P01-T16 / P10-T09 | User + Claude | Resolved: approach and zero-tolerance list approved; datasets drafted in P10-T09 |
 | DEC-18 | Quality-gate owners and risk owners for waivers (default Unassigned) | P01-T15 | User | Open |
 | DEC-14 | Concept-board tab labels differ from the written spec: follow the spec (ADR-0002) | P01-T03 | Plan | Resolved |
 

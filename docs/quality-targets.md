@@ -1,6 +1,6 @@
 # Supported platforms and measurable quality targets
 
-Status: **PROPOSED, awaiting user approval** (task P01-T16; decisions DEC-15, DEC-16, DEC-17).
+Status: **APPROVED by the user on 2026-10-09** (task P01-T16; decisions DEC-15, DEC-16, DEC-17). Changes require a new approval.
 
 These are the "approved targets" that QUALITY_GATES.md refers to (QG-04.3, QG-04.6, QG-05.2, QG-05.5, QG-07.8, QG-09.*). Every target states how it is measured, so a gate can only pass with evidence. Numbers are engineering proposals, not measurements: they are validated and, if needed, revised at the points listed in section 7.
 
