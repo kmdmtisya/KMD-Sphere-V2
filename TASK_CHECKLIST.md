@@ -225,15 +225,15 @@
   - [x] P02-T01.3 Spacing/radii/motion/breakpoints
   - [x] P02-T01.4 Contrast test
   - [x] P02-T01.5 Guard test
-- [ ] **P02-T02** · Themes, typography and theme-mode persistence · `IN_PROGRESS` 🔄
+- [x] **P02-T02** · Themes, typography and theme-mode persistence · `COMPLETED` ✅
   - Deps: P02-T01 · Wave: W2 · Track: MOB · Size: M · Approval: no
-  - Started: 2026-10-09T20:15:45+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P02-T02.1 ThemeData builders
-  - [ ] P02-T02.2 Component themes
-  - [ ] P02-T02.3 Typography and tabular figures
-  - [ ] P02-T02.4 ThemeModeController and persistence
-  - [ ] P02-T02.5 Deterministic golden font
+  - Started: 2026-10-09T20:15:45+04:00 · Completed: 2026-10-09T20:49:10+04:00 · Duration: 33m 25s · Blocker: —
+  - Evidence: lib/shared/design_system/theme: AppTheme.light()/dark() (Material 3) built only from tokens: ColorScheme mapped from WealthColors with every foreground/background pair >= 4.5:1 (incl. snack-bar action on inverse surface); component themes for app bar, card (16 dp, no elevation), filled/elevated/outlined/text/icon buttons (>= 48 dp), chips and segmented button (check mark when selected, not colour-only), inputs (filled, 3:1 border, 2 dp focus ring, error colour), navigation bar (labels always shown), bottom sheet (drag handle), dialog, snack bar, divider, list tile, progress; Cupertino page transitions on iOS. WealthTypography (platform font; displayAmount/amount/headline/title/body/label/caption; tabular figures on amounts; sizes defined explicitly) + context.wealthText. ThemeModeController (system/light/dark) persisted through PreferencesStore (SharedPreferencesStore in main, in-memory in tests), initial mode read before the first frame; corrupt or failing storage falls back to system and never blocks a change. Temporary System/Light/Dark switch on the placeholder screen. test/helpers/test_fonts.dart loads Roboto and Material Icons from the pinned Flutter SDK for deterministic golden rendering (no font committed; golden images themselves are produced in P02-T08). CK-M: dart format clean, flutter analyze no issues, flutter test 279 passed (49 new). PR #13 CI green: format/analyze/test, android debug build, ios compile, backend/mobile/security gates, tracker validate. DEVICE CHECK on an Android 17 emulator: light and dark screenshots rendered as designed; tapping Dark switched instantly; a clean step-by-step reproduction (clear data, launch, one tap on Dark, force-stop, relaunch) showed the stored value 'dark' unchanged at every step and the app reopening in dark mode. One earlier device run reopened as Light with 'light' stored after an emulator hang and restart; I could not reproduce it and attribute it to leftover adb commands from the hung session replaying after the restart, but I have not proven that cause. DEFECTS found by tests and fixed: (1) WealthTypography only had a size for displayAmount because a fresh ThemeData text theme carries no sizes until localised; sizes are now explicit; (2) widget tests needed a Material ancestor. MUTATION CHECK (5 breakages, all caught): filled button minimum removed, theme mode no longer persisted, amounts without tabular figures, navigation labels hidden when unselected, low-contrast onSecondary. Evidence toward QG-01.5 (verified at P02-T08)
+  - [x] P02-T02.1 ThemeData builders
+  - [x] P02-T02.2 Component themes
+  - [x] P02-T02.3 Typography and tabular figures
+  - [x] P02-T02.4 ThemeModeController and persistence
+  - [x] P02-T02.5 Deterministic golden font
 - [x] **P02-T03** · Money model and formatting primitives · `COMPLETED` ✅
   - Deps: P01-T06, P01-T03, P01-GATE · Wave: W1 · Track: MOB · Size: M · Approval: no
   - Started: 2026-10-09T19:32:17+04:00 · Completed: 2026-10-09T19:52:27+04:00 · Duration: 20m 10s · Blocker: —
