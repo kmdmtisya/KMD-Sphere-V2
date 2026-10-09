@@ -314,10 +314,10 @@
   - [x] P03-T01.4 Multi-currency fixtures
   - [x] P03-T01.5 Scripted copilot fixtures
   - [x] P03-T01.6 Tests
-- [ ] **P03-T02** · Home Dashboard (screen 3) · `IN_PROGRESS` 🔄
+- [x] **P03-T02** · Home Dashboard (screen 3) · `COMPLETED` ✅
   - Deps: P03-T01 · Wave: W2 · Track: MOB · Size: L · Approval: no
-  - Started: 2026-10-10T00:15:36+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-10T00:15:36+04:00 · Completed: 2026-10-10T00:57:13+04:00 · Duration: 41m 37s · Blocker: —
+  - Evidence: PR #21. HomeScreen (features/dashboard/presentation) replaces the Home placeholder: greeting from fixture, DEMO badge, inert notifications icon; WealthSummaryCard with total wealth, backend return and P/L, PeriodSelector (1W 1M 1Y ALL) swapping PerformanceLineChart series; key-figure MetricCards (portfolio value, net worth, monthly income, goals) navigating to Portfolio/Goals tabs; AI insight card with DataAsOfLabel, EvidenceSourceChips and Ask Wealth AI -> /ai; goals list with status as icon+text; pull-to-refresh invalidating every section; each section loads, fails and retries independently (providers per section). Customise mode: reorder with Move up/down buttons and, for screen readers, semantics custom actions; hide/show switches; layout persisted through DashboardLayoutRepository (restart simulated on the same store). Tests (24 in home_screen_test; suite 650 passing, 34 goldens skipped on Windows): all sections from fixtures, period swap, reorder+hide persist across restart, custom-action reorder, isolated failure with working retry, every-section failure still shows retries, refresh reloads all five repository sections, navigation, semantics, 320dp x light/dark x LTR/RTL x 1.0/2.0x no overflow (found and fixed AppBar action, insight title and goal row overflows). Four mutants (no save, missing refresh invalidation, move-up disabled, missing-section append) were caught after two weak tests were strengthened. Test infrastructure: widget tests use a synchronous in-memory fixture bundle (demoOverrides) because real asset I/O never completes in fake async; existing app/navigation tests updated for the real Home content. format/analyze clean, CI green. Not run on an emulator yet (P03-T07); concept-board comparison is the P03 gate review.
   - [x] P03-T02.1 Summary card and chart
   - [x] P03-T02.2 Metric cards
   - [x] P03-T02.3 Insight card with sources
