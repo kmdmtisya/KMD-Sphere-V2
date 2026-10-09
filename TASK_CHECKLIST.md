@@ -130,21 +130,21 @@
   - [x] P01-T07.3 Logging and correlation-ID middleware
   - [x] P01-T07.4 Error model
   - [x] P01-T07.5 Test setup incl. async client
-- [ ] **P01-T08** · SQLAlchemy 2 and Alembic baseline · `IN_PROGRESS` 🔄
+- [x] **P01-T08** · SQLAlchemy 2 and Alembic baseline · `COMPLETED` ✅
   - Deps: P01-T07 · Wave: W4 · Track: DB · Size: M · Approval: no
-  - Started: 2026-10-09T15:34:51+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P01-T08.1 Async engine/session factory
-  - [ ] P01-T08.2 Declarative base with naming conventions and UUID/NUMERIC types
-  - [ ] P01-T08.3 Baseline migration
-  - [ ] P01-T08.4 Test DB fixture and single-head test
-- [ ] **P01-T09** · CI pipeline: backend · `IN_PROGRESS` 🔄
+  - Started: 2026-10-09T15:34:51+04:00 · Completed: 2026-10-09T15:39:55+04:00 · Duration: 5m 04s · Blocker: —
+  - Evidence: backend/app/db: async Database (lazy engine, pool, pre-ping, dispose in app lifespan) + get_session dependency (rollback on error); Base with naming convention, UUID PK (gen_random_uuid), NUMERIC AMOUNT(28,8)/QUANTITY/RATE(28,12), timezone-aware timestamp mixins; Alembic async env (URL from settings, none in alembic.ini) + baseline revision 0001 (pgcrypto, vector). CK-DB via CLI on a scratch database: alembic upgrade head, check ('No new upgrade operations detected'), downgrade base, upgrade head, current '0001 (head)', single head; scratch DB dropped. pytest 39 passed (single-head test, baseline-root test, no-credentials-in-migrations test, migration round-trip on a throwaway DB, session dependency incl. rollback on error and pool health, naming/NUMERIC/UUID DDL tests); ruff + strict mypy clean; coverage 97.86%. Same cycle green in CI run 37925019120. Evidence for QG-10.3
+  - [x] P01-T08.1 Async engine/session factory
+  - [x] P01-T08.2 Declarative base with naming conventions and UUID/NUMERIC types
+  - [x] P01-T08.3 Baseline migration
+  - [x] P01-T08.4 Test DB fixture and single-head test
+- [x] **P01-T09** · CI pipeline: backend · `COMPLETED` ✅
   - Deps: P01-T07 · Wave: W4 · Track: INF · Size: S · Approval: no
-  - Started: 2026-10-09T15:34:51+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P01-T09.1 Workflow with service containers
-  - [ ] P01-T09.2 Caching
-  - [ ] P01-T09.3 Required-check documentation
+  - Started: 2026-10-09T15:34:51+04:00 · Completed: 2026-10-09T15:39:55+04:00 · Duration: 5m 04s · Blocker: —
+  - Evidence: GitHub Actions run 37925019120 (https://github.com/kmdmtisya/KMD-Sphere-V2/actions/runs/37925019120) success on commit 42ab0ca: .github/workflows/backend.yml on ubuntu-24.04 with pgvector/pgvector:pg17 + redis:7 service containers; uv sync --locked, ruff format --check, ruff check, mypy, Alembic upgrade/check/downgrade/upgrade + single-head, pytest --cov-fail-under=85 -> 39 passed, 0 skipped (integration tests ran), coverage 97.86%; path filters backend/** and workflow file; required-check names documented in docs/ci.md. Test settings made hermetic after a CI-env simulation showed ambient POSTGRES_* variables would break config tests. Evidence for QG-02.1, QG-02.2, QG-03.1, QG-10.1 (backend part)
+  - [x] P01-T09.1 Workflow with service containers
+  - [x] P01-T09.2 Caching
+  - [x] P01-T09.3 Required-check documentation
 - [x] **P01-T10** · CI pipeline: mobile · `COMPLETED` ✅
   - Deps: P01-T06 · Wave: W3 · Track: INF · Size: S · Approval: no
   - Started: 2026-10-09T14:44:53+04:00 · Completed: 2026-10-09T14:59:06+04:00 · Duration: 14m 13s · Blocker: —

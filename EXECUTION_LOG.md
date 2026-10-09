@@ -151,3 +151,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-09T15:34:51+04:00 — START P01-T09
 - CI pipeline: backend
 - prerequisites verified COMPLETED
+
+### 2026-10-09T15:39:55+04:00 — COMPLETE P01-T08
+- duration: 5m 04s
+- evidence: backend/app/db: async Database (lazy engine, pool, pre-ping, dispose in app lifespan) + get_session dependency (rollback on error); Base with naming convention, UUID PK (gen_random_uuid), NUMERIC AMOUNT(28,8)/QUANTITY/RATE(28,12), timezone-aware timestamp mixins; Alembic async env (URL from settings, none in alembic.ini) + baseline revision 0001 (pgcrypto, vector). CK-DB via CLI on a scratch database: alembic upgrade head, check ('No new upgrade operations detected'), downgrade base, upgrade head, current '0001 (head)', single head; scratch DB dropped. pytest 39 passed (single-head test, baseline-root test, no-credentials-in-migrations test, migration round-trip on a throwaway DB, session dependency incl. rollback on error and pool health, naming/NUMERIC/UUID DDL tests); ruff + strict mypy clean; coverage 97.86%. Same cycle green in CI run 37925019120. Evidence for QG-10.3
+
+### 2026-10-09T15:39:55+04:00 — COMPLETE P01-T09
+- duration: 5m 04s
+- evidence: GitHub Actions run 37925019120 (https://github.com/kmdmtisya/KMD-Sphere-V2/actions/runs/37925019120) success on commit 42ab0ca: .github/workflows/backend.yml on ubuntu-24.04 with pgvector/pgvector:pg17 + redis:7 service containers; uv sync --locked, ruff format --check, ruff check, mypy, Alembic upgrade/check/downgrade/upgrade + single-head, pytest --cov-fail-under=85 -> 39 passed, 0 skipped (integration tests ran), coverage 97.86%; path filters backend/** and workflow file; required-check names documented in docs/ci.md. Test settings made hermetic after a CI-env simulation showed ambient POSTGRES_* variables would break config tests. Evidence for QG-02.1, QG-02.2, QG-03.1, QG-10.1 (backend part)
