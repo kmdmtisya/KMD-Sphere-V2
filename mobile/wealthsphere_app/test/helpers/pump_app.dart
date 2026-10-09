@@ -5,6 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:wealthsphere_app/l10n/generated/app_localizations.dart';
 import 'package:wealthsphere_app/shared/design_system/theme/app_theme.dart';
 
+import 'demo_overrides.dart';
+
 /// Wraps [child] with provider scope, theme, localisation, text scale and text direction.
 /// Every widget test in the project uses this helper so light/dark, 2.0x text and RTL
 /// variants are one parameter away.
@@ -26,7 +28,10 @@ extension PumpApp on WidgetTester {
     }
     await pumpWidget(
       ProviderScope(
-        overrides: overrides,
+        // Instant demo repositories on a synchronous asset bundle by default. A caller that
+        // passes its own overrides includes `demoOverrides(...)` in them (a provider cannot be
+        // overridden twice).
+        overrides: overrides.isEmpty ? demoOverrides() : overrides,
         child: MaterialApp(
           theme: theme ?? AppTheme.light(),
           darkTheme: darkTheme ?? AppTheme.dark(),

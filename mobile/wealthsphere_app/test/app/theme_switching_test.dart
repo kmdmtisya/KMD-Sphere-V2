@@ -6,11 +6,14 @@ import 'package:wealthsphere_app/core/preferences/preferences_store.dart';
 import 'package:wealthsphere_app/shared/design_system/theme/theme.dart';
 import 'package:wealthsphere_app/shared/design_system/tokens/tokens.dart';
 
+import '../helpers/demo_overrides.dart';
+
 Widget appWith(
   PreferencesStore store, {
   ThemeMode initial = ThemeMode.system,
 }) => ProviderScope(
   overrides: [
+    ...demoOverrides(),
     preferencesStoreProvider.overrideWithValue(store),
     initialThemeModeProvider.overrideWithValue(initial),
   ],

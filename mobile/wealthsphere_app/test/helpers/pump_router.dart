@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wealthsphere_app/app/router.dart';
 import 'package:wealthsphere_app/l10n/generated/app_localizations.dart';
 import 'package:wealthsphere_app/shared/design_system/theme/app_theme.dart';
+
+import 'demo_overrides.dart';
 
 /// Pumps the real route table and shell starting at [initialLocation].
 Future<GoRouter> pumpRouterApp(
@@ -15,6 +18,7 @@ Future<GoRouter> pumpRouterApp(
   double textScale = 1.0,
   TextDirection textDirection = TextDirection.ltr,
   bool enableGallery = true,
+  List<Override> overrides = const [],
 }) async {
   await tester.binding.setSurfaceSize(surfaceSize);
   addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -25,6 +29,7 @@ Future<GoRouter> pumpRouterApp(
   addTearDown(router.dispose);
   await tester.pumpWidget(
     ProviderScope(
+      overrides: overrides.isEmpty ? demoOverrides() : overrides,
       child: MaterialApp.router(
         routerConfig: router,
         theme: AppTheme.light(),

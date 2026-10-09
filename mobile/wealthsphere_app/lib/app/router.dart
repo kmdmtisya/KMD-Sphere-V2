@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../features/dashboard/presentation/home_screen.dart';
 import 'app_routes.dart';
 import 'app_shell.dart';
 import 'app_tab.dart';
@@ -18,7 +19,7 @@ final Map<AppTab, RouteBase Function()> tabRoutes =
     <AppTab, RouteBase Function()>{
       AppTab.home: () => GoRoute(
         path: AppRoutes.home,
-        builder: (context, state) => const HomePlaceholder(),
+        builder: (context, state) => const HomeScreen(),
       ),
       AppTab.portfolio: () => GoRoute(
         path: AppRoutes.portfolio,
