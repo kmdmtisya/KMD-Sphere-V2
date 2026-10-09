@@ -57,6 +57,12 @@ CRLF, LF = chr(13) + chr(10), chr(10)
 AUTO_BEGIN, AUTO_END = "<!-- AUTO:BEGIN -->", "<!-- AUTO:END -->"
 
 
+def _wave_no(wave: str) -> int:
+    """`W10` -> 10, so waves compare numerically (a string compare puts W10 before W9)."""
+    m = re.fullmatch(r"W(\d+)", wave or "")
+    return int(m.group(1)) if m else -1
+
+
 def now() -> str:
     return datetime.now().astimezone().isoformat(timespec="seconds")
 
@@ -424,7 +430,7 @@ def cmd_validate(cl: Checklist, args) -> None:
         for d in t.deps:
             if d not in cl.tasks:
                 errs.append(f"{t.id}: unknown dependency {d}")
-            elif cl.tasks[d].phase == t.phase and cl.tasks[d].wave >= t.wave and d != t.id and t.wave != "GATE":
+            elif cl.tasks[d].phase == t.phase and _wave_no(cl.tasks[d].wave) >= _wave_no(t.wave) and d != t.id and t.wave != "GATE":
                 errs.append(f"{t.id}: dependency {d} not in an earlier wave")
         if t.status == "COMPLETED":
             if not ISO_TZ_RE.match(t.completed):
@@ -873,8 +879,13 @@ def validate_qg(cl: Checklist, errs: list[str], warns: list[str]) -> None:
         if any(t.gs or t.gd for t in cl.tasks.values()):
             errs.append("QUALITY_GATES.md is missing but tasks reference quality gates (enforcement would be off)")
         return
-    if len(reg.titles) != 12:
+    # The twelve platform gates are the baseline and cannot shrink; later workstreams (for example the
+    # Forex gates QG-13..QG-20) may add more, but the numbering must stay contiguous.
+    if len(reg.titles) < 12:
         errs.append(f"QUALITY_GATES.md: expected 12 gates, found {len(reg.titles)}")
+    expected_ids = [f"QG-{i:02d}" for i in range(1, len(reg.titles) + 1)]
+    if sorted(reg.titles) != expected_ids:
+        errs.append("QUALITY_GATES.md: gate ids must be contiguous from QG-01")
     for g in reg.titles:
         for k in FIELD_KEYS:
             if k not in reg.fields[g]:

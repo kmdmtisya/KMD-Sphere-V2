@@ -4,7 +4,7 @@ _Version 1.0 · created 2026-10-09T12:49:16+04:00 · status: **DRAFT — awaitin
 
 This is the authoritative end-to-end roadmap for building WealthSphere from the current repository state to production release. It covers the Flutter design system and all 13 screens for Android/iOS, backend services, database, portfolio management, analytics, the compounding calculator, AI Wealth Copilot, AI Investment Intelligence, security, CI/CD, cloud infrastructure, testing and release.
 
-**Size:** 15 phases · 157 tasks (incl. 15 phase gates) · 597 subtasks · 12 quality gates with 81 criteria (QUALITY_GATES.md).
+**Size:** 16 phases · 172 tasks (incl. 16 phase gates) · 687 subtasks · 20 quality gates with 119 criteria (QUALITY_GATES.md). Phase P15 and gates QG-13..QG-20 add the Forex Trading Intelligence workstream (FX), proposed 2026-10-09 and **awaiting user approval**; see ADR-0009 and docs/design/forex-technical-design.md.
 
 ## 1. Document map
 
@@ -12,7 +12,7 @@ This is the authoritative end-to-end roadmap for building WealthSphere from the 
 |---|---|---|
 | `EXECUTION_PLAN.md` (this file) | Roadmap: phases, waves, tasks, dependencies, acceptance criteria, verification, rules | Humans / Claude via a plan-change task |
 | `TASK_CHECKLIST.md` | Checkbox per task and subtask with status, timestamps, duration, evidence | **`scripts/track.py` only** |
-| `QUALITY_GATES.md` | **Authoritative quality-gate register** QG-01…QG-12: criteria, owner, timestamps, evidence, blocking issues, approvals, waivers | **`scripts/track.py qg …` only** |
+| `QUALITY_GATES.md` | **Authoritative quality-gate register** QG-01…QG-20 (QG-13…QG-20 are the Forex gates QG-FX-01…08): criteria, owner, timestamps, evidence, blocking issues, approvals, waivers | **`scripts/track.py qg …` only** |
 | `PROGRESS_DASHBOARD.md` | Counts, current phase, next executable tasks, blockers | `scripts/track.py dashboard` (auto block) + hand-kept sections |
 | `EXECUTION_LOG.md` | Append-only chronological record | `scripts/track.py` (and manual notes for decisions/issues) |
 | `docs/UI_EXECUTION_PLAN.md` | Supplementary UI step detail (see `Ref` on tasks) | Reference only |
@@ -115,8 +115,9 @@ Conflicts and resolutions found in the documents:
 | P12 | Cloud Infrastructure & Deployment Pipeline | INFRA | P01 (early start allowed); deployment tasks need P04-T01 | 12 | 8 |
 | P13 | Production Hardening & Quality Assurance | HARDENING | P09, P10, P11, P12 | 12 | 6 |
 | P14 | Release & Production Deployment | RELEASE | P13 | 9 | 7 |
+| P15 | Forex Trading Intelligence (FX workstream) | FX | P08, P09, P10, P11, P12 (P15-T14 also P13) | 15 | 13 |
 
-**Valid single-lane order:** P00 → P01 → P02 → P03 → P04 → P05 → P06 → P07 → P08 → P09 → P10 → P11 → P12 → P13 → P14 (numeric order satisfies every dependency).
+**Valid single-lane order:** P00 → P01 → P02 → P03 → P04 → P05 → P06 → P07 → P08 → P09 → P10 → P11 → P12 → P13 → P14 → P15 (numeric order satisfies every dependency).
 
 **Parallel lanes** (after `P01-GATE`, each needs its own phase approvals and worktree):
 
@@ -150,7 +151,7 @@ P00 → P01 ─┬─ MOBILE  : P02 → P03 → P07 ─────────�
 
 Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0007 (P01-T03) and can be changed there before use. A task may only be completed when its listed gates pass **and** its acceptance criteria are evidenced.
 
-### 7.2 Platform quality gates (QG-01 … QG-12)
+### 7.2 Platform quality gates (QG-01 … QG-20)
 
 **QUALITY_GATES.md is the authoritative quality-gate register.** Each gate lists its criteria as checkboxes with a stable id (`QG-06.2`), the phase in which the criterion first becomes required, the task that produces its evidence, and a CRITICAL flag for security, financial-integrity and authorisation criteria. Gate statuses: `NOT_STARTED`, `IN_PROGRESS`, `BLOCKED`, `FAILED`, `PASSED`, `WAIVED`.
 
@@ -168,6 +169,14 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | QG-10 | CI/CD and Infrastructure | 8 | 0 | P01, P12 |
 | QG-11 | End-to-End Integration | 6 | 1 | P08, P09, P10 |
 | QG-12 | Production Release Readiness | 8 | 3 | P13, P14 |
+| QG-13 (QG-FX-01) | Forex Market Data Integrity | 5 | 2 | P15 |
+| QG-14 (QG-FX-02) | Forex Technical Indicator Accuracy | 3 | 0 | P15 |
+| QG-15 (QG-FX-03) | Forex Prediction Model Validation | 6 | 0 | P15 |
+| QG-16 (QG-FX-04) | Forex Trading Risk Accuracy | 5 | 5 | P15 |
+| QG-17 (QG-FX-05) | Forex Backtesting Integrity | 4 | 1 | P15 |
+| QG-18 (QG-FX-06) | Forex AI Trading Intelligence | 5 | 2 | P15 |
+| QG-19 (QG-FX-07) | Forex Mobile Experience | 5 | 0 | P15 |
+| QG-20 (QG-FX-08) | Forex Release and Regulatory Readiness | 5 | 4 | P15 |
 
 **Gate types per phase (spec 8.2):**
 
@@ -221,6 +230,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | P12 | P01 | QG-08.4,5,7; QG-10.2,4,5,6,7,8 | P12-T11 |
 | P13 | P09, P10, P11, P12 | QG-01.4; QG-04.6; QG-05.5; QG-08.2,8; QG-09.1,2,3,4,6; QG-12.1,3,4,7 | — |
 | P14 | P13 | QG-04.7; QG-05.6; QG-12.2,5,6,8 | P14-T03, P14-T07 |
+| P15 | P08, P09, P10, P11, P12 (P15-T14: P13) | QG-13 … QG-20 (every criterion) | P15-T13, P15-T14 (QG-13..QG-19 satisfied before start) |
 
 
 ## 8. Decision register
@@ -245,6 +255,12 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | DEC-17 | AI evaluation datasets and acceptance thresholds for QG-07 | P01-T16 / P10-T09 | User + Claude | Resolved: approach and zero-tolerance list approved; datasets drafted in P10-T09 |
 | DEC-18 | Quality-gate owners and risk owners for waivers (default Unassigned) | P01-T15 | User | Open |
 | DEC-14 | Concept-board tab labels differ from the written spec: follow the spec (ADR-0002) | P01-T03 | Plan | Resolved |
+| DEC-19 | Forex market-data provider(s): streaming licence, redistribution and display rights, cost, instrument coverage (candidates to evaluate: OANDA, Interactive Brokers, other licensed vendors); tradable vs indicative quotes | P15-T01 / P15-T02 | User | Open |
+| DEC-20 | Forex launch markets, regulatory classification (information vs advice), disclosure wording and legal review | P15-T01 / P15-T14 | User + legal | Open |
+| DEC-21 | Time-series storage: PostgreSQL native partitioning (proposed) vs TimescaleDB extension | P15-T02 | Claude proposes, user approves | Open |
+| DEC-22 | Forecasting stack and v1 model scope: statsmodels, scikit-learn, LightGBM/XGBoost baselines (proposed); LSTM/GRU/Transformer research-only behind a separate gate | P15-T05 | Claude proposes, user approves | Open |
+| DEC-23 | Forex release strategy: ship with v1 or after v1 behind a feature flag (proposed: after v1, flagged) | P15-T01 | User | Open |
+| DEC-24 | Source of instrument contract specifications (lot size, pip location, margin rules): provider API vs maintained, reviewed table | P15-T07 | Claude proposes, user approves | Open |
 
 ## 9. Key risks
 
@@ -258,7 +274,12 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | iOS verification gap on Windows | macOS CI build now; Mac/cloud device for VoiceOver and release builds. |
 | Store review delays for a finance app | Accounts and declarations started early (DEC-09, P14-T05); no advice/guarantee wording. |
 | Gates become paperwork (criteria ticked without real evidence) | Tracker requires an evidence statement and timestamp per criterion, `validate` checks them, critical criteria cannot be waived, and P13-T11 re-verifies everything on the release candidate. |
-| Scope creep into trading/robo-advice | Explicit non-goal; no execution affordances (D6). |
+| Scope creep into trading/robo-advice | Explicit non-goal; no execution affordances (D6). The Forex module (P15) is bounded to decision support and paper trading; live execution needs a separate approved phase (ADR-0009). |
+| Forex data licence or redistribution limits (display, storage, streaming) | DEC-19 and the licence review (P15-T14) before any provider is wired to users; fake provider keeps development unblocked; indicative rates are labelled and never shown as executable quotes. |
+| Forex regulatory classification (advice or arrangement of dealing) in a launch market | DEC-20 legal review before release; information-only wording, risk disclosures, no personalised recommendations or execution. |
+| Overfitted or leaky forecasts create false confidence | Time-series-aware splits, walk-forward evaluation, leakage tests, baseline comparison reported even when the baseline wins, calibration labelling (QG-15, QG-17). |
+| Leverage and stop-loss misunderstandings harm users | Risk engine returns margin and leverage warnings and states that stops can gap or slip; paper trading first; disclosures reviewed (QG-16, QG-20). |
+| Streaming outage or stale prices shown as live | Heartbeat, stale-data detection, explicit feed status in the UI and API, no invented prices (QG-13). |
 
 ## 10. Phase and task detail
 
@@ -2889,11 +2910,280 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Quality gates required before completion:** QG-04.7, QG-05.6, QG-12.2, QG-12.5, QG-12.6, QG-12.8
 - **Subtasks:** `P14-GATE.1` Run gates · `P14-GATE.2` Present summary · `P14-GATE.3` Record sign-off
 
+### P15 — Forex Trading Intelligence (FX workstream)
+
+- **Goal:** AI-assisted forex market intelligence, probabilistic forecasts, transparent opportunity ranking, deterministic trade-risk calculation, backtesting and paper trading, integrated into WealthSphere as a **decision-support and paper-trading** module. No live trade execution (see ADR-0009 and docs/design/forex-technical-design.md).
+- **Entry criteria:** P08-GATE, P09-GATE, P10-GATE, P11-GATE and P12-GATE complete; user approves the phase and ADR-0009 (P15-T01).
+- **Exit criteria:** QG-13..QG-20 (QG-FX-01..08) satisfied; paper trading separate from real holdings; no live execution in the build; market-data licence and regulatory reviews recorded.
+- **Prerequisite phases:** P08, P09, P10, P11, P12 (P15-T14 also needs P13-GATE) · **Lane:** FX
+- **Task alias:** the FX-nn names are the same tasks as P15-Tnn (FX-01 = P15-T01 … FX-14 = P15-T14); the tracker tracks the P15-Tnn IDs. QG-FX-nn are the gates QG-(12+nn).
+- **Entry gates:** prerequisite phase gates completed (P08, P09, P10, P11, P12); cumulative quality criteria QG-06.1–7; QG-07.1–8; QG-08.1,3,6; QG-11.3–4; user approval of the phase.
+- **Task-level gates:** each task's CK suites and acceptance criteria.
+- **Exit gates:** QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19, QG-20 (every criterion) required by `P15-GATE` plus user review.
+- **Release gates:** `Gates-start` on P15-T13 and P15-T14: QG-13..QG-19 satisfied.
+
+| Wave | Tasks | Mode | Entry condition | Conflict notes |
+|---|---|---|---|---|
+| P15.W1 | P15-T01 | Single task | Phase approved and all dependencies complete | — |
+| P15.W2 | P15-T02 | Single task | Phase approved and all dependencies complete | — |
+| P15.W3 | P15-T03, P15-T04 | Parallel-safe | Phase approved and all dependencies complete | T03 and T04 touch different modules (indicators vs calendar). |
+| P15.W4 | P15-T05 | Single task | Phase approved and all dependencies complete | — |
+| P15.W5 | P15-T06 | Single task | Phase approved and all dependencies complete | — |
+| P15.W6 | P15-T07, P15-T08 | Parallel-safe | Phase approved and all dependencies complete | T07 and T08 touch different modules; only one adds a migration (T07 none, T08 report store). |
+| P15.W7 | P15-T09 | Single task | Phase approved and all dependencies complete | — |
+| P15.W8 | P15-T10 | Single task | Phase approved and all dependencies complete | — |
+| P15.W9 | P15-T11 | Single task | Phase approved and all dependencies complete | — |
+| P15.W10 | P15-T12 | Single task | Phase approved and all dependencies complete | — |
+| P15.W11 | P15-T13 | Single task | Phase approved and all dependencies complete | — |
+| P15.W12 | P15-T14 | Single task | Phase approved and all dependencies complete | — |
+| P15.W13 | P15-GATE | Single task | Phase approved and all dependencies complete | — |
+
+#### P15-T01 — FX-01 Requirements, architecture and regulatory scoping
+
+`DOC` · Size M · Wave P15.W1 · Approval: **USER REVIEW REQUIRED**
+
+- **Objective:** Confirm the Forex module scope, amend SOLUTION_INTENT/brief/guide, approve ADR-0009 and the forex technical design, and record the open decisions (DEC-19..DEC-24).
+- **Depends on:** P08-GATE, P10-GATE
+- **Parallel with:** — (sequential)
+- **Unblocks:** P15-T02
+- **Deliverables:** docs/design/forex-technical-design.md approved; ADR-0009 Accepted; intent documents amended; decisions DEC-19..DEC-24 resolved or scheduled.
+- **Acceptance criteria:**
+  - User approves the scope, the decision-support/paper-trading-only boundary and the release strategy (DEC-23).
+  - No live execution, no guaranteed-return language and no mixing of paper balances with net worth are written into the design as hard rules.
+- **Verification:** User approval of ADR-0009 and the design document.
+- **Subtasks:** `P15-T01.1` Impact assessment on architecture and security · `P15-T01.2` Amend intent documents · `P15-T01.3` Technical design review · `P15-T01.4` ADR-0009 · `P15-T01.5` Decision register update
+
+#### P15-T02 — FX-02 Market data provider abstraction, ingestion and streaming
+
+`BE` · Size L · Wave P15.W2 · Approval: **USER REVIEW REQUIRED**
+
+- **Objective:** Extend the P08 provider abstraction with quote, candle and streaming interfaces for forex; WebSocket streaming with reconnect, heartbeat, caching and stale-data detection; time-series storage; a fake provider so development never invents prices.
+- **Depends on:** P15-T01, P08-GATE
+- **Parallel with:** — (sequential)
+- **Unblocks:** P15-T03, P15-T04
+- **Deliverables:** Forex market-data service, provider adapters for the DEC-19 choice, instrument registry (configurable universe), quote and candle tables with migration, streaming gateway to the app.
+- **Acceptance criteria:**
+  - Every stored quote carries provider, instrument, bid, ask, derived mid, timestamp (UTC), data type (tradable/indicative/delayed/simulated), quality and feed status.
+  - When a provider is unavailable the API reports unavailable or stale; it never invents or interpolates a price.
+  - Stale-data detection, heartbeat loss and reconnect are covered by tests with an injected clock.
+- **Verification:** CK-B, CK-API, CK-DB; contract tests with recorded fixtures; reconnection and stale-data tests.
+- **Subtasks:** `P15-T02.1` Quote and candle interfaces · `P15-T02.2` Instrument registry and configurable universe · `P15-T02.3` Time-series schema and migration · `P15-T02.4` Streaming client with heartbeat and reconnect · `P15-T02.5` Stale-data and outage handling · `P15-T02.6` Fake provider and recorded fixtures · `P15-T02.7` Tests
+
+#### P15-T03 — FX-03 Technical analysis engine
+
+`BE` · Size L · Wave P15.W3 · Approval: no
+
+- **Objective:** Deterministic indicators (SMA, EMA, MACD, ADX, RSI, Stochastic, ROC, ATR, Bollinger Bands), market structure (swing points, support/resistance, breakouts, trendlines, channels) and candlestick/price-action detectors, plus timeframe aggregation.
+- **Depends on:** P15-T02
+- **Parallel with:** P15-T04
+- **Unblocks:** P15-T05
+- **Deliverables:** Indicator library with reference test vectors, timeframe aggregator (1m to 1M), market-structure and pattern detectors, API.
+- **Acceptance criteria:**
+  - Every indicator matches independently computed reference cases within a documented tolerance.
+  - Aggregation handles missing candles, weekend gaps and irregular sessions without fabricating candles.
+  - No LLM computes or edits an indicator value.
+- **Verification:** CK-B; reference-vector and property tests; independent recomputation.
+- **Subtasks:** `P15-T03.1` Trend indicators · `P15-T03.2` Momentum and volatility indicators · `P15-T03.3` Timeframe aggregation · `P15-T03.4` Market structure · `P15-T03.5` Price-action detectors · `P15-T03.6` Reference vectors and tests
+
+#### P15-T04 — FX-04 Economic calendar and macroeconomic intelligence
+
+`BE` · Size M · Wave P15.W3 · Approval: no
+
+- **Objective:** Ingest scheduled economic events, central-bank decisions and rate differentials with source and timestamp, and keep confirmed data separate from interpretation.
+- **Depends on:** P15-T02
+- **Parallel with:** P15-T03
+- **Unblocks:** P15-T05
+- **Deliverables:** Calendar ingestion, event model (actual/forecast/previous, affected currencies, release time), event-risk windows used by the scanner, API.
+- **Acceptance criteria:**
+  - Each event shows source and timestamp; confirmed values and speculative commentary are different fields and different UI labels.
+  - Release times are stored in UTC and shown in the user's timezone.
+- **Verification:** CK-B, CK-API; fixture-based ingestion tests; timezone tests.
+- **Subtasks:** `P15-T04.1` Event model and schema · `P15-T04.2` Provider adapter · `P15-T04.3` Event-risk windows · `P15-T04.4` API · `P15-T04.5` Tests
+
+#### P15-T05 — FX-05 Prediction models and evaluation framework
+
+`BE` · Size XL · Wave P15.W4 · Approval: **USER REVIEW REQUIRED**
+
+- **Objective:** Extensible model framework with baselines (random walk, no-change), statistical (ARIMA/SARIMA), gradient boosting (LightGBM/XGBoost), Random Forest, ensembles and volatility forecasts, evaluated with time-series-aware validation, calibration and drift monitoring.
+- **Depends on:** P15-T03, P15-T04
+- **Parallel with:** — (sequential)
+- **Unblocks:** P15-T06
+- **Deliverables:** Model registry with versions, feature pipeline, walk-forward evaluation, calibration and interval-coverage reports, drift monitor, forecast API.
+- **Acceptance criteria:**
+  - Every model is benchmarked against the baselines and the comparison is reported even when the baseline wins.
+  - No future data reaches a feature or label (leakage tests pass).
+  - Forecasts carry horizon, up/down probabilities, return distribution, expected volatility, price interval, calibration status, out-of-sample performance, freshness and model version.
+  - A probability is labelled 'requires calibration' until calibration is established.
+- **Verification:** CK-B; leakage tests; walk-forward and calibration reports under reports/quality/; user review of the evaluation report.
+- **Subtasks:** `P15-T05.1` Feature pipeline · `P15-T05.2` Baselines · `P15-T05.3` Statistical and boosting models · `P15-T05.4` Ensembles and volatility · `P15-T05.5` Walk-forward evaluation · `P15-T05.6` Calibration and interval coverage · `P15-T05.7` Drift monitoring · `P15-T05.8` Forecast API
+
+#### P15-T06 — FX-06 Strategy, signal engine and opportunity ranking
+
+`BE` · Size L · Wave P15.W5 · Approval: no
+
+- **Objective:** Detect setups (trend continuation, breakout, reversal, range, momentum, mean reversion), compute the transparent opportunity score, and rank pairs for the Opportunity Ranking Dashboard.
+- **Depends on:** P15-T05
+- **Parallel with:** — (sequential)
+- **Unblocks:** P15-T07, P15-T08
+- **Deliverables:** Signal rules, scoring with a published formula and weights, ranking API with market condition, opportunity type and risk per pair, explanation payload listing every factor.
+- **Acceptance criteria:**
+  - The score is a weighted, documented combination of trend, momentum, volatility, spread/costs, liquidity, confluence, macro-event risk, forecast calibration, strategy history and risk/reward.
+  - Each ranked item exposes its factors, assumptions, key risks, data freshness and costs; output is labelled research candidates, never guaranteed outcomes.
+  - Illustrative levels are generated only from timestamped market data and rule definitions.
+- **Verification:** CK-B, CK-API; golden tests for scoring; guarantee-language guard.
+- **Subtasks:** `P15-T06.1` Setup rules · `P15-T06.2` Scoring model and weights · `P15-T06.3` Ranking and market-condition classifier · `P15-T06.4` Explanation payload · `P15-T06.5` Ranking API · `P15-T06.6` Tests
+
+#### P15-T07 — FX-07 Trade risk management engine
+
+`BE` · Size L · Wave P15.W6 · Approval: **USER REVIEW REQUIRED**
+
+- **Objective:** Deterministic position sizing, pip value (per pair, quote and account currency with FX conversion), margin, costs, slippage and exposure, with configurable risk limits.
+- **Depends on:** P15-T06
+- **Parallel with:** P15-T08
+- **Unblocks:** P15-T09
+- **Deliverables:** Risk calculator service and API, instrument contract specifications, Decimal-only arithmetic with explicit rounding (ADR-0006), independent reference cases.
+- **Acceptance criteria:**
+  - No fixed pip-value assumption: pip value is derived from the quote currency, account currency and conversion rate for each pair (including JPY and USD-quote pairs).
+  - Outputs: position size, pip value, potential loss and profit, risk/reward, margin, estimated costs, exposure and account impact.
+  - Leverage and margin warnings are returned, and the output states that stop-losses can slip or gap.
+- **Verification:** CK-B; independent recomputation; property tests; user review of formulas.
+- **Subtasks:** `P15-T07.1` Contract specification model · `P15-T07.2` Pip value and conversion · `P15-T07.3` Position sizing · `P15-T07.4` Margin and leverage · `P15-T07.5` Costs and slippage · `P15-T07.6` Exposure and limits · `P15-T07.7` Reference cases and tests
+
+#### P15-T08 — FX-08 Backtesting and strategy validation
+
+`BE` · Size XL · Wave P15.W6 · Approval: no
+
+- **Objective:** Event-driven backtester with spread, commission and slippage models, walk-forward and out-of-sample evaluation, benchmarks and reproducible reports.
+- **Depends on:** P15-T06
+- **Parallel with:** P15-T07
+- **Unblocks:** P15-T09
+- **Deliverables:** Backtest engine, metrics (return, drawdown, win rate, profit factor, Sharpe, Sortino, expectancy, streaks, exposure, cost and slippage sensitivity), report store.
+- **Acceptance criteria:**
+  - Look-ahead and future-leakage tests fail on a deliberately leaky strategy and pass on the real engine.
+  - Costs and slippage are always included; sensitivity analysis is reported.
+  - Same inputs and seed produce an identical report (hash recorded).
+- **Verification:** CK-B; leakage tests; reproducibility test; reports under reports/quality/.
+- **Subtasks:** `P15-T08.1` Engine and clock · `P15-T08.2` Cost and slippage models · `P15-T08.3` Metrics · `P15-T08.4` Walk-forward harness · `P15-T08.5` Benchmarks · `P15-T08.6` Reproducible reports · `P15-T08.7` Leakage tests
+
+#### P15-T09 — FX-09 Paper trading and trade journal
+
+`BE` · Size L · Wave P15.W7 · Approval: no
+
+- **Objective:** Virtual account, simulated orders with virtual stop/take-profit, positions, realised/unrealised P/L, journal, strategy tags and performance analytics, kept apart from real holdings.
+- **Depends on:** P15-T07, P15-T08
+- **Parallel with:** — (sequential)
+- **Unblocks:** P15-T10
+- **Deliverables:** Paper-trading service and API, schema and migration, journal, analytics, isolation tests.
+- **Acceptance criteria:**
+  - Paper balances and trades are in separate tables and never enter net worth, holdings or analytics of real portfolios.
+  - Every paper-trading response carries a PAPER TRADING marker; backtested, paper and live-observed performance are separate labelled series.
+  - Ownership and IDOR tests pass for all endpoints.
+- **Verification:** CK-B, CK-API, CK-DB, CK-S; isolation and IDOR tests.
+- **Subtasks:** `P15-T09.1` Schema and migration · `P15-T09.2` Virtual account and orders · `P15-T09.3` Positions and P/L · `P15-T09.4` Journal and tags · `P15-T09.5` Analytics · `P15-T09.6` Isolation and IDOR tests
+
+#### P15-T10 — FX-10 AI Forex Copilot (allow-listed tools)
+
+`AI` · Size L · Wave P15.W8 · Approval: no
+
+- **Objective:** Add forex tools to the AI orchestrator (quotes, indicators, forecasts, opportunities, calendar, risk calculator, backtest results, paper performance), each authorised server-side, with the four-part answer structure.
+- **Depends on:** P15-T09, P10-GATE, P11-GATE
+- **Parallel with:** — (sequential)
+- **Unblocks:** P15-T11
+- **Deliverables:** Tool definitions and schemas, orchestrator prompts, structured output validation, evaluation set, guarantee-language guard.
+- **Acceptance criteria:**
+  - The model can only call allow-listed tools; every market fact, indicator, forecast and risk figure comes from a tool result with timestamp and source.
+  - Answers separate facts, model forecasts, assumptions and interpretation, include model version and data freshness, and refuse or qualify when data is stale.
+  - No guaranteed-profit or personalised-advice language passes the output guard.
+- **Verification:** CK-B, CK-AI; AI evaluation set including adversarial and stale-data cases.
+- **Subtasks:** `P15-T10.1` Tool schemas and authorisation · `P15-T10.2` Orchestrator integration · `P15-T10.3` Structured output validation · `P15-T10.4` Guarantee-language guard · `P15-T10.5` Evaluation set · `P15-T10.6` Tests
+
+#### P15-T11 — FX-11 Android and iOS Forex Intelligence integration
+
+`MOB` · Size XL · Wave P15.W9 · Approval: no
+
+- **Objective:** Forex section in the app: overview, live markets, chart, predictions, Opportunity Ranking Dashboard, scanner, trade setup, risk calculator, calendar, backtesting, paper trading, journal, Copilot and alerts, in the approved design language.
+- **Depends on:** P15-T10, P09-GATE
+- **Parallel with:** — (sequential)
+- **Unblocks:** P15-T12
+- **Deliverables:** Screens and widgets reusing the design system, streaming client with reconnection, notification preferences, DEMO-first fixtures then API wiring.
+- **Acceptance criteria:**
+  - Screens use the shared design system, light and dark, text scaling 2.0 and RTL; PAPER TRADING and DEMO labels are always visible where relevant.
+  - Streaming updates keep charts responsive; background/foreground transitions and network interruptions recover cleanly.
+  - Indicative or delayed prices are never shown as live executable quotes.
+- **Verification:** CK-M, flutter test incl. goldens; integration tests; manual device pass.
+- **Subtasks:** `P15-T11.1` Navigation and entry points · `P15-T11.2` Overview and live markets · `P15-T11.3` Chart and predictions · `P15-T11.4` Opportunity Ranking Dashboard and scanner · `P15-T11.5` Trade setup and risk calculator · `P15-T11.6` Calendar and backtesting · `P15-T11.7` Paper trading and journal · `P15-T11.8` Copilot and alerts · `P15-T11.9` Streaming resilience · `P15-T11.10` Tests
+
+#### P15-T12 — FX-12 Forex quality gates verification
+
+`QA` · Size M · Wave P15.W10 · Approval: no
+
+- **Objective:** Run and evidence QG-FX-01..07 (QG-13..QG-19) with reports under reports/quality/.
+- **Depends on:** P15-T11
+- **Parallel with:** — (sequential)
+- **Unblocks:** P15-T13
+- **Deliverables:** Quality report per gate.
+- **Acceptance criteria:**
+  - Every criterion of QG-13..QG-19 is verified with evidence; failures block FX-13.
+- **Verification:** python scripts/track.py qg check/pass per gate; CK-B, CK-M, CK-S.
+- **Quality gates required before completion:** QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19
+- **Subtasks:** `P15-T12.1` Market data and indicator gates · `P15-T12.2` Prediction and risk gates · `P15-T12.3` Backtesting and AI gates · `P15-T12.4` Mobile gate · `P15-T12.5` Report
+
+#### P15-T13 — FX-13 Staging validation
+
+`QA` · Size M · Wave P15.W11 · Approval: **USER REVIEW REQUIRED**
+
+- **Objective:** Run the module on staging against the licensed provider sandbox or delayed feed: streaming soak, outage drills, stale-data behaviour and user acceptance.
+- **Depends on:** P15-T12, P12-T11
+- **Parallel with:** — (sequential)
+- **Unblocks:** P15-T14
+- **Deliverables:** Staging validation report.
+- **Acceptance criteria:**
+  - Soak test and provider-outage drill pass; no invented prices; alerts and dashboards operational.
+  - User acceptance recorded.
+- **Verification:** Staging tests and user approval.
+- **Quality gates required before start:** QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19
+- **Subtasks:** `P15-T13.1` Streaming soak · `P15-T13.2` Outage and failover drills · `P15-T13.3` Observability check · `P15-T13.4` User acceptance
+
+#### P15-T14 — FX-14 Release approval and regulatory readiness
+
+`REL` · Size M · Wave P15.W12 · Approval: **USER REVIEW REQUIRED**
+
+- **Objective:** Complete market-data licence review, launch-market regulatory review, risk disclosures and the final decision on release, with live execution still disabled.
+- **Depends on:** P15-T13, P13-GATE
+- **Parallel with:** — (sequential)
+- **Unblocks:** P15-GATE
+- **Deliverables:** Licence and regulatory review records, disclosure text, release decision.
+- **Acceptance criteria:**
+  - Market-data licence permits the in-app display, storage and any redistribution.
+  - Regulatory review is complete for each launch market (DEC-20); disclosures are approved.
+  - No live execution capability exists in the build; enabling one needs a separate approved phase.
+- **Verification:** User approval; legal review records.
+- **Quality gates required before start:** QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19
+- **Subtasks:** `P15-T14.1` Licence review · `P15-T14.2` Regulatory review · `P15-T14.3` Risk disclosures · `P15-T14.4` Execution-disabled verification · `P15-T14.5` Release decision
+
+#### P15-GATE — Phase P15 exit gate
+
+`GATE` · Size S · Wave P15.W13 · Approval: **USER REVIEW REQUIRED**
+
+- **Objective:** Confirm the Forex Trading Intelligence module.
+- **Depends on:** P15-T01, P15-T02, P15-T03, P15-T04, P15-T05, P15-T06, P15-T07, P15-T08, P15-T09, P15-T10, P15-T11, P15-T12, P15-T13, P15-T14
+- **Parallel with:** — (sequential)
+- **Unblocks:** —
+- **Deliverables:** Gate summary.
+- **Acceptance criteria:**
+  - User approval recorded.
+- **Verification:** CK-B, CK-M, CK-S.
+- **Quality gates required before completion:** QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19, QG-20
+- **Subtasks:** `P15-GATE.1` Run gates · `P15-GATE.2` Present summary · `P15-GATE.3` Record approval
+
+---
+
 ## Appendix A — Requirement traceability
 
 | Requirement (source) | Delivered by |
 |---|---|
 | Design tokens, themes, shared component library (UI spec) | P02-T01…T08 |
+| Forex Trading Intelligence module: market dashboard, predictions, technical analysis, economic calendar, Opportunity Ranking Dashboard, trade-risk engine, backtesting, paper trading, Forex Copilot (extension request, 2026-10-09) | P15-T01…T14 (FX-01…FX-14); gates QG-13…QG-20 (QG-FX-01…08) |
 | Screen 1 Welcome/Onboarding, 2 Sign In/Up | P04-T08 |
 | Screen 3 Home Dashboard | P03-T02 → live P09-T02 |
 | Screen 4 Portfolio Overview | P03-T03 → live P09-T02 |

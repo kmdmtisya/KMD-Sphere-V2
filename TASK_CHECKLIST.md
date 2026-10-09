@@ -1373,3 +1373,161 @@
   - [ ] P14-GATE.1 Run gates
   - [ ] P14-GATE.2 Present summary
   - [ ] P14-GATE.3 Record sign-off
+
+## P15 — Forex Trading Intelligence (FX workstream)
+
+- Phase approval: `PENDING`
+- Entry gates: prerequisite phase gates completed (P08, P09, P10, P11, P12); cumulative criteria QG-06.1–7; QG-07.1–8; QG-08.1,3,6; QG-11.3–4 — enforced as dependencies of every wave-1 task
+- Exit gates: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19, QG-20 — required by `P15-GATE` (Gates-done)
+- Release gates: P15-T13 and P15-T14 start only after QG-13..QG-19 are satisfied
+
+- [ ] **P15-T01** · FX-01 Requirements, architecture and regulatory scoping · `NOT_STARTED` ⬜
+  - Deps: P08-GATE, P10-GATE · Wave: W1 · Track: DOC · Size: M · Approval: yes
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P15-T01.1 Impact assessment on architecture and security
+  - [ ] P15-T01.2 Amend intent documents
+  - [ ] P15-T01.3 Technical design review
+  - [ ] P15-T01.4 ADR-0009
+  - [ ] P15-T01.5 Decision register update
+- [ ] **P15-T02** · FX-02 Market data provider abstraction, ingestion and streaming · `NOT_STARTED` ⬜
+  - Deps: P15-T01, P08-GATE · Wave: W2 · Track: BE · Size: L · Approval: yes
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P15-T02.1 Quote and candle interfaces
+  - [ ] P15-T02.2 Instrument registry and configurable universe
+  - [ ] P15-T02.3 Time-series schema and migration
+  - [ ] P15-T02.4 Streaming client with heartbeat and reconnect
+  - [ ] P15-T02.5 Stale-data and outage handling
+  - [ ] P15-T02.6 Fake provider and recorded fixtures
+  - [ ] P15-T02.7 Tests
+- [ ] **P15-T03** · FX-03 Technical analysis engine · `NOT_STARTED` ⬜
+  - Deps: P15-T02 · Wave: W3 · Track: BE · Size: L · Approval: no
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P15-T03.1 Trend indicators
+  - [ ] P15-T03.2 Momentum and volatility indicators
+  - [ ] P15-T03.3 Timeframe aggregation
+  - [ ] P15-T03.4 Market structure
+  - [ ] P15-T03.5 Price-action detectors
+  - [ ] P15-T03.6 Reference vectors and tests
+- [ ] **P15-T04** · FX-04 Economic calendar and macroeconomic intelligence · `NOT_STARTED` ⬜
+  - Deps: P15-T02 · Wave: W3 · Track: BE · Size: M · Approval: no
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P15-T04.1 Event model and schema
+  - [ ] P15-T04.2 Provider adapter
+  - [ ] P15-T04.3 Event-risk windows
+  - [ ] P15-T04.4 API
+  - [ ] P15-T04.5 Tests
+- [ ] **P15-T05** · FX-05 Prediction models and evaluation framework · `NOT_STARTED` ⬜
+  - Deps: P15-T03, P15-T04 · Wave: W4 · Track: BE · Size: XL · Approval: yes
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P15-T05.1 Feature pipeline
+  - [ ] P15-T05.2 Baselines
+  - [ ] P15-T05.3 Statistical and boosting models
+  - [ ] P15-T05.4 Ensembles and volatility
+  - [ ] P15-T05.5 Walk-forward evaluation
+  - [ ] P15-T05.6 Calibration and interval coverage
+  - [ ] P15-T05.7 Drift monitoring
+  - [ ] P15-T05.8 Forecast API
+- [ ] **P15-T06** · FX-06 Strategy, signal engine and opportunity ranking · `NOT_STARTED` ⬜
+  - Deps: P15-T05 · Wave: W5 · Track: BE · Size: L · Approval: no
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P15-T06.1 Setup rules
+  - [ ] P15-T06.2 Scoring model and weights
+  - [ ] P15-T06.3 Ranking and market-condition classifier
+  - [ ] P15-T06.4 Explanation payload
+  - [ ] P15-T06.5 Ranking API
+  - [ ] P15-T06.6 Tests
+- [ ] **P15-T07** · FX-07 Trade risk management engine · `NOT_STARTED` ⬜
+  - Deps: P15-T06 · Wave: W6 · Track: BE · Size: L · Approval: yes
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P15-T07.1 Contract specification model
+  - [ ] P15-T07.2 Pip value and conversion
+  - [ ] P15-T07.3 Position sizing
+  - [ ] P15-T07.4 Margin and leverage
+  - [ ] P15-T07.5 Costs and slippage
+  - [ ] P15-T07.6 Exposure and limits
+  - [ ] P15-T07.7 Reference cases and tests
+- [ ] **P15-T08** · FX-08 Backtesting and strategy validation · `NOT_STARTED` ⬜
+  - Deps: P15-T06 · Wave: W6 · Track: BE · Size: XL · Approval: no
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P15-T08.1 Engine and clock
+  - [ ] P15-T08.2 Cost and slippage models
+  - [ ] P15-T08.3 Metrics
+  - [ ] P15-T08.4 Walk-forward harness
+  - [ ] P15-T08.5 Benchmarks
+  - [ ] P15-T08.6 Reproducible reports
+  - [ ] P15-T08.7 Leakage tests
+- [ ] **P15-T09** · FX-09 Paper trading and trade journal · `NOT_STARTED` ⬜
+  - Deps: P15-T07, P15-T08 · Wave: W7 · Track: BE · Size: L · Approval: no
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P15-T09.1 Schema and migration
+  - [ ] P15-T09.2 Virtual account and orders
+  - [ ] P15-T09.3 Positions and P/L
+  - [ ] P15-T09.4 Journal and tags
+  - [ ] P15-T09.5 Analytics
+  - [ ] P15-T09.6 Isolation and IDOR tests
+- [ ] **P15-T10** · FX-10 AI Forex Copilot (allow-listed tools) · `NOT_STARTED` ⬜
+  - Deps: P15-T09, P10-GATE, P11-GATE · Wave: W8 · Track: AI · Size: L · Approval: no
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P15-T10.1 Tool schemas and authorisation
+  - [ ] P15-T10.2 Orchestrator integration
+  - [ ] P15-T10.3 Structured output validation
+  - [ ] P15-T10.4 Guarantee-language guard
+  - [ ] P15-T10.5 Evaluation set
+  - [ ] P15-T10.6 Tests
+- [ ] **P15-T11** · FX-11 Android and iOS Forex Intelligence integration · `NOT_STARTED` ⬜
+  - Deps: P15-T10, P09-GATE · Wave: W9 · Track: MOB · Size: XL · Approval: no
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P15-T11.1 Navigation and entry points
+  - [ ] P15-T11.2 Overview and live markets
+  - [ ] P15-T11.3 Chart and predictions
+  - [ ] P15-T11.4 Opportunity Ranking Dashboard and scanner
+  - [ ] P15-T11.5 Trade setup and risk calculator
+  - [ ] P15-T11.6 Calendar and backtesting
+  - [ ] P15-T11.7 Paper trading and journal
+  - [ ] P15-T11.8 Copilot and alerts
+  - [ ] P15-T11.9 Streaming resilience
+  - [ ] P15-T11.10 Tests
+- [ ] **P15-T12** · FX-12 Forex quality gates verification · `NOT_STARTED` ⬜
+  - Deps: P15-T11 · Wave: W10 · Track: QA · Size: M · Approval: no · Gates-done: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P15-T12.1 Market data and indicator gates
+  - [ ] P15-T12.2 Prediction and risk gates
+  - [ ] P15-T12.3 Backtesting and AI gates
+  - [ ] P15-T12.4 Mobile gate
+  - [ ] P15-T12.5 Report
+- [ ] **P15-T13** · FX-13 Staging validation · `NOT_STARTED` ⬜
+  - Deps: P15-T12, P12-T11 · Wave: W11 · Track: QA · Size: M · Approval: yes · Gates-start: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P15-T13.1 Streaming soak
+  - [ ] P15-T13.2 Outage and failover drills
+  - [ ] P15-T13.3 Observability check
+  - [ ] P15-T13.4 User acceptance
+- [ ] **P15-T14** · FX-14 Release approval and regulatory readiness · `NOT_STARTED` ⬜
+  - Deps: P15-T13, P13-GATE · Wave: W12 · Track: REL · Size: M · Approval: yes · Gates-start: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P15-T14.1 Licence review
+  - [ ] P15-T14.2 Regulatory review
+  - [ ] P15-T14.3 Risk disclosures
+  - [ ] P15-T14.4 Execution-disabled verification
+  - [ ] P15-T14.5 Release decision
+- [ ] **P15-GATE** · Phase P15 exit gate · `NOT_STARTED` ⬜
+  - Deps: P15-T01, P15-T02, P15-T03, P15-T04, P15-T05, P15-T06, P15-T07, P15-T08, P15-T09, P15-T10, P15-T11, P15-T12, P15-T13, P15-T14 · Wave: W13 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19, QG-20
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P15-GATE.1 Run gates
+  - [ ] P15-GATE.2 Present summary
+  - [ ] P15-GATE.3 Record approval

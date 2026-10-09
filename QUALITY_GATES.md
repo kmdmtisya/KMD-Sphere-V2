@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-09T22:56:23+04:00 by `scripts/track.py`._
+_Generated at 2026-10-09T23:15:13+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -23,9 +23,17 @@ _Generated at 2026-10-09T22:56:23+04:00 by `scripts/track.py`._
 | QG-10 | CI/CD and Infrastructure | 🔄 IN_PROGRESS | 2/8 | Unassigned | — |
 | QG-11 | End-to-End Integration | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
 | QG-12 | Production Release Readiness | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
+| QG-13 | QG-FX-01: Market Data Integrity | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
+| QG-14 | QG-FX-02: Technical Indicator Accuracy | ⬜ NOT_STARTED | 0/3 | Unassigned | — |
+| QG-15 | QG-FX-03: Prediction Model Validation | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
+| QG-16 | QG-FX-04: Trading Risk Accuracy | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
+| QG-17 | QG-FX-05: Backtesting Integrity | ⬜ NOT_STARTED | 0/4 | Unassigned | — |
+| QG-18 | QG-FX-06: AI Trading Intelligence | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
+| QG-19 | QG-FX-07: Mobile Experience | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
+| QG-20 | QG-FX-08: Release and Regulatory Readiness | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
 
 Waivers: 0 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 19/81.
+Criteria satisfied overall: 19/119.
 
 Current phase **P02** exit-gate criteria outstanding: QG-01.5.
 <!-- QG-AUTO:END -->
@@ -267,6 +275,148 @@ Blocking Issues: —
 Blocks: —  
 Approved By: —
 
+### QG-13: QG-FX-01: Market Data Integrity
+
+- [ ] QG-13.1 Streaming connectivity is verified · Required: P15 · By: P15-T02
+- [ ] QG-13.2 Bid/ask prices are validated against provider records · Required: P15 · By: P15-T02 · CRITICAL
+- [ ] QG-13.3 Stale-data detection is tested · Required: P15 · By: P15-T02
+- [ ] QG-13.4 Timestamp and timezone handling is verified · Required: P15 · By: P15-T02
+- [ ] QG-13.5 Feed outages are handled safely and prices are never invented or shown as live when delayed, indicative or simulated · Required: P15 · By: P15-T02 · CRITICAL
+
+Status: NOT_STARTED  
+Owner: Unassigned  
+Start Timestamp: —  
+End Timestamp: —  
+Verification Timestamp: —  
+Evidence: —  
+Blocking Issues: —  
+Blocks: —  
+Approved By: —
+
+### QG-14: QG-FX-02: Technical Indicator Accuracy
+
+- [ ] QG-14.1 Indicator calculations match independently validated reference cases · Required: P15 · By: P15-T03
+- [ ] QG-14.2 Timeframe aggregation is correct · Required: P15 · By: P15-T03
+- [ ] QG-14.3 Missing candles and irregular market hours are handled · Required: P15 · By: P15-T03
+
+Status: NOT_STARTED  
+Owner: Unassigned  
+Start Timestamp: —  
+End Timestamp: —  
+Verification Timestamp: —  
+Evidence: —  
+Blocking Issues: —  
+Blocks: —  
+Approved By: —
+
+### QG-15: QG-FX-03: Prediction Model Validation
+
+- [ ] QG-15.1 Models outperform, or are honestly reported against, the random-walk and no-change baselines · Required: P15 · By: P15-T05
+- [ ] QG-15.2 No data leakage in features, labels or splits · Required: P15 · By: P15-T05
+- [ ] QG-15.3 Out-of-sample testing is completed · Required: P15 · By: P15-T05
+- [ ] QG-15.4 Probability calibration is evaluated · Required: P15 · By: P15-T05
+- [ ] QG-15.5 Prediction intervals are assessed for coverage · Required: P15 · By: P15-T05
+- [ ] QG-15.6 Model drift monitoring is configured · Required: P15 · By: P15-T05
+
+Status: NOT_STARTED  
+Owner: Unassigned  
+Start Timestamp: —  
+End Timestamp: —  
+Verification Timestamp: —  
+Evidence: —  
+Blocking Issues: —  
+Blocks: —  
+Approved By: —
+
+### QG-16: QG-FX-04: Trading Risk Accuracy
+
+- [ ] QG-16.1 Position sizing is verified against independent reference cases · Required: P15 · By: P15-T07 · CRITICAL
+- [ ] QG-16.2 Pip-value conversions are verified for each quote and account currency case · Required: P15 · By: P15-T07 · CRITICAL
+- [ ] QG-16.3 Risk/reward calculations are verified · Required: P15 · By: P15-T07 · CRITICAL
+- [ ] QG-16.4 Margin and leverage calculations are verified · Required: P15 · By: P15-T07 · CRITICAL
+- [ ] QG-16.5 Costs and slippage are included in outputs · Required: P15 · By: P15-T07 · CRITICAL
+
+Status: NOT_STARTED  
+Owner: Unassigned  
+Start Timestamp: —  
+End Timestamp: —  
+Verification Timestamp: —  
+Evidence: —  
+Blocking Issues: —  
+Blocks: —  
+Approved By: —
+
+### QG-17: QG-FX-05: Backtesting Integrity
+
+- [ ] QG-17.1 Look-ahead bias tests pass · Required: P15 · By: P15-T08 · CRITICAL
+- [ ] QG-17.2 Transaction costs and slippage are included · Required: P15 · By: P15-T08
+- [ ] QG-17.3 Walk-forward validation is completed · Required: P15 · By: P15-T08
+- [ ] QG-17.4 Backtest reports are reproducible · Required: P15 · By: P15-T08
+
+Status: NOT_STARTED  
+Owner: Unassigned  
+Start Timestamp: —  
+End Timestamp: —  
+Verification Timestamp: —  
+Evidence: —  
+Blocking Issues: —  
+Blocks: —  
+Approved By: —
+
+### QG-18: QG-FX-06: AI Trading Intelligence
+
+- [ ] QG-18.1 Market facts are source-backed with timestamps · Required: P15 · By: P15-T10 · CRITICAL
+- [ ] QG-18.2 Prediction timestamps and model versions are included · Required: P15 · By: P15-T10
+- [ ] QG-18.3 No guaranteed-profit language passes the output guard · Required: P15 · By: P15-T10 · CRITICAL
+- [ ] QG-18.4 Structured AI output is validated · Required: P15 · By: P15-T10
+- [ ] QG-18.5 Stale-data conditions are handled · Required: P15 · By: P15-T10
+
+Status: NOT_STARTED  
+Owner: Unassigned  
+Start Timestamp: —  
+End Timestamp: —  
+Verification Timestamp: —  
+Evidence: —  
+Blocking Issues: —  
+Blocks: —  
+Approved By: —
+
+### QG-19: QG-FX-07: Mobile Experience
+
+- [ ] QG-19.1 Android and iOS builds pass · Required: P15 · By: P15-T11
+- [ ] QG-19.2 Charts remain responsive during streaming updates · Required: P15 · By: P15-T11
+- [ ] QG-19.3 Background and foreground transitions are handled · Required: P15 · By: P15-T11
+- [ ] QG-19.4 Notifications are tested · Required: P15 · By: P15-T11
+- [ ] QG-19.5 Network interruption recovery is verified · Required: P15 · By: P15-T11
+
+Status: NOT_STARTED  
+Owner: Unassigned  
+Start Timestamp: —  
+End Timestamp: —  
+Verification Timestamp: —  
+Evidence: —  
+Blocking Issues: —  
+Blocks: —  
+Approved By: —
+
+### QG-20: QG-FX-08: Release and Regulatory Readiness
+
+- [ ] QG-20.1 Market-data licensing is reviewed · Required: P15 · By: P15-T14 · CRITICAL
+- [ ] QG-20.2 Launch-market financial-advice and trading regulations are reviewed · Required: P15 · By: P15-T14 · CRITICAL
+- [ ] QG-20.3 Risk disclosures are reviewed · Required: P15 · By: P15-T14
+- [ ] QG-20.4 Paper trading remains separate from real holdings · Required: P15 · By: P15-T09 · CRITICAL
+- [ ] QG-20.5 No live execution is enabled without explicit approval · Required: P15 · By: P15-T14 · CRITICAL
+
+Status: NOT_STARTED  
+Owner: Unassigned  
+Start Timestamp: —  
+End Timestamp: —  
+Verification Timestamp: —  
+Evidence: —  
+Blocking Issues: —  
+Blocks: —  
+Approved By: —
+
 ## Waiver register
 
 A waiver needs explicit approval, a documented justification, a future expiry/review date and a named risk owner. Critical security, financial-integrity and authorisation criteria cannot be waived by the tracker. Expired waivers fail `track.py validate`.
@@ -282,3 +432,4 @@ Changes to when a criterion is required are decisions, recorded here and in EXEC
 | Date | Criterion | Change | Reason | Approved by |
 |---|---|---|---|---|
 | 2026-10-09 | QG-08.4 | Required phase P01 → P12; evidence task P01-T11 → P12-T04 | The criterion covers dependency **and container** scanning. Dependency scanning is already running in CI (P01-T11); no container images exist until P12-T04, so the container half cannot be satisfied earlier. Not a waiver: the full criterion still applies, at the phase where it can be met. | user (option b) |
+| 2026-10-09 | QG-13…QG-20 | Eight Forex gates (QG-FX-01…08, 38 criteria, all required at P15) added to the register | Forex Trading Intelligence module requested as workstream P15; mapping QG-FX-nn = QG-(12+nn). Additive: no existing criterion changed. Proposed, pending user approval of P15. | pending user approval |
