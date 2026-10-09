@@ -16,6 +16,7 @@ class AIChatComposer extends StatefulWidget {
     required this.onSend,
     this.onStop,
     this.streaming = false,
+    this.enabled = true,
     this.maxLength = 2000,
     super.key,
   });
@@ -25,6 +26,9 @@ class AIChatComposer extends StatefulWidget {
   /// Called by the stop button; the button shows only while [streaming].
   final VoidCallback? onStop;
   final bool streaming;
+
+  /// False disables typing and sending (for example while offline).
+  final bool enabled;
   final int maxLength;
 
   @override
@@ -40,7 +44,8 @@ class _AIChatComposerState extends State<AIChatComposer> {
     super.dispose();
   }
 
-  bool get _canSend => !widget.streaming && _controller.text.trim().isNotEmpty;
+  bool get _canSend =>
+      widget.enabled && !widget.streaming && _controller.text.trim().isNotEmpty;
 
   void _send() {
     if (!_canSend) return;
@@ -61,6 +66,7 @@ class _AIChatComposerState extends State<AIChatComposer> {
             Expanded(
               child: TextField(
                 controller: _controller,
+                enabled: widget.enabled,
                 minLines: 1,
                 maxLines: 5,
                 maxLength: widget.maxLength,

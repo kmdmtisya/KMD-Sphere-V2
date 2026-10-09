@@ -1101,5 +1101,107 @@
         "type": "String"
       }
     }
+  },
+  "aiTitle": "Wealth AI",
+  "@aiTitle": {
+    "description": "Title of the AI Wealth screen"
+  },
+  "aiScopeAll": "All portfolios",
+  "@aiScopeAll": {
+    "description": "AI scope chip: no specific context"
+  },
+  "aiScopePortfolioUnknown": "Portfolio {id}",
+  "@aiScopePortfolioUnknown": {
+    "description": "AI scope chip for a portfolio whose name is not loaded",
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "aiScopeForecast": "This forecast",
+  "@aiScopeForecast": {
+    "description": "AI scope chip for a forecast"
+  },
+  "aiScopeGoal": "Goal {id}",
+  "@aiScopeGoal": {
+    "description": "AI scope chip for a goal",
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "aiChangeScope": "Change context",
+  "@aiChangeScope": {
+    "description": "Tooltip/hint for the scope chip"
+  },
+  "aiRemoveScope": "Remove context",
+  "@aiRemoveScope": {
+    "description": "Delete button of the scope chip"
+  },
+  "aiScopeSheetTitle": "Ask about",
+  "@aiScopeSheetTitle": {
+    "description": "Title of the context chooser"
+  },
+  "aiYou": "You",
+  "@aiYou": {
+    "description": "Label of the user's message"
+  },
+  "aiSectionObserved": "Observed data",
+  "@aiSectionObserved": {
+    "description": "Answer section heading"
+  },
+  "aiSectionCalculated": "Calculated",
+  "@aiSectionCalculated": {
+    "description": "Answer section heading"
+  },
+  "aiSectionAssumption": "Assumptions",
+  "@aiSectionAssumption": {
+    "description": "Answer section heading"
+  },
+  "aiSectionInterpretation": "AI interpretation",
+  "@aiSectionInterpretation": {
+    "description": "Answer section heading"
+  },
+  "aiStopped": "Stopped. The answer may be incomplete.",
+  "@aiStopped": {
+    "description": "Shown when the user stopped an answer"
+  },
+  "aiRefusalTitle": "Can't help with that",
+  "@aiRefusalTitle": {
+    "description": "Heading of a refusal"
+  },
+  "aiFailedGeneric": "The assistant couldn't answer. Try again.",
+  "@aiFailedGeneric": {
+    "description": "Transport failure message"
+  },
+  "aiAnswerReady": "Answer ready",
+  "@aiAnswerReady": {
+    "description": "Screen-reader announcement when an answer completes"
+  },
+  "aiAnswerStopped": "Answer stopped",
+  "@aiAnswerStopped": {
+    "description": "Screen-reader announcement when stopped"
+  },
+  "aiAnswerFailed": "The answer failed",
+  "@aiAnswerFailed": {
+    "description": "Screen-reader announcement on failure"
+  },
+  "aiOfflineComposer": "You're offline. Reconnect to ask a question.",
+  "@aiOfflineComposer": {
+    "description": "Composer hint while offline"
+  },
+  "aiFooter": "Informational only, not financial advice. No trades are executed.",
+  "@aiFooter": {
+    "description": "Persistent footer"
+  },
+  "aiSuggestionsTitle": "Try asking",
+  "@aiSuggestionsTitle": {
+    "description": "Heading of suggested questions"
+  },
+  "aiSourcesTitle": "Sources",
+  "@aiSourcesTitle": {
+    "description": "Heading above evidence chips"
   }
 }

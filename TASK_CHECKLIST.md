@@ -354,16 +354,16 @@
   - [x] P03-T05.4 Nominal/real toggle
   - [x] P03-T05.5 Assumptions panel
   - [x] P03-T05.6 Tests
-- [ ] **P03-T06** · AI Wealth Copilot (screen 6) · `NOT_STARTED` ⬜
+- [ ] **P03-T06** · AI Wealth Copilot (screen 6) · `IN_PROGRESS` 🔄
   - Deps: P03-T01 · Wave: W2 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T02:27:43+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P03-T06.1 Empty state and suggestions
-  - [ ] P03-T06.2 Scope chip
-  - [ ] P03-T06.3 Four-section answer renderer
-  - [ ] P03-T06.4 Streaming and stop
-  - [ ] P03-T06.5 Refusal/failure/offline states
-  - [ ] P03-T06.6 Tests
+  - [x] P03-T06.1 Empty state and suggestions
+  - [x] P03-T06.2 Scope chip
+  - [x] P03-T06.3 Four-section answer renderer
+  - [x] P03-T06.4 Streaming and stop
+  - [x] P03-T06.5 Refusal/failure/offline states
+  - [x] P03-T06.6 Tests
 - [ ] **P03-T07** · Journeys, accessibility sweep and device QA · `NOT_STARTED` ⬜
   - Deps: P03-T02, P03-T03, P03-T05, P03-T06 · Wave: W4 · Track: QA · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
