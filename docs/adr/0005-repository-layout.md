@@ -1,6 +1,6 @@
 # ADR-0005: Repository layout
 
-Status: Proposed
+Status: Accepted (user approval, 2026-10-09)
 
 ## Decision
 A single monorepo:

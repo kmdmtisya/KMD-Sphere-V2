@@ -1,6 +1,6 @@
 # ADR-0004: Backend layout and tooling
 
-Status: Proposed (tooling choices = DEC-07)
+Status: Accepted (user approval, 2026-10-09)
 
 ## Context
 CLAUDE.md requires a modular monolith; the guide sketches many `services/*` folders.

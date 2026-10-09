@@ -123,3 +123,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-09T14:25:55+04:00 — AWAITING_VERIFICATION P01-T03
 - evidence: docs/adr/0001..0007 + README written (Context/Decision/Consequences); ADR-0006 records DEC-06 = ROUND_HALF_UP with full internal precision, boundary-only rounding, minor units per ISO 4217, largest-remainder allocation, tie-case tests; ADR-0004 records DEC-07 tooling (uv, ruff, mypy, pytest). All ADRs are Proposed pending user review
+
+### 2026-10-09T14:28:15+04:00 — COMPLETE P01-T03
+- duration: 20m 41s
+- evidence: User approved ADR-0001..0007 in chat ('approve ADRs'); ADR statuses set to Accepted (commit follows); DEC-06 (ROUND_HALF_UP) and DEC-07 (uv, ruff, mypy, pytest) now accepted; QG-01.1 evidence source · Approved by: user (mtisya@gmail.com)

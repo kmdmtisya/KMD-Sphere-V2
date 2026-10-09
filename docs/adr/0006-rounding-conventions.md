@@ -1,6 +1,6 @@
 # ADR-0006: Rounding conventions
 
-Status: Proposed (DEC-06; the user delegated the choice and the recommendation was adopted)
+Status: Accepted (user approval, 2026-10-09)
 
 ## Context
 Money must be exact and reproducible across Flutter, Python and PostgreSQL. Python's `Decimal` defaults to half-even, while PostgreSQL `round(numeric)`, spreadsheets and bank statements round ties away from zero.

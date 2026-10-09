@@ -1,6 +1,6 @@
 # ADR-0007: Test strategy
 
-Status: Proposed
+Status: Accepted (user approval, 2026-10-09)
 
 ## Decision
 - **Backend:** pytest unit tests; API integration tests against PostgreSQL and Redis service containers; golden and property-based (Hypothesis) tests for financial engines; authorization/IDOR tests for every protected endpoint; provider contract tests using recorded fixtures.

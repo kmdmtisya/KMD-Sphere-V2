@@ -1,6 +1,6 @@
 # ADR-0001: UI first with DEMO data
 
-Status: Proposed
+Status: Accepted (user approval, 2026-10-09)
 
 ## Context
 CLAUDE.md orders work backend-first (identity, schema, portfolio) and says not to start with the AI recommendation interface. The approved UI/UX specification defines delivery gates that build the first screens on mock data with an explicit `DEMO` indicator.

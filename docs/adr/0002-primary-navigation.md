@@ -1,6 +1,6 @@
 # ADR-0002: Primary navigation
 
-Status: Proposed
+Status: Accepted (user approval, 2026-10-09)
 
 ## Context
 The written specification defines the tabs Home, Portfolio, AI Wealth, Goals, More. The concept board shows Home, Portfolio, Invest, AI, More. The board is explicitly a visual direction, not a source of truth.

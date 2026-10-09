@@ -1,6 +1,6 @@
 # ADR-0003: Client money representation
 
-Status: Proposed
+Status: Accepted (user approval, 2026-10-09)
 
 ## Context
 CLAUDE.md forbids binary floating point as the authoritative representation of money and states that the backend is authoritative for financial calculations.

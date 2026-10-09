@@ -85,10 +85,10 @@
   - [x] P01-T02.2 Add .gitignore/.editorconfig/README
   - [x] P01-T02.3 Move CLAUDE.md to root and fix paths (D8)
   - [x] P01-T02.4 Extract concept board PNG from the PDF
-- [ ] **P01-T03** · Record foundational ADRs · `AWAITING_VERIFICATION` 🔎
+- [x] **P01-T03** · Record foundational ADRs · `COMPLETED` ✅
   - Deps: P01-T02 · Wave: W2 · Track: DOC · Size: S · Approval: yes
-  - Started: 2026-10-09T14:07:34+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: docs/adr/0001..0007 + README written (Context/Decision/Consequences); ADR-0006 records DEC-06 = ROUND_HALF_UP with full internal precision, boundary-only rounding, minor units per ISO 4217, largest-remainder allocation, tie-case tests; ADR-0004 records DEC-07 tooling (uv, ruff, mypy, pytest). All ADRs are Proposed pending user review
+  - Started: 2026-10-09T14:07:34+04:00 · Completed: 2026-10-09T14:28:15+04:00 · Duration: 20m 41s · Blocker: —
+  - Evidence: User approved ADR-0001..0007 in chat ('approve ADRs'); ADR statuses set to Accepted (commit follows); DEC-06 (ROUND_HALF_UP) and DEC-07 (uv, ruff, mypy, pytest) now accepted; QG-01.1 evidence source · Approved by: user (mtisya@gmail.com)
   - [x] P01-T03.1 ADR-0001 UI-first (D1)
   - [x] P01-T03.2 ADR-0002 navigation (D2)
   - [x] P01-T03.3 ADR-0003 client money (D4)
