@@ -842,5 +842,140 @@
   "demoNotConnected": "Not available in demo mode",
   "@demoNotConnected": {
     "description": "Hint for actions disabled in demo"
+  },
+  "calcInitialInvestment": "Initial investment",
+  "@calcInitialInvestment": {
+    "description": "Calculator field"
+  },
+  "calcMonthlyContribution": "Monthly contribution",
+  "@calcMonthlyContribution": {
+    "description": "Calculator field"
+  },
+  "calcExpectedReturn": "Expected annual return (base)",
+  "@calcExpectedReturn": {
+    "description": "Calculator field"
+  },
+  "calcYears": "Investment period (years)",
+  "@calcYears": {
+    "description": "Calculator field"
+  },
+  "calcContributionGrowth": "Yearly contribution increase (optional)",
+  "@calcContributionGrowth": {
+    "description": "Calculator field"
+  },
+  "calcAdvanced": "Advanced options",
+  "@calcAdvanced": {
+    "description": "Expandable advanced section title"
+  },
+  "calcInflation": "Inflation (per year)",
+  "@calcInflation": {
+    "description": "Calculator field"
+  },
+  "calcFee": "Annual fee",
+  "@calcFee": {
+    "description": "Calculator field"
+  },
+  "calcCompounding": "Compounding",
+  "@calcCompounding": {
+    "description": "Calculator field"
+  },
+  "calcContributionFrequency": "Contributions",
+  "@calcContributionFrequency": {
+    "description": "Calculator field"
+  },
+  "calcFrequencyMonthly": "Monthly",
+  "@calcFrequencyMonthly": {
+    "description": "Frequency option"
+  },
+  "calcFrequencyQuarterly": "Quarterly",
+  "@calcFrequencyQuarterly": {
+    "description": "Frequency option"
+  },
+  "calcFrequencyYearly": "Yearly",
+  "@calcFrequencyYearly": {
+    "description": "Frequency option"
+  },
+  "calcYourAssumptions": "Your assumptions",
+  "@calcYourAssumptions": {
+    "description": "Heading above scenario return rates"
+  },
+  "calcConservativeReturn": "Conservative return",
+  "@calcConservativeReturn": {
+    "description": "Calculator field"
+  },
+  "calcGrowthReturn": "Growth return",
+  "@calcGrowthReturn": {
+    "description": "Calculator field"
+  },
+  "calcNegativeNote": "Negative returns are allowed to model losses.",
+  "@calcNegativeNote": {
+    "description": "Hint for return fields"
+  },
+  "calcCalculate": "Calculate",
+  "@calcCalculate": {
+    "description": "Primary button"
+  },
+  "calcCalculating": "Calculating…",
+  "@calcCalculating": {
+    "description": "Primary button while loading"
+  },
+  "calcFootnote": "Projections are illustrative and not guaranteed.",
+  "@calcFootnote": {
+    "description": "Persistent calculator footnote"
+  },
+  "calcFailed": "We couldn't calculate this. Check your connection and try again.",
+  "@calcFailed": {
+    "description": "Calculation failed message"
+  },
+  "calcFixErrors": "Fix the highlighted fields to continue.",
+  "@calcFixErrors": {
+    "description": "Shown when submitting with invalid fields"
+  },
+  "inputRequired": "Enter a value.",
+  "@inputRequired": {
+    "description": "Validation message"
+  },
+  "inputInvalid": "Enter a valid number.",
+  "@inputInvalid": {
+    "description": "Validation message"
+  },
+  "inputWholeNumber": "Enter a whole number.",
+  "@inputWholeNumber": {
+    "description": "Validation message"
+  },
+  "inputTooLow": "Must be at least {min}.",
+  "@inputTooLow": {
+    "description": "Validation message",
+    "placeholders": {
+      "min": {
+        "type": "String"
+      }
+    }
+  },
+  "inputTooHigh": "Must be at most {max}.",
+  "@inputTooHigh": {
+    "description": "Validation message",
+    "placeholders": {
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "inputTooManyDecimals": "Use at most {digits} decimal places.",
+  "@inputTooManyDecimals": {
+    "description": "Validation message",
+    "placeholders": {
+      "digits": {
+        "type": "String"
+      }
+    }
+  },
+  "inputConservativeAboveBase": "Conservative return can't be higher than the base return.",
+  "@inputConservativeAboveBase": {
+    "description": "Validation message"
+  },
+  "inputGrowthBelowBase": "Growth return can't be lower than the base return.",
+  "@inputGrowthBelowBase": {
+    "description": "Validation message"
   }
 }

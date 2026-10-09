@@ -334,16 +334,16 @@
   - [x] P03-T03.4 Holdings preview
   - [x] P03-T03.5 Contextual AI link
   - [x] P03-T03.6 Tests
-- [ ] **P03-T04** · Compounding Calculator (screen 9) · `NOT_STARTED` ⬜
+- [ ] **P03-T04** · Compounding Calculator (screen 9) · `IN_PROGRESS` 🔄
   - Deps: P03-T01 · Wave: W2 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T01:31:22+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P03-T04.1 Currency/percent inputs with locale decimals
-  - [ ] P03-T04.2 Advanced options
-  - [ ] P03-T04.3 ForecastInputLimits validation
-  - [ ] P03-T04.4 Calculate to ForecastRepository
-  - [ ] P03-T04.5 Keyboard handling
-  - [ ] P03-T04.6 Tests
+  - [x] P03-T04.1 Currency/percent inputs with locale decimals
+  - [x] P03-T04.2 Advanced options
+  - [x] P03-T04.3 ForecastInputLimits validation
+  - [x] P03-T04.4 Calculate to ForecastRepository
+  - [x] P03-T04.5 Keyboard handling
+  - [x] P03-T04.6 Tests
 - [ ] **P03-T05** · Wealth Forecast (screen 10) · `NOT_STARTED` ⬜
   - Deps: P03-T04 · Wave: W3 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
