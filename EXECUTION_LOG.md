@@ -80,3 +80,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-09T13:43:16+04:00 — COMPLETE P01-T01
 - duration: 2m 56s
 - evidence: docker info -> server 29.5.3 answers; flutter doctor all [√] after installing Android platform 36 + build-tools 28.0.3 via sdkmanager (licences already accepted); emulator Pixel_8_Pro booted (sys.boot_completed=1, adb device emulator-5554, Android 17 API 37); Terraform 1.16.5 installed via winget; Python 3.14.5, uv 0.12.20; versions recorded in docs/dev-setup.md
+
+### 2026-10-09T13:44:17+04:00 — COMPLETE P01-T02
+- duration: 3m 57s
+- evidence: git init -b main; commit 3765a4c 'chore: initialise repository, governance files and execution tracking' (17 files, branch main); .gitignore/.editorconfig/README added, .env ignored (git check-ignore); CLAUDE.md moved to repo root with docs/ reading-order paths + execution-control section; docs/design/wealthsphere-ui-concept.png extracted from PDF page 8 (2,070,248 bytes, blob hash identical to worktree); .gitattributes added (LF, binaries) after CRLF warnings

@@ -53,6 +53,7 @@ SUB_RE = re.compile(rf"^  - \[([ x])\] ({TASK_ID}\.\d+) (.*)$")
 PHASE_RE = re.compile(r"^## (P\d\d) — (.*)$")
 APPROVAL_RE = re.compile(r"^- Phase approval: `(.*)`\s*$")
 ISO_TZ_RE = re.compile(r"^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d[+-]\d\d:\d\d$")
+CRLF, LF = chr(13) + chr(10), chr(10)
 AUTO_BEGIN, AUTO_END = "<!-- AUTO:BEGIN -->", "<!-- AUTO:END -->"
 
 
@@ -90,7 +91,7 @@ class Checklist:
     def __init__(self, root: Path):
         self.root = root
         self.path = root / "TASK_CHECKLIST.md"
-        self.lines = self.path.read_text(encoding="utf-8").split("\n")
+        self.lines = self.path.read_text(encoding="utf-8").replace(CRLF, LF).split("\n")
         self.tasks: dict[str, Task] = {}
         self.phases: dict[str, dict] = {}
         self._parse()
@@ -170,7 +171,7 @@ class Checklist:
 
 def log_append(root: Path, title: str, bullets: list[str]) -> None:
     path = root / "EXECUTION_LOG.md"
-    text = path.read_text(encoding="utf-8").rstrip("\n")
+    text = path.read_text(encoding="utf-8").replace(CRLF, LF).rstrip("\n")
     entry = f"\n\n### {now()} — {title}\n" + "\n".join(f"- {b}" for b in bullets)
     path.write_text(text + entry + "\n", encoding="utf-8", newline="\n")
 
@@ -388,7 +389,7 @@ def render_dashboard(cl: Checklist) -> str:
 
 def cmd_dashboard(cl: Checklist, args) -> None:
     path = cl.root / "PROGRESS_DASHBOARD.md"
-    text = path.read_text(encoding="utf-8")
+    text = path.read_text(encoding="utf-8").replace(CRLF, LF)
     if AUTO_BEGIN not in text or AUTO_END not in text:
         die("PROGRESS_DASHBOARD.md is missing AUTO markers")
     head, rest = text.split(AUTO_BEGIN, 1)
@@ -514,7 +515,7 @@ class Register:
     def __init__(self, root: Path):
         self.root = root
         self.path = root / "QUALITY_GATES.md"
-        self.lines = self.path.read_text(encoding="utf-8").split("\n")
+        self.lines = self.path.read_text(encoding="utf-8").replace(CRLF, LF).split("\n")
         self.titles: dict[str, str] = {}
         self.crits: dict[str, Criterion] = {}
         self.fields: dict[str, dict[str, int]] = {}

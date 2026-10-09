@@ -77,14 +77,14 @@
   - [x] P01-T01.3 Create/boot an Android emulator
   - [x] P01-T01.4 Install Terraform (or defer)
   - [x] P01-T01.5 Record versions
-- [ ] **P01-T02** · Initialise repository and governance files · `IN_PROGRESS` 🔄
+- [x] **P01-T02** · Initialise repository and governance files · `COMPLETED` ✅
   - Deps: P00-GATE · Wave: W1 · Track: REPO · Size: S · Approval: no
-  - Started: 2026-10-09T13:40:20+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P01-T02.1 git init (default branch main) and first commit of existing docs
-  - [ ] P01-T02.2 Add .gitignore/.editorconfig/README
-  - [ ] P01-T02.3 Move CLAUDE.md to root and fix paths (D8)
-  - [ ] P01-T02.4 Extract concept board PNG from the PDF
+  - Started: 2026-10-09T13:40:20+04:00 · Completed: 2026-10-09T13:44:17+04:00 · Duration: 3m 57s · Blocker: —
+  - Evidence: git init -b main; commit 3765a4c 'chore: initialise repository, governance files and execution tracking' (17 files, branch main); .gitignore/.editorconfig/README added, .env ignored (git check-ignore); CLAUDE.md moved to repo root with docs/ reading-order paths + execution-control section; docs/design/wealthsphere-ui-concept.png extracted from PDF page 8 (2,070,248 bytes, blob hash identical to worktree); .gitattributes added (LF, binaries) after CRLF warnings
+  - [x] P01-T02.1 git init (default branch main) and first commit of existing docs
+  - [x] P01-T02.2 Add .gitignore/.editorconfig/README
+  - [x] P01-T02.3 Move CLAUDE.md to root and fix paths (D8)
+  - [x] P01-T02.4 Extract concept board PNG from the PDF
 - [ ] **P01-T03** · Record foundational ADRs · `NOT_STARTED` ⬜
   - Deps: P01-T02 · Wave: W2 · Track: DOC · Size: S · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —
