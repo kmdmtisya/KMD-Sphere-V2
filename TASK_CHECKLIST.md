@@ -183,15 +183,15 @@
   - [x] P01-T14.1 Export script
   - [x] P01-T14.2 Spectral ruleset
   - [x] P01-T14.3 CI step
-- [ ] **P01-T15** · Quality-gate CI integration and merge protection · `NOT_STARTED` ⬜
+- [ ] **P01-T15** · Quality-gate CI integration and merge protection · `AWAITING_VERIFICATION` 🔎
   - Deps: P01-T09, P01-T10, P01-T11, P01-T13 · Wave: W6 · Track: INF · Size: M · Approval: no · Gates-done: QG-02.3, QG-02.5, QG-03.6
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P01-T15.1 Required checks and branch protection
-  - [ ] P01-T15.2 CODEOWNERS and review rule
-  - [ ] P01-T15.3 Coverage report
-  - [ ] P01-T15.4 Tracker validation job
-  - [ ] P01-T15.5 ADR-0008
+  - Started: 2026-10-09T17:55:33+04:00 · Completed: — · Duration: — · Blocker: —
+  - Evidence: Ruleset 'main protection' (id 24794631, enforcement active, bypass actors: none): deletion and force-push blocked, pull request required (0 approvals, threads resolved), required checks 'backend gate','mobile gate','security gate','tracker validate'. PROOF: (1) direct push to main rejected: 'GH013 Repository rule violations: Changes must be made through a pull request; 4 of 4 required status checks are expected'; (2) throwaway PR #5 with unformatted code: 'lint, types, tests, migrations' failed, mergeStateStatus BLOCKED, 'gh pr merge' refused ('the base branch policy prohibits the merge'), PR closed unmerged, branch deleted. Workflows rebuilt as always-run + change-detection + gate jobs (a first version failed because gate jobs inherited a non-existent working directory; found by CI on PR #4 and fixed before the rule was enabled). New tracker.yml; CODEOWNERS; scripts/coverage_by_module.py + backend/coverage-policy.toml (per-module table in job summary, 85% floor for business-critical modules once they exist; 7 tests); ADR-0008 (Proposed); generated coverage.xml mistakenly committed and removed/ignored. AWAITING: QG-02.5 (code reviews) cannot be ticked honestly until the user decides whether the compensating controls in ADR-0008 are acceptable (0 required approvals because the sole maintainer cannot approve own PRs)
+  - [x] P01-T15.1 Required checks and branch protection
+  - [x] P01-T15.2 CODEOWNERS and review rule
+  - [x] P01-T15.3 Coverage report
+  - [x] P01-T15.4 Tracker validation job
+  - [x] P01-T15.5 ADR-0008
 - [x] **P01-T16** · Define supported platforms and measurable quality targets · `COMPLETED` ✅
   - Deps: P01-T03 · Wave: W3 · Track: DOC · Size: M · Approval: yes · Gates-done: QG-04.3, QG-05.2
   - Started: 2026-10-09T15:46:03+04:00 · Completed: 2026-10-09T15:52:49+04:00 · Duration: 6m 46s · Blocker: —

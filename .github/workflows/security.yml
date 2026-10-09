@@ -122,3 +122,19 @@ jobs:
           name: sbom-cyclonedx
           path: sbom.cdx.json
           retention-days: 90
+
+  security-gate:
+    name: security gate
+    if: always()
+    needs: [secrets, dependencies, sast, trivy, sbom]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Require every security job to have passed
+        env:
+          RESULTS: ${{ needs.secrets.result }} ${{ needs.dependencies.result }} ${{ needs.sast.result }} ${{ needs.trivy.result }} ${{ needs.sbom.result }}
+        run: |
+          for r in $RESULTS; do
+            [ "$r" = "success" ] || { echo "::error::a security job finished with result: $r"; exit 1; }
+          done
+          echo "all security jobs passed"

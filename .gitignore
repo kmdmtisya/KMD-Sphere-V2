@@ -61,3 +61,8 @@ reports/tmp/
 
 # Flutter generated localisation
 mobile/wealthsphere_app/lib/l10n/generated/
+
+# test and coverage reports
+coverage.xml
+.coverage*
+htmlcov/
