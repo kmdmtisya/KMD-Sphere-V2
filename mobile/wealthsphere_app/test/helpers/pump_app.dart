@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wealthsphere_app/l10n/generated/app_localizations.dart';
+import 'package:wealthsphere_app/shared/design_system/theme/app_theme.dart';
 
 /// Wraps [child] with provider scope, theme, localisation, text scale and text direction.
 /// Every widget test in the project uses this helper so light/dark, 2.0x text and RTL
@@ -26,10 +27,8 @@ extension PumpApp on WidgetTester {
       ProviderScope(
         overrides: overrides,
         child: MaterialApp(
-          theme: theme ?? ThemeData(useMaterial3: true),
-          darkTheme:
-              darkTheme ??
-              ThemeData(useMaterial3: true, brightness: Brightness.dark),
+          theme: theme ?? AppTheme.light(),
+          darkTheme: darkTheme ?? AppTheme.dark(),
           themeMode: themeMode,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
