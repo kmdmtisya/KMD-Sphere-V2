@@ -288,13 +288,13 @@
   - [x] P02-T08.1 Gallery screen
   - [x] P02-T08.2 Goldens
   - [x] P02-T08.3 design-system.md
-- [ ] **P02-GATE** · UX Gate 1 review · `IN_PROGRESS` 🔄
+- [x] **P02-GATE** · UX Gate 1 review · `COMPLETED` ✅
   - Deps: P02-T01, P02-T02, P02-T03, P02-T04, P02-T05, P02-T06, P02-T07, P02-T08 · Wave: W6 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-01.5
-  - Started: 2026-10-09T23:36:18+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-09T23:36:18+04:00 · Completed: 2026-10-09T23:38:27+04:00 · Duration: 2m 09s · Blocker: —
+  - Evidence: User approved UX Gate 1 on 2026-10-09 after reviewing the gallery. Gates run: dart format clean, flutter analyze clean, 576 tests passed (34 goldens skipped on Windows, compared on CI Linux), CI mobile and tracker green on main. QG-01.5 verified. TalkBack check of chart summaries remains open. · Approved by: user (mtisya@gmail.com)
   - [x] P02-GATE.1 Run gates
-  - [ ] P02-GATE.2 Demo gallery
-  - [ ] P02-GATE.3 Record approval
+  - [x] P02-GATE.2 Demo gallery
+  - [x] P02-GATE.3 Record approval
 
 
 ## P03 — Priority Screens with DEMO Data (UX Gate 2)
