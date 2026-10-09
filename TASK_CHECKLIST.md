@@ -225,9 +225,9 @@
   - [x] P02-T01.3 Spacing/radii/motion/breakpoints
   - [x] P02-T01.4 Contrast test
   - [x] P02-T01.5 Guard test
-- [ ] **P02-T02** · Themes, typography and theme-mode persistence · `NOT_STARTED` ⬜
+- [ ] **P02-T02** · Themes, typography and theme-mode persistence · `IN_PROGRESS` 🔄
   - Deps: P02-T01 · Wave: W2 · Track: MOB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-09T20:15:45+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P02-T02.1 ThemeData builders
   - [ ] P02-T02.2 Component themes

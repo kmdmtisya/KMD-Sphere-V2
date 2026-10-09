@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../l10n/generated/app_localizations.dart';
-import '../shared/design_system/tokens/tokens.dart';
+import '../shared/design_system/theme/theme.dart';
 import 'router.dart';
+
+final ThemeData _lightTheme = AppTheme.light();
+final ThemeData _darkTheme = AppTheme.dark();
 
 class WealthSphereApp extends ConsumerWidget {
   const WealthSphereApp({super.key});
@@ -15,10 +18,9 @@ class WealthSphereApp extends ConsumerWidget {
       routerConfig: ref.watch(routerProvider),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: BrandPalette.blue600,
-      ),
+      theme: _lightTheme,
+      darkTheme: _darkTheme,
+      themeMode: ref.watch(themeModeProvider),
     );
   }
 }

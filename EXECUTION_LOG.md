@@ -345,3 +345,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-09T19:53:29+04:00 — CORRECTION — test counts in the P02-T01 and P02-T03 evidence
 - The completion evidence quoted approximate figures from memory ('about 120 assertions', '125 cases'). Measured: tokens suite 159 tests, formatting suite 60 tests, guard suite 10 tests, full mobile suite 230 tests. The two phrases in TASK_CHECKLIST.md evidence text were corrected to the measured numbers; no status, timestamp or other evidence was changed.
+
+### 2026-10-09T20:15:45+04:00 — START P02-T02
+- Themes, typography and theme-mode persistence
+- prerequisites verified COMPLETED
