@@ -84,3 +84,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-09T13:44:17+04:00 — COMPLETE P01-T02
 - duration: 3m 57s
 - evidence: git init -b main; commit 3765a4c 'chore: initialise repository, governance files and execution tracking' (17 files, branch main); .gitignore/.editorconfig/README added, .env ignored (git check-ignore); CLAUDE.md moved to repo root with docs/ reading-order paths + execution-control section; docs/design/wealthsphere-ui-concept.png extracted from PDF page 8 (2,070,248 bytes, blob hash identical to worktree); .gitattributes added (LF, binaries) after CRLF warnings
+
+### 2026-10-09T13:59:17+04:00 — Repository published to GitHub (user instruction)
+- Remote origin = https://github.com/kmdmtisya/KMD-Sphere-V2.git; main pushed (HEAD d189265); remote was empty beforehand.
+- Convention recorded in CLAUDE.md: commit each completed task and push to origin.

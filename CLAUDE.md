@@ -5,6 +5,7 @@ Work is driven by `EXECUTION_PLAN.md` (roadmap), `TASK_CHECKLIST.md` (state), `Q
 - Follow the per-task procedure in `EXECUTION_PLAN.md` section 4.2. Do one task, wave or phase at a time and never start the next phase without the user's approval.
 - Change task, gate and approval state only with `python scripts/track.py ...`; never hand-edit statuses, checkboxes or timestamps, and never fabricate evidence.
 - Mark a task complete only after its acceptance criteria and quality gates are verified.
+- Source control: remote `origin` = https://github.com/kmdmtisya/KMD-Sphere-V2.git (branch `main`). Commit each completed task (message `<type>: <task id> <summary>`) and push to `origin`; never force-push or rewrite pushed history without the user's approval.
 
 ## Project
 WealthSphere - AI-Powered Portfolio & Wealth Intelligence Platform.
