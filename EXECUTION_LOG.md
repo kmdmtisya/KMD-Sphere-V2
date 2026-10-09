@@ -487,3 +487,6 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-10T02:52:46+04:00 — START P03-T07
 - Journeys, accessibility sweep and device QA
 - prerequisites verified COMPLETED
+
+### 2026-10-10T03:34:08+04:00 — BLOCKED P03-T07
+- reason: Waiting on manual device QA (P03-T07.3): the checklist in docs/design/qa-gate2.md needs a person at small/large Android and iOS devices (TalkBack/VoiceOver, safe areas, keyboard, real restart, concept-board comparison); iOS hardware outstanding (TD-09). Done so far (PR #26): 5/5 integration journeys pass on the Android emulator (API 37); accessibility sweep 40/40 in CI; suite 811 passing.
