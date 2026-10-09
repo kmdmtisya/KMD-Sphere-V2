@@ -334,16 +334,16 @@
   - [x] P03-T03.4 Holdings preview
   - [x] P03-T03.5 Contextual AI link
   - [x] P03-T03.6 Tests
-- [ ] **P03-T04** · Compounding Calculator (screen 9) · `NOT_STARTED` ⬜
+- [x] **P03-T04** · Compounding Calculator (screen 9) · `COMPLETED` ✅
   - Deps: P03-T01 · Wave: W2 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P03-T04.1 Currency/percent inputs with locale decimals
-  - [ ] P03-T04.2 Advanced options
-  - [ ] P03-T04.3 ForecastInputLimits validation
-  - [ ] P03-T04.4 Calculate to ForecastRepository
-  - [ ] P03-T04.5 Keyboard handling
-  - [ ] P03-T04.6 Tests
+  - Started: 2026-10-10T01:31:22+04:00 · Completed: 2026-10-10T01:56:52+04:00 · Duration: 25m 30s · Blocker: —
+  - Evidence: PR #23. CalculatorScreen (features/calculator/presentation) replaces the calculator placeholder: currency inputs (initial, monthly) and percent/year inputs with a locale-aware decimal typing filter and numeric keyboards (core/input/decimal_input.dart: exact Decimal parsing, rejects '.' in comma-decimal locales, drops letters/grouping/second separator, caps decimals, optional leading minus); collapsible Advanced options (inflation, fee, compounding and contribution frequency, Your assumptions conservative/growth rates). Validation from one definition, ForecastInputLimits (ranges, decimals, whole years, conservative <= base <= growth; negative returns allowed within limits with a note; defaults equal the demo forecast fixture's request, asserted by test). Calculate builds a CompoundForecastRequest (money and rates as strings), calls ForecastRepository.compound with a loading state and no double submit, stores the result in forecastResultProvider and opens the Forecast route; failure shows an inline message and the button becomes Try again. Inputs survive navigating to Forecast and back (calculatorInputsProvider). Persistent footnote: projections are illustrative and not guaranteed. Defect found by tests and fixed: the first version used a lazy ListView and a collapsing ExpansionTile, so an invalid field offscreen or in the collapsed section was not validated and could be submitted; now a non-lazy scroll view, maintainState fields and an all-field validity check (regression tests added). A guard test asserts no dart:math/pow/exp/log in the calculator code (DEC-03). Tests: 48 in test/features/calculator (unit: parsing in en and de, typing filter, every limit boundary, ordering, defaults; widget: defaults, validation messages, blocked submit including hidden fields, request contents and frequencies, loading, failure and retry, input persistence, keyboard inset at 320x568 with footnote above the keyboard and focused field visible, labels and 48dp button, 320dp x light/dark x LTR/RTL x 1.0/2.0x with errors and advanced open). Suite 722 passing (34 goldens skipped on Windows). Mutants (all-field check, maintainState, a limit, comma-locale dot rejection) caught. Comma-decimal input is verified at the input layer; the app only ships English l10n so a de-locale screen run is not possible yet. format/analyze clean, CI green. Not run on an emulator yet (P03-T07).
+  - [x] P03-T04.1 Currency/percent inputs with locale decimals
+  - [x] P03-T04.2 Advanced options
+  - [x] P03-T04.3 ForecastInputLimits validation
+  - [x] P03-T04.4 Calculate to ForecastRepository
+  - [x] P03-T04.5 Keyboard handling
+  - [x] P03-T04.6 Tests
 - [ ] **P03-T05** · Wealth Forecast (screen 10) · `NOT_STARTED` ⬜
   - Deps: P03-T04 · Wave: W3 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

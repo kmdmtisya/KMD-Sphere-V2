@@ -135,7 +135,10 @@ void main() {
         await tapTab(tester, 'More');
         await tester.tap(find.text('Compounding calculator'));
         await tester.pumpAndSettle();
-        await tester.tap(find.text('Wealth forecast'));
+        // The calculator opens with valid defaults; Calculate shows the forecast.
+        await tester.ensureVisible(find.text('Calculate'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('Calculate'));
         await tester.pumpAndSettle();
         expect(onScreen('Wealth forecast'), isTrue);
 
