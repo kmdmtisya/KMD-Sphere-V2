@@ -159,3 +159,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-09T15:39:55+04:00 — COMPLETE P01-T09
 - duration: 5m 04s
 - evidence: GitHub Actions run 37925019120 (https://github.com/kmdmtisya/KMD-Sphere-V2/actions/runs/37925019120) success on commit 42ab0ca: .github/workflows/backend.yml on ubuntu-24.04 with pgvector/pgvector:pg17 + redis:7 service containers; uv sync --locked, ruff format --check, ruff check, mypy, Alembic upgrade/check/downgrade/upgrade + single-head, pytest --cov-fail-under=85 -> 39 passed, 0 skipped (integration tests ran), coverage 97.86%; path filters backend/** and workflow file; required-check names documented in docs/ci.md. Test settings made hermetic after a CI-env simulation showed ambient POSTGRES_* variables would break config tests. Evidence for QG-02.1, QG-02.2, QG-03.1, QG-10.1 (backend part)
+
+### 2026-10-09T15:46:03+04:00 — START P01-T16
+- Define supported platforms and measurable quality targets
+- prerequisites verified COMPLETED
+
+### 2026-10-09T15:46:57+04:00 — AWAITING_VERIFICATION P01-T16
+- evidence: docs/quality-targets.md drafted: platform support (Android API 26+, iOS 16+, reference devices), mobile performance/stability targets with measurement methods, API and database SLOs, design workload assumptions, coverage policy, AI evaluation datasets with zero-tolerance list, validation schedule, 5 decisions requested. Platform defaults read from the generated project (Flutter minSdk 24, iOS 15.0). Status PROPOSED: awaiting user approval; QG-04.3 and QG-05.2 are not ticked until approved

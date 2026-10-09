@@ -192,14 +192,14 @@
   - [ ] P01-T15.3 Coverage report
   - [ ] P01-T15.4 Tracker validation job
   - [ ] P01-T15.5 ADR-0008
-- [ ] **P01-T16** · Define supported platforms and measurable quality targets · `NOT_STARTED` ⬜
+- [ ] **P01-T16** · Define supported platforms and measurable quality targets · `AWAITING_VERIFICATION` 🔎
   - Deps: P01-T03 · Wave: W3 · Track: DOC · Size: M · Approval: yes · Gates-done: QG-04.3, QG-05.2
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P01-T16.1 Platform support matrix
-  - [ ] P01-T16.2 Mobile performance targets
-  - [ ] P01-T16.3 API/database SLOs
-  - [ ] P01-T16.4 AI evaluation datasets and thresholds approach
+  - Started: 2026-10-09T15:46:03+04:00 · Completed: — · Duration: — · Blocker: —
+  - Evidence: docs/quality-targets.md drafted: platform support (Android API 26+, iOS 16+, reference devices), mobile performance/stability targets with measurement methods, API and database SLOs, design workload assumptions, coverage policy, AI evaluation datasets with zero-tolerance list, validation schedule, 5 decisions requested. Platform defaults read from the generated project (Flutter minSdk 24, iOS 15.0). Status PROPOSED: awaiting user approval; QG-04.3 and QG-05.2 are not ticked until approved
+  - [x] P01-T16.1 Platform support matrix
+  - [x] P01-T16.2 Mobile performance targets
+  - [x] P01-T16.3 API/database SLOs
+  - [x] P01-T16.4 AI evaluation datasets and thresholds approach
 - [ ] **P01-GATE** · Phase P01 exit gate · `NOT_STARTED` ⬜
   - Deps: P01-T01, P01-T02, P01-T03, P01-T04, P01-T05, P01-T06, P01-T07, P01-T08, P01-T09, P01-T10, P01-T11, P01-T12, P01-T13, P01-T14, P01-T15, P01-T16 · Wave: W7 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-01.1, QG-01.2, QG-02.1, QG-02.2, QG-02.3, QG-02.4, QG-02.5, QG-02.6, QG-03.1, QG-03.6, QG-04.1, QG-04.2, QG-04.3, QG-05.1, QG-05.2, QG-08.3, QG-08.4, QG-08.6, QG-10.1, QG-10.3
   - Started: — · Completed: — · Duration: — · Blocker: —
