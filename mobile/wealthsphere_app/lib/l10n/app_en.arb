@@ -265,5 +265,365 @@
   "calculatorTitle": "Compounding calculator",
   "@calculatorTitle": {
     "description": "Title of the calculator screen"
+  },
+  "periodSelectorLabel": "Time period",
+  "@periodSelectorLabel": {
+    "description": "Label for the chart period selector"
+  },
+  "period1w": "1W",
+  "@period1w": {
+    "description": "Short chart period label"
+  },
+  "periodSpoken1w": "1 week",
+  "@periodSpoken1w": {
+    "description": "Spoken chart period label"
+  },
+  "period1m": "1M",
+  "@period1m": {
+    "description": "Short chart period label"
+  },
+  "periodSpoken1m": "1 month",
+  "@periodSpoken1m": {
+    "description": "Spoken chart period label"
+  },
+  "period3m": "3M",
+  "@period3m": {
+    "description": "Short chart period label"
+  },
+  "periodSpoken3m": "3 months",
+  "@periodSpoken3m": {
+    "description": "Spoken chart period label"
+  },
+  "period6m": "6M",
+  "@period6m": {
+    "description": "Short chart period label"
+  },
+  "periodSpoken6m": "6 months",
+  "@periodSpoken6m": {
+    "description": "Spoken chart period label"
+  },
+  "periodYtd": "YTD",
+  "@periodYtd": {
+    "description": "Short chart period label"
+  },
+  "periodSpokenYtd": "Year to date",
+  "@periodSpokenYtd": {
+    "description": "Spoken chart period label"
+  },
+  "period1y": "1Y",
+  "@period1y": {
+    "description": "Short chart period label"
+  },
+  "periodSpoken1y": "1 year",
+  "@periodSpoken1y": {
+    "description": "Spoken chart period label"
+  },
+  "periodAll": "ALL",
+  "@periodAll": {
+    "description": "Short chart period label"
+  },
+  "periodSpokenAll": "All time",
+  "@periodSpokenAll": {
+    "description": "Spoken chart period label"
+  },
+  "allPortfolios": "All portfolios (consolidated)",
+  "@allPortfolios": {
+    "description": "Portfolio switcher option showing every portfolio combined"
+  },
+  "selectPortfolio": "Select portfolio",
+  "@selectPortfolio": {
+    "description": "Title of the portfolio chooser sheet"
+  },
+  "portfolioSwitcherSpoken": "Portfolio: {name}. Double tap to change.",
+  "@portfolioSwitcherSpoken": {
+    "description": "Spoken label of the portfolio switcher",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "selected": "Selected",
+  "@selected": {
+    "description": "Spoken and visible selected state"
+  },
+  "scenarioRate": "{rate} a year assumed",
+  "@scenarioRate": {
+    "description": "Scenario return assumption (an assumption, not a promise)",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "scenarioProjected": "Projected value",
+  "@scenarioProjected": {
+    "description": "Label above a projected final value"
+  },
+  "evidenceSourceSpoken": "Source: {source}, provider {provider}, {asOf}. Double tap for details.",
+  "@evidenceSourceSpoken": {
+    "description": "Spoken label of an evidence chip",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      },
+      "provider": {
+        "type": "String"
+      },
+      "asOf": {
+        "type": "String"
+      }
+    }
+  },
+  "evidenceSheetTitle": "Source details",
+  "@evidenceSheetTitle": {
+    "description": "Title of the evidence detail sheet"
+  },
+  "evidenceProvider": "Provider",
+  "@evidenceProvider": {
+    "description": "Evidence detail label"
+  },
+  "evidenceSource": "Source",
+  "@evidenceSource": {
+    "description": "Evidence detail label"
+  },
+  "close": "Close",
+  "@close": {
+    "description": "Close button"
+  },
+  "metricInfo": "About {label}",
+  "@metricInfo": {
+    "description": "Tooltip for the metric definition button",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "chatHint": "Ask about your wealth",
+  "@chatHint": {
+    "description": "Hint of the AI chat input"
+  },
+  "chatSend": "Send",
+  "@chatSend": {
+    "description": "Send message button"
+  },
+  "chatStop": "Stop",
+  "@chatStop": {
+    "description": "Stop streaming button"
+  },
+  "chatCounter": "{count} of {max}",
+  "@chatCounter": {
+    "description": "Character counter of the chat input",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "chartViewAsTable": "View as table",
+  "@chartViewAsTable": {
+    "description": "Toggle that shows chart points as a table"
+  },
+  "chartViewAsChart": "View as chart",
+  "@chartViewAsChart": {
+    "description": "Toggle that returns from the table to the chart"
+  },
+  "chartNoData": "No data to chart yet",
+  "@chartNoData": {
+    "description": "Shown when a chart has no points"
+  },
+  "chartTableDate": "Date",
+  "@chartTableDate": {
+    "description": "Table column header"
+  },
+  "chartTableValue": "Value",
+  "@chartTableValue": {
+    "description": "Table column header"
+  },
+  "chartSummarySingle": "{series}: {value} on {date}.",
+  "@chartSummarySingle": {
+    "description": "Chart summary with one point",
+    "placeholders": {
+      "series": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "chartSummaryRose": "{series} rose from {start} to {end} over {range}. High {high} on {highDate}, low {low} on {lowDate}.",
+  "@chartSummaryRose": {
+    "description": "Chart summary for a rising series",
+    "placeholders": {
+      "series": {
+        "type": "String"
+      },
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      },
+      "range": {
+        "type": "String"
+      },
+      "high": {
+        "type": "String"
+      },
+      "highDate": {
+        "type": "String"
+      },
+      "low": {
+        "type": "String"
+      },
+      "lowDate": {
+        "type": "String"
+      }
+    }
+  },
+  "chartSummaryFell": "{series} fell from {start} to {end} over {range}. High {high} on {highDate}, low {low} on {lowDate}.",
+  "@chartSummaryFell": {
+    "description": "Chart summary for a falling series",
+    "placeholders": {
+      "series": {
+        "type": "String"
+      },
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      },
+      "range": {
+        "type": "String"
+      },
+      "high": {
+        "type": "String"
+      },
+      "highDate": {
+        "type": "String"
+      },
+      "low": {
+        "type": "String"
+      },
+      "lowDate": {
+        "type": "String"
+      }
+    }
+  },
+  "chartSummaryFlat": "{series} stayed at {start} over {range}. High {high} on {highDate}, low {low} on {lowDate}.",
+  "@chartSummaryFlat": {
+    "description": "Chart summary for an unchanged series",
+    "placeholders": {
+      "series": {
+        "type": "String"
+      },
+      "start": {
+        "type": "String"
+      },
+      "range": {
+        "type": "String"
+      },
+      "high": {
+        "type": "String"
+      },
+      "highDate": {
+        "type": "String"
+      },
+      "low": {
+        "type": "String"
+      },
+      "lowDate": {
+        "type": "String"
+      }
+    }
+  },
+  "allocationSliceSpoken": "{label}, {percent}",
+  "@allocationSliceSpoken": {
+    "description": "Spoken allocation slice",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "forecastSeriesSpoken": "{series}: {value} after {years}",
+  "@forecastSeriesSpoken": {
+    "description": "Spoken last value of a forecast series",
+    "placeholders": {
+      "series": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "years": {
+        "type": "String"
+      }
+    }
+  },
+  "seriesSelected": "{label} (selected)",
+  "@seriesSelected": {
+    "description": "Legend label for the emphasised series",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "yearsCount": "{count, plural, one{1 year} other{{count} years}}",
+  "@yearsCount": {
+    "description": "A number of years",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "yearsShort": "{count}y",
+  "@yearsShort": {
+    "description": "Short axis label for years",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "allocationSummary": "Allocation: {slices}.",
+  "@allocationSummary": {
+    "description": "Spoken summary of an allocation chart",
+    "placeholders": {
+      "slices": {
+        "type": "String"
+      }
+    }
+  },
+  "forecastSummary": "Forecast comparison. {series}.",
+  "@forecastSummary": {
+    "description": "Spoken summary of the forecast chart",
+    "placeholders": {
+      "series": {
+        "type": "String"
+      }
+    }
+  },
+  "chartTableName": "Name",
+  "@chartTableName": {
+    "description": "Table column header"
+  },
+  "chartTableYear": "Year",
+  "@chartTableYear": {
+    "description": "Table column header for forecast years"
   }
 }

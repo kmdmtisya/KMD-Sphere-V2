@@ -369,3 +369,19 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-09T21:25:52+04:00 — COMPLETE P02-T07
 - duration: 25m 24s
 - evidence: PR #14. GoRouter StatefulShellRoute.indexedStack with five tab branches built from the tabRoutes registry, WealthBottomNav (labels always visible, reselect callback), root redirect, NotFoundScreen, strict AiScope.tryParse for untrusted /ai?scope= links. Tests: app_routes_test, navigation_test (stack persistence across tabs, back pops nested then exits at root via mocked SystemNavigator.pop, reselect returns to root, hostile scopes ignored, 320x568 at 1.0/2.0x in LTR/RTL), wealth_bottom_nav_test. Full mobile suite 416 passing; format/analyze clean; CI green. Mutations to reselect logic, root redirect and scope id regex were each caught. Not verified on a device in this task.
+
+### 2026-10-09T21:42:30+04:00 — START P02-T05
+- Composite components
+- prerequisites verified COMPLETED
+
+### 2026-10-09T21:42:30+04:00 — START P02-T06
+- Accessible charts
+- prerequisites verified COMPLETED
+
+### 2026-10-09T22:09:31+04:00 — COMPLETE P02-T05
+- duration: 27m 01s
+- evidence: PR #15. Components in lib/shared/design_system/components: WealthCard, WealthSummaryCard, MetricCard (definition tooltip), PeriodSelector + ChartPeriod, PortfolioSwitcher (+PortfolioOption, sheet incl. consolidated option), InvestmentRow, ScenarioCard (radio semantics, border + check icon + 'Selected'), EvidenceSourceChip (+EvidenceSource, detail sheet, no URL opening), AIChatComposer (send disabled when blank/streaming, stop while streaming, max length, counter). Tests in composite_components_test.dart cover interaction, semantics, and a 7-component light/dark x LTR/RTL x 1.0/2.0x matrix at 320x568 with no overflow; test/guards/composite_purity_test.dart asserts none uses riverpod/ref/repository. Local flutter test: 565 passed, 6 skipped (the chart goldens, Linux-only); dart format and flutter analyze clean; CI mobile gate, android build and ios compile green. Mutations (scenario check icon, blank-text send guard) were caught. Not verified on a device in this task.
+
+### 2026-10-09T22:09:32+04:00 — COMPLETE P02-T06
+- duration: 27m 02s
+- evidence: PR #15. DEC-13 confirmed by user: fl_chart. lib/shared/design_system/charts: ChartPoint/ChartSeries/ForecastPoint/ForecastSeries/AllocationSlice (Decimal; double only at plotting coordinates), ChartSemantics (rose/fell/flat/single/empty summaries from supplied points, exact above 2^53), ChartFrame (summary semantics + View as table toggle + empty state), PerformanceLineChart (tooltip, loading skeleton, reduced motion), AllocationDonutChart + AllocationLegend (palette + labels + percentages, tap to highlight), ForecastComparisonChart (selected solid, others dashed/thinner, max 3, legend). charts_test.dart covers summaries, empty/single-point, tooltips, table toggle, legend, and a 3-chart light/dark x LTR/RTL x 1.0/2.0x matrix (which caught and led to a fix of a legend overflow). 6 golden images (3 charts x light/dark) were generated on the CI Linux runner, reviewed visually, committed, and compared by CI (mobile gate green); goldens are skipped on non-Linux. Local: 565 passed, 6 skipped; format and analyze clean. Mutations (summary direction, dash style, tooltip date, sorted-points assert) were caught. TalkBack read-through of the summaries not yet done (UI_EXECUTION_PLAN step 6 asks for one) and is deferred to P02-T08/the P02 gate.

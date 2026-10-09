@@ -239,7 +239,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | DEC-10 | Jurisdictions, regulatory classification and disclaimer wording (legal review) | P11-T10 / P13-T05 | User + legal | Open |
 | DEC-11 | Penetration-test provider (external vs internal) | P13-T03 | User | Open |
 | DEC-12 | Offline cache storage (encrypted Drift vs alternatives) | P09-T06 | Claude proposes, user approves | Open |
-| DEC-13 | Charts library: fl_chart (open-source, proposed) vs Syncfusion (licence) | P02-T06 | User | Proposed |
+| DEC-13 | Charts library: fl_chart (open-source, proposed) vs Syncfusion (licence) | P02-T06 | User | Resolved: fl_chart (confirmed 2026-10-09) |
 | DEC-15 | Supported Android versions (minimum API level) and iOS versions/devices | P01-T16 | User | Resolved: Android 8.0 (API 26), iOS 16.0 |
 | DEC-16 | Measurable performance targets: app start-up, memory, crash rate, API p95/p99 SLOs, database query thresholds | P01-T16 | User | Resolved: targets approved (design workload to be revisited at P06 baseline) |
 | DEC-17 | AI evaluation datasets and acceptance thresholds for QG-07 | P01-T16 / P10-T09 | User + Claude | Resolved: approach and zero-tolerance list approved; datasets drafted in P10-T09 |

@@ -252,26 +252,26 @@
   - [x] P02-T04.4 Skeleton/Empty/Error
   - [x] P02-T04.5 AsyncValueView
   - [x] P02-T04.6 Widget tests in light/dark/2.0x/RTL
-- [ ] **P02-T05** · Composite components · `NOT_STARTED` ⬜
+- [x] **P02-T05** · Composite components · `COMPLETED` ✅
   - Deps: P02-T04 · Wave: W4 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P02-T05.1 Summary and metric cards
-  - [ ] P02-T05.2 PeriodSelector and PortfolioSwitcher
-  - [ ] P02-T05.3 InvestmentRow and ScenarioCard
-  - [ ] P02-T05.4 EvidenceSourceChip
-  - [ ] P02-T05.5 AIChatComposer
-  - [ ] P02-T05.6 Interaction and semantics tests
-- [ ] **P02-T06** · Accessible charts · `NOT_STARTED` ⬜
+  - Started: 2026-10-09T21:42:30+04:00 · Completed: 2026-10-09T22:09:31+04:00 · Duration: 27m 01s · Blocker: —
+  - Evidence: PR #15. Components in lib/shared/design_system/components: WealthCard, WealthSummaryCard, MetricCard (definition tooltip), PeriodSelector + ChartPeriod, PortfolioSwitcher (+PortfolioOption, sheet incl. consolidated option), InvestmentRow, ScenarioCard (radio semantics, border + check icon + 'Selected'), EvidenceSourceChip (+EvidenceSource, detail sheet, no URL opening), AIChatComposer (send disabled when blank/streaming, stop while streaming, max length, counter). Tests in composite_components_test.dart cover interaction, semantics, and a 7-component light/dark x LTR/RTL x 1.0/2.0x matrix at 320x568 with no overflow; test/guards/composite_purity_test.dart asserts none uses riverpod/ref/repository. Local flutter test: 565 passed, 6 skipped (the chart goldens, Linux-only); dart format and flutter analyze clean; CI mobile gate, android build and ios compile green. Mutations (scenario check icon, blank-text send guard) were caught. Not verified on a device in this task.
+  - [x] P02-T05.1 Summary and metric cards
+  - [x] P02-T05.2 PeriodSelector and PortfolioSwitcher
+  - [x] P02-T05.3 InvestmentRow and ScenarioCard
+  - [x] P02-T05.4 EvidenceSourceChip
+  - [x] P02-T05.5 AIChatComposer
+  - [x] P02-T05.6 Interaction and semantics tests
+- [x] **P02-T06** · Accessible charts · `COMPLETED` ✅
   - Deps: P02-T04 · Wave: W4 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P02-T06.1 Chart data model
-  - [ ] P02-T06.2 ChartSemantics
-  - [ ] P02-T06.3 Line chart
-  - [ ] P02-T06.4 Donut + legend
-  - [ ] P02-T06.5 Forecast comparison chart
-  - [ ] P02-T06.6 Goldens
+  - Started: 2026-10-09T21:42:30+04:00 · Completed: 2026-10-09T22:09:32+04:00 · Duration: 27m 02s · Blocker: —
+  - Evidence: PR #15. DEC-13 confirmed by user: fl_chart. lib/shared/design_system/charts: ChartPoint/ChartSeries/ForecastPoint/ForecastSeries/AllocationSlice (Decimal; double only at plotting coordinates), ChartSemantics (rose/fell/flat/single/empty summaries from supplied points, exact above 2^53), ChartFrame (summary semantics + View as table toggle + empty state), PerformanceLineChart (tooltip, loading skeleton, reduced motion), AllocationDonutChart + AllocationLegend (palette + labels + percentages, tap to highlight), ForecastComparisonChart (selected solid, others dashed/thinner, max 3, legend). charts_test.dart covers summaries, empty/single-point, tooltips, table toggle, legend, and a 3-chart light/dark x LTR/RTL x 1.0/2.0x matrix (which caught and led to a fix of a legend overflow). 6 golden images (3 charts x light/dark) were generated on the CI Linux runner, reviewed visually, committed, and compared by CI (mobile gate green); goldens are skipped on non-Linux. Local: 565 passed, 6 skipped; format and analyze clean. Mutations (summary direction, dash style, tooltip date, sorted-points assert) were caught. TalkBack read-through of the summaries not yet done (UI_EXECUTION_PLAN step 6 asks for one) and is deferred to P02-T08/the P02 gate.
+  - [x] P02-T06.1 Chart data model
+  - [x] P02-T06.2 ChartSemantics
+  - [x] P02-T06.3 Line chart
+  - [x] P02-T06.4 Donut + legend
+  - [x] P02-T06.5 Forecast comparison chart
+  - [x] P02-T06.6 Goldens
 - [x] **P02-T07** · Navigation shell and WealthBottomNav · `COMPLETED` ✅
   - Deps: P02-T02 · Wave: W3 · Track: MOB · Size: M · Approval: no
   - Started: 2026-10-09T21:00:28+04:00 · Completed: 2026-10-09T21:25:52+04:00 · Duration: 25m 24s · Blocker: —
