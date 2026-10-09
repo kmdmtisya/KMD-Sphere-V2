@@ -243,3 +243,62 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-09T18:24:49+04:00 — USER DECISION — review controls accepted (QG-02.5, ADR-0008)
 - User chose option 1: accept the compensating review controls (CODEOWNERS, PR template, recorded user approvals, independent diff review for sensitive changes; required approvals 0 while single maintainer). ADR-0008 set to Accepted and QG-02.5 verified in PR #6; P01-T15 completed in the follow-up PR (the first attempt's command chain stopped before the completion step).
+
+### 2026-10-09T18:33:56+04:00 — QG CHECK QG-01.1
+- evidence: Architecture follows the approved solution intent: docs/architecture.md derived from SOLUTION_INTENT sections 22, 26, 27 and the implementation guide (modular monolith, backend authoritative for financial truth, allow-listed AI tools, provider abstractions); ADR-0001..0008 all Accepted by the user; 11 document conflicts (D1-D11) listed with resolutions in EXECUTION_PLAN.md section 2; plan approved at P00-GATE
+
+### 2026-10-09T18:33:56+04:00 — QG CHECK QG-01.2
+- evidence: Module boundaries and dependencies documented in docs/architecture.md section 2 (11 modules, responsibility and allowed-dependency table, rule: modules call only service interfaces), ADR-0004 (backend layout: api/service/repository/schemas) and ADR-0005 (repository layout); backend/app/modules reserved for domain modules
+
+### 2026-10-09T18:33:56+04:00 — QG CHECK QG-02.1
+- evidence: Formatting and lint pass: PR #4 required checks all green ('lint, types, tests, migrations' = ruff format --check + ruff check; 'format, analyze, test (incl. goldens)' = dart format --set-exit-if-changed + flutter analyze); pre-commit 'run --all-files' all 12 hooks Passed; negative tests showed ruff-check fails on an unused import, and a failing check blocked PR #5 from merging
+
+### 2026-10-09T18:33:56+04:00 — QG CHECK QG-02.2
+- evidence: Static types pass: mypy --strict 'Success: no issues found in 30 source files' (backend, incl. tests and OpenTelemetry/SQLAlchemy/asyncpg stubs) in CI; flutter analyze 'No issues found' with strict-casts, strict-inference and strict-raw-types in CI
+
+### 2026-10-09T18:33:57+04:00 — QG CHECK QG-02.4
+- evidence: No hardcoded credentials or secrets: gitleaks full-history scan in CI (fetch-depth 0) 'no leaks found' on runs 37931445813 and every later PR/push; local gitleaks history scan of 15 commits clean; Trivy secret scan clean; pre-commit gitleaks hook blocks staged secrets; SEEDED TEST: random fake key on a throwaway branch failed CI run 37931671715 (generic-api-key) and was blocked by the local hook; .env git-ignored; a JWT-shaped test fixture was replaced by runtime construction instead of suppressing the rule
+
+### 2026-10-09T18:33:57+04:00 — QG CHECK QG-02.6
+- evidence: No unexplained technical debt: docs/tech-debt.md lists 11 known shortcuts with risk, owner and resolve-by point, plus every inline lint/type suppression with its justification (scan of backend/ and scripts/ found 11 suppression sites, all with rule codes); PR template and CONTRIBUTING now require debt to be recorded in the same pull request. Notable entries: TD-05 tracker has no automated test suite (to be added before P02), TD-03 iOS Xcode not pinned
+
+### 2026-10-09T18:33:57+04:00 — QG CHECK QG-03.1
+- evidence: Required unit tests pass: backend pytest 109 passed (0 skipped in CI; coverage 96.6%, per-module report in job summary) and mobile flutter test passed, in PR #4 CI and on main after merge (runs 37944172314 backend, 37944172316 mobile)
+
+### 2026-10-09T18:33:58+04:00 — QG CHECK QG-04.1
+- evidence: Android app builds: CI job 'android debug build' success on PR #4 and earlier runs 37931445838 / 37926752270; local flutter build apk --debug produces an APK reporting minSdkVersion 26, targetSdkVersion 36 (aapt2 badging), app id com.kmdmtisya.wealthsphere_app; installed and launched on an Android 17 emulator
+
+### 2026-10-09T18:33:58+04:00 — QG CHECK QG-04.2
+- evidence: Flutter analysis and tests pass: flutter analyze 'No issues found', dart format clean, flutter test passed (app shell test) locally and in CI job 'format, analyze, test (incl. goldens)' on PR #4
+
+### 2026-10-09T18:33:58+04:00 — QG CHECK QG-05.1
+- evidence: iOS app builds: CI job 'ios compile (no codesign)' success on macOS runner image macos-26-arm64 (run 37931445838; 'Built build/ios/iphoneos/Runner.app (15.7MB)') and on PR #4, with IPHONEOS_DEPLOYMENT_TARGET 16.0 in all three Runner configurations. CAVEAT recorded as TD-03: the runner's default Xcode is used and its version is not logged or pinned yet; pinning is scheduled for P14-T02
+
+### 2026-10-09T18:33:58+04:00 — QG CHECK QG-08.3
+- evidence: Secrets scanning passes: gitleaks job in security.yml (full history) green on PR #4, #6, #7 and main (run 37944172283); seeded-secret test (run 37931671715) proved the scan fails when a secret is present; local pre-commit gitleaks hook also active
+
+### 2026-10-09T18:33:59+04:00 — QG CHECK QG-08.6
+- evidence: Sensitive data excluded from logs: app/core/redaction.py applied to every log record (messages, extra fields, exception text); tests/test_redaction.py covers 15 leak cases (bearer, JWT, URL/DSN credentials incl. redis://:pw@host, password/secret/api_key/token pairs, financial amount/balance/price/net_worth), 5 clean-text cases, key detection, recursion, depth cap and an end-to-end log line; live server log showed no password; found and fixed the empty-username URL gap. Baseline mechanism; re-verified on the release candidate at P13-T11
+
+### 2026-10-09T18:33:59+04:00 — QG CHECK QG-10.1
+- evidence: CI pipelines pass: workflows backend, mobile, security, tracker all success on main after the last merge (runs 37944172314, 37944172316, 37944172283, 37944172361 on f525b80) and all four required gate checks green on PRs #4, #6, #7; ruleset blocks merges otherwise (PR #5 demonstration)
+
+### 2026-10-09T18:33:59+04:00 — QG CHECK QG-10.3
+- evidence: Database migrations validated: baseline revision 0001 (pgcrypto, vector); CI step 'Migrations' runs alembic upgrade head, check ('No new upgrade operations detected'), downgrade base, upgrade head and asserts a single head; pytest round-trip on a throwaway database, single-head and no-credentials-in-migrations tests; local CLI cycle on a scratch database
+
+### 2026-10-09T18:34:15+04:00 — QG PASSED QG-02
+- evidence: All six QG-02 criteria verified with evidence (formatting/lint, static types, no critical code-quality findings (CodeQL 0 alerts), no hardcoded secrets, code-review controls accepted by user, tech-debt register). Re-verified at P13-T11
+
+### 2026-10-09T18:34:16+04:00 — START P01-GATE
+- Phase P01 exit gate
+- prerequisites verified COMPLETED
+
+### 2026-10-09T18:35:56+04:00 — USER DECISION — QG-08.4 rescoped from P01 to P12 (option b)
+- User chose option b: move QG-08.4 (dependency AND container vulnerability scanning) to P12, evidence task P12-T04, because no container images exist until then. Not a waiver: the full criterion still applies. Dependency scanning already runs in CI (P01-T11).
+- Gate bindings recomputed from the register: P01-GATE and all later entry lists no longer include QG-08.4; P12-GATE now requires it. Recorded in QUALITY_GATES.md 'Scope changes'.
+
+### 2026-10-09T18:35:56+04:00 — P01 exit criteria verified; QG-02 PASSED; P01-GATE started
+- Verified with evidence: QG-01.1, 01.2, 02.1, 02.2, 02.4, 02.6, 03.1, 04.1, 04.2, 05.1, 08.3, 08.6, 10.1, 10.3 (QG-02.3, 02.5, 03.6, 04.3, 05.2 earlier). `qg require` for all 19 P01 criteria: satisfied. QG-02 passed (first gate PASSED).
+- Fresh local run: backend ruff/mypy/openapi check/pytest 109 passed (97.0% coverage, per-module policy OK); mobile dart format/analyze/test pass; tracker validate OK; gitleaks 26 commits no leaks.
+- New docs/tech-debt.md records 11 known shortcuts (notably TD-05: tracker lacks an automated test suite, to be added before P02; TD-03: iOS Xcode unpinned; TD-06: 0 required approvals).
+- P01-GATE awaits the user's phase-exit approval (sub-task P01-GATE.3 is ticked only on approval).
