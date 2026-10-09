@@ -1,0 +1,125 @@
+{
+  "demo": true,
+  "allocation": {
+    "p-retire": {
+      "items": [
+        {
+          "label": "Equities",
+          "value": {
+            "amount": "56750.00",
+            "currency": "USD"
+          },
+          "weight_percent": "62.88"
+        },
+        {
+          "label": "Bonds",
+          "value": {
+            "amount": "26500.40",
+            "currency": "USD"
+          },
+          "weight_percent": "29.36"
+        },
+        {
+          "label": "Cash",
+          "value": {
+            "amount": "7000.00",
+            "currency": "USD"
+          },
+          "weight_percent": "7.76"
+        }
+      ]
+    },
+    "p-growth": {
+      "items": [
+        {
+          "label": "Equities",
+          "value": {
+            "amount": "23940.15",
+            "currency": "USD"
+          },
+          "weight_percent": "74.95"
+        },
+        {
+          "label": "Alternatives",
+          "value": {
+            "amount": "8000.00",
+            "currency": "USD"
+          },
+          "weight_percent": "25.05"
+        }
+      ]
+    },
+    "p-income": {
+      "items": [
+        {
+          "label": "Equities",
+          "value": {
+            "amount": "9795.80",
+            "currency": "USD"
+          },
+          "weight_percent": "55.04"
+        },
+        {
+          "label": "Bonds",
+          "value": {
+            "amount": "5000.00",
+            "currency": "USD"
+          },
+          "weight_percent": "28.10"
+        },
+        {
+          "label": "Real estate",
+          "value": {
+            "amount": "3000.00",
+            "currency": "USD"
+          },
+          "weight_percent": "16.86"
+        }
+      ]
+    },
+    "consolidated": {
+      "items": [
+        {
+          "label": "Equities",
+          "value": {
+            "amount": "90485.95",
+            "currency": "USD"
+          },
+          "weight_percent": "64.65"
+        },
+        {
+          "label": "Bonds",
+          "value": {
+            "amount": "31500.40",
+            "currency": "USD"
+          },
+          "weight_percent": "22.50"
+        },
+        {
+          "label": "Alternatives",
+          "value": {
+            "amount": "8000.00",
+            "currency": "USD"
+          },
+          "weight_percent": "5.71"
+        },
+        {
+          "label": "Cash",
+          "value": {
+            "amount": "7000.00",
+            "currency": "USD"
+          },
+          "weight_percent": "5.00"
+        },
+        {
+          "label": "Real estate",
+          "value": {
+            "amount": "3000.00",
+            "currency": "USD"
+          },
+          "weight_percent": "2.14"
+        }
+      ]
+    }
+  }
+}

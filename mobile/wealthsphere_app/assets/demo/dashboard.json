@@ -1,0 +1,79 @@
+{
+  "demo": true,
+  "greeting": {
+    "name": "Alex"
+  },
+  "net_worth": {
+    "assets": {
+      "amount": "186486.35",
+      "currency": "USD"
+    },
+    "liabilities": {
+      "amount": "18200.00",
+      "currency": "USD"
+    },
+    "net_worth": {
+      "amount": "168286.35",
+      "currency": "USD"
+    },
+    "as_of": "2026-10-09T08:00:00Z"
+  },
+  "income": {
+    "monthly": {
+      "amount": "1245.30",
+      "currency": "USD"
+    },
+    "yearly": {
+      "amount": "14943.60",
+      "currency": "USD"
+    },
+    "as_of": "2026-10-09T08:00:00Z"
+  },
+  "goals": {
+    "on_track": 3,
+    "total": 4,
+    "items": [
+      {
+        "id": "g-home",
+        "name": "Home deposit",
+        "progress_percent": "62.50",
+        "status": "on_track"
+      },
+      {
+        "id": "g-edu",
+        "name": "Education fund",
+        "progress_percent": "41.00",
+        "status": "on_track"
+      },
+      {
+        "id": "g-ret",
+        "name": "Retirement at 60",
+        "progress_percent": "28.30",
+        "status": "on_track"
+      },
+      {
+        "id": "g-trip",
+        "name": "Family travel",
+        "progress_percent": "18.00",
+        "status": "behind"
+      }
+    ],
+    "as_of": "2026-10-09T08:00:00Z"
+  },
+  "insight": {
+    "text": "Your portfolios are up 14.09% since you started investing. Equities make up most of the growth, and about a fifth of your holdings are in AED and KES.",
+    "as_of": "2026-10-09T08:00:00Z",
+    "sources": [
+      {
+        "label": "Portfolio valuation (demo)",
+        "provider": "Demo Data Co.",
+        "as_of": "2026-10-09T08:00:00Z"
+      },
+      {
+        "label": "FX rates (demo)",
+        "provider": "Demo Data Co.",
+        "as_of": "2026-10-09T07:55:00Z"
+      }
+    ]
+  }
+}

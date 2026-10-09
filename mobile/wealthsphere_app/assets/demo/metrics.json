@@ -1,0 +1,30 @@
+{
+  "demo": true,
+  "metrics": {
+    "p-retire": {
+      "total_return_percent": "15.71",
+      "cagr_percent": "6.12",
+      "dividend_yield_percent": "2.10",
+      "volatility_percent": "9.40"
+    },
+    "p-growth": {
+      "total_return_percent": "16.14",
+      "cagr_percent": "8.30",
+      "dividend_yield_percent": "0.60",
+      "volatility_percent": "17.80"
+    },
+    "p-income": {
+      "total_return_percent": "3.46",
+      "cagr_percent": "2.90",
+      "dividend_yield_percent": "4.80",
+      "volatility_percent": "5.20"
+    },
+    "consolidated": {
+      "total_return_percent": "14.09",
+      "cagr_percent": "6.35",
+      "dividend_yield_percent": "2.30",
+      "volatility_percent": "10.10"
+    }
+  },
+  "as_of": "2026-10-09T08:00:00Z"
+}

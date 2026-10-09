@@ -304,16 +304,16 @@
 - Exit gates: QG-04.4; QG-05.3 — required by `P03-GATE` (Gates-done)
 - Release gates: —
 
-- [ ] **P03-T01** · Demo data layer · `NOT_STARTED` ⬜
+- [ ] **P03-T01** · Demo data layer · `IN_PROGRESS` 🔄
   - Deps: P02-GATE · Wave: W1 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-09T23:44:54+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P03-T01.1 Domain/DTO models
-  - [ ] P03-T01.2 Repository interfaces
-  - [ ] P03-T01.3 Demo implementations
-  - [ ] P03-T01.4 Multi-currency fixtures
-  - [ ] P03-T01.5 Scripted copilot fixtures
-  - [ ] P03-T01.6 Tests
+  - [x] P03-T01.1 Domain/DTO models
+  - [x] P03-T01.2 Repository interfaces
+  - [x] P03-T01.3 Demo implementations
+  - [x] P03-T01.4 Multi-currency fixtures
+  - [x] P03-T01.5 Scripted copilot fixtures
+  - [x] P03-T01.6 Tests
 - [ ] **P03-T02** · Home Dashboard (screen 3) · `NOT_STARTED` ⬜
   - Deps: P03-T01 · Wave: W2 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
