@@ -319,3 +319,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 - Defects found by the suite and fixed in scripts/track.py: (1) `complete`/`verify` accepted whitespace-only evidence; (2) deleting QUALITY_GATES.md silently switched gate enforcement off and `validate` still reported OK. The tracker now fails closed in both cases.
 - Mutation check: deliberately breaking (a) the phase-approval check, (b) Gates-done enforcement, (c) the CRITICAL-waiver refusal each made a named test fail; the tracker was restored byte-for-byte.
 - docs/tech-debt.md: TD-05 removed (resolved). Not a roadmap task, so no task ID was consumed.
+
+### 2026-10-09T19:26:47+04:00 — PHASE APPROVED P02
+- approved by user (mtisya@gmail.com)
+- Flutter Design System (UX Gate 1)
+
+### 2026-10-09T19:26:47+04:00 — USER DECISION — phase P02 approved (after the tracker test suite)
+- User instruction 'tests first, then approve P02': the tracker test suite (PR #10) merged first; P02 (Flutter Design System, UX Gate 1) then approved. Entry gate P01-GATE is complete. No P02 task has been started.
