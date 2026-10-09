@@ -3,13 +3,7 @@ name: mobile
 on:
   push:
     branches: [main]
-    paths:
-      - "mobile/**"
-      - ".github/workflows/mobile.yml"
   pull_request:
-    paths:
-      - "mobile/**"
-      - ".github/workflows/mobile.yml"
   workflow_dispatch:
 
 permissions:
@@ -27,7 +21,35 @@ defaults:
     working-directory: mobile/wealthsphere_app
 
 jobs:
+  changes:
+    name: detect changes
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      run: ${{ steps.diff.outputs.run }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+      - id: diff
+        env:
+          EVENT: ${{ github.event_name }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+        run: |
+          set -euo pipefail
+          run=true # fail safe: run the checks unless we can prove nothing relevant changed
+          base=""
+          if [ "$EVENT" = "pull_request" ]; then base="$PR_BASE"; elif [ "$EVENT" = "push" ]; then base="$PUSH_BEFORE"; fi
+          if [ -n "$base" ] && ! echo "$base" | grep -qE '^0+$' && git cat-file -e "$base^{commit}" 2>/dev/null; then
+            if git diff --name-only "$base" "$GITHUB_SHA" | grep -qE '^(mobile/|\.github/workflows/mobile\.yml)'; then run=true; else run=false; fi
+          fi
+          echo "run=$run" >> "$GITHUB_OUTPUT"
+          echo "Relevant changes: $run"
+
   analyze-test:
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
     name: format, analyze, test (incl. goldens)
     runs-on: ubuntu-24.04
     timeout-minutes: 20
@@ -105,3 +127,27 @@ jobs:
       - run: flutter pub get && flutter gen-l10n
       - name: Build iOS (no code signing)
         run: flutter build ios --no-codesign
+
+  mobile-gate:
+    name: mobile gate
+    if: always()
+    needs: [changes, analyze-test, build-android, build-ios]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Require every job to have passed (skipped is only acceptable when nothing relevant changed)
+        env:
+          RUN: ${{ needs.changes.outputs.run }}
+          R_CHANGES: ${{ needs.changes.result }}
+          R_ANALYZE_TEST: ${{ needs.analyze-test.result }}
+          R_BUILD_ANDROID: ${{ needs.build-android.result }}
+          R_BUILD_IOS: ${{ needs.build-ios.result }}
+        run: |
+          set -eu
+          if [ "$R_ANALYZE_TEST" = "skipped" ] && [ "$RUN" = "true" ]; then echo "::error::analyze-test was skipped although relevant files changed"; exit 1; fi
+          if [ "$R_BUILD_ANDROID" = "skipped" ] && [ "$RUN" = "true" ]; then echo "::error::build-android was skipped although relevant files changed"; exit 1; fi
+          if [ "$R_BUILD_IOS" = "skipped" ] && [ "$RUN" = "true" ]; then echo "::error::build-ios was skipped although relevant files changed"; exit 1; fi
+          for r in "$R_CHANGES" $R_ANALYZE_TEST $R_BUILD_ANDROID $R_BUILD_IOS; do
+            case "$r" in success|skipped) ;; *) echo "::error::a required job finished with result: $r"; exit 1 ;; esac
+          done
+          echo "all required jobs passed (or were legitimately skipped)"

@@ -31,10 +31,12 @@ The `gitleaks` hook needs the gitleaks binary (`winget install Gitleaks.Gitleaks
 
 CI runs the same checks (`docs/ci.md`). Tests are never deleted or weakened to make a build pass.
 
-## Branches
-- `main` is always releasable. Short-lived branches named `<type>/<task-id>-<slug>`, for example `feat/p05-t04-transaction-ledger`.
-- Until branch protection is enabled (P01-T15) the project owner may push tracker and documentation commits directly to `main`; afterwards every change goes through a pull request with the required checks green.
-- Keep branches small and reviewable; rebase on `main` before opening a pull request. Never force-push shared branches or rewrite pushed history without approval.
+## Branches and pull requests
+- `main` is protected (ruleset, no bypass): changes arrive only through pull requests whose required checks pass (`backend gate`, `mobile gate`, `security gate`, `tracker validate`). Direct pushes, force-pushes and branch deletion are blocked.
+- Work on a short-lived branch named `<type>/<task-id>-<slug>`, for example `feat/p05-t04-transaction-ledger`. Rebase on `main` before opening the pull request.
+- Open the pull request early with `gh pr create`, wait for the checks, then merge (`gh pr merge --merge --delete-branch`). Tracker-only changes follow the same path; they are quick because the heavy jobs skip when their area is untouched.
+- CODEOWNERS requests the maintainer automatically. Required approvals are 0 while there is a single maintainer (see ADR-0008); user approval is recorded by the tracker for tasks and gates that require it.
+- Never force-push shared branches or rewrite pushed history without approval.
 
 ## Commit messages
 Conventional commits, enforced by the `commit-msg` hook:

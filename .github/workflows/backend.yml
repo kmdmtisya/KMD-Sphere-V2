@@ -3,13 +3,7 @@ name: backend
 on:
   push:
     branches: [main]
-    paths:
-      - "backend/**"
-      - ".github/workflows/backend.yml"
   pull_request:
-    paths:
-      - "backend/**"
-      - ".github/workflows/backend.yml"
   workflow_dispatch:
 
 permissions:
@@ -24,7 +18,35 @@ defaults:
     working-directory: backend
 
 jobs:
+  changes:
+    name: detect changes
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      run: ${{ steps.diff.outputs.run }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+      - id: diff
+        env:
+          EVENT: ${{ github.event_name }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+        run: |
+          set -euo pipefail
+          run=true # fail safe: run the checks unless we can prove nothing relevant changed
+          base=""
+          if [ "$EVENT" = "pull_request" ]; then base="$PR_BASE"; elif [ "$EVENT" = "push" ]; then base="$PUSH_BEFORE"; fi
+          if [ -n "$base" ] && ! echo "$base" | grep -qE '^0+$' && git cat-file -e "$base^{commit}" 2>/dev/null; then
+            if git diff --name-only "$base" "$GITHUB_SHA" | grep -qE '^(backend/|scripts/|\.github/workflows/backend\.yml)'; then run=true; else run=false; fi
+          fi
+          echo "run=$run" >> "$GITHUB_OUTPUT"
+          echo "Relevant changes: $run"
+
   quality:
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
     name: lint, types, tests, migrations
     runs-on: ubuntu-24.04
     timeout-minutes: 20
@@ -106,6 +128,9 @@ jobs:
       - name: Tests with coverage (incl. integration against service containers)
         run: uv run pytest --cov --cov-report=xml --cov-report=term-missing --cov-fail-under=85
 
+      - name: Coverage by module (business-critical modules must meet the policy floor)
+        run: uv run python ../scripts/coverage_by_module.py coverage.xml --policy coverage-policy.toml --summary "$GITHUB_STEP_SUMMARY"
+
       - name: Upload coverage
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
@@ -113,3 +138,23 @@ jobs:
           name: backend-coverage
           path: backend/coverage.xml
           if-no-files-found: ignore
+
+  backend-gate:
+    name: backend gate
+    if: always()
+    needs: [changes, quality]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Require every job to have passed (skipped is only acceptable when nothing relevant changed)
+        env:
+          RUN: ${{ needs.changes.outputs.run }}
+          R_CHANGES: ${{ needs.changes.result }}
+          R_QUALITY: ${{ needs.quality.result }}
+        run: |
+          set -eu
+          if [ "$R_QUALITY" = "skipped" ] && [ "$RUN" = "true" ]; then echo "::error::quality was skipped although relevant files changed"; exit 1; fi
+          for r in "$R_CHANGES" $R_QUALITY; do
+            case "$r" in success|skipped) ;; *) echo "::error::a required job finished with result: $r"; exit 1 ;; esac
+          done
+          echo "all required jobs passed (or were legitimately skipped)"

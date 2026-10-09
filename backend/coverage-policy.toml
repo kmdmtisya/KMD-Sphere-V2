@@ -1,0 +1,18 @@
+# Business-critical backend modules (QG-03.5, docs/quality-targets.md section 6).
+# Each listed module must reach `threshold`% line coverage as soon as it exists; modules that do
+# not exist yet are skipped (and reported). Add modules here when they are created.
+# Coverage is a floor, never a substitute for meaningful tests.
+threshold = 85
+
+critical = [
+  "modules/forecasting",
+  "modules/analytics",
+  "modules/transactions",
+  "modules/assets",
+  "modules/portfolio",
+  "modules/fx",
+  "modules/goals",
+  "modules/networth",
+  "modules/identity",
+  "modules/ai",
+]

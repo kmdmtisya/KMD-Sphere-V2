@@ -183,9 +183,9 @@
   - [x] P01-T14.1 Export script
   - [x] P01-T14.2 Spectral ruleset
   - [x] P01-T14.3 CI step
-- [ ] **P01-T15** · Quality-gate CI integration and merge protection · `NOT_STARTED` ⬜
+- [ ] **P01-T15** · Quality-gate CI integration and merge protection · `IN_PROGRESS` 🔄
   - Deps: P01-T09, P01-T10, P01-T11, P01-T13 · Wave: W6 · Track: INF · Size: M · Approval: no · Gates-done: QG-02.3, QG-02.5, QG-03.6
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-09T17:55:33+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P01-T15.1 Required checks and branch protection
   - [ ] P01-T15.2 CODEOWNERS and review rule

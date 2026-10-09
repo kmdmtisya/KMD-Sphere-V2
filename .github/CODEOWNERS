@@ -1,0 +1,12 @@
+# Code owners are requested automatically on pull requests (they cannot block a merge while the
+# repository has a single maintainer; see docs/adr/0008-quality-gate-policy.md).
+*                          @kmdmtisya
+
+# Security-, money- and AI-sensitive areas always get an explicit owner request.
+/.github/                  @kmdmtisya
+/backend/app/core/         @kmdmtisya
+/backend/migrations/       @kmdmtisya
+/docs/security.md          @kmdmtisya
+/docs/ai-governance.md     @kmdmtisya
+/QUALITY_GATES.md          @kmdmtisya
+/scripts/track.py          @kmdmtisya

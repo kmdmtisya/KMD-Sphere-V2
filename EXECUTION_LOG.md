@@ -214,3 +214,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-09T16:45:29+04:00 — COMPLETE P01-T14
 - duration: 24m 03s
 - evidence: scripts/export_openapi.py (write and --check modes, hermetic settings, deterministic sorted JSON) and committed backend/openapi.json; backend/.spectral.yaml (spectral:oas + house rules: money fields must be string, operation summary, versioned paths); Spectral 6.17.0 'No results with a severity of warn or higher' after documenting the API (contact, servers, tags, typed health responses). NEGATIVE TEST: deliberately bad spec was flagged: amount, net_worth and market_value typed number (error), unversioned path /portfolios (error), string-typed balance accepted. backend/tests/test_openapi_contract.py (7 tests: committed contract matches app, deterministic, OpenAPI 3.1, versioned paths, unique operationIds and summaries, money fields never numbers, /metrics excluded). CI backend run 37931445974 success includes 'OpenAPI contract is up to date' and the Spectral step. Evidence for QG-01.3 groundwork (contract tooling)
+
+### 2026-10-09T17:55:33+04:00 — START P01-T15
+- Quality-gate CI integration and merge protection
+- prerequisites verified COMPLETED
