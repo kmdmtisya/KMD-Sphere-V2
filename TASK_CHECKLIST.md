@@ -242,16 +242,16 @@
   - [x] P02-T03.2 MoneyFormatter
   - [x] P02-T03.3 PercentFormatter and date labels
   - [x] P02-T03.4 Edge-case unit tests
-- [ ] **P02-T04** · Status and state widgets · `IN_PROGRESS` 🔄
+- [x] **P02-T04** · Status and state widgets · `COMPLETED` ✅
   - Deps: P02-T02, P02-T03 · Wave: W3 · Track: MOB · Size: M · Approval: no
-  - Started: 2026-10-09T21:00:28+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P02-T04.1 Amount and change widgets
-  - [ ] P02-T04.2 Risk/Disclosure/Demo/DataAsOf
-  - [ ] P02-T04.3 Banners
-  - [ ] P02-T04.4 Skeleton/Empty/Error
-  - [ ] P02-T04.5 AsyncValueView
-  - [ ] P02-T04.6 Widget tests in light/dark/2.0x/RTL
+  - Started: 2026-10-09T21:00:28+04:00 · Completed: 2026-10-09T21:25:51+04:00 · Duration: 25m 23s · Blocker: —
+  - Evidence: PR #14. Components in lib/shared/design_system/components: CurrencyAmount, ChangeIndicator, RiskLabel, DisclosurePanel, DemoBadge/DemoBanner, DataAsOfLabel, OfflineBanner/StaleDataBanner, SkeletonLoader, EmptyState/ErrorState, AsyncValueView. Widget tests cover semantics, 48dp retry target, reduced-motion skeleton, async precedence (data over error on refresh) and a light/dark x LTR/RTL x 1.0/2.0x text matrix at 320x568 with no overflow. Full mobile suite 416 passing (279 before this wave); dart format and flutter analyze clean; CI mobile gate, android debug build and ios compile green. Mutations to the async value precedence and banner live-region were caught by tests. Not verified on a device in this task.
+  - [x] P02-T04.1 Amount and change widgets
+  - [x] P02-T04.2 Risk/Disclosure/Demo/DataAsOf
+  - [x] P02-T04.3 Banners
+  - [x] P02-T04.4 Skeleton/Empty/Error
+  - [x] P02-T04.5 AsyncValueView
+  - [x] P02-T04.6 Widget tests in light/dark/2.0x/RTL
 - [ ] **P02-T05** · Composite components · `NOT_STARTED` ⬜
   - Deps: P02-T04 · Wave: W4 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
@@ -272,15 +272,15 @@
   - [ ] P02-T06.4 Donut + legend
   - [ ] P02-T06.5 Forecast comparison chart
   - [ ] P02-T06.6 Goldens
-- [ ] **P02-T07** · Navigation shell and WealthBottomNav · `IN_PROGRESS` 🔄
+- [x] **P02-T07** · Navigation shell and WealthBottomNav · `COMPLETED` ✅
   - Deps: P02-T02 · Wave: W3 · Track: MOB · Size: M · Approval: no
-  - Started: 2026-10-09T21:00:28+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P02-T07.1 Router and route names
-  - [ ] P02-T07.2 WealthBottomNav
-  - [ ] P02-T07.3 Per-feature route registry contract
-  - [ ] P02-T07.4 Scope parsing
-  - [ ] P02-T07.5 Navigation tests
+  - Started: 2026-10-09T21:00:28+04:00 · Completed: 2026-10-09T21:25:52+04:00 · Duration: 25m 24s · Blocker: —
+  - Evidence: PR #14. GoRouter StatefulShellRoute.indexedStack with five tab branches built from the tabRoutes registry, WealthBottomNav (labels always visible, reselect callback), root redirect, NotFoundScreen, strict AiScope.tryParse for untrusted /ai?scope= links. Tests: app_routes_test, navigation_test (stack persistence across tabs, back pops nested then exits at root via mocked SystemNavigator.pop, reselect returns to root, hostile scopes ignored, 320x568 at 1.0/2.0x in LTR/RTL), wealth_bottom_nav_test. Full mobile suite 416 passing; format/analyze clean; CI green. Mutations to reselect logic, root redirect and scope id regex were each caught. Not verified on a device in this task.
+  - [x] P02-T07.1 Router and route names
+  - [x] P02-T07.2 WealthBottomNav
+  - [x] P02-T07.3 Per-feature route registry contract
+  - [x] P02-T07.4 Scope parsing
+  - [x] P02-T07.5 Navigation tests
 - [ ] **P02-T08** · Component gallery, goldens and design-system documentation · `NOT_STARTED` ⬜
   - Deps: P02-T05, P02-T06, P02-T07 · Wave: W5 · Track: MOB · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

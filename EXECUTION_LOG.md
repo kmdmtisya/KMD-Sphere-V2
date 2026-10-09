@@ -361,3 +361,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-09T21:00:28+04:00 — START P02-T07
 - Navigation shell and WealthBottomNav
 - prerequisites verified COMPLETED
+
+### 2026-10-09T21:25:51+04:00 — COMPLETE P02-T04
+- duration: 25m 23s
+- evidence: PR #14. Components in lib/shared/design_system/components: CurrencyAmount, ChangeIndicator, RiskLabel, DisclosurePanel, DemoBadge/DemoBanner, DataAsOfLabel, OfflineBanner/StaleDataBanner, SkeletonLoader, EmptyState/ErrorState, AsyncValueView. Widget tests cover semantics, 48dp retry target, reduced-motion skeleton, async precedence (data over error on refresh) and a light/dark x LTR/RTL x 1.0/2.0x text matrix at 320x568 with no overflow. Full mobile suite 416 passing (279 before this wave); dart format and flutter analyze clean; CI mobile gate, android debug build and ios compile green. Mutations to the async value precedence and banner live-region were caught by tests. Not verified on a device in this task.
+
+### 2026-10-09T21:25:52+04:00 — COMPLETE P02-T07
+- duration: 25m 24s
+- evidence: PR #14. GoRouter StatefulShellRoute.indexedStack with five tab branches built from the tabRoutes registry, WealthBottomNav (labels always visible, reselect callback), root redirect, NotFoundScreen, strict AiScope.tryParse for untrusted /ai?scope= links. Tests: app_routes_test, navigation_test (stack persistence across tabs, back pops nested then exits at root via mocked SystemNavigator.pop, reselect returns to root, hostile scopes ignored, 320x568 at 1.0/2.0x in LTR/RTL), wealth_bottom_nav_test. Full mobile suite 416 passing; format/analyze clean; CI green. Mutations to reselect logic, root redirect and scope id regex were each caught. Not verified on a device in this task.
