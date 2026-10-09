@@ -7,11 +7,11 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-09T23:34:23+04:00 by `scripts/track.py`._
+_Generated at 2026-10-09T23:38:27+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
-| QG-01 | Architecture and Design | 🔄 IN_PROGRESS | 2/5 | Unassigned | — |
+| QG-01 | Architecture and Design | 🔄 IN_PROGRESS | 3/5 | Unassigned | — |
 | QG-02 | Code Quality | ✅ PASSED | 6/6 | Unassigned | — |
 | QG-03 | Automated Testing | 🔄 IN_PROGRESS | 2/6 | Unassigned | — |
 | QG-04 | Android Platform | 🔄 IN_PROGRESS | 3/7 | Unassigned | — |
@@ -33,9 +33,9 @@ _Generated at 2026-10-09T23:34:23+04:00 by `scripts/track.py`._
 | QG-20 | QG-FX-08: Release and Regulatory Readiness | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
 
 Waivers: 0 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 19/119.
+Criteria satisfied overall: 20/119.
 
-Current phase **P02** exit-gate criteria outstanding: QG-01.5.
+Current phase **P12** exit-gate criteria outstanding: QG-13.1, QG-13.2, QG-13.3, QG-13.4, QG-13.5, QG-14.1, QG-14.2, QG-14.3, QG-15.1, QG-15.2, QG-15.3, QG-15.4, QG-15.5, QG-15.6, QG-16.1, QG-16.2, QG-16.3, QG-16.4, QG-16.5, QG-17.1, QG-17.2, QG-17.3, QG-17.4, QG-18.1, QG-18.2, QG-18.3, QG-18.4, QG-18.5, QG-19.1, QG-19.2, QG-19.3, QG-19.4, QG-19.5, QG-20.1, QG-20.2, QG-20.3, QG-20.4, QG-20.5.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -44,14 +44,14 @@ Current phase **P02** exit-gate criteria outstanding: QG-01.5.
 - [x] QG-01.2 Module boundaries and dependencies are documented · Required: P01 · By: P01-T04 · Evidence: Module boundaries and dependencies documented in docs/architecture.md section 2 (11 modules, responsibility and allowed-dependency table, rule: modules call only service interfaces), ADR-0004 (backend layout: api/service/repository/schemas) and ADR-0005 (repository layout); backend/app/modules reserved for domain modules · Verified: 2026-10-09T18:33:56+04:00
 - [ ] QG-01.3 API contracts and database designs are reviewed · Required: P05 · By: P05-T10
 - [ ] QG-01.4 No unresolved critical architectural risks · Required: P14 · By: P14-T10
-- [ ] QG-01.5 UI/UX implementation follows the approved WealthSphere design system · Required: P02 · By: P02-T08
+- [x] QG-01.5 UI/UX implementation follows the approved WealthSphere design system · Required: P02 · By: P02-T08 · Evidence: UX Gate 1: user reviewed the component gallery against the concept board and approved (2026-10-09). Design system per docs/design/design-system.md: tokens with measured contrast (contrast tests), shared components and 3 charts, light/dark, 2.0x text, RTL; style guard test enforces tokens (no colour literals, no left/right APIs, no double in money code); 34 golden images (28 gallery + 6 chart) compared on CI Linux; format and analyze clean, 576 tests pass locally (34 goldens skipped on Windows). TalkBack read-through of chart summaries not yet performed. · Verified: 2026-10-09T23:38:20+04:00
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
 Start Timestamp: 2026-10-09T18:33:56+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-09T18:33:56+04:00  
-Evidence: 2/5 criteria verified; latest QG-01.2 at 2026-10-09T18:33:56+04:00  
+Verification Timestamp: 2026-10-09T23:38:20+04:00  
+Evidence: 3/5 criteria verified; latest QG-01.5 at 2026-10-09T23:38:20+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —

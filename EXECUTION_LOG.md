@@ -411,3 +411,23 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-09T23:34:22+04:00 — PHASE APPROVED P12
 - approved by user (mtisya@gmail.com)
 - Forex Trading Intelligence (FX workstream)
+
+### 2026-10-09T23:36:18+04:00 — START P02-GATE
+- UX Gate 1 review
+- prerequisites verified COMPLETED
+
+### 2026-10-09T23:38:12+04:00 — QG CHECK QG-01.5
+- evidence: UX Gate 1: user reviewed the component gallery against the concept board and approved (2026-10-09). Design system per docs/design/design-system.md: tokens with measured contrast (contrast tests), 20 shared components and 3 charts, light/dark, 2.0x text, RTL; style guard test enforces tokens (no colour literals, no left/right APIs, no double in money code); 62 golden images compared on CI Linux (28 gallery + 6 chart ... see tests); format and analyze clean, 576 tests pass locally. TalkBack read-through of chart summaries not yet performed.
+
+### 2026-10-09T23:38:20+04:00 — QG UNCHECK QG-01.5
+- reason: Evidence text misstated the golden image count (62); actual is 34. Re-verifying with corrected evidence.
+
+### 2026-10-09T23:38:20+04:00 — QG CHECK QG-01.5
+- evidence: UX Gate 1: user reviewed the component gallery against the concept board and approved (2026-10-09). Design system per docs/design/design-system.md: tokens with measured contrast (contrast tests), shared components and 3 charts, light/dark, 2.0x text, RTL; style guard test enforces tokens (no colour literals, no left/right APIs, no double in money code); 34 golden images (28 gallery + 6 chart) compared on CI Linux; format and analyze clean, 576 tests pass locally (34 goldens skipped on Windows). TalkBack read-through of chart summaries not yet performed.
+
+### 2026-10-09T23:38:27+04:00 — AWAITING_VERIFICATION P02-GATE
+- evidence: Gates run and user review presented; awaiting recorded approval. dart format, flutter analyze clean; 576 tests passed (34 goldens skipped on Windows, compared on CI Linux).
+
+### 2026-10-09T23:38:27+04:00 — COMPLETE P02-GATE
+- duration: 2m 09s
+- evidence: User approved UX Gate 1 on 2026-10-09 after reviewing the gallery. Gates run: dart format clean, flutter analyze clean, 576 tests passed (34 goldens skipped on Windows, compared on CI Linux), CI mobile and tracker green on main. QG-01.5 verified. TalkBack check of chart summaries remains open. · Approved by: user (mtisya@gmail.com)
