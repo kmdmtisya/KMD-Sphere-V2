@@ -256,22 +256,22 @@
   - Deps: P02-T04 · Wave: W4 · Track: MOB · Size: L · Approval: no
   - Started: 2026-10-09T21:42:30+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P02-T05.1 Summary and metric cards
-  - [ ] P02-T05.2 PeriodSelector and PortfolioSwitcher
-  - [ ] P02-T05.3 InvestmentRow and ScenarioCard
-  - [ ] P02-T05.4 EvidenceSourceChip
-  - [ ] P02-T05.5 AIChatComposer
-  - [ ] P02-T05.6 Interaction and semantics tests
+  - [x] P02-T05.1 Summary and metric cards
+  - [x] P02-T05.2 PeriodSelector and PortfolioSwitcher
+  - [x] P02-T05.3 InvestmentRow and ScenarioCard
+  - [x] P02-T05.4 EvidenceSourceChip
+  - [x] P02-T05.5 AIChatComposer
+  - [x] P02-T05.6 Interaction and semantics tests
 - [ ] **P02-T06** · Accessible charts · `IN_PROGRESS` 🔄
   - Deps: P02-T04 · Wave: W4 · Track: MOB · Size: L · Approval: no
   - Started: 2026-10-09T21:42:30+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P02-T06.1 Chart data model
-  - [ ] P02-T06.2 ChartSemantics
-  - [ ] P02-T06.3 Line chart
-  - [ ] P02-T06.4 Donut + legend
-  - [ ] P02-T06.5 Forecast comparison chart
-  - [ ] P02-T06.6 Goldens
+  - [x] P02-T06.1 Chart data model
+  - [x] P02-T06.2 ChartSemantics
+  - [x] P02-T06.3 Line chart
+  - [x] P02-T06.4 Donut + legend
+  - [x] P02-T06.5 Forecast comparison chart
+  - [x] P02-T06.6 Goldens
 - [x] **P02-T07** · Navigation shell and WealthBottomNav · `COMPLETED` ✅
   - Deps: P02-T02 · Wave: W3 · Track: MOB · Size: M · Approval: no
   - Started: 2026-10-09T21:00:28+04:00 · Completed: 2026-10-09T21:25:52+04:00 · Duration: 25m 24s · Blocker: —
