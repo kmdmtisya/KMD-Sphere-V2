@@ -92,31 +92,37 @@ class WealthSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final text = context.wealthText;
     final colors = context.wealthColors;
-    return WealthCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(label, style: text.label.copyWith(color: colors.textMuted)),
-          const SizedBox(height: AppSpacing.xxs),
-          amount,
-          if (change != null) ...[
+    return SizedBox(
+      width: double.infinity,
+      child: WealthCard(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(label, style: text.label.copyWith(color: colors.textMuted)),
             const SizedBox(height: AppSpacing.xxs),
-            change!,
+            amount,
+            if (change != null) ...[
+              const SizedBox(height: AppSpacing.xxs),
+              change!,
+            ],
+            if (chart != null) ...[
+              const SizedBox(height: AppSpacing.m),
+              chart!,
+            ],
+            if (periodSelector != null) ...[
+              const SizedBox(height: AppSpacing.s),
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: periodSelector!,
+              ),
+            ],
+            if (footer != null) ...[
+              const SizedBox(height: AppSpacing.s),
+              footer!,
+            ],
           ],
-          if (chart != null) ...[const SizedBox(height: AppSpacing.m), chart!],
-          if (periodSelector != null) ...[
-            const SizedBox(height: AppSpacing.s),
-            Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: periodSelector!,
-            ),
-          ],
-          if (footer != null) ...[
-            const SizedBox(height: AppSpacing.s),
-            footer!,
-          ],
-        ],
+        ),
       ),
     );
   }
