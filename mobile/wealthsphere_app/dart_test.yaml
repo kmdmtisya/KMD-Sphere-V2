@@ -1,0 +1,3 @@
+tags:
+  golden:
+    description: Golden image tests. Authoritative on CI (ubuntu); run locally with --tags golden.

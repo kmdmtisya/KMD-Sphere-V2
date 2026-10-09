@@ -85,9 +85,9 @@
   - [x] P01-T02.2 Add .gitignore/.editorconfig/README
   - [x] P01-T02.3 Move CLAUDE.md to root and fix paths (D8)
   - [x] P01-T02.4 Extract concept board PNG from the PDF
-- [ ] **P01-T03** · Record foundational ADRs · `NOT_STARTED` ⬜
+- [ ] **P01-T03** · Record foundational ADRs · `IN_PROGRESS` 🔄
   - Deps: P01-T02 · Wave: W2 · Track: DOC · Size: S · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-09T14:07:34+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P01-T03.1 ADR-0001 UI-first (D1)
   - [ ] P01-T03.2 ADR-0002 navigation (D2)
@@ -96,31 +96,31 @@
   - [ ] P01-T03.5 ADR-0005 repo layout
   - [ ] P01-T03.6 ADR-0006 rounding conventions (DEC-06)
   - [ ] P01-T03.7 ADR-0007 test strategy
-- [ ] **P01-T04** · Write architecture and governance documents · `NOT_STARTED` ⬜
+- [ ] **P01-T04** · Write architecture and governance documents · `IN_PROGRESS` 🔄
   - Deps: P01-T02 · Wave: W2 · Track: DOC · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-09T14:07:34+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P01-T04.1 architecture.md (modules, data flow, boundaries)
   - [ ] P01-T04.2 security.md (controls, secrets, threat-model stub)
   - [ ] P01-T04.3 api-conventions.md (versioning, errors, pagination, money as strings, idempotency)
   - [ ] P01-T04.4 ai-governance.md (tool contract, evidence rules)
-- [ ] **P01-T05** · Docker Compose development stack · `NOT_STARTED` ⬜
+- [x] **P01-T05** · Docker Compose development stack · `COMPLETED` ✅
   - Deps: P01-T01, P01-T02 · Wave: W2 · Track: INF · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P01-T05.1 Compose file with healthchecks and named volumes
-  - [ ] P01-T05.2 .env.example with placeholders only
-  - [ ] P01-T05.3 Makefile helpers
-  - [ ] P01-T05.4 Document ports and reset procedure
-- [ ] **P01-T06** · Flutter app scaffold and tooling · `NOT_STARTED` ⬜
+  - Started: 2026-10-09T14:07:34+04:00 · Completed: 2026-10-09T14:23:16+04:00 · Duration: 15m 42s · Blocker: —
+  - Evidence: docker compose config valid; 'docker compose up -d --wait' rc=0; 'docker compose ps': keycloak, postgres, rabbitmq, redis all (healthy); postgres: DBs wealthsphere+keycloak, extensions vector+pgcrypto; redis PONG; rabbitmq ping OK; keycloak /health/ready 200 and master realm 200; .env git-ignored (git check-ignore) and not tracked, no password values found in tracked files (git grep); host ports 5433/6380/5673/15673/8081 chosen because 5432 is in use locally; ports documented in docs/dev-setup.md. gitleaks scan deferred to P01-T11
+  - [x] P01-T05.1 Compose file with healthchecks and named volumes
+  - [x] P01-T05.2 .env.example with placeholders only
+  - [x] P01-T05.3 Makefile helpers
+  - [x] P01-T05.4 Document ports and reset procedure
+- [x] **P01-T06** · Flutter app scaffold and tooling · `COMPLETED` ✅
   - Deps: P01-T01, P01-T02 · Wave: W2 · Track: MOB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P01-T06.1 flutter create with org id from DEC-01
-  - [ ] P01-T06.2 Add dependencies via `flutter pub add`
-  - [ ] P01-T06.3 analysis_options.yaml strict lints
-  - [ ] P01-T06.4 l10n.yaml and app_en.arb
-  - [ ] P01-T06.5 test/helpers/pump_app.dart and dart_test.yaml golden tag
+  - Started: 2026-10-09T14:07:34+04:00 · Completed: 2026-10-09T14:23:56+04:00 · Duration: 16m 22s · Blocker: —
+  - Evidence: flutter create --org com.kmdmtisya (applicationId com.kmdmtisya.wealthsphere_app); deps via flutter pub add: flutter_riverpod 3.4.3, go_router 18, freezed 4.0.2/json_serializable 6.14, decimal, intl, fl_chart 1.2, shared_preferences; Dio/secure storage/local_auth intentionally absent (D9); strict analysis_options, gen-l10n (app_en.arb), test/helpers/pump_app.dart (theme/text-scale/RTL/overrides), dart_test.yaml golden tag; dart format clean, flutter analyze 'No issues found', flutter test 1/1 passed; flutter build apk --debug OK (after installing NDK 28.2.13676358); installed on emulator-5554 (Android 17) and screenshot shows WealthSphere shell with tagline (first cold start +44s)
+  - [x] P01-T06.1 flutter create with org id from DEC-01
+  - [x] P01-T06.2 Add dependencies via `flutter pub add`
+  - [x] P01-T06.3 analysis_options.yaml strict lints
+  - [x] P01-T06.4 l10n.yaml and app_en.arb
+  - [x] P01-T06.5 test/helpers/pump_app.dart and dart_test.yaml golden tag
 - [ ] **P01-T07** · FastAPI backend skeleton · `NOT_STARTED` ⬜
   - Deps: P01-T03, P01-T05 · Wave: W3 · Track: BE · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

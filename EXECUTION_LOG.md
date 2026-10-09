@@ -88,3 +88,31 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-09T13:59:17+04:00 — Repository published to GitHub (user instruction)
 - Remote origin = https://github.com/kmdmtisya/KMD-Sphere-V2.git; main pushed (HEAD d189265); remote was empty beforehand.
 - Convention recorded in CLAUDE.md: commit each completed task and push to origin.
+
+### 2026-10-09T14:07:34+04:00 — START P01-T03
+- Record foundational ADRs
+- prerequisites verified COMPLETED
+
+### 2026-10-09T14:07:34+04:00 — START P01-T04
+- Write architecture and governance documents
+- prerequisites verified COMPLETED
+
+### 2026-10-09T14:07:34+04:00 — START P01-T05
+- Docker Compose development stack
+- prerequisites verified COMPLETED
+
+### 2026-10-09T14:07:34+04:00 — START P01-T06
+- Flutter app scaffold and tooling
+- prerequisites verified COMPLETED
+
+### 2026-10-09T14:07:34+04:00 — DECISIONS RECORDED — DEC-01, DEC-06 (user)
+- DEC-01: organisation reverse-domain = com.kmdmtisya (Android applicationId / iOS bundle prefix).
+- DEC-06: user delegated ('recommend the best'); adopted recommendation = ROUND_HALF_UP (ties away from zero), full precision internally, rounding only at documented boundaries; rationale: matches PostgreSQL numeric round(), spreadsheets and bank statements. To be written as ADR-0006 (P01-T03, user review).
+
+### 2026-10-09T14:23:16+04:00 — COMPLETE P01-T05
+- duration: 15m 42s
+- evidence: docker compose config valid; 'docker compose up -d --wait' rc=0; 'docker compose ps': keycloak, postgres, rabbitmq, redis all (healthy); postgres: DBs wealthsphere+keycloak, extensions vector+pgcrypto; redis PONG; rabbitmq ping OK; keycloak /health/ready 200 and master realm 200; .env git-ignored (git check-ignore) and not tracked, no password values found in tracked files (git grep); host ports 5433/6380/5673/15673/8081 chosen because 5432 is in use locally; ports documented in docs/dev-setup.md. gitleaks scan deferred to P01-T11
+
+### 2026-10-09T14:23:56+04:00 — COMPLETE P01-T06
+- duration: 16m 22s
+- evidence: flutter create --org com.kmdmtisya (applicationId com.kmdmtisya.wealthsphere_app); deps via flutter pub add: flutter_riverpod 3.4.3, go_router 18, freezed 4.0.2/json_serializable 6.14, decimal, intl, fl_chart 1.2, shared_preferences; Dio/secure storage/local_auth intentionally absent (D9); strict analysis_options, gen-l10n (app_en.arb), test/helpers/pump_app.dart (theme/text-scale/RTL/overrides), dart_test.yaml golden tag; dart format clean, flutter analyze 'No issues found', flutter test 1/1 passed; flutter build apk --debug OK (after installing NDK 28.2.13676358); installed on emulator-5554 (Android 17) and screenshot shows WealthSphere shell with tagline (first cold start +44s)

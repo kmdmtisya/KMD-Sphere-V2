@@ -23,3 +23,30 @@ terraform version
 python --version && uv --version
 flutter emulators --launch Pixel_8_Pro
 ```
+
+## Local stack (P01-T05)
+
+```bash
+cp .env.example .env     # then replace every CHANGE_ME (dev values only; .env is git-ignored)
+make up                  # docker compose up -d --wait
+make ps | make logs | make down | make reset   # reset DESTROYS local data volumes
+```
+
+| Service | Host port (default) | Notes |
+|---|---|---|
+| PostgreSQL 17 + pgvector | 5433 | databases `wealthsphere` and `keycloak`; extensions `vector`, `pgcrypto` |
+| Redis 7 | 6380 | password required |
+| RabbitMQ 4 | 5673 (AMQP), 15673 (management UI) | |
+| Keycloak 26.4 (start-dev) | 8081 (health on 9001) | realm and client are configured in P04-T01 |
+
+Host ports differ from the usual defaults so the stack can run beside other local services. Override them in `.env`. All ports bind to 127.0.0.1 only.
+
+## Mobile app
+
+```bash
+cd mobile/wealthsphere_app
+flutter pub get && flutter gen-l10n
+dart format --output=none --set-exit-if-changed . && flutter analyze && flutter test
+flutter build apk --debug && flutter install -d emulator-5554
+```
+The first Android build also needs NDK 28.2.13676358 (`sdkmanager --install "ndk;28.2.13676358"`).

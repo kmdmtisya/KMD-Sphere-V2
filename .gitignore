@@ -58,3 +58,6 @@ crash.log
 node_modules/
 reports/tmp/
 *.log
+
+# Flutter generated localisation
+mobile/wealthsphere_app/lib/l10n/generated/

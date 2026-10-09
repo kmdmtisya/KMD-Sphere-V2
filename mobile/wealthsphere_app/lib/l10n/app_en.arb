@@ -1,0 +1,9 @@
+{
+  "@@locale": "en",
+  "appTitle": "WealthSphere",
+  "@appTitle": {"description": "Application name"},
+  "appTagline": "Track. Measure. Forecast. Grow.",
+  "@appTagline": {"description": "Brand tagline"},
+  "placeholderBody": "App shell ready. Features are added phase by phase.",
+  "@placeholderBody": {"description": "Temporary body text of the scaffold home screen"}
+}
