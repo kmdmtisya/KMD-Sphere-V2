@@ -201,6 +201,8 @@ def cmd_start(cl: Checklist, args) -> None:
         if unmet:
             die(f"{tid}: prerequisites not COMPLETED: {', '.join(unmet)}")
         reg = Register.load(cl.root)
+        if reg is None and (t.gs or t.gd):
+            die(f"{tid}: QUALITY_GATES.md is missing, so its quality gates cannot be verified")
         if reg:
             if (g := reg.blocking(tid)):
                 die(f"{tid}: blocked by failed/blocked quality gate(s) {', '.join(g)}; resolve and re-verify first")
@@ -240,11 +242,17 @@ def _require_subs(t: Task) -> None:
         die(f"{t.id}: unticked subtasks: {', '.join(open_subs)}")
 
 
+def _require_evidence(evidence: str) -> None:
+    if not evidence.strip() or evidence.strip() in ("—", "-"):
+        die("--evidence is required (commands run, results, commit/PR reference)")
+
+
 def cmd_verify(cl: Checklist, args) -> None:
     t = get(cl, args.id)
     if t.status != "IN_PROGRESS":
         die(f"{t.id} is {t.status}, expected IN_PROGRESS")
     _require_subs(t)
+    _require_evidence(args.evidence)
     t.status, t.evidence = "AWAITING_VERIFICATION", args.evidence
     cl.flush(t)
     cl.save()
@@ -261,10 +269,11 @@ def cmd_complete(cl: Checklist, args) -> None:
             die(f"{t.id} requires --approved-by <name> (user approval)")
     elif t.status not in ("IN_PROGRESS", "AWAITING_VERIFICATION"):
         die(f"{t.id} is {t.status}; cannot complete")
-    if not args.evidence or args.evidence.strip() in ("—", "-"):
-        die("--evidence is required (commands run, results, commit/PR reference)")
+    _require_evidence(args.evidence)
     _require_subs(t)
     reg = Register.load(cl.root)
+    if reg is None and (t.gs or t.gd):
+        die(f"{t.id}: QUALITY_GATES.md is missing, so its quality gates cannot be verified")
     if reg:
         if (g := reg.blocking(t.id)):
             die(f"{t.id}: blocked by failed/blocked quality gate(s) {', '.join(g)}")
@@ -861,6 +870,8 @@ def _rewrite_waiver(reg: Register, wid: str) -> None:
 def validate_qg(cl: Checklist, errs: list[str], warns: list[str]) -> None:
     reg = Register.load(cl.root)
     if not reg:
+        if any(t.gs or t.gd for t in cl.tasks.values()):
+            errs.append("QUALITY_GATES.md is missing but tasks reference quality gates (enforcement would be off)")
         return
     if len(reg.titles) != 12:
         errs.append(f"QUALITY_GATES.md: expected 12 gates, found {len(reg.titles)}")

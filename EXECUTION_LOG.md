@@ -313,3 +313,9 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-09T18:57:37+04:00 — PHASE P01 CLOSED — exit gate approved by user
 - P01 (Repository, Environment & Engineering Foundation) complete: 17/17 tasks including the gate. No later phase has been approved yet; P02, P04 and P12 are eligible to start once the user approves them.
 - Open follow-ups recorded in docs/tech-debt.md (notably TD-05 tracker test suite, recommended before P02) and user-side items (Dependabot alerts, private vulnerability reporting, Dependabot PRs #1-#3).
+
+### 2026-10-09T19:24:34+04:00 — FOLLOW-UP (user: 'tests first') — tracker test suite added, TD-05 resolved
+- Added tests/tracker (88 tests, ~75 s): task lifecycle, validation of corrupted/forged state, quality-gate register (checks, failures, waivers, enforcement), robustness (CRLF, missing files, utilities, the repository's real tracking files). Tests drive the real CLI against a miniature roadmap in a temp directory; the real tracking files are never modified. Runs in CI inside the required 'tracker validate' job.
+- Defects found by the suite and fixed in scripts/track.py: (1) `complete`/`verify` accepted whitespace-only evidence; (2) deleting QUALITY_GATES.md silently switched gate enforcement off and `validate` still reported OK. The tracker now fails closed in both cases.
+- Mutation check: deliberately breaking (a) the phase-approval check, (b) Gates-done enforcement, (c) the CRITICAL-waiver refusal each made a named test fail; the tracker was restored byte-for-byte.
+- docs/tech-debt.md: TD-05 removed (resolved). Not a roadmap task, so no task ID was consumed.
