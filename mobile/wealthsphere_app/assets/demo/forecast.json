@@ -1,0 +1,621 @@
+{
+  "demo": true,
+  "request": {
+    "initial_investment": {
+      "amount": "10000.00",
+      "currency": "USD"
+    },
+    "monthly_contribution": {
+      "amount": "500.00",
+      "currency": "USD"
+    },
+    "annual_return_percent": "8.00",
+    "years": 20,
+    "contribution_growth_percent": "0.00",
+    "inflation_percent": "2.50",
+    "annual_fee_percent": "0.50",
+    "compounding_frequency": "monthly",
+    "contribution_frequency": "monthly",
+    "conservative_return_percent": "5.00",
+    "growth_return_percent": "12.00"
+  },
+  "response": {
+    "currency": "USD",
+    "scenarios": {
+      "conservative": {
+        "annual_return_percent": "5.00",
+        "nominal": [
+          {
+            "year": 0,
+            "value": "10000.00"
+          },
+          {
+            "year": 1,
+            "value": "16572.77"
+          },
+          {
+            "year": 2,
+            "value": "23441.31"
+          },
+          {
+            "year": 3,
+            "value": "30618.93"
+          },
+          {
+            "year": 4,
+            "value": "38119.55"
+          },
+          {
+            "year": 5,
+            "value": "45957.70"
+          },
+          {
+            "year": 6,
+            "value": "54148.56"
+          },
+          {
+            "year": 7,
+            "value": "62708.01"
+          },
+          {
+            "year": 8,
+            "value": "71652.64"
+          },
+          {
+            "year": 9,
+            "value": "80999.77"
+          },
+          {
+            "year": 10,
+            "value": "90767.53"
+          },
+          {
+            "year": 11,
+            "value": "100974.84"
+          },
+          {
+            "year": 12,
+            "value": "111641.47"
+          },
+          {
+            "year": 13,
+            "value": "122788.10"
+          },
+          {
+            "year": 14,
+            "value": "134436.33"
+          },
+          {
+            "year": 15,
+            "value": "146608.74"
+          },
+          {
+            "year": 16,
+            "value": "159328.90"
+          },
+          {
+            "year": 17,
+            "value": "172621.46"
+          },
+          {
+            "year": 18,
+            "value": "186512.20"
+          },
+          {
+            "year": 19,
+            "value": "201028.01"
+          },
+          {
+            "year": 20,
+            "value": "216197.04"
+          }
+        ],
+        "real": [
+          {
+            "year": 0,
+            "value": "10000.00"
+          },
+          {
+            "year": 1,
+            "value": "16168.55"
+          },
+          {
+            "year": 2,
+            "value": "22311.77"
+          },
+          {
+            "year": 3,
+            "value": "28432.72"
+          },
+          {
+            "year": 4,
+            "value": "34534.43"
+          },
+          {
+            "year": 5,
+            "value": "40619.91"
+          },
+          {
+            "year": 6,
+            "value": "46692.13"
+          },
+          {
+            "year": 7,
+            "value": "52754.07"
+          },
+          {
+            "year": 8,
+            "value": "58808.66"
+          },
+          {
+            "year": 9,
+            "value": "64858.82"
+          },
+          {
+            "year": 10,
+            "value": "70907.45"
+          },
+          {
+            "year": 11,
+            "value": "76957.44"
+          },
+          {
+            "year": 12,
+            "value": "83011.67"
+          },
+          {
+            "year": 13,
+            "value": "89072.99"
+          },
+          {
+            "year": 14,
+            "value": "95144.25"
+          },
+          {
+            "year": 15,
+            "value": "101228.28"
+          },
+          {
+            "year": 16,
+            "value": "107327.92"
+          },
+          {
+            "year": 17,
+            "value": "113445.97"
+          },
+          {
+            "year": 18,
+            "value": "119585.26"
+          },
+          {
+            "year": 19,
+            "value": "125748.59"
+          },
+          {
+            "year": 20,
+            "value": "131938.77"
+          }
+        ],
+        "final_nominal": {
+          "amount": "216197.04",
+          "currency": "USD"
+        },
+        "final_real": {
+          "amount": "131938.77",
+          "currency": "USD"
+        },
+        "total_contributions": {
+          "amount": "130000.00",
+          "currency": "USD"
+        },
+        "total_growth": {
+          "amount": "86197.04",
+          "currency": "USD"
+        }
+      },
+      "base": {
+        "annual_return_percent": "8.00",
+        "nominal": [
+          {
+            "year": 0,
+            "value": "10000.00"
+          },
+          {
+            "year": 1,
+            "value": "16953.56"
+          },
+          {
+            "year": 2,
+            "value": "24428.63"
+          },
+          {
+            "year": 3,
+            "value": "32464.34"
+          },
+          {
+            "year": 4,
+            "value": "41102.72"
+          },
+          {
+            "year": 5,
+            "value": "50388.98"
+          },
+          {
+            "year": 6,
+            "value": "60371.71"
+          },
+          {
+            "year": 7,
+            "value": "71103.14"
+          },
+          {
+            "year": 8,
+            "value": "82639.44"
+          },
+          {
+            "year": 9,
+            "value": "95040.95"
+          },
+          {
+            "year": 10,
+            "value": "108372.58"
+          },
+          {
+            "year": 11,
+            "value": "122704.08"
+          },
+          {
+            "year": 12,
+            "value": "138110.44"
+          },
+          {
+            "year": 13,
+            "value": "154672.28"
+          },
+          {
+            "year": 14,
+            "value": "172476.26"
+          },
+          {
+            "year": 15,
+            "value": "191615.54"
+          },
+          {
+            "year": 16,
+            "value": "212190.26"
+          },
+          {
+            "year": 17,
+            "value": "234308.09"
+          },
+          {
+            "year": 18,
+            "value": "258084.75"
+          },
+          {
+            "year": 19,
+            "value": "283644.67"
+          },
+          {
+            "year": 20,
+            "value": "311121.57"
+          }
+        ],
+        "real": [
+          {
+            "year": 0,
+            "value": "10000.00"
+          },
+          {
+            "year": 1,
+            "value": "16540.06"
+          },
+          {
+            "year": 2,
+            "value": "23251.52"
+          },
+          {
+            "year": 3,
+            "value": "30146.36"
+          },
+          {
+            "year": 4,
+            "value": "37237.03"
+          },
+          {
+            "year": 5,
+            "value": "44536.51"
+          },
+          {
+            "year": 6,
+            "value": "52058.34"
+          },
+          {
+            "year": 7,
+            "value": "59816.60"
+          },
+          {
+            "year": 8,
+            "value": "67826.03"
+          },
+          {
+            "year": 9,
+            "value": "76101.99"
+          },
+          {
+            "year": 10,
+            "value": "84660.49"
+          },
+          {
+            "year": 11,
+            "value": "93518.27"
+          },
+          {
+            "year": 12,
+            "value": "102692.83"
+          },
+          {
+            "year": 13,
+            "value": "112202.43"
+          },
+          {
+            "year": 14,
+            "value": "122066.14"
+          },
+          {
+            "year": 15,
+            "value": "132303.93"
+          },
+          {
+            "year": 16,
+            "value": "142936.65"
+          },
+          {
+            "year": 17,
+            "value": "153986.12"
+          },
+          {
+            "year": 18,
+            "value": "165475.14"
+          },
+          {
+            "year": 19,
+            "value": "177427.60"
+          },
+          {
+            "year": 20,
+            "value": "189868.46"
+          }
+        ],
+        "final_nominal": {
+          "amount": "311121.57",
+          "currency": "USD"
+        },
+        "final_real": {
+          "amount": "189868.46",
+          "currency": "USD"
+        },
+        "total_contributions": {
+          "amount": "130000.00",
+          "currency": "USD"
+        },
+        "total_growth": {
+          "amount": "181121.57",
+          "currency": "USD"
+        }
+      },
+      "growth": {
+        "annual_return_percent": "12.00",
+        "nominal": [
+          {
+            "year": 0,
+            "value": "10000.00"
+          },
+          {
+            "year": 1,
+            "value": "17460.04"
+          },
+          {
+            "year": 2,
+            "value": "25777.98"
+          },
+          {
+            "year": 3,
+            "value": "35052.48"
+          },
+          {
+            "year": 4,
+            "value": "45393.55"
+          },
+          {
+            "year": 5,
+            "value": "56923.84"
+          },
+          {
+            "year": 6,
+            "value": "69780.12"
+          },
+          {
+            "year": 7,
+            "value": "84114.87"
+          },
+          {
+            "year": 8,
+            "value": "100098.11"
+          },
+          {
+            "year": 9,
+            "value": "117919.43"
+          },
+          {
+            "year": 10,
+            "value": "137790.20"
+          },
+          {
+            "year": 11,
+            "value": "159946.11"
+          },
+          {
+            "year": 12,
+            "value": "184649.95"
+          },
+          {
+            "year": 13,
+            "value": "212194.73"
+          },
+          {
+            "year": 14,
+            "value": "242907.16"
+          },
+          {
+            "year": 15,
+            "value": "277151.52"
+          },
+          {
+            "year": 16,
+            "value": "315333.98"
+          },
+          {
+            "year": 17,
+            "value": "357907.42"
+          },
+          {
+            "year": 18,
+            "value": "405376.81"
+          },
+          {
+            "year": 19,
+            "value": "458305.18"
+          },
+          {
+            "year": 20,
+            "value": "517320.31"
+          }
+        ],
+        "real": [
+          {
+            "year": 0,
+            "value": "10000.00"
+          },
+          {
+            "year": 1,
+            "value": "17034.18"
+          },
+          {
+            "year": 2,
+            "value": "24535.85"
+          },
+          {
+            "year": 3,
+            "value": "32549.71"
+          },
+          {
+            "year": 4,
+            "value": "41124.31"
+          },
+          {
+            "year": 5,
+            "value": "50312.38"
+          },
+          {
+            "year": 6,
+            "value": "60171.18"
+          },
+          {
+            "year": 7,
+            "value": "70762.91"
+          },
+          {
+            "year": 8,
+            "value": "82155.18"
+          },
+          {
+            "year": 9,
+            "value": "94421.43"
+          },
+          {
+            "year": 10,
+            "value": "107641.49"
+          },
+          {
+            "year": 11,
+            "value": "121902.10"
+          },
+          {
+            "year": 12,
+            "value": "137297.56"
+          },
+          {
+            "year": 13,
+            "value": "153930.38"
+          },
+          {
+            "year": 14,
+            "value": "171912.00"
+          },
+          {
+            "year": 15,
+            "value": "191363.58"
+          },
+          {
+            "year": 16,
+            "value": "212416.83"
+          },
+          {
+            "year": 17,
+            "value": "235214.99"
+          },
+          {
+            "year": 18,
+            "value": "259913.79"
+          },
+          {
+            "year": 19,
+            "value": "286682.59"
+          },
+          {
+            "year": 20,
+            "value": "315705.56"
+          }
+        ],
+        "final_nominal": {
+          "amount": "517320.31",
+          "currency": "USD"
+        },
+        "final_real": {
+          "amount": "315705.56",
+          "currency": "USD"
+        },
+        "total_contributions": {
+          "amount": "130000.00",
+          "currency": "USD"
+        },
+        "total_growth": {
+          "amount": "387320.31",
+          "currency": "USD"
+        }
+      }
+    },
+    "assumptions": {
+      "initial_investment": {
+        "amount": "10000.00",
+        "currency": "USD"
+      },
+      "monthly_contribution": {
+        "amount": "500.00",
+        "currency": "USD"
+      },
+      "annual_return_percent": "8.00",
+      "years": 20,
+      "contribution_growth_percent": "0.00",
+      "inflation_percent": "2.50",
+      "annual_fee_percent": "0.50",
+      "compounding_frequency": "monthly",
+      "contribution_frequency": "monthly",
+      "conservative_return_percent": "5.00",
+      "growth_return_percent": "12.00"
+    },
+    "as_of": "2026-10-09T08:00:00Z",
+    "notice": "Projections are illustrative scenarios based on the assumptions shown. They are not guaranteed."
+  }
+}

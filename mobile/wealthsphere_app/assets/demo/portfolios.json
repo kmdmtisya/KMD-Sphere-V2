@@ -1,0 +1,98 @@
+{
+  "demo": true,
+  "portfolios": [
+    {
+      "id": "p-retire",
+      "name": "Retirement",
+      "base_currency": "USD"
+    },
+    {
+      "id": "p-growth",
+      "name": "Growth",
+      "base_currency": "USD"
+    },
+    {
+      "id": "p-income",
+      "name": "Income",
+      "base_currency": "USD"
+    }
+  ],
+  "summaries": {
+    "p-retire": {
+      "portfolio_id": "p-retire",
+      "name": "Retirement",
+      "base_currency": "USD",
+      "value": {
+        "amount": "90250.40",
+        "currency": "USD"
+      },
+      "invested": {
+        "amount": "78000.00",
+        "currency": "USD"
+      },
+      "profit_loss": {
+        "amount": "12250.40",
+        "currency": "USD"
+      },
+      "return_percent": "15.71",
+      "as_of": "2026-10-09T08:00:00Z"
+    },
+    "p-growth": {
+      "portfolio_id": "p-growth",
+      "name": "Growth",
+      "base_currency": "USD",
+      "value": {
+        "amount": "31940.15",
+        "currency": "USD"
+      },
+      "invested": {
+        "amount": "27500.00",
+        "currency": "USD"
+      },
+      "profit_loss": {
+        "amount": "4440.15",
+        "currency": "USD"
+      },
+      "return_percent": "16.15",
+      "as_of": "2026-10-09T08:00:00Z"
+    },
+    "p-income": {
+      "portfolio_id": "p-income",
+      "name": "Income",
+      "base_currency": "USD",
+      "value": {
+        "amount": "17795.80",
+        "currency": "USD"
+      },
+      "invested": {
+        "amount": "17200.00",
+        "currency": "USD"
+      },
+      "profit_loss": {
+        "amount": "595.80",
+        "currency": "USD"
+      },
+      "return_percent": "3.46",
+      "as_of": "2026-10-09T08:00:00Z"
+    },
+    "consolidated": {
+      "portfolio_id": "consolidated",
+      "name": "All portfolios",
+      "base_currency": "USD",
+      "value": {
+        "amount": "139986.35",
+        "currency": "USD"
+      },
+      "invested": {
+        "amount": "122700.00",
+        "currency": "USD"
+      },
+      "profit_loss": {
+        "amount": "17286.35",
+        "currency": "USD"
+      },
+      "return_percent": "14.09",
+      "as_of": "2026-10-09T08:00:00Z"
+    }
+  }
+}

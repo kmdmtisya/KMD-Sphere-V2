@@ -1,0 +1,224 @@
+{
+  "demo": true,
+  "intro": "Ask about your portfolio, risks, goals and forecasts.",
+  "notice": "Demo responses, not connected to your data.",
+  "suggested": [
+    "How is my portfolio performing?",
+    "What are the biggest risks in my portfolio?",
+    "How much could I have in 20 years?",
+    "Which of my holdings are in foreign currencies?"
+  ],
+  "unsupported_reply": "Demo mode can answer the suggested questions only.",
+  "scripts": [
+    {
+      "id": "performance",
+      "kind": "answer",
+      "question": "How is my portfolio performing?",
+      "events": [
+        {
+          "type": "tool",
+          "text": "Fetching portfolio summary…"
+        },
+        {
+          "type": "tool",
+          "text": "Fetching performance metrics…"
+        },
+        {
+          "type": "section",
+          "kind": "observed",
+          "text": "Across your three portfolios the value is $139,986.35 against $122,700.00 invested, as of 9 Oct 2026."
+        },
+        {
+          "type": "section",
+          "kind": "calculated",
+          "text": "That is a total return of 14.09% (CAGR 6.35%), with volatility of 10.10%. Figures come from the portfolio engine, not the AI."
+        },
+        {
+          "type": "section",
+          "kind": "assumption",
+          "text": "Returns are shown in USD, your base currency, and include price changes and income, before any tax."
+        },
+        {
+          "type": "section",
+          "kind": "interpretation",
+          "text": "Growth has come mostly from equities. The income portfolio has been steadier but has contributed less. Past performance does not indicate future results."
+        },
+        {
+          "type": "source",
+          "label": "Portfolio valuation (demo)",
+          "provider": "Demo Data Co.",
+          "as_of": "2026-10-09T08:00:00Z"
+        },
+        {
+          "type": "source",
+          "label": "FX rates (demo)",
+          "provider": "Demo Data Co.",
+          "as_of": "2026-10-09T07:55:00Z"
+        },
+        {
+          "type": "done"
+        }
+      ]
+    },
+    {
+      "id": "risk",
+      "kind": "answer",
+      "question": "What are the biggest risks in my portfolio?",
+      "events": [
+        {
+          "type": "tool",
+          "text": "Fetching allocation…"
+        },
+        {
+          "type": "tool",
+          "text": "Running portfolio checks…"
+        },
+        {
+          "type": "section",
+          "kind": "observed",
+          "text": "Equities are about 64.65% of your holdings, bonds 22.50%, alternatives 5.71%, cash 5.00% and real estate 2.14%. About 22% is held in AED and KES."
+        },
+        {
+          "type": "section",
+          "kind": "calculated",
+          "text": "Estimated annual volatility is 10.10%, driven mainly by the growth portfolio at 17.80%."
+        },
+        {
+          "type": "section",
+          "kind": "assumption",
+          "text": "Volatility is estimated from historical monthly returns and may not repeat."
+        },
+        {
+          "type": "section",
+          "kind": "interpretation",
+          "text": "The main things to watch are concentration in equities and currency moves in AED and KES holdings. This is not personalised advice."
+        },
+        {
+          "type": "source",
+          "label": "Portfolio valuation (demo)",
+          "provider": "Demo Data Co.",
+          "as_of": "2026-10-09T08:00:00Z"
+        },
+        {
+          "type": "done"
+        }
+      ]
+    },
+    {
+      "id": "forecast",
+      "kind": "answer",
+      "question": "How much could I have in 20 years?",
+      "events": [
+        {
+          "type": "tool",
+          "text": "Fetching forecast scenarios…"
+        },
+        {
+          "type": "section",
+          "kind": "observed",
+          "text": "You invest $10,000 now and $500 each month."
+        },
+        {
+          "type": "section",
+          "kind": "calculated",
+          "text": "With the base assumption of 8% a year, 0.5% fees and 2.5% inflation, the projection after 20 years is about $311,122 before inflation (about $189,868 in today's money) (conservative and growth scenarios are shown on the Forecast screen)."
+        },
+        {
+          "type": "section",
+          "kind": "assumption",
+          "text": "Returns are assumed constant and are not guaranteed. Real markets move up and down."
+        },
+        {
+          "type": "section",
+          "kind": "interpretation",
+          "text": "Regular contributions drive most of the result over this period. Try the calculator to see how different assumptions change the outcome."
+        },
+        {
+          "type": "source",
+          "label": "Portfolio valuation (demo)",
+          "provider": "Demo Data Co.",
+          "as_of": "2026-10-09T08:00:00Z"
+        },
+        {
+          "type": "done"
+        }
+      ]
+    },
+    {
+      "id": "currency",
+      "kind": "answer",
+      "question": "Which of my holdings are in foreign currencies?",
+      "events": [
+        {
+          "type": "tool",
+          "text": "Fetching holdings…"
+        },
+        {
+          "type": "tool",
+          "text": "Fetching FX rates…"
+        },
+        {
+          "type": "section",
+          "kind": "observed",
+          "text": "Four holdings are priced in AED or KES: the Emirates Index Fund, the Nairobi Equity Fund, the Kenya Treasury Fund and the Real Estate Trust."
+        },
+        {
+          "type": "section",
+          "kind": "calculated",
+          "text": "Together they are worth about $31,090 in USD, using the FX rates shown in the sources."
+        },
+        {
+          "type": "section",
+          "kind": "assumption",
+          "text": "Conversions use the latest available rate, which can change during the day."
+        },
+        {
+          "type": "section",
+          "kind": "interpretation",
+          "text": "Moves in AED and KES against USD will change the USD value of these holdings even if their local prices do not move."
+        },
+        {
+          "type": "source",
+          "label": "Portfolio valuation (demo)",
+          "provider": "Demo Data Co.",
+          "as_of": "2026-10-09T08:00:00Z"
+        },
+        {
+          "type": "source",
+          "label": "FX rates (demo)",
+          "provider": "Demo Data Co.",
+          "as_of": "2026-10-09T07:55:00Z"
+        },
+        {
+          "type": "done"
+        }
+      ]
+    },
+    {
+      "id": "refusal",
+      "kind": "refusal",
+      "question": "Guarantee me a 20% return",
+      "events": [
+        {
+          "type": "refusal",
+          "text": "I can't guarantee returns. No one can, and investment values can fall as well as rise. I can show you scenarios with clearly stated assumptions instead."
+        }
+      ]
+    },
+    {
+      "id": "failure",
+      "kind": "failure",
+      "question": "Show me a failing request (demo)",
+      "events": [
+        {
+          "type": "tool",
+          "text": "Fetching portfolio summary…"
+        },
+        {
+          "type": "error",
+          "text": "The assistant could not complete this request. Please try again."
+        }
+      ]
+    }
+  ]
+}

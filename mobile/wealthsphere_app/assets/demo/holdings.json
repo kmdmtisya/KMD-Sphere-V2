@@ -1,0 +1,321 @@
+{
+  "demo": true,
+  "holdings": {
+    "p-retire": {
+      "items": [
+        {
+          "symbol": "DEMO-GEQ",
+          "name": "Demo Global Equity Fund",
+          "asset_class": "Equities",
+          "value": {
+            "amount": "42000.00",
+            "currency": "USD"
+          },
+          "native_value": {
+            "amount": "42000.00",
+            "currency": "USD"
+          },
+          "change_percent": "1.80",
+          "as_of": "2026-10-09T08:00:00Z"
+        },
+        {
+          "symbol": "DEMO-BND",
+          "name": "Demo Aggregate Bond Fund",
+          "asset_class": "Bonds",
+          "value": {
+            "amount": "26500.40",
+            "currency": "USD"
+          },
+          "native_value": {
+            "amount": "26500.40",
+            "currency": "USD"
+          },
+          "change_percent": "-0.20",
+          "as_of": "2026-10-09T08:00:00Z"
+        },
+        {
+          "symbol": "DEMO-EMR",
+          "name": "Demo Emirates Index Fund",
+          "asset_class": "Equities",
+          "value": {
+            "amount": "14750.00",
+            "currency": "USD"
+          },
+          "native_value": {
+            "amount": "54169.38",
+            "currency": "AED"
+          },
+          "change_percent": "2.40",
+          "as_of": "2026-10-09T08:00:00Z"
+        },
+        {
+          "symbol": "DEMO-CSH",
+          "name": "Demo Cash Reserve",
+          "asset_class": "Cash",
+          "value": {
+            "amount": "7000.00",
+            "currency": "USD"
+          },
+          "native_value": {
+            "amount": "7000.00",
+            "currency": "USD"
+          },
+          "change_percent": "0.00",
+          "as_of": "2026-10-09T08:00:00Z"
+        }
+      ]
+    },
+    "p-growth": {
+      "items": [
+        {
+          "symbol": "DEMO-TEC",
+          "name": "Demo Technology ETF",
+          "asset_class": "Equities",
+          "value": {
+            "amount": "15600.15",
+            "currency": "USD"
+          },
+          "native_value": {
+            "amount": "15600.15",
+            "currency": "USD"
+          },
+          "change_percent": "3.10",
+          "as_of": "2026-10-09T08:00:00Z"
+        },
+        {
+          "symbol": "DEMO-KEN",
+          "name": "Demo Nairobi Equity Fund",
+          "asset_class": "Equities",
+          "value": {
+            "amount": "8340.00",
+            "currency": "USD"
+          },
+          "native_value": {
+            "amount": "1077528.00",
+            "currency": "KES"
+          },
+          "change_percent": "-1.10",
+          "as_of": "2026-10-09T08:00:00Z"
+        },
+        {
+          "symbol": "DEMO-CRY",
+          "name": "Demo Digital Asset Trust",
+          "asset_class": "Alternatives",
+          "value": {
+            "amount": "8000.00",
+            "currency": "USD"
+          },
+          "native_value": {
+            "amount": "8000.00",
+            "currency": "USD"
+          },
+          "change_percent": "5.60",
+          "as_of": "2026-10-09T08:00:00Z"
+        }
+      ]
+    },
+    "p-income": {
+      "items": [
+        {
+          "symbol": "DEMO-DIV",
+          "name": "Demo Dividend Aristocrats",
+          "asset_class": "Equities",
+          "value": {
+            "amount": "9795.80",
+            "currency": "USD"
+          },
+          "native_value": {
+            "amount": "9795.80",
+            "currency": "USD"
+          },
+          "change_percent": "0.70",
+          "as_of": "2026-10-09T08:00:00Z"
+        },
+        {
+          "symbol": "DEMO-KTB",
+          "name": "Demo Kenya Treasury Fund",
+          "asset_class": "Bonds",
+          "value": {
+            "amount": "5000.00",
+            "currency": "USD"
+          },
+          "native_value": {
+            "amount": "646000.00",
+            "currency": "KES"
+          },
+          "change_percent": "0.30",
+          "as_of": "2026-10-09T08:00:00Z"
+        },
+        {
+          "symbol": "DEMO-REI",
+          "name": "Demo Real Estate Trust",
+          "asset_class": "Real estate",
+          "value": {
+            "amount": "3000.00",
+            "currency": "USD"
+          },
+          "native_value": {
+            "amount": "11017.50",
+            "currency": "AED"
+          },
+          "change_percent": "0.90",
+          "as_of": "2026-10-09T08:00:00Z"
+        }
+      ]
+    },
+    "consolidated": {
+      "items": [
+        {
+          "symbol": "DEMO-GEQ",
+          "name": "Demo Global Equity Fund",
+          "asset_class": "Equities",
+          "value": {
+            "amount": "42000.00",
+            "currency": "USD"
+          },
+          "native_value": {
+            "amount": "42000.00",
+            "currency": "USD"
+          },
+          "change_percent": "1.80",
+          "as_of": "2026-10-09T08:00:00Z"
+        },
+        {
+          "symbol": "DEMO-BND",
+          "name": "Demo Aggregate Bond Fund",
+          "asset_class": "Bonds",
+          "value": {
+            "amount": "26500.40",
+            "currency": "USD"
+          },
+          "native_value": {
+            "amount": "26500.40",
+            "currency": "USD"
+          },
+          "change_percent": "-0.20",
+          "as_of": "2026-10-09T08:00:00Z"
+        },
+        {
+          "symbol": "DEMO-EMR",
+          "name": "Demo Emirates Index Fund",
+          "asset_class": "Equities",
+          "value": {
+            "amount": "14750.00",
+            "currency": "USD"
+          },
+          "native_value": {
+            "amount": "54169.38",
+            "currency": "AED"
+          },
+          "change_percent": "2.40",
+          "as_of": "2026-10-09T08:00:00Z"
+        },
+        {
+          "symbol": "DEMO-CSH",
+          "name": "Demo Cash Reserve",
+          "asset_class": "Cash",
+          "value": {
+            "amount": "7000.00",
+            "currency": "USD"
+          },
+          "native_value": {
+            "amount": "7000.00",
+            "currency": "USD"
+          },
+          "change_percent": "0.00",
+          "as_of": "2026-10-09T08:00:00Z"
+        },
+        {
+          "symbol": "DEMO-TEC",
+          "name": "Demo Technology ETF",
+          "asset_class": "Equities",
+          "value": {
+            "amount": "15600.15",
+            "currency": "USD"
+          },
+          "native_value": {
+            "amount": "15600.15",
+            "currency": "USD"
+          },
+          "change_percent": "3.10",
+          "as_of": "2026-10-09T08:00:00Z"
+        },
+        {
+          "symbol": "DEMO-KEN",
+          "name": "Demo Nairobi Equity Fund",
+          "asset_class": "Equities",
+          "value": {
+            "amount": "8340.00",
+            "currency": "USD"
+          },
+          "native_value": {
+            "amount": "1077528.00",
+            "currency": "KES"
+          },
+          "change_percent": "-1.10",
+          "as_of": "2026-10-09T08:00:00Z"
+        },
+        {
+          "symbol": "DEMO-CRY",
+          "name": "Demo Digital Asset Trust",
+          "asset_class": "Alternatives",
+          "value": {
+            "amount": "8000.00",
+            "currency": "USD"
+          },
+          "native_value": {
+            "amount": "8000.00",
+            "currency": "USD"
+          },
+          "change_percent": "5.60",
+          "as_of": "2026-10-09T08:00:00Z"
+        },
+        {
+          "symbol": "DEMO-DIV",
+          "name": "Demo Dividend Aristocrats",
+          "asset_class": "Equities",
+          "value": {
+            "amount": "9795.80",
+            "currency": "USD"
+          },
+          "native_value": {
+            "amount": "9795.80",
+            "currency": "USD"
+          },
+          "change_percent": "0.70",
+          "as_of": "2026-10-09T08:00:00Z"
+        },
+        {
+          "symbol": "DEMO-KTB",
+          "name": "Demo Kenya Treasury Fund",
+          "asset_class": "Bonds",
+          "value": {
+            "amount": "5000.00",
+            "currency": "USD"
+          },
+          "native_value": {
+            "amount": "646000.00",
+            "currency": "KES"
+          },
+          "change_percent": "0.30",
+          "as_of": "2026-10-09T08:00:00Z"
+        },
+        {
+          "symbol": "DEMO-REI",
+          "name": "Demo Real Estate Trust",
+          "asset_class": "Real estate",
+          "value": {
+            "amount": "3000.00",
+            "currency": "USD"
+          },
+          "native_value": {
+            "amount": "11017.50",
+            "currency": "AED"
+          },
+          "change_percent": "0.90",
+          "as_of": "2026-10-09T08:00:00Z"
+        }
+      ]
+    }
+  }
+}

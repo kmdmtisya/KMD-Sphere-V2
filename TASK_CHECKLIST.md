@@ -304,16 +304,16 @@
 - Exit gates: QG-04.4; QG-05.3 — required by `P03-GATE` (Gates-done)
 - Release gates: —
 
-- [ ] **P03-T01** · Demo data layer · `NOT_STARTED` ⬜
+- [x] **P03-T01** · Demo data layer · `COMPLETED` ✅
   - Deps: P02-GATE · Wave: W1 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P03-T01.1 Domain/DTO models
-  - [ ] P03-T01.2 Repository interfaces
-  - [ ] P03-T01.3 Demo implementations
-  - [ ] P03-T01.4 Multi-currency fixtures
-  - [ ] P03-T01.5 Scripted copilot fixtures
-  - [ ] P03-T01.6 Tests
+  - Started: 2026-10-09T23:44:54+04:00 · Completed: 2026-10-10T00:01:26+04:00 · Duration: 16m 32s · Blocker: —
+  - Evidence: PR #20. Domain models (lib/shared/domain/wealth_models.dart, features/forecast/domain, features/copilot/domain, features/dashboard/domain) mirror the planned API: snake_case JSON, money as {amount,currency} strings, rates/percentages as strings, strict parsing via core/data/json_reader.dart (rejects JSON numbers for money/decimals, zone-less timestamps, and impossible calendar values; found and fixed Dart's date rollover). Repository interfaces + Demo implementations: DashboardRepository, PortfolioRepository, ForecastRepository, CopilotRepository (Stream<ChatEvent>), DashboardLayoutRepository (local, persisted via PreferencesStore). DemoBehavior provides configurable latency (default 600 ms) and failure injection (failAlways, failNextCalls for retry); dataSourceModeProvider is demo-only. Fixtures assets/demo/*.json (8 files, each demo:true, enforced by DemoAssets and a test): 3 portfolios + consolidated, USD/AED/KES holdings, series for all 7 ChartPeriods, allocation, metrics, canned forecast for default inputs, 4 scripted copilot answers plus refusal and failure scripts; reproducible via tool/generate_demo_fixtures.py. Tests (50 new; 626 total passing, 34 goldens skipped on Windows): all fixtures load through the interfaces, internal consistency (holdings sum to portfolio value, weights sum to 100, series end at current value, forecast totals), Decimal precision above 2^53 round-trips, latency and failure injection, streaming order, refusal/failure/unsupported replies, layout persistence and corrupt-data fallback. Mutations (demo flag check, failNext decrement, decimal check, layout bounds, a fixture figure) were each caught. format and analyze clean; CI mobile gate, android and ios builds green. Deviation: plain immutable Dart classes with explicit parsers instead of Freezed (no build_runner step in CI; json_serializable cannot read Decimal/Money anyway). No screen code added.
+  - [x] P03-T01.1 Domain/DTO models
+  - [x] P03-T01.2 Repository interfaces
+  - [x] P03-T01.3 Demo implementations
+  - [x] P03-T01.4 Multi-currency fixtures
+  - [x] P03-T01.5 Scripted copilot fixtures
+  - [x] P03-T01.6 Tests
 - [ ] **P03-T02** · Home Dashboard (screen 3) · `NOT_STARTED` ⬜
   - Deps: P03-T01 · Wave: W2 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
