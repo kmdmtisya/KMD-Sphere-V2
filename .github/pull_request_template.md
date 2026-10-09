@@ -17,6 +17,7 @@
 - [ ] No secrets, tokens or real personal data committed
 - [ ] AI changes: tools authorised server-side, structured output validated, no guaranteed-return language
 - [ ] Documentation updated (README, docs/, ADR if a decision changed)
+- [ ] Any technical debt or new lint/type suppression is recorded in docs/tech-debt.md (no unexplained debt)
 
 ## Quality gates
 <!-- Criteria verified or affected, e.g. QG-03.1. Verified with `python scripts/track.py qg check ... --evidence ...` -->

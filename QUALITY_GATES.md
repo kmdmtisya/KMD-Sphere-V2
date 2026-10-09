@@ -7,69 +7,69 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-09T18:24:49+04:00 by `scripts/track.py`._
+_Generated at 2026-10-09T18:34:16+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
-| QG-01 | Architecture and Design | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
-| QG-02 | Code Quality | 🔄 IN_PROGRESS | 2/6 | Unassigned | — |
-| QG-03 | Automated Testing | 🔄 IN_PROGRESS | 1/6 | Unassigned | — |
-| QG-04 | Android Platform | 🔄 IN_PROGRESS | 1/7 | Unassigned | — |
-| QG-05 | iOS Platform | 🔄 IN_PROGRESS | 1/6 | Unassigned | — |
+| QG-01 | Architecture and Design | 🔄 IN_PROGRESS | 2/5 | Unassigned | — |
+| QG-02 | Code Quality | ✅ PASSED | 6/6 | Unassigned | — |
+| QG-03 | Automated Testing | 🔄 IN_PROGRESS | 2/6 | Unassigned | — |
+| QG-04 | Android Platform | 🔄 IN_PROGRESS | 3/7 | Unassigned | — |
+| QG-05 | iOS Platform | 🔄 IN_PROGRESS | 2/6 | Unassigned | — |
 | QG-06 | Financial Accuracy and Data Integrity | ⬜ NOT_STARTED | 0/7 | Unassigned | — |
 | QG-07 | AI Reliability and Investment Intelligence | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
-| QG-08 | Security and Privacy | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
+| QG-08 | Security and Privacy | 🔄 IN_PROGRESS | 2/8 | Unassigned | — |
 | QG-09 | Performance and Scalability | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
-| QG-10 | CI/CD and Infrastructure | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
+| QG-10 | CI/CD and Infrastructure | 🔄 IN_PROGRESS | 2/8 | Unassigned | — |
 | QG-11 | End-to-End Integration | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
 | QG-12 | Production Release Readiness | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
 
 Waivers: 0 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 5/81.
+Criteria satisfied overall: 19/81.
 
-Current phase **P01** exit-gate criteria outstanding: QG-01.1, QG-01.2, QG-02.1, QG-02.2, QG-02.4, QG-02.6, QG-03.1, QG-04.1, QG-04.2, QG-05.1, QG-08.3, QG-08.4, QG-08.6, QG-10.1, QG-10.3.
+Current phase **P01** exit-gate criteria outstanding: none.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
 
-- [ ] QG-01.1 Architecture complies with the approved solution intent and architectural decisions · Required: P01 · By: P01-T03
-- [ ] QG-01.2 Module boundaries and dependencies are documented · Required: P01 · By: P01-T04
+- [x] QG-01.1 Architecture complies with the approved solution intent and architectural decisions · Required: P01 · By: P01-T03 · Evidence: Architecture follows the approved solution intent: docs/architecture.md derived from SOLUTION_INTENT sections 22, 26, 27 and the implementation guide (modular monolith, backend authoritative for financial truth, allow-listed AI tools, provider abstractions); ADR-0001..0008 all Accepted by the user; 11 document conflicts (D1-D11) listed with resolutions in EXECUTION_PLAN.md section 2; plan approved at P00-GATE · Verified: 2026-10-09T18:33:56+04:00
+- [x] QG-01.2 Module boundaries and dependencies are documented · Required: P01 · By: P01-T04 · Evidence: Module boundaries and dependencies documented in docs/architecture.md section 2 (11 modules, responsibility and allowed-dependency table, rule: modules call only service interfaces), ADR-0004 (backend layout: api/service/repository/schemas) and ADR-0005 (repository layout); backend/app/modules reserved for domain modules · Verified: 2026-10-09T18:33:56+04:00
 - [ ] QG-01.3 API contracts and database designs are reviewed · Required: P05 · By: P05-T10
 - [ ] QG-01.4 No unresolved critical architectural risks · Required: P13 · By: P13-T10
 - [ ] QG-01.5 UI/UX implementation follows the approved WealthSphere design system · Required: P02 · By: P02-T08
 
-Status: NOT_STARTED  
+Status: IN_PROGRESS  
 Owner: Unassigned  
-Start Timestamp: —  
+Start Timestamp: 2026-10-09T18:33:56+04:00  
 End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Verification Timestamp: 2026-10-09T18:33:56+04:00  
+Evidence: 2/5 criteria verified; latest QG-01.2 at 2026-10-09T18:33:56+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
 
 ### QG-02: Code Quality
 
-- [ ] QG-02.1 Formatting and linting checks pass · Required: P01 · By: P01-T09,P01-T10
-- [ ] QG-02.2 Static type checks pass · Required: P01 · By: P01-T09
+- [x] QG-02.1 Formatting and linting checks pass · Required: P01 · By: P01-T09,P01-T10 · Evidence: Formatting and lint pass: PR #4 required checks all green ('lint, types, tests, migrations' = ruff format --check + ruff check; 'format, analyze, test (incl. goldens)' = dart format --set-exit-if-changed + flutter analyze); pre-commit 'run --all-files' all 12 hooks Passed; negative tests showed ruff-check fails on an unused import, and a failing check blocked PR #5 from merging · Verified: 2026-10-09T18:33:56+04:00
+- [x] QG-02.2 Static type checks pass · Required: P01 · By: P01-T09 · Evidence: Static types pass: mypy --strict 'Success: no issues found in 30 source files' (backend, incl. tests and OpenTelemetry/SQLAlchemy/asyncpg stubs) in CI; flutter analyze 'No issues found' with strict-casts, strict-inference and strict-raw-types in CI · Verified: 2026-10-09T18:33:56+04:00
 - [x] QG-02.3 No unresolved critical or high-severity code-quality issues · Required: P01 · By: P01-T15 · Evidence: No unresolved critical/high code-quality issues: ruff (rules incl. flake8-bandit S, bugbear, asyncio) clean; mypy --strict 'no issues found in 30 source files'; CodeQL python security-extended on PR #4 and main: 0 open code-scanning alerts (GitHub API); Trivy HIGH/CRITICAL: none; dependency audit (pip-audit, OSV): none. Required-check gates now block merges (ruleset 'main protection') · Verified: 2026-10-09T18:14:49+04:00
-- [ ] QG-02.4 No hardcoded credentials or secrets · Required: P01 · By: P01-T11 · CRITICAL
+- [x] QG-02.4 No hardcoded credentials or secrets · Required: P01 · By: P01-T11 · Evidence: No hardcoded credentials or secrets: gitleaks full-history scan in CI (fetch-depth 0) 'no leaks found' on runs 37931445813 and every later PR/push; local gitleaks history scan of 15 commits clean; Trivy secret scan clean; pre-commit gitleaks hook blocks staged secrets; SEEDED TEST: random fake key on a throwaway branch failed CI run 37931671715 (generic-api-key) and was blocked by the local hook; .env git-ignored; a JWT-shaped test fixture was replaced by runtime construction instead of suppressing the rule · Verified: 2026-10-09T18:33:57+04:00 · CRITICAL
 - [x] QG-02.5 Code reviews are completed for relevant changes · Required: P01 · By: P01-T15 · Evidence: User accepted the compensating review controls of ADR-0008 in chat ('Accept these controls'): CODEOWNERS requests the maintainer on every PR (explicitly on .github/, backend/app/core/, migrations, security docs, tracker, quality-gate register); PR template with Definition of Done checklist; mandatory recorded user approval for every task flagged Approval: yes and every phase gate; independent diff review before completing tasks touching money, authorization, AI tools or migrations. Ruleset requires 0 approving reviews because the sole maintainer cannot approve own PRs; to be raised to 1 with code-owner review when a second maintainer joins. All changes land via pull requests (PR #4 merged; direct pushes rejected) · Verified: 2026-10-09T18:22:40+04:00
-- [ ] QG-02.6 No unexplained technical debt introduced · Required: P01 · By: P01-T13
+- [x] QG-02.6 No unexplained technical debt introduced · Required: P01 · By: P01-T13 · Evidence: No unexplained technical debt: docs/tech-debt.md lists 11 known shortcuts with risk, owner and resolve-by point, plus every inline lint/type suppression with its justification (scan of backend/ and scripts/ found 11 suppression sites, all with rule codes); PR template and CONTRIBUTING now require debt to be recorded in the same pull request. Notable entries: TD-05 tracker has no automated test suite (to be added before P02), TD-03 iOS Xcode not pinned · Verified: 2026-10-09T18:33:57+04:00
 
-Status: IN_PROGRESS  
+Status: PASSED  
 Owner: Unassigned  
 Start Timestamp: 2026-10-09T18:14:49+04:00  
-End Timestamp: —  
-Verification Timestamp: 2026-10-09T18:22:40+04:00  
-Evidence: 2/6 criteria verified; latest QG-02.5 at 2026-10-09T18:22:40+04:00  
+End Timestamp: 2026-10-09T18:34:15+04:00  
+Verification Timestamp: 2026-10-09T18:34:15+04:00  
+Evidence: All six QG-02 criteria verified with evidence (formatting/lint, static types, no critical code-quality findings (CodeQL 0 alerts), no hardcoded secrets, code-review controls accepted by user, tech-debt register). Re-verified at P13-T11  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
 
 ### QG-03: Automated Testing
 
-- [ ] QG-03.1 All required unit tests pass · Required: P01 · By: P01-T09,P01-T10
+- [x] QG-03.1 All required unit tests pass · Required: P01 · By: P01-T09,P01-T10 · Evidence: Required unit tests pass: backend pytest 109 passed (0 skipped in CI; coverage 96.6%, per-module report in job summary) and mobile flutter test passed, in PR #4 CI and on main after merge (runs 37944172314 backend, 37944172316 mobile) · Verified: 2026-10-09T18:33:57+04:00
 - [ ] QG-03.2 All required integration tests pass · Required: P05 · By: P05-T09
 - [ ] QG-03.3 Relevant end-to-end tests pass · Required: P09 · By: P09-T10
 - [ ] QG-03.4 Critical financial calculations achieve 100% requirement/edge-case coverage through documented test cases · Required: P06 · By: P06-T10 · CRITICAL
@@ -80,16 +80,16 @@ Status: IN_PROGRESS
 Owner: Unassigned  
 Start Timestamp: 2026-10-09T18:14:49+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-09T18:14:49+04:00  
-Evidence: 1/6 criteria verified; latest QG-03.6 at 2026-10-09T18:14:49+04:00  
+Verification Timestamp: 2026-10-09T18:33:57+04:00  
+Evidence: 2/6 criteria verified; latest QG-03.1 at 2026-10-09T18:33:57+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
 
 ### QG-04: Android Platform
 
-- [ ] QG-04.1 Android application builds successfully · Required: P01 · By: P01-T06
-- [ ] QG-04.2 Flutter analysis and tests pass · Required: P01 · By: P01-T10
+- [x] QG-04.1 Android application builds successfully · Required: P01 · By: P01-T06 · Evidence: Android app builds: CI job 'android debug build' success on PR #4 and earlier runs 37931445838 / 37926752270; local flutter build apk --debug produces an APK reporting minSdkVersion 26, targetSdkVersion 36 (aapt2 badging), app id com.kmdmtisya.wealthsphere_app; installed and launched on an Android 17 emulator · Verified: 2026-10-09T18:33:58+04:00
+- [x] QG-04.2 Flutter analysis and tests pass · Required: P01 · By: P01-T10 · Evidence: Flutter analysis and tests pass: flutter analyze 'No issues found', dart format clean, flutter test passed (app shell test) locally and in CI job 'format, analyze, test (incl. goldens)' on PR #4 · Verified: 2026-10-09T18:33:58+04:00
 - [x] QG-04.3 Supported Android versions are explicitly documented · Required: P01 · By: P01-T16 · Evidence: docs/quality-targets.md section 1: supported Android versions documented (minimum Android 8.0 / API 26, target level tracked against Google Play policy, reference devices); approved by user 2026-10-09 · Verified: 2026-10-09T15:52:48+04:00
 - [ ] QG-04.4 Navigation, responsive layouts, accessibility and lifecycle behaviour are verified · Required: P03 · By: P03-T07
 - [ ] QG-04.5 Secure storage and biometric authentication work correctly · Required: P04 · By: P04-T07
@@ -100,15 +100,15 @@ Status: IN_PROGRESS
 Owner: Unassigned  
 Start Timestamp: 2026-10-09T15:52:48+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-09T15:52:48+04:00  
-Evidence: 1/7 criteria verified; latest QG-04.3 at 2026-10-09T15:52:48+04:00  
+Verification Timestamp: 2026-10-09T18:33:58+04:00  
+Evidence: 3/7 criteria verified; latest QG-04.2 at 2026-10-09T18:33:58+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
 
 ### QG-05: iOS Platform
 
-- [ ] QG-05.1 iOS application builds successfully using the supported Xcode toolchain · Required: P01 · By: P01-T10
+- [x] QG-05.1 iOS application builds successfully using the supported Xcode toolchain · Required: P01 · By: P01-T10 · Evidence: iOS app builds: CI job 'ios compile (no codesign)' success on macOS runner image macos-26-arm64 (run 37931445838; 'Built build/ios/iphoneos/Runner.app (15.7MB)') and on PR #4, with IPHONEOS_DEPLOYMENT_TARGET 16.0 in all three Runner configurations. CAVEAT recorded as TD-03: the runner's default Xcode is used and its version is not logged or pinned yet; pinning is scheduled for P14-T02 · Verified: 2026-10-09T18:33:58+04:00
 - [x] QG-05.2 Supported iOS versions and devices are documented · Required: P01 · By: P01-T16 · Evidence: docs/quality-targets.md section 1: supported iOS versions and devices documented (minimum iOS 16.0, iPhone SE 3rd gen / iPhone 15 / Pro Max classes, update policy); approved by user 2026-10-09 · Verified: 2026-10-09T15:52:49+04:00
 - [ ] QG-05.3 Navigation, safe areas, accessibility and lifecycle behaviour are verified · Required: P03 · By: P03-T07
 - [ ] QG-05.4 Face ID/Touch ID and Keychain storage work correctly · Required: P04 · By: P04-T07
@@ -119,8 +119,8 @@ Status: IN_PROGRESS
 Owner: Unassigned  
 Start Timestamp: 2026-10-09T15:52:49+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-09T15:52:49+04:00  
-Evidence: 1/6 criteria verified; latest QG-05.2 at 2026-10-09T15:52:49+04:00  
+Verification Timestamp: 2026-10-09T18:33:58+04:00  
+Evidence: 2/6 criteria verified; latest QG-05.1 at 2026-10-09T18:33:58+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -170,19 +170,19 @@ Approved By: —
 
 - [ ] QG-08.1 Authentication and authorization tests pass · Required: P04 · By: P04-T09 · CRITICAL
 - [ ] QG-08.2 No known unresolved critical or high-severity exploitable vulnerabilities at release · Required: P13 · By: P13-T03 · CRITICAL
-- [ ] QG-08.3 Secrets scanning passes · Required: P01 · By: P01-T11 · CRITICAL
-- [ ] QG-08.4 Dependency and container vulnerability scanning passes · Required: P01 · By: P01-T11
+- [x] QG-08.3 Secrets scanning passes · Required: P01 · By: P01-T11 · Evidence: Secrets scanning passes: gitleaks job in security.yml (full history) green on PR #4, #6, #7 and main (run 37944172283); seeded-secret test (run 37931671715) proved the scan fails when a secret is present; local pre-commit gitleaks hook also active · Verified: 2026-10-09T18:33:58+04:00 · CRITICAL
+- [ ] QG-08.4 Dependency and container vulnerability scanning passes · Required: P12 · By: P12-T04
 - [ ] QG-08.5 Encryption in transit and at rest is verified · Required: P12 · By: P12-T03,P12-T05 · CRITICAL
-- [ ] QG-08.6 Sensitive financial data is excluded from inappropriate logs · Required: P01 · By: P01-T12 · CRITICAL
+- [x] QG-08.6 Sensitive financial data is excluded from inappropriate logs · Required: P01 · By: P01-T12 · Evidence: Sensitive data excluded from logs: app/core/redaction.py applied to every log record (messages, extra fields, exception text); tests/test_redaction.py covers 15 leak cases (bearer, JWT, URL/DSN credentials incl. redis://:pw@host, password/secret/api_key/token pairs, financial amount/balance/price/net_worth), 5 clean-text cases, key detection, recursion, depth cap and an end-to-end log line; live server log showed no password; found and fixed the empty-username URL gap. Baseline mechanism; re-verified on the release candidate at P13-T11 · Verified: 2026-10-09T18:33:59+04:00 · CRITICAL
 - [ ] QG-08.7 Backup and restore procedures are tested · Required: P12 · By: P12-T10
 - [ ] QG-08.8 Privacy, retention, consent and account-deletion requirements are verified · Required: P13 · By: P13-T05 · CRITICAL
 
-Status: NOT_STARTED  
+Status: IN_PROGRESS  
 Owner: Unassigned  
-Start Timestamp: —  
+Start Timestamp: 2026-10-09T18:33:58+04:00  
 End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Verification Timestamp: 2026-10-09T18:33:59+04:00  
+Evidence: 2/8 criteria verified; latest QG-08.6 at 2026-10-09T18:33:59+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -208,21 +208,21 @@ Approved By: —
 
 ### QG-10: CI/CD and Infrastructure
 
-- [ ] QG-10.1 CI pipelines pass · Required: P01 · By: P01-T09,P01-T10
+- [x] QG-10.1 CI pipelines pass · Required: P01 · By: P01-T09,P01-T10 · Evidence: CI pipelines pass: workflows backend, mobile, security, tracker all success on main after the last merge (runs 37944172314, 37944172316, 37944172283, 37944172361 on f525b80) and all four required gate checks green on PRs #4, #6, #7; ruleset blocks merges otherwise (PR #5 demonstration) · Verified: 2026-10-09T18:33:59+04:00
 - [ ] QG-10.2 Build artifacts are reproducible and versioned · Required: P12 · By: P12-T04
-- [ ] QG-10.3 Database migrations are validated · Required: P01 · By: P01-T08
+- [x] QG-10.3 Database migrations are validated · Required: P01 · By: P01-T08 · Evidence: Database migrations validated: baseline revision 0001 (pgcrypto, vector); CI step 'Migrations' runs alembic upgrade head, check ('No new upgrade operations detected'), downgrade base, upgrade head and asserts a single head; pytest round-trip on a throwaway database, single-head and no-credentials-in-migrations tests; local CLI cycle on a scratch database · Verified: 2026-10-09T18:33:59+04:00
 - [ ] QG-10.4 Infrastructure changes are reviewed · Required: P12 · By: P12-T02
 - [ ] QG-10.5 Deployment health checks pass · Required: P12 · By: P12-T11
 - [ ] QG-10.6 Monitoring, logs, metrics and alerts are operational · Required: P12 · By: P12-T09
 - [ ] QG-10.7 Rollback procedures are tested · Required: P12 · By: P12-T08
 - [ ] QG-10.8 Staging and production configurations are appropriately isolated · Required: P12 · By: P12-T02
 
-Status: NOT_STARTED  
+Status: IN_PROGRESS  
 Owner: Unassigned  
-Start Timestamp: —  
+Start Timestamp: 2026-10-09T18:33:59+04:00  
 End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Verification Timestamp: 2026-10-09T18:33:59+04:00  
+Evidence: 2/8 criteria verified; latest QG-10.3 at 2026-10-09T18:33:59+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -275,3 +275,10 @@ A waiver needs explicit approval, a documented justification, a future expiry/re
 |---|---|---|---|---|---|---|---|
 <!-- WAIVERS:BEGIN -->
 <!-- WAIVERS:END -->
+
+## Scope changes
+Changes to when a criterion is required are decisions, recorded here and in EXECUTION_LOG.md.
+
+| Date | Criterion | Change | Reason | Approved by |
+|---|---|---|---|---|
+| 2026-10-09 | QG-08.4 | Required phase P01 → P12; evidence task P01-T11 → P12-T04 | The criterion covers dependency **and container** scanning. Dependency scanning is already running in CI (P01-T11); no container images exist until P12-T04, so the container half cannot be satisfied earlier. Not a waiver: the full criterion still applies, at the phase where it can be met. | user (option b) |

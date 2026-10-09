@@ -207,7 +207,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | Phase | Entry (prerequisite phases) | Exit criteria required | Release gates |
 |---|---|---|---|
 | P00 | — | none | — |
-| P01 | P00 | QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,4,6; QG-10.1,3 | — |
+| P01 | P00 | QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,6; QG-10.1,3 | — |
 | P02 | P01 | QG-01.5 | — |
 | P03 | P02 | QG-04.4; QG-05.3 | — |
 | P04 | P01 | QG-04.5; QG-05.4; QG-08.1 | — |
@@ -218,7 +218,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | P09 | P03, P04, P05, P06, P07, P08 | QG-03.3; QG-11.1,2,5,6 | — |
 | P10 | P04, P05, P06 | QG-07.1,2,3,5,6,8; QG-11.3 | — |
 | P11 | P08, P10 | QG-07.4,7 | — |
-| P12 | P01 | QG-08.5,7; QG-10.2,4,5,6,7,8 | P12-T11 |
+| P12 | P01 | QG-08.4,5,7; QG-10.2,4,5,6,7,8 | P12-T11 |
 | P13 | P09, P10, P11, P12 | QG-01.4; QG-04.6; QG-05.5; QG-08.2,8; QG-09.1,2,3,4,6; QG-12.1,3,4,7 | — |
 | P14 | P13 | QG-04.7; QG-05.6; QG-12.2,5,6,8 | P14-T03, P14-T07 |
 
@@ -362,7 +362,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Prerequisite phases:** P00 · **Lane:** FOUNDATION
 - **Entry gates:** prerequisite phase gates completed (P00); cumulative quality criteria none; user approval of the phase.
 - **Task-level gates:** each task's CK suites and acceptance criteria; additionally quality criteria: P01-T15 → QG-02.3,5; QG-03.6; P01-T16 → QG-04.3; QG-05.2.
-- **Exit gates:** QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,4,6; QG-10.1,3 (required by `P01-GATE`) plus user review.
+- **Exit gates:** QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,6; QG-10.1,3 (required by `P01-GATE`) plus user review.
 - **Release gates:** —
 
 | Wave | Tasks | Mode | Entry condition | Conflict notes |
@@ -638,7 +638,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
   - Backend and mobile CI green on main.
   - User approval recorded.
 - **Verification:** CK-B, CK-M, CK-S, CK-DB all green on main.
-- **Quality gates required before completion:** QG-01.1, QG-01.2, QG-02.1, QG-02.2, QG-02.3, QG-02.4, QG-02.5, QG-02.6, QG-03.1, QG-03.6, QG-04.1, QG-04.2, QG-04.3, QG-05.1, QG-05.2, QG-08.3, QG-08.4, QG-08.6, QG-10.1, QG-10.3
+- **Quality gates required before completion:** QG-01.1, QG-01.2, QG-02.1, QG-02.2, QG-02.3, QG-02.4, QG-02.5, QG-02.6, QG-03.1, QG-03.6, QG-04.1, QG-04.2, QG-04.3, QG-05.1, QG-05.2, QG-08.3, QG-08.6, QG-10.1, QG-10.3
 - **Subtasks:** `P01-GATE.1` Run all quality gates · `P01-GATE.2` Present summary · `P01-GATE.3` Record user approval
 
 ### P02 — Flutter Design System (UX Gate 1)
@@ -647,7 +647,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Entry criteria:** P01-T06 and P01-T10 complete; DEC-13 (chart library) confirmed.
 - **Exit criteria:** Gallery reviewed against the concept board in both themes at 2.0 text scale; all component tests and goldens green.
 - **Prerequisite phases:** P01 (P01-T06, P01-T10) · **Lane:** MOBILE
-- **Entry gates:** prerequisite phase gates completed (P01); cumulative quality criteria QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,4,6; QG-10.1,3; user approval of the phase.
+- **Entry gates:** prerequisite phase gates completed (P01); cumulative quality criteria QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,6; QG-10.1,3; user approval of the phase.
 - **Task-level gates:** each task's CK suites and acceptance criteria.
 - **Exit gates:** QG-01.5 (required by `P02-GATE`) plus user review.
 - **Release gates:** —
@@ -804,7 +804,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Entry criteria:** P02-GATE complete.
 - **Exit criteria:** Five screens and five journeys pass on emulator with accessibility sweep clean; user approves gate 2.
 - **Prerequisite phases:** P02 · **Lane:** MOBILE
-- **Entry gates:** prerequisite phase gates completed (P02); cumulative quality criteria QG-01.1,2,5; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,4,6; QG-10.1,3; user approval of the phase.
+- **Entry gates:** prerequisite phase gates completed (P02); cumulative quality criteria QG-01.1,2,5; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,6; QG-10.1,3; user approval of the phase.
 - **Task-level gates:** each task's CK suites and acceptance criteria.
 - **Exit gates:** QG-04.4; QG-05.3 (required by `P03-GATE`) plus user review.
 - **Release gates:** —
@@ -944,7 +944,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Entry criteria:** P01-GATE complete; Keycloak available in the local stack.
 - **Exit criteria:** No protected endpoint is reachable without a valid token; ownership/IDOR harness exists; mobile can sign in, refresh and lock.
 - **Prerequisite phases:** P01 · **Lane:** BACKEND
-- **Entry gates:** prerequisite phase gates completed (P01); cumulative quality criteria QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,4,6; QG-10.1,3; user approval of the phase.
+- **Entry gates:** prerequisite phase gates completed (P01); cumulative quality criteria QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,6; QG-10.1,3; user approval of the phase.
 - **Task-level gates:** each task's CK suites and acceptance criteria.
 - **Exit gates:** QG-04.5; QG-05.4; QG-08.1 (required by `P04-GATE`) plus user review.
 - **Release gates:** —
@@ -1114,7 +1114,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Entry criteria:** P04-T02 and P04-T03 complete.
 - **Exit criteria:** Portfolio summary endpoint is correct, tested and IDOR-safe; OpenAPI contract reconciled with mobile DTOs.
 - **Prerequisite phases:** P04 · **Lane:** BACKEND
-- **Entry gates:** prerequisite phase gates completed (P04); cumulative quality criteria QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-08.1,3,4,6; QG-10.1,3; user approval of the phase.
+- **Entry gates:** prerequisite phase gates completed (P04); cumulative quality criteria QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-08.1,3,6; QG-10.1,3; user approval of the phase.
 - **Task-level gates:** each task's CK suites and acceptance criteria.
 - **Exit gates:** QG-01.3; QG-03.2; QG-06.2,5 (required by `P05-GATE`) plus user review.
 - **Release gates:** —
@@ -1301,7 +1301,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Entry criteria:** P06 approved; P05 tasks as listed in each task's dependencies.
 - **Exit criteria:** Independent recomputation confirms every formula; analytics APIs are authorised and cached.
 - **Prerequisite phases:** P05 (P06-T01/T02 may start after P01-T07 once P06 is approved) · **Lane:** BACKEND
-- **Entry gates:** prerequisite phase gates completed (P05); cumulative quality criteria QG-01.1–3; QG-02.1–6; QG-03.1,2,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-06.2,5; QG-08.1,3,4,6; QG-10.1,3; user approval of the phase.
+- **Entry gates:** prerequisite phase gates completed (P05); cumulative quality criteria QG-01.1–3; QG-02.1–6; QG-03.1,2,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-06.2,5; QG-08.1,3,6; QG-10.1,3; user approval of the phase.
 - **Task-level gates:** each task's CK suites and acceptance criteria.
 - **Exit gates:** QG-03.4–5; QG-06.1,3,4,6 (required by `P06-GATE`) plus user review.
 - **Release gates:** —
@@ -1485,7 +1485,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Entry criteria:** P03-GATE complete.
 - **Exit criteria:** All 13 screens exist with loading/empty/error states and journeys; user approves gate 3.
 - **Prerequisite phases:** P03 · **Lane:** MOBILE
-- **Entry gates:** prerequisite phase gates completed (P03); cumulative quality criteria QG-01.1,2,5; QG-02.1–6; QG-03.1,6; QG-04.1–4; QG-05.1–3; QG-08.3,4,6; QG-10.1,3; user approval of the phase.
+- **Entry gates:** prerequisite phase gates completed (P03); cumulative quality criteria QG-01.1,2,5; QG-02.1–6; QG-03.1,6; QG-04.1–4; QG-05.1–3; QG-08.3,6; QG-10.1,3; user approval of the phase.
 - **Task-level gates:** each task's CK suites and acceptance criteria.
 - **Exit gates:** none (required by `P07-GATE`) plus user review.
 - **Release gates:** —
@@ -1651,7 +1651,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Entry criteria:** P05 complete; DEC-04 (providers/licensing) decided in P08-T01.
 - **Exit criteria:** Valuations use timestamped market data with freshness flags; provider outages degrade gracefully.
 - **Prerequisite phases:** P05 · **Lane:** BACKEND
-- **Entry gates:** prerequisite phase gates completed (P05); cumulative quality criteria QG-01.1–3; QG-02.1–6; QG-03.1,2,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-06.2,5; QG-08.1,3,4,6; QG-10.1,3; user approval of the phase.
+- **Entry gates:** prerequisite phase gates completed (P05); cumulative quality criteria QG-01.1–3; QG-02.1–6; QG-03.1,2,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-06.2,5; QG-08.1,3,6; QG-10.1,3; user approval of the phase.
 - **Task-level gates:** each task's CK suites and acceptance criteria.
 - **Exit gates:** QG-06.7; QG-09.5; QG-11.4 (required by `P08-GATE`) plus user review.
 - **Release gates:** —
@@ -1818,7 +1818,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Entry criteria:** Required backend phases and P07-GATE complete; DEC-08 (push) and DEC-12 (offline store) decided.
 - **Exit criteria:** All 13 screens run on live data; DEMO appears only where data is still demo; E2E suite green.
 - **Prerequisite phases:** P03, P04, P05, P06, P07, P08 · **Lane:** INTEGRATION
-- **Entry gates:** prerequisite phase gates completed (P03, P04, P05, P06, P07, P08); cumulative quality criteria QG-01.1,2,3,5; QG-02.1–6; QG-03.1,2,4,5,6; QG-04.1–5; QG-05.1–4; QG-06.1–7; QG-08.1,3,4,6; QG-09.5; QG-10.1,3; QG-11.4; user approval of the phase.
+- **Entry gates:** prerequisite phase gates completed (P03, P04, P05, P06, P07, P08); cumulative quality criteria QG-01.1,2,3,5; QG-02.1–6; QG-03.1,2,4,5,6; QG-04.1–5; QG-05.1–4; QG-06.1–7; QG-08.1,3,6; QG-09.5; QG-10.1,3; QG-11.4; user approval of the phase.
 - **Task-level gates:** each task's CK suites and acceptance criteria.
 - **Exit gates:** QG-03.3; QG-11.1,2,5,6 (required by `P09-GATE`) plus user review.
 - **Release gates:** —
@@ -1995,7 +1995,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Entry criteria:** P04-T09, P06-T09 and P06-T02 complete; DEC-05 (LLM provider/budget/keys) decided.
 - **Exit criteria:** Copilot answers only through authorised tools; adversarial suite passes; user approves.
 - **Prerequisite phases:** P04, P05, P06 (P09-T01 for mobile wiring) · **Lane:** AI
-- **Entry gates:** prerequisite phase gates completed (P04, P05, P06); cumulative quality criteria QG-01.1–3; QG-02.1–6; QG-03.1,2,4,5,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-06.1–6; QG-08.1,3,4,6; QG-10.1,3; user approval of the phase.
+- **Entry gates:** prerequisite phase gates completed (P04, P05, P06); cumulative quality criteria QG-01.1–3; QG-02.1–6; QG-03.1,2,4,5,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-06.1–6; QG-08.1,3,6; QG-10.1,3; user approval of the phase.
 - **Task-level gates:** each task's CK suites and acceptance criteria.
 - **Exit gates:** QG-07.1,2,3,5,6,8; QG-11.3 (required by `P10-GATE`) plus user review.
 - **Release gates:** —
@@ -2177,7 +2177,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Entry criteria:** P08-T06, P08-T09, P10-T08 complete.
 - **Exit criteria:** Opportunities carry risks, assumptions, evidence and timestamps; safety suite passes; legal review done.
 - **Prerequisite phases:** P08, P10 · **Lane:** AI
-- **Entry gates:** prerequisite phase gates completed (P08, P10); cumulative quality criteria QG-01.1–3; QG-02.1–6; QG-03.1,2,4,5,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-06.1–7; QG-07.1,2,3,5,6,8; QG-08.1,3,4,6; QG-09.5; QG-10.1,3; QG-11.3–4; user approval of the phase.
+- **Entry gates:** prerequisite phase gates completed (P08, P10); cumulative quality criteria QG-01.1–3; QG-02.1–6; QG-03.1,2,4,5,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-06.1–7; QG-07.1,2,3,5,6,8; QG-08.1,3,6; QG-09.5; QG-10.1,3; QG-11.3–4; user approval of the phase.
 - **Task-level gates:** each task's CK suites and acceptance criteria.
 - **Exit gates:** QG-07.4,7 (required by `P11-GATE`) plus user review.
 - **Release gates:** —
@@ -2356,9 +2356,9 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Entry criteria:** P01-GATE complete; DEC-02 (cloud/region/data residency) decided in P12-T01.
 - **Exit criteria:** Staging runs the full stack from pipeline with monitoring and a tested restore.
 - **Prerequisite phases:** P01 (early start allowed); deployment tasks need P04-T01 · **Lane:** INFRA
-- **Entry gates:** prerequisite phase gates completed (P01); cumulative quality criteria QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,4,6; QG-10.1,3; user approval of the phase.
+- **Entry gates:** prerequisite phase gates completed (P01); cumulative quality criteria QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,6; QG-10.1,3; user approval of the phase.
 - **Task-level gates:** each task's CK suites and acceptance criteria.
-- **Exit gates:** QG-08.5,7; QG-10.2,4,5,6,7,8 (required by `P12-GATE`) plus user review.
+- **Exit gates:** QG-08.4,5,7; QG-10.2,4,5,6,7,8 (required by `P12-GATE`) plus user review.
 - **Release gates:** P12-T11 → start: QG-02.1, QG-02.2, QG-02.3, QG-02.4, QG-03.1, QG-03.2, QG-03.6, QG-08.3, QG-08.4, QG-08.6, QG-11.1, QG-11.2, QG-11.5
 
 | Wave | Tasks | Mode | Entry condition | Conflict notes |
@@ -2543,7 +2543,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Acceptance criteria:**
   - User approval recorded.
 - **Verification:** CK-INF, CK-S.
-- **Quality gates required before completion:** QG-08.5, QG-08.7, QG-10.2, QG-10.4, QG-10.5, QG-10.6, QG-10.7, QG-10.8
+- **Quality gates required before completion:** QG-08.4, QG-08.5, QG-08.7, QG-10.2, QG-10.4, QG-10.5, QG-10.6, QG-10.7, QG-10.8
 - **Subtasks:** `P12-GATE.1` Run gates · `P12-GATE.2` Present summary · `P12-GATE.3` Record approval
 
 ### P13 — Production Hardening & Quality Assurance

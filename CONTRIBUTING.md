@@ -51,6 +51,9 @@ Types: `feat`, `fix`, `docs`, `chore`, `ci`, `test`, `refactor`, `perf`, `build`
 ## Pull requests
 Use the template (Definition of Done checklist, quality gates, evidence). Describe failures and remaining risks honestly. A pull request touching money, authorization, AI tools or migrations needs a second review.
 
+## Technical debt
+If you knowingly take a shortcut, add it to `docs/tech-debt.md` in the same pull request (what, why, risk, owner, when it will be resolved). New lint or type suppressions need a rule code and a justification in the same file.
+
 ## Rules that never bend
 No secrets in source control; no binary floating point for money; backend is authoritative for financial calculations; every protected resource checks ownership server-side; AI gets only allow-listed tools; no guaranteed-return language; no automatic trade execution. See `CLAUDE.md`, `docs/security.md` and `docs/ai-governance.md`.
 

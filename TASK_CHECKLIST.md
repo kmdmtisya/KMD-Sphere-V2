@@ -65,7 +65,7 @@
 
 - Phase approval: `APPROVED by user (mtisya@gmail.com) at 2026-10-09T13:40:14+04:00`
 - Entry gates: prerequisite phase gates completed (P00); cumulative criteria none — enforced as dependencies of every wave-1 task
-- Exit gates: QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,4,6; QG-10.1,3 — required by `P01-GATE` (Gates-done)
+- Exit gates: QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,6; QG-10.1,3 — required by `P01-GATE` (Gates-done)
 - Release gates: —
 
 - [x] **P01-T01** · Verify local environment readiness · `COMPLETED` ✅
@@ -200,19 +200,19 @@
   - [x] P01-T16.2 Mobile performance targets
   - [x] P01-T16.3 API/database SLOs
   - [x] P01-T16.4 AI evaluation datasets and thresholds approach
-- [ ] **P01-GATE** · Phase P01 exit gate · `NOT_STARTED` ⬜
-  - Deps: P01-T01, P01-T02, P01-T03, P01-T04, P01-T05, P01-T06, P01-T07, P01-T08, P01-T09, P01-T10, P01-T11, P01-T12, P01-T13, P01-T14, P01-T15, P01-T16 · Wave: W7 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-01.1, QG-01.2, QG-02.1, QG-02.2, QG-02.3, QG-02.4, QG-02.5, QG-02.6, QG-03.1, QG-03.6, QG-04.1, QG-04.2, QG-04.3, QG-05.1, QG-05.2, QG-08.3, QG-08.4, QG-08.6, QG-10.1, QG-10.3
-  - Started: — · Completed: — · Duration: — · Blocker: —
+- [ ] **P01-GATE** · Phase P01 exit gate · `IN_PROGRESS` 🔄
+  - Deps: P01-T01, P01-T02, P01-T03, P01-T04, P01-T05, P01-T06, P01-T07, P01-T08, P01-T09, P01-T10, P01-T11, P01-T12, P01-T13, P01-T14, P01-T15, P01-T16 · Wave: W7 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-01.1, QG-01.2, QG-02.1, QG-02.2, QG-02.3, QG-02.4, QG-02.5, QG-02.6, QG-03.1, QG-03.6, QG-04.1, QG-04.2, QG-04.3, QG-05.1, QG-05.2, QG-08.3, QG-08.6, QG-10.1, QG-10.3
+  - Started: 2026-10-09T18:34:16+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P01-GATE.1 Run all quality gates
-  - [ ] P01-GATE.2 Present summary
+  - [x] P01-GATE.1 Run all quality gates
+  - [x] P01-GATE.2 Present summary
   - [ ] P01-GATE.3 Record user approval
 
 
 ## P02 — Flutter Design System (UX Gate 1)
 
 - Phase approval: `PENDING`
-- Entry gates: prerequisite phase gates completed (P01); cumulative criteria QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,4,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
+- Entry gates: prerequisite phase gates completed (P01); cumulative criteria QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
 - Exit gates: QG-01.5 — required by `P02-GATE` (Gates-done)
 - Release gates: —
 
@@ -300,7 +300,7 @@
 ## P03 — Priority Screens with DEMO Data (UX Gate 2)
 
 - Phase approval: `PENDING`
-- Entry gates: prerequisite phase gates completed (P02); cumulative criteria QG-01.1,2,5; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,4,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
+- Entry gates: prerequisite phase gates completed (P02); cumulative criteria QG-01.1,2,5; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
 - Exit gates: QG-04.4; QG-05.3 — required by `P03-GATE` (Gates-done)
 - Release gates: —
 
@@ -383,7 +383,7 @@
 ## P04 — Identity & Security Foundation
 
 - Phase approval: `PENDING`
-- Entry gates: prerequisite phase gates completed (P01); cumulative criteria QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,4,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
+- Entry gates: prerequisite phase gates completed (P01); cumulative criteria QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
 - Exit gates: QG-04.5; QG-05.4; QG-08.1 — required by `P04-GATE` (Gates-done)
 - Release gates: —
 
@@ -473,7 +473,7 @@
 ## P05 — Portfolio Core: Database & Backend
 
 - Phase approval: `PENDING`
-- Entry gates: prerequisite phase gates completed (P04); cumulative criteria QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-08.1,3,4,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
+- Entry gates: prerequisite phase gates completed (P04); cumulative criteria QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-08.1,3,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
 - Exit gates: QG-01.3; QG-03.2; QG-06.2,5 — required by `P05-GATE` (Gates-done)
 - Release gates: —
 
@@ -567,7 +567,7 @@
 ## P06 — Analytics, Forecasting & Wealth Planning (Backend)
 
 - Phase approval: `PENDING`
-- Entry gates: prerequisite phase gates completed (P05); cumulative criteria QG-01.1–3; QG-02.1–6; QG-03.1,2,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-06.2,5; QG-08.1,3,4,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
+- Entry gates: prerequisite phase gates completed (P05); cumulative criteria QG-01.1–3; QG-02.1–6; QG-03.1,2,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-06.2,5; QG-08.1,3,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
 - Exit gates: QG-03.4–5; QG-06.1,3,4,6 — required by `P06-GATE` (Gates-done)
 - Release gates: —
 
@@ -661,7 +661,7 @@
 ## P07 — Remaining Screens with DEMO Data (UX Gate 3)
 
 - Phase approval: `PENDING`
-- Entry gates: prerequisite phase gates completed (P03); cumulative criteria QG-01.1,2,5; QG-02.1–6; QG-03.1,6; QG-04.1–4; QG-05.1–3; QG-08.3,4,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
+- Entry gates: prerequisite phase gates completed (P03); cumulative criteria QG-01.1,2,5; QG-02.1–6; QG-03.1,6; QG-04.1–4; QG-05.1–3; QG-08.3,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
 - Exit gates: none — required by `P07-GATE` (Gates-done)
 - Release gates: —
 
@@ -748,7 +748,7 @@
 ## P08 — Market Data & Research Integration (Backend)
 
 - Phase approval: `PENDING`
-- Entry gates: prerequisite phase gates completed (P05); cumulative criteria QG-01.1–3; QG-02.1–6; QG-03.1,2,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-06.2,5; QG-08.1,3,4,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
+- Entry gates: prerequisite phase gates completed (P05); cumulative criteria QG-01.1–3; QG-02.1–6; QG-03.1,2,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-06.2,5; QG-08.1,3,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
 - Exit gates: QG-06.7; QG-09.5; QG-11.4 — required by `P08-GATE` (Gates-done)
 - Release gates: —
 
@@ -833,7 +833,7 @@
 ## P09 — Mobile-Backend Integration (UX Gate 4)
 
 - Phase approval: `PENDING`
-- Entry gates: prerequisite phase gates completed (P03, P04, P05, P06, P07, P08); cumulative criteria QG-01.1,2,3,5; QG-02.1–6; QG-03.1,2,4,5,6; QG-04.1–5; QG-05.1–4; QG-06.1–7; QG-08.1,3,4,6; QG-09.5; QG-10.1,3; QG-11.4 — enforced as dependencies of every wave-1 task
+- Entry gates: prerequisite phase gates completed (P03, P04, P05, P06, P07, P08); cumulative criteria QG-01.1,2,3,5; QG-02.1–6; QG-03.1,2,4,5,6; QG-04.1–5; QG-05.1–4; QG-06.1–7; QG-08.1,3,6; QG-09.5; QG-10.1,3; QG-11.4 — enforced as dependencies of every wave-1 task
 - Exit gates: QG-03.3; QG-11.1,2,5,6 — required by `P09-GATE` (Gates-done)
 - Release gates: —
 
@@ -926,7 +926,7 @@
 ## P10 — AI Tool Layer & Wealth Copilot
 
 - Phase approval: `PENDING`
-- Entry gates: prerequisite phase gates completed (P04, P05, P06); cumulative criteria QG-01.1–3; QG-02.1–6; QG-03.1,2,4,5,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-06.1–6; QG-08.1,3,4,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
+- Entry gates: prerequisite phase gates completed (P04, P05, P06); cumulative criteria QG-01.1–3; QG-02.1–6; QG-03.1,2,4,5,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-06.1–6; QG-08.1,3,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
 - Exit gates: QG-07.1,2,3,5,6,8; QG-11.3 — required by `P10-GATE` (Gates-done)
 - Release gates: —
 
@@ -1019,7 +1019,7 @@
 ## P11 — AI Investment Intelligence & Portfolio Doctor
 
 - Phase approval: `PENDING`
-- Entry gates: prerequisite phase gates completed (P08, P10); cumulative criteria QG-01.1–3; QG-02.1–6; QG-03.1,2,4,5,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-06.1–7; QG-07.1,2,3,5,6,8; QG-08.1,3,4,6; QG-09.5; QG-10.1,3; QG-11.3–4 — enforced as dependencies of every wave-1 task
+- Entry gates: prerequisite phase gates completed (P08, P10); cumulative criteria QG-01.1–3; QG-02.1–6; QG-03.1,2,4,5,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-06.1–7; QG-07.1,2,3,5,6,8; QG-08.1,3,6; QG-09.5; QG-10.1,3; QG-11.3–4 — enforced as dependencies of every wave-1 task
 - Exit gates: QG-07.4,7 — required by `P11-GATE` (Gates-done)
 - Release gates: —
 
@@ -1112,8 +1112,8 @@
 ## P12 — Cloud Infrastructure & Deployment Pipeline
 
 - Phase approval: `PENDING`
-- Entry gates: prerequisite phase gates completed (P01); cumulative criteria QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,4,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
-- Exit gates: QG-08.5,7; QG-10.2,4,5,6,7,8 — required by `P12-GATE` (Gates-done)
+- Entry gates: prerequisite phase gates completed (P01); cumulative criteria QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
+- Exit gates: QG-08.4,5,7; QG-10.2,4,5,6,7,8 — required by `P12-GATE` (Gates-done)
 - Release gates: P12-T11 (Gates-start)
 
 - [ ] **P12-T01** · Cloud provider, region and residency decision · `NOT_STARTED` ⬜
@@ -1198,7 +1198,7 @@
   - [ ] P12-T11.3 Smoke
   - [ ] P12-T11.4 Report
 - [ ] **P12-GATE** · Phase P12 exit gate · `NOT_STARTED` ⬜
-  - Deps: P12-T01, P12-T02, P12-T03, P12-T04, P12-T05, P12-T06, P12-T07, P12-T08, P12-T09, P12-T10, P12-T11 · Wave: W8 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-08.5, QG-08.7, QG-10.2, QG-10.4, QG-10.5, QG-10.6, QG-10.7, QG-10.8
+  - Deps: P12-T01, P12-T02, P12-T03, P12-T04, P12-T05, P12-T06, P12-T07, P12-T08, P12-T09, P12-T10, P12-T11 · Wave: W8 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-08.4, QG-08.5, QG-08.7, QG-10.2, QG-10.4, QG-10.5, QG-10.6, QG-10.7, QG-10.8
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P12-GATE.1 Run gates
