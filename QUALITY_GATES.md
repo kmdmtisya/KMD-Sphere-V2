@@ -7,12 +7,12 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-09T18:14:49+04:00 by `scripts/track.py`._
+_Generated at 2026-10-09T18:22:40+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
 | QG-01 | Architecture and Design | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
-| QG-02 | Code Quality | 🔄 IN_PROGRESS | 1/6 | Unassigned | — |
+| QG-02 | Code Quality | 🔄 IN_PROGRESS | 2/6 | Unassigned | — |
 | QG-03 | Automated Testing | 🔄 IN_PROGRESS | 1/6 | Unassigned | — |
 | QG-04 | Android Platform | 🔄 IN_PROGRESS | 1/7 | Unassigned | — |
 | QG-05 | iOS Platform | 🔄 IN_PROGRESS | 1/6 | Unassigned | — |
@@ -25,9 +25,9 @@ _Generated at 2026-10-09T18:14:49+04:00 by `scripts/track.py`._
 | QG-12 | Production Release Readiness | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
 
 Waivers: 0 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 4/81.
+Criteria satisfied overall: 5/81.
 
-Current phase **P01** exit-gate criteria outstanding: QG-01.1, QG-01.2, QG-02.1, QG-02.2, QG-02.4, QG-02.5, QG-02.6, QG-03.1, QG-04.1, QG-04.2, QG-05.1, QG-08.3, QG-08.4, QG-08.6, QG-10.1, QG-10.3.
+Current phase **P01** exit-gate criteria outstanding: QG-01.1, QG-01.2, QG-02.1, QG-02.2, QG-02.4, QG-02.6, QG-03.1, QG-04.1, QG-04.2, QG-05.1, QG-08.3, QG-08.4, QG-08.6, QG-10.1, QG-10.3.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -54,15 +54,15 @@ Approved By: —
 - [ ] QG-02.2 Static type checks pass · Required: P01 · By: P01-T09
 - [x] QG-02.3 No unresolved critical or high-severity code-quality issues · Required: P01 · By: P01-T15 · Evidence: No unresolved critical/high code-quality issues: ruff (rules incl. flake8-bandit S, bugbear, asyncio) clean; mypy --strict 'no issues found in 30 source files'; CodeQL python security-extended on PR #4 and main: 0 open code-scanning alerts (GitHub API); Trivy HIGH/CRITICAL: none; dependency audit (pip-audit, OSV): none. Required-check gates now block merges (ruleset 'main protection') · Verified: 2026-10-09T18:14:49+04:00
 - [ ] QG-02.4 No hardcoded credentials or secrets · Required: P01 · By: P01-T11 · CRITICAL
-- [ ] QG-02.5 Code reviews are completed for relevant changes · Required: P01 · By: P01-T15
+- [x] QG-02.5 Code reviews are completed for relevant changes · Required: P01 · By: P01-T15 · Evidence: User accepted the compensating review controls of ADR-0008 in chat ('Accept these controls'): CODEOWNERS requests the maintainer on every PR (explicitly on .github/, backend/app/core/, migrations, security docs, tracker, quality-gate register); PR template with Definition of Done checklist; mandatory recorded user approval for every task flagged Approval: yes and every phase gate; independent diff review before completing tasks touching money, authorization, AI tools or migrations. Ruleset requires 0 approving reviews because the sole maintainer cannot approve own PRs; to be raised to 1 with code-owner review when a second maintainer joins. All changes land via pull requests (PR #4 merged; direct pushes rejected) · Verified: 2026-10-09T18:22:40+04:00
 - [ ] QG-02.6 No unexplained technical debt introduced · Required: P01 · By: P01-T13
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
 Start Timestamp: 2026-10-09T18:14:49+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-09T18:14:49+04:00  
-Evidence: 1/6 criteria verified; latest QG-02.3 at 2026-10-09T18:14:49+04:00  
+Verification Timestamp: 2026-10-09T18:22:40+04:00  
+Evidence: 2/6 criteria verified; latest QG-02.5 at 2026-10-09T18:22:40+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
