@@ -145,6 +145,9 @@ jobs:
     needs: [changes, quality]
     runs-on: ubuntu-24.04
     timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }} # this job does not check out the repository
     steps:
       - name: Require every job to have passed (skipped is only acceptable when nothing relevant changed)
         env:
