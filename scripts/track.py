@@ -29,7 +29,7 @@ Usage (run from the repository root):
   python scripts/track.py qg reverify QG-06 --evidence "..." [--approved-by "name"]
   python scripts/track.py qg waive QG-02.6 --justification "..." --approved-by "name" --risk-owner "name" --expires YYYY-MM-DD
   python scripts/track.py qg revoke-waiver W-001
-  python scripts/track.py qg require QG-02.1 QG-03 QG-all@P13   # exit 1 if not satisfied (for CI)
+  python scripts/track.py qg require QG-02.1 QG-03 QG-all@P14   # exit 1 if not satisfied (for CI)
 Add --root <dir> to operate on a copy of the tracking files.
 """
 from __future__ import annotations
@@ -55,6 +55,12 @@ APPROVAL_RE = re.compile(r"^- Phase approval: `(.*)`\s*$")
 ISO_TZ_RE = re.compile(r"^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d[+-]\d\d:\d\d$")
 CRLF, LF = chr(13) + chr(10), chr(10)
 AUTO_BEGIN, AUTO_END = "<!-- AUTO:BEGIN -->", "<!-- AUTO:END -->"
+
+
+def _wave_no(wave: str) -> int:
+    """`W10` -> 10, so waves compare numerically (a string compare puts W10 before W9)."""
+    m = re.fullmatch(r"W(\d+)", wave or "")
+    return int(m.group(1)) if m else -1
 
 
 def now() -> str:
@@ -424,7 +430,7 @@ def cmd_validate(cl: Checklist, args) -> None:
         for d in t.deps:
             if d not in cl.tasks:
                 errs.append(f"{t.id}: unknown dependency {d}")
-            elif cl.tasks[d].phase == t.phase and cl.tasks[d].wave >= t.wave and d != t.id and t.wave != "GATE":
+            elif cl.tasks[d].phase == t.phase and _wave_no(cl.tasks[d].wave) >= _wave_no(t.wave) and d != t.id and t.wave != "GATE":
                 errs.append(f"{t.id}: dependency {d} not in an earlier wave")
         if t.status == "COMPLETED":
             if not ISO_TZ_RE.match(t.completed):
@@ -607,7 +613,9 @@ class Register:
             return self.gate_crits(token)
         if m := re.fullmatch(r"QG-all@P(\d\d)", token):
             lim = int(m.group(1))
-            return [c for c in self.crits.values() if c.gate != "QG-12" and c.required_phase <= lim]
+            # QG-01..QG-11 only: QG-12 is the release gate itself, and optional workstream gates (the
+            # Forex gates QG-13..QG-20) never block core release readiness.
+            return [c for c in self.crits.values() if int(c.gate[3:]) <= 11 and c.required_phase <= lim]
         raise KeyError(token)
 
     def unsatisfied(self, tokens: list[str]) -> list[str]:
@@ -718,9 +726,9 @@ def cmd_qg(cl: Checklist, args) -> None:
             if st in ("FAILED", "BLOCKED"):
                 die(f"{g} is {st}; run `qg resolve {g}` after remediation first")
             if cid == "QG-12.1":
-                un = reg.unsatisfied(["QG-all@P13"])
+                un = reg.unsatisfied(["QG-all@P14"])
                 if un:
-                    die("QG-12.1 requires every QG-01..QG-11 criterion due by P13; unsatisfied: " + short(un))
+                    die("QG-12.1 requires every QG-01..QG-11 criterion due by P14; unsatisfied: " + short(un))
             c.done = True
             c.meta["Evidence"] = clean(args.evidence)
             c.meta["Verified"] = ts
@@ -873,8 +881,13 @@ def validate_qg(cl: Checklist, errs: list[str], warns: list[str]) -> None:
         if any(t.gs or t.gd for t in cl.tasks.values()):
             errs.append("QUALITY_GATES.md is missing but tasks reference quality gates (enforcement would be off)")
         return
-    if len(reg.titles) != 12:
+    # The twelve platform gates are the baseline and cannot shrink; later workstreams (for example the
+    # Forex gates QG-13..QG-20) may add more, but the numbering must stay contiguous.
+    if len(reg.titles) < 12:
         errs.append(f"QUALITY_GATES.md: expected 12 gates, found {len(reg.titles)}")
+    expected_ids = [f"QG-{i:02d}" for i in range(1, len(reg.titles) + 1)]
+    if sorted(reg.titles) != expected_ids:
+        errs.append("QUALITY_GATES.md: gate ids must be contiguous from QG-01")
     for g in reg.titles:
         for k in FIELD_KEYS:
             if k not in reg.fields[g]:

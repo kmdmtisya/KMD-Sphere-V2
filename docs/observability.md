@@ -1,6 +1,6 @@
 # Observability
 
-Implemented in P01-T12; production dashboards, alerts and SLOs are P12-T09. Targets: `docs/quality-targets.md`.
+Implemented in P01-T12; production dashboards, alerts and SLOs are P13-T09. Targets: `docs/quality-targets.md`.
 
 ## Log schema
 Every log line is one JSON object written to stderr:

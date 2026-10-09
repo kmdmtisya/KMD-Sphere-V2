@@ -393,3 +393,21 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-09T22:56:23+04:00 — COMPLETE P02-T08
 - duration: 37m 51s
 - evidence: PR #16. Debug-only /_gallery (registered only when enableGallery/kDebugMode; test asserts it is absent when disabled and a gallery link then shows not-found) reachable from More; shows 8 sections covering every component and chart with theme, text scale 1.0/1.5/2.0 and RTL toggles; all content DEMO-labelled fixtures. 28 section goldens (7 sections x light/dark x 1x/2x) generated on the CI Linux runner, reviewed visually, committed under test/app/goldens and compared by CI (mobile gate green); they skip on non-Linux. docs/design/design-system.md: principles, light/dark token tables with measured contrast (from test/helpers/contrast.dart), spacing/motion/size tokens, component catalogue with rules, do/don't list, test and golden procedure. The gallery found three defects, fixed with tests/goldens: StatusBanner retry overflowed at 2.0x on 320dp (regression test added), stale-banner text read 'Showing data from As of 5 hours ago', and WealthSummaryCard did not fill the row width. Local: 576 passed, 34 golden tests skipped on Windows; format and analyze clean. Mutation (gallery guard forced on) was caught. Visual sign-off against the concept board is the P02 gate review and is not claimed here.
+
+### 2026-10-09T23:17:04+04:00 — PLAN CHANGE (proposed) — add phase P15 Forex Trading Intelligence and gates QG-13..QG-20
+- requested by the user 2026-10-09: Forex Market Intelligence module (decision support and paper trading only) plus an Opportunity Ranking Dashboard
+- added 15 tasks (FX-01..FX-14 = P15-T01..T14, plus P15-GATE), 90 subtasks, 8 gates / 38 criteria (QG-FX-01..08 = QG-13..QG-20), decisions DEC-19..DEC-24, 5 risks
+- documents: docs/design/forex-technical-design.md, docs/adr/0009-forex-intelligence-module.md (Proposed), SOLUTION_INTENT section 34 and section 30 clarification, brief and guide sections
+- tracker: wave numbers now compare numerically (W10 after W9) and the gate count may exceed 12 when contiguous; 4 new tests
+- P15 phase approval is PENDING; nothing is implemented; no existing task or criterion changed
+
+### 2026-10-09T23:24:10+04:00 — PLAN CHANGE (proposed) — move the Forex phase between P11 and the cloud infrastructure phase
+- requested by the user 2026-10-09: place the Forex Trading Intelligence phase after P11 and before Cloud Infrastructure
+- renumbered phases: Forex P15 -> P12; Cloud Infrastructure P12 -> P13; Production Hardening P13 -> P14; Release P14 -> P15 (task IDs, gates, waves, quality-gate Required phases and documentation updated; earlier entries in this log keep the old IDs)
+- dependencies changed because staging and hardening now come after the Forex phase: FX-13 became integration and soak validation on the local/CI stack (no cloud staging dependency); FX-14 no longer depends on the hardening gate; the module staging smoke tests were added to P13-T11 and production enablement of the Forex flag needs P14-GATE and those smoke tests
+- tracker: QG-all@Pxx now covers QG-01..QG-11 only, so optional workstream gates (QG-13..QG-20) never block core release readiness (QG-12.1); QG-12.1 now requires criteria due by P14; one new test
+- phase P12 approval remains PENDING; no task started; nothing implemented
+
+### 2026-10-09T23:34:22+04:00 — PHASE APPROVED P12
+- approved by user (mtisya@gmail.com)
+- Forex Trading Intelligence (FX workstream)

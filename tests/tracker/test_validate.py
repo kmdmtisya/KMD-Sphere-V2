@@ -165,3 +165,30 @@ def test_validate_is_read_only(ws: Workspace, name: str) -> None:
     before = ws.read(name)
     ws.ok("validate")
     assert ws.read(name) == before
+
+
+# ----------------------------------------------------------------------------- scale: more waves and gates
+def test_waves_compare_numerically_not_as_text(ws: Workspace) -> None:
+    ws.edit("TASK_CHECKLIST.md", "Deps: P00-T01 · Wave: W2", "Deps: P00-T01 · Wave: W10")
+    ws.edit("TASK_CHECKLIST.md", "Deps: — · Wave: W1 · Track: DOC", "Deps: — · Wave: W9 · Track: DOC")
+    ws.edit("TASK_CHECKLIST.md", "Deps: P00-T01, P00-T02 · Wave: W3", "Deps: P00-T01, P00-T02 · Wave: W11")
+    assert "OK" in ws.ok("validate"), "W9 must come before W10"
+
+
+def _with_extra_gate(ws: Workspace, number: int) -> None:
+    text = ws.read("QUALITY_GATES.md")
+    start = text.index("### QG-12:")
+    end = text.index("## Waiver register")
+    section = text[start:end].replace("QG-12", f"QG-{number:02d}")
+    ws.write("QUALITY_GATES.md", text[:end] + section + text[end:])
+
+
+def test_additional_contiguous_gates_are_allowed(ws: Workspace) -> None:
+    _with_extra_gate(ws, 13)
+    ws.edit("TASK_CHECKLIST.md", "QG-11.1, QG-12.1", "QG-11.1, QG-12.1, QG-13.1")
+    assert "13 quality gates" in ws.ok("validate")
+
+
+def test_gate_numbering_gap_is_detected(ws: Workspace) -> None:
+    _with_extra_gate(ws, 14)
+    assert "contiguous" in _bad(ws)

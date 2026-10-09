@@ -12,3 +12,4 @@ Format: Context / Decision / Consequences. Status values: Proposed, Accepted, Su
 | [0006](0006-rounding-conventions.md) | Rounding conventions | Accepted |
 | [0007](0007-test-strategy.md) | Test strategy | Accepted |
 | [0008](0008-quality-gate-policy.md) | Quality-gate policy and merge protection | Accepted |
+| [0009](0009-forex-intelligence-module.md) | Forex Trading Intelligence module (decision support and paper trading only) | Accepted |

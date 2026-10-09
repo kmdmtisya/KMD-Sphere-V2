@@ -242,6 +242,8 @@ The system must be able to explain why an opportunity was surfaced, including se
 ## 30. Initial Non-Goals
 The initial release is not a bank, broker, exchange, high-frequency trading system or autonomous robo-adviser. Focus on **Tracking + Measurement + Intelligence + Forecasting + Research + Decision Support**.
 
+_Clarification (approved 2026-10-09, ADR-0009): the optional Forex module in section 34 is decision support and paper trading only. It does not change these non-goals: no order execution, no brokerage, no autonomous or copy trading._
+
 ## 31. Development Philosophy
 For each feature:
 ```text
@@ -272,6 +274,23 @@ Portfolio Management tells users what they own. Analytics explains performance. 
 
 The objective is not for AI to make financial decisions on behalf of the user. The objective is to give the user a substantially better understanding of wealth, alternatives, risks, opportunities and possible future outcomes so they can make better-informed decisions.
 
+
+## 34. Forex Market Intelligence Module (approved extension, ADR-0009)
+_Status: approved by the user 2026-10-09 (ADR-0009, phase P12). Not part of the core release path (P00-P11 and P13-P15); it is planned as phase P12, between the AI phases and cloud infrastructure._
+
+**Intent.** Help users study the foreign-exchange market with timestamped market data, deterministic technical analysis, probabilistic forecasts with honest validation, a transparent opportunity ranking, trade risk management, backtesting and paper trading, explained by the AI Copilot through allow-listed tools.
+
+**Scope.** Major, minor and selected emerging-market pairs (configurable universe); live bid/ask, spread in pips, change, session, volatility and feed status; timeframes 1m to 1M; indicators and market structure; economic calendar; forecasts for 15m, 1h, 4h, 24h and 1w horizons; an Opportunity Ranking Dashboard of research candidates (pair, market condition, opportunity type, risk, score with factors); a risk calculator; backtesting; paper trading with a journal; an AI Forex Copilot; alerts.
+
+**Boundaries (non-negotiable).**
+- Decision support and paper trading only. No live trade execution, broker trading credentials or automated trading without a separate approved phase, regulatory review and dedicated trading risk controls.
+- No guaranteed-return language. Forecasts and scores are model outputs; probabilities are labelled "Requires calibration" until calibration is established and are never described as success rates.
+- Tradable quotes, indicative rates, delayed and simulated prices are distinguished everywhere and never shown as live executable quotes; prices are never invented when a provider is down.
+- Paper balances never enter net worth, holdings or real analytics, and PAPER TRADING is labelled throughout.
+- The backend computes prices, indicators, forecasts, risk and backtests; the LLM only explains tool results and separates facts, calculations, assumptions and interpretation.
+- Position sizing never assumes a fixed pip value; stop-loss orders do not guarantee a maximum loss, and leverage and margin warnings are shown.
+
+**Quality.** Gates QG-FX-01…08 (QG-13…QG-20) in QUALITY_GATES.md; plan in EXECUTION_PLAN.md phase P12; design in docs/design/forex-technical-design.md.
 
 ---
 

@@ -24,7 +24,7 @@ QUALITY_GATES.md defines 12 platform quality gates (QG-01..QG-12). They only mea
 - an independent review pass of the diff before a task that touches money, authorization, AI tools or migrations is completed.
 When a second human maintainer joins, raise required approvals to 1 and require code-owner review.
 
-**4. Evidence.** Gate criteria are ticked only with `track.py qg check ... --evidence ...`; CI repeats the automated parts. Release workflows call `track.py qg require` (P12-T08).
+**4. Evidence.** Gate criteria are ticked only with `track.py qg check ... --evidence ...`; CI repeats the automated parts. Release workflows call `track.py qg require` (P13-T08).
 
 **5. Waivers.** Only non-critical criteria can be waived, with justification, approver, risk owner and expiry (QUALITY_GATES.md). Critical security, financial-integrity and authorization criteria are never waived by the tracker.
 

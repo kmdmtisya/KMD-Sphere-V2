@@ -1,6 +1,6 @@
 # Local OpenTelemetry Collector (docker compose profile "observability").
 # Receives OTLP from the API and prints what it receives, so traces and metrics can be inspected
-# during development. Production exporters are configured in P12-T09.
+# during development. Production exporters are configured in P13-T09.
 receivers:
   otlp:
     protocols:
