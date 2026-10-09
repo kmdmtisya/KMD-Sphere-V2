@@ -80,6 +80,18 @@ services:
       retries: 30
       start_period: 40s
 
+  # Optional: docker compose --profile observability up -d otel-collector
+  otel-collector:
+    profiles: ["observability"]
+    image: otel/opentelemetry-collector-contrib:0.162.0
+    restart: unless-stopped
+    command: ["--config=/etc/otelcol/config.yaml"]
+    volumes:
+      - ./infra/docker/otel/collector.yaml:/etc/otelcol/config.yaml:ro
+    ports:
+      - "127.0.0.1:${OTEL_HTTP_PORT:-4318}:4318"
+      - "127.0.0.1:${OTEL_GRPC_PORT:-4317}:4317"
+
 volumes:
   postgres_data:
   redis_data:

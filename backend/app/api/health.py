@@ -3,10 +3,12 @@
 import asyncio
 import logging
 from collections.abc import Awaitable, Callable
+from typing import Literal
 
 import asyncpg
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
+from pydantic import BaseModel
 from redis.asyncio import Redis
 
 from app.core.config import Settings
@@ -14,6 +16,15 @@ from app.core.config import Settings
 logger = logging.getLogger(__name__)
 ReadinessCheck = Callable[[], Awaitable[None]]
 router = APIRouter(tags=["health"])
+
+
+class LiveStatus(BaseModel):
+    status: Literal["ok"]
+
+
+class ReadyStatus(BaseModel):
+    status: Literal["ready", "not_ready"]
+    checks: dict[str, Literal["ok", "failed"]]
 
 
 def default_checks(settings: Settings) -> dict[str, ReadinessCheck]:
@@ -38,12 +49,26 @@ def default_checks(settings: Settings) -> dict[str, ReadinessCheck]:
     return {"database": database, "redis": redis}
 
 
-@router.get("/health/live")
-async def live() -> dict[str, str]:
-    return {"status": "ok"}
+@router.get(
+    "/health/live",
+    summary="Liveness probe",
+    description="Returns 200 while the process is running. Does not check dependencies.",
+    response_model=LiveStatus,
+)
+async def live() -> LiveStatus:
+    return LiveStatus(status="ok")
 
 
-@router.get("/health/ready")
+@router.get(
+    "/health/ready",
+    summary="Readiness probe",
+    description=(
+        "Returns 200 when PostgreSQL and Redis are reachable, otherwise 503. "
+        "Failure responses name the failing dependency but never reveal hosts or credentials."
+    ),
+    response_model=ReadyStatus,
+    responses={503: {"model": ReadyStatus, "description": "A dependency is unavailable"}},
+)
 async def ready(request: Request) -> JSONResponse:
     settings: Settings = request.app.state.settings
     checks: dict[str, ReadinessCheck] = request.app.state.readiness_checks

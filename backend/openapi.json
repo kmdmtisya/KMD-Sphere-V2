@@ -1,0 +1,128 @@
+{
+  "components": {
+    "schemas": {
+      "LiveStatus": {
+        "properties": {
+          "status": {
+            "const": "ok",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "title": "LiveStatus",
+        "type": "object"
+      },
+      "ReadyStatus": {
+        "properties": {
+          "checks": {
+            "additionalProperties": {
+              "enum": [
+                "ok",
+                "failed"
+              ],
+              "type": "string"
+            },
+            "title": "Checks",
+            "type": "object"
+          },
+          "status": {
+            "enum": [
+              "ready",
+              "not_ready"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "checks"
+        ],
+        "title": "ReadyStatus",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "contact": {
+      "name": "WealthSphere",
+      "url": "https://github.com/kmdmtisya/KMD-Sphere-V2"
+    },
+    "description": "Backend for the WealthSphere mobile apps. The backend is authoritative for all financial calculations. Money, quantities and rates are JSON strings. Errors use RFC 7807 problem+json and every response carries X-Correlation-ID.",
+    "summary": "Portfolio and wealth intelligence API",
+    "title": "WealthSphere API",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/health/live": {
+      "get": {
+        "description": "Returns 200 while the process is running. Does not check dependencies.",
+        "operationId": "live_health_live_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LiveStatus"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Liveness probe",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "description": "Returns 200 when PostgreSQL and Redis are reachable, otherwise 503. Failure responses name the failing dependency but never reveal hosts or credentials.",
+        "operationId": "ready_health_ready_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadyStatus"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadyStatus"
+                }
+              }
+            },
+            "description": "A dependency is unavailable"
+          }
+        },
+        "summary": "Readiness probe",
+        "tags": [
+          "health"
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "description": "Local development",
+      "url": "http://127.0.0.1:8000"
+    }
+  ],
+  "tags": [
+    {
+      "description": "Liveness and readiness probes",
+      "name": "health"
+    }
+  ]
+}

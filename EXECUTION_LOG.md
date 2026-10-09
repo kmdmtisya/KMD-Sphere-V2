@@ -182,3 +182,19 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 - iOS IPHONEOS_DEPLOYMENT_TARGET 16.0 set in all three Runner build configurations.
 - Verification: dart format, flutter analyze, flutter test local pass; GitHub Actions run 37926752270 success (format/analyze/test, android debug build, ios compile on macOS).
 - Decision register updated: DEC-01, DEC-06, DEC-07, DEC-15, DEC-16, DEC-17 resolved. This changes configuration produced by completed task P01-T06; recorded here rather than reopening it.
+
+### 2026-10-09T16:21:26+04:00 — START P01-T11
+- Security and supply-chain baseline in CI
+- prerequisites verified COMPLETED
+
+### 2026-10-09T16:21:26+04:00 — START P01-T12
+- Observability baseline
+- prerequisites verified COMPLETED
+
+### 2026-10-09T16:21:26+04:00 — START P01-T13
+- Developer standards and workflow
+- prerequisites verified COMPLETED
+
+### 2026-10-09T16:21:26+04:00 — START P01-T14
+- OpenAPI export and contract-check tooling
+- prerequisites verified COMPLETED

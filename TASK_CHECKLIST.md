@@ -152,37 +152,37 @@
   - [x] P01-T10.1 Ubuntu job
   - [x] P01-T10.2 macOS iOS build job
   - [x] P01-T10.3 Artifact upload of failed golden diffs
-- [ ] **P01-T11** · Security and supply-chain baseline in CI · `NOT_STARTED` ⬜
+- [ ] **P01-T11** · Security and supply-chain baseline in CI · `IN_PROGRESS` 🔄
   - Deps: P01-T09, P01-T10 · Wave: W5 · Track: SEC · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-09T16:21:26+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P01-T11.1 Secret scanning
-  - [ ] P01-T11.2 Python and Dart dependency audit
-  - [ ] P01-T11.3 SAST
-  - [ ] P01-T11.4 Container image scan
-  - [ ] P01-T11.5 SBOM and Dependabot
-- [ ] **P01-T12** · Observability baseline · `NOT_STARTED` ⬜
+  - [x] P01-T11.1 Secret scanning
+  - [x] P01-T11.2 Python and Dart dependency audit
+  - [x] P01-T11.3 SAST
+  - [x] P01-T11.4 Container image scan
+  - [x] P01-T11.5 SBOM and Dependabot
+- [ ] **P01-T12** · Observability baseline · `IN_PROGRESS` 🔄
   - Deps: P01-T07 · Wave: W5 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-09T16:21:26+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P01-T12.1 OTel instrumentation
-  - [ ] P01-T12.2 Prometheus metrics
-  - [ ] P01-T12.3 Redaction filter and tests
-  - [ ] P01-T12.4 Document log schema
-- [ ] **P01-T13** · Developer standards and workflow · `NOT_STARTED` ⬜
+  - [x] P01-T12.1 OTel instrumentation
+  - [x] P01-T12.2 Prometheus metrics
+  - [x] P01-T12.3 Redaction filter and tests
+  - [x] P01-T12.4 Document log schema
+- [ ] **P01-T13** · Developer standards and workflow · `IN_PROGRESS` 🔄
   - Deps: P01-T09, P01-T10 · Wave: W5 · Track: DOC · Size: S · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-09T16:21:26+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P01-T13.1 CONTRIBUTING and PR template
-  - [ ] P01-T13.2 pre-commit hooks
-  - [ ] P01-T13.3 Branch/commit conventions
-- [ ] **P01-T14** · OpenAPI export and contract-check tooling · `NOT_STARTED` ⬜
+  - [x] P01-T13.1 CONTRIBUTING and PR template
+  - [x] P01-T13.2 pre-commit hooks
+  - [x] P01-T13.3 Branch/commit conventions
+- [ ] **P01-T14** · OpenAPI export and contract-check tooling · `IN_PROGRESS` 🔄
   - Deps: P01-T07, P01-T09 · Wave: W5 · Track: BE · Size: S · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-09T16:21:26+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P01-T14.1 Export script
-  - [ ] P01-T14.2 Spectral ruleset
-  - [ ] P01-T14.3 CI step
+  - [x] P01-T14.1 Export script
+  - [x] P01-T14.2 Spectral ruleset
+  - [x] P01-T14.3 CI step
 - [ ] **P01-T15** · Quality-gate CI integration and merge protection · `NOT_STARTED` ⬜
   - Deps: P01-T09, P01-T10, P01-T11, P01-T13 · Wave: W6 · Track: INF · Size: M · Approval: no · Gates-done: QG-02.3, QG-02.5, QG-03.6
   - Started: — · Completed: — · Duration: — · Blocker: —
@@ -1373,4 +1373,3 @@
   - [ ] P14-GATE.1 Run gates
   - [ ] P14-GATE.2 Present summary
   - [ ] P14-GATE.3 Record sign-off
-

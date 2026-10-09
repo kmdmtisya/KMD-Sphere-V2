@@ -32,6 +32,11 @@ class Settings(BaseSettings):
     redis_port: int = 6380
 
     readiness_timeout_seconds: float = 2.0
+    otel_service_name: str = "wealthsphere-api"
+    otel_exporter_otlp_endpoint: str = ""
+    otel_metric_export_interval_ms: int = 15000
+    metrics_token: SecretStr = SecretStr("")
+
     db_pool_size: int = 5
     db_max_overflow: int = 5
     db_connect_timeout_seconds: float = 5.0

@@ -1,0 +1,32 @@
+extends: ["spectral:oas"]
+
+# House rules (docs/api-conventions.md, ADR-0003). Run with --fail-severity=warn in CI.
+rules:
+  wealthsphere-money-is-string:
+    description: Money, quantities and rates are strings in JSON, never numbers (ADR-0003).
+    message: "{{property}} looks like a monetary value and must be type string, not {{value}}."
+    severity: error
+    given: >-
+      $..properties[?(@property.match(/^(amount|balance|price|quantity|rate|value|fee|fees|tax|taxes|net_worth|principal|contribution|income)$|_(amount|balance|price|quantity|rate|value|fee|fees|tax|taxes|net_worth)$/i))]
+    then:
+      field: type
+      function: enumeration
+      functionOptions:
+        values: [string]
+
+  wealthsphere-operation-summary:
+    description: Every operation has a short summary for the generated client docs.
+    severity: warn
+    given: "$.paths[*][get,put,post,delete,patch]"
+    then:
+      field: summary
+      function: truthy
+
+  wealthsphere-paths-versioned-or-health:
+    description: API paths live under /api/v1; only health endpoints are unversioned.
+    severity: error
+    given: "$.paths[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^/(api/v1/|health/)"

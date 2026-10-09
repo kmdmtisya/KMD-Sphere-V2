@@ -1,0 +1,59 @@
+﻿# Install once:  uv tool install pre-commit && pre-commit install
+# (installs both the pre-commit and commit-msg hooks)
+# Run on everything:  pre-commit run --all-files
+minimum_pre_commit_version: "3.5.0"
+default_install_hook_types: [pre-commit, commit-msg]
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-yaml
+      - id: check-json
+        exclude: ^backend/openapi\.json$ # generated; verified by scripts/export_openapi.py --check
+      - id: check-merge-conflict
+      - id: detect-private-key
+      - id: check-added-large-files
+        args: ["--maxkb=3500"]
+      - id: end-of-file-fixer
+        exclude: ^(backend/openapi\.json|mobile/.*\.(png|jpg|ttf)|docs/.*\.(png|pdf))$
+      - id: trailing-whitespace
+        # Markdown uses two trailing spaces as a line break (QUALITY_GATES.md fields).
+        args: ["--markdown-linebreak-ext=md"]
+        exclude: ^(docs/.*\.(png|pdf)|mobile/.*\.(png|jpg))$
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.10
+    hooks:
+      - id: ruff-check
+        files: ^backend/
+      - id: ruff-format
+        files: ^backend/
+
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v4.4.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+        # `track` is used for tracker-only commits (task state, evidence, logs).
+        args: [feat, fix, docs, chore, ci, test, refactor, perf, build, revert, track]
+
+  - repo: local
+    hooks:
+      - id: dart-format
+        name: dart format (mobile)
+        language: system
+        entry: dart format --output=none --set-exit-if-changed
+        files: ^mobile/wealthsphere_app/.*\.dart$
+        exclude: \.(g|freezed)\.dart$
+      - id: tracker-validate
+        name: execution tracker consistency
+        language: system
+        entry: python scripts/track.py validate
+        pass_filenames: false
+        files: ^(TASK_CHECKLIST|QUALITY_GATES|PROGRESS_DASHBOARD|EXECUTION_LOG|EXECUTION_PLAN)\.md$|^scripts/track\.py$
+      - id: gitleaks
+        name: gitleaks (staged changes; needs the gitleaks binary)
+        language: system
+        entry: gitleaks git --pre-commit --staged --redact --no-banner
+        pass_filenames: false

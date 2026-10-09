@@ -1,0 +1,124 @@
+name: security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "23 4 * * 1" # weekly: new advisories can appear without any code change
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  OSV_SCANNER_VERSION: v2.6.0
+  TRIVY_VERSION: "0.75.0"
+  SYFT_VERSION: "1.54.1"
+
+jobs:
+  secrets:
+    name: secret scan (gitleaks)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0 # scan the full history, not only the tip
+      - uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  dependencies:
+    name: dependency audit (pip-audit, OSV)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          python-version: "3.13"
+
+      - name: pip-audit (Python, locked versions)
+        working-directory: backend
+        run: |
+          uv export --locked --no-hashes --no-emit-project --all-groups > "$RUNNER_TEMP/requirements.txt"
+          uvx pip-audit -r "$RUNNER_TEMP/requirements.txt" --disable-pip --no-deps --strict
+
+      - name: Install OSV-Scanner (checksum verified)
+        run: |
+          set -euo pipefail
+          base="https://github.com/google/osv-scanner/releases/download/${OSV_SCANNER_VERSION}"
+          curl -fsSL -o osv-scanner "$base/osv-scanner_linux_amd64"
+          curl -fsSL -o osv.sums "$base/osv-scanner_SHA256SUMS"
+          grep " osv-scanner_linux_amd64$" osv.sums | sed 's/osv-scanner_linux_amd64/osv-scanner/' | sha256sum -c -
+          chmod +x osv-scanner
+
+      - name: OSV-Scanner (Python and Dart lockfiles; any known vulnerability fails)
+        run: ./osv-scanner scan source -L backend/uv.lock -L mobile/wealthsphere_app/pubspec.lock
+
+  sast:
+    name: static analysis (CodeQL, Python)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: github/codeql-action/init@24c54180a607b1449ed407dd24f251e4e9147c8d # v4
+        with:
+          languages: python
+          build-mode: none
+          queries: security-extended
+      - uses: github/codeql-action/analyze@24c54180a607b1449ed407dd24f251e4e9147c8d # v4
+        with:
+          category: "/language:python"
+
+  trivy:
+    name: vulnerabilities, secrets, misconfiguration (Trivy)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Install Trivy (checksum verified)
+        run: |
+          set -euo pipefail
+          base="https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}"
+          file="trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz"
+          curl -fsSL -o "$file" "$base/$file"
+          curl -fsSL -o trivy.sums "$base/trivy_${TRIVY_VERSION}_checksums.txt"
+          grep " $file$" trivy.sums | sha256sum -c -
+          tar -xzf "$file" trivy
+      - name: Scan repository (HIGH and CRITICAL fail the build)
+        run: ./trivy fs --scanners vuln,secret,misconfig --severity HIGH,CRITICAL --exit-code 1 --quiet .
+      # Container image scanning is added with the Dockerfiles in P12-T04.
+
+  sbom:
+    name: SBOM (CycloneDX)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Install Syft (checksum verified)
+        run: |
+          set -euo pipefail
+          base="https://github.com/anchore/syft/releases/download/v${SYFT_VERSION}"
+          file="syft_${SYFT_VERSION}_linux_amd64.tar.gz"
+          curl -fsSL -o "$file" "$base/$file"
+          curl -fsSL -o syft.sums "$base/syft_${SYFT_VERSION}_checksums.txt"
+          grep " $file$" syft.sums | sha256sum -c -
+          tar -xzf "$file" syft
+      - name: Generate SBOM
+        run: ./syft dir:. -o cyclonedx-json=sbom.cdx.json -q
+      - name: Validate SBOM is non-empty
+        run: python3 -c "import json,sys; d=json.load(open('sbom.cdx.json')); n=len(d.get('components',[])); print('components:', n); sys.exit(0 if n > 0 else 1)"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: sbom-cyclonedx
+          path: sbom.cdx.json
+          retention-days: 90
