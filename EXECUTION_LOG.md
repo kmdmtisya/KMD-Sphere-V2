@@ -369,3 +369,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-09T21:25:52+04:00 — COMPLETE P02-T07
 - duration: 25m 24s
 - evidence: PR #14. GoRouter StatefulShellRoute.indexedStack with five tab branches built from the tabRoutes registry, WealthBottomNav (labels always visible, reselect callback), root redirect, NotFoundScreen, strict AiScope.tryParse for untrusted /ai?scope= links. Tests: app_routes_test, navigation_test (stack persistence across tabs, back pops nested then exits at root via mocked SystemNavigator.pop, reselect returns to root, hostile scopes ignored, 320x568 at 1.0/2.0x in LTR/RTL), wealth_bottom_nav_test. Full mobile suite 416 passing; format/analyze clean; CI green. Mutations to reselect logic, root redirect and scope id regex were each caught. Not verified on a device in this task.
+
+### 2026-10-09T21:42:30+04:00 — START P02-T05
+- Composite components
+- prerequisites verified COMPLETED
+
+### 2026-10-09T21:42:30+04:00 — START P02-T06
+- Accessible charts
+- prerequisites verified COMPLETED

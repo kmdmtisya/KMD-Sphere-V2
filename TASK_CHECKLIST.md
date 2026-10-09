@@ -252,9 +252,9 @@
   - [x] P02-T04.4 Skeleton/Empty/Error
   - [x] P02-T04.5 AsyncValueView
   - [x] P02-T04.6 Widget tests in light/dark/2.0x/RTL
-- [ ] **P02-T05** · Composite components · `NOT_STARTED` ⬜
+- [ ] **P02-T05** · Composite components · `IN_PROGRESS` 🔄
   - Deps: P02-T04 · Wave: W4 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-09T21:42:30+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P02-T05.1 Summary and metric cards
   - [ ] P02-T05.2 PeriodSelector and PortfolioSwitcher
@@ -262,9 +262,9 @@
   - [ ] P02-T05.4 EvidenceSourceChip
   - [ ] P02-T05.5 AIChatComposer
   - [ ] P02-T05.6 Interaction and semantics tests
-- [ ] **P02-T06** · Accessible charts · `NOT_STARTED` ⬜
+- [ ] **P02-T06** · Accessible charts · `IN_PROGRESS` 🔄
   - Deps: P02-T04 · Wave: W4 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-09T21:42:30+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P02-T06.1 Chart data model
   - [ ] P02-T06.2 ChartSemantics
