@@ -121,10 +121,10 @@
   - [x] P01-T06.3 analysis_options.yaml strict lints
   - [x] P01-T06.4 l10n.yaml and app_en.arb
   - [x] P01-T06.5 test/helpers/pump_app.dart and dart_test.yaml golden tag
-- [ ] **P01-T07** · FastAPI backend skeleton · `IN_PROGRESS` 🔄
+- [x] **P01-T07** · FastAPI backend skeleton · `COMPLETED` ✅
   - Deps: P01-T03, P01-T05 · Wave: W3 · Track: BE · Size: M · Approval: no
-  - Started: 2026-10-09T14:44:53+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-09T14:44:53+04:00 · Completed: 2026-10-09T14:59:06+04:00 · Duration: 14m 13s · Blocker: —
+  - Evidence: backend/ (uv, Python 3.13.15): app factory, GET /health/live + /health/ready, pydantic-settings config with no default secrets, JSON logging with correlation_id, X-Correlation-ID accept/generate/echo (malformed IDs replaced), RFC 7807 problem+json (404/405/422/500; validation never echoes input; 500 generic). CK-B: ruff format --check OK, ruff check OK, mypy strict 'no issues in 17 files', pytest 26 passed (incl. integration test against live docker stack), coverage 99%. Live uvicorn check: ready 200 with DB+Redis up; stopping Redis -> 503 {redis: failed}; restart -> 200; no password found in server log. Defects found and fixed during the task: localhost resolved to IPv6 and timed out against Docker's IPv4 bind (default hosts now 127.0.0.1); ruff src setting misclassified first-party imports; asserts in production code replaced by cast; asyncpg-stubs added
   - [x] P01-T07.1 Project layout per ADR-0004
   - [x] P01-T07.2 Config via environment (no secrets in code)
   - [x] P01-T07.3 Logging and correlation-ID middleware
@@ -145,13 +145,13 @@
   - [ ] P01-T09.1 Workflow with service containers
   - [ ] P01-T09.2 Caching
   - [ ] P01-T09.3 Required-check documentation
-- [ ] **P01-T10** · CI pipeline: mobile · `IN_PROGRESS` 🔄
+- [x] **P01-T10** · CI pipeline: mobile · `COMPLETED` ✅
   - Deps: P01-T06 · Wave: W3 · Track: INF · Size: S · Approval: no
-  - Started: 2026-10-09T14:44:53+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P01-T10.1 Ubuntu job
-  - [ ] P01-T10.2 macOS iOS build job
-  - [ ] P01-T10.3 Artifact upload of failed golden diffs
+  - Started: 2026-10-09T14:44:53+04:00 · Completed: 2026-10-09T14:59:06+04:00 · Duration: 14m 13s · Blocker: —
+  - Evidence: GitHub Actions run 37920335942 (https://github.com/kmdmtisya/KMD-Sphere-V2/actions/runs/37920335942) on commit 6451c55: 'format, analyze, test (incl. goldens)' success (ubuntu-24.04), 'android debug build' success, 'ios compile (no codesign)' success (macos); earlier run 37919527389 on 0c529e9 also green. Goldens run only in the ubuntu job (flutter test --coverage; golden-failure diffs uploaded on failure). Path filters mobile/** + workflow file. Runner pinned to ubuntu-24.04 (ubuntu-latest migrates to 26 on 2026-10-19) and actions bumped to checkout@v5/setup-java@v5 after deprecation warnings. Evidence for QG-04.1/04.2/05.1/10.1 (mobile part); gate criteria are verified at P01-GATE
+  - [x] P01-T10.1 Ubuntu job
+  - [x] P01-T10.2 macOS iOS build job
+  - [x] P01-T10.3 Artifact upload of failed golden diffs
 - [ ] **P01-T11** · Security and supply-chain baseline in CI · `NOT_STARTED` ⬜
   - Deps: P01-T09, P01-T10 · Wave: W5 · Track: SEC · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
