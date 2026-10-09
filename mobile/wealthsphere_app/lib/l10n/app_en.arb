@@ -27,5 +27,243 @@
   "themeDark": "Dark",
   "@themeDark": {
     "description": "Always use the dark theme"
+  },
+  "loading": "Loading",
+  "@loading": {
+    "description": "Spoken label for loading placeholders"
+  },
+  "retry": "Try again",
+  "@retry": {
+    "description": "Retry button label"
+  },
+  "errorGenericTitle": "Something went wrong",
+  "@errorGenericTitle": {
+    "description": "Title of the generic error state"
+  },
+  "errorGenericMessage": "We couldn't load this. Check your connection and try again.",
+  "@errorGenericMessage": {
+    "description": "Body of the generic error state"
+  },
+  "emptyDefaultTitle": "Nothing here yet",
+  "@emptyDefaultTitle": {
+    "description": "Default title of the empty state"
+  },
+  "demoBadge": "DEMO",
+  "@demoBadge": {
+    "description": "Badge shown on screens that display demo data"
+  },
+  "demoBadgeSpoken": "Demo data",
+  "@demoBadgeSpoken": {
+    "description": "Spoken label of the demo badge"
+  },
+  "demoBannerText": "Demo data. Not connected to your accounts.",
+  "@demoBannerText": {
+    "description": "Banner explaining that the data is a demonstration"
+  },
+  "offlineBannerText": "You're offline. Showing saved data.",
+  "@offlineBannerText": {
+    "description": "Banner shown without a network connection"
+  },
+  "staleBannerText": "These figures may be out of date.",
+  "@staleBannerText": {
+    "description": "Banner shown when data is older than expected"
+  },
+  "staleBannerWithAge": "Showing data from {age}. It may be out of date.",
+  "@staleBannerWithAge": {
+    "description": "Stale banner with a localised age",
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "asOfJustNow": "As of just now",
+  "@asOfJustNow": {
+    "description": "Freshness label for data less than a minute old"
+  },
+  "asOfMinutes": "As of {count, plural, one{1 minute} other{{count} minutes}} ago",
+  "@asOfMinutes": {
+    "description": "Freshness label in minutes",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "asOfHours": "As of {count, plural, one{1 hour} other{{count} hours}} ago",
+  "@asOfHours": {
+    "description": "Freshness label in hours",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "asOfDays": "As of {count, plural, one{1 day} other{{count} days}} ago",
+  "@asOfDays": {
+    "description": "Freshness label in days",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "asOfDate": "As of {date}",
+  "@asOfDate": {
+    "description": "Freshness label with an absolute date",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "riskLow": "Low risk",
+  "@riskLow": {
+    "description": "Risk label"
+  },
+  "riskMedium": "Medium risk",
+  "@riskMedium": {
+    "description": "Risk label"
+  },
+  "riskHigh": "High risk",
+  "@riskHigh": {
+    "description": "Risk label"
+  },
+  "disclosureShow": "Show details",
+  "@disclosureShow": {
+    "description": "Hint for an expandable panel that is collapsed"
+  },
+  "disclosureHide": "Hide details",
+  "@disclosureHide": {
+    "description": "Hint for an expandable panel that is expanded"
+  },
+  "changeUpSpoken": "up {value}",
+  "@changeUpSpoken": {
+    "description": "Spoken form of a gain",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "changeDownSpoken": "down {value}",
+  "@changeDownSpoken": {
+    "description": "Spoken form of a loss",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "changeUnchangedSpoken": "unchanged",
+  "@changeUnchangedSpoken": {
+    "description": "Spoken form of no change"
+  },
+  "percentSpoken": "{value} percent",
+  "@percentSpoken": {
+    "description": "Spoken percentage",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "amountSpoken": "{amount} {currency}",
+  "@amountSpoken": {
+    "description": "Spoken money amount",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "amountSpokenNegative": "minus {amount} {currency}",
+  "@amountSpokenNegative": {
+    "description": "Spoken negative money amount",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "nativeAmountSpoken": "{amount} in the original currency",
+  "@nativeAmountSpoken": {
+    "description": "Spoken secondary amount in the asset's own currency",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tabHome": "Home",
+  "@tabHome": {
+    "description": "Bottom navigation tab"
+  },
+  "tabPortfolio": "Portfolio",
+  "@tabPortfolio": {
+    "description": "Bottom navigation tab"
+  },
+  "tabAiWealth": "AI Wealth",
+  "@tabAiWealth": {
+    "description": "Bottom navigation tab"
+  },
+  "tabGoals": "Goals",
+  "@tabGoals": {
+    "description": "Bottom navigation tab"
+  },
+  "tabMore": "More",
+  "@tabMore": {
+    "description": "Bottom navigation tab"
+  },
+  "comingSoon": "Coming soon",
+  "@comingSoon": {
+    "description": "Placeholder for features not built yet"
+  },
+  "notFoundTitle": "Page not found",
+  "@notFoundTitle": {
+    "description": "Title of the unknown-route screen"
+  },
+  "notFoundBody": "That page doesn't exist or is no longer available.",
+  "@notFoundBody": {
+    "description": "Body of the unknown-route screen"
+  },
+  "goHome": "Go to Home",
+  "@goHome": {
+    "description": "Button that returns to the Home tab"
+  },
+  "aiContextLabel": "Context: {scope}",
+  "@aiContextLabel": {
+    "description": "Shows which portfolio, forecast or goal the AI chat was opened for",
+    "placeholders": {
+      "scope": {
+        "type": "String"
+      }
+    }
+  },
+  "moreCalculator": "Compounding calculator",
+  "@moreCalculator": {
+    "description": "Entry in the More tab"
+  },
+  "moreForecast": "Wealth forecast",
+  "@moreForecast": {
+    "description": "Entry in the More tab"
+  },
+  "holdingsTitle": "Holdings",
+  "@holdingsTitle": {
+    "description": "Title of the holdings screen"
+  },
+  "forecastTitle": "Wealth forecast",
+  "@forecastTitle": {
+    "description": "Title of the forecast screen"
+  },
+  "calculatorTitle": "Compounding calculator",
+  "@calculatorTitle": {
+    "description": "Title of the calculator screen"
   }
 }

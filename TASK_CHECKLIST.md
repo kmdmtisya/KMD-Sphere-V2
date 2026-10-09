@@ -242,9 +242,9 @@
   - [x] P02-T03.2 MoneyFormatter
   - [x] P02-T03.3 PercentFormatter and date labels
   - [x] P02-T03.4 Edge-case unit tests
-- [ ] **P02-T04** · Status and state widgets · `NOT_STARTED` ⬜
+- [ ] **P02-T04** · Status and state widgets · `IN_PROGRESS` 🔄
   - Deps: P02-T02, P02-T03 · Wave: W3 · Track: MOB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-09T21:00:28+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P02-T04.1 Amount and change widgets
   - [ ] P02-T04.2 Risk/Disclosure/Demo/DataAsOf
@@ -272,9 +272,9 @@
   - [ ] P02-T06.4 Donut + legend
   - [ ] P02-T06.5 Forecast comparison chart
   - [ ] P02-T06.6 Goldens
-- [ ] **P02-T07** · Navigation shell and WealthBottomNav · `NOT_STARTED` ⬜
+- [ ] **P02-T07** · Navigation shell and WealthBottomNav · `IN_PROGRESS` 🔄
   - Deps: P02-T02 · Wave: W3 · Track: MOB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-09T21:00:28+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P02-T07.1 Router and route names
   - [ ] P02-T07.2 WealthBottomNav
