@@ -121,15 +121,15 @@
   - [x] P01-T06.3 analysis_options.yaml strict lints
   - [x] P01-T06.4 l10n.yaml and app_en.arb
   - [x] P01-T06.5 test/helpers/pump_app.dart and dart_test.yaml golden tag
-- [ ] **P01-T07** · FastAPI backend skeleton · `NOT_STARTED` ⬜
+- [ ] **P01-T07** · FastAPI backend skeleton · `IN_PROGRESS` 🔄
   - Deps: P01-T03, P01-T05 · Wave: W3 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-09T14:44:53+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P01-T07.1 Project layout per ADR-0004
-  - [ ] P01-T07.2 Config via environment (no secrets in code)
-  - [ ] P01-T07.3 Logging and correlation-ID middleware
-  - [ ] P01-T07.4 Error model
-  - [ ] P01-T07.5 Test setup incl. async client
+  - [x] P01-T07.1 Project layout per ADR-0004
+  - [x] P01-T07.2 Config via environment (no secrets in code)
+  - [x] P01-T07.3 Logging and correlation-ID middleware
+  - [x] P01-T07.4 Error model
+  - [x] P01-T07.5 Test setup incl. async client
 - [ ] **P01-T08** · SQLAlchemy 2 and Alembic baseline · `NOT_STARTED` ⬜
   - Deps: P01-T07 · Wave: W4 · Track: DB · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
@@ -145,9 +145,9 @@
   - [ ] P01-T09.1 Workflow with service containers
   - [ ] P01-T09.2 Caching
   - [ ] P01-T09.3 Required-check documentation
-- [ ] **P01-T10** · CI pipeline: mobile · `NOT_STARTED` ⬜
+- [ ] **P01-T10** · CI pipeline: mobile · `IN_PROGRESS` 🔄
   - Deps: P01-T06 · Wave: W3 · Track: INF · Size: S · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-09T14:44:53+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P01-T10.1 Ubuntu job
   - [ ] P01-T10.2 macOS iOS build job
