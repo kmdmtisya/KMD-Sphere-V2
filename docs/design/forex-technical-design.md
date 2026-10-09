@@ -1,12 +1,12 @@
 # Forex Trading Intelligence module: technical design
 
-Status: **Proposed**, awaiting user approval (P15-T01). Nothing in this document is implemented. Related: [ADR-0009](../adr/0009-forex-intelligence-module.md), `EXECUTION_PLAN.md` phase P15 (tasks FX-01…FX-14 = P15-T01…T14), quality gates QG-13…QG-20 (QG-FX-01…08).
+Status: **Proposed**, awaiting user approval (P12-T01). Nothing in this document is implemented. Related: [ADR-0009](../adr/0009-forex-intelligence-module.md), `EXECUTION_PLAN.md` phase P12 (tasks FX-01…FX-14 = P12-T01…T14), quality gates QG-13…QG-20 (QG-FX-01…08).
 
 ## 1. Purpose and boundary
 
 An AI-assisted **decision-support and paper-trading** module inside WealthSphere: live market data, indicators, probabilistic forecasts, a transparent opportunity ranking, deterministic trade-risk calculation, backtesting, paper trading and a Forex Copilot.
 
-Hard boundaries (they apply to every task in P15):
+Hard boundaries (they apply to every task in P12):
 
 1. **No live trade execution.** The build contains no order-placement code path and no broker trading credentials. Enabling execution needs a separate, explicitly approved phase, regulatory review and dedicated trading risk controls.
 2. **No guarantees.** A forecast, score or setup is never presented as a guaranteed or expected profit. Output is "research candidate", "scenario", "illustrative level".
@@ -238,7 +238,7 @@ Metrics: stream lag, messages/s, reconnects, stale-quote ratio per provider, mod
 | AI | evaluation set with stale data, adversarial prompts, guarantee-language guard |
 | Mobile | widget/golden for new widgets in light/dark/2.0x/RTL, streaming resilience, lifecycle, integration tests |
 
-## 18. Out of scope for P15
+## 18. Out of scope for P12
 
 Live order execution, broker account linking for trading, automated or copy trading, leveraged position management on real accounts, tax advice, social/signal selling. Any of these needs a new approved phase.
 

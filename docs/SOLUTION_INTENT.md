@@ -276,7 +276,7 @@ The objective is not for AI to make financial decisions on behalf of the user. T
 
 
 ## 34. Forex Market Intelligence Module (proposed extension, ADR-0009)
-_Status: proposed 2026-10-09, awaiting user approval (P15-T01). Not part of the initial release path (P00-P14)._
+_Status: proposed 2026-10-09, awaiting user approval (P12-T01). Not part of the core release path (P00-P11 and P13-P15); it is planned as phase P12, between the AI phases and cloud infrastructure._
 
 **Intent.** Help users study the foreign-exchange market with timestamped market data, deterministic technical analysis, probabilistic forecasts with honest validation, a transparent opportunity ranking, trade risk management, backtesting and paper trading, explained by the AI Copilot through allow-listed tools.
 
@@ -290,7 +290,7 @@ _Status: proposed 2026-10-09, awaiting user approval (P15-T01). Not part of the 
 - The backend computes prices, indicators, forecasts, risk and backtests; the LLM only explains tool results and separates facts, calculations, assumptions and interpretation.
 - Position sizing never assumes a fixed pip value; stop-loss orders do not guarantee a maximum loss, and leverage and margin warnings are shown.
 
-**Quality.** Gates QG-FX-01…08 (QG-13…QG-20) in QUALITY_GATES.md; plan in EXECUTION_PLAN.md phase P15; design in docs/design/forex-technical-design.md.
+**Quality.** Gates QG-FX-01…08 (QG-13…QG-20) in QUALITY_GATES.md; plan in EXECUTION_PLAN.md phase P12; design in docs/design/forex-technical-design.md.
 
 ---
 

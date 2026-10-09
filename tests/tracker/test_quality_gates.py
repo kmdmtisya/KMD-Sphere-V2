@@ -83,7 +83,7 @@ def test_pass_sets_timestamps_and_status(ws: Workspace) -> None:
 def test_release_readiness_gate_needs_a_named_approver(ws: Workspace) -> None:
     for n in range(1, 12):  # every gate except the release-readiness gate itself
         ws.ok("qg", "check", f"QG-{n:02d}.1", "--evidence", "e")
-    ws.ok("qg", "require", "QG-all@P13")
+    ws.ok("qg", "require", "QG-all@P14")
     ws.ok("qg", "check", "QG-12.1", "--evidence", "all gates verified")
     assert "requires --approved-by" in ws.fail("qg", "pass", "QG-12", "--evidence", "x")
     ws.ok("qg", "pass", "QG-12", "--evidence", "release approved", "--approved-by", "Ada")
@@ -103,7 +103,7 @@ def test_reverify_only_after_a_pass_and_refreshes_the_verification_time(ws: Work
 
 def test_check_of_the_final_criterion_requires_all_earlier_gates(ws: Workspace) -> None:
     out = ws.fail("qg", "check", "QG-12.1", "--evidence", "x")
-    assert "requires every QG-01..QG-11 criterion due by P13" in out
+    assert "requires every QG-01..QG-11 criterion due by P14" in out
     assert "QG-01.1" in out
 
 
@@ -251,3 +251,14 @@ def test_summary_block_in_the_register_is_refreshed(ws: Workspace) -> None:
     assert "(placeholder)" not in text
     assert "| QG-01 | Architecture and Design | 🔄 IN_PROGRESS | 1/1 |" in text
     assert "Criteria satisfied overall: 1/12" in text
+
+
+def test_qg_all_covers_only_the_core_gates(ws: Workspace) -> None:
+    text = ws.read("QUALITY_GATES.md")
+    end = text.index("## Waiver register")
+    section = text[text.index("### QG-12:") : end].replace("QG-12", "QG-13").replace("Required: P", "Required: P")
+    ws.write("QUALITY_GATES.md", text[:end] + section + text[end:])
+    ws.edit("TASK_CHECKLIST.md", "QG-11.1, QG-12.1", "QG-11.1, QG-12.1, QG-13.1")
+    for n in range(1, 12):
+        ws.ok("qg", "check", f"QG-{n:02d}.1", "--evidence", "e")
+    ws.ok("qg", "require", "QG-all@P14")  # QG-13.1 is unverified but is not a core gate

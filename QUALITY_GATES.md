@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-09T23:15:13+04:00 by `scripts/track.py`._
+_Generated at 2026-10-09T23:24:10+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -43,7 +43,7 @@ Current phase **P02** exit-gate criteria outstanding: QG-01.5.
 - [x] QG-01.1 Architecture complies with the approved solution intent and architectural decisions · Required: P01 · By: P01-T03 · Evidence: Architecture follows the approved solution intent: docs/architecture.md derived from SOLUTION_INTENT sections 22, 26, 27 and the implementation guide (modular monolith, backend authoritative for financial truth, allow-listed AI tools, provider abstractions); ADR-0001..0008 all Accepted by the user; 11 document conflicts (D1-D11) listed with resolutions in EXECUTION_PLAN.md section 2; plan approved at P00-GATE · Verified: 2026-10-09T18:33:56+04:00
 - [x] QG-01.2 Module boundaries and dependencies are documented · Required: P01 · By: P01-T04 · Evidence: Module boundaries and dependencies documented in docs/architecture.md section 2 (11 modules, responsibility and allowed-dependency table, rule: modules call only service interfaces), ADR-0004 (backend layout: api/service/repository/schemas) and ADR-0005 (repository layout); backend/app/modules reserved for domain modules · Verified: 2026-10-09T18:33:56+04:00
 - [ ] QG-01.3 API contracts and database designs are reviewed · Required: P05 · By: P05-T10
-- [ ] QG-01.4 No unresolved critical architectural risks · Required: P13 · By: P13-T10
+- [ ] QG-01.4 No unresolved critical architectural risks · Required: P14 · By: P14-T10
 - [ ] QG-01.5 UI/UX implementation follows the approved WealthSphere design system · Required: P02 · By: P02-T08
 
 Status: IN_PROGRESS  
@@ -70,7 +70,7 @@ Owner: Unassigned
 Start Timestamp: 2026-10-09T18:14:49+04:00  
 End Timestamp: 2026-10-09T18:34:15+04:00  
 Verification Timestamp: 2026-10-09T18:34:15+04:00  
-Evidence: All six QG-02 criteria verified with evidence (formatting/lint, static types, no critical code-quality findings (CodeQL 0 alerts), no hardcoded secrets, code-review controls accepted by user, tech-debt register). Re-verified at P13-T11  
+Evidence: All six QG-02 criteria verified with evidence (formatting/lint, static types, no critical code-quality findings (CodeQL 0 alerts), no hardcoded secrets, code-review controls accepted by user, tech-debt register). Re-verified at P14-T11  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -101,8 +101,8 @@ Approved By: —
 - [x] QG-04.3 Supported Android versions are explicitly documented · Required: P01 · By: P01-T16 · Evidence: docs/quality-targets.md section 1: supported Android versions documented (minimum Android 8.0 / API 26, target level tracked against Google Play policy, reference devices); approved by user 2026-10-09 · Verified: 2026-10-09T15:52:48+04:00
 - [ ] QG-04.4 Navigation, responsive layouts, accessibility and lifecycle behaviour are verified · Required: P03 · By: P03-T07
 - [ ] QG-04.5 Secure storage and biometric authentication work correctly · Required: P04 · By: P04-T07
-- [ ] QG-04.6 App startup, crash behaviour and memory consumption meet approved performance targets · Required: P13 · By: P13-T04
-- [ ] QG-04.7 Release signing and Google Play requirements are validated · Required: P14 · By: P14-T02
+- [ ] QG-04.6 App startup, crash behaviour and memory consumption meet approved performance targets · Required: P14 · By: P14-T04
+- [ ] QG-04.7 Release signing and Google Play requirements are validated · Required: P15 · By: P15-T02
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
@@ -116,12 +116,12 @@ Approved By: —
 
 ### QG-05: iOS Platform
 
-- [x] QG-05.1 iOS application builds successfully using the supported Xcode toolchain · Required: P01 · By: P01-T10 · Evidence: iOS app builds: CI job 'ios compile (no codesign)' success on macOS runner image macos-26-arm64 (run 37931445838; 'Built build/ios/iphoneos/Runner.app (15.7MB)') and on PR #4, with IPHONEOS_DEPLOYMENT_TARGET 16.0 in all three Runner configurations. CAVEAT recorded as TD-03: the runner's default Xcode is used and its version is not logged or pinned yet; pinning is scheduled for P14-T02 · Verified: 2026-10-09T18:33:58+04:00
+- [x] QG-05.1 iOS application builds successfully using the supported Xcode toolchain · Required: P01 · By: P01-T10 · Evidence: iOS app builds: CI job 'ios compile (no codesign)' success on macOS runner image macos-26-arm64 (run 37931445838; 'Built build/ios/iphoneos/Runner.app (15.7MB)') and on PR #4, with IPHONEOS_DEPLOYMENT_TARGET 16.0 in all three Runner configurations. CAVEAT recorded as TD-03: the runner's default Xcode is used and its version is not logged or pinned yet; pinning is scheduled for P15-T02 · Verified: 2026-10-09T18:33:58+04:00
 - [x] QG-05.2 Supported iOS versions and devices are documented · Required: P01 · By: P01-T16 · Evidence: docs/quality-targets.md section 1: supported iOS versions and devices documented (minimum iOS 16.0, iPhone SE 3rd gen / iPhone 15 / Pro Max classes, update policy); approved by user 2026-10-09 · Verified: 2026-10-09T15:52:49+04:00
 - [ ] QG-05.3 Navigation, safe areas, accessibility and lifecycle behaviour are verified · Required: P03 · By: P03-T07
 - [ ] QG-05.4 Face ID/Touch ID and Keychain storage work correctly · Required: P04 · By: P04-T07
-- [ ] QG-05.5 App startup, crash behaviour and memory consumption meet approved performance targets · Required: P13 · By: P13-T04
-- [ ] QG-05.6 App signing, provisioning, privacy declarations and App Store requirements are validated · Required: P14 · By: P14-T02,P14-T05
+- [ ] QG-05.5 App startup, crash behaviour and memory consumption meet approved performance targets · Required: P14 · By: P14-T04
+- [ ] QG-05.6 App signing, provisioning, privacy declarations and App Store requirements are validated · Required: P15 · By: P15-T02,P15-T05
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
@@ -177,13 +177,13 @@ Approved By: —
 ### QG-08: Security and Privacy
 
 - [ ] QG-08.1 Authentication and authorization tests pass · Required: P04 · By: P04-T09 · CRITICAL
-- [ ] QG-08.2 No known unresolved critical or high-severity exploitable vulnerabilities at release · Required: P13 · By: P13-T03 · CRITICAL
+- [ ] QG-08.2 No known unresolved critical or high-severity exploitable vulnerabilities at release · Required: P14 · By: P14-T03 · CRITICAL
 - [x] QG-08.3 Secrets scanning passes · Required: P01 · By: P01-T11 · Evidence: Secrets scanning passes: gitleaks job in security.yml (full history) green on PR #4, #6, #7 and main (run 37944172283); seeded-secret test (run 37931671715) proved the scan fails when a secret is present; local pre-commit gitleaks hook also active · Verified: 2026-10-09T18:33:58+04:00 · CRITICAL
-- [ ] QG-08.4 Dependency and container vulnerability scanning passes · Required: P12 · By: P12-T04
-- [ ] QG-08.5 Encryption in transit and at rest is verified · Required: P12 · By: P12-T03,P12-T05 · CRITICAL
-- [x] QG-08.6 Sensitive financial data is excluded from inappropriate logs · Required: P01 · By: P01-T12 · Evidence: Sensitive data excluded from logs: app/core/redaction.py applied to every log record (messages, extra fields, exception text); tests/test_redaction.py covers 15 leak cases (bearer, JWT, URL/DSN credentials incl. redis://:pw@host, password/secret/api_key/token pairs, financial amount/balance/price/net_worth), 5 clean-text cases, key detection, recursion, depth cap and an end-to-end log line; live server log showed no password; found and fixed the empty-username URL gap. Baseline mechanism; re-verified on the release candidate at P13-T11 · Verified: 2026-10-09T18:33:59+04:00 · CRITICAL
-- [ ] QG-08.7 Backup and restore procedures are tested · Required: P12 · By: P12-T10
-- [ ] QG-08.8 Privacy, retention, consent and account-deletion requirements are verified · Required: P13 · By: P13-T05 · CRITICAL
+- [ ] QG-08.4 Dependency and container vulnerability scanning passes · Required: P13 · By: P13-T04
+- [ ] QG-08.5 Encryption in transit and at rest is verified · Required: P13 · By: P13-T03,P13-T05 · CRITICAL
+- [x] QG-08.6 Sensitive financial data is excluded from inappropriate logs · Required: P01 · By: P01-T12 · Evidence: Sensitive data excluded from logs: app/core/redaction.py applied to every log record (messages, extra fields, exception text); tests/test_redaction.py covers 15 leak cases (bearer, JWT, URL/DSN credentials incl. redis://:pw@host, password/secret/api_key/token pairs, financial amount/balance/price/net_worth), 5 clean-text cases, key detection, recursion, depth cap and an end-to-end log line; live server log showed no password; found and fixed the empty-username URL gap. Baseline mechanism; re-verified on the release candidate at P14-T11 · Verified: 2026-10-09T18:33:59+04:00 · CRITICAL
+- [ ] QG-08.7 Backup and restore procedures are tested · Required: P13 · By: P13-T10
+- [ ] QG-08.8 Privacy, retention, consent and account-deletion requirements are verified · Required: P14 · By: P14-T05 · CRITICAL
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
@@ -197,12 +197,12 @@ Approved By: —
 
 ### QG-09: Performance and Scalability
 
-- [ ] QG-09.1 API response times meet defined service-level objectives · Required: P13 · By: P13-T04
-- [ ] QG-09.2 Database queries meet approved performance thresholds · Required: P13 · By: P13-T04
-- [ ] QG-09.3 Mobile startup and interaction latency meet agreed targets · Required: P13 · By: P13-T04
-- [ ] QG-09.4 Load and stress tests pass against representative workloads · Required: P13 · By: P13-T04
+- [ ] QG-09.1 API response times meet defined service-level objectives · Required: P14 · By: P14-T04
+- [ ] QG-09.2 Database queries meet approved performance thresholds · Required: P14 · By: P14-T04
+- [ ] QG-09.3 Mobile startup and interaction latency meet agreed targets · Required: P14 · By: P14-T04
+- [ ] QG-09.4 Load and stress tests pass against representative workloads · Required: P14 · By: P14-T04
 - [ ] QG-09.5 Background jobs, retries and failure recovery operate correctly · Required: P08 · By: P08-T08
-- [ ] QG-09.6 Capacity assumptions and bottlenecks are documented · Required: P13 · By: P13-T04
+- [ ] QG-09.6 Capacity assumptions and bottlenecks are documented · Required: P14 · By: P14-T04
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -217,13 +217,13 @@ Approved By: —
 ### QG-10: CI/CD and Infrastructure
 
 - [x] QG-10.1 CI pipelines pass · Required: P01 · By: P01-T09,P01-T10 · Evidence: CI pipelines pass: workflows backend, mobile, security, tracker all success on main after the last merge (runs 37944172314, 37944172316, 37944172283, 37944172361 on f525b80) and all four required gate checks green on PRs #4, #6, #7; ruleset blocks merges otherwise (PR #5 demonstration) · Verified: 2026-10-09T18:33:59+04:00
-- [ ] QG-10.2 Build artifacts are reproducible and versioned · Required: P12 · By: P12-T04
+- [ ] QG-10.2 Build artifacts are reproducible and versioned · Required: P13 · By: P13-T04
 - [x] QG-10.3 Database migrations are validated · Required: P01 · By: P01-T08 · Evidence: Database migrations validated: baseline revision 0001 (pgcrypto, vector); CI step 'Migrations' runs alembic upgrade head, check ('No new upgrade operations detected'), downgrade base, upgrade head and asserts a single head; pytest round-trip on a throwaway database, single-head and no-credentials-in-migrations tests; local CLI cycle on a scratch database · Verified: 2026-10-09T18:33:59+04:00
-- [ ] QG-10.4 Infrastructure changes are reviewed · Required: P12 · By: P12-T02
-- [ ] QG-10.5 Deployment health checks pass · Required: P12 · By: P12-T11
-- [ ] QG-10.6 Monitoring, logs, metrics and alerts are operational · Required: P12 · By: P12-T09
-- [ ] QG-10.7 Rollback procedures are tested · Required: P12 · By: P12-T08
-- [ ] QG-10.8 Staging and production configurations are appropriately isolated · Required: P12 · By: P12-T02
+- [ ] QG-10.4 Infrastructure changes are reviewed · Required: P13 · By: P13-T02
+- [ ] QG-10.5 Deployment health checks pass · Required: P13 · By: P13-T11
+- [ ] QG-10.6 Monitoring, logs, metrics and alerts are operational · Required: P13 · By: P13-T09
+- [ ] QG-10.7 Rollback procedures are tested · Required: P13 · By: P13-T08
+- [ ] QG-10.8 Staging and production configurations are appropriately isolated · Required: P13 · By: P13-T02
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
@@ -256,14 +256,14 @@ Approved By: —
 
 ### QG-12: Production Release Readiness
 
-- [ ] QG-12.1 All mandatory platform quality gates pass (every QG-01..QG-11 criterion due at or before P13 is satisfied; verified with `track.py qg check QG-12.1`) · Required: P13 · By: P13-T11
-- [ ] QG-12.2 Android and iOS release builds are verified · Required: P14 · By: P14-T02
-- [ ] QG-12.3 Security and privacy reviews are complete · Required: P13 · By: P13-T10 · CRITICAL
-- [ ] QG-12.4 Disaster-recovery procedures are validated · Required: P13 · By: P13-T09
-- [ ] QG-12.5 Production monitoring and alerting are active · Required: P14 · By: P14-T03
-- [ ] QG-12.6 Release notes and operational runbooks are available · Required: P14 · By: P14-T06
-- [ ] QG-12.7 Required legal/regulatory reviews are complete for the intended launch markets and investment-intelligence features · Required: P13 · By: P13-T10 · CRITICAL
-- [ ] QG-12.8 Final user approval is obtained before production deployment · Required: P14 · By: P14-T06 · CRITICAL
+- [ ] QG-12.1 All mandatory platform quality gates pass (every QG-01..QG-11 criterion due at or before P14 is satisfied; verified with `track.py qg check QG-12.1`) · Required: P14 · By: P14-T11
+- [ ] QG-12.2 Android and iOS release builds are verified · Required: P15 · By: P15-T02
+- [ ] QG-12.3 Security and privacy reviews are complete · Required: P14 · By: P14-T10 · CRITICAL
+- [ ] QG-12.4 Disaster-recovery procedures are validated · Required: P14 · By: P14-T09
+- [ ] QG-12.5 Production monitoring and alerting are active · Required: P15 · By: P15-T03
+- [ ] QG-12.6 Release notes and operational runbooks are available · Required: P15 · By: P15-T06
+- [ ] QG-12.7 Required legal/regulatory reviews are complete for the intended launch markets and investment-intelligence features · Required: P14 · By: P14-T10 · CRITICAL
+- [ ] QG-12.8 Final user approval is obtained before production deployment · Required: P15 · By: P15-T06 · CRITICAL
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -277,11 +277,11 @@ Approved By: —
 
 ### QG-13: QG-FX-01: Market Data Integrity
 
-- [ ] QG-13.1 Streaming connectivity is verified · Required: P15 · By: P15-T02
-- [ ] QG-13.2 Bid/ask prices are validated against provider records · Required: P15 · By: P15-T02 · CRITICAL
-- [ ] QG-13.3 Stale-data detection is tested · Required: P15 · By: P15-T02
-- [ ] QG-13.4 Timestamp and timezone handling is verified · Required: P15 · By: P15-T02
-- [ ] QG-13.5 Feed outages are handled safely and prices are never invented or shown as live when delayed, indicative or simulated · Required: P15 · By: P15-T02 · CRITICAL
+- [ ] QG-13.1 Streaming connectivity is verified · Required: P12 · By: P12-T02
+- [ ] QG-13.2 Bid/ask prices are validated against provider records · Required: P12 · By: P12-T02 · CRITICAL
+- [ ] QG-13.3 Stale-data detection is tested · Required: P12 · By: P12-T02
+- [ ] QG-13.4 Timestamp and timezone handling is verified · Required: P12 · By: P12-T02
+- [ ] QG-13.5 Feed outages are handled safely and prices are never invented or shown as live when delayed, indicative or simulated · Required: P12 · By: P12-T02 · CRITICAL
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -295,9 +295,9 @@ Approved By: —
 
 ### QG-14: QG-FX-02: Technical Indicator Accuracy
 
-- [ ] QG-14.1 Indicator calculations match independently validated reference cases · Required: P15 · By: P15-T03
-- [ ] QG-14.2 Timeframe aggregation is correct · Required: P15 · By: P15-T03
-- [ ] QG-14.3 Missing candles and irregular market hours are handled · Required: P15 · By: P15-T03
+- [ ] QG-14.1 Indicator calculations match independently validated reference cases · Required: P12 · By: P12-T03
+- [ ] QG-14.2 Timeframe aggregation is correct · Required: P12 · By: P12-T03
+- [ ] QG-14.3 Missing candles and irregular market hours are handled · Required: P12 · By: P12-T03
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -311,12 +311,12 @@ Approved By: —
 
 ### QG-15: QG-FX-03: Prediction Model Validation
 
-- [ ] QG-15.1 Models outperform, or are honestly reported against, the random-walk and no-change baselines · Required: P15 · By: P15-T05
-- [ ] QG-15.2 No data leakage in features, labels or splits · Required: P15 · By: P15-T05
-- [ ] QG-15.3 Out-of-sample testing is completed · Required: P15 · By: P15-T05
-- [ ] QG-15.4 Probability calibration is evaluated · Required: P15 · By: P15-T05
-- [ ] QG-15.5 Prediction intervals are assessed for coverage · Required: P15 · By: P15-T05
-- [ ] QG-15.6 Model drift monitoring is configured · Required: P15 · By: P15-T05
+- [ ] QG-15.1 Models outperform, or are honestly reported against, the random-walk and no-change baselines · Required: P12 · By: P12-T05
+- [ ] QG-15.2 No data leakage in features, labels or splits · Required: P12 · By: P12-T05
+- [ ] QG-15.3 Out-of-sample testing is completed · Required: P12 · By: P12-T05
+- [ ] QG-15.4 Probability calibration is evaluated · Required: P12 · By: P12-T05
+- [ ] QG-15.5 Prediction intervals are assessed for coverage · Required: P12 · By: P12-T05
+- [ ] QG-15.6 Model drift monitoring is configured · Required: P12 · By: P12-T05
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -330,11 +330,11 @@ Approved By: —
 
 ### QG-16: QG-FX-04: Trading Risk Accuracy
 
-- [ ] QG-16.1 Position sizing is verified against independent reference cases · Required: P15 · By: P15-T07 · CRITICAL
-- [ ] QG-16.2 Pip-value conversions are verified for each quote and account currency case · Required: P15 · By: P15-T07 · CRITICAL
-- [ ] QG-16.3 Risk/reward calculations are verified · Required: P15 · By: P15-T07 · CRITICAL
-- [ ] QG-16.4 Margin and leverage calculations are verified · Required: P15 · By: P15-T07 · CRITICAL
-- [ ] QG-16.5 Costs and slippage are included in outputs · Required: P15 · By: P15-T07 · CRITICAL
+- [ ] QG-16.1 Position sizing is verified against independent reference cases · Required: P12 · By: P12-T07 · CRITICAL
+- [ ] QG-16.2 Pip-value conversions are verified for each quote and account currency case · Required: P12 · By: P12-T07 · CRITICAL
+- [ ] QG-16.3 Risk/reward calculations are verified · Required: P12 · By: P12-T07 · CRITICAL
+- [ ] QG-16.4 Margin and leverage calculations are verified · Required: P12 · By: P12-T07 · CRITICAL
+- [ ] QG-16.5 Costs and slippage are included in outputs · Required: P12 · By: P12-T07 · CRITICAL
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -348,10 +348,10 @@ Approved By: —
 
 ### QG-17: QG-FX-05: Backtesting Integrity
 
-- [ ] QG-17.1 Look-ahead bias tests pass · Required: P15 · By: P15-T08 · CRITICAL
-- [ ] QG-17.2 Transaction costs and slippage are included · Required: P15 · By: P15-T08
-- [ ] QG-17.3 Walk-forward validation is completed · Required: P15 · By: P15-T08
-- [ ] QG-17.4 Backtest reports are reproducible · Required: P15 · By: P15-T08
+- [ ] QG-17.1 Look-ahead bias tests pass · Required: P12 · By: P12-T08 · CRITICAL
+- [ ] QG-17.2 Transaction costs and slippage are included · Required: P12 · By: P12-T08
+- [ ] QG-17.3 Walk-forward validation is completed · Required: P12 · By: P12-T08
+- [ ] QG-17.4 Backtest reports are reproducible · Required: P12 · By: P12-T08
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -365,11 +365,11 @@ Approved By: —
 
 ### QG-18: QG-FX-06: AI Trading Intelligence
 
-- [ ] QG-18.1 Market facts are source-backed with timestamps · Required: P15 · By: P15-T10 · CRITICAL
-- [ ] QG-18.2 Prediction timestamps and model versions are included · Required: P15 · By: P15-T10
-- [ ] QG-18.3 No guaranteed-profit language passes the output guard · Required: P15 · By: P15-T10 · CRITICAL
-- [ ] QG-18.4 Structured AI output is validated · Required: P15 · By: P15-T10
-- [ ] QG-18.5 Stale-data conditions are handled · Required: P15 · By: P15-T10
+- [ ] QG-18.1 Market facts are source-backed with timestamps · Required: P12 · By: P12-T10 · CRITICAL
+- [ ] QG-18.2 Prediction timestamps and model versions are included · Required: P12 · By: P12-T10
+- [ ] QG-18.3 No guaranteed-profit language passes the output guard · Required: P12 · By: P12-T10 · CRITICAL
+- [ ] QG-18.4 Structured AI output is validated · Required: P12 · By: P12-T10
+- [ ] QG-18.5 Stale-data conditions are handled · Required: P12 · By: P12-T10
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -383,11 +383,11 @@ Approved By: —
 
 ### QG-19: QG-FX-07: Mobile Experience
 
-- [ ] QG-19.1 Android and iOS builds pass · Required: P15 · By: P15-T11
-- [ ] QG-19.2 Charts remain responsive during streaming updates · Required: P15 · By: P15-T11
-- [ ] QG-19.3 Background and foreground transitions are handled · Required: P15 · By: P15-T11
-- [ ] QG-19.4 Notifications are tested · Required: P15 · By: P15-T11
-- [ ] QG-19.5 Network interruption recovery is verified · Required: P15 · By: P15-T11
+- [ ] QG-19.1 Android and iOS builds pass · Required: P12 · By: P12-T11
+- [ ] QG-19.2 Charts remain responsive during streaming updates · Required: P12 · By: P12-T11
+- [ ] QG-19.3 Background and foreground transitions are handled · Required: P12 · By: P12-T11
+- [ ] QG-19.4 Notifications are tested · Required: P12 · By: P12-T11
+- [ ] QG-19.5 Network interruption recovery is verified · Required: P12 · By: P12-T11
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -401,11 +401,11 @@ Approved By: —
 
 ### QG-20: QG-FX-08: Release and Regulatory Readiness
 
-- [ ] QG-20.1 Market-data licensing is reviewed · Required: P15 · By: P15-T14 · CRITICAL
-- [ ] QG-20.2 Launch-market financial-advice and trading regulations are reviewed · Required: P15 · By: P15-T14 · CRITICAL
-- [ ] QG-20.3 Risk disclosures are reviewed · Required: P15 · By: P15-T14
-- [ ] QG-20.4 Paper trading remains separate from real holdings · Required: P15 · By: P15-T09 · CRITICAL
-- [ ] QG-20.5 No live execution is enabled without explicit approval · Required: P15 · By: P15-T14 · CRITICAL
+- [ ] QG-20.1 Market-data licensing is reviewed · Required: P12 · By: P12-T14 · CRITICAL
+- [ ] QG-20.2 Launch-market financial-advice and trading regulations are reviewed · Required: P12 · By: P12-T14 · CRITICAL
+- [ ] QG-20.3 Risk disclosures are reviewed · Required: P12 · By: P12-T14
+- [ ] QG-20.4 Paper trading remains separate from real holdings · Required: P12 · By: P12-T09 · CRITICAL
+- [ ] QG-20.5 No live execution is enabled without explicit approval · Required: P12 · By: P12-T14 · CRITICAL
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -431,5 +431,5 @@ Changes to when a criterion is required are decisions, recorded here and in EXEC
 
 | Date | Criterion | Change | Reason | Approved by |
 |---|---|---|---|---|
-| 2026-10-09 | QG-08.4 | Required phase P01 → P12; evidence task P01-T11 → P12-T04 | The criterion covers dependency **and container** scanning. Dependency scanning is already running in CI (P01-T11); no container images exist until P12-T04, so the container half cannot be satisfied earlier. Not a waiver: the full criterion still applies, at the phase where it can be met. | user (option b) |
-| 2026-10-09 | QG-13…QG-20 | Eight Forex gates (QG-FX-01…08, 38 criteria, all required at P15) added to the register | Forex Trading Intelligence module requested as workstream P15; mapping QG-FX-nn = QG-(12+nn). Additive: no existing criterion changed. Proposed, pending user approval of P15. | pending user approval |
+| 2026-10-09 | QG-08.4 | Required phase P01 → P13; evidence task P01-T11 → P13-T04 | The criterion covers dependency **and container** scanning. Dependency scanning is already running in CI (P01-T11); no container images exist until P13-T04, so the container half cannot be satisfied earlier. Not a waiver: the full criterion still applies, at the phase where it can be met. | user (option b) |
+| 2026-10-09 | QG-13…QG-20 | Eight Forex gates (QG-FX-01…08, 38 criteria, all required at P12) added to the register | Forex Trading Intelligence module requested as workstream P12; mapping QG-FX-nn = QG-(12+nn). Additive: no existing criterion changed. Proposed, pending user approval of P12. | pending user approval |

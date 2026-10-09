@@ -400,3 +400,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 - documents: docs/design/forex-technical-design.md, docs/adr/0009-forex-intelligence-module.md (Proposed), SOLUTION_INTENT section 34 and section 30 clarification, brief and guide sections
 - tracker: wave numbers now compare numerically (W10 after W9) and the gate count may exceed 12 when contiguous; 4 new tests
 - P15 phase approval is PENDING; nothing is implemented; no existing task or criterion changed
+
+### 2026-10-09T23:24:10+04:00 — PLAN CHANGE (proposed) — move the Forex phase between P11 and the cloud infrastructure phase
+- requested by the user 2026-10-09: place the Forex Trading Intelligence phase after P11 and before Cloud Infrastructure
+- renumbered phases: Forex P15 -> P12; Cloud Infrastructure P12 -> P13; Production Hardening P13 -> P14; Release P14 -> P15 (task IDs, gates, waves, quality-gate Required phases and documentation updated; earlier entries in this log keep the old IDs)
+- dependencies changed because staging and hardening now come after the Forex phase: FX-13 became integration and soak validation on the local/CI stack (no cloud staging dependency); FX-14 no longer depends on the hardening gate; the module staging smoke tests were added to P13-T11 and production enablement of the Forex flag needs P14-GATE and those smoke tests
+- tracker: QG-all@Pxx now covers QG-01..QG-11 only, so optional workstream gates (QG-13..QG-20) never block core release readiness (QG-12.1); QG-12.1 now requires criteria due by P14; one new test
+- phase P12 approval remains PENDING; no task started; nothing implemented

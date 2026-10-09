@@ -17,13 +17,13 @@ Derived from CLAUDE.md (Security Rules), `SOLUTION_INTENT.md` section 23 and the
 | Authorization | Ownership checks on every resource; IDOR tests per endpoint | P04-T03, P05-T09 |
 | API protection | Rate limiting, brute-force controls, input limits, security headers | P04-T05 |
 | Audit | Append-only audit events for financial changes and AI/tool activity | P04-T04 |
-| Secrets | Never in source control; `.env` is git-ignored; secret manager in cloud; CI uses OIDC, not long-lived keys | P01-T05, P12-T06 |
-| Transport / storage | TLS 1.2+ (prefer 1.3); encryption at rest | P12 |
+| Secrets | Never in source control; `.env` is git-ignored; secret manager in cloud; CI uses OIDC, not long-lived keys | P01-T05, P13-T06 |
+| Transport / storage | TLS 1.2+ (prefer 1.3); encryption at rest | P13 |
 | Logging | No secrets or unnecessary financial payloads in logs; redaction filter with tests | P01-T12 |
 | Supply chain | Secret scanning, dependency and container scanning, SAST, SBOM | P01-T11 |
-| Backups | Encrypted backups, restore tests, documented RPO/RTO | P12-T10 |
-| Privacy | Consent, retention, export and account deletion | P13-T05 |
-| Reviews | OWASP API Security Top 10, OWASP MASVS, penetration test | P13 |
+| Backups | Encrypted backups, restore tests, documented RPO/RTO | P13-T10 |
+| Privacy | Consent, retention, export and account deletion | P14-T05 |
+| Reviews | OWASP API Security Top 10, OWASP MASVS, penetration test | P14 |
 
 ## Secrets handling (current)
 - Local development values live in `.env` (ignored by git); only `.env.example` with placeholders is committed.
