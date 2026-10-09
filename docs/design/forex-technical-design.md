@@ -1,6 +1,6 @@
 # Forex Trading Intelligence module: technical design
 
-Status: **Proposed**, awaiting user approval (P12-T01). Nothing in this document is implemented. Related: [ADR-0009](../adr/0009-forex-intelligence-module.md), `EXECUTION_PLAN.md` phase P12 (tasks FX-01…FX-14 = P12-T01…T14), quality gates QG-13…QG-20 (QG-FX-01…08).
+Status: **Approved** by the user 2026-10-09 (scope and phase P12); open decisions DEC-19..DEC-24 remain. Nothing in this document is implemented. Related: [ADR-0009](../adr/0009-forex-intelligence-module.md), `EXECUTION_PLAN.md` phase P12 (tasks FX-01…FX-14 = P12-T01…T14), quality gates QG-13…QG-20 (QG-FX-01…08).
 
 ## 1. Purpose and boundary
 

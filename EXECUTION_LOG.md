@@ -407,3 +407,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 - dependencies changed because staging and hardening now come after the Forex phase: FX-13 became integration and soak validation on the local/CI stack (no cloud staging dependency); FX-14 no longer depends on the hardening gate; the module staging smoke tests were added to P13-T11 and production enablement of the Forex flag needs P14-GATE and those smoke tests
 - tracker: QG-all@Pxx now covers QG-01..QG-11 only, so optional workstream gates (QG-13..QG-20) never block core release readiness (QG-12.1); QG-12.1 now requires criteria due by P14; one new test
 - phase P12 approval remains PENDING; no task started; nothing implemented
+
+### 2026-10-09T23:34:22+04:00 — PHASE APPROVED P12
+- approved by user (mtisya@gmail.com)
+- Forex Trading Intelligence (FX workstream)

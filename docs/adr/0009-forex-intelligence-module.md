@@ -1,6 +1,6 @@
 # ADR-0009: Forex Trading Intelligence module (decision support and paper trading only)
 
-Status: **Proposed** (awaiting user approval at P12-T01)
+Status: Accepted (user approval, 2026-10-09; phase P12 approved)
 
 ## Context
 A request (2026-10-09) adds a Forex Market Intelligence, Prediction and Trade Opportunity Analysis module: live quotes, indicators, probabilistic forecasts, an opportunity ranking dashboard, risk management, backtesting, paper trading and an AI Forex Copilot. SOLUTION_INTENT section 30 lists "not a bank, broker, exchange, high-frequency trading system or autonomous robo-adviser" as initial non-goals, and CLAUDE.md forbids automatic trade execution without an approved requirement. Forex is leveraged, short-horizon and heavily regulated, so the module carries risks the wealth-tracking core does not (user harm from leverage, regulatory classification, data licensing, false confidence from overfitted models).

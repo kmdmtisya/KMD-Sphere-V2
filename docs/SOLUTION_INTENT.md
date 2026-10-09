@@ -242,7 +242,7 @@ The system must be able to explain why an opportunity was surfaced, including se
 ## 30. Initial Non-Goals
 The initial release is not a bank, broker, exchange, high-frequency trading system or autonomous robo-adviser. Focus on **Tracking + Measurement + Intelligence + Forecasting + Research + Decision Support**.
 
-_Clarification (proposed 2026-10-09, ADR-0009): the optional Forex module in section 34 is decision support and paper trading only. It does not change these non-goals: no order execution, no brokerage, no autonomous or copy trading._
+_Clarification (approved 2026-10-09, ADR-0009): the optional Forex module in section 34 is decision support and paper trading only. It does not change these non-goals: no order execution, no brokerage, no autonomous or copy trading._
 
 ## 31. Development Philosophy
 For each feature:
@@ -275,8 +275,8 @@ Portfolio Management tells users what they own. Analytics explains performance. 
 The objective is not for AI to make financial decisions on behalf of the user. The objective is to give the user a substantially better understanding of wealth, alternatives, risks, opportunities and possible future outcomes so they can make better-informed decisions.
 
 
-## 34. Forex Market Intelligence Module (proposed extension, ADR-0009)
-_Status: proposed 2026-10-09, awaiting user approval (P12-T01). Not part of the core release path (P00-P11 and P13-P15); it is planned as phase P12, between the AI phases and cloud infrastructure._
+## 34. Forex Market Intelligence Module (approved extension, ADR-0009)
+_Status: approved by the user 2026-10-09 (ADR-0009, phase P12). Not part of the core release path (P00-P11 and P13-P15); it is planned as phase P12, between the AI phases and cloud infrastructure._
 
 **Intent.** Help users study the foreign-exchange market with timestamped market data, deterministic technical analysis, probabilistic forecasts with honest validation, a transparent opportunity ranking, trade risk management, backtesting and paper trading, explained by the AI Copilot through allow-listed tools.
 

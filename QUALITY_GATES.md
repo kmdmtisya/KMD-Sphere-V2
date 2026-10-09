@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-09T23:24:10+04:00 by `scripts/track.py`._
+_Generated at 2026-10-09T23:34:23+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -432,4 +432,4 @@ Changes to when a criterion is required are decisions, recorded here and in EXEC
 | Date | Criterion | Change | Reason | Approved by |
 |---|---|---|---|---|
 | 2026-10-09 | QG-08.4 | Required phase P01 → P13; evidence task P01-T11 → P13-T04 | The criterion covers dependency **and container** scanning. Dependency scanning is already running in CI (P01-T11); no container images exist until P13-T04, so the container half cannot be satisfied earlier. Not a waiver: the full criterion still applies, at the phase where it can be met. | user (option b) |
-| 2026-10-09 | QG-13…QG-20 | Eight Forex gates (QG-FX-01…08, 38 criteria, all required at P12) added to the register | Forex Trading Intelligence module requested as workstream P12; mapping QG-FX-nn = QG-(12+nn). Additive: no existing criterion changed. Proposed, pending user approval of P12. | pending user approval |
+| 2026-10-09 | QG-13…QG-20 | Eight Forex gates (QG-FX-01…08, 38 criteria, all required at P12) added to the register | Forex Trading Intelligence module requested as workstream P12; mapping QG-FX-nn = QG-(12+nn). Additive: no existing criterion changed. Approved with phase P12. | user |
