@@ -625,5 +625,150 @@
   "chartTableYear": "Year",
   "@chartTableYear": {
     "description": "Table column header for forecast years"
+  },
+  "homeGreeting": "Hello, {name}",
+  "@homeGreeting": {
+    "description": "Greeting on the home screen",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationsTooltip": "Notifications",
+  "@notificationsTooltip": {
+    "description": "Tooltip of the notifications icon"
+  },
+  "homeTotalWealth": "Total wealth",
+  "@homeTotalWealth": {
+    "description": "Label of the headline wealth figure"
+  },
+  "homeKeyFigures": "Key figures",
+  "@homeKeyFigures": {
+    "description": "Title of the home metrics section"
+  },
+  "homePortfolioValue": "Portfolio value",
+  "@homePortfolioValue": {
+    "description": "Metric label"
+  },
+  "homeNetWorth": "Net worth",
+  "@homeNetWorth": {
+    "description": "Metric label"
+  },
+  "homeMonthlyIncome": "Monthly income",
+  "@homeMonthlyIncome": {
+    "description": "Metric label"
+  },
+  "homeGoals": "Goals",
+  "@homeGoals": {
+    "description": "Metric label and section title"
+  },
+  "goalsOnTrack": "{count} on track",
+  "@goalsOnTrack": {
+    "description": "Goals metric value",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "goalsProgressSpoken": "{name}: {percent} complete, {status}",
+  "@goalsProgressSpoken": {
+    "description": "Spoken goal progress",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "goalStatusOnTrack": "on track",
+  "@goalStatusOnTrack": {
+    "description": "Goal status"
+  },
+  "goalStatusBehind": "behind",
+  "@goalStatusBehind": {
+    "description": "Goal status"
+  },
+  "homeInsightTitle": "AI insight",
+  "@homeInsightTitle": {
+    "description": "Title of the AI insight card"
+  },
+  "askWealthAi": "Ask Wealth AI",
+  "@askWealthAi": {
+    "description": "Button that opens the AI Wealth tab"
+  },
+  "customise": "Customise",
+  "@customise": {
+    "description": "Enter dashboard edit mode"
+  },
+  "customiseDone": "Done",
+  "@customiseDone": {
+    "description": "Leave dashboard edit mode"
+  },
+  "customiseTitle": "Customise home",
+  "@customiseTitle": {
+    "description": "Title of the customise mode"
+  },
+  "moveUp": "Move up",
+  "@moveUp": {
+    "description": "Reorder action"
+  },
+  "moveDown": "Move down",
+  "@moveDown": {
+    "description": "Reorder action"
+  },
+  "showSection": "Show {section}",
+  "@showSection": {
+    "description": "Switch label to show a dashboard section",
+    "placeholders": {
+      "section": {
+        "type": "String"
+      }
+    }
+  },
+  "sectionWealthSummary": "Wealth summary",
+  "@sectionWealthSummary": {
+    "description": "Dashboard section name"
+  },
+  "sectionMetrics": "Key figures",
+  "@sectionMetrics": {
+    "description": "Dashboard section name"
+  },
+  "sectionInsight": "AI insight",
+  "@sectionInsight": {
+    "description": "Dashboard section name"
+  },
+  "sectionGoals": "Goals",
+  "@sectionGoals": {
+    "description": "Dashboard section name"
+  },
+  "sectionPosition": "{section}, position {position} of {total}",
+  "@sectionPosition": {
+    "description": "Spoken position of a reorderable section",
+    "placeholders": {
+      "section": {
+        "type": "String"
+      },
+      "position": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "sectionFailed": "This section couldn't be loaded.",
+  "@sectionFailed": {
+    "description": "Shown inside a failed dashboard section"
+  },
+  "pullToRefresh": "Pull down to refresh",
+  "@pullToRefresh": {
+    "description": "Hint for refreshing"
   }
 }

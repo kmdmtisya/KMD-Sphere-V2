@@ -314,16 +314,16 @@
   - [x] P03-T01.4 Multi-currency fixtures
   - [x] P03-T01.5 Scripted copilot fixtures
   - [x] P03-T01.6 Tests
-- [ ] **P03-T02** · Home Dashboard (screen 3) · `NOT_STARTED` ⬜
+- [ ] **P03-T02** · Home Dashboard (screen 3) · `IN_PROGRESS` 🔄
   - Deps: P03-T01 · Wave: W2 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T00:15:36+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P03-T02.1 Summary card and chart
-  - [ ] P03-T02.2 Metric cards
-  - [ ] P03-T02.3 Insight card with sources
-  - [ ] P03-T02.4 Customise mode
-  - [ ] P03-T02.5 Pull-to-refresh and states
-  - [ ] P03-T02.6 Tests
+  - [x] P03-T02.1 Summary card and chart
+  - [x] P03-T02.2 Metric cards
+  - [x] P03-T02.3 Insight card with sources
+  - [x] P03-T02.4 Customise mode
+  - [x] P03-T02.5 Pull-to-refresh and states
+  - [x] P03-T02.6 Tests
 - [ ] **P03-T03** · Portfolio Overview (screen 4) · `NOT_STARTED` ⬜
   - Deps: P03-T01 · Wave: W2 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

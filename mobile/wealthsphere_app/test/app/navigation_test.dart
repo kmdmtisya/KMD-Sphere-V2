@@ -78,7 +78,7 @@ void main() {
       expect(find.byType(BackButton), findsOneWidget);
 
       await tapTab(tester, 'Home');
-      expect(find.text('Track. Measure. Forecast. Grow.'), findsOneWidget);
+      expect(find.text('Total wealth'), findsOneWidget);
 
       await tapTab(tester, 'Portfolio');
       // Still on Holdings (the nested screen), not back at the Portfolio root.
