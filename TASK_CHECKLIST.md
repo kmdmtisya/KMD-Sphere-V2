@@ -211,7 +211,7 @@
 
 ## P02 — Flutter Design System (UX Gate 1)
 
-- Phase approval: `PENDING`
+- Phase approval: `APPROVED by user (mtisya@gmail.com) at 2026-10-09T19:26:47+04:00`
 - Entry gates: prerequisite phase gates completed (P01); cumulative criteria QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
 - Exit gates: QG-01.5 — required by `P02-GATE` (Gates-done)
 - Release gates: —
