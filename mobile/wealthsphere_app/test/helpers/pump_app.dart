@@ -18,6 +18,7 @@ extension PumpApp on WidgetTester {
     TextDirection textDirection = TextDirection.ltr,
     List<Override> overrides = const [],
     Size? surfaceSize,
+    bool settle = true,
   }) async {
     if (surfaceSize != null) {
       await binding.setSurfaceSize(surfaceSize);
@@ -41,6 +42,10 @@ extension PumpApp on WidgetTester {
         ),
       ),
     );
-    await pumpAndSettle();
+    if (settle) {
+      await pumpAndSettle();
+    } else {
+      await pump();
+    }
   }
 }

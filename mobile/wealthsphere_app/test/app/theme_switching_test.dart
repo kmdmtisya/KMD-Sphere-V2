@@ -18,7 +18,13 @@ Widget appWith(
 );
 
 Brightness shownBrightness(WidgetTester tester) =>
-    Theme.of(tester.element(find.text('WealthSphere').first)).brightness;
+    Theme.of(tester.element(find.byType(Scaffold).first)).brightness;
+
+/// The theme switch lives on the More tab (temporary Settings placeholder).
+Future<void> openMore(WidgetTester tester) async {
+  await tester.tap(find.text('More'));
+  await tester.pumpAndSettle();
+}
 
 void main() {
   testWidgets(
@@ -27,12 +33,14 @@ void main() {
       final store = InMemoryPreferencesStore();
       await tester.pumpWidget(appWith(store));
       await tester.pumpAndSettle();
+      await openMore(tester);
 
       // The test platform is light, so "system" shows the light theme.
       expect(shownBrightness(tester), Brightness.light);
-      final scaffold = tester.widget<Scaffold>(find.byType(Scaffold));
+      final scaffold = tester.widget<Scaffold>(find.byType(Scaffold).first);
       expect(
-        Theme.of(tester.element(find.byType(Scaffold))).scaffoldBackgroundColor,
+        Theme.of(tester.element(find.byType(Scaffold).first))
+            .scaffoldBackgroundColor,
         WealthColors.light.scaffold,
       );
       expect(scaffold, isNotNull);
@@ -41,7 +49,8 @@ void main() {
       await tester.pumpAndSettle();
       expect(shownBrightness(tester), Brightness.dark);
       expect(
-        Theme.of(tester.element(find.byType(Scaffold))).scaffoldBackgroundColor,
+        Theme.of(tester.element(find.byType(Scaffold).first))
+            .scaffoldBackgroundColor,
         WealthColors.dark.scaffold,
       );
       expect(store.values[themeModePreferenceKey], 'dark');
@@ -82,6 +91,7 @@ void main() {
       final handle = tester.ensureSemantics();
       await tester.pumpWidget(appWith(InMemoryPreferencesStore()));
       await tester.pumpAndSettle();
+      await openMore(tester);
 
       expect(find.byIcon(Icons.check), findsOneWidget);
       expect(
@@ -109,6 +119,7 @@ void main() {
       });
       await tester.pumpWidget(appWith(InMemoryPreferencesStore()));
       await tester.pumpAndSettle();
+      await openMore(tester);
       expect(tester.takeException(), isNull);
       expect(find.text('Dark'), findsOneWidget);
     },
