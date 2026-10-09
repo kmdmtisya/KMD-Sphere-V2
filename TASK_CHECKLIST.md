@@ -344,10 +344,10 @@
   - [x] P03-T04.4 Calculate to ForecastRepository
   - [x] P03-T04.5 Keyboard handling
   - [x] P03-T04.6 Tests
-- [ ] **P03-T05** · Wealth Forecast (screen 10) · `IN_PROGRESS` 🔄
+- [x] **P03-T05** · Wealth Forecast (screen 10) · `COMPLETED` ✅
   - Deps: P03-T04 · Wave: W3 · Track: MOB · Size: L · Approval: no
-  - Started: 2026-10-10T02:04:39+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-10T02:04:39+04:00 · Completed: 2026-10-10T02:19:18+04:00 · Duration: 14m 39s · Blocker: —
+  - Evidence: PR #24. ForecastScreen (features/calculator/presentation/forecast) replaces the forecast placeholder and renders forecastResultProvider (set by the calculator): three ScenarioCards (rate and final value; selection updates value, chart, breakdown and radio semantics), ForecastComparisonChart with the selected series emphasised, final value for the selected scenario, contributions-vs-growth stacked bar with both amounts as text and a spoken label (labelled 'shown before inflation' since the response gives those in nominal terms), Nominal / Today's money toggle that swaps to the response's real series and values (no inflation maths in Dart), assumptions DisclosurePanel whose 'Projections are not guaranteed' summary is always visible and whose details echo every input from response.assumptions, demo-mismatch notice when the canned response does not match the user's request, Edit assumptions (back to the calculator) and Ask AI about this forecast -> /ai?scope=forecast:current, empty state when there is no result. Tests (21 in forecast_screen_test; suite 743 passing, 34 goldens skipped on Windows) include a trace test asserting every amount on screen outside the chart axis matches a formatted field of the response. Layout matrix at 320dp found and fixed a breakdown legend overflow at 2.0x. Mutants (final value ignoring the toggle, mismatch notice disabled, chart selection fixed, chart using nominal in real mode) caught. format/analyze clean, CI green. Scope id 'current' is a placeholder until forecasts get backend ids (gate 4). Not run on an emulator yet (P03-T07).
   - [x] P03-T05.1 Scenario cards and selection
   - [x] P03-T05.2 Comparison chart
   - [x] P03-T05.3 Contributions vs growth
