@@ -236,3 +236,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-09T18:22:40+04:00 — QG CHECK QG-02.5
 - evidence: User accepted the compensating review controls of ADR-0008 in chat ('Accept these controls'): CODEOWNERS requests the maintainer on every PR (explicitly on .github/, backend/app/core/, migrations, security docs, tracker, quality-gate register); PR template with Definition of Done checklist; mandatory recorded user approval for every task flagged Approval: yes and every phase gate; independent diff review before completing tasks touching money, authorization, AI tools or migrations. Ruleset requires 0 approving reviews because the sole maintainer cannot approve own PRs; to be raised to 1 with code-owner review when a second maintainer joins. All changes land via pull requests (PR #4 merged; direct pushes rejected)
+
+### 2026-10-09T18:24:49+04:00 — COMPLETE P01-T15
+- duration: 29m 16s
+- evidence: Merge protection live and proven (PR #4, ruleset 24794631; direct push rejected with GH013; failing-check PR #5 blocked and closed unmerged); required checks backend gate, mobile gate, security gate, tracker validate green on PRs #4 and #6; per-module coverage policy; CODEOWNERS; tracker workflow; ADR-0008 accepted by user. Criteria verified: QG-02.3, QG-03.6, QG-02.5 (user accepted the compensating review controls)
+
+### 2026-10-09T18:24:49+04:00 — USER DECISION — review controls accepted (QG-02.5, ADR-0008)
+- User chose option 1: accept the compensating review controls (CODEOWNERS, PR template, recorded user approvals, independent diff review for sensitive changes; required approvals 0 while single maintainer). ADR-0008 set to Accepted and QG-02.5 verified in PR #6; P01-T15 completed in the follow-up PR (the first attempt's command chain stopped before the completion step).
