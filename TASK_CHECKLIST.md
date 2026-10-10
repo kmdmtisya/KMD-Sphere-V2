@@ -495,13 +495,13 @@
   - [x] P05-T02.2 Endpoints
   - [x] P05-T02.3 Seed data
   - [x] P05-T02.4 Tests
-- [ ] **P05-T03** · Portfolio CRUD API · `NOT_STARTED` ⬜
+- [ ] **P05-T03** · Portfolio CRUD API · `IN_PROGRESS` 🔄
   - Deps: P05-T01, P04-T03 · Wave: W2 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T20:35:31+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P05-T03.1 Service and endpoints
-  - [ ] P05-T03.2 Ownership and audit
-  - [ ] P05-T03.3 Tests
+  - [x] P05-T03.1 Service and endpoints
+  - [x] P05-T03.2 Ownership and audit
+  - [x] P05-T03.3 Tests
 - [ ] **P05-T04** · Transaction ledger API · `NOT_STARTED` ⬜
   - Deps: P05-T02, P05-T03, P04-T04 · Wave: W3 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

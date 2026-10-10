@@ -26,6 +26,7 @@ from app.core.telemetry import Telemetry
 from app.db.session import Database
 from app.modules.assets import api as assets_api
 from app.modules.identity import api as identity_api
+from app.modules.portfolio import api as portfolio_api
 
 
 def create_app(
@@ -116,6 +117,7 @@ def create_app(
     app.include_router(identity_api.risk_router)
     app.include_router(assets_api.classes_router)
     app.include_router(assets_api.router)
+    app.include_router(portfolio_api.router)
     telemetry.instrument(app)
     return app
 
