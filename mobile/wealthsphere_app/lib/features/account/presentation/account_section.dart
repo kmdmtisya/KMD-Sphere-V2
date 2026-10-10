@@ -8,6 +8,7 @@ import '../../../shared/design_system/components/components.dart';
 import '../../../shared/design_system/theme/wealth_typography.dart';
 import '../../../shared/design_system/tokens/tokens.dart';
 import '../data/account_repository.dart';
+import 'app_lock_settings_tile.dart';
 
 /// Sign in / sign out and the server's view of the account. Temporary home in the More tab
 /// until the auth screens (P04-T08) and Settings exist.
@@ -66,6 +67,8 @@ class AccountSection extends ConsumerWidget {
               ),
               const SizedBox(height: AppSpacing.xs),
               const _ServerAccount(),
+              const SizedBox(height: AppSpacing.s),
+              const AppLockSettingsTile(),
               const SizedBox(height: AppSpacing.s),
               OutlinedButton.icon(
                 key: const ValueKey('sign-out'),

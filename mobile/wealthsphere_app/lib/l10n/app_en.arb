@@ -1261,5 +1261,69 @@
   "accountServerError": "Couldn't load your account from the server.",
   "@accountServerError": {
     "description": "The /me call failed"
+  },
+  "lockTitle": "WealthSphere is locked",
+  "@lockTitle": {
+    "description": "Lock screen heading"
+  },
+  "lockBody": "Unlock with your fingerprint, face or device PIN to see your finances.",
+  "@lockBody": {
+    "description": "Lock screen explanation"
+  },
+  "lockUnlock": "Unlock",
+  "@lockUnlock": {
+    "description": "Button that shows the biometric or device PIN prompt"
+  },
+  "lockSignOut": "Sign out",
+  "@lockSignOut": {
+    "description": "Leave the locked session; signing in again is required"
+  },
+  "lockReason": "Unlock WealthSphere",
+  "@lockReason": {
+    "description": "Reason shown in the system biometric prompt"
+  },
+  "lockFailed": "Not recognised. Try again.",
+  "@lockFailed": {
+    "description": "Biometric or PIN check failed"
+  },
+  "lockLockedOut": "Too many attempts. Try again later, or sign out and sign in again.",
+  "@lockLockedOut": {
+    "description": "Device refused after repeated failures"
+  },
+  "lockUnavailable": "This device has no screen lock or biometrics set up. Sign out and sign in again to continue.",
+  "@lockUnavailable": {
+    "description": "Device cannot verify the user"
+  },
+  "privacyCoverLabel": "WealthSphere",
+  "@privacyCoverLabel": {
+    "description": "Accessible label of the cover shown while the app is in the app switcher"
+  },
+  "appLockSetting": "Lock with biometrics or device PIN",
+  "@appLockSetting": {
+    "description": "Switch that turns the app lock on or off"
+  },
+  "appLockTimeoutLabel": "Lock after leaving the app",
+  "@appLockTimeoutLabel": {
+    "description": "Label above the lock timeout choices"
+  },
+  "appLockImmediately": "Immediately",
+  "@appLockImmediately": {
+    "description": "Lock timeout option"
+  },
+  "appLockOneMinute": "After 1 minute",
+  "@appLockOneMinute": {
+    "description": "Lock timeout option"
+  },
+  "appLockFiveMinutes": "After 5 minutes",
+  "@appLockFiveMinutes": {
+    "description": "Lock timeout option"
+  },
+  "appLockUnavailableHint": "Set up a screen lock on this device to use app lock.",
+  "@appLockUnavailableHint": {
+    "description": "Shown when the device cannot verify the user"
+  },
+  "appLockConfirmReason": "Confirm it's you to change app lock",
+  "@appLockConfirmReason": {
+    "description": "Reason shown in the system prompt when changing lock settings"
   }
 }

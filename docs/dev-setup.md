@@ -86,4 +86,6 @@ The app signs in with Authorization Code + PKCE in the system browser (Custom Ta
    The iOS simulator shares the host's network; nothing to forward.
 3. Run the app, open **More > Account > Sign in**, and sign in as a seeded test user. The card shows the account as the API reports it (`GET /api/v1/me`).
 
+App lock: a restored session opens locked. On an emulator without a screen lock the lock screen offers only Sign out; set one with `adb shell locksettings set-pin <pin>` (remove it with `adb shell locksettings clear --old <pin>`), or turn app lock off under More > Account.
+
 Plain HTTP is allowed only to `127.0.0.1`, `localhost` and `10.0.2.2`, and only in debug builds (Android `src/debug` network security config; iOS `NSAllowsLocalNetworking`). A fresh emulator's Chrome shows its first-run screen on the first sign-in; dismiss it once.
