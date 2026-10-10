@@ -683,3 +683,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-10T21:39:55+04:00 — COMPLETE P05-T06
 - duration: 15m 25s
 - evidence: PR #49 (commit 133192e). FX service with documented rate-selection rules (historical by trade date within 7 days, latest with stale flag after 1 day, inverse pair only when no direct rate, deterministic ties; thresholds provisional until DEC-26) and GET /api/v1/fx-rates/{base}/{quote} with provenance (404 fx-rate-unavailable). Original transaction currency and rate preserved: postings store their own currency plus the rate used (user-supplied wins; otherwise the historical rate with provider and timestamp, rounded half-up to 12 dp). Conversion rounding explicit (ROUND_HALF_UP to target minor units) and tested with tie cases for KES/JPY/KWD and negatives. Local pytest 585 passed, coverage 90.93%, ruff/mypy/OpenAPI/Spectral clean. 13/13 mutants caught; a flaky test (colliding currency pairs) found and fixed; IDOR guard gained a reasoned exemption list for global-data routes. CI all gates pass.
+
+### 2026-10-10T21:43:03+04:00 — START P05-T07
+- Manual valuations API
+- prerequisites verified COMPLETED
+
+### 2026-10-10T21:52:23+04:00 — COMPLETE P05-T07
+- duration: 9m 20s
+- evidence: PR #50 (commit 0f97c14). /api/v1/portfolios/{id}/valuations: create (as-of with zone, not future; source label; Money in minor units, not negative; usable asset; one per asset per instant -> 409), list (newest first, cursor, asset filter), get, latest (per asset the greatest as-of at or before the moment; deterministic via the unique constraint; scoped to the portfolio), patch (value/source/note; as-of immutable), delete. Create/update/delete audited without amounts. Archived portfolios read-only. 6 routes IDOR-registered with cross-user tests. Local pytest 642 passed, coverage 89.51%, ruff/mypy/OpenAPI/Spectral clean. 12/12 mutants caught. CI all gates pass.

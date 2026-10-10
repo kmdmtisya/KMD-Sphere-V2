@@ -525,14 +525,14 @@
   - [x] P05-T06.1 FX service
   - [x] P05-T06.2 Rate selection rules
   - [x] P05-T06.3 Rounding tests
-- [ ] **P05-T07** · Manual valuations API · `NOT_STARTED` ⬜
+- [x] **P05-T07** · Manual valuations API · `COMPLETED` ✅
   - Deps: P05-T04 · Wave: W4 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P05-T07.1 Endpoints
-  - [ ] P05-T07.2 Selection logic
-  - [ ] P05-T07.3 Audit
-  - [ ] P05-T07.4 Tests
+  - Started: 2026-10-10T21:43:03+04:00 · Completed: 2026-10-10T21:52:23+04:00 · Duration: 9m 20s · Blocker: —
+  - Evidence: PR #50 (commit 0f97c14). /api/v1/portfolios/{id}/valuations: create (as-of with zone, not future; source label; Money in minor units, not negative; usable asset; one per asset per instant -> 409), list (newest first, cursor, asset filter), get, latest (per asset the greatest as-of at or before the moment; deterministic via the unique constraint; scoped to the portfolio), patch (value/source/note; as-of immutable), delete. Create/update/delete audited without amounts. Archived portfolios read-only. 6 routes IDOR-registered with cross-user tests. Local pytest 642 passed, coverage 89.51%, ruff/mypy/OpenAPI/Spectral clean. 12/12 mutants caught. CI all gates pass.
+  - [x] P05-T07.1 Endpoints
+  - [x] P05-T07.2 Selection logic
+  - [x] P05-T07.3 Audit
+  - [x] P05-T07.4 Tests
 - [ ] **P05-T08** · Portfolio summary and consolidation endpoints · `NOT_STARTED` ⬜
   - Deps: P05-T05, P05-T06, P05-T07 · Wave: W5 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
