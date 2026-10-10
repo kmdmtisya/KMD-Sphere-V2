@@ -387,10 +387,10 @@
 - Exit gates: QG-04.5; QG-05.4; QG-08.1 — required by `P04-GATE` (Gates-done)
 - Release gates: —
 
-- [ ] **P04-T01** · Keycloak realm and client configuration · `IN_PROGRESS` 🔄
+- [x] **P04-T01** · Keycloak realm and client configuration · `COMPLETED` ✅
   - Deps: P01-T05, P01-GATE · Wave: W1 · Track: SEC · Size: M · Approval: no
-  - Started: 2026-10-10T04:44:12+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-10T04:44:12+04:00 · Completed: 2026-10-10T04:52:04+04:00 · Duration: 7m 52s · Blocker: —
+  - Evidence: PR #31. infra/keycloak/realm-export.json (realm wealthsphere) imported by docker compose (--import-realm; log: Realm 'wealthsphere' imported). Mobile client wealthsphere-mobile: public, standard flow only, PKCE S256 required, implicit/password/device/CIBA grants off, exact redirect com.kmdmtisya.wealthsphere:/oauth2redirect (a shared scheme for Android and iOS; '_' is not valid in a URI scheme), audience mapper to wealthsphere-api, 5-minute access tokens, refresh-token rotation (revokeRefreshToken, maxReuse 0). Password policy 12+ with upper/lower/digit/symbol, not username/email, history 5; email verification required; TOTP (6 digits, 30 s). Test users alice/bob/mfa @example.test imported without credentials; scripts/keycloak_dev.py seed-users sets passwords from .env (git-ignored). Verification against the running Keycloak 26.4: scripts/keycloak_dev.py smoke 15/15 PASS (PKCE code exchange returns access+refresh tokens with aud wealthsphere-api and azp wealthsphere-mobile; exchange without code_verifier -> invalid_grant; request without PKCE refused; implicit refused; password grant refused; TOTP enrolment completes; later login prompts for OTP; wrong code rejected; right code signs in; policy, email verification and client flags as imported). CI: backend/tests/test_keycloak_realm.py (5 tests) pins these settings and asserts no credentials or client secrets are committed; backend suite 114 passing; CI green. Open item for P04-GATE: whether TOTP is mandatory for every account (currently available, per-user).
   - [x] P04-T01.1 Realm and roles
   - [x] P04-T01.2 Mobile public client (PKCE)
   - [x] P04-T01.3 MFA/email verification/policies
