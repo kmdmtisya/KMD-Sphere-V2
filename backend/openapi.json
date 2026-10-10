@@ -554,6 +554,17 @@
             ],
             "title": "Last Transaction At"
           },
+          "native_value": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The same value in its own currency"
+          },
           "quantity": {
             "examples": [
               "1234.50"
@@ -565,6 +576,43 @@
           "realized_pl": {
             "$ref": "#/components/schemas/Money",
             "description": "Profit or loss realised by sales"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Current value in the portfolio currency (latest valuation at the latest FX rate; market prices from P08). Null when unpriced, unconverted or closed."
+          },
+          "value_as_of": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "When that value applied",
+            "title": "Value As Of"
+          },
+          "value_source": {
+            "anyOf": [
+              {
+                "const": "valuation",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Where the value comes from (`price` arrives with market data, P08)",
+            "title": "Value Source"
           }
         },
         "required": [
@@ -576,7 +624,11 @@
           "income",
           "expenses",
           "last_transaction_at",
-          "computed_at"
+          "computed_at",
+          "value",
+          "native_value",
+          "value_as_of",
+          "value_source"
         ],
         "title": "HoldingOut",
         "type": "object"
@@ -1201,7 +1253,7 @@
           },
           "holdings_value": {
             "$ref": "#/components/schemas/Money",
-            "description": "Valued positions (latest valuations until P09)"
+            "description": "Valued positions (latest valuations until prices arrive in P08)"
           },
           "income": {
             "$ref": "#/components/schemas/Money"

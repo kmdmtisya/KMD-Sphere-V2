@@ -28,7 +28,7 @@ class AssetClass(UUIDPrimaryKeyMixin, TimestampMixin, Base):
 
     code: Mapped[str] = mapped_column(String(40))
     name: Mapped[str] = mapped_column(String(100))
-    # `market`: valued from prices (P09). `manual`: valued from user-entered valuations.
+    # `market`: valued from prices (P08-T05/T06). `manual`: valued from user-entered valuations.
     valuation_mode: Mapped[str] = mapped_column(String(16))
     # Which metadata keys the class uses, for validation by the asset service (P05-T02).
     metadata_schema: Mapped[dict[str, Any]] = mapped_column(

@@ -34,7 +34,9 @@ class SummaryOut(BaseModel):
     portfolio_ids: list[uuid.UUID]
     currency: str
     total_value: Money = Field(description="holdings_value + cash")
-    holdings_value: Money = Field(description="Valued positions (latest valuations until P09)")
+    holdings_value: Money = Field(
+        description="Valued positions (latest valuations until prices arrive in P08)"
+    )
     cash: Money = Field(description="Cash from the ledger; negative if deposits are not recorded")
     cost_basis: Money = Field(description="Of the valued positions with a ledger cost")
     unrealized_pl: Money

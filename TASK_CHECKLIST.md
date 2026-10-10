@@ -547,14 +547,14 @@
   - [x] P05-T09.1 IDOR sweep
   - [x] P05-T09.2 Invariants
   - [x] P05-T09.3 Property tests
-- [ ] **P05-T10** · OpenAPI contract and Dart DTO reconciliation · `NOT_STARTED` ⬜
+- [ ] **P05-T10** · OpenAPI contract and Dart DTO reconciliation · `IN_PROGRESS` 🔄
   - Deps: P05-T08, P03-T01 · Wave: W6 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T22:26:08+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P05-T10.1 Export spec
-  - [ ] P05-T10.2 Diff against DTOs
-  - [ ] P05-T10.3 Decide generation approach
-  - [ ] P05-T10.4 Update DTO plan
+  - [x] P05-T10.1 Export spec
+  - [x] P05-T10.2 Diff against DTOs
+  - [x] P05-T10.3 Decide generation approach
+  - [x] P05-T10.4 Update DTO plan
 - [ ] **P05-GATE** · Phase P05 exit gate · `NOT_STARTED` ⬜
   - Deps: P05-T01, P05-T02, P05-T03, P05-T04, P05-T05, P05-T06, P05-T07, P05-T08, P05-T09, P05-T10 · Wave: W7 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-01.3, QG-03.2, QG-06.2, QG-06.5
   - Started: — · Completed: — · Duration: — · Blocker: —
