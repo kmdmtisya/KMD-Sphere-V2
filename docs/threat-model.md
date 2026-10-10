@@ -131,6 +131,6 @@ Designed-in controls; each becomes a tested control in its task.
 ## 5. Security test suite
 
 Run in CI as its own step in each workflow (P04-T09):
-- Backend `uv run pytest -m security`: 208 tests over token validation, route authentication coverage, authorization/IDOR (with the registry guard), identity, rate and body limits, headers, CORS, audit, redaction and the realm export. `tests/test_security_suite.py` fails if a security module loses its marker.
+- Backend `uv run pytest -m security`: token validation, route authentication coverage, authorization/IDOR (with the registry guard), identity, rate and body limits, headers, CORS, audit, redaction and the realm export (P04); portfolio, ledger, holdings, valuation and summary isolation, and the integrity suite (P05-T09: an IDOR sweep over every registered route with before/after snapshots of the victim's data, and seeded random ledger sequences checking the ledger invariants after every step). `tests/test_security_suite.py` fails if a security module loses its marker.
 - Mobile `flutter test --tags security`: 128 tests over the token set and secure store, refresh and rotation, the PKCE client, the API client (including no-token-leak checks), app lock, sign-in screens and MFA set-up. `test/guards/security_suite_test.dart` fails if a file loses its tag.
 - Not in CI (needs the local Keycloak): `python scripts/keycloak_dev.py smoke` (19 live checks incl. PKCE, grants, TOTP and brute-force lockout) and `tests/test_identity_keycloak_live.py`.

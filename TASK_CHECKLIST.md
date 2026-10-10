@@ -540,13 +540,13 @@
   - [x] P05-T08.1 Service
   - [x] P05-T08.2 Endpoints
   - [x] P05-T08.3 Reconciliation tests
-- [ ] **P05-T09** · Authorisation and integrity test suite · `NOT_STARTED` ⬜
+- [ ] **P05-T09** · Authorisation and integrity test suite · `IN_PROGRESS` 🔄
   - Deps: P05-T08 · Wave: W6 · Track: SEC · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T22:10:45+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P05-T09.1 IDOR sweep
-  - [ ] P05-T09.2 Invariants
-  - [ ] P05-T09.3 Property tests
+  - [x] P05-T09.1 IDOR sweep
+  - [x] P05-T09.2 Invariants
+  - [x] P05-T09.3 Property tests
 - [ ] **P05-T10** · OpenAPI contract and Dart DTO reconciliation · `NOT_STARTED` ⬜
   - Deps: P05-T08, P03-T01 · Wave: W6 · Track: BE · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

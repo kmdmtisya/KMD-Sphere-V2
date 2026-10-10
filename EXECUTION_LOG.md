@@ -699,3 +699,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-10T22:07:29+04:00 — COMPLETE P05-T08
 - duration: 11m 58s
 - evidence: PR #51 (commit 6cacda4). GET /api/v1/portfolios/{id}/summary and GET /api/v1/portfolios/consolidated/summary (active portfolios, reporting currency default = user base). Totals reconcile with independently computed fixtures: a 10-entry, 3-currency scenario with every figure worked by hand in tests/test_portfolio_summary.py, reproduced exactly through the API in tests/test_summary_api.py. Response includes freshness (computed_at, data_as_of = oldest input, stale_fx, unconverted currencies, unpriced assets, complete) and a currency breakdown (native + converted, shares by largest remainder to 100.00). Formulas in docs/design/portfolio-summary.md. Local pytest 690 passed, coverage 90.23%, ruff/mypy/OpenAPI/Spectral clean. 14/14 mutants caught. CI all gates pass.
+
+### 2026-10-10T22:10:45+04:00 — START P05-T09
+- Authorisation and integrity test suite
+- prerequisites verified COMPLETED
