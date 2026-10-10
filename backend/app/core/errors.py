@@ -9,6 +9,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
+from app.core.auth import AuthenticationError
 from app.core.correlation import HEADER_NAME, new_correlation_id
 
 logger = logging.getLogger(__name__)
@@ -63,6 +64,26 @@ async def _validation_error(request: Request, exc: Exception) -> JSONResponse:
     return problem(request, 422, "validation", "Validation failed", errors=errors)
 
 
+async def _authentication(request: Request, exc: Exception) -> JSONResponse:
+    # One answer for every failure: callers learn nothing about why a token was rejected.
+    logger.info(
+        "authentication failed",
+        extra={"reason": str(exc), "path": request.url.path, "correlation_id": _cid(request)},
+    )
+    return problem(
+        request,
+        401,
+        "unauthenticated",
+        "Unauthorized",
+        "A valid access token is required.",
+        headers={"WWW-Authenticate": 'Bearer realm="wealthsphere", error="invalid_token"'},
+    )
+
+
+async def _invalid_value(request: Request, exc: Exception) -> JSONResponse:
+    return problem(request, 422, "validation", "Validation failed", str(exc))
+
+
 async def _unhandled(request: Request, exc: Exception) -> JSONResponse:
     cid = _cid(request)
     logger.error(
@@ -74,6 +95,10 @@ async def _unhandled(request: Request, exc: Exception) -> JSONResponse:
 
 
 def register_exception_handlers(app: FastAPI) -> None:
+    from app.modules.identity.service import InvalidProfileChangeError
+
     app.add_exception_handler(StarletteHTTPException, _http_exception)
     app.add_exception_handler(RequestValidationError, _validation_error)
+    app.add_exception_handler(AuthenticationError, _authentication)
+    app.add_exception_handler(InvalidProfileChangeError, _invalid_value)
     app.add_exception_handler(Exception, _unhandled)

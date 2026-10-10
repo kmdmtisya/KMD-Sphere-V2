@@ -17,7 +17,8 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name, disable_existing_loggers=False)
 
 # Import every module's models here so autogenerate and `alembic check` see them.
-# (No domain models exist yet; they arrive with P05.)
+import app.modules.identity.models  # noqa: E402, F401
+
 target_metadata = Base.metadata
 
 

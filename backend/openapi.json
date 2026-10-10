@@ -1,6 +1,44 @@
 {
   "components": {
     "schemas": {
+      "DashboardLayout": {
+        "additionalProperties": false,
+        "properties": {
+          "hidden": {
+            "items": {
+              "enum": [
+                "wealthSummary",
+                "metrics",
+                "insight",
+                "goals"
+              ],
+              "type": "string"
+            },
+            "maxItems": 10,
+            "title": "Hidden",
+            "type": "array"
+          },
+          "order": {
+            "items": {
+              "enum": [
+                "wealthSummary",
+                "metrics",
+                "insight",
+                "goals"
+              ],
+              "type": "string"
+            },
+            "maxItems": 10,
+            "title": "Order",
+            "type": "array"
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "title": "DashboardLayout",
+        "type": "object"
+      },
       "LiveStatus": {
         "properties": {
           "status": {
@@ -13,6 +51,191 @@
           "status"
         ],
         "title": "LiveStatus",
+        "type": "object"
+      },
+      "MeResponse": {
+        "properties": {
+          "base_currency": {
+            "title": "Base Currency",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "display_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Name"
+          },
+          "email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email"
+          },
+          "email_verified": {
+            "title": "Email Verified",
+            "type": "boolean"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "locale": {
+            "title": "Locale",
+            "type": "string"
+          },
+          "preferences": {
+            "$ref": "#/components/schemas/Preferences"
+          },
+          "timezone": {
+            "title": "Timezone",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "email",
+          "email_verified",
+          "display_name",
+          "base_currency",
+          "locale",
+          "timezone",
+          "preferences",
+          "created_at"
+        ],
+        "title": "MeResponse",
+        "type": "object"
+      },
+      "Preferences": {
+        "additionalProperties": false,
+        "description": "UI preferences stored for the user. Unknown keys are rejected.",
+        "properties": {
+          "dashboard_layout": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DashboardLayout"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "theme_mode": {
+            "anyOf": [
+              {
+                "enum": [
+                  "system",
+                  "light",
+                  "dark"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Theme Mode"
+          }
+        },
+        "title": "Preferences",
+        "type": "object"
+      },
+      "PreferencesUpdate": {
+        "additionalProperties": false,
+        "description": "PATCH body: any subset of the fields below. Omitted fields keep their value; sending null\nclears a UI preference.",
+        "properties": {
+          "base_currency": {
+            "anyOf": [
+              {
+                "pattern": "^[A-Z]{3}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Base Currency"
+          },
+          "dashboard_layout": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DashboardLayout"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "display_name": {
+            "anyOf": [
+              {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Name"
+          },
+          "locale": {
+            "anyOf": [
+              {
+                "pattern": "^[a-z]{2,3}([_-][A-Za-z0-9]{2,8})*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Locale"
+          },
+          "theme_mode": {
+            "anyOf": [
+              {
+                "enum": [
+                  "system",
+                  "light",
+                  "dark"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Theme Mode"
+          },
+          "timezone": {
+            "anyOf": [
+              {
+                "maxLength": 64,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Timezone"
+          }
+        },
+        "title": "PreferencesUpdate",
         "type": "object"
       },
       "ReadyStatus": {
@@ -44,6 +267,13 @@
         "title": "ReadyStatus",
         "type": "object"
       }
+    },
+    "securitySchemes": {
+      "HTTPBearer": {
+        "description": "OIDC access token from the WealthSphere realm",
+        "scheme": "bearer",
+        "type": "http"
+      }
     }
   },
   "info": {
@@ -58,6 +288,79 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/api/v1/me": {
+      "get": {
+        "description": "The signed-in user, created on first sign-in.",
+        "operationId": "get_me_api_v1_me_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Me",
+        "tags": [
+          "identity"
+        ]
+      }
+    },
+    "/api/v1/me/preferences": {
+      "patch": {
+        "description": "Updates any subset of display name, base currency, locale, time zone and UI preferences.",
+        "operationId": "update_preferences_api_v1_me_preferences_patch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PreferencesUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "422": {
+            "description": "Invalid preference values"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Update Preferences",
+        "tags": [
+          "identity"
+        ]
+      }
+    },
     "/health/live": {
       "get": {
         "description": "Returns 200 while the process is running. Does not check dependencies.",
@@ -123,6 +426,10 @@
     {
       "description": "Liveness and readiness probes",
       "name": "health"
+    },
+    {
+      "description": "The signed-in user, profile and preferences",
+      "name": "identity"
     }
   ]
 }

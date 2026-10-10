@@ -395,15 +395,15 @@
   - [x] P04-T01.2 Mobile public client (PKCE)
   - [x] P04-T01.3 MFA/email verification/policies
   - [x] P04-T01.4 Test users
-- [ ] **P04-T02** · Backend authentication and user profile · `NOT_STARTED` ⬜
+- [ ] **P04-T02** · Backend authentication and user profile · `IN_PROGRESS` 🔄
   - Deps: P04-T01, P01-T08 · Wave: W2 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T04:54:10+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P04-T02.1 JWKS validation with caching
-  - [ ] P04-T02.2 User provisioning
-  - [ ] P04-T02.3 Profile and preferences endpoints
-  - [ ] P04-T02.4 Migration
-  - [ ] P04-T02.5 Tests
+  - [x] P04-T02.1 JWKS validation with caching
+  - [x] P04-T02.2 User provisioning
+  - [x] P04-T02.3 Profile and preferences endpoints
+  - [x] P04-T02.4 Migration
+  - [x] P04-T02.5 Tests
 - [ ] **P04-T03** · Authorization framework and IDOR test harness · `NOT_STARTED` ⬜
   - Deps: P04-T02 · Wave: W3 · Track: SEC · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

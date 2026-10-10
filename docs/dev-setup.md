@@ -63,3 +63,9 @@ The first Android build also needs NDK 28.2.13676358 (`sdkmanager --install "ndk
 python scripts/keycloak_dev.py seed-users   # set passwords; reset the MFA user's enrolment
 python scripts/keycloak_dev.py smoke        # PKCE, rejected grants, TOTP enrolment and login
 ```
+
+## Backend authentication
+
+The API verifies Keycloak access tokens (RS256, issuer, audience `wealthsphere-api`, expiry, authorised party `wealthsphere-mobile`) against the realm's JWKS. Set `OIDC_ISSUER` in `.env` to the realm URL exactly as it appears in the token's `iss` claim (locally `http://127.0.0.1:8081/realms/wealthsphere`). With no issuer configured every protected endpoint answers 401.
+
+A user row is created on the first valid request (`GET /api/v1/me`). `PATCH /api/v1/me/preferences` updates display name, base currency, locale, time zone and UI preferences.
