@@ -498,3 +498,20 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-10T03:59:54+04:00 — COMPLETE P03-T07
 - duration: 1h 07m 08s
 - evidence: PR #26 + this PR. (T07.1) integration_test/app_test.dart: the five Gate 2 journeys, 5/5 pass on the Android emulator (sdk gphone16k x86_64, Android 17/API 37), run locally since CI has no emulator. (T07.2) test/a11y/accessibility_sweep_test.dart: 5 screens x light/dark x LTR/RTL x 1.0/2.0x against Flutter's tap-target, label and contrast guidelines plus a stricter tap-target check and CustomMinimumContrastGuideline over every Text, 40/40 in CI, each stricter check proven by a deliberate defect. (T07.3) Manual device checklist in docs/design/qa-gate2.md: all rows on small/large Android and iPhone SE/Pro Max sizes reported Pass by the user on 2026-10-10; run by the user, not observed by Claude, device models not recorded; the long-strings row cannot exercise app text until a second language exists. iOS integration journeys were not run by Claude. Suite 811 passing; format/analyze clean; CI green.
+
+### 2026-10-10T04:06:09+04:00 — START P03-GATE
+- UX Gate 2 review
+- prerequisites verified COMPLETED
+
+### 2026-10-10T04:08:27+04:00 — QG CHECK QG-04.4
+- evidence: Android navigation, responsive layouts, accessibility and lifecycle verified for P03: 5/5 integration journeys (tabs with preserved stacks, back, customise+restart, portfolio switch, calculator->forecast->AI scope, AI stream/retry) pass on the Android emulator (API 37); accessibility sweep over the 5 screens x light/dark x LTR/RTL x 1.0/2.0x (Flutter tap-target, label, contrast guidelines plus stricter tap-target and all-Text contrast checks) 40/40 in CI; 320dp layout matrices on every screen; user ran the manual device checklist on small and large Android (safe areas, keyboard, TalkBack, dark mode, reduced motion, real kill-and-relaunch restart, concept-board comparison) and reported all Pass on 2026-10-10 (docs/design/qa-gate2.md; device models not recorded). Suite 811 passing; CI green on main 8ea2a59.
+
+### 2026-10-10T04:08:27+04:00 — QG CHECK QG-05.3
+- evidence: iOS navigation, safe areas, accessibility and lifecycle for P03: user ran the manual device checklist at iPhone SE and Pro Max sizes (safe areas/notch, keyboard, VoiceOver walkthrough, dark mode, reduced motion, real restart, concept-board comparison) and reported all Pass on 2026-10-10 (docs/design/qa-gate2.md; run by the user, device models not recorded). Shared Flutter code is covered by the widget, layout-matrix and accessibility-sweep tests in CI and the iOS app compiles in CI (macOS job). The integration journeys were not run on iOS by Claude.
+
+### 2026-10-10T04:08:28+04:00 — AWAITING_VERIFICATION P03-GATE
+- evidence: Gates run: dart format clean, flutter analyze clean, 811 tests passed (34 goldens skipped on Windows, compared on CI), CI backend/mobile/security/tracker green on main 8ea2a59. QG-04.4 and QG-05.3 verified. Five screens reviewed by the user on device.
+
+### 2026-10-10T04:08:28+04:00 — COMPLETE P03-GATE
+- duration: 2m 20s
+- evidence: User approved UX Gate 2 on 2026-10-10 after reviewing Home, Portfolio Overview, Compounding Calculator, Wealth Forecast and AI Wealth Copilot on device against the concept board (manual checklist all Pass, user-reported). Automated: 5/5 integration journeys on the Android emulator, accessibility sweep 40/40, suite 811 passing, CI green on main 8ea2a59. Exit criteria QG-04.4 and QG-05.3 verified. · Approved by: user (mtisya@gmail.com)
