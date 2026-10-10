@@ -12,8 +12,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.api_responses import UNAUTHORIZED, conflict, invalid, not_found
 from app.db.session import get_session
 from app.modules.identity.dependencies import CurrentUserDep
+from app.modules.transactions.holdings_service import HoldingsService
 from app.modules.transactions.repository import ListFilter
 from app.modules.transactions.schemas import (
+    HoldingOut,
     ReversalCreate,
     TransactionCreate,
     TransactionOut,
@@ -135,3 +137,22 @@ async def reverse_transaction(
         user.id, portfolio_id, transaction_id, body, idempotency_key
     )
     return _respond(result, response)
+
+
+holdings_router = APIRouter(prefix="/api/v1/portfolios/{portfolio_id}/holdings", tags=["holdings"])
+
+
+@holdings_router.get(
+    "", response_model=list[HoldingOut], responses={**UNAUTHORIZED, **not_found("portfolio")}
+)
+async def list_holdings(
+    portfolio_id: uuid.UUID,
+    user: CurrentUserDep,
+    session: SessionDep,
+    include_closed: Annotated[
+        bool, Query(description="Also return assets no longer held (for realised results)")
+    ] = False,
+) -> list[HoldingOut]:
+    """Positions derived from the ledger: quantity, weighted average cost, cost basis, realised
+    profit, income and expenses, in the portfolio currency (ADR-0012)."""
+    return await HoldingsService(session).list(user.id, portfolio_id, include_closed)

@@ -20,6 +20,7 @@ SECURITY_MODULES: dict[str, tuple[str, ...]] = {
         "tests.test_assets_api",
         "tests.test_portfolios_api",
         "tests.test_transactions_api",
+        "tests.test_holdings_api",
     ),
     "identity provisioning and preferences": ("tests.test_identity_api",),
     "rate limits, body limits, headers, CORS": ("tests.test_api_protection",),

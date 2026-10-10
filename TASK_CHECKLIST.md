@@ -511,13 +511,13 @@
   - [x] P05-T04.3 Correction flow
   - [x] P05-T04.4 Audit
   - [x] P05-T04.5 Tests
-- [ ] **P05-T05** · Holdings calculation service · `NOT_STARTED` ⬜
+- [ ] **P05-T05** · Holdings calculation service · `IN_PROGRESS` 🔄
   - Deps: P05-T04 · Wave: W4 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T21:04:39+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P05-T05.1 Cost-basis method ADR
-  - [ ] P05-T05.2 Implementation
-  - [ ] P05-T05.3 Golden and property tests
+  - [x] P05-T05.1 Cost-basis method ADR
+  - [x] P05-T05.2 Implementation
+  - [x] P05-T05.3 Golden and property tests
 - [ ] **P05-T06** · Multi-currency and FX conversion · `NOT_STARTED` ⬜
   - Deps: P05-T01 · Wave: W2 · Track: BE · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

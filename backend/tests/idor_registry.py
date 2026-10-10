@@ -36,4 +36,7 @@ IDOR_TESTS: dict[tuple[str, str], str] = {
     ("POST", "/api/v1/portfolios/{portfolio_id}/transactions/{transaction_id}/reversal"): (
         "tests.test_transactions_api::test_bob_cannot_reverse_alices_transaction"
     ),
+    ("GET", "/api/v1/portfolios/{portfolio_id}/holdings"): (
+        "tests.test_holdings_api::test_bob_cannot_read_alices_holdings"
+    ),
 }

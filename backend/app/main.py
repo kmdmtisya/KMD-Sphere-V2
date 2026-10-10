@@ -81,6 +81,7 @@ def create_app(
             },
             {"name": "portfolios", "description": "The signed-in user's portfolios"},
             {"name": "transactions", "description": "The append-only ledger of each portfolio"},
+            {"name": "holdings", "description": "Positions derived from the ledger (ADR-0012)"},
         ],
         docs_url="/docs" if settings.docs_enabled else None,
         redoc_url=None,
@@ -122,6 +123,7 @@ def create_app(
     app.include_router(assets_api.router)
     app.include_router(portfolio_api.router)
     app.include_router(transactions_api.router)
+    app.include_router(transactions_api.holdings_router)
     telemetry.instrument(app)
     return app
 

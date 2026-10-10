@@ -2,7 +2,8 @@
 
 - Postings to one portfolio are serialised (the portfolio row is locked for the transaction), so
   the position checks below cannot race.
-- SELL and TRANSFER_OUT cannot take a position below zero; neither can a reversal.
+- SELL, TRANSFER_OUT and reversals are checked against the date-ordered history: no quantity may
+  go below zero on any date, including later sales that relied on the units (ADR-0012).
 - An `Idempotency-Key` replay with the same content returns the original entry; the same key
   with different content is a conflict.
 - Every posting and reversal writes an audit event in the same database transaction."""
@@ -25,6 +26,8 @@ from app.core.errors import ConflictError, InvalidValueError
 from app.core.money import Money, minor_units, round_half_up
 from app.modules.assets.service import AssetService
 from app.modules.portfolio.models import Portfolio
+from app.modules.transactions.holdings import Entry, never_negative
+from app.modules.transactions.holdings_service import HoldingsService
 from app.modules.transactions.models import Transaction
 from app.modules.transactions.repository import Cursor, LedgerRepository, ListFilter
 from app.modules.transactions.rules import (
@@ -103,12 +106,16 @@ class LedgerService:
         ):
             raise InvalidValueError("asset_id: no such asset")
         sign = POSITION_SIGN.get(posting.transaction_type, 0)
-        if sign < 0 and posting.quantity is not None and posting.asset_id is not None:
-            held = await self._repo.position(portfolio_id, posting.asset_id)
-            if held < posting.quantity:
-                raise ConflictError(f"Quantity exceeds the units held ({held.normalize():f}).")
+        if sign < 0 and posting.asset_id is not None and posting.quantity is not None:
+            history = await self._repo.entries(portfolio_id, posting.asset_id)
+            candidate = _candidate(values, reverses=None)
+            if not never_negative([*history, candidate]):
+                raise ConflictError(
+                    "Not enough units held on that date, or a later sale would no longer be "
+                    "covered."
+                )
         return await self._store(
-            user_id, portfolio_id, values, idempotency_key, "transactions.transaction.posted"
+            user_id, portfolio, values, idempotency_key, "transactions.transaction.posted"
         )
 
     async def reverse(
@@ -119,7 +126,7 @@ class LedgerService:
         body: ReversalCreate,
         idempotency_key: str | None,
     ) -> Result:
-        await self._writable_portfolio(user_id, portfolio_id)
+        portfolio = await self._writable_portfolio(user_id, portfolio_id)
         original, reversed_by = require_found(
             await self._repo.get(portfolio_id, transaction_id), "transaction"
         )
@@ -137,15 +144,16 @@ class LedgerService:
         if reversed_by is not None:
             raise ConflictError("This entry has already been reversed.")
         sign = POSITION_SIGN.get(original.transaction_type, 0)
-        if sign > 0 and original.asset_id is not None and original.quantity is not None:
-            held = await self._repo.position(portfolio_id, original.asset_id)
-            if held - original.quantity < 0:
+        if sign > 0 and original.asset_id is not None:
+            history = await self._repo.entries(portfolio_id, original.asset_id)
+            candidate = _candidate(values, reverses=original.id)
+            if not never_negative([*history, candidate]):
                 raise ConflictError(
                     "Reversing this entry would leave a negative position; reverse the later "
                     "sale or transfer first."
                 )
         return await self._store(
-            user_id, portfolio_id, values, idempotency_key, "transactions.transaction.reversed"
+            user_id, portfolio, values, idempotency_key, "transactions.transaction.reversed"
         )
 
     # ------------------------------------------------------------------------------ reading
@@ -201,11 +209,12 @@ class LedgerService:
     async def _store(
         self,
         user_id: uuid.UUID,
-        portfolio_id: uuid.UUID,
+        portfolio: Portfolio,
         values: dict[str, Any],
         idempotency_key: str | None,
         action: str,
     ) -> Result:
+        portfolio_id = portfolio.id
         try:
             row = await self._repo.add(
                 {
@@ -219,6 +228,10 @@ class LedgerService:
         except IntegrityError as e:
             await self._session.rollback()
             raise ConflictError("This entry conflicts with the ledger (already reversed?).") from e
+        if row.asset_id is not None:
+            await HoldingsService(self._session).rebuild_asset(
+                portfolio_id, row.asset_id, portfolio.base_currency
+            )
         await self._audit.record(
             action,
             Actor.user(user_id),
@@ -235,6 +248,24 @@ class LedgerService:
         )
         await self._session.commit()
         return Result(_out(row, None), replayed=False)
+
+
+def _candidate(values: dict[str, Any], reverses: uuid.UUID | None) -> Entry:
+    """The entry about to be stored, for checking the history it would create (it sorts after
+    every existing entry on the same trade date)."""
+    return Entry(
+        id=uuid.uuid4(),
+        transaction_type=values["transaction_type"],
+        trade_date=values["trade_date"],
+        created_at=datetime.now(UTC),
+        asset_id=values["asset_id"],
+        quantity=values["quantity"],
+        gross_amount=values["gross_amount"],
+        fees=values["fees"],
+        taxes=values["taxes"],
+        fx=values["fx_rate_to_portfolio_currency"],
+        reverses=reverses,
+    )
 
 
 def _draft(body: TransactionCreate) -> Draft:

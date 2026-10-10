@@ -4,17 +4,18 @@ has no update or delete (the database refuses those too, migration 0004)."""
 import uuid
 from dataclasses import dataclass
 from datetime import date, datetime
-from decimal import Decimal
 from typing import Any
 
-from sqlalchemy import Select, and_, case, func, select, tuple_
+from sqlalchemy import Select, and_, delete, func, select, tuple_
+from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import aliased
 
 from app.core.authz import owned_by
+from app.core.money import round_half_up
 from app.modules.portfolio.models import Portfolio
-from app.modules.transactions.models import Transaction
-from app.modules.transactions.rules import POSITION_SIGN
+from app.modules.transactions.holdings import Entry, Position
+from app.modules.transactions.models import Holding, Transaction
 
 _reversal = aliased(Transaction, name="reversal")
 
@@ -49,22 +50,53 @@ class LedgerRepository:
         result = await self._session.execute(stmt.execution_options(populate_existing=True))
         return result.scalar_one_or_none()
 
-    async def position(self, portfolio_id: uuid.UUID, asset_id: uuid.UUID) -> Decimal:
-        """Units of `asset_id` held: trades and transfers, with every reversal cancelling the
-        entry it reverses."""
-        direction = case(
-            *[(Transaction.transaction_type == t, s) for t, s in POSITION_SIGN.items()], else_=0
-        )
-        reversal_factor = case((Transaction.reverses_transaction_id.is_(None), 1), else_=-1)
+    async def entries(self, portfolio_id: uuid.UUID, asset_id: uuid.UUID) -> list[Entry]:
+        """Every ledger entry for one asset in one portfolio, including reversals."""
         result = await self._session.execute(
-            select(
-                func.coalesce(
-                    func.sum(func.coalesce(Transaction.quantity, 0) * direction * reversal_factor),
-                    0,
-                )
-            ).where(Transaction.portfolio_id == portfolio_id, Transaction.asset_id == asset_id)
+            select(Transaction).where(
+                Transaction.portfolio_id == portfolio_id, Transaction.asset_id == asset_id
+            )
         )
-        return Decimal(result.scalar_one())
+        return [to_entry(t) for t in result.scalars()]
+
+    async def save_holding(
+        self, portfolio_id: uuid.UUID, position: Position, currency: str
+    ) -> None:
+        """Stores one derived position (insert or replace). Figures are rounded half-up to the
+        column scale (ADR-0012)."""
+        values = {
+            "portfolio_id": portfolio_id,
+            "asset_id": position.asset_id,
+            "quantity": round_half_up(position.quantity, 12),
+            "cost_basis": round_half_up(position.cost_basis, 8),
+            "realized_pl": round_half_up(position.realized_pl, 8),
+            "income": round_half_up(position.income, 8),
+            "expenses": round_half_up(position.expenses, 8),
+            "currency": currency,
+            "last_transaction_at": position.last_transaction_at,
+            "computed_at": func.now(),
+        }
+        stmt = pg_insert(Holding).values(**values)
+        stmt = stmt.on_conflict_do_update(
+            constraint="uq_holdings_portfolio_id_asset_id",
+            set_={k: stmt.excluded[k] for k in values if k not in ("portfolio_id", "asset_id")}
+            | {"updated_at": func.now()},
+        )
+        await self._session.execute(stmt)
+
+    async def delete_holding(self, portfolio_id: uuid.UUID, asset_id: uuid.UUID) -> None:
+        await self._session.execute(
+            delete(Holding).where(
+                Holding.portfolio_id == portfolio_id, Holding.asset_id == asset_id
+            )
+        )
+
+    async def holdings(self, portfolio_id: uuid.UUID, include_closed: bool) -> list[Holding]:
+        stmt = select(Holding).where(Holding.portfolio_id == portfolio_id)
+        if not include_closed:
+            stmt = stmt.where(Holding.quantity > 0)
+        result = await self._session.execute(stmt.order_by(Holding.asset_id))
+        return list(result.scalars())
 
     async def by_idempotency_key(self, portfolio_id: uuid.UUID, key: str) -> Transaction | None:
         result = await self._session.execute(
@@ -130,3 +162,19 @@ class LedgerRepository:
                 _reversal.portfolio_id == Transaction.portfolio_id,
             ),
         )
+
+
+def to_entry(t: Transaction) -> Entry:
+    return Entry(
+        id=t.id,
+        transaction_type=t.transaction_type,
+        trade_date=t.trade_date,
+        created_at=t.created_at,
+        asset_id=t.asset_id,
+        quantity=t.quantity,
+        gross_amount=t.gross_amount,
+        fees=t.fees,
+        taxes=t.taxes,
+        fx=t.fx_rate_to_portfolio_currency,
+        reverses=t.reverses_transaction_id,
+    )

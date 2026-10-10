@@ -30,6 +30,7 @@ dev = [
   "ruff>=0.8",
   "mypy>=1.13",
   "asyncpg-stubs>=0.32.0",
+  "hypothesis>=6.168.5",
 ]
 
 [tool.uv]
