@@ -547,10 +547,10 @@
   - [x] P05-T09.1 IDOR sweep
   - [x] P05-T09.2 Invariants
   - [x] P05-T09.3 Property tests
-- [ ] **P05-T10** · OpenAPI contract and Dart DTO reconciliation · `IN_PROGRESS` 🔄
+- [x] **P05-T10** · OpenAPI contract and Dart DTO reconciliation · `COMPLETED` ✅
   - Deps: P05-T08, P03-T01 · Wave: W6 · Track: BE · Size: M · Approval: no
-  - Started: 2026-10-10T22:26:08+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-10T22:26:08+04:00 · Completed: 2026-10-10T22:47:18+04:00 · Duration: 21m 10s · Blocker: —
+  - Evidence: PR #53 (commit 35cf698). Published spec: backend/openapi.json (export_openapi --check, Spectral clean); holdings now expose valuation-based value/native_value/value_as_of/value_source (null when unpriced, unconverted or closed). Mapping: docs/contracts/dto-mapping.json + generated dto-mapping.md lists every field of the live DTOs (PortfolioRef, PortfolioSummary, HoldingSummary, Account) as same/renamed/dto-only/api-only with resolution and owning task, and the pending DTOs with keys and owners. Decision: ADR-0013 (Proposed) hand-written DTOs on JsonReader plus contract check, no generated client. CI contract check: tests/test_dto_mapping.py (paths, methods, nested fields vs openapi.json; keys read per Dart class equal mapped keys; owners are real tasks; Markdown current); backend gate now also triggers on mobile lib, docs/contracts and EXECUTION_PLAN.md. 20/20 contract-drift mutants and 10/10 holding-value mutants caught. Local pytest 725 passed, coverage 90%. CI all gates pass.
   - [x] P05-T10.1 Export spec
   - [x] P05-T10.2 Diff against DTOs
   - [x] P05-T10.3 Decide generation approach
