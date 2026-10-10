@@ -55,6 +55,10 @@ files = ["app", "tests"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+# One event loop per test module, shared by its async fixtures and tests, so module-scoped
+# resources (a migrated database, an app with its engine) are usable from every test.
+asyncio_default_fixture_loop_scope = "module"
+asyncio_default_test_loop_scope = "module"
 testpaths = ["tests"]
 addopts = "-ra --strict-markers"
 markers = ["integration: needs the docker compose stack (postgres, redis)"]

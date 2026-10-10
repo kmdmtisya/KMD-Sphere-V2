@@ -15,7 +15,7 @@ from app.main import create_app
 from tests import auth_helpers as ah
 from tests.db_fixtures import migrated_settings  # noqa: F401 (fixture)
 
-pytestmark = [pytest.mark.integration, pytest.mark.asyncio(loop_scope="module")]
+pytestmark = pytest.mark.integration
 
 
 @pytest.fixture(scope="module")

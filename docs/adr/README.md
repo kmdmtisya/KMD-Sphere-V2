@@ -14,3 +14,4 @@ Format: Context / Decision / Consequences. Status values: Proposed, Accepted, Su
 | [0008](0008-quality-gate-policy.md) | Quality-gate policy and merge protection | Accepted |
 | [0009](0009-forex-intelligence-module.md) | Forex Trading Intelligence module (decision support and paper trading only) | Accepted |
 | [0010](0010-global-reporting-currency.md) | Global reporting currency and FX management (FXCUR) | Accepted |
+| [0011](0011-authorization-404-vs-403.md) | Authorization model and the 404-vs-403 policy | Accepted |

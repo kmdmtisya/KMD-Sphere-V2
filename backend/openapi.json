@@ -39,6 +39,19 @@
         "title": "DashboardLayout",
         "type": "object"
       },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
       "LiveStatus": {
         "properties": {
           "status": {
@@ -266,6 +279,165 @@
         ],
         "title": "ReadyStatus",
         "type": "object"
+      },
+      "RiskProfileCreate": {
+        "additionalProperties": false,
+        "properties": {
+          "horizon_years": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Horizon Years"
+          },
+          "risk_tolerance": {
+            "enum": [
+              "conservative",
+              "balanced",
+              "growth",
+              "aggressive"
+            ],
+            "title": "Risk Tolerance",
+            "type": "string"
+          }
+        },
+        "required": [
+          "risk_tolerance"
+        ],
+        "title": "RiskProfileCreate",
+        "type": "object"
+      },
+      "RiskProfileOut": {
+        "properties": {
+          "assessed_at": {
+            "format": "date-time",
+            "title": "Assessed At",
+            "type": "string"
+          },
+          "horizon_years": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Horizon Years"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "risk_tolerance": {
+            "enum": [
+              "conservative",
+              "balanced",
+              "growth",
+              "aggressive"
+            ],
+            "title": "Risk Tolerance",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "risk_tolerance",
+          "horizon_years",
+          "source",
+          "assessed_at"
+        ],
+        "title": "RiskProfileOut",
+        "type": "object"
+      },
+      "RiskProfileUpdate": {
+        "additionalProperties": false,
+        "description": "Corrects a self-assessment. Omitted fields keep their value.",
+        "properties": {
+          "horizon_years": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Horizon Years"
+          },
+          "risk_tolerance": {
+            "anyOf": [
+              {
+                "enum": [
+                  "conservative",
+                  "balanced",
+                  "growth",
+                  "aggressive"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Risk Tolerance"
+          }
+        },
+        "title": "RiskProfileUpdate",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
       }
     },
     "securitySchemes": {
@@ -356,6 +528,206 @@
           }
         ],
         "summary": "Update Preferences",
+        "tags": [
+          "identity"
+        ]
+      }
+    },
+    "/api/v1/risk-profiles": {
+      "get": {
+        "description": "The signed-in user's risk assessments, newest first.",
+        "operationId": "list_risk_profiles_api_v1_risk_profiles_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/RiskProfileOut"
+                  },
+                  "title": "Response List Risk Profiles Api V1 Risk Profiles Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "List Risk Profiles",
+        "tags": [
+          "identity"
+        ]
+      },
+      "post": {
+        "description": "Records a new risk self-assessment for the signed-in user.",
+        "operationId": "add_risk_profile_api_v1_risk_profiles_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiskProfileCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskProfileOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Add Risk Profile",
+        "tags": [
+          "identity"
+        ]
+      }
+    },
+    "/api/v1/risk-profiles/{risk_profile_id}": {
+      "get": {
+        "description": "One of the signed-in user's risk assessments.",
+        "operationId": "get_risk_profile_api_v1_risk_profiles__risk_profile_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "risk_profile_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Risk Profile Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskProfileOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such risk profile for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Risk Profile",
+        "tags": [
+          "identity"
+        ]
+      },
+      "patch": {
+        "description": "Corrects one of the signed-in user's risk assessments.",
+        "operationId": "update_risk_profile_api_v1_risk_profiles__risk_profile_id__patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "risk_profile_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Risk Profile Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiskProfileUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskProfileOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such risk profile for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Update Risk Profile",
         "tags": [
           "identity"
         ]

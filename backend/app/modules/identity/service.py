@@ -7,8 +7,17 @@ from datetime import UTC, datetime, timedelta
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.auth import TokenClaims
+from app.core.authz import ResourceNotFoundError, require_found
+from app.modules.identity.models import RiskProfile
 from app.modules.identity.repository import IdentityRepository
-from app.modules.identity.schemas import MeResponse, Preferences, PreferencesUpdate
+from app.modules.identity.schemas import (
+    MeResponse,
+    Preferences,
+    PreferencesUpdate,
+    RiskProfileCreate,
+    RiskProfileOut,
+    RiskProfileUpdate,
+)
 
 # Refresh last_seen_at at most this often, so ordinary reads do not write on every request.
 _TOUCH_INTERVAL = timedelta(hours=1)
@@ -97,3 +106,33 @@ class IdentityService:
         await self._repo.update_profile(user_id, values)
         await self._session.commit()
         return await self.me(user_id)
+
+    # ----------------------------------------------------------------- risk profiles (owned)
+
+    @staticmethod
+    def _out(row: RiskProfile) -> RiskProfileOut:
+        return RiskProfileOut.model_validate(row, from_attributes=True)
+
+    async def add_risk_profile(self, user_id: uuid.UUID, body: RiskProfileCreate) -> RiskProfileOut:
+        row = await self._repo.add_risk_profile(user_id, body.risk_tolerance, body.horizon_years)
+        await self._session.commit()
+        return self._out(row)
+
+    async def list_risk_profiles(self, user_id: uuid.UUID) -> list[RiskProfileOut]:
+        return [self._out(r) for r in await self._repo.list_risk_profiles(user_id)]
+
+    async def get_risk_profile(self, user_id: uuid.UUID, profile_id: uuid.UUID) -> RiskProfileOut:
+        row = require_found(await self._repo.get_risk_profile(user_id, profile_id), "risk profile")
+        return self._out(row)
+
+    async def update_risk_profile(
+        self, user_id: uuid.UUID, profile_id: uuid.UUID, change: RiskProfileUpdate
+    ) -> RiskProfileOut:
+        values = change.model_dump(exclude_unset=True)
+        if "risk_tolerance" in values and values["risk_tolerance"] is None:
+            raise InvalidProfileChangeError("risk_tolerance cannot be cleared")
+        if values:
+            if not await self._repo.update_risk_profile(user_id, profile_id, values):
+                raise ResourceNotFoundError("risk profile")
+            await self._session.commit()
+        return await self.get_risk_profile(user_id, profile_id)

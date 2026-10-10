@@ -64,3 +64,30 @@ class MeResponse(BaseModel):
     timezone: str
     preferences: Preferences
     created_at: datetime
+
+
+RiskTolerance = Literal["conservative", "balanced", "growth", "aggressive"]
+
+
+class RiskProfileCreate(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    risk_tolerance: RiskTolerance
+    horizon_years: int | None = Field(default=None, ge=0, le=100)
+
+
+class RiskProfileUpdate(BaseModel):
+    """Corrects a self-assessment. Omitted fields keep their value."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    risk_tolerance: RiskTolerance | None = None
+    horizon_years: int | None = Field(default=None, ge=0, le=100)
+
+
+class RiskProfileOut(BaseModel):
+    id: uuid.UUID
+    risk_tolerance: RiskTolerance
+    horizon_years: int | None
+    source: str
+    assessed_at: datetime

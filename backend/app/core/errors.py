@@ -10,6 +10,7 @@ from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.core.auth import AuthenticationError
+from app.core.authz import PermissionDeniedError, ResourceNotFoundError
 from app.core.correlation import HEADER_NAME, new_correlation_id
 
 logger = logging.getLogger(__name__)
@@ -80,6 +81,17 @@ async def _authentication(request: Request, exc: Exception) -> JSONResponse:
     )
 
 
+async def _not_found(request: Request, exc: Exception) -> JSONResponse:
+    # Identical for "does not exist" and "belongs to someone else" (ADR-0011).
+    return problem(request, 404, "not-found", "Not Found", "The requested resource was not found.")
+
+
+async def _forbidden(request: Request, exc: Exception) -> JSONResponse:
+    return problem(
+        request, 403, "forbidden", "Forbidden", "You do not have permission for this action."
+    )
+
+
 async def _invalid_value(request: Request, exc: Exception) -> JSONResponse:
     return problem(request, 422, "validation", "Validation failed", str(exc))
 
@@ -101,4 +113,6 @@ def register_exception_handlers(app: FastAPI) -> None:
     app.add_exception_handler(RequestValidationError, _validation_error)
     app.add_exception_handler(AuthenticationError, _authentication)
     app.add_exception_handler(InvalidProfileChangeError, _invalid_value)
+    app.add_exception_handler(ResourceNotFoundError, _not_found)
+    app.add_exception_handler(PermissionDeniedError, _forbidden)
     app.add_exception_handler(Exception, _unhandled)

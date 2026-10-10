@@ -404,14 +404,14 @@
   - [x] P04-T02.3 Profile and preferences endpoints
   - [x] P04-T02.4 Migration
   - [x] P04-T02.5 Tests
-- [ ] **P04-T03** · Authorization framework and IDOR test harness · `NOT_STARTED` ⬜
+- [ ] **P04-T03** · Authorization framework and IDOR test harness · `IN_PROGRESS` 🔄
   - Deps: P04-T02 · Wave: W3 · Track: SEC · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T05:07:30+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P04-T03.1 Ownership dependency
-  - [ ] P04-T03.2 Two-user fixtures
-  - [ ] P04-T03.3 Policy ADR
-  - [ ] P04-T03.4 Example IDOR tests
+  - [x] P04-T03.1 Ownership dependency
+  - [x] P04-T03.2 Two-user fixtures
+  - [x] P04-T03.3 Policy ADR
+  - [x] P04-T03.4 Example IDOR tests
 - [ ] **P04-T04** · Audit event infrastructure · `NOT_STARTED` ⬜
   - Deps: P04-T02 · Wave: W3 · Track: BE · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
