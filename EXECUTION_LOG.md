@@ -703,3 +703,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-10T22:10:45+04:00 — START P05-T09
 - Authorisation and integrity test suite
 - prerequisites verified COMPLETED
+
+### 2026-10-10T22:22:46+04:00 — COMPLETE P05-T09
+- duration: 12m 01s
+- evidence: PR #52 (commit 90df9a1). tests/test_integrity_suite.py: IDOR sweep over every registered id route (valid bodies, 404 indistinguishable from missing, before/after hash snapshot of all the victim's rows unchanged; unknown path parameters or missing write bodies fail the suite) plus collection isolation (lists, search, consolidated summary). Every endpoint therefore has a cross-user denial test (per-route tests + sweep). Ledger invariants hold under random sequences: 12 seeds x 30 steps through the API (deposits, buys, backdated sells, dividends, reversals, idempotent replays), checking after every step row immutability, reversal rules, no negative quantity on any date, holdings cache == recomputation, one audit event per entry, replays add nothing, summary agrees (independent cash oracle). Pure properties remain Hypothesis-based (P05-T05). Local pytest 706 passed, -m security 476 passed, coverage 90.26%. 11/11 injected product regressions caught by this suite alone (cash-sign bug first survived and led to the independent oracle). CI all gates pass.
