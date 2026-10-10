@@ -387,14 +387,14 @@
 - Exit gates: QG-04.5; QG-05.4; QG-08.1 — required by `P04-GATE` (Gates-done)
 - Release gates: —
 
-- [ ] **P04-T01** · Keycloak realm and client configuration · `NOT_STARTED` ⬜
+- [ ] **P04-T01** · Keycloak realm and client configuration · `IN_PROGRESS` 🔄
   - Deps: P01-T05, P01-GATE · Wave: W1 · Track: SEC · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T04:44:12+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P04-T01.1 Realm and roles
-  - [ ] P04-T01.2 Mobile public client (PKCE)
-  - [ ] P04-T01.3 MFA/email verification/policies
-  - [ ] P04-T01.4 Test users
+  - [x] P04-T01.1 Realm and roles
+  - [x] P04-T01.2 Mobile public client (PKCE)
+  - [x] P04-T01.3 MFA/email verification/policies
+  - [x] P04-T01.4 Test users
 - [ ] **P04-T02** · Backend authentication and user profile · `NOT_STARTED` ⬜
   - Deps: P04-T01, P01-T08 · Wave: W2 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

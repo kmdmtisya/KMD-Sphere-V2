@@ -57,7 +57,10 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:26.4
     restart: unless-stopped
-    command: ["start-dev", "--health-enabled=true"]
+    # The development realm is imported on first start (only if it does not exist yet).
+    command: ["start-dev", "--health-enabled=true", "--import-realm"]
+    volumes:
+      - ./infra/keycloak:/opt/keycloak/data/import:ro
     environment:
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://postgres:5432/${KEYCLOAK_DB}
