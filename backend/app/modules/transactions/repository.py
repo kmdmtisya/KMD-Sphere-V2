@@ -50,6 +50,13 @@ class LedgerRepository:
         result = await self._session.execute(stmt.execution_options(populate_existing=True))
         return result.scalar_one_or_none()
 
+    async def all_entries(self, portfolio_id: uuid.UUID) -> list[Entry]:
+        """Every ledger entry of the portfolio, including reversals."""
+        result = await self._session.execute(
+            select(Transaction).where(Transaction.portfolio_id == portfolio_id)
+        )
+        return [to_entry(t) for t in result.scalars()]
+
     async def entries(self, portfolio_id: uuid.UUID, asset_id: uuid.UUID) -> list[Entry]:
         """Every ledger entry for one asset in one portfolio, including reversals."""
         result = await self._session.execute(
@@ -177,4 +184,5 @@ def to_entry(t: Transaction) -> Entry:
         taxes=t.taxes,
         fx=t.fx_rate_to_portfolio_currency,
         reverses=t.reverses_transaction_id,
+        currency=t.currency,
     )

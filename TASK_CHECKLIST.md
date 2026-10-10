@@ -533,13 +533,13 @@
   - [x] P05-T07.2 Selection logic
   - [x] P05-T07.3 Audit
   - [x] P05-T07.4 Tests
-- [ ] **P05-T08** · Portfolio summary and consolidation endpoints · `NOT_STARTED` ⬜
+- [ ] **P05-T08** · Portfolio summary and consolidation endpoints · `IN_PROGRESS` 🔄
   - Deps: P05-T05, P05-T06, P05-T07 · Wave: W5 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T21:55:31+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P05-T08.1 Service
-  - [ ] P05-T08.2 Endpoints
-  - [ ] P05-T08.3 Reconciliation tests
+  - [x] P05-T08.1 Service
+  - [x] P05-T08.2 Endpoints
+  - [x] P05-T08.3 Reconciliation tests
 - [ ] **P05-T09** · Authorisation and integrity test suite · `NOT_STARTED` ⬜
   - Deps: P05-T08 · Wave: W6 · Track: SEC · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

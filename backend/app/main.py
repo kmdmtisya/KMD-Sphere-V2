@@ -28,6 +28,7 @@ from app.modules.assets import api as assets_api
 from app.modules.identity import api as identity_api
 from app.modules.market_data import api as market_data_api
 from app.modules.portfolio import api as portfolio_api
+from app.modules.portfolio import summary_api
 from app.modules.transactions import api as transactions_api
 from app.modules.transactions import valuations_api
 
@@ -128,6 +129,7 @@ def create_app(
     app.include_router(identity_api.risk_router)
     app.include_router(assets_api.classes_router)
     app.include_router(assets_api.router)
+    app.include_router(summary_api.router)  # before the portfolio routes (consolidated)
     app.include_router(portfolio_api.router)
     app.include_router(transactions_api.router)
     app.include_router(transactions_api.holdings_router)
