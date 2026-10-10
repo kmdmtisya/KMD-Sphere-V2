@@ -9,7 +9,7 @@ A single monorepo:
 mobile/wealthsphere_app/   Flutter app (app/, core/, shared/design_system/, features/)
 backend/                   FastAPI modular monolith, Alembic migrations, tests
 infra/docker/              container assets for local development
-infrastructure/terraform/  cloud infrastructure (P13)
+infrastructure/terraform/  cloud infrastructure (P14)
 docs/                      product docs, ADRs, design, architecture, security
 scripts/                   repository tooling (track.py, OpenAPI export)
 .github/workflows/         CI/CD

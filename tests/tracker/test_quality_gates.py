@@ -83,7 +83,7 @@ def test_pass_sets_timestamps_and_status(ws: Workspace) -> None:
 def test_release_readiness_gate_needs_a_named_approver(ws: Workspace) -> None:
     for n in range(1, 12):  # every gate except the release-readiness gate itself
         ws.ok("qg", "check", f"QG-{n:02d}.1", "--evidence", "e")
-    ws.ok("qg", "require", "QG-all@P14")
+    ws.ok("qg", "require", "QG-all@P15")
     ws.ok("qg", "check", "QG-12.1", "--evidence", "all gates verified")
     assert "requires --approved-by" in ws.fail("qg", "pass", "QG-12", "--evidence", "x")
     ws.ok("qg", "pass", "QG-12", "--evidence", "release approved", "--approved-by", "Ada")
@@ -103,7 +103,7 @@ def test_reverify_only_after_a_pass_and_refreshes_the_verification_time(ws: Work
 
 def test_check_of_the_final_criterion_requires_all_earlier_gates(ws: Workspace) -> None:
     out = ws.fail("qg", "check", "QG-12.1", "--evidence", "x")
-    assert "requires every QG-01..QG-11 criterion due by P14" in out
+    assert "requires every core criterion" in out
     assert "QG-01.1" in out
 
 
@@ -261,4 +261,22 @@ def test_qg_all_covers_only_the_core_gates(ws: Workspace) -> None:
     ws.edit("TASK_CHECKLIST.md", "QG-11.1, QG-12.1", "QG-11.1, QG-12.1, QG-13.1")
     for n in range(1, 12):
         ws.ok("qg", "check", f"QG-{n:02d}.1", "--evidence", "e")
-    ws.ok("qg", "require", "QG-all@P14")  # QG-13.1 is unverified but is not a core gate
+    ws.ok("qg", "require", "QG-all@P15")  # QG-13.1 is unverified but is not a core gate
+
+
+def test_qg_all_includes_core_workstream_gates_but_not_forex(ws: Workspace) -> None:
+    """Gates QG-13..QG-20 (Forex) are optional; QG-21+ (multi-currency) are core."""
+    text = ws.read("QUALITY_GATES.md")
+    end = text.index("## Waiver register")
+    base = text[text.index("### QG-12:") : end]
+    extra = "".join(base.replace("QG-12", f"QG-{n}") for n in range(13, 22))
+    ws.write("QUALITY_GATES.md", text[:end] + extra + text[end:])
+    bound = ", ".join(f"QG-{n}.1" for n in range(13, 22))
+    ws.edit("TASK_CHECKLIST.md", "QG-11.1, QG-12.1", f"QG-11.1, QG-12.1, {bound}")
+    for n in range(1, 12):
+        ws.ok("qg", "check", f"QG-{n:02d}.1", "--evidence", "e")
+    out = ws.fail("qg", "require", "QG-all@P15")
+    assert "QG-21.1" in out
+    assert "QG-13.1" not in out
+    ws.ok("qg", "check", "QG-21.1", "--evidence", "e")
+    ws.ok("qg", "require", "QG-all@P15")

@@ -19,7 +19,7 @@ Workflows live in `.github/workflows/`. Each workflow runs on every pull request
 
 ## Notes
 - Locked installs: the backend uses `uv sync --locked`, so a change to `pyproject.toml` without an updated `uv.lock` fails CI.
-- CI database credentials are throwaway values for ephemeral service containers; real secrets never go in workflow files (use GitHub Environments and OIDC, P13-T06).
+- CI database credentials are throwaway values for ephemeral service containers; real secrets never go in workflow files (use GitHub Environments and OIDC, P14-T06).
 - Concurrency groups cancel superseded runs on the same ref.
 - Per-module coverage is written to the job summary of the backend run (`scripts/coverage_by_module.py`); policy in `backend/coverage-policy.toml`.
 - Third-party actions are pinned to commit SHAs and updated by Dependabot.

@@ -515,3 +515,12 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-10T04:08:28+04:00 — COMPLETE P03-GATE
 - duration: 2m 20s
 - evidence: User approved UX Gate 2 on 2026-10-10 after reviewing Home, Portfolio Overview, Compounding Calculator, Wealth Forecast and AI Wealth Copilot on device against the concept board (manual checklist all Pass, user-reported). Automated: 5/5 integration journeys on the Android emulator, accessibility sweep 40/40, suite 811 passing, CI green on main 8ea2a59. Exit criteria QG-04.4 and QG-05.3 verified. · Approved by: user (mtisya@gmail.com)
+
+### 2026-10-10T04:30:07+04:00 — PLAN CHANGE (proposed) — add phase P11 Multi-Currency Reporting & FX Management (FXCUR) and gates QG-21..QG-25
+- requested by the user 2026-10-10: real-time multi-currency conversion with a global reporting currency (user recommendation adopted: one global setting, not a calculator feature)
+- existing coverage reused, not duplicated: P05-T01 fx_rates, P05-T06 FX service and rate selection, P08-T02/T03 provider abstraction, P08-T05 FX ingestion and backfill, P04-T05 preferences, P07-T08 Settings, P09-T02 preference sync
+- placement: after P10 and before AI Intelligence; renumbered AI Intelligence P11->P12, Forex P12->P13, Infrastructure P13->P14, Hardening P14->P15, Release P15->P16 (earlier entries in this log keep the old ids)
+- added 13 tasks (FXCUR-01..12 = P11-T01..T12, plus P11-GATE), 59 subtasks, 5 gates / 27 criteria (QG-21..QG-25), decisions DEC-25..DEC-29, 3 risks; P12-T01/T02, P13-T01 and the P15 wave-1 tasks now also depend on P11-GATE; P14-T11 staging smoke covers the reporting currency
+- tracker: QG-12.1 core release readiness now covers every gate except QG-12 and the optional Forex gates QG-13..QG-20 (so QG-21..QG-25 are core); one new test
+- documents: docs/design/multi-currency-design.md, docs/adr/0010-global-reporting-currency.md (Proposed), SOLUTION_INTENT section 8 extension, brief and guide sections
+- P11 phase approval PENDING; nothing implemented
