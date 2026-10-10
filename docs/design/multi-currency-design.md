@@ -134,3 +134,11 @@ Central cache with TTL, batch retrieval, one snapshot per request, per-holding c
 ## 15. Open decisions
 
 DEC-25 provider(s) and licence · DEC-26 refresh cadence and staleness thresholds · DEC-27 pivot currency and precision · DEC-28 audit scope and retention · DEC-29 FX scenario overlay in v1 or later.
+
+## Baseline delivered in P05-T06
+
+Before the full FX module (P11), the core already has:
+- Conversion with explicit ROUND_HALF_UP to the target currency's minor units, and an exact variant for intermediate sums (`app/modules/market_data/fx.py`).
+- Rate selection: historical (latest rate at or before the end of the trade date, at most 7 days old), latest (stale after 1 day), the opposite pair inverted when needed, deterministic ties. The thresholds are provisional until DEC-26.
+- `GET /api/v1/fx-rates/{base}/{quote}[?on=YYYY-MM-DD]` with provider, timestamp, inversion and staleness.
+- Ledger postings in another currency keep their own currency and the rate used (the user's, or the historical rate with its provider and timestamp).

@@ -26,6 +26,7 @@ from app.core.telemetry import Telemetry
 from app.db.session import Database
 from app.modules.assets import api as assets_api
 from app.modules.identity import api as identity_api
+from app.modules.market_data import api as market_data_api
 from app.modules.portfolio import api as portfolio_api
 from app.modules.transactions import api as transactions_api
 
@@ -82,6 +83,7 @@ def create_app(
             {"name": "portfolios", "description": "The signed-in user's portfolios"},
             {"name": "transactions", "description": "The append-only ledger of each portfolio"},
             {"name": "holdings", "description": "Positions derived from the ledger (ADR-0012)"},
+            {"name": "fx", "description": "FX rates and the rules that select them"},
         ],
         docs_url="/docs" if settings.docs_enabled else None,
         redoc_url=None,
@@ -124,6 +126,7 @@ def create_app(
     app.include_router(portfolio_api.router)
     app.include_router(transactions_api.router)
     app.include_router(transactions_api.holdings_router)
+    app.include_router(market_data_api.router)
     telemetry.instrument(app)
     return app
 

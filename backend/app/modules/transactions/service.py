@@ -25,6 +25,8 @@ from app.core.authz import require_found
 from app.core.errors import ConflictError, InvalidValueError
 from app.core.money import Money, minor_units, round_half_up
 from app.modules.assets.service import AssetService
+from app.modules.market_data.fx import FxRateUnavailable
+from app.modules.market_data.service import FxService
 from app.modules.portfolio.models import Portfolio
 from app.modules.transactions.holdings import Entry, never_negative
 from app.modules.transactions.holdings_service import HoldingsService
@@ -92,6 +94,7 @@ class LedgerService:
         idempotency_key: str | None,
     ) -> Result:
         portfolio = await self._writable_portfolio(user_id, portfolio_id)
+        body = await self._with_fx_rate(body, portfolio.base_currency)
         try:
             posting = normalise(_draft(body), portfolio.base_currency, today())
         except RuleViolation as e:
@@ -183,6 +186,28 @@ class LedgerService:
         return TransactionPage(items=[_out(r, rb) for r, rb in page], next_cursor=next_cursor)
 
     # ------------------------------------------------------------------------------ helpers
+
+    async def _with_fx_rate(self, body: TransactionCreate, base_currency: str) -> TransactionCreate:
+        """A foreign-currency posting without a rate gets the historical rate for its trade date;
+        the rate, its time and its provider are stored on the posting (P05-T06)."""
+        if body.currency == base_currency or body.fx_rate_to_portfolio_currency is not None:
+            return body
+        try:
+            quote = await FxService(self._session).rate_for_posting(
+                body.currency, base_currency, body.trade_date
+            )
+        except FxRateUnavailable as e:
+            raise InvalidValueError(
+                f"fx_rate_to_portfolio_currency: no {body.currency}/{base_currency} rate is "
+                f"available for {body.trade_date}; send the rate you used"
+            ) from e
+        return body.model_copy(
+            update={
+                "fx_rate_to_portfolio_currency": quote.rate,
+                "fx_rate_as_of": quote.as_of,
+                "fx_rate_source": quote.provider,
+            }
+        )
 
     async def _writable_portfolio(self, user_id: uuid.UUID, portfolio_id: uuid.UUID) -> Portfolio:
         portfolio = require_found(

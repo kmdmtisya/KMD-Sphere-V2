@@ -518,13 +518,13 @@
   - [x] P05-T05.1 Cost-basis method ADR
   - [x] P05-T05.2 Implementation
   - [x] P05-T05.3 Golden and property tests
-- [ ] **P05-T06** · Multi-currency and FX conversion · `NOT_STARTED` ⬜
+- [ ] **P05-T06** · Multi-currency and FX conversion · `IN_PROGRESS` 🔄
   - Deps: P05-T01 · Wave: W2 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T21:24:30+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P05-T06.1 FX service
-  - [ ] P05-T06.2 Rate selection rules
-  - [ ] P05-T06.3 Rounding tests
+  - [x] P05-T06.1 FX service
+  - [x] P05-T06.2 Rate selection rules
+  - [x] P05-T06.3 Rounding tests
 - [ ] **P05-T07** · Manual valuations API · `NOT_STARTED` ⬜
   - Deps: P05-T04 · Wave: W4 · Track: BE · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

@@ -128,6 +128,10 @@ async def _conflict(request: Request, exc: Exception) -> JSONResponse:
     return problem(request, 409, "conflict", "Conflict", str(exc))
 
 
+async def _fx_unavailable(request: Request, exc: Exception) -> JSONResponse:
+    return problem(request, 404, "fx-rate-unavailable", "FX rate unavailable", str(exc))
+
+
 async def _rate_limited(request: Request, exc: Exception) -> JSONResponse:
     from app.core.ratelimit import RateLimitedError, too_many_requests
 
@@ -147,6 +151,7 @@ async def _unhandled(request: Request, exc: Exception) -> JSONResponse:
 def register_exception_handlers(app: FastAPI) -> None:
     from app.core.ratelimit import RateLimitedError
     from app.modules.identity.service import InvalidProfileChangeError
+    from app.modules.market_data.fx import FxRateUnavailable
 
     app.add_exception_handler(StarletteHTTPException, _http_exception)
     app.add_exception_handler(RequestValidationError, _validation_error)
@@ -154,6 +159,7 @@ def register_exception_handlers(app: FastAPI) -> None:
     app.add_exception_handler(InvalidProfileChangeError, _invalid_value)
     app.add_exception_handler(InvalidValueError, _invalid_value)
     app.add_exception_handler(ConflictError, _conflict)
+    app.add_exception_handler(FxRateUnavailable, _fx_unavailable)
     app.add_exception_handler(ResourceNotFoundError, _not_found)
     app.add_exception_handler(PermissionDeniedError, _forbidden)
     app.add_exception_handler(RateLimitedError, _rate_limited)
