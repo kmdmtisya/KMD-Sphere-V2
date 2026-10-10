@@ -687,3 +687,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-10T21:43:03+04:00 — START P05-T07
 - Manual valuations API
 - prerequisites verified COMPLETED
+
+### 2026-10-10T21:52:23+04:00 — COMPLETE P05-T07
+- duration: 9m 20s
+- evidence: PR #50 (commit 0f97c14). /api/v1/portfolios/{id}/valuations: create (as-of with zone, not future; source label; Money in minor units, not negative; usable asset; one per asset per instant -> 409), list (newest first, cursor, asset filter), get, latest (per asset the greatest as-of at or before the moment; deterministic via the unique constraint; scoped to the portfolio), patch (value/source/note; as-of immutable), delete. Create/update/delete audited without amounts. Archived portfolios read-only. 6 routes IDOR-registered with cross-user tests. Local pytest 642 passed, coverage 89.51%, ruff/mypy/OpenAPI/Spectral clean. 12/12 mutants caught. CI all gates pass.
