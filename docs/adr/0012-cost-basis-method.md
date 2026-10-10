@@ -1,6 +1,6 @@
 # ADR-0012: Cost-basis method for holdings
 
-Status: Proposed (P05-T05, 2026-10-10; for user approval at P05-GATE)
+Status: Accepted (proposed in P05-T05, 2026-10-10; approved by the user at P05-GATE, 2026-10-11)
 
 ## Context
 Holdings, realised profit and unrealised profit all depend on how the cost of units sold is measured. The ledger (P05-T04) is append-only, multi-currency, and corrected by reversal entries. Common methods: weighted average cost (WAC), first-in-first-out (FIFO), specific identification. Tax rules differ by country; WealthSphere is a tracking and planning tool, not a tax calculator (a tax-lot method can be added later without changing the ledger).
