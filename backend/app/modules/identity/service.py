@@ -6,6 +6,7 @@ from datetime import UTC, datetime, timedelta
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.audit import Actor, AuditWriter
 from app.core.auth import TokenClaims
 from app.core.authz import ResourceNotFoundError, require_found
 from app.modules.identity.models import RiskProfile
@@ -48,6 +49,7 @@ class IdentityService:
     def __init__(self, session: AsyncSession) -> None:
         self._session = session
         self._repo = IdentityRepository(session)
+        self._audit = AuditWriter(session)
 
     async def provision(self, claims: TokenClaims) -> CurrentUser:
         """Returns the user for these claims, creating it on first sight (idempotent)."""
@@ -115,6 +117,13 @@ class IdentityService:
 
     async def add_risk_profile(self, user_id: uuid.UUID, body: RiskProfileCreate) -> RiskProfileOut:
         row = await self._repo.add_risk_profile(user_id, body.risk_tolerance, body.horizon_years)
+        await self._audit.record(
+            "identity.risk_profile.created",
+            Actor.user(user_id),
+            resource_type="risk_profile",
+            resource_id=row.id,
+            details={"risk_tolerance": row.risk_tolerance, "horizon_years": row.horizon_years},
+        )
         await self._session.commit()
         return self._out(row)
 
@@ -134,5 +143,12 @@ class IdentityService:
         if values:
             if not await self._repo.update_risk_profile(user_id, profile_id, values):
                 raise ResourceNotFoundError("risk profile")
+            await self._audit.record(
+                "identity.risk_profile.updated",
+                Actor.user(user_id),
+                resource_type="risk_profile",
+                resource_id=profile_id,
+                details={"changed": sorted(values), **values},
+            )
             await self._session.commit()
         return await self.get_risk_profile(user_id, profile_id)

@@ -412,14 +412,14 @@
   - [x] P04-T03.2 Two-user fixtures
   - [x] P04-T03.3 Policy ADR
   - [x] P04-T03.4 Example IDOR tests
-- [ ] **P04-T04** · Audit event infrastructure · `NOT_STARTED` ⬜
+- [x] **P04-T04** · Audit event infrastructure · `COMPLETED` ✅
   - Deps: P04-T02 · Wave: W3 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P04-T04.1 Schema and migration
-  - [ ] P04-T04.2 Writer service
-  - [ ] P04-T04.3 Redaction
-  - [ ] P04-T04.4 Tests
+  - Started: 2026-10-10T05:17:39+04:00 · Completed: 2026-10-10T05:27:02+04:00 · Duration: 9m 23s · Blocker: —
+  - Evidence: PR #34 (commit 382b429). audit_events table + migration 0003 with triggers rejecting UPDATE/DELETE/TRUNCATE; ORM before_update/before_delete guards; AuditWriter exposes only record(); details redacted via app.core.redaction (Decimal->str, floats dropped, 8 KiB cap); correlation ID stored per event; event written in the caller's transaction; risk-profile create/update audited. tests/test_audit.py 20 tests incl. DB-level UPDATE/DELETE/TRUNCATE rejection, stored-row redaction, correlation linkage via X-Correlation-ID, rollback when the event cannot be written. Local: ruff/format/mypy clean, pytest 209 passed. CI: backend gate pass (206 passed, 3 skipped live-Keycloak), security gate, mobile gate, tracker validate pass. 11 mutants all caught. Docs: docs/security.md Audit events.
+  - [x] P04-T04.1 Schema and migration
+  - [x] P04-T04.2 Writer service
+  - [x] P04-T04.3 Redaction
+  - [x] P04-T04.4 Tests
 - [ ] **P04-T05** · API protection · `NOT_STARTED` ⬜
   - Deps: P04-T02 · Wave: W3 · Track: SEC · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
