@@ -27,6 +27,8 @@ android {
         // flag during build.
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        // Sign-in redirect (com.kmdmtisya.wealthsphere:/oauth2redirect) back into the app.
+        manifestPlaceholders["appAuthRedirectScheme"] = "com.kmdmtisya.wealthsphere"
     }
 
     buildTypes {

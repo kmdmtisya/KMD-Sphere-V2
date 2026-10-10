@@ -12,7 +12,7 @@ Derived from CLAUDE.md (Security Rules), `SOLUTION_INTENT.md` section 23 and the
 | Area | Requirement | Planned in |
 |---|---|---|
 | Identity | Keycloak, OIDC Authorization Code + PKCE, MFA, email verification, password policy | P04-T01 |
-| Tokens | Short-lived access tokens, refresh rotation; stored only in secure mobile storage | P04-T06 |
+| Tokens | Short-lived access tokens, refresh rotation; stored only in secure mobile storage (see "Mobile session tokens" below) | P04-T06 |
 | App access | Biometric unlock, lock on background/timeout | P04-T07 |
 | Authorization | Ownership checks on every resource; IDOR tests per endpoint | P04-T03, P05-T09 |
 | API protection | Rate limiting, brute-force controls, input limits, security headers (see "API protection" below) | P04-T05 |
@@ -95,3 +95,13 @@ await session.commit()                         # the change and its event commit
 - Counters are fixed windows in Redis (`ws:rl:<budget>:<sha256>`; raw IPs and user ids are not stored). If Redis is unavailable, each process keeps its own counters and the outage is logged: limits stay on, they are never skipped.
 - The client IP is the direct peer. Behind a proxy or load balancer, run uvicorn with `--proxy-headers --forwarded-allow-ips=<proxy>` (P14); `X-Forwarded-For` is never trusted directly.
 - Every response carries `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: no-referrer`, `Cross-Origin-Resource-Policy: same-origin`, `Permissions-Policy`, `Cache-Control: no-store` and a deny-all `Content-Security-Policy` (except Swagger UI, which is disabled in production). Staging and production add `Strict-Transport-Security`.
+
+## Mobile session tokens (P04-T06)
+
+- **Sign-in:** Authorization Code + PKCE (S256) through AppAuth in the system browser; public client, no secret on the device; no `offline_access` scope. iOS uses an ephemeral browser session, so no SSO cookie outlives sign-out.
+- **Storage:** tokens live only in `flutter_secure_storage` (Android Keystore-encrypted storage; iOS Keychain `first_unlock_this_device`, not synced). Android backup and device transfer are disabled for the app. Shared preferences hold UI preferences only.
+- **Refresh:** `TokenManager` refreshes 30 s before expiry, one refresh at a time, and persists the rotated refresh token immediately (Keycloak revokes the old one). On a 401 the API client refreshes once and retries once.
+- **Session end:** a refused refresh (expired or revoked session) clears the tokens and signs out; so does the API refusing a freshly refreshed token (for example, a disabled account). A network failure during refresh fails the request but keeps the session for when the device is back online.
+- **Sign-out:** tokens are deleted from the device first, then the Keycloak session is ended (`/protocol/openid-connect/logout` with the refresh token), best effort.
+- **No leaks:** there is no HTTP logging interceptor; `TokenSet`, `AuthException` and `ApiException` print no token; UI state never holds tokens. Tests assert tokens never appear in printed output or errors.
+- **Transport:** release builds require https; debug builds allow plain HTTP only to loopback development hosts.

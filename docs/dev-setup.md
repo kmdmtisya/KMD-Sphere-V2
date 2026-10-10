@@ -72,3 +72,18 @@ The API verifies Keycloak access tokens (RS256, issuer, audience `wealthsphere-a
 Rate limits use Redis (`RATE_LIMIT_*` settings in `app/core/config.py`; see docs/security.md "API protection"). Set `RATE_LIMIT_ENABLED=false` only for local load experiments.
 
 A user row is created on the first valid request (`GET /api/v1/me`). `PATCH /api/v1/me/preferences` updates display name, base currency, locale, time zone and UI preferences.
+
+## Mobile sign-in against the local stack
+
+The app signs in with Authorization Code + PKCE in the system browser (Custom Tabs / ASWebAuthenticationSession) and calls the API with the resulting access token. Defaults target the local stack; override with `--dart-define=WS_API_BASE_URL=...` and `--dart-define=WS_OIDC_ISSUER=...` (release builds require https).
+
+1. Start the stack and the API (`docker compose up -d`, then `cd backend && uv run uvicorn app.main:app --port 8000`), with `OIDC_ISSUER=http://127.0.0.1:8081/realms/wealthsphere` in `.env`.
+2. Android emulator or USB device: forward the ports so `127.0.0.1` on the device is your machine and the token issuer matches the API's `OIDC_ISSUER`:
+   ```
+   adb reverse tcp:8000 tcp:8000
+   adb reverse tcp:8081 tcp:8081
+   ```
+   The iOS simulator shares the host's network; nothing to forward.
+3. Run the app, open **More > Account > Sign in**, and sign in as a seeded test user. The card shows the account as the API reports it (`GET /api/v1/me`).
+
+Plain HTTP is allowed only to `127.0.0.1`, `localhost` and `10.0.2.2`, and only in debug builds (Android `src/debug` network security config; iOS `NSAllowsLocalNetworking`). A fresh emulator's Chrome shows its first-run screen on the first sign-in; dismiss it once.

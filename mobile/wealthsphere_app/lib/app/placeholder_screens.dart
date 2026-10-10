@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../features/account/presentation/account_section.dart';
 import '../l10n/generated/app_localizations.dart';
 import '../shared/design_system/components/components.dart';
 import '../shared/design_system/theme/theme.dart';
@@ -160,6 +161,8 @@ class MorePlaceholder extends ConsumerWidget {
     return _PlaceholderPage(
       title: l10n.tabMore,
       children: [
+        const AccountSection(),
+        const SizedBox(height: AppSpacing.l),
         OutlinedButton(
           onPressed: () => context.push(AppRoutes.calculator),
           child: Text(l10n.moreCalculator),

@@ -428,15 +428,15 @@
   - [x] P04-T05.2 Keycloak brute-force
   - [x] P04-T05.3 Limits and headers
   - [x] P04-T05.4 Tests
-- [ ] **P04-T06** · Mobile networking and authentication core · `NOT_STARTED` ⬜
+- [ ] **P04-T06** · Mobile networking and authentication core · `IN_PROGRESS` 🔄
   - Deps: P04-T01, P04-T02, P01-T06 · Wave: W3 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T05:46:39+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P04-T06.1 Add Dio/secure storage/appauth
-  - [ ] P04-T06.2 PKCE flow
-  - [ ] P04-T06.3 Token storage and refresh interceptor
-  - [ ] P04-T06.4 Logout
-  - [ ] P04-T06.5 Tests with fakes
+  - [x] P04-T06.1 Add Dio/secure storage/appauth
+  - [x] P04-T06.2 PKCE flow
+  - [x] P04-T06.3 Token storage and refresh interceptor
+  - [x] P04-T06.4 Logout
+  - [x] P04-T06.5 Tests with fakes
 - [ ] **P04-T07** · Biometric app lock and session policy · `NOT_STARTED` ⬜
   - Deps: P04-T06 · Wave: W4 · Track: MOB · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
