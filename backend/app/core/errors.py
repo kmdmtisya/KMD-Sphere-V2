@@ -21,6 +21,10 @@ class InvalidValueError(ValueError):
     """A well-formed request whose values break a business rule (answered with 422)."""
 
 
+class ConflictError(Exception):
+    """The request conflicts with the resource's current state (answered with 409)."""
+
+
 PROBLEM_BASE = "https://wealthsphere.app/problems"
 MEDIA_TYPE = "application/problem+json"
 
@@ -120,6 +124,10 @@ async def _invalid_value(request: Request, exc: Exception) -> JSONResponse:
     return problem(request, 422, "validation", "Validation failed", str(exc))
 
 
+async def _conflict(request: Request, exc: Exception) -> JSONResponse:
+    return problem(request, 409, "conflict", "Conflict", str(exc))
+
+
 async def _rate_limited(request: Request, exc: Exception) -> JSONResponse:
     from app.core.ratelimit import RateLimitedError, too_many_requests
 
@@ -145,6 +153,7 @@ def register_exception_handlers(app: FastAPI) -> None:
     app.add_exception_handler(AuthenticationError, _authentication)
     app.add_exception_handler(InvalidProfileChangeError, _invalid_value)
     app.add_exception_handler(InvalidValueError, _invalid_value)
+    app.add_exception_handler(ConflictError, _conflict)
     app.add_exception_handler(ResourceNotFoundError, _not_found)
     app.add_exception_handler(PermissionDeniedError, _forbidden)
     app.add_exception_handler(RateLimitedError, _rate_limited)

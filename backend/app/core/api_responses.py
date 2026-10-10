@@ -23,3 +23,7 @@ def not_found(what: str) -> dict[int | str, dict[str, Any]]:
 
 def invalid(what: str) -> dict[int | str, dict[str, Any]]:
     return {422: {"description": f"Invalid {what}"}}
+
+
+def conflict(what: str) -> dict[int | str, dict[str, Any]]:
+    return {409: {"description": what}}

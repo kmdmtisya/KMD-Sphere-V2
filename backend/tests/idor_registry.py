@@ -15,4 +15,13 @@ IDOR_TESTS: dict[tuple[str, str], str] = {
     ("GET", "/api/v1/assets/{asset_id}"): (
         "tests.test_assets_api::test_bob_cannot_read_alices_asset"
     ),
+    ("GET", "/api/v1/portfolios/{portfolio_id}"): (
+        "tests.test_portfolios_api::test_bob_cannot_read_alices_portfolio"
+    ),
+    ("PATCH", "/api/v1/portfolios/{portfolio_id}"): (
+        "tests.test_portfolios_api::test_bob_cannot_change_alices_portfolio"
+    ),
+    ("POST", "/api/v1/portfolios/{portfolio_id}/archive"): (
+        "tests.test_portfolios_api::test_bob_cannot_archive_alices_portfolio"
+    ),
 }
