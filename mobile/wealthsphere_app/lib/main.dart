@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app/app.dart';
+import 'core/auth/token_store.dart';
 import 'core/preferences/preferences_store.dart';
 import 'shared/design_system/formatting/formatting.dart';
 import 'shared/design_system/theme/theme.dart';
@@ -16,6 +17,7 @@ Future<void> main() async {
     ProviderScope(
       overrides: [
         preferencesStoreProvider.overrideWithValue(store),
+        tokenStoreProvider.overrideWithValue(SecureTokenStore()),
         initialThemeModeProvider.overrideWithValue(themeMode),
       ],
       child: const WealthSphereApp(),

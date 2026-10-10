@@ -428,15 +428,15 @@
   - [x] P04-T05.2 Keycloak brute-force
   - [x] P04-T05.3 Limits and headers
   - [x] P04-T05.4 Tests
-- [ ] **P04-T06** · Mobile networking and authentication core · `NOT_STARTED` ⬜
+- [x] **P04-T06** · Mobile networking and authentication core · `COMPLETED` ✅
   - Deps: P04-T01, P04-T02, P01-T06 · Wave: W3 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P04-T06.1 Add Dio/secure storage/appauth
-  - [ ] P04-T06.2 PKCE flow
-  - [ ] P04-T06.3 Token storage and refresh interceptor
-  - [ ] P04-T06.4 Logout
-  - [ ] P04-T06.5 Tests with fakes
+  - Started: 2026-10-10T05:46:39+04:00 · Completed: 2026-10-10T06:40:20+04:00 · Duration: 53m 41s · Blocker: —
+  - Evidence: PR #36 (commit 4d55c71). Dio + flutter_secure_storage + flutter_appauth. core/auth: KeycloakOidcClient (Auth Code + PKCE via AppAuth, ephemeral session, public client, no offline_access; refresh/logout form posts), TokenManager (secure-storage restore, refresh 30 s before expiry, single-flight, rotated refresh token persisted, refused refresh clears tokens and signs out, network failure keeps session), SecureTokenStore (Keystore / Keychain first_unlock_this_device, not synced; Android backup + device transfer disabled), AuthController (no tokens in UI state). core/network: Dio with correlation-ID and auth interceptors (401 -> one refresh + one retry; second 401 ends session; no logging interceptor), ApiException problem+json mapping. Account section in More (sign in/out + GET /api/v1/me). Tests: 57 new; flutter analyze clean, 868 tests pass; 23 mutants caught. Emulator API 37 vs local stack: sign-in as alice with /me 200; cold restart after token expiry restored + refreshed (/me 200 first try); sign-out took Keycloak sessions 1 -> 0; server-revoked session after expiry showed 'session ended' with no API call and stayed signed out. iOS not run on device (no macOS); CI ios compile pass. CI: backend, mobile (format/analyze/test, android build, ios compile), security, tracker validate pass. Docs: dev-setup.md, security.md.
+  - [x] P04-T06.1 Add Dio/secure storage/appauth
+  - [x] P04-T06.2 PKCE flow
+  - [x] P04-T06.3 Token storage and refresh interceptor
+  - [x] P04-T06.4 Logout
+  - [x] P04-T06.5 Tests with fakes
 - [ ] **P04-T07** · Biometric app lock and session policy · `NOT_STARTED` ⬜
   - Deps: P04-T06 · Wave: W4 · Track: MOB · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

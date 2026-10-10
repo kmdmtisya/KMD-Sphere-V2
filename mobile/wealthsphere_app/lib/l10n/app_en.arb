@@ -1203,5 +1203,63 @@
   "aiSourcesTitle": "Sources",
   "@aiSourcesTitle": {
     "description": "Heading above evidence chips"
+  },
+  "accountTitle": "Account",
+  "@accountTitle": {
+    "description": "Heading of the account section in the More tab"
+  },
+  "accountSignIn": "Sign in",
+  "@accountSignIn": {
+    "description": "Button that starts sign-in in the system browser"
+  },
+  "accountSigningIn": "Signing in…",
+  "@accountSigningIn": {
+    "description": "Shown while the sign-in page is open"
+  },
+  "accountSignOut": "Sign out",
+  "@accountSignOut": {
+    "description": "Button that ends the session on this device"
+  },
+  "accountSignedInAs": "Signed in as {email}",
+  "@accountSignedInAs": {
+    "description": "Who is signed in",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "accountSignedIn": "Signed in",
+  "@accountSignedIn": {
+    "description": "Shown when the account email is not known"
+  },
+  "accountSignedOutHint": "Sign in to use your own portfolio data. Until then the app shows DEMO data.",
+  "@accountSignedOutHint": {
+    "description": "Explains what signing in does"
+  },
+  "accountSessionExpired": "Your session ended. Please sign in again.",
+  "@accountSessionExpired": {
+    "description": "Shown after the session expired or was refused"
+  },
+  "accountSignInFailed": "Sign-in did not complete. Please try again.",
+  "@accountSignInFailed": {
+    "description": "Generic sign-in failure"
+  },
+  "accountSignInOffline": "Can't reach the sign-in service. Check your connection and try again.",
+  "@accountSignInOffline": {
+    "description": "Sign-in failed for network reasons"
+  },
+  "accountServerCheck": "Server account: {email}",
+  "@accountServerCheck": {
+    "description": "Account as reported by the WealthSphere API",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "accountServerError": "Couldn't load your account from the server.",
+  "@accountServerError": {
+    "description": "The /me call failed"
   }
 }
