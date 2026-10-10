@@ -3,11 +3,23 @@ extends: ["spectral:oas"]
 # House rules (docs/api-conventions.md, ADR-0003). Run with --fail-severity=warn in CI.
 rules:
   wealthsphere-money-is-string:
-    description: Money, quantities and rates are strings in JSON, never numbers (ADR-0003).
+    description: >-
+      Money, quantities and rates are strings in JSON, never numbers (ADR-0003). A money field
+      may instead be the Money object, whose amount is checked by the next rule.
     message: "{{property}} looks like a monetary value and must be type string, not {{value}}."
     severity: error
     given: >-
-      $..properties[?(@property.match(/^(amount|balance|price|quantity|rate|value|fee|fees|tax|taxes|net_worth|principal|contribution|income)$|_(amount|balance|price|quantity|rate|value|fee|fees|tax|taxes|net_worth)$/i))]
+      $..properties[?(@property.match(/^(amount|balance|price|quantity|rate|value|fee|fees|tax|taxes|net_worth|principal|contribution|income)$|_(amount|balance|price|quantity|rate|value|fee|fees|tax|taxes|net_worth)$/i) && @.type !== 'object')]
+    then:
+      field: type
+      function: enumeration
+      functionOptions:
+        values: [string]
+
+  wealthsphere-money-object-amount-is-string:
+    description: The Money object carries its amount as a string and an ISO 4217 currency.
+    severity: error
+    given: "$.components.schemas.Money.properties.amount"
     then:
       field: type
       function: enumeration

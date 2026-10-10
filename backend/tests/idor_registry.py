@@ -24,4 +24,16 @@ IDOR_TESTS: dict[tuple[str, str], str] = {
     ("POST", "/api/v1/portfolios/{portfolio_id}/archive"): (
         "tests.test_portfolios_api::test_bob_cannot_archive_alices_portfolio"
     ),
+    ("GET", "/api/v1/portfolios/{portfolio_id}/transactions"): (
+        "tests.test_transactions_api::test_bob_cannot_list_alices_ledger"
+    ),
+    ("POST", "/api/v1/portfolios/{portfolio_id}/transactions"): (
+        "tests.test_transactions_api::test_bob_cannot_post_to_alices_portfolio"
+    ),
+    ("GET", "/api/v1/portfolios/{portfolio_id}/transactions/{transaction_id}"): (
+        "tests.test_transactions_api::test_bob_cannot_read_alices_transaction"
+    ),
+    ("POST", "/api/v1/portfolios/{portfolio_id}/transactions/{transaction_id}/reversal"): (
+        "tests.test_transactions_api::test_bob_cannot_reverse_alices_transaction"
+    ),
 }

@@ -53,6 +53,10 @@ class AssetService:
         asset, asset_class = require_found(await self._repo.get_visible(user_id, asset_id), "asset")
         return await self._detail(asset, asset_class, user_id)
 
+    async def is_visible(self, user_id: uuid.UUID, asset_id: uuid.UUID) -> bool:
+        """Whether the user may use this asset (an active catalogue asset or one of theirs)."""
+        return await self._repo.get_visible(user_id, asset_id) is not None
+
     async def create(self, user_id: uuid.UUID, body: AssetCreate) -> AssetOut:
         asset_class = await self._repo.class_by_code(body.asset_class)
         if asset_class is None:
