@@ -55,7 +55,7 @@ services:
       retries: 20
 
   keycloak:
-    image: quay.io/keycloak/keycloak:26.4
+    image: quay.io/keycloak/keycloak:26.8
     restart: unless-stopped
     # The development realm is imported on first start (only if it does not exist yet).
     command: ["start-dev", "--health-enabled=true", "--import-realm"]
