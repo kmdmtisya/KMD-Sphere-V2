@@ -719,3 +719,18 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-11T01:52:07+04:00 — START P05-GATE
 - Phase P05 exit gate
 - prerequisites verified COMPLETED
+
+### 2026-10-11T02:04:14+04:00 — QG CHECK QG-01.3
+- evidence: API contracts and database designs reviewed and approved by the user at P05-GATE (2026-10-11): docs/design/data-model.md (Approved), ADR-0012 and ADR-0013 (Accepted), docs/design/portfolio-summary.md, docs/contracts/dto-mapping.md with CI contract check; backend/openapi.json Spectral clean and matches the app.
+
+### 2026-10-11T02:04:23+04:00 — QG START QG-06
+- Financial Accuracy and Data Integrity
+
+### 2026-10-11T02:04:24+04:00 — QG CHECK QG-03.2
+- evidence: Integration tests pass: backend pytest 783 passed locally (coverage 90%) and in CI on PR #54 (real PostgreSQL, migrations up/down/up), covering schema, assets, portfolios, ledger, holdings, FX, valuations, summary, and the P05-T09 authorisation sweep plus 12x30 randomised ledger sequences; -m security 477 passed.
+
+### 2026-10-11T02:04:24+04:00 — QG CHECK QG-06.2
+- evidence: Decimal precision and rounding tested: ADR-0006 ROUND_HALF_UP with tie cases (positive/negative, 0/2/3/12 places) and ISO 4217 minor units in tests/test_money.py (money.py 100% coverage, 16/16 mutants caught); strict string-only decimal parsing refuses numbers, exponents, signs, whitespace; golden vectors and Hypothesis properties for holdings (test_holdings), FX rounding (test_fx), posting rules (test_transaction_rules), largest-remainder percentages and summary (test_portfolio_summary); NUMERIC columns checked in test_schema_core.
+
+### 2026-10-11T02:04:24+04:00 — QG CHECK QG-06.5
+- evidence: Transaction history is auditable: ledger append-only (DB triggers reject UPDATE/DELETE/TRUNCATE, no update/delete routes, 405), corrections only via linked reversal entries, Idempotency-Key replays add nothing, one audit event per posting and reversal (test_audit, test_transactions_api), per-portfolio lock; test_integrity_suite checks after every step of 12 seeded random sequences: row immutability, reversal rules, no negative quantity on any date, holdings cache equals recomputation from the ledger, exactly one audit event per entry. 11/11 injected product regressions caught.

@@ -7,16 +7,16 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-11T01:52:07+04:00 by `scripts/track.py`._
+_Generated at 2026-10-11T02:04:24+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
-| QG-01 | Architecture and Design | 🔄 IN_PROGRESS | 3/5 | Unassigned | — |
+| QG-01 | Architecture and Design | 🔄 IN_PROGRESS | 4/5 | Unassigned | — |
 | QG-02 | Code Quality | ✅ PASSED | 6/6 | Unassigned | — |
-| QG-03 | Automated Testing | 🔄 IN_PROGRESS | 2/6 | Unassigned | — |
+| QG-03 | Automated Testing | 🔄 IN_PROGRESS | 3/6 | Unassigned | — |
 | QG-04 | Android Platform | 🔄 IN_PROGRESS | 5/7 | Unassigned | — |
 | QG-05 | iOS Platform | 🔄 IN_PROGRESS | 4/6 | Unassigned | — |
-| QG-06 | Financial Accuracy and Data Integrity | ⬜ NOT_STARTED | 0/7 | Unassigned | — |
+| QG-06 | Financial Accuracy and Data Integrity | 🔄 IN_PROGRESS | 2/7 | Unassigned | — |
 | QG-07 | AI Reliability and Investment Intelligence | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
 | QG-08 | Security and Privacy | 🔄 IN_PROGRESS | 3/8 | Unassigned | — |
 | QG-09 | Performance and Scalability | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
@@ -38,16 +38,16 @@ _Generated at 2026-10-11T01:52:07+04:00 by `scripts/track.py`._
 | QG-25 | QG-FXCUR-05: AI Integration | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 25/146.
+Criteria satisfied overall: 29/146.
 
-Current phase **P05** exit-gate criteria outstanding: QG-01.3, QG-03.2, QG-06.2, QG-06.5.
+Current phase **P05** exit-gate criteria outstanding: none.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
 
 - [x] QG-01.1 Architecture complies with the approved solution intent and architectural decisions · Required: P01 · By: P01-T03 · Evidence: Architecture follows the approved solution intent: docs/architecture.md derived from SOLUTION_INTENT sections 22, 26, 27 and the implementation guide (modular monolith, backend authoritative for financial truth, allow-listed AI tools, provider abstractions); ADR-0001..0008 all Accepted by the user; 11 document conflicts (D1-D11) listed with resolutions in EXECUTION_PLAN.md section 2; plan approved at P00-GATE · Verified: 2026-10-09T18:33:56+04:00
 - [x] QG-01.2 Module boundaries and dependencies are documented · Required: P01 · By: P01-T04 · Evidence: Module boundaries and dependencies documented in docs/architecture.md section 2 (11 modules, responsibility and allowed-dependency table, rule: modules call only service interfaces), ADR-0004 (backend layout: api/service/repository/schemas) and ADR-0005 (repository layout); backend/app/modules reserved for domain modules · Verified: 2026-10-09T18:33:56+04:00
-- [ ] QG-01.3 API contracts and database designs are reviewed · Required: P05 · By: P05-T10
+- [x] QG-01.3 API contracts and database designs are reviewed · Required: P05 · By: P05-T10 · Evidence: API contracts and database designs reviewed and approved by the user at P05-GATE (2026-10-11): docs/design/data-model.md (Approved), ADR-0012 and ADR-0013 (Accepted), docs/design/portfolio-summary.md, docs/contracts/dto-mapping.md with CI contract check; backend/openapi.json Spectral clean and matches the app. · Verified: 2026-10-11T02:04:14+04:00
 - [ ] QG-01.4 No unresolved critical architectural risks · Required: P15 · By: P15-T10
 - [x] QG-01.5 UI/UX implementation follows the approved WealthSphere design system · Required: P02 · By: P02-T08 · Evidence: UX Gate 1: user reviewed the component gallery against the concept board and approved (2026-10-09). Design system per docs/design/design-system.md: tokens with measured contrast (contrast tests), shared components and 3 charts, light/dark, 2.0x text, RTL; style guard test enforces tokens (no colour literals, no left/right APIs, no double in money code); 34 golden images (28 gallery + 6 chart) compared on CI Linux; format and analyze clean, 576 tests pass locally (34 goldens skipped on Windows). TalkBack read-through of chart summaries not yet performed. · Verified: 2026-10-09T23:38:20+04:00
 
@@ -55,8 +55,8 @@ Status: IN_PROGRESS
 Owner: Unassigned  
 Start Timestamp: 2026-10-09T18:33:56+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-09T23:38:20+04:00  
-Evidence: 3/5 criteria verified; latest QG-01.5 at 2026-10-09T23:38:20+04:00  
+Verification Timestamp: 2026-10-11T02:04:14+04:00  
+Evidence: 4/5 criteria verified; latest QG-01.3 at 2026-10-11T02:04:14+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -83,7 +83,7 @@ Approved By: —
 ### QG-03: Automated Testing
 
 - [x] QG-03.1 All required unit tests pass · Required: P01 · By: P01-T09,P01-T10 · Evidence: Required unit tests pass: backend pytest 109 passed (0 skipped in CI; coverage 96.6%, per-module report in job summary) and mobile flutter test passed, in PR #4 CI and on main after merge (runs 37944172314 backend, 37944172316 mobile) · Verified: 2026-10-09T18:33:57+04:00
-- [ ] QG-03.2 All required integration tests pass · Required: P05 · By: P05-T09
+- [x] QG-03.2 All required integration tests pass · Required: P05 · By: P05-T09 · Evidence: Integration tests pass: backend pytest 783 passed locally (coverage 90%) and in CI on PR #54 (real PostgreSQL, migrations up/down/up), covering schema, assets, portfolios, ledger, holdings, FX, valuations, summary, and the P05-T09 authorisation sweep plus 12x30 randomised ledger sequences; -m security 477 passed. · Verified: 2026-10-11T02:04:24+04:00
 - [ ] QG-03.3 Relevant end-to-end tests pass · Required: P09 · By: P09-T10
 - [ ] QG-03.4 Critical financial calculations achieve 100% requirement/edge-case coverage through documented test cases · Required: P06 · By: P06-T10 · CRITICAL
 - [ ] QG-03.5 At least 85% automated line coverage for business-critical backend modules, without using coverage as a substitute for meaningful tests · Required: P06 · By: P06-T10
@@ -93,8 +93,8 @@ Status: IN_PROGRESS
 Owner: Unassigned  
 Start Timestamp: 2026-10-09T18:14:49+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-09T18:33:57+04:00  
-Evidence: 2/6 criteria verified; latest QG-03.1 at 2026-10-09T18:33:57+04:00  
+Verification Timestamp: 2026-10-11T02:04:24+04:00  
+Evidence: 3/6 criteria verified; latest QG-03.2 at 2026-10-11T02:04:24+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -141,19 +141,19 @@ Approved By: —
 ### QG-06: Financial Accuracy and Data Integrity
 
 - [ ] QG-06.1 Financial calculations are deterministic and reproducible · Required: P06 · By: P06-T01 · CRITICAL
-- [ ] QG-06.2 Decimal precision and rounding rules are tested · Required: P05 · By: P05-T05 · CRITICAL
+- [x] QG-06.2 Decimal precision and rounding rules are tested · Required: P05 · By: P05-T05 · Evidence: Decimal precision and rounding tested: ADR-0006 ROUND_HALF_UP with tie cases (positive/negative, 0/2/3/12 places) and ISO 4217 minor units in tests/test_money.py (money.py 100% coverage, 16/16 mutants caught); strict string-only decimal parsing refuses numbers, exponents, signs, whitespace; golden vectors and Hypothesis properties for holdings (test_holdings), FX rounding (test_fx), posting rules (test_transaction_rules), largest-remainder percentages and summary (test_portfolio_summary); NUMERIC columns checked in test_schema_core. · Verified: 2026-10-11T02:04:24+04:00 · CRITICAL
 - [ ] QG-06.3 Compound-growth calculations are verified against independently calculated reference cases · Required: P06 · By: P06-T10 · CRITICAL
 - [ ] QG-06.4 Portfolio valuations, realized/unrealized gains, fees, income and currency conversions reconcile correctly · Required: P06 · By: P06-T10 · CRITICAL
-- [ ] QG-06.5 Transaction history is auditable · Required: P05 · By: P05-T09 · CRITICAL
+- [x] QG-06.5 Transaction history is auditable · Required: P05 · By: P05-T09 · Evidence: Transaction history is auditable: ledger append-only (DB triggers reject UPDATE/DELETE/TRUNCATE, no update/delete routes, 405), corrections only via linked reversal entries, Idempotency-Key replays add nothing, one audit event per posting and reversal (test_audit, test_transactions_api), per-portfolio lock; test_integrity_suite checks after every step of 12 seeded random sequences: row immutability, reversal rules, no negative quantity on any date, holdings cache equals recomputation from the ledger, exactly one audit event per entry. 11/11 injected product regressions caught. · Verified: 2026-10-11T02:04:24+04:00 · CRITICAL
 - [ ] QG-06.6 No unexplained financial reconciliation differences · Required: P06 · By: P06-T10 · CRITICAL
 - [ ] QG-06.7 Historical prices and FX rates retain their timestamps and provenance · Required: P08 · By: P08-T05 · CRITICAL
 
-Status: NOT_STARTED  
+Status: IN_PROGRESS  
 Owner: Unassigned  
-Start Timestamp: —  
+Start Timestamp: 2026-10-11T02:04:23+04:00  
 End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Verification Timestamp: 2026-10-11T02:04:24+04:00  
+Evidence: 2/7 criteria verified; latest QG-06.5 at 2026-10-11T02:04:24+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
