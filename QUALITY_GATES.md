@@ -7,18 +7,18 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-10T19:15:55+04:00 by `scripts/track.py`._
+_Generated at 2026-10-10T19:30:26+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
 | QG-01 | Architecture and Design | 🔄 IN_PROGRESS | 3/5 | Unassigned | — |
 | QG-02 | Code Quality | ✅ PASSED | 6/6 | Unassigned | — |
 | QG-03 | Automated Testing | 🔄 IN_PROGRESS | 2/6 | Unassigned | — |
-| QG-04 | Android Platform | 🔄 IN_PROGRESS | 4/7 | Unassigned | — |
-| QG-05 | iOS Platform | 🔄 IN_PROGRESS | 3/6 | Unassigned | — |
+| QG-04 | Android Platform | 🔄 IN_PROGRESS | 5/7 | Unassigned | — |
+| QG-05 | iOS Platform | 🔄 IN_PROGRESS | 4/6 | Unassigned | — |
 | QG-06 | Financial Accuracy and Data Integrity | ⬜ NOT_STARTED | 0/7 | Unassigned | — |
 | QG-07 | AI Reliability and Investment Intelligence | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
-| QG-08 | Security and Privacy | 🔄 IN_PROGRESS | 2/8 | Unassigned | — |
+| QG-08 | Security and Privacy | 🔄 IN_PROGRESS | 3/8 | Unassigned | — |
 | QG-09 | Performance and Scalability | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
 | QG-10 | CI/CD and Infrastructure | 🔄 IN_PROGRESS | 2/8 | Unassigned | — |
 | QG-11 | End-to-End Integration | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
@@ -37,10 +37,10 @@ _Generated at 2026-10-10T19:15:55+04:00 by `scripts/track.py`._
 | QG-24 | QG-FXCUR-04: Android and iOS | ⬜ NOT_STARTED | 0/7 | Unassigned | — |
 | QG-25 | QG-FXCUR-05: AI Integration | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
 
-Waivers: 0 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 22/146.
+Waivers: 1 active (0 expired — must be resolved), 0 closed.
+Criteria satisfied overall: 25/146.
 
-Current phase **P04** exit-gate criteria outstanding: QG-04.5, QG-05.4, QG-08.1.
+Current phase **P04** exit-gate criteria outstanding: none.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -105,7 +105,7 @@ Approved By: —
 - [x] QG-04.2 Flutter analysis and tests pass · Required: P01 · By: P01-T10 · Evidence: Flutter analysis and tests pass: flutter analyze 'No issues found', dart format clean, flutter test passed (app shell test) locally and in CI job 'format, analyze, test (incl. goldens)' on PR #4 · Verified: 2026-10-09T18:33:58+04:00
 - [x] QG-04.3 Supported Android versions are explicitly documented · Required: P01 · By: P01-T16 · Evidence: docs/quality-targets.md section 1: supported Android versions documented (minimum Android 8.0 / API 26, target level tracked against Google Play policy, reference devices); approved by user 2026-10-09 · Verified: 2026-10-09T15:52:48+04:00
 - [x] QG-04.4 Navigation, responsive layouts, accessibility and lifecycle behaviour are verified · Required: P03 · By: P03-T07 · Evidence: Android navigation, responsive layouts, accessibility and lifecycle verified for P03: 5/5 integration journeys (tabs with preserved stacks, back, customise+restart, portfolio switch, calculator->forecast->AI scope, AI stream/retry) pass on the Android emulator (API 37); accessibility sweep over the 5 screens x light/dark x LTR/RTL x 1.0/2.0x (Flutter tap-target, label, contrast guidelines plus stricter tap-target and all-Text contrast checks) 40/40 in CI; 320dp layout matrices on every screen; user ran the manual device checklist on small and large Android (safe areas, keyboard, TalkBack, dark mode, reduced motion, real kill-and-relaunch restart, concept-board comparison) and reported all Pass on 2026-10-10 (docs/design/qa-gate2.md; device models not recorded). Suite 811 passing; CI green on main 8ea2a59. · Verified: 2026-10-10T04:08:27+04:00
-- [ ] QG-04.5 Secure storage and biometric authentication work correctly · Required: P04 · By: P04-T07
+- [x] QG-04.5 Secure storage and biometric authentication work correctly · Required: P04 · By: P04-T07 · Evidence: Secure storage and biometric authentication work correctly on Android: emulator API 37 (2026-10-10) with an enrolled fingerprint plus PIN. Tokens are held only in flutter_secure_storage (session restored across cold starts; backup and device transfer disabled). Resume after the configured timeout and cold start show the system fingerprint prompt; a wrong finger (finger 2) keeps the app locked; the enrolled finger (finger 1) unlocks back to the same screen; cancelling leaves the lock screen with no app content in the accessibility tree; changing the lock timeout requires a fingerprint (wrong finger refused, right finger applied); the Recents card shows the privacy cover; a stale session signs out with a plain message after unlock. Device-PIN path also verified earlier. Fingerprint enrolment was done on the emulator before this run (not repeated here). Unit/widget tests: app_lock, app_lock_gate, token store, token manager. · Verified: 2026-10-10T19:30:26+04:00
 - [ ] QG-04.6 App startup, crash behaviour and memory consumption meet approved performance targets · Required: P15 · By: P15-T04
 - [ ] QG-04.7 Release signing and Google Play requirements are validated · Required: P16 · By: P16-T02
 
@@ -113,8 +113,8 @@ Status: IN_PROGRESS
 Owner: Unassigned  
 Start Timestamp: 2026-10-09T15:52:48+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-10T04:08:27+04:00  
-Evidence: 4/7 criteria verified; latest QG-04.4 at 2026-10-10T04:08:27+04:00  
+Verification Timestamp: 2026-10-10T19:30:26+04:00  
+Evidence: 5/7 criteria verified; latest QG-04.5 at 2026-10-10T19:30:26+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -124,7 +124,7 @@ Approved By: —
 - [x] QG-05.1 iOS application builds successfully using the supported Xcode toolchain · Required: P01 · By: P01-T10 · Evidence: iOS app builds: CI job 'ios compile (no codesign)' success on macOS runner image macos-26-arm64 (run 37931445838; 'Built build/ios/iphoneos/Runner.app (15.7MB)') and on PR #4, with IPHONEOS_DEPLOYMENT_TARGET 16.0 in all three Runner configurations. CAVEAT recorded as TD-03: the runner's default Xcode is used and its version is not logged or pinned yet; pinning is scheduled for P16-T02 · Verified: 2026-10-09T18:33:58+04:00
 - [x] QG-05.2 Supported iOS versions and devices are documented · Required: P01 · By: P01-T16 · Evidence: docs/quality-targets.md section 1: supported iOS versions and devices documented (minimum iOS 16.0, iPhone SE 3rd gen / iPhone 15 / Pro Max classes, update policy); approved by user 2026-10-09 · Verified: 2026-10-09T15:52:49+04:00
 - [x] QG-05.3 Navigation, safe areas, accessibility and lifecycle behaviour are verified · Required: P03 · By: P03-T07 · Evidence: iOS navigation, safe areas, accessibility and lifecycle for P03: user ran the manual device checklist at iPhone SE and Pro Max sizes (safe areas/notch, keyboard, VoiceOver walkthrough, dark mode, reduced motion, real restart, concept-board comparison) and reported all Pass on 2026-10-10 (docs/design/qa-gate2.md; run by the user, device models not recorded). Shared Flutter code is covered by the widget, layout-matrix and accessibility-sweep tests in CI and the iOS app compiles in CI (macOS job). The integration journeys were not run on iOS by Claude. · Verified: 2026-10-10T04:08:27+04:00
-- [ ] QG-05.4 Face ID/Touch ID and Keychain storage work correctly · Required: P04 · By: P04-T07
+- [ ] QG-05.4 Face ID/Touch ID and Keychain storage work correctly · Required: P04 · By: P04-T07 · WAIVED: W-001
 - [ ] QG-05.5 App startup, crash behaviour and memory consumption meet approved performance targets · Required: P15 · By: P15-T04
 - [ ] QG-05.6 App signing, provisioning, privacy declarations and App Store requirements are validated · Required: P16 · By: P16-T02,P16-T05
 
@@ -181,7 +181,7 @@ Approved By: —
 
 ### QG-08: Security and Privacy
 
-- [ ] QG-08.1 Authentication and authorization tests pass · Required: P04 · By: P04-T09 · CRITICAL
+- [x] QG-08.1 Authentication and authorization tests pass · Required: P04 · By: P04-T09 · Evidence: Authentication and authorization tests pass: backend security suite (pytest -m security, 208 tests) and mobile security suite (flutter test --tags security, 128 tests) run as their own CI steps and pass on PR #39 (and main, PR #40). Covers token tamper/expiry/audience/issuer/algorithm (31 cases), route-authentication coverage (every non-public route x 5 bad-token cases), cross-user/IDOR tests with a registry guard, identity provisioning, rate/body limits, headers, CORS, audit and redaction; 19 live Keycloak smoke checks (PKCE, rejected grants, TOTP, brute-force lockout). Guards fail the build if a module loses its marker or a route ships unauthenticated (mutant-checked). · Verified: 2026-10-10T19:30:26+04:00 · CRITICAL
 - [ ] QG-08.2 No known unresolved critical or high-severity exploitable vulnerabilities at release · Required: P15 · By: P15-T03 · CRITICAL
 - [x] QG-08.3 Secrets scanning passes · Required: P01 · By: P01-T11 · Evidence: Secrets scanning passes: gitleaks job in security.yml (full history) green on PR #4, #6, #7 and main (run 37944172283); seeded-secret test (run 37931671715) proved the scan fails when a secret is present; local pre-commit gitleaks hook also active · Verified: 2026-10-09T18:33:58+04:00 · CRITICAL
 - [ ] QG-08.4 Dependency and container vulnerability scanning passes · Required: P14 · By: P14-T04
@@ -194,8 +194,8 @@ Status: IN_PROGRESS
 Owner: Unassigned  
 Start Timestamp: 2026-10-09T18:33:58+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-09T18:33:59+04:00  
-Evidence: 2/8 criteria verified; latest QG-08.6 at 2026-10-09T18:33:59+04:00  
+Verification Timestamp: 2026-10-10T19:30:26+04:00  
+Evidence: 3/8 criteria verified; latest QG-08.1 at 2026-10-10T19:30:26+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -521,6 +521,7 @@ A waiver needs explicit approval, a documented justification, a future expiry/re
 | Waiver | Criterion | Justification | Approved by | Risk owner | Granted | Expires | Status |
 |---|---|---|---|---|---|---|---|
 <!-- WAIVERS:BEGIN -->
+| W-001 | QG-05.4 | Deferred by the user (2026-10-10): no macOS device or simulator is available now, so Face ID and Keychain behaviour (including SF-18, Keychain items surviving app reinstall) cannot be exercised yet. Mitigations until then: Keychain options are unit-tested (first_unlock_this_device, not synced), iOS compiles in CI on every PR, NSFaceIDUsageDescription is declared, and the same lock logic is covered by shared tests and verified on Android. Must be verified on an iPhone or simulator before any iOS release (P16) and at the latest at this waiver's expiry. | user (mtisya@gmail.com) | user (mtisya@gmail.com) | 2026-10-10T19:30:26+04:00 | 2026-12-31 | ACTIVE |
 <!-- WAIVERS:END -->
 
 ## Scope changes

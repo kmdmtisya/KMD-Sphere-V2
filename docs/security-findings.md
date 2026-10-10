@@ -23,11 +23,11 @@ SF-10 is an accepted risk, kept here so it is revisited at P15.
 | ID | Severity | Finding | Owner / phase | Notes |
 |---|---|---|---|---|
 | SF-10 | High | TOTP MFA is optional: a stolen password alone signs in to accounts without TOTP | Accepted for now (user decision, 2026-10-10: keep optional) | Revisit before P15 release readiness; options remain: require TOTP for all accounts, or before real financial data is linked |
-| SF-11 | Medium | iOS Keychain storage and Face ID have not been exercised on an iPhone or simulator (no macOS in this environment); covered by unit tests and the CI iOS compile only | Before QG-05.4 is closed (P04-GATE) | Needs a macOS machine or a cloud device run |
+| SF-11 | Medium | iOS Keychain storage and Face ID have not been exercised on an iPhone or simulator (no macOS in this environment); covered by unit tests and the CI iOS compile only | Deferred by the user on 2026-10-10 under waiver of QG-05.4 (expires 2026-12-31); must be verified on an iPhone or simulator before any iOS release (P16) | Needs a macOS machine or a cloud device run |
 | SF-12 | Medium | Per-IP rate limits depend on correct client-IP attribution behind the load balancer | P14 | uvicorn `--proxy-headers --forwarded-allow-ips`; never trust `X-Forwarded-For` directly |
 | SF-13 | Medium | The application database role owns `audit_events`, so it could disable the append-only triggers | P15 | Separate least-privilege runtime role without ownership or `TRIGGER` privilege |
 | SF-14 | Low | No certificate pinning; no root/jailbreak or tamper signals | P15 (MASVS review) | Decide with the threat of compromised devices in mind |
 | SF-15 | Low | Android 8 to 12 rely on the in-app privacy cover for the Recents snapshot (only 13+ disables the screenshot) | P15 | Consider `FLAG_SECURE` while locked or on sensitive screens |
 | SF-16 | Info | The local gitleaks binary is missing on the development machine, so commits skip the local hook (`SKIP=gitleaks`); CI gitleaks runs on every PR over full history | Developer setup | Install gitleaks locally |
 | SF-17 | Info | Development Keycloak and API run over HTTP | P14 | Release builds refuse non-HTTPS endpoints already |
-| SF-18 | Medium | iOS keeps Keychain items after the app is deleted, so a reinstalled app could restore a previous session | Before QG-05.4 is closed | Verify on an iPhone/simulator; fix is to clear stored tokens on the first launch after an install |
+| SF-18 | Medium | iOS keeps Keychain items after the app is deleted, so a reinstalled app could restore a previous session | Deferred with SF-11 (same waiver); verify with the delete-and-reinstall check | Verify on an iPhone/simulator; fix is to clear stored tokens on the first launch after an install |
