@@ -437,10 +437,10 @@
   - [x] P04-T06.3 Token storage and refresh interceptor
   - [x] P04-T06.4 Logout
   - [x] P04-T06.5 Tests with fakes
-- [ ] **P04-T07** · Biometric app lock and session policy · `IN_PROGRESS` 🔄
+- [x] **P04-T07** · Biometric app lock and session policy · `COMPLETED` ✅
   - Deps: P04-T06 · Wave: W4 · Track: MOB · Size: M · Approval: no
-  - Started: 2026-10-10T06:48:54+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-10T06:48:54+04:00 · Completed: 2026-10-10T07:26:29+04:00 · Duration: 37m 35s · Blocker: —
+  - Evidence: PR #37 (commit c056085). local_auth DeviceAuthenticator (biometrics + device credential fallback; all error codes non-success). AppLockController: only while signed in, default on; locks on restored session, on resume after configured timeout (immediately/1/5 min), after 5 min idle, and on backwards clock; fresh sign-in not re-locked; only success unlocks; late prompt result after sign-out ignored. AppLockGate: app offstage while locked (no paint/hit-test/semantics, tickers paused, state kept), lock screen with Unlock + Sign out (only Sign out without device security), single prompt per lock (no resume loop), privacy cover while inactive. Settings changes need a successful device check. Android FlutterFragmentActivity, AppCompat themes, USE_BIOMETRIC, setRecentsScreenshotEnabled(false) on 13+; iOS NSFaceIDUsageDescription. Tests: 38 new; analyze/format clean; full suite pass. Mutants: 20/20 non-equivalent caught (1 equivalent removed as redundant code; 2 first-run survivors led to added tests). Emulator API 37 with device PIN (no fingerprint enrolled): resume after Home showed system prompt; wrong PIN kept prompt, right PIN unlocked to same screen; cold start locked, cancel kept lock screen with no app content in accessibility tree; Unlock + PIN reopened; Recents card shows privacy cover. iOS not run on device; CI ios compile pass. CI all required gates pass. Docs: security.md App lock, dev-setup.md.
   - [x] P04-T07.1 local_auth integration
   - [x] P04-T07.2 Lock policy
   - [x] P04-T07.3 Privacy screen
