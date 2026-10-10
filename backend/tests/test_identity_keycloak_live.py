@@ -18,7 +18,7 @@ from app.core.config import Settings
 from app.main import create_app
 from tests.db_fixtures import migrated_settings  # noqa: F401 (fixture)
 
-pytestmark = [pytest.mark.integration, pytest.mark.asyncio(loop_scope="module")]
+pytestmark = pytest.mark.integration
 ROOT = Path(__file__).resolve().parents[2]
 
 

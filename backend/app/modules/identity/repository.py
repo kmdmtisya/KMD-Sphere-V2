@@ -7,7 +7,8 @@ from sqlalchemy import select, text, update
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.modules.identity.models import User, UserProfile
+from app.core.authz import owned_by
+from app.modules.identity.models import RiskProfile, User, UserProfile
 
 
 class IdentityRepository:
@@ -79,3 +80,47 @@ class IdentityRepository:
                 .where(UserProfile.user_id == user_id)
                 .values(**values, updated_at=text("now()"))
             )
+
+    # ----------------------------------------------------------------- risk profiles (owned)
+
+    async def add_risk_profile(
+        self, user_id: uuid.UUID, risk_tolerance: str, horizon_years: int | None
+    ) -> RiskProfile:
+        row = RiskProfile(
+            user_id=user_id, risk_tolerance=risk_tolerance, horizon_years=horizon_years
+        )
+        self._session.add(row)
+        await self._session.flush()
+        await self._session.refresh(row)
+        return row
+
+    async def list_risk_profiles(self, user_id: uuid.UUID) -> list[RiskProfile]:
+        result = await self._session.execute(
+            owned_by(RiskProfile, user_id).order_by(
+                RiskProfile.assessed_at.desc(), RiskProfile.created_at.desc()
+            )
+        )
+        return list(result.scalars())
+
+    async def get_risk_profile(
+        self, user_id: uuid.UUID, profile_id: uuid.UUID
+    ) -> RiskProfile | None:
+        """The caller's risk profile, or None if it does not exist or belongs to someone else."""
+        result = await self._session.execute(
+            owned_by(RiskProfile, user_id)
+            .where(RiskProfile.id == profile_id)
+            .execution_options(populate_existing=True)
+        )
+        return result.scalar_one_or_none()
+
+    async def update_risk_profile(
+        self, user_id: uuid.UUID, profile_id: uuid.UUID, values: dict[str, Any]
+    ) -> bool:
+        """Updates only a row owned by `user_id` (the WHERE clause enforces it). Returns found."""
+        result = await self._session.execute(
+            update(RiskProfile)
+            .where(RiskProfile.id == profile_id, RiskProfile.user_id == user_id)
+            .values(**values, updated_at=text("now()"))
+            .returning(RiskProfile.id)
+        )
+        return result.scalar_one_or_none() is not None

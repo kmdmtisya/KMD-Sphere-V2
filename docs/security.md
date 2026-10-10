@@ -39,3 +39,20 @@ Derived from CLAUDE.md (Security Rules), `SOLUTION_INTENT.md` section 23 and the
 
 ## Reporting
 Security issues: see `SECURITY.md` (added in P01-T11).
+
+## Authorization and IDOR tests (ADR-0011)
+
+- Query user data only through `owned_by(Model, user.id)` from `app/core/authz.py`; repeat `user_id = :user` in every `UPDATE`/`DELETE`.
+- A resource that is not the caller's answers **404**, identical to a missing one; **403** is only for a visible resource and a missing permission.
+- Never accept an owner or `user_id` in a request body.
+- For every route with an id in its path, write a cross-user test with `tests/authz_harness.py`:
+
+```python
+from tests.authz_harness import TwoUsers, assert_hidden_from, two_users  # noqa: F401
+
+async def test_bob_cannot_read_alices_goal(http, two_users: TwoUsers) -> None:
+    goal = await http.post("/api/v1/goals", headers=two_users.alice.headers, json={...})
+    await assert_hidden_from(http, two_users.bob, "GET", f"/api/v1/goals/{goal.json()['id']}")
+```
+
+  then register it in `tests/idor_registry.py`. `tests/test_idor_coverage.py` fails CI for any id route without a registered test.

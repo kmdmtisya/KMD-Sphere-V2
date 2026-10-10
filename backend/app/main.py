@@ -64,6 +64,7 @@ def create_app(
     app.include_router(health.router)
     app.include_router(metrics.router)
     app.include_router(identity_api.router)
+    app.include_router(identity_api.risk_router)
     telemetry.instrument(app)
     return app
 
