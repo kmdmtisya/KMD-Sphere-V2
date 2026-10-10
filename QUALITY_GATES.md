@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-10T04:35:03+04:00 by `scripts/track.py`._
+_Generated at 2026-10-10T04:39:41+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -40,7 +40,7 @@ _Generated at 2026-10-10T04:35:03+04:00 by `scripts/track.py`._
 Waivers: 0 active (0 expired — must be resolved), 0 closed.
 Criteria satisfied overall: 22/146.
 
-Current phase **P11** exit-gate criteria outstanding: QG-21.1, QG-21.2, QG-21.3, QG-21.4, QG-21.5, QG-22.1, QG-22.2, QG-22.3, QG-22.4, QG-22.5, QG-23.1, QG-23.2, QG-23.3, QG-23.4, QG-23.5, QG-24.1, QG-24.2, QG-24.3, QG-24.4, QG-24.5, QG-24.6, QG-24.7, QG-25.1, QG-25.2, QG-25.3, QG-25.4, QG-25.5.
+Current phase **P04** exit-gate criteria outstanding: QG-04.5, QG-05.4, QG-08.1.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
