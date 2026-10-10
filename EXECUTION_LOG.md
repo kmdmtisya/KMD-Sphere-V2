@@ -671,3 +671,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-10T21:04:39+04:00 — START P05-T05
 - Holdings calculation service
 - prerequisites verified COMPLETED
+
+### 2026-10-10T21:21:42+04:00 — COMPLETE P05-T05
+- duration: 17m 03s
+- evidence: PR #48 (commit 82c2bb1). ADR-0012 cost-basis method (weighted average cost in portfolio currency; Proposed, for user approval at P05-GATE). Pure holdings fold (Decimal, 50-digit context; stored rounded half-up to 8 dp; API to minor units per ADR-0006). Golden vectors (8, hand-computed: buys, partial sells with fees/tax, full sale, split as zero-value transfer-in, multi-rate FX, income/withholding, reversals, transfer out, repeating decimals) and Hypothesis properties (quantity, cost conservation, zero units zero cost, reversal == never posted, order independence) pass. Holdings cache (migration 0006 income/expenses) rebuilt in the same transaction as every posting/reversal; GET /api/v1/portfolios/{id}/holdings (IDOR-registered). Fixed T04 gap: sales/reversals now checked against date-ordered history. Local pytest 558 passed, coverage 90.97%, ruff/mypy/OpenAPI/Spectral clean. Mutants: 13/15 caught; remaining pair was redundant code, removed, then caught. CI all gates pass.
