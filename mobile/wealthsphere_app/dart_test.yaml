@@ -1,3 +1,5 @@
 tags:
   golden:
     description: Golden image tests. Authoritative on CI (ubuntu); run locally with --tags golden.
+  security:
+    description: Security test suite (sign-in, tokens, secure storage, API client, app lock). CI runs it as its own step.

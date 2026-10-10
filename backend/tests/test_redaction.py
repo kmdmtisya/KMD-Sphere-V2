@@ -8,6 +8,8 @@ import pytest
 from app.core.logging import CorrelationIdFilter, JsonFormatter
 from app.core.redaction import REDACTED, is_sensitive_key, redact, scrub_text
 
+pytestmark = pytest.mark.security
+
 
 def _b64(raw: bytes) -> str:
     return base64.urlsafe_b64encode(raw).decode().rstrip("=")

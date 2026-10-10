@@ -128,6 +128,10 @@ jobs:
       - name: Tests with coverage (incl. integration against service containers)
         run: uv run pytest --cov --cov-report=xml --cov-report=term-missing --cov-fail-under=85
 
+      # The security suite on its own, so its result is visible in the job (docs/threat-model.md).
+      - name: Security test suite
+        run: uv run pytest -m security
+
       - name: Coverage by module (business-critical modules must meet the policy floor)
         run: uv run python ../scripts/coverage_by_module.py coverage.xml --policy coverage-policy.toml --summary "$GITHUB_STEP_SUMMARY"
 

@@ -3,9 +3,13 @@ that test must exist. This keeps ownership tests from being forgotten as modules
 
 import importlib
 
+import pytest
+
 from app.main import create_app
 from tests.conftest import make_settings
 from tests.idor_registry import IDOR_TESTS
+
+pytestmark = pytest.mark.security
 
 
 def _id_routes() -> set[tuple[str, str]]:

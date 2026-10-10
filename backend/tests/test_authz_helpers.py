@@ -18,6 +18,8 @@ from app.main import create_app
 from app.modules.identity.models import RiskProfile
 from tests.conftest import make_settings
 
+pytestmark = pytest.mark.security
+
 
 def test_owned_by_always_filters_on_the_owner() -> None:
     uid = uuid.uuid4()

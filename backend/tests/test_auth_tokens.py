@@ -19,6 +19,8 @@ from app.main import create_app
 from tests import auth_helpers as ah
 from tests.conftest import make_settings
 
+pytestmark = pytest.mark.security
+
 # ------------------------------------------------------------------------- unit: verifier
 
 

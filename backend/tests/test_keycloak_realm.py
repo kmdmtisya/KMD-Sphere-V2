@@ -11,6 +11,8 @@ from typing import Any
 
 import pytest
 
+pytestmark = pytest.mark.security
+
 REALM_FILE = Path(__file__).resolve().parents[2] / "infra" / "keycloak" / "realm-export.json"
 
 
