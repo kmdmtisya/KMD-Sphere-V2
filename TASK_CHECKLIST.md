@@ -540,13 +540,13 @@
   - [x] P05-T08.1 Service
   - [x] P05-T08.2 Endpoints
   - [x] P05-T08.3 Reconciliation tests
-- [ ] **P05-T09** · Authorisation and integrity test suite · `NOT_STARTED` ⬜
+- [x] **P05-T09** · Authorisation and integrity test suite · `COMPLETED` ✅
   - Deps: P05-T08 · Wave: W6 · Track: SEC · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P05-T09.1 IDOR sweep
-  - [ ] P05-T09.2 Invariants
-  - [ ] P05-T09.3 Property tests
+  - Started: 2026-10-10T22:10:45+04:00 · Completed: 2026-10-10T22:22:46+04:00 · Duration: 12m 01s · Blocker: —
+  - Evidence: PR #52 (commit 90df9a1). tests/test_integrity_suite.py: IDOR sweep over every registered id route (valid bodies, 404 indistinguishable from missing, before/after hash snapshot of all the victim's rows unchanged; unknown path parameters or missing write bodies fail the suite) plus collection isolation (lists, search, consolidated summary). Every endpoint therefore has a cross-user denial test (per-route tests + sweep). Ledger invariants hold under random sequences: 12 seeds x 30 steps through the API (deposits, buys, backdated sells, dividends, reversals, idempotent replays), checking after every step row immutability, reversal rules, no negative quantity on any date, holdings cache == recomputation, one audit event per entry, replays add nothing, summary agrees (independent cash oracle). Pure properties remain Hypothesis-based (P05-T05). Local pytest 706 passed, -m security 476 passed, coverage 90.26%. 11/11 injected product regressions caught by this suite alone (cash-sign bug first survived and led to the independent oracle). CI all gates pass.
+  - [x] P05-T09.1 IDOR sweep
+  - [x] P05-T09.2 Invariants
+  - [x] P05-T09.3 Property tests
 - [ ] **P05-T10** · OpenAPI contract and Dart DTO reconciliation · `NOT_STARTED` ⬜
   - Deps: P05-T08, P03-T01 · Wave: W6 · Track: BE · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

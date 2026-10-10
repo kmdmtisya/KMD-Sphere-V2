@@ -699,3 +699,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-10T22:07:29+04:00 — COMPLETE P05-T08
 - duration: 11m 58s
 - evidence: PR #51 (commit 6cacda4). GET /api/v1/portfolios/{id}/summary and GET /api/v1/portfolios/consolidated/summary (active portfolios, reporting currency default = user base). Totals reconcile with independently computed fixtures: a 10-entry, 3-currency scenario with every figure worked by hand in tests/test_portfolio_summary.py, reproduced exactly through the API in tests/test_summary_api.py. Response includes freshness (computed_at, data_as_of = oldest input, stale_fx, unconverted currencies, unpriced assets, complete) and a currency breakdown (native + converted, shares by largest remainder to 100.00). Formulas in docs/design/portfolio-summary.md. Local pytest 690 passed, coverage 90.23%, ruff/mypy/OpenAPI/Spectral clean. 14/14 mutants caught. CI all gates pass.
+
+### 2026-10-10T22:10:45+04:00 — START P05-T09
+- Authorisation and integrity test suite
+- prerequisites verified COMPLETED
+
+### 2026-10-10T22:22:46+04:00 — COMPLETE P05-T09
+- duration: 12m 01s
+- evidence: PR #52 (commit 90df9a1). tests/test_integrity_suite.py: IDOR sweep over every registered id route (valid bodies, 404 indistinguishable from missing, before/after hash snapshot of all the victim's rows unchanged; unknown path parameters or missing write bodies fail the suite) plus collection isolation (lists, search, consolidated summary). Every endpoint therefore has a cross-user denial test (per-route tests + sweep). Ledger invariants hold under random sequences: 12 seeds x 30 steps through the API (deposits, buys, backdated sells, dividends, reversals, idempotent replays), checking after every step row immutability, reversal rules, no negative quantity on any date, holdings cache == recomputation, one audit event per entry, replays add nothing, summary agrees (independent cash oracle). Pure properties remain Hypothesis-based (P05-T05). Local pytest 706 passed, -m security 476 passed, coverage 90.26%. 11/11 injected product regressions caught by this suite alone (cash-sign bug first survived and led to the independent oracle). CI all gates pass.
