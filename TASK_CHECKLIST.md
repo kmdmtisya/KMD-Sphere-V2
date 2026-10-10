@@ -404,10 +404,10 @@
   - [x] P04-T02.3 Profile and preferences endpoints
   - [x] P04-T02.4 Migration
   - [x] P04-T02.5 Tests
-- [ ] **P04-T03** · Authorization framework and IDOR test harness · `IN_PROGRESS` 🔄
+- [x] **P04-T03** · Authorization framework and IDOR test harness · `COMPLETED` ✅
   - Deps: P04-T02 · Wave: W3 · Track: SEC · Size: M · Approval: no
-  - Started: 2026-10-10T05:07:30+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-10T05:07:30+04:00 · Completed: 2026-10-10T05:15:33+04:00 · Duration: 8m 03s · Blocker: —
+  - Evidence: PR #33. app/core/authz.py: owned_by(Model, user_id) query scoping (another user's row is never loaded), require_found -> ResourceNotFoundError (uniform 404 problem, kind not echoed), require_role -> PermissionDeniedError (403). ADR-0011 (Accepted): ownership in the query and in every UPDATE/DELETE WHERE clause; owner always from the token, never the body; 404 for missing and not-yours with identical bodies; 403 only for a visible resource and missing permission; 401 uniform. Example resource: risk profiles (POST/GET list/GET by id/PATCH /api/v1/risk-profiles), the first user-owned resource. Harness: tests/authz_harness.py (two provisioned users; assert_hidden_from checks 404 and that it is indistinguishable from a random missing id); tests/idor_registry.py maps every id route to its cross-user test; tests/test_idor_coverage.py fails CI if any id route (from the OpenAPI paths) is unregistered, stale, or names a missing test. Tests: Bob cannot read or PATCH Alice's profile (DB confirms unchanged), lists never mix, unauthenticated 401s, owner cannot be assigned (user_id rejected), malformed id 422, validation 422s; authz unit tests (owner filter always present in SQL, 404/403 bodies leak nothing). Mutation checks: dropping the owner filter from the read (2 tests fail) or from the update WHERE (1 test fails) is caught. Test infra: one event loop per module for async fixtures/tests (pytest-asyncio settings). Documented in docs/security.md. OpenAPI regenerated, Spectral clean. Backend 189 passing locally; CI 186 passed, 3 skipped (live Keycloak). Note: the T03 code commit 3395dc2 carries the message 'feat: eof' (an end-of-file hook aborted the first commit); left as is because rewriting pushed history needs user approval.
   - [x] P04-T03.1 Ownership dependency
   - [x] P04-T03.2 Two-user fixtures
   - [x] P04-T03.3 Policy ADR
