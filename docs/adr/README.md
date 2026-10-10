@@ -15,5 +15,5 @@ Format: Context / Decision / Consequences. Status values: Proposed, Accepted, Su
 | [0009](0009-forex-intelligence-module.md) | Forex Trading Intelligence module (decision support and paper trading only) | Accepted |
 | [0010](0010-global-reporting-currency.md) | Global reporting currency and FX management (FXCUR) | Accepted |
 | [0011](0011-authorization-404-vs-403.md) | Authorization model and the 404-vs-403 policy | Accepted |
-| [0012](0012-cost-basis-method.md) | Cost-basis method for holdings (weighted average cost) | Proposed |
-| [0013](0013-api-client-dtos.md) | Mobile API client DTOs (hand-written, contract-checked) | Proposed |
+| [0012](0012-cost-basis-method.md) | Cost-basis method for holdings (weighted average cost) | Accepted |
+| [0013](0013-api-client-dtos.md) | Mobile API client DTOs (hand-written, contract-checked) | Accepted |

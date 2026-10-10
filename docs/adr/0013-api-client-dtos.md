@@ -1,6 +1,6 @@
 # ADR-0013: Mobile API client DTOs (hand-written, contract-checked)
 
-Status: Proposed (P05-T10, 2026-10-10; for user approval at P05-GATE)
+Status: Accepted (proposed in P05-T10, 2026-10-10; approved by the user at P05-GATE, 2026-10-11)
 
 ## Context
 P03-T01 built the mobile DTOs for DEMO data, before the API existed. P05 built the API, and P05-T10 must decide how the app keeps its DTOs in step with `backend/openapi.json`. The plan assumed Freezed DTOs; in practice every DTO is a hand-written class parsed by the strict `JsonReader` (`lib/core/data/json_reader.dart`), and `freezed`, `json_serializable` and `build_runner` are declared in `pubspec.yaml` but not used.
