@@ -477,10 +477,10 @@
 - Exit gates: QG-01.3; QG-03.2; QG-06.2,5 — required by `P05-GATE` (Gates-done)
 - Release gates: —
 
-- [ ] **P05-T01** · Core schema and migrations · `IN_PROGRESS` 🔄
+- [ ] **P05-T01** · Core schema and migrations · `AWAITING_VERIFICATION` 🔎
   - Deps: P04-T02, P04-GATE · Wave: W1 · Track: DB · Size: L · Approval: yes
   - Started: 2026-10-10T19:42:13+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Evidence: PR #44 (commit 7dec617). Migration 0004: portfolios, portfolio_members, asset_classes, assets, asset_metadata, transactions (append-only via triggers), holdings (derived), valuations, fx_rates. All money NUMERIC(28,8), quantities and rates NUMERIC(28,12), no float columns; every core table UUID PK + created_at/updated_at. Upgrade/check/downgrade/upgrade round-trip and single head (test_migrations, CI migrations step). tests/test_schema_core.py 51 tests (metadata + DB constraints). 20/20 schema mutants caught. Local pytest 325 passed, coverage 93.28%; CI backend, mobile, security, tracker gates pass. Design and decisions for review: docs/design/data-model.md. Awaiting user review.
   - [x] P05-T01.1 Portfolio and member tables
   - [x] P05-T01.2 Asset and metadata tables
   - [x] P05-T01.3 Transactions/holdings/valuations
