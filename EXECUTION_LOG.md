@@ -592,3 +592,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-10T07:35:24+04:00 — START P04-T08
 - Auth screens: Welcome/Onboarding and Sign In/Up
 - prerequisites verified COMPLETED
+
+### 2026-10-10T08:12:52+04:00 — COMPLETE P04-T08
+- duration: 37m 28s
+- evidence: PR #38 (commit 13c94d1). Screen 1 /welcome: 3-slide carousel with Skip labelled 'Skip introduction' (tap action verified), Next through all slides (no swipe needed), slide position hints, reduced-motion jump, no return promises; shown on first launch (onboarding preference). Screen 2 /sign-in: optional validated email login_hint, hosted sign-in and registration (prompt=create), forgot-password in-app browser (config-built URL), MFA note, DEMO path, fixed non-leaking error messages, cancel silent. MFA set-up (kc_action=CONFIGURE_TOTP) from account card keeps the session on failure. One-time biometric offer: accept needs device check, Not now turns lock off, no-screen-lock explanation. Tests: 33 new; 939 pass; analyze/format clean; accessibility test found and fixed a real Skip semantics bug. 20/20 mutants caught. Emulator API 37: fresh install Welcome -> Skip -> Sign in with prefilled email on Keycloak -> 'Protect this device' sheet -> Home; Create account opened registration page; Forgot password opened reset page; back returned to sign-in. iOS not run on device; CI ios compile pass. CI all gates pass. Docs: security.md Sign-in screens.
