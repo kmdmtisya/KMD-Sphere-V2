@@ -29,7 +29,7 @@ Usage (run from the repository root):
   python scripts/track.py qg reverify QG-06 --evidence "..." [--approved-by "name"]
   python scripts/track.py qg waive QG-02.6 --justification "..." --approved-by "name" --risk-owner "name" --expires YYYY-MM-DD
   python scripts/track.py qg revoke-waiver W-001
-  python scripts/track.py qg require QG-02.1 QG-03 QG-all@P14   # exit 1 if not satisfied (for CI)
+  python scripts/track.py qg require QG-02.1 QG-03 QG-all@P15   # exit 1 if not satisfied (for CI)
 Add --root <dir> to operate on a copy of the tracking files.
 """
 from __future__ import annotations
@@ -492,6 +492,8 @@ GATE_ICON = {"NOT_STARTED": "⬜", "IN_PROGRESS": "🔄", "BLOCKED": "⛔", "FAI
 META_ORDER = ["Required", "By", "Evidence", "Verified", "WAIVED"]
 QG_BEGIN, QG_END = "<!-- QG-AUTO:BEGIN -->", "<!-- QG-AUTO:END -->"
 WAIVER_BEGIN, WAIVER_END = "<!-- WAIVERS:BEGIN -->", "<!-- WAIVERS:END -->"
+# Forex Trading Intelligence (QG-13..QG-20) ships separately behind a feature flag (ADR-0009).
+OPTIONAL_GATE_NUMBERS = frozenset(range(13, 21))
 TOKEN_RE = re.compile(r"^(QG-\d\d(?:\.\d+)?|QG-all@P\d\d)$")
 
 
@@ -613,9 +615,16 @@ class Register:
             return self.gate_crits(token)
         if m := re.fullmatch(r"QG-all@P(\d\d)", token):
             lim = int(m.group(1))
-            # QG-01..QG-11 only: QG-12 is the release gate itself, and optional workstream gates (the
-            # Forex gates QG-13..QG-20) never block core release readiness.
-            return [c for c in self.crits.values() if int(c.gate[3:]) <= 11 and c.required_phase <= lim]
+            # Core gates only: not QG-12 (the release gate itself) and not the optional Forex
+            # workstream gates, which never block the core release. The multi-currency gates
+            # (QG-21..QG-25) are core.
+            return [
+                c
+                for c in self.crits.values()
+                if int(c.gate[3:]) != 12
+                and int(c.gate[3:]) not in OPTIONAL_GATE_NUMBERS
+                and c.required_phase <= lim
+            ]
         raise KeyError(token)
 
     def unsatisfied(self, tokens: list[str]) -> list[str]:
@@ -726,9 +735,9 @@ def cmd_qg(cl: Checklist, args) -> None:
             if st in ("FAILED", "BLOCKED"):
                 die(f"{g} is {st}; run `qg resolve {g}` after remediation first")
             if cid == "QG-12.1":
-                un = reg.unsatisfied(["QG-all@P14"])
+                un = reg.unsatisfied(["QG-all@P15"])
                 if un:
-                    die("QG-12.1 requires every QG-01..QG-11 criterion due by P14; unsatisfied: " + short(un))
+                    die("QG-12.1 requires every core criterion (all gates except QG-12 and the optional Forex gates QG-13..QG-20) due by P15; unsatisfied: " + short(un))
             c.done = True
             c.meta["Evidence"] = clean(args.evidence)
             c.meta["Verified"] = ts

@@ -1,12 +1,12 @@
 # Forex Trading Intelligence module: technical design
 
-Status: **Approved** by the user 2026-10-09 (scope and phase P12); open decisions DEC-19..DEC-24 remain. Nothing in this document is implemented. Related: [ADR-0009](../adr/0009-forex-intelligence-module.md), `EXECUTION_PLAN.md` phase P12 (tasks FX-01…FX-14 = P12-T01…T14), quality gates QG-13…QG-20 (QG-FX-01…08).
+Status: **Approved** by the user 2026-10-09 (scope and phase P13); open decisions DEC-19..DEC-24 remain. Nothing in this document is implemented. Related: [ADR-0009](../adr/0009-forex-intelligence-module.md), `EXECUTION_PLAN.md` phase P13 (tasks FX-01…FX-14 = P13-T01…T14), quality gates QG-13…QG-20 (QG-FX-01…08).
 
 ## 1. Purpose and boundary
 
 An AI-assisted **decision-support and paper-trading** module inside WealthSphere: live market data, indicators, probabilistic forecasts, a transparent opportunity ranking, deterministic trade-risk calculation, backtesting, paper trading and a Forex Copilot.
 
-Hard boundaries (they apply to every task in P12):
+Hard boundaries (they apply to every task in P13):
 
 1. **No live trade execution.** The build contains no order-placement code path and no broker trading credentials. Enabling execution needs a separate, explicitly approved phase, regulatory review and dedicated trading risk controls.
 2. **No guarantees.** A forecast, score or setup is never presented as a guaranteed or expected profit. Output is "research candidate", "scenario", "illustrative level".
@@ -22,7 +22,7 @@ Hard boundaries (they apply to every task in P12):
 | Modular monolith | New backend modules under `backend/app/modules/forex/` (sub-packages below). Same layering as ADR-0004 (api / service / repository / schemas). No new deployable service in v1. |
 | Market data (P08) | The P08 provider abstraction is **extended** with quote streaming and candles for forex; it is not duplicated. DEC-04 (providers) is widened by DEC-19 for forex streaming rights. |
 | Database (ADR-0005) | New migrations: instruments, quotes, candles, economic events, forecasts and model registry, signals, backtests, paper accounts/orders/positions/journal. Time-series volume decides DEC-21 (partitioning vs TimescaleDB). |
-| AI (P10, P11) | New allow-listed tools for the orchestrator; same four-section answer structure, same output guard. Forex tools are read-only except paper-trading simulation inside the user's own paper account. |
+| AI (P10, P12) | New allow-listed tools for the orchestrator; same four-section answer structure, same output guard. Forex tools are read-only except paper-trading simulation inside the user's own paper account. |
 | Mobile | New "Forex" section reached from More (and Home shortcut) so the approved five-tab navigation (ADR-0002) is unchanged. Reuses the design system (cards, charts, `DataAsOfLabel`, `DemoBadge`, state widgets). Adds a `PaperTradingBadge`. |
 | Security | New endpoints go through the existing authn/authz and ownership harness (P04). Provider credentials only in the secret store. Streaming is authenticated. Paper data is per-user with IDOR tests. |
 | Observability | Feed status, staleness, stream lag, model drift and backtest job metrics added to the OTel pipeline. |
@@ -238,7 +238,7 @@ Metrics: stream lag, messages/s, reconnects, stale-quote ratio per provider, mod
 | AI | evaluation set with stale data, adversarial prompts, guarantee-language guard |
 | Mobile | widget/golden for new widgets in light/dark/2.0x/RTL, streaming resilience, lifecycle, integration tests |
 
-## 18. Out of scope for P12
+## 18. Out of scope for P13
 
 Live order execution, broker account linking for trading, automated or copy trading, leveraged position management on real accounts, tax advice, social/signal selling. Any of these needs a new approved phase.
 

@@ -71,7 +71,7 @@ Cross-cutting platform code (`backend/app/core`): configuration, logging with co
 
 ## 7. Environments
 
-Local: `docker-compose.yml` (Postgres, Redis, RabbitMQ, Keycloak). Cloud: Terraform-managed, containerised, with isolated staging and production (P13).
+Local: `docker-compose.yml` (Postgres, Redis, RabbitMQ, Keycloak). Cloud: Terraform-managed, containerised, with isolated staging and production (P14).
 
 ## 8. Quality attributes
 

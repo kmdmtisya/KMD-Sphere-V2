@@ -89,6 +89,8 @@ Users can maintain multiple portfolios such as UAE Investments, Kenya Investment
 ## 8. Multi-Currency Intent
 Each investment retains its native currency. The user selects a reporting/base currency. WealthSphere converts portfolio values using appropriate FX data while preserving original transaction currency and historical exchange-rate information.
 
+_Extension (approved 2026-10-10, ADR-0010, plan phase P11 FXCUR):_ the reporting currency is a **global user setting**, synced across devices and reachable from Settings and from Total Wealth on Home. Switching it changes only how figures are presented, everywhere in the app (dashboard, portfolios, holdings, analytics, net worth, income, goals, calculator, forecasts, AI, reports); it never changes balances, transaction amounts, transaction rates, portfolio base currencies, goal target currencies or forecast assumptions. Conversions use timestamped provider rates labelled current, cached or unavailable (never invented), one consistent rate snapshot per view, historical rates for past figures, and exact decimal arithmetic on the backend. A currency converter and authorised AI currency tools are included.
+
 ## 9. Portfolio Analytics Intent
 Progressively support:
 - Current market value and invested capital
@@ -276,7 +278,7 @@ The objective is not for AI to make financial decisions on behalf of the user. T
 
 
 ## 34. Forex Market Intelligence Module (approved extension, ADR-0009)
-_Status: approved by the user 2026-10-09 (ADR-0009, phase P12). Not part of the core release path (P00-P11 and P13-P15); it is planned as phase P12, between the AI phases and cloud infrastructure._
+_Status: approved by the user 2026-10-09 (ADR-0009, phase P13). Not part of the core release path (P00-P12 and P14-P16); it is planned as phase P13, between the AI phases and cloud infrastructure._
 
 **Intent.** Help users study the foreign-exchange market with timestamped market data, deterministic technical analysis, probabilistic forecasts with honest validation, a transparent opportunity ranking, trade risk management, backtesting and paper trading, explained by the AI Copilot through allow-listed tools.
 
@@ -290,7 +292,7 @@ _Status: approved by the user 2026-10-09 (ADR-0009, phase P12). Not part of the 
 - The backend computes prices, indicators, forecasts, risk and backtests; the LLM only explains tool results and separates facts, calculations, assumptions and interpretation.
 - Position sizing never assumes a fixed pip value; stop-loss orders do not guarantee a maximum loss, and leverage and margin warnings are shown.
 
-**Quality.** Gates QG-FX-01…08 (QG-13…QG-20) in QUALITY_GATES.md; plan in EXECUTION_PLAN.md phase P12; design in docs/design/forex-technical-design.md.
+**Quality.** Gates QG-FX-01…08 (QG-13…QG-20) in QUALITY_GATES.md; plan in EXECUTION_PLAN.md phase P13; design in docs/design/forex-technical-design.md.
 
 ---
 
