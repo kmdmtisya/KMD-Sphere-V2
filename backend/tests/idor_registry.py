@@ -39,6 +39,24 @@ IDOR_TESTS: dict[tuple[str, str], str] = {
     ("GET", "/api/v1/portfolios/{portfolio_id}/holdings"): (
         "tests.test_holdings_api::test_bob_cannot_read_alices_holdings"
     ),
+    ("POST", "/api/v1/portfolios/{portfolio_id}/valuations"): (
+        "tests.test_valuations_api::test_bob_cannot_add_to_alices_valuations"
+    ),
+    ("GET", "/api/v1/portfolios/{portfolio_id}/valuations"): (
+        "tests.test_valuations_api::test_bob_cannot_list_alices_valuations"
+    ),
+    ("GET", "/api/v1/portfolios/{portfolio_id}/valuations/latest"): (
+        "tests.test_valuations_api::test_bob_cannot_read_alices_latest_valuations"
+    ),
+    ("GET", "/api/v1/portfolios/{portfolio_id}/valuations/{valuation_id}"): (
+        "tests.test_valuations_api::test_bob_cannot_read_alices_valuation"
+    ),
+    ("PATCH", "/api/v1/portfolios/{portfolio_id}/valuations/{valuation_id}"): (
+        "tests.test_valuations_api::test_bob_cannot_change_alices_valuation"
+    ),
+    ("DELETE", "/api/v1/portfolios/{portfolio_id}/valuations/{valuation_id}"): (
+        "tests.test_valuations_api::test_bob_cannot_delete_alices_valuation"
+    ),
 }
 
 # Routes whose path parameters identify global reference data, not anyone's resource, with the

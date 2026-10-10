@@ -1553,6 +1553,190 @@
         ],
         "title": "ValidationError",
         "type": "object"
+      },
+      "ValuationCreate": {
+        "additionalProperties": false,
+        "description": "A user-entered value of an asset at a moment (a property, a business, a pension).",
+        "properties": {
+          "as_of": {
+            "description": "When the value applied (with a time zone)",
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "asset_id": {
+            "format": "uuid",
+            "title": "Asset Id",
+            "type": "string"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "source": {
+            "description": "Where the value comes from, e.g. \"owner estimate\", \"bank statement\"",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Source",
+            "type": "string"
+          },
+          "value": {
+            "$ref": "#/components/schemas/Money"
+          }
+        },
+        "required": [
+          "asset_id",
+          "value",
+          "as_of",
+          "source"
+        ],
+        "title": "ValuationCreate",
+        "type": "object"
+      },
+      "ValuationOut": {
+        "properties": {
+          "as_of": {
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "asset_id": {
+            "format": "uuid",
+            "title": "Asset Id",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "portfolio_id": {
+            "format": "uuid",
+            "title": "Portfolio Id",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "value": {
+            "$ref": "#/components/schemas/Money"
+          }
+        },
+        "required": [
+          "id",
+          "portfolio_id",
+          "asset_id",
+          "value",
+          "as_of",
+          "source",
+          "note",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "ValuationOut",
+        "type": "object"
+      },
+      "ValuationPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ValuationOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Pass as `cursor` for the next page; null at the end",
+            "title": "Next Cursor"
+          }
+        },
+        "required": [
+          "items",
+          "next_cursor"
+        ],
+        "title": "ValuationPage",
+        "type": "object"
+      },
+      "ValuationUpdate": {
+        "additionalProperties": false,
+        "description": "Corrects a valuation. The asset and the as-of time cannot change: post a new valuation.",
+        "properties": {
+          "note": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "maxLength": 64,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "title": "ValuationUpdate",
+        "type": "object"
       }
     },
     "securitySchemes": {
@@ -2914,6 +3098,502 @@
         ]
       }
     },
+    "/api/v1/portfolios/{portfolio_id}/valuations": {
+      "get": {
+        "description": "Valuations, newest as-of first.",
+        "operationId": "list_valuations_api_v1_portfolios__portfolio_id__valuations_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "portfolio_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Portfolio Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "asset_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Asset Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 200,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValuationPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such portfolio for this user"
+          },
+          "422": {
+            "description": "Invalid cursor"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "List Valuations",
+        "tags": [
+          "valuations"
+        ]
+      },
+      "post": {
+        "description": "Records the value of an asset at a moment, with where the value comes from.",
+        "operationId": "create_valuation_api_v1_portfolios__portfolio_id__valuations_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "portfolio_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Portfolio Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValuationCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValuationOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such portfolio for this user"
+          },
+          "409": {
+            "description": "A valuation already exists at that moment, or the portfolio is archived"
+          },
+          "422": {
+            "description": "Invalid valuation"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Create Valuation",
+        "tags": [
+          "valuations"
+        ]
+      }
+    },
+    "/api/v1/portfolios/{portfolio_id}/valuations/latest": {
+      "get": {
+        "description": "For each asset, the valuation with the latest as-of at or before `at`.",
+        "operationId": "latest_valuations_api_v1_portfolios__portfolio_id__valuations_latest_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "portfolio_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Portfolio Id",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Values as of this moment (default: now)",
+            "in": "query",
+            "name": "at",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Values as of this moment (default: now)",
+              "title": "At"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ValuationOut"
+                  },
+                  "title": "Response Latest Valuations Api V1 Portfolios  Portfolio Id  Valuations Latest Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such portfolio for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Latest Valuations",
+        "tags": [
+          "valuations"
+        ]
+      }
+    },
+    "/api/v1/portfolios/{portfolio_id}/valuations/{valuation_id}": {
+      "delete": {
+        "description": "Removes a mistaken valuation (audited).",
+        "operationId": "delete_valuation_api_v1_portfolios__portfolio_id__valuations__valuation_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "portfolio_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Portfolio Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "valuation_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Valuation Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such valuation for this user"
+          },
+          "409": {
+            "description": "The portfolio is archived"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Delete Valuation",
+        "tags": [
+          "valuations"
+        ]
+      },
+      "get": {
+        "description": "One valuation.",
+        "operationId": "get_valuation_api_v1_portfolios__portfolio_id__valuations__valuation_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "portfolio_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Portfolio Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "valuation_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Valuation Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValuationOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such valuation for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Valuation",
+        "tags": [
+          "valuations"
+        ]
+      },
+      "patch": {
+        "description": "Corrects the value, source or note (audited). The as-of time cannot change.",
+        "operationId": "update_valuation_api_v1_portfolios__portfolio_id__valuations__valuation_id__patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "portfolio_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Portfolio Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "valuation_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Valuation Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValuationUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValuationOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such valuation for this user"
+          },
+          "409": {
+            "description": "The portfolio is archived"
+          },
+          "422": {
+            "description": "Invalid change"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Update Valuation",
+        "tags": [
+          "valuations"
+        ]
+      }
+    },
     "/api/v1/risk-profiles": {
       "get": {
         "description": "The signed-in user's risk assessments, newest first.",
@@ -3251,6 +3931,10 @@
     {
       "description": "FX rates and the rules that select them",
       "name": "fx"
+    },
+    {
+      "description": "User-entered values of assets without a market price",
+      "name": "valuations"
     }
   ]
 }
