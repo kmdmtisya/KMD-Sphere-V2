@@ -502,15 +502,15 @@
   - [x] P05-T03.1 Service and endpoints
   - [x] P05-T03.2 Ownership and audit
   - [x] P05-T03.3 Tests
-- [ ] **P05-T04** · Transaction ledger API · `NOT_STARTED` ⬜
+- [x] **P05-T04** · Transaction ledger API · `COMPLETED` ✅
   - Deps: P05-T02, P05-T03, P04-T04 · Wave: W3 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P05-T04.1 Ledger model and validation per type
-  - [ ] P05-T04.2 Idempotency
-  - [ ] P05-T04.3 Correction flow
-  - [ ] P05-T04.4 Audit
-  - [ ] P05-T04.5 Tests
+  - Started: 2026-10-10T20:59:16+04:00 · Completed: 2026-10-10T21:01:39+04:00 · Duration: 2m 23s · Blocker: —
+  - Evidence: PR #47 (commits e18486c, 943fb84). 14 types posted append-only via POST /api/v1/portfolios/{id}/transactions with per-type rules (derived gross ROUND_HALF_UP, currency minor units, FX required for foreign postings, asset visibility); no update/delete routes (405) plus DB triggers; corrections via linked reversal entries (once, not of a reversal, never negative position); Idempotency-Key replay returns the original (200, no second posting or audit), different content 409, concurrent retries post once; per-portfolio row lock (concurrent sells tested); audit event per posting and reversal; list with filters and cursor pagination. Tests: 43 rule + 33 API (IDOR routes registered). Local pytest 527 passed, coverage 90.77%, ruff/mypy clean, OpenAPI + Spectral clean (rule aligned with the Money object convention, proven on a broken spec). 17/17 mutants caught. CI all gates pass. Process: implementation first committed on local main (push refused by protection) and moved to the branch; tracker start recorded after that commit.
+  - [x] P05-T04.1 Ledger model and validation per type
+  - [x] P05-T04.2 Idempotency
+  - [x] P05-T04.3 Correction flow
+  - [x] P05-T04.4 Audit
+  - [x] P05-T04.5 Tests
 - [ ] **P05-T05** · Holdings calculation service · `NOT_STARTED` ⬜
   - Deps: P05-T04 · Wave: W4 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

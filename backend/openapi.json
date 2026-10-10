@@ -469,6 +469,32 @@
         "title": "MetadataField",
         "type": "object"
       },
+      "Money": {
+        "additionalProperties": false,
+        "description": "An amount in a currency. The amount is a string, written with the currency's minor units\nin responses (\"1234.50\", \"1500\" for JPY).",
+        "properties": {
+          "amount": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Amount",
+            "type": "string"
+          },
+          "currency": {
+            "description": "ISO 4217 code",
+            "pattern": "^[A-Z]{3}$",
+            "title": "Currency",
+            "type": "string"
+          }
+        },
+        "required": [
+          "amount",
+          "currency"
+        ],
+        "title": "Money",
+        "type": "object"
+      },
       "PortfolioCreate": {
         "additionalProperties": false,
         "properties": {
@@ -787,6 +813,26 @@
         "title": "ReadyStatus",
         "type": "object"
       },
+      "ReversalCreate": {
+        "additionalProperties": false,
+        "properties": {
+          "note": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          }
+        },
+        "title": "ReversalCreate",
+        "type": "object"
+      },
       "RiskProfileCreate": {
         "additionalProperties": false,
         "properties": {
@@ -904,6 +950,434 @@
           }
         },
         "title": "RiskProfileUpdate",
+        "type": "object"
+      },
+      "TransactionCreate": {
+        "additionalProperties": false,
+        "description": "A ledger posting. See `app/modules/transactions/rules.py` for the rules per type. Amounts\nare Money objects in the posting `currency`; quantities and rates are strings.",
+        "properties": {
+          "asset_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Asset Id"
+          },
+          "currency": {
+            "description": "Currency of the posting",
+            "pattern": "^[A-Z]{3}$",
+            "title": "Currency",
+            "type": "string"
+          },
+          "fees": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "fx_rate_as_of": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "When the rate was valid (with a time zone)",
+            "title": "Fx Rate As Of"
+          },
+          "fx_rate_source": {
+            "anyOf": [
+              {
+                "maxLength": 32,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fx Rate Source"
+          },
+          "fx_rate_to_portfolio_currency": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "1 unit of the posting currency in portfolio currency units. Required when the posting currency differs from the portfolio's.",
+            "title": "Fx Rate To Portfolio Currency"
+          },
+          "gross_amount": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "For BUY/SELL derived from quantity x unit price when omitted"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "quantity": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Units, for trades and transfers",
+            "title": "Quantity"
+          },
+          "settlement_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Settlement Date"
+          },
+          "taxes": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "trade_date": {
+            "format": "date",
+            "title": "Trade Date",
+            "type": "string"
+          },
+          "transaction_type": {
+            "enum": [
+              "BUY",
+              "SELL",
+              "DEPOSIT",
+              "WITHDRAWAL",
+              "DIVIDEND",
+              "INTEREST",
+              "COUPON",
+              "RENT",
+              "DISTRIBUTION",
+              "FEE",
+              "TAX",
+              "TRANSFER_IN",
+              "TRANSFER_OUT",
+              "VALUATION_ADJUSTMENT"
+            ],
+            "title": "Transaction Type",
+            "type": "string"
+          },
+          "unit_price": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "transaction_type",
+          "trade_date",
+          "currency"
+        ],
+        "title": "TransactionCreate",
+        "type": "object"
+      },
+      "TransactionOut": {
+        "properties": {
+          "asset_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Asset Id"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "fees": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "fx_rate_as_of": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fx Rate As Of"
+          },
+          "fx_rate_source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fx Rate Source"
+          },
+          "fx_rate_to_portfolio_currency": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Fx Rate To Portfolio Currency",
+            "type": "string"
+          },
+          "gross_amount": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "idempotency_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Idempotency Key"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "portfolio_id": {
+            "format": "uuid",
+            "title": "Portfolio Id",
+            "type": "string"
+          },
+          "quantity": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Quantity"
+          },
+          "reversed_by_transaction_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Set when this entry has been cancelled by a reversal",
+            "title": "Reversed By Transaction Id"
+          },
+          "reverses_transaction_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Set on a reversal: the entry it cancels",
+            "title": "Reverses Transaction Id"
+          },
+          "settlement_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Settlement Date"
+          },
+          "source": {
+            "enum": [
+              "manual",
+              "import",
+              "system"
+            ],
+            "title": "Source",
+            "type": "string"
+          },
+          "taxes": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "trade_date": {
+            "format": "date",
+            "title": "Trade Date",
+            "type": "string"
+          },
+          "transaction_type": {
+            "enum": [
+              "BUY",
+              "SELL",
+              "DEPOSIT",
+              "WITHDRAWAL",
+              "DIVIDEND",
+              "INTEREST",
+              "COUPON",
+              "RENT",
+              "DISTRIBUTION",
+              "FEE",
+              "TAX",
+              "TRANSFER_IN",
+              "TRANSFER_OUT",
+              "VALUATION_ADJUSTMENT"
+            ],
+            "title": "Transaction Type",
+            "type": "string"
+          },
+          "unit_price": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "portfolio_id",
+          "transaction_type",
+          "trade_date",
+          "settlement_date",
+          "asset_id",
+          "currency",
+          "quantity",
+          "unit_price",
+          "gross_amount",
+          "fees",
+          "taxes",
+          "fx_rate_to_portfolio_currency",
+          "fx_rate_as_of",
+          "fx_rate_source",
+          "source",
+          "idempotency_key",
+          "reverses_transaction_id",
+          "reversed_by_transaction_id",
+          "note",
+          "created_at"
+        ],
+        "title": "TransactionOut",
+        "type": "object"
+      },
+      "TransactionPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/TransactionOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Pass as `cursor` for the next page; null at the end",
+            "title": "Next Cursor"
+          }
+        },
+        "required": [
+          "items",
+          "next_cursor"
+        ],
+        "title": "TransactionPage",
         "type": "object"
       },
       "ValidationError": {
@@ -1654,6 +2128,475 @@
         ]
       }
     },
+    "/api/v1/portfolios/{portfolio_id}/transactions": {
+      "get": {
+        "description": "The ledger, newest first, with optional filters and cursor pagination.",
+        "operationId": "list_transactions_api_v1_portfolios__portfolio_id__transactions_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "portfolio_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Portfolio Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "transaction_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "BUY",
+                    "SELL",
+                    "DEPOSIT",
+                    "WITHDRAWAL",
+                    "DIVIDEND",
+                    "INTEREST",
+                    "COUPON",
+                    "RENT",
+                    "DISTRIBUTION",
+                    "FEE",
+                    "TAX",
+                    "TRANSFER_IN",
+                    "TRANSFER_OUT",
+                    "VALUATION_ADJUSTMENT"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Transaction Type"
+            }
+          },
+          {
+            "in": "query",
+            "name": "asset_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Asset Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "from_date",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "From Date"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to_date",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "To Date"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 200,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such portfolio for this user"
+          },
+          "422": {
+            "description": "Invalid filter or cursor"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "List Transactions",
+        "tags": [
+          "transactions"
+        ]
+      },
+      "post": {
+        "description": "Posts an entry to the portfolio's ledger. Posted entries never change.",
+        "operationId": "post_transaction_api_v1_portfolios__portfolio_id__transactions_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "portfolio_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Portfolio Id",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Client-chosen key (1-128 visible ASCII). A retry with the same key and content returns the original entry (200, Idempotent-Replayed: true).",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[\\x21-\\x7e]{1,128}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Client-chosen key (1-128 visible ASCII). A retry with the same key and content returns the original entry (200, Idempotent-Replayed: true).",
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Idempotent replay of an earlier posting",
+            "headers": {
+              "Idempotent-Replayed": {
+                "description": "true when the response repeats an earlier posting with this key",
+                "schema": {
+                  "enum": [
+                    "true"
+                  ],
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such portfolio for this user"
+          },
+          "409": {
+            "description": "Archived portfolio, quantity above the units held, or an Idempotency-Key reused for a different entry"
+          },
+          "422": {
+            "description": "Invalid entry"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Post Transaction",
+        "tags": [
+          "transactions"
+        ]
+      }
+    },
+    "/api/v1/portfolios/{portfolio_id}/transactions/{transaction_id}": {
+      "get": {
+        "description": "One ledger entry, with its reversal link.",
+        "operationId": "get_transaction_api_v1_portfolios__portfolio_id__transactions__transaction_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "portfolio_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Portfolio Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "transaction_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Transaction Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such transaction for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Transaction",
+        "tags": [
+          "transactions"
+        ]
+      }
+    },
+    "/api/v1/portfolios/{portfolio_id}/transactions/{transaction_id}/reversal": {
+      "post": {
+        "description": "Cancels an entry by posting its reversal (same figures, linked to it). To correct an\nentry, reverse it and post the right one.",
+        "operationId": "reverse_transaction_api_v1_portfolios__portfolio_id__transactions__transaction_id__reversal_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "portfolio_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Portfolio Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "transaction_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Transaction Id",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Client-chosen key (1-128 visible ASCII). A retry with the same key and content returns the original entry (200, Idempotent-Replayed: true).",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[\\x21-\\x7e]{1,128}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Client-chosen key (1-128 visible ASCII). A retry with the same key and content returns the original entry (200, Idempotent-Replayed: true).",
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReversalCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Idempotent replay of an earlier posting",
+            "headers": {
+              "Idempotent-Replayed": {
+                "description": "true when the response repeats an earlier posting with this key",
+                "schema": {
+                  "enum": [
+                    "true"
+                  ],
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such transaction for this user"
+          },
+          "409": {
+            "description": "Already reversed, a reversal, or it would leave a negative position"
+          },
+          "422": {
+            "description": "Invalid entry"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Reverse Transaction",
+        "tags": [
+          "transactions"
+        ]
+      }
+    },
     "/api/v1/risk-profiles": {
       "get": {
         "description": "The signed-in user's risk assessments, newest first.",
@@ -1979,6 +2922,10 @@
     {
       "description": "The signed-in user's portfolios",
       "name": "portfolios"
+    },
+    {
+      "description": "The append-only ledger of each portfolio",
+      "name": "transactions"
     }
   ]
 }

@@ -659,3 +659,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-10T20:44:58+04:00 — COMPLETE P05-T03
 - duration: 9m 27s
 - evidence: PR #46 (commits f5859cb, 100770e). /api/v1/portfolios create/list/get/patch/archive; ownership via owned_by on reads and owner in UPDATE WHERE; cross-user access 404 (GET, PATCH, archive registered in IDOR registry and tested, data unchanged); audit events for create/update/archive (none for empty patch or repeat archive); names unique per user (409), base currency immutable, archived read-only (409), limit 100. Local: ruff/format/mypy clean, OpenAPI regenerated and Spectral clean, pytest 430 passed, coverage 92.22%. 13/14 mutants caught; the 14th was redundant code and was removed. CI backend, mobile, security, tracker pass.
+
+### 2026-10-10T20:59:17+04:00 — START P05-T04
+- Transaction ledger API
+- prerequisites verified COMPLETED
+
+### 2026-10-10T21:01:39+04:00 — COMPLETE P05-T04
+- duration: 2m 23s
+- evidence: PR #47 (commits e18486c, 943fb84). 14 types posted append-only via POST /api/v1/portfolios/{id}/transactions with per-type rules (derived gross ROUND_HALF_UP, currency minor units, FX required for foreign postings, asset visibility); no update/delete routes (405) plus DB triggers; corrections via linked reversal entries (once, not of a reversal, never negative position); Idempotency-Key replay returns the original (200, no second posting or audit), different content 409, concurrent retries post once; per-portfolio row lock (concurrent sells tested); audit event per posting and reversal; list with filters and cursor pagination. Tests: 43 rule + 33 API (IDOR routes registered). Local pytest 527 passed, coverage 90.77%, ruff/mypy clean, OpenAPI + Spectral clean (rule aligned with the Money object convention, proven on a broken spec). 17/17 mutants caught. CI all gates pass. Process: implementation first committed on local main (push refused by protection) and moved to the branch; tracker start recorded after that commit.
