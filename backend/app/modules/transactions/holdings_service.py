@@ -10,7 +10,7 @@ from app.core.authz import require_found
 from app.core.money import Money, minor_units, round_half_up
 from app.modules.assets.schemas import AssetSummary
 from app.modules.assets.service import AssetService
-from app.modules.transactions.holdings import compute
+from app.modules.transactions.holdings import Entry, compute
 from app.modules.transactions.models import Holding
 from app.modules.transactions.repository import LedgerRepository
 from app.modules.transactions.schemas import HoldingOut
@@ -31,6 +31,14 @@ class HoldingsService:
             await self._repo.delete_holding(portfolio_id, asset_id)
         else:
             await self._repo.save_holding(portfolio_id, position, currency)
+
+    async def positions(self, portfolio_id: uuid.UUID) -> list[Holding]:
+        """Every holding row, closed ones included. The caller has authorised the portfolio."""
+        return await self._repo.holdings(portfolio_id, include_closed=True)
+
+    async def entries(self, portfolio_id: uuid.UUID) -> list[Entry]:
+        """Every ledger entry (with reversals). The caller has authorised the portfolio."""
+        return await self._repo.all_entries(portfolio_id)
 
     async def list(
         self, user_id: uuid.UUID, portfolio_id: uuid.UUID, include_closed: bool

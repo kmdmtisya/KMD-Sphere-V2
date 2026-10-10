@@ -30,6 +30,7 @@ class Entry:
     taxes: Decimal
     fx: Decimal
     reverses: uuid.UUID | None = None
+    currency: str = ""
 
 
 @dataclass

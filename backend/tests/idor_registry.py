@@ -57,6 +57,9 @@ IDOR_TESTS: dict[tuple[str, str], str] = {
     ("DELETE", "/api/v1/portfolios/{portfolio_id}/valuations/{valuation_id}"): (
         "tests.test_valuations_api::test_bob_cannot_delete_alices_valuation"
     ),
+    ("GET", "/api/v1/portfolios/{portfolio_id}/summary"): (
+        "tests.test_summary_api::test_bob_cannot_read_alices_summary"
+    ),
 }
 
 # Routes whose path parameters identify global reference data, not anyone's resource, with the

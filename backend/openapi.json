@@ -311,6 +311,46 @@
         "title": "AssetSummary",
         "type": "object"
       },
+      "CurrencyShare": {
+        "properties": {
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "native": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Valued positions and cash in this currency"
+          },
+          "share_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Share of total value (2 decimals, adding up to 100); null when not meaningful",
+            "title": "Share Percent"
+          },
+          "value": {
+            "$ref": "#/components/schemas/Money",
+            "description": "The same amount in the summary currency"
+          }
+        },
+        "required": [
+          "currency",
+          "native",
+          "value",
+          "share_percent"
+        ],
+        "title": "CurrencyShare",
+        "type": "object"
+      },
       "DashboardLayout": {
         "additionalProperties": false,
         "properties": {
@@ -347,6 +387,51 @@
           "order"
         ],
         "title": "DashboardLayout",
+        "type": "object"
+      },
+      "Freshness": {
+        "properties": {
+          "complete": {
+            "description": "False when anything is unpriced or unconverted",
+            "title": "Complete",
+            "type": "boolean"
+          },
+          "computed_at": {
+            "format": "date-time",
+            "title": "Computed At",
+            "type": "string"
+          },
+          "data_as_of": {
+            "description": "The oldest valuation or FX rate the figures use",
+            "format": "date-time",
+            "title": "Data As Of",
+            "type": "string"
+          },
+          "stale_fx": {
+            "description": "Currencies whose FX rate is older than a day",
+            "items": {
+              "type": "string"
+            },
+            "title": "Stale Fx",
+            "type": "array"
+          },
+          "unconverted_currencies": {
+            "description": "Currencies without a usable FX rate; their amounts are left out of totals",
+            "items": {
+              "type": "string"
+            },
+            "title": "Unconverted Currencies",
+            "type": "array"
+          }
+        },
+        "required": [
+          "computed_at",
+          "data_as_of",
+          "stale_fx",
+          "unconverted_currencies",
+          "complete"
+        ],
+        "title": "Freshness",
         "type": "object"
       },
       "FxQuoteOut": {
@@ -1084,6 +1169,96 @@
           }
         },
         "title": "RiskProfileUpdate",
+        "type": "object"
+      },
+      "SummaryOut": {
+        "description": "Server-authoritative totals. Money is in `currency`, rounded to its minor units.",
+        "properties": {
+          "cash": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Cash from the ledger; negative if deposits are not recorded"
+          },
+          "cost_basis": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Of the valued positions with a ledger cost"
+          },
+          "currencies": {
+            "items": {
+              "$ref": "#/components/schemas/CurrencyShare"
+            },
+            "title": "Currencies",
+            "type": "array"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "expenses": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "freshness": {
+            "$ref": "#/components/schemas/Freshness"
+          },
+          "holdings_value": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Valued positions (latest valuations until P09)"
+          },
+          "income": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "net_contributions": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Deposits minus withdrawals"
+          },
+          "portfolio_ids": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "title": "Portfolio Ids",
+            "type": "array"
+          },
+          "realized_pl": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "total_value": {
+            "$ref": "#/components/schemas/Money",
+            "description": "holdings_value + cash"
+          },
+          "unpriced_assets": {
+            "description": "Open positions without a price or valuation (not in holdings_value)",
+            "items": {
+              "$ref": "#/components/schemas/AssetSummary"
+            },
+            "title": "Unpriced Assets",
+            "type": "array"
+          },
+          "unrealized_pl": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "valued_positions": {
+            "title": "Valued Positions",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "portfolio_ids",
+          "currency",
+          "total_value",
+          "holdings_value",
+          "cash",
+          "cost_basis",
+          "unrealized_pl",
+          "realized_pl",
+          "income",
+          "expenses",
+          "net_contributions",
+          "valued_positions",
+          "currencies",
+          "unpriced_assets",
+          "freshness"
+        ],
+        "title": "SummaryOut",
         "type": "object"
       },
       "TransactionCreate": {
@@ -2341,6 +2516,72 @@
         ]
       }
     },
+    "/api/v1/portfolios/consolidated/summary": {
+      "get": {
+        "description": "All active portfolios together, in one currency (docs/design/portfolio-summary.md).",
+        "operationId": "consolidated_summary_api_v1_portfolios_consolidated_summary_get",
+        "parameters": [
+          {
+            "description": "Reporting currency; default: your base",
+            "in": "query",
+            "name": "currency",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Z]{3}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Reporting currency; default: your base",
+              "title": "Currency"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SummaryOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "422": {
+            "description": "Invalid currency"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Consolidated Summary",
+        "tags": [
+          "portfolios"
+        ]
+      }
+    },
     "/api/v1/portfolios/{portfolio_id}": {
       "get": {
         "description": "One of the signed-in user's portfolios.",
@@ -2626,6 +2867,73 @@
         "summary": "List Holdings",
         "tags": [
           "holdings"
+        ]
+      }
+    },
+    "/api/v1/portfolios/{portfolio_id}/summary": {
+      "get": {
+        "description": "Totals for one portfolio in its base currency, with currency breakdown and freshness.",
+        "operationId": "portfolio_summary_api_v1_portfolios__portfolio_id__summary_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "portfolio_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Portfolio Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SummaryOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such portfolio for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Portfolio Summary",
+        "tags": [
+          "portfolios"
         ]
       }
     },

@@ -8,7 +8,7 @@
 - Rounding, where a value is derived, is ROUND_HALF_UP (ADR-0006)."""
 
 import re
-from decimal import ROUND_HALF_UP, Decimal
+from decimal import ROUND_FLOOR, ROUND_HALF_UP, Decimal
 from typing import Annotated, Any
 
 from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, PlainSerializer, WithJsonSchema
@@ -89,3 +89,21 @@ class Money(BaseModel):
     def of(cls, amount: Decimal, currency: str) -> "Money":
         """Money rounded for presentation to the currency's minor units."""
         return cls(amount=round_half_up(amount, minor_units(currency)), currency=currency)
+
+
+def percentages(parts: list[Decimal], places: int = 2) -> list[Decimal] | None:
+    """Shares of the total in percent, rounded to `places` decimals and allocated by largest
+    remainder so they add up to exactly 100 (ADR-0006). None when the total is not positive or a
+    part is negative (a percentage share would be meaningless)."""
+    total = sum(parts, Decimal(0))
+    if not parts or total <= 0 or any(p < 0 for p in parts):
+        return None
+    unit = Decimal(1).scaleb(-places)
+    exact = [p * 100 / total for p in parts]
+    floored = [e.quantize(unit, rounding=ROUND_FLOOR) for e in exact]
+    shortfall = int((Decimal(100) - sum(floored, Decimal(0))) / unit)
+    # Largest remainders first; ties go to the earlier part, so the result is deterministic.
+    order = sorted(range(len(parts)), key=lambda i: (-(exact[i] - floored[i]), i))
+    for i in order[:shortfall]:
+        floored[i] += unit
+    return floored
