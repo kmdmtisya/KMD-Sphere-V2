@@ -78,6 +78,7 @@ def create_app(
                 "name": "assets",
                 "description": "Asset classes, catalogue search and user-defined assets",
             },
+            {"name": "portfolios", "description": "The signed-in user's portfolios"},
         ],
         docs_url="/docs" if settings.docs_enabled else None,
         redoc_url=None,

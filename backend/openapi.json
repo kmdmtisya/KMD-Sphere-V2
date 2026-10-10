@@ -1975,6 +1975,10 @@
     {
       "description": "Asset classes, catalogue search and user-defined assets",
       "name": "assets"
+    },
+    {
+      "description": "The signed-in user's portfolios",
+      "name": "portfolios"
     }
   ]
 }
