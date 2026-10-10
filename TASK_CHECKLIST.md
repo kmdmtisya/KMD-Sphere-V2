@@ -461,13 +461,13 @@
   - [x] P04-T09.1 Automated tests in CI
   - [x] P04-T09.2 Threat model
   - [x] P04-T09.3 Findings register
-- [ ] **P04-GATE** · Phase P04 exit gate · `NOT_STARTED` ⬜
+- [x] **P04-GATE** · Phase P04 exit gate · `COMPLETED` ✅
   - Deps: P04-T01, P04-T02, P04-T03, P04-T04, P04-T05, P04-T06, P04-T07, P04-T08, P04-T09 · Wave: W6 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-04.5, QG-05.4, QG-08.1
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P04-GATE.1 Run gates
-  - [ ] P04-GATE.2 Present summary
-  - [ ] P04-GATE.3 Record approval
+  - Started: 2026-10-10T19:33:32+04:00 · Completed: 2026-10-10T19:35:29+04:00 · Duration: 1m 57s · Blocker: —
+  - Evidence: P04 exit gate approved by the user 2026-10-10 after summary. QG-08.1 and QG-04.5 passed; QG-05.4 waived (user, expires 2026-12-31). P04-T01..T09 complete. Accepted risks: SF-10 (MFA optional); iOS biometrics/Keychain unverified on a device until the waiver expires. · Approved by: user (mtisya@gmail.com)
+  - [x] P04-GATE.1 Run gates
+  - [x] P04-GATE.2 Present summary
+  - [x] P04-GATE.3 Record approval
 
 
 ## P05 — Portfolio Core: Database & Backend
