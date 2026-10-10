@@ -1,6 +1,6 @@
 # Core Data Model (P05-T01)
 
-Status: Draft for user review (P05-T01 needs your approval before P05-T02 starts). Migration `0004`. Models live with their modules (ADR-0004): `portfolio`, `assets`, `transactions`, `market_data`.
+Status: Approved by the user 2026-10-10 (P05-T01). Migration `0004`. Models live with their modules (ADR-0004): `portfolio`, `assets`, `transactions`, `market_data`.
 
 ## 1. Entities
 

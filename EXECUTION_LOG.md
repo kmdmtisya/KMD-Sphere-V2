@@ -639,3 +639,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-10T19:55:42+04:00 — AWAITING_VERIFICATION P05-T01
 - evidence: PR #44 (commit 7dec617). Migration 0004: portfolios, portfolio_members, asset_classes, assets, asset_metadata, transactions (append-only via triggers), holdings (derived), valuations, fx_rates. All money NUMERIC(28,8), quantities and rates NUMERIC(28,12), no float columns; every core table UUID PK + created_at/updated_at. Upgrade/check/downgrade/upgrade round-trip and single head (test_migrations, CI migrations step). tests/test_schema_core.py 51 tests (metadata + DB constraints). 20/20 schema mutants caught. Local pytest 325 passed, coverage 93.28%; CI backend, mobile, security, tracker gates pass. Design and decisions for review: docs/design/data-model.md. Awaiting user review.
+
+### 2026-10-10T20:18:46+04:00 — COMPLETE P05-T01
+- duration: 36m 33s
+- evidence: PR #44 (commit 7dec617). Migration 0004 core schema (portfolios, members, asset classes, assets, asset metadata, append-only transactions, holdings, valuations, fx_rates); NUMERIC money/quantity/rate, UUID PKs and timestamps; round-trip and single head; 51 schema tests; 20/20 mutants caught; CI green. Design decisions in docs/design/data-model.md approved as proposed. · Approved by: user (mtisya@gmail.com)
