@@ -364,13 +364,13 @@
   - [x] P03-T06.4 Streaming and stop
   - [x] P03-T06.5 Refusal/failure/offline states
   - [x] P03-T06.6 Tests
-- [ ] **P03-T07** · Journeys, accessibility sweep and device QA · `BLOCKED` ⛔
+- [x] **P03-T07** · Journeys, accessibility sweep and device QA · `COMPLETED` ✅
   - Deps: P03-T02, P03-T03, P03-T05, P03-T06 · Wave: W4 · Track: QA · Size: L · Approval: no
-  - Started: 2026-10-10T02:52:46+04:00 · Completed: — · Duration: — · Blocker: Waiting on manual device QA (P03-T07.3): the checklist in docs/design/qa-gate2.md needs a person at small/large Android and iOS devices (TalkBack/VoiceOver, safe areas, keyboard, real restart, concept-board comparison); iOS hardware outstanding (TD-09). Done so far (PR #26): 5/5 integration journeys pass on the Android emulator (API 37); accessibility sweep 40/40 in CI; suite 811 passing.
-  - Evidence: —
+  - Started: 2026-10-10T02:52:46+04:00 · Completed: 2026-10-10T03:59:54+04:00 · Duration: 1h 07m 08s · Blocker: —
+  - Evidence: PR #26 + this PR. (T07.1) integration_test/app_test.dart: the five Gate 2 journeys, 5/5 pass on the Android emulator (sdk gphone16k x86_64, Android 17/API 37), run locally since CI has no emulator. (T07.2) test/a11y/accessibility_sweep_test.dart: 5 screens x light/dark x LTR/RTL x 1.0/2.0x against Flutter's tap-target, label and contrast guidelines plus a stricter tap-target check and CustomMinimumContrastGuideline over every Text, 40/40 in CI, each stricter check proven by a deliberate defect. (T07.3) Manual device checklist in docs/design/qa-gate2.md: all rows on small/large Android and iPhone SE/Pro Max sizes reported Pass by the user on 2026-10-10; run by the user, not observed by Claude, device models not recorded; the long-strings row cannot exercise app text until a second language exists. iOS integration journeys were not run by Claude. Suite 811 passing; format/analyze clean; CI green.
   - [x] P03-T07.1 Write journeys
   - [x] P03-T07.2 Accessibility sweep
-  - [ ] P03-T07.3 Manual QA checklist on devices
+  - [x] P03-T07.3 Manual QA checklist on devices
 - [ ] **P03-GATE** · UX Gate 2 review · `NOT_STARTED` ⬜
   - Deps: P03-T01, P03-T02, P03-T03, P03-T04, P03-T05, P03-T06, P03-T07 · Wave: W5 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-04.4, QG-05.3
   - Started: — · Completed: — · Duration: — · Blocker: —

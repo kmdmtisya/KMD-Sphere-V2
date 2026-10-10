@@ -490,3 +490,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-10T03:34:08+04:00 — BLOCKED P03-T07
 - reason: Waiting on manual device QA (P03-T07.3): the checklist in docs/design/qa-gate2.md needs a person at small/large Android and iOS devices (TalkBack/VoiceOver, safe areas, keyboard, real restart, concept-board comparison); iOS hardware outstanding (TD-09). Done so far (PR #26): 5/5 integration journeys pass on the Android emulator (API 37); accessibility sweep 40/40 in CI; suite 811 passing.
+
+### 2026-10-10T03:59:53+04:00 — UNBLOCKED P03-T07
+- resolved: Waiting on manual device QA (P03-T07.3): the checklist in docs/design/qa-gate2.md needs a person at small/large Android and iOS devices (TalkBack/VoiceOver, safe areas, keyboard, real restart, concept-board comparison); iOS hardware outstanding (TD-09). Done so far (PR #26): 5/5 integration journeys pass on the Android emulator (API 37); accessibility sweep 40/40 in CI; suite 811 passing.
+- status now IN_PROGRESS
+
+### 2026-10-10T03:59:54+04:00 — COMPLETE P03-T07
+- duration: 1h 07m 08s
+- evidence: PR #26 + this PR. (T07.1) integration_test/app_test.dart: the five Gate 2 journeys, 5/5 pass on the Android emulator (sdk gphone16k x86_64, Android 17/API 37), run locally since CI has no emulator. (T07.2) test/a11y/accessibility_sweep_test.dart: 5 screens x light/dark x LTR/RTL x 1.0/2.0x against Flutter's tap-target, label and contrast guidelines plus a stricter tap-target check and CustomMinimumContrastGuideline over every Text, 40/40 in CI, each stricter check proven by a deliberate defect. (T07.3) Manual device checklist in docs/design/qa-gate2.md: all rows on small/large Android and iPhone SE/Pro Max sizes reported Pass by the user on 2026-10-10; run by the user, not observed by Claude, device models not recorded; the long-strings row cannot exercise app text until a second language exists. iOS integration journeys were not run by Claude. Suite 811 passing; format/analyze clean; CI green.

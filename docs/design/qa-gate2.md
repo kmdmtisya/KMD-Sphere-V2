@@ -32,18 +32,20 @@ Contrast of every colour role in both themes is also enforced at token level (`t
 
 Status values: Pass · Fail (with note) · Not run.
 
+Results below were run and reported by the user on 2026-10-10 ("tested all and all passed"). They were not observed by Claude, and the exact device models were not recorded; add them here if needed.
+
 | Check | Small Android (360×640) | Large Android | iPhone SE size | iPhone Pro Max size |
 |---|---|---|---|---|
-| Notch, status bar and safe areas | Not run | Not run | Not run | Not run |
-| Keyboard: calculator fields visible above it, Next/Done order | Not run | Not run | Not run | Not run |
-| TalkBack / VoiceOver walkthrough of all five screens (incl. chart summaries) | Not run | Not run | Not run | Not run |
-| Dark mode visual check | Not run | Not run | Not run | Not run |
-| Reduced motion (skeleton static, no chart animation) | Not run | Not run | Not run | Not run |
-| Long strings (pseudo-locale) | Not run | Not run | Not run | Not run |
-| Real restart: customise Home, kill app, relaunch | Not run | Not run | Not run | Not run |
-| Side-by-side with `docs/design/wealthsphere-ui-concept.png` | Not run | Not run | Not run | Not run |
+| Notch, status bar and safe areas | Pass (user) | Pass (user) | Pass (user) | Pass (user) |
+| Keyboard: calculator fields visible above it, Next/Done order | Pass (user) | Pass (user) | Pass (user) | Pass (user) |
+| TalkBack / VoiceOver walkthrough of all five screens (incl. chart summaries) | Pass (user) | Pass (user) | Pass (user) | Pass (user) |
+| Dark mode visual check | Pass (user) | Pass (user) | Pass (user) | Pass (user) |
+| Reduced motion (skeleton static, no chart animation) | Pass (user) | Pass (user) | Pass (user) | Pass (user) |
+| Long strings (pseudo-locale) | Pass (user) | Pass (user) | Pass (user) | Pass (user) |
+| Real restart: customise Home, kill app, relaunch | Pass (user) | Pass (user) | Pass (user) | Pass (user) |
+| Side-by-side with `docs/design/wealthsphere-ui-concept.png` | Pass (user) | Pass (user) | Pass (user) | Pass (user) |
 
-The rows above need a person at a device. Physical devices and an iOS device or Mac are still outstanding (TD-09); the user's review at P03-GATE is the place to record these results.
+Note on long strings: the app ships English only, so the pseudo-locale cannot yet change any app text; this row will need repeating once a second language is added.
 
 ## 4. Defects found and fixed during P03
 
