@@ -77,6 +77,18 @@ class AssetRepository:
         row = result.first()
         return (row[0], row[1]) if row else None
 
+    async def get_many(self, asset_ids: list[uuid.UUID]) -> list[tuple[Asset, AssetClass]]:
+        """Assets by id, whatever their owner or status: for showing what a portfolio already
+        holds (the caller has already authorised access to that portfolio)."""
+        if not asset_ids:
+            return []
+        result = await self._session.execute(
+            select(Asset, AssetClass)
+            .join(AssetClass, Asset.asset_class_id == AssetClass.id)
+            .where(Asset.id.in_(asset_ids))
+        )
+        return [(asset, cls) for asset, cls in result.all()]
+
     async def metadata(self, asset_id: uuid.UUID) -> dict[str, Any]:
         result = await self._session.execute(
             select(AssetMetadata.key, AssetMetadata.value)

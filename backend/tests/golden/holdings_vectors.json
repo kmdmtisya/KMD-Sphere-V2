@@ -1,0 +1,86 @@
+{
+  "_about": "Hand-computed holdings vectors for ADR-0012 (weighted average cost). Each entry: label, type, day (offset), qty, gross, fees, taxes, fx, reverses (label). Expected values are in the portfolio currency, compared at 8 decimals (the stored precision). The arithmetic is written out in 'working'.",
+  "vectors": [
+    {
+      "name": "two buys, partial sell with fees and tax",
+      "entries": [
+        {"label": "b1", "type": "BUY", "day": 1, "qty": "10", "gross": "1000", "fees": "10"},
+        {"label": "b2", "type": "BUY", "day": 2, "qty": "5", "gross": "600", "fees": "5"},
+        {"label": "s1", "type": "SELL", "day": 3, "qty": "6", "gross": "780", "fees": "6", "taxes": "4"}
+      ],
+      "working": "cost 1010 + 605 = 1615 for 15; sell 6 removes 1615/15*6 = 646; proceeds 780-6-4 = 770; realised 124; cost 969 for 9",
+      "expected": {"quantity": "9", "cost_basis": "969", "realized_pl": "124", "income": "0", "expenses": "0"}
+    },
+    {
+      "name": "selling everything leaves exactly zero cost",
+      "entries": [
+        {"label": "b1", "type": "BUY", "day": 1, "qty": "3", "gross": "30"},
+        {"label": "b2", "type": "BUY", "day": 2, "qty": "3", "gross": "33"},
+        {"label": "s1", "type": "SELL", "day": 3, "qty": "6", "gross": "72", "fees": "1"}
+      ],
+      "working": "cost 63 for 6; sell all removes 63; proceeds 71; realised 8",
+      "expected": {"quantity": "0", "cost_basis": "0", "realized_pl": "8", "income": "0", "expenses": "0"}
+    },
+    {
+      "name": "forward split posted as a zero-value transfer in",
+      "entries": [
+        {"label": "b1", "type": "BUY", "day": 1, "qty": "100", "gross": "5000"},
+        {"label": "split", "type": "TRANSFER_IN", "day": 2, "qty": "100", "gross": "0"},
+        {"label": "s1", "type": "SELL", "day": 3, "qty": "50", "gross": "1500"}
+      ],
+      "working": "5000 for 100 (avg 50); split: 5000 for 200 (avg 25); sell 50 removes 1250; proceeds 1500; realised 250; cost 3750 for 150",
+      "expected": {"quantity": "150", "cost_basis": "3750", "realized_pl": "250", "income": "0", "expenses": "0"}
+    },
+    {
+      "name": "each posting converts at its own rate",
+      "entries": [
+        {"label": "b1", "type": "BUY", "day": 1, "qty": "10", "gross": "200", "fees": "2", "fx": "1.10"},
+        {"label": "s1", "type": "SELL", "day": 2, "qty": "4", "gross": "100", "fees": "1", "fx": "1.20"}
+      ],
+      "working": "cost 202*1.10 = 222.2 for 10; sell 4 removes 88.88; proceeds 99*1.20 = 118.8; realised 29.92; cost 133.32 for 6",
+      "expected": {"quantity": "6", "cost_basis": "133.32", "realized_pl": "29.92", "income": "0", "expenses": "0"}
+    },
+    {
+      "name": "income and expenses do not change cost",
+      "entries": [
+        {"label": "b1", "type": "BUY", "day": 1, "qty": "10", "gross": "100"},
+        {"label": "d1", "type": "DIVIDEND", "day": 2, "gross": "15", "taxes": "2.25"},
+        {"label": "f1", "type": "FEE", "day": 3, "gross": "3"},
+        {"label": "v1", "type": "VALUATION_ADJUSTMENT", "day": 4, "gross": "-20"},
+        {"label": "i1", "type": "INTEREST", "day": 5, "gross": "1"}
+      ],
+      "working": "income 15 + 1 = 16; expenses 2.25 withholding + 3 fee = 5.25; valuation adjustment ignored",
+      "expected": {"quantity": "10", "cost_basis": "100", "realized_pl": "0", "income": "16", "expenses": "5.25"}
+    },
+    {
+      "name": "a reversed entry and its reversal are left out",
+      "entries": [
+        {"label": "b1", "type": "BUY", "day": 1, "qty": "10", "gross": "100"},
+        {"label": "b2", "type": "BUY", "day": 2, "qty": "10", "gross": "200"},
+        {"label": "s1", "type": "SELL", "day": 3, "qty": "5", "gross": "75"},
+        {"label": "r2", "type": "BUY", "day": 2, "qty": "10", "gross": "200", "reverses": "b2"}
+      ],
+      "working": "without b2: 100 for 10; sell 5 removes 50; realised 25; cost 50 for 5",
+      "expected": {"quantity": "5", "cost_basis": "50", "realized_pl": "25", "income": "0", "expenses": "0"}
+    },
+    {
+      "name": "a transfer out removes cost without realising profit",
+      "entries": [
+        {"label": "b1", "type": "BUY", "day": 1, "qty": "4", "gross": "100"},
+        {"label": "t1", "type": "TRANSFER_OUT", "day": 2, "qty": "1", "gross": "0"}
+      ],
+      "working": "100 for 4; transfer 1 removes 25; cost 75 for 3",
+      "expected": {"quantity": "3", "cost_basis": "75", "realized_pl": "0", "income": "0", "expenses": "0"}
+    },
+    {
+      "name": "repeating decimals stay exact until the stored rounding",
+      "entries": [
+        {"label": "b1", "type": "BUY", "day": 1, "qty": "1", "gross": "10"},
+        {"label": "b2", "type": "BUY", "day": 2, "qty": "2", "gross": "20.02"},
+        {"label": "s1", "type": "SELL", "day": 3, "qty": "1", "gross": "11"}
+      ],
+      "working": "30.02 for 3; sell 1 removes 10.006666...; realised 0.993333... -> 0.99333333; cost 20.013333... -> 20.01333333",
+      "expected": {"quantity": "2", "cost_basis": "20.01333333", "realized_pl": "0.99333333", "income": "0", "expenses": "0"}
+    }
+  ]
+}

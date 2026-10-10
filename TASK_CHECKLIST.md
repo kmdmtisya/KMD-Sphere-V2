@@ -511,13 +511,13 @@
   - [x] P05-T04.3 Correction flow
   - [x] P05-T04.4 Audit
   - [x] P05-T04.5 Tests
-- [ ] **P05-T05** · Holdings calculation service · `NOT_STARTED` ⬜
+- [x] **P05-T05** · Holdings calculation service · `COMPLETED` ✅
   - Deps: P05-T04 · Wave: W4 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P05-T05.1 Cost-basis method ADR
-  - [ ] P05-T05.2 Implementation
-  - [ ] P05-T05.3 Golden and property tests
+  - Started: 2026-10-10T21:04:39+04:00 · Completed: 2026-10-10T21:21:42+04:00 · Duration: 17m 03s · Blocker: —
+  - Evidence: PR #48 (commit 82c2bb1). ADR-0012 cost-basis method (weighted average cost in portfolio currency; Proposed, for user approval at P05-GATE). Pure holdings fold (Decimal, 50-digit context; stored rounded half-up to 8 dp; API to minor units per ADR-0006). Golden vectors (8, hand-computed: buys, partial sells with fees/tax, full sale, split as zero-value transfer-in, multi-rate FX, income/withholding, reversals, transfer out, repeating decimals) and Hypothesis properties (quantity, cost conservation, zero units zero cost, reversal == never posted, order independence) pass. Holdings cache (migration 0006 income/expenses) rebuilt in the same transaction as every posting/reversal; GET /api/v1/portfolios/{id}/holdings (IDOR-registered). Fixed T04 gap: sales/reversals now checked against date-ordered history. Local pytest 558 passed, coverage 90.97%, ruff/mypy/OpenAPI/Spectral clean. Mutants: 13/15 caught; remaining pair was redundant code, removed, then caught. CI all gates pass.
+  - [x] P05-T05.1 Cost-basis method ADR
+  - [x] P05-T05.2 Implementation
+  - [x] P05-T05.3 Golden and property tests
 - [ ] **P05-T06** · Multi-currency and FX conversion · `NOT_STARTED` ⬜
   - Deps: P05-T01 · Wave: W2 · Track: BE · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

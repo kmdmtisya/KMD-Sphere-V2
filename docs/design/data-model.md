@@ -35,7 +35,7 @@ erDiagram
 | `assets` | One catalogue table for every asset | Global (no owner) or user-defined (owner set, visible only to them). Native currency. At most one row per provider reference. |
 | `asset_metadata` | Type-specific facts (coupon, maturity, sector, address) | One JSON value per key per asset, with source and as-of. |
 | `transactions` | **Append-only ledger**, the source of truth | 14 types. Own currency and the FX rate to the portfolio currency, with its time and source. Idempotency key. Reversal link. |
-| `holdings` | Derived position per asset per portfolio | A cache: always rebuildable from the ledger (P05-T05). |
+| `holdings` | Derived position per asset per portfolio: quantity, cost basis, realised profit, income, expenses (migration 0006) | A cache rebuilt from the ledger in the same transaction as every posting; weighted average cost (ADR-0012). |
 | `valuations` | User-entered values for assets without a market price | One per asset per as-of instant; source label. |
 | `fx_rates` | Timestamped exchange rates | Positive; one row per pair, provider and instant. P11 extends it. |
 

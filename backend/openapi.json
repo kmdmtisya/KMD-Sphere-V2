@@ -362,6 +362,78 @@
         "title": "HTTPValidationError",
         "type": "object"
       },
+      "HoldingOut": {
+        "description": "A position derived from the ledger (weighted average cost, ADR-0012). Money is in the\nportfolio's base currency, converted at each posting's own rate.",
+        "properties": {
+          "asset": {
+            "$ref": "#/components/schemas/AssetSummary"
+          },
+          "average_cost": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Cost per unit (up to 8 decimals); null when no units are held"
+          },
+          "computed_at": {
+            "format": "date-time",
+            "title": "Computed At",
+            "type": "string"
+          },
+          "cost_basis": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "expenses": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Fees and taxes charged to the asset, incl. withholding"
+          },
+          "income": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Dividends, coupons, rent, distributions and interest"
+          },
+          "last_transaction_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Transaction At"
+          },
+          "quantity": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Quantity",
+            "type": "string"
+          },
+          "realized_pl": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Profit or loss realised by sales"
+          }
+        },
+        "required": [
+          "asset",
+          "quantity",
+          "average_cost",
+          "cost_basis",
+          "realized_pl",
+          "income",
+          "expenses",
+          "last_transaction_at",
+          "computed_at"
+        ],
+        "title": "HoldingOut",
+        "type": "object"
+      },
       "LiveStatus": {
         "properties": {
           "status": {
@@ -2128,6 +2200,89 @@
         ]
       }
     },
+    "/api/v1/portfolios/{portfolio_id}/holdings": {
+      "get": {
+        "description": "Positions derived from the ledger: quantity, weighted average cost, cost basis, realised\nprofit, income and expenses, in the portfolio currency (ADR-0012).",
+        "operationId": "list_holdings_api_v1_portfolios__portfolio_id__holdings_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "portfolio_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Portfolio Id",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Also return assets no longer held (for realised results)",
+            "in": "query",
+            "name": "include_closed",
+            "required": false,
+            "schema": {
+              "default": false,
+              "description": "Also return assets no longer held (for realised results)",
+              "title": "Include Closed",
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/HoldingOut"
+                  },
+                  "title": "Response List Holdings Api V1 Portfolios  Portfolio Id  Holdings Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such portfolio for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "List Holdings",
+        "tags": [
+          "holdings"
+        ]
+      }
+    },
     "/api/v1/portfolios/{portfolio_id}/transactions": {
       "get": {
         "description": "The ledger, newest first, with optional filters and cursor pagination.",
@@ -2926,6 +3081,10 @@
     {
       "description": "The append-only ledger of each portfolio",
       "name": "transactions"
+    },
+    {
+      "description": "Positions derived from the ledger (ADR-0012)",
+      "name": "holdings"
     }
   ]
 }

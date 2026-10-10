@@ -53,6 +53,13 @@ class AssetService:
         asset, asset_class = require_found(await self._repo.get_visible(user_id, asset_id), "asset")
         return await self._detail(asset, asset_class, user_id)
 
+    async def summaries(
+        self, user_id: uuid.UUID, asset_ids: list[uuid.UUID]
+    ) -> dict[uuid.UUID, AssetSummary]:
+        """Summaries of assets a portfolio already holds, keyed by id."""
+        rows = await self._repo.get_many(asset_ids)
+        return {asset.id: _summary(asset, cls, user_id) for asset, cls in rows}
+
     async def is_visible(self, user_id: uuid.UUID, asset_id: uuid.UUID) -> bool:
         """Whether the user may use this asset (an active catalogue asset or one of theirs)."""
         return await self._repo.get_visible(user_id, asset_id) is not None

@@ -7,6 +7,7 @@ from typing import Literal
 from pydantic import AwareDatetime, BaseModel, ConfigDict, Field
 
 from app.core.money import CURRENCY_PATTERN, DecimalString, Money
+from app.modules.assets.schemas import AssetSummary
 
 TransactionType = Literal[
     "BUY",
@@ -97,3 +98,20 @@ class TransactionPage(BaseModel):
     next_cursor: str | None = Field(
         description="Pass as `cursor` for the next page; null at the end"
     )
+
+
+class HoldingOut(BaseModel):
+    """A position derived from the ledger (weighted average cost, ADR-0012). Money is in the
+    portfolio's base currency, converted at each posting's own rate."""
+
+    asset: AssetSummary
+    quantity: DecimalString
+    average_cost: Money | None = Field(
+        description="Cost per unit (up to 8 decimals); null when no units are held"
+    )
+    cost_basis: Money
+    realized_pl: Money = Field(description="Profit or loss realised by sales")
+    income: Money = Field(description="Dividends, coupons, rent, distributions and interest")
+    expenses: Money = Field(description="Fees and taxes charged to the asset, incl. withholding")
+    last_transaction_at: datetime | None
+    computed_at: datetime

@@ -140,6 +140,10 @@ class Holding(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     # Cost basis and realised result, in the portfolio's base currency (`currency`).
     cost_basis: Mapped[Decimal] = mapped_column(AMOUNT)
     realized_pl: Mapped[Decimal] = mapped_column(AMOUNT, server_default=text("0"))
+    # Income from the asset (dividends, coupons, rent, distributions, interest) and costs charged
+    # to it (fees, taxes, withholding), in the portfolio currency (ADR-0012).
+    income: Mapped[Decimal] = mapped_column(AMOUNT, server_default=text("0"))
+    expenses: Mapped[Decimal] = mapped_column(AMOUNT, server_default=text("0"))
     currency: Mapped[str] = mapped_column(String(3))
     # The latest ledger entry the figures include, and when they were computed.
     last_transaction_at: Mapped[datetime | None] = mapped_column()
