@@ -50,3 +50,16 @@ dart format --output=none --set-exit-if-changed . && flutter analyze && flutter 
 flutter build apk --debug && flutter install -d emulator-5554
 ```
 The first Android build also needs NDK 28.2.13676358 (`sdkmanager --install "ndk;28.2.13676358"`).
+
+## Keycloak development realm
+
+`docker compose up` imports `infra/keycloak/realm-export.json` (realm `wealthsphere`) on first start. To re-import after changing the file, remove the realm in the admin console (or recreate the Keycloak database) and restart the container.
+
+- Mobile client `wealthsphere-mobile`: public, Authorization Code + PKCE (S256) only; implicit and password grants are off. Redirect URI `com.kmdmtisya.wealthsphere:/oauth2redirect`. Access tokens carry the audience `wealthsphere-api` and live 5 minutes; refresh tokens rotate.
+- Password policy: 12+ characters with upper, lower, digit and symbol, not the username or email, last 5 not reusable. New accounts must verify their email. TOTP MFA is available; enforcing it for every account is decided before production (P04-GATE).
+- Test users `alice@example.test`, `bob@example.test` (two users for cross-user tests) and `mfa@example.test` (must enrol TOTP) are imported **without passwords**. Set `KEYCLOAK_TEST_USER_PASSWORD` in `.env`, then:
+
+```
+python scripts/keycloak_dev.py seed-users   # set passwords; reset the MFA user's enrolment
+python scripts/keycloak_dev.py smoke        # PKCE, rejected grants, TOTP enrolment and login
+```
