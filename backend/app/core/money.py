@@ -85,11 +85,6 @@ class Money(BaseModel):
     amount: MoneyAmount
     currency: str = Field(pattern=CURRENCY_PATTERN, description="ISO 4217 code")
 
-    @classmethod
-    def of(cls, amount: Decimal, currency: str) -> "Money":
-        """Money rounded for presentation to the currency's minor units."""
-        return cls(amount=round_half_up(amount, minor_units(currency)), currency=currency)
-
 
 def percentages(parts: list[Decimal], places: int = 2) -> list[Decimal] | None:
     """Shares of the total in percent, rounded to `places` decimals and allocated by largest
