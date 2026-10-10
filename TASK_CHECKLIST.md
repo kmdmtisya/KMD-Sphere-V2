@@ -518,10 +518,10 @@
   - [x] P05-T05.1 Cost-basis method ADR
   - [x] P05-T05.2 Implementation
   - [x] P05-T05.3 Golden and property tests
-- [ ] **P05-T06** · Multi-currency and FX conversion · `IN_PROGRESS` 🔄
+- [x] **P05-T06** · Multi-currency and FX conversion · `COMPLETED` ✅
   - Deps: P05-T01 · Wave: W2 · Track: BE · Size: M · Approval: no
-  - Started: 2026-10-10T21:24:30+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-10T21:24:30+04:00 · Completed: 2026-10-10T21:39:55+04:00 · Duration: 15m 25s · Blocker: —
+  - Evidence: PR #49 (commit 133192e). FX service with documented rate-selection rules (historical by trade date within 7 days, latest with stale flag after 1 day, inverse pair only when no direct rate, deterministic ties; thresholds provisional until DEC-26) and GET /api/v1/fx-rates/{base}/{quote} with provenance (404 fx-rate-unavailable). Original transaction currency and rate preserved: postings store their own currency plus the rate used (user-supplied wins; otherwise the historical rate with provider and timestamp, rounded half-up to 12 dp). Conversion rounding explicit (ROUND_HALF_UP to target minor units) and tested with tie cases for KES/JPY/KWD and negatives. Local pytest 585 passed, coverage 90.93%, ruff/mypy/OpenAPI/Spectral clean. 13/13 mutants caught; a flaky test (colliding currency pairs) found and fixed; IDOR guard gained a reasoned exemption list for global-data routes. CI all gates pass.
   - [x] P05-T06.1 FX service
   - [x] P05-T06.2 Rate selection rules
   - [x] P05-T06.3 Rounding tests
