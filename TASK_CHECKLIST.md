@@ -382,7 +382,7 @@
 
 ## P04 — Identity & Security Foundation
 
-- Phase approval: `PENDING`
+- Phase approval: `APPROVED by user (mtisya@gmail.com) at 2026-10-10T04:39:41+04:00`
 - Entry gates: prerequisite phase gates completed (P01); cumulative criteria QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
 - Exit gates: QG-04.5; QG-05.4; QG-08.1 — required by `P04-GATE` (Gates-done)
 - Release gates: —
