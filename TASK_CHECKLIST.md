@@ -454,10 +454,10 @@
   - [x] P04-T08.3 Password reset entry
   - [x] P04-T08.4 Biometric prompt
   - [x] P04-T08.5 Tests
-- [ ] **P04-T09** · Security test suite v1 and threat model · `AWAITING_VERIFICATION` 🔎
+- [x] **P04-T09** · Security test suite v1 and threat model · `COMPLETED` ✅
   - Deps: P04-T03, P04-T04, P04-T05, P04-T07 · Wave: W5 · Track: SEC · Size: M · Approval: yes
-  - Started: 2026-10-10T08:26:13+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: PR #39 (commit 1f3328e). Security suite in CI as its own step: backend 'uv run pytest -m security' 208 passed in CI (token tamper/expiry/audience/algorithm, route auth coverage for every non-public route x 5 bad-token cases, authz/IDOR incl. registry guard, identity, rate/body limits, headers, CORS, audit, redaction, realm export); mobile 'flutter test --tags security' 128 passed in CI (token set/secure store, refresh/rotation, PKCE client, API client incl. no-token-leak, app lock, auth screens, MFA set-up). Inventory guards fail the build if a module loses its marker/tag (mutant-checked), and test_auth_coverage fails on an unauthenticated route (mutant-checked). docs/threat-model.md: assets, trust boundaries, data-flow diagram, STRIDE over identity, API, mobile, data/infra and planned AI surfaces with controls/tests/status and residual risks. docs/security-findings.md: 7 fixed, 8 open (SF-10 MFA optional -> decision at P04-GATE; SF-11 iOS not exercised on device). Note: tracker start was recorded after the first T09 edits had begun (same session). Awaiting user review of the threat model and findings.
+  - Started: 2026-10-10T08:26:13+04:00 · Completed: 2026-10-10T19:15:55+04:00 · Duration: 10h 49m 42s · Blocker: —
+  - Evidence: PR #39 (commit 1f3328e). Security suite in CI as its own step (backend 208 passed, mobile 128 passed); route-authentication coverage test; inventory guards; docs/threat-model.md and docs/security-findings.md reviewed by the user. User decision recorded: SF-10 two-step verification stays optional for now (revisit at P15). SF-18 (iOS Keychain survives reinstall) added as an open finding. · Approved by: user (mtisya@gmail.com)
   - [x] P04-T09.1 Automated tests in CI
   - [x] P04-T09.2 Threat model
   - [x] P04-T09.3 Findings register
