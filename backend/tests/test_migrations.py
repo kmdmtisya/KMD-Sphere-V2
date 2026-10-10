@@ -87,7 +87,8 @@ async def test_upgrade_check_downgrade_upgrade_round_trip(scratch_db: str) -> No
             extensions = {
                 row[0] for row in await conn.execute(text("SELECT extname FROM pg_extension"))
             }
-        assert version == "0001"
+        head = ScriptDirectory.from_config(_config()).get_current_head()
+        assert version == head
         assert {"pgcrypto", "vector"} <= extensions
     finally:
         await engine.dispose()

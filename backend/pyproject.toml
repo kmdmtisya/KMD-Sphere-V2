@@ -17,6 +17,8 @@ dependencies = [
   "opentelemetry-instrumentation-fastapi>=0.66b1",
   "opentelemetry-exporter-prometheus>=0.66b1",
   "prometheus-client>=0.26.0",
+  "pyjwt[crypto]>=2.10",
+  "tzdata>=2025.2",
 ]
 
 [dependency-groups]

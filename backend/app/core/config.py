@@ -37,6 +37,15 @@ class Settings(BaseSettings):
     otel_metric_export_interval_ms: int = 15000
     metrics_token: SecretStr = SecretStr("")
 
+    # OIDC (Keycloak). The issuer must match the `iss` claim exactly; with no issuer set, every
+    # protected endpoint answers 401 (fail closed).
+    oidc_issuer: str = ""
+    oidc_audience: str = "wealthsphere-api"
+    oidc_authorized_parties: str = "wealthsphere-mobile"
+    oidc_jwks_url: str = ""
+    jwks_cache_seconds: int = 300
+    auth_leeway_seconds: int = 30
+
     db_pool_size: int = 5
     db_max_overflow: int = 5
     db_connect_timeout_seconds: float = 5.0
@@ -60,6 +69,20 @@ class Settings(BaseSettings):
         password = quote_plus(self.redis_password.get_secret_value())
         auth = f":{password}@" if password else ""
         return f"redis://{auth}{self.redis_host}:{self.redis_port}/0"
+
+    @property
+    def jwks_url(self) -> str:
+        if self.oidc_jwks_url:
+            return self.oidc_jwks_url
+        return (
+            f"{self.oidc_issuer.rstrip('/')}/protocol/openid-connect/certs"
+            if self.oidc_issuer
+            else ""
+        )
+
+    @property
+    def authorized_parties(self) -> frozenset[str]:
+        return frozenset(p.strip() for p in self.oidc_authorized_parties.split(",") if p.strip())
 
     @property
     def docs_enabled(self) -> bool:
