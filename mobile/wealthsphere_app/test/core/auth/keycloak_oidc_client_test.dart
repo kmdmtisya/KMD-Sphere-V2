@@ -189,6 +189,27 @@ void main() {
       },
     );
 
+    test(
+      'login hint, registration and MFA set-up use the hosted pages',
+      () async {
+        when(() => appAuth.authorizeAndExchangeCode(any()))
+            .thenAnswer((_) async => response());
+        await client.signIn(loginHint: 'alice@example.test');
+        await client.signIn(intent: SignInIntent.register);
+        await client.signIn(intent: SignInIntent.configureMfa);
+        final requests = verify(
+          () => appAuth.authorizeAndExchangeCode(captureAny()),
+        ).captured.cast<AuthorizationTokenRequest>();
+        expect(requests[0].loginHint, 'alice@example.test');
+        expect(requests[0].promptValues, isNull);
+        expect(requests[0].additionalParameters, isNull);
+        expect(requests[1].promptValues, ['create']);
+        expect(requests[2].additionalParameters, {
+          'kc_action': 'CONFIGURE_TOTP',
+        });
+      },
+    );
+
     test('closing the browser is "cancelled"', () async {
       when(() => appAuth.authorizeAndExchangeCode(any())).thenThrow(
         FlutterAppAuthUserCancelledException(

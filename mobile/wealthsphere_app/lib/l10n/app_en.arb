@@ -1325,5 +1325,145 @@
   "appLockConfirmReason": "Confirm it's you to change app lock",
   "@appLockConfirmReason": {
     "description": "Reason shown in the system prompt when changing lock settings"
+  },
+  "welcomeSkip": "Skip",
+  "@welcomeSkip": {
+    "description": "Skips the introduction carousel"
+  },
+  "welcomeSkipLabel": "Skip introduction",
+  "@welcomeSkipLabel": {
+    "description": "Accessible label of the Skip button"
+  },
+  "welcomeNext": "Next",
+  "@welcomeNext": {
+    "description": "Goes to the next introduction slide"
+  },
+  "welcomeGetStarted": "Get started",
+  "@welcomeGetStarted": {
+    "description": "Last slide: continue to sign-in"
+  },
+  "welcomeHaveAccount": "I already have an account",
+  "@welcomeHaveAccount": {
+    "description": "Goes straight to sign-in"
+  },
+  "welcomeSlideLabel": "Slide {current} of {total}",
+  "@welcomeSlideLabel": {
+    "description": "Position in the introduction carousel",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "welcomeSlide1Title": "All your wealth in one place",
+  "@welcomeSlide1Title": {
+    "description": "Introduction slide 1 title"
+  },
+  "welcomeSlide1Body": "Portfolios, cash, property and debts in your currency, always marked with how fresh the data is.",
+  "@welcomeSlide1Body": {
+    "description": "Introduction slide 1 body"
+  },
+  "welcomeSlide2Title": "Plan with clear scenarios",
+  "@welcomeSlide2Title": {
+    "description": "Introduction slide 2 title"
+  },
+  "welcomeSlide2Body": "Compare conservative, expected and optimistic paths for your goals. Forecasts are scenarios, not promises.",
+  "@welcomeSlide2Body": {
+    "description": "Introduction slide 2 body"
+  },
+  "welcomeSlide3Title": "AI that shows its working",
+  "@welcomeSlide3Title": {
+    "description": "Introduction slide 3 title"
+  },
+  "welcomeSlide3Body": "Ask questions about your money. Answers separate facts, calculations, assumptions and interpretation.",
+  "@welcomeSlide3Body": {
+    "description": "Introduction slide 3 body"
+  },
+  "signInTitle": "Sign in",
+  "@signInTitle": {
+    "description": "Sign-in screen title"
+  },
+  "signInIntro": "You sign in on WealthSphere's secure sign-in page. Your password is never entered in or stored by the app.",
+  "@signInIntro": {
+    "description": "Explains the hosted sign-in"
+  },
+  "signInEmailLabel": "Email (optional)",
+  "@signInEmailLabel": {
+    "description": "Email field label; used to pre-fill the sign-in page"
+  },
+  "signInEmailHint": "name@example.com",
+  "@signInEmailHint": {
+    "description": "Email field hint"
+  },
+  "signInEmailInvalid": "Enter an email address like name@example.com, or leave this empty.",
+  "@signInEmailInvalid": {
+    "description": "Email validation message"
+  },
+  "signInEmailTooLong": "That email address is too long.",
+  "@signInEmailTooLong": {
+    "description": "Email validation message"
+  },
+  "signInContinue": "Continue to sign in",
+  "@signInContinue": {
+    "description": "Opens the hosted sign-in page"
+  },
+  "signInCreateAccount": "Create an account",
+  "@signInCreateAccount": {
+    "description": "Opens the hosted registration page"
+  },
+  "signInForgotPassword": "Forgot password?",
+  "@signInForgotPassword": {
+    "description": "Opens the hosted password reset page"
+  },
+  "signInResetFailed": "Couldn't open the password reset page. Check your connection and try again.",
+  "@signInResetFailed": {
+    "description": "Reset page could not be opened"
+  },
+  "signInMfaNote": "If two-step verification is on, the sign-in page asks for the code from your authenticator app.",
+  "@signInMfaNote": {
+    "description": "Explains MFA during sign-in"
+  },
+  "signInExploreDemo": "Explore with DEMO data",
+  "@signInExploreDemo": {
+    "description": "Continue without signing in; the app shows DEMO data"
+  },
+  "mfaSetUp": "Set up two-step verification",
+  "@mfaSetUp": {
+    "description": "Starts TOTP set-up on the identity provider"
+  },
+  "mfaSetUpFailed": "Two-step verification set-up did not complete. Please try again.",
+  "@mfaSetUpFailed": {
+    "description": "MFA set-up failed"
+  },
+  "biometricOfferTitle": "Unlock with biometrics?",
+  "@biometricOfferTitle": {
+    "description": "Title of the one-time sheet after the first sign-in"
+  },
+  "biometricOfferBody": "Next time, open WealthSphere with your fingerprint, face or device PIN. Your session stays on this device, protected by its secure storage.",
+  "@biometricOfferBody": {
+    "description": "Body of the biometric offer"
+  },
+  "biometricOfferAccept": "Use biometrics",
+  "@biometricOfferAccept": {
+    "description": "Turns the app lock on after a device check"
+  },
+  "biometricOfferDecline": "Not now",
+  "@biometricOfferDecline": {
+    "description": "Leaves the app lock off"
+  },
+  "biometricOfferNoDeviceTitle": "Protect this device",
+  "@biometricOfferNoDeviceTitle": {
+    "description": "Biometric offer when the device has no screen lock"
+  },
+  "biometricOfferNoDeviceBody": "This device has no screen lock, so WealthSphere asks you to sign in again whenever you return. Set up a screen lock to unlock with biometrics instead.",
+  "@biometricOfferNoDeviceBody": {
+    "description": "Body when the device cannot verify the user"
+  },
+  "biometricOfferOk": "OK",
+  "@biometricOfferOk": {
+    "description": "Dismisses the sheet"
   }
 }

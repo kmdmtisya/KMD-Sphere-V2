@@ -25,6 +25,18 @@ enum AuthFailure {
   unexpected,
 }
 
+/// What the hosted identity pages should show.
+enum SignInIntent {
+  /// The sign-in page (with links to registration and password reset).
+  signIn,
+
+  /// The registration page (`prompt=create`).
+  register,
+
+  /// Set up TOTP two-step verification (Keycloak application-initiated action).
+  configureMfa,
+}
+
 class AuthException implements Exception {
   const AuthException(this.failure);
 
@@ -37,7 +49,12 @@ class AuthException implements Exception {
 /// The identity-provider operations the app needs. Faked in tests.
 abstract interface class OidcClient {
   /// Authorization Code + PKCE in the system browser; returns the new session's tokens.
-  Future<TokenSet> signIn();
+  /// [loginHint] pre-fills the email on the identity provider's page; the password is only ever
+  /// typed there, never in the app.
+  Future<TokenSet> signIn({
+    String? loginHint,
+    SignInIntent intent = SignInIntent.signIn,
+  });
 
   /// Exchanges the refresh token. Keycloak rotates it: the result carries a new one and the old
   /// one stops working.
@@ -75,12 +92,22 @@ class KeycloakOidcClient implements OidcClient {
   final DateTime Function() _clock;
 
   @override
-  Future<TokenSet> signIn() async {
+  Future<TokenSet> signIn({
+    String? loginHint,
+    SignInIntent intent = SignInIntent.signIn,
+  }) async {
     try {
       final response = await _appAuth.authorizeAndExchangeCode(
         AuthorizationTokenRequest(
           _config.clientId,
           _config.redirectUri,
+          loginHint: loginHint,
+          promptValues: intent == SignInIntent.register
+              ? const ['create']
+              : null,
+          additionalParameters: intent == SignInIntent.configureMfa
+              ? const {'kc_action': 'CONFIGURE_TOTP'}
+              : null,
           serviceConfiguration: AuthorizationServiceConfiguration(
             authorizationEndpoint: _config.authorizationEndpoint,
             tokenEndpoint: _config.tokenEndpoint,

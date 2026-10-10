@@ -33,14 +33,19 @@ class FakeOidcClient implements OidcClient {
   final List<TokenSet> refreshedFrom = [];
   final List<TokenSet> endedSessions = [];
   int signInCalls = 0;
+  final List<({String? loginHint, SignInIntent intent})> signInRequests = [];
 
   /// Completes refreshes only when the test says so (to test concurrency).
   Completer<void>? refreshGate;
   bool failEndSession = false;
 
   @override
-  Future<TokenSet> signIn() async {
+  Future<TokenSet> signIn({
+    String? loginHint,
+    SignInIntent intent = SignInIntent.signIn,
+  }) async {
     signInCalls++;
+    signInRequests.add((loginHint: loginHint, intent: intent));
     return _next(signInResults);
   }
 

@@ -175,6 +175,53 @@ void main() {
     },
   );
 
+  testWidgets(
+    'two-step verification set-up keeps the session whatever happens',
+    (tester) async {
+      store.tokens = tokens('a');
+      api.replies.addAll([
+        reply(200, me('alice@example.test')),
+        reply(200, me('alice@example.test')),
+      ]);
+      oidc.signInResults
+        ..add(const AuthException(AuthFailure.unexpected))
+        ..add(const AuthException(AuthFailure.cancelled))
+        ..add(tokens('b'));
+      await tester.pumpApp(
+        const Scaffold(body: SingleChildScrollView(child: AccountSection())),
+        overrides: overrides(),
+      );
+      final button = find.byKey(const ValueKey('set-up-mfa'));
+      await tester.ensureVisible(button);
+      await tester.tap(button);
+      await tester.pumpAndSettle();
+      expect(
+        find.text(
+          'Two-step verification set-up did not complete. Please try again.',
+        ),
+        findsOneWidget,
+      );
+      expect(store.tokens!.refreshToken, 'refresh-a');
+      await tester.tap(button);
+      await tester.pumpAndSettle();
+      expect(
+        find.textContaining('did not complete'),
+        findsNothing,
+      ); // cancelled: no error
+      await tester.tap(button);
+      await tester.pumpAndSettle();
+      expect(
+        store.tokens!.refreshToken,
+        'refresh-b',
+      ); // the new tokens replace the old
+      expect(
+        oidc.signInRequests.map((r) => r.intent),
+        everyElement(SignInIntent.configureMfa),
+      );
+      expect(find.text('Sign out'), findsOneWidget);
+    },
+  );
+
   test('the controller never exposes tokens', () async {
     store.tokens = tokens('a');
     final container = ProviderContainer(

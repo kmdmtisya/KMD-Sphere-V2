@@ -445,15 +445,15 @@
   - [x] P04-T07.2 Lock policy
   - [x] P04-T07.3 Privacy screen
   - [x] P04-T07.4 Tests
-- [ ] **P04-T08** · Auth screens: Welcome/Onboarding and Sign In/Up · `NOT_STARTED` ⬜
+- [x] **P04-T08** · Auth screens: Welcome/Onboarding and Sign In/Up · `COMPLETED` ✅
   - Deps: P04-T06, P02-GATE · Wave: W4 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P04-T08.1 Welcome/onboarding carousel
-  - [ ] P04-T08.2 Sign in/up and MFA flow
-  - [ ] P04-T08.3 Password reset entry
-  - [ ] P04-T08.4 Biometric prompt
-  - [ ] P04-T08.5 Tests
+  - Started: 2026-10-10T07:35:24+04:00 · Completed: 2026-10-10T08:12:52+04:00 · Duration: 37m 28s · Blocker: —
+  - Evidence: PR #38 (commit 13c94d1). Screen 1 /welcome: 3-slide carousel with Skip labelled 'Skip introduction' (tap action verified), Next through all slides (no swipe needed), slide position hints, reduced-motion jump, no return promises; shown on first launch (onboarding preference). Screen 2 /sign-in: optional validated email login_hint, hosted sign-in and registration (prompt=create), forgot-password in-app browser (config-built URL), MFA note, DEMO path, fixed non-leaking error messages, cancel silent. MFA set-up (kc_action=CONFIGURE_TOTP) from account card keeps the session on failure. One-time biometric offer: accept needs device check, Not now turns lock off, no-screen-lock explanation. Tests: 33 new; 939 pass; analyze/format clean; accessibility test found and fixed a real Skip semantics bug. 20/20 mutants caught. Emulator API 37: fresh install Welcome -> Skip -> Sign in with prefilled email on Keycloak -> 'Protect this device' sheet -> Home; Create account opened registration page; Forgot password opened reset page; back returned to sign-in. iOS not run on device; CI ios compile pass. CI all gates pass. Docs: security.md Sign-in screens.
+  - [x] P04-T08.1 Welcome/onboarding carousel
+  - [x] P04-T08.2 Sign in/up and MFA flow
+  - [x] P04-T08.3 Password reset entry
+  - [x] P04-T08.4 Biometric prompt
+  - [x] P04-T08.5 Tests
 - [ ] **P04-T09** · Security test suite v1 and threat model · `NOT_STARTED` ⬜
   - Deps: P04-T03, P04-T04, P04-T05, P04-T07 · Wave: W5 · Track: SEC · Size: M · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —

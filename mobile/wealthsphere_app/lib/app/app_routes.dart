@@ -15,6 +15,10 @@ abstract final class AppRoutes {
   static const String calculator = '/more/calculator';
   static const String forecast = '/more/calculator/forecast';
 
+  /// Screen 1 (first launch) and screen 2, outside the tab shell.
+  static const String welcome = '/welcome';
+  static const String signIn = '/sign-in';
+
   /// Debug-only component gallery. Not registered in release builds.
   static const String gallery = '/_gallery';
 
