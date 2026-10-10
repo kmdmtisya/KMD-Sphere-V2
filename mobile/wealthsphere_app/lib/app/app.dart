@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../core/security/app_lock_gate.dart';
 import '../l10n/generated/app_localizations.dart';
 import '../shared/design_system/theme/theme.dart';
 import 'router.dart';
@@ -21,6 +22,8 @@ class WealthSphereApp extends ConsumerWidget {
       theme: _lightTheme,
       darkTheme: _darkTheme,
       themeMode: ref.watch(themeModeProvider),
+      builder: (context, child) =>
+          AppLockGate(child: child ?? const SizedBox.shrink()),
     );
   }
 }

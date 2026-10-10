@@ -13,7 +13,7 @@ Derived from CLAUDE.md (Security Rules), `SOLUTION_INTENT.md` section 23 and the
 |---|---|---|
 | Identity | Keycloak, OIDC Authorization Code + PKCE, MFA, email verification, password policy | P04-T01 |
 | Tokens | Short-lived access tokens, refresh rotation; stored only in secure mobile storage (see "Mobile session tokens" below) | P04-T06 |
-| App access | Biometric unlock, lock on background/timeout | P04-T07 |
+| App access | Biometric unlock, lock on background/timeout (see "App lock" below) | P04-T07 |
 | Authorization | Ownership checks on every resource; IDOR tests per endpoint | P04-T03, P05-T09 |
 | API protection | Rate limiting, brute-force controls, input limits, security headers (see "API protection" below) | P04-T05 |
 | Audit | Append-only audit events for financial changes and AI/tool activity (see "Audit events" below) | P04-T04 |
@@ -105,3 +105,12 @@ await session.commit()                         # the change and its event commit
 - **Sign-out:** tokens are deleted from the device first, then the Keycloak session is ended (`/protocol/openid-connect/logout` with the refresh token), best effort.
 - **No leaks:** there is no HTTP logging interceptor; `TokenSet`, `AuthException` and `ApiException` print no token; UI state never holds tokens. Tests assert tokens never appear in printed output or errors.
 - **Transport:** release builds require https; debug builds allow plain HTTP only to loopback development hosts.
+
+## App lock (P04-T07)
+
+- **When:** only while signed in, and on by default (users can turn it off after verifying themselves). The app locks when a stored session is restored at start-up, when it returns from the background after the chosen timeout (immediately, 1 minute or 5 minutes; immediately by default), and after 5 minutes without a touch. A fresh sign-in is not locked again. If the device clock moved backwards while away, the app locks.
+- **Unlock:** `local_auth` with biometrics and the device PIN/pattern/passcode as the platform fallback. Only a successful check unlocks; a failed, cancelled or locked-out check leaves the app locked with a plain message. Without any device security, the lock screen offers only **Sign out** (sign in again with Keycloak). The prompt opens once when the lock engages; after a failure the user taps Unlock, so resume events never loop it.
+- **While locked:** the app is offstage (not painted, not hit-testable, hidden from screen readers, animations paused) behind the lock screen; navigation state is kept.
+- **Settings:** turning the lock off or changing the timeout needs a successful device check first. On a device that cannot verify anyone, the lock can only be turned off.
+- **App switcher:** while the app is inactive a privacy cover replaces its content, so the Recents/app-switcher snapshot shows no financial data. Android 13+ also disables the Recents screenshot (`setRecentsScreenshotEnabled(false)`).
+- **Platform:** Android `MainActivity` is a `FlutterFragmentActivity` with AppCompat themes and `USE_BIOMETRIC`; iOS declares `NSFaceIDUsageDescription`.

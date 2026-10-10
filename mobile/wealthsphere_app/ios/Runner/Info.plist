@@ -82,5 +82,7 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>NSFaceIDUsageDescription</key>
+	<string>WealthSphere uses Face ID to unlock the app and keep your finances private.</string>
 </dict>
 </plist>

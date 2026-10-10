@@ -437,14 +437,14 @@
   - [x] P04-T06.3 Token storage and refresh interceptor
   - [x] P04-T06.4 Logout
   - [x] P04-T06.5 Tests with fakes
-- [ ] **P04-T07** · Biometric app lock and session policy · `NOT_STARTED` ⬜
+- [ ] **P04-T07** · Biometric app lock and session policy · `IN_PROGRESS` 🔄
   - Deps: P04-T06 · Wave: W4 · Track: MOB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T06:48:54+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P04-T07.1 local_auth integration
-  - [ ] P04-T07.2 Lock policy
-  - [ ] P04-T07.3 Privacy screen
-  - [ ] P04-T07.4 Tests
+  - [x] P04-T07.1 local_auth integration
+  - [x] P04-T07.2 Lock policy
+  - [x] P04-T07.3 Privacy screen
+  - [x] P04-T07.4 Tests
 - [ ] **P04-T08** · Auth screens: Welcome/Onboarding and Sign In/Up · `NOT_STARTED` ⬜
   - Deps: P04-T06, P02-GATE · Wave: W4 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

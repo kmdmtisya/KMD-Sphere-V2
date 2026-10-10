@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- API and sign-in. -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- App lock (biometrics or device credential). -->
+    <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
     <!-- No backup or device transfer: session tokens live in Keystore-encrypted storage, whose
          keys never leave the device, and app data is re-fetched from the backend. -->
     <application
