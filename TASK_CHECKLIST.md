@@ -477,16 +477,16 @@
 - Exit gates: QG-01.3; QG-03.2; QG-06.2,5 — required by `P05-GATE` (Gates-done)
 - Release gates: —
 
-- [ ] **P05-T01** · Core schema and migrations · `NOT_STARTED` ⬜
+- [x] **P05-T01** · Core schema and migrations · `COMPLETED` ✅
   - Deps: P04-T02, P04-GATE · Wave: W1 · Track: DB · Size: L · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P05-T01.1 Portfolio and member tables
-  - [ ] P05-T01.2 Asset and metadata tables
-  - [ ] P05-T01.3 Transactions/holdings/valuations
-  - [ ] P05-T01.4 FX table
-  - [ ] P05-T01.5 Constraints and indexes
-  - [ ] P05-T01.6 Schema tests
+  - Started: 2026-10-10T19:42:13+04:00 · Completed: 2026-10-10T20:18:46+04:00 · Duration: 36m 33s · Blocker: —
+  - Evidence: PR #44 (commit 7dec617). Migration 0004 core schema (portfolios, members, asset classes, assets, asset metadata, append-only transactions, holdings, valuations, fx_rates); NUMERIC money/quantity/rate, UUID PKs and timestamps; round-trip and single head; 51 schema tests; 20/20 mutants caught; CI green. Design decisions in docs/design/data-model.md approved as proposed. · Approved by: user (mtisya@gmail.com)
+  - [x] P05-T01.1 Portfolio and member tables
+  - [x] P05-T01.2 Asset and metadata tables
+  - [x] P05-T01.3 Transactions/holdings/valuations
+  - [x] P05-T01.4 FX table
+  - [x] P05-T01.5 Constraints and indexes
+  - [x] P05-T01.6 Schema tests
 - [ ] **P05-T02** · Asset model and search API · `NOT_STARTED` ⬜
   - Deps: P05-T01 · Wave: W2 · Track: BE · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
