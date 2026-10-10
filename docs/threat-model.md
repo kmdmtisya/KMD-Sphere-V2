@@ -1,6 +1,6 @@
 # WealthSphere Threat Model (v1, P04-T09)
 
-Status: Draft for user review (P04-T09, 2026-10-10). Scope: everything built through P04, plus the planned AI surface (P12) so its controls are designed in, not added later. Reviewed again at P10 (AI tool layer), P14 (cloud) and P15 (hardening, OWASP API Top 10 / MASVS review, penetration test).
+Status: Approved by the user 2026-10-10 (P04-T09) (P04-T09, 2026-10-10). Scope: everything built through P04, plus the planned AI surface (P12) so its controls are designed in, not added later. Reviewed again at P10 (AI tool layer), P14 (cloud) and P15 (hardening, OWASP API Top 10 / MASVS review, penetration test).
 
 Method: STRIDE per surface. Each threat lists the control, where it is tested, and its status: **In place** (implemented and tested), **Partial** (implemented, a gap is known), **Planned** (owned by a later task). Findings found while building P04 are in [security-findings.md](security-findings.md).
 
@@ -59,7 +59,7 @@ Trust boundaries:
 | # | STRIDE | Threat | Control | Tested by | Status |
 |---|---|---|---|---|---|
 | I1 | S | Password guessing / credential stuffing | Brute-force detection: 5 failures, temporary lockout 1 to 15 min (never permanent, so accounts cannot be locked by others); password policy (12+ chars, mixed, history 5) | `test_keycloak_realm.py`; `keycloak_dev.py smoke` (lockout checks) | In place |
-| I2 | S | Stolen password alone is enough | TOTP MFA available; set up from More > Account | smoke (TOTP enrolment, wrong code refused) | **Partial**: MFA is optional; whether it is mandatory is decided at P04-GATE |
+| I2 | S | Stolen password alone is enough | TOTP MFA available; set up from More > Account | smoke (TOTP enrolment, wrong code refused) | **Partial**: MFA is optional (user decision 2026-10-10, SF-10; revisited at P15) |
 | I3 | S/E | Authorization code interception (custom scheme hijack) | Public client with PKCE S256 required; exact redirect URI; implicit and password grants off | realm tests; smoke (no-PKCE refused, implicit and password grants refused) | In place |
 | I4 | I | Long-lived tokens leak | Access 5 min; refresh rotation with reuse detection (`revokeRefreshToken`, max reuse 0); SSO idle 30 min, max 10 h; no `offline_access` scope requested | realm tests; mobile `keycloak_oidc_client_test` | In place |
 | I5 | T | Realm misconfiguration drifts | Realm as code (`infra/keycloak/realm-export.json`), tests over the export; `sync-realm` | `test_keycloak_realm.py` | In place (dev); production realm hardening (HTTPS only, admin access, SMTP) is P14 |
@@ -121,7 +121,7 @@ Designed-in controls; each becomes a tested control in its task.
 
 | Item | Risk | Owner / when |
 |---|---|---|
-| MFA optional | A stolen password is enough for accounts without TOTP | **Decide at P04-GATE**: mandatory for all, or strongly encouraged |
+| MFA optional | A stolen password is enough for accounts without TOTP | Accepted by the user on 2026-10-10 (optional for now); revisit at P15 |
 | iOS not exercised on a device | Keychain options and Face ID behaviour are unit-tested, and CI compiles iOS, but they have not been run on an iPhone | Run on a device or simulator before P04-GATE closes QG-05.4, or defer with approval |
 | Client IP attribution behind a proxy | Per-IP limits could be bypassed or shared wrongly | P14 (load balancer, `--proxy-headers`) |
 | App DB role owns `audit_events` | The owner could disable the triggers | P15 (separate least-privilege role) |
