@@ -72,6 +72,16 @@ def test_password_mfa_and_session_policy(realm: dict[str, Any]) -> None:
     assert realm["revokeRefreshToken"] is True and realm["refreshTokenMaxReuse"] == 0
 
 
+def test_brute_force_detection_locks_accounts_temporarily(realm: dict[str, Any]) -> None:
+    assert realm["bruteForceProtected"] is True
+    assert realm["failureFactor"] <= 5
+    assert realm["waitIncrementSeconds"] >= 60
+    assert realm["maxFailureWaitSeconds"] >= 900
+    assert realm["minimumQuickLoginWaitSeconds"] >= 60
+    # Temporary, not permanent: a permanent lockout lets anyone disable any account by guessing.
+    assert realm["permanentLockout"] is False
+
+
 def test_no_credentials_or_secrets_are_committed(realm: dict[str, Any]) -> None:
     text = REALM_FILE.read_text(encoding="utf-8").lower()
     for user in realm.get("users", []):

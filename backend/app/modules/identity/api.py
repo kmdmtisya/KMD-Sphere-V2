@@ -21,7 +21,16 @@ router = APIRouter(prefix="/api/v1/me", tags=["identity"])
 SessionDep = Annotated[AsyncSession, Depends(get_session)]
 
 _UNAUTHORIZED: dict[int | str, dict[str, Any]] = {
-    401: {"description": "Missing, invalid or expired access token"}
+    401: {"description": "Missing, invalid or expired access token"},
+    429: {
+        "description": "Rate limit exceeded (docs/security.md, API protection)",
+        "headers": {
+            "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {"type": "integer", "minimum": 1},
+            }
+        },
+    },
 }
 
 

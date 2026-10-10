@@ -15,7 +15,7 @@ Derived from CLAUDE.md (Security Rules), `SOLUTION_INTENT.md` section 23 and the
 | Tokens | Short-lived access tokens, refresh rotation; stored only in secure mobile storage | P04-T06 |
 | App access | Biometric unlock, lock on background/timeout | P04-T07 |
 | Authorization | Ownership checks on every resource; IDOR tests per endpoint | P04-T03, P05-T09 |
-| API protection | Rate limiting, brute-force controls, input limits, security headers | P04-T05 |
+| API protection | Rate limiting, brute-force controls, input limits, security headers (see "API protection" below) | P04-T05 |
 | Audit | Append-only audit events for financial changes and AI/tool activity (see "Audit events" below) | P04-T04 |
 | Secrets | Never in source control; `.env` is git-ignored; secret manager in cloud; CI uses OIDC, not long-lived keys | P01-T05, P14-T06 |
 | Transport / storage | TLS 1.2+ (prefer 1.3); encryption at rest | P14 |
@@ -78,3 +78,20 @@ await session.commit()                         # the change and its event commit
 - **Redaction.** `details` pass through `app.core.redaction.redact`: credentials, tokens and financial values (amounts, prices, balances and so on) are replaced with `[REDACTED]`; floats are never stored; details over 8 KiB are reduced to their key names. Store field names and resource ids, not amounts; the resource's own append-only history holds the values.
 - **AI tool calls** store `hash_arguments(arguments)`, not the arguments (docs/ai-governance.md).
 - **No foreign key to users**, so the trail outlives the rows it describes. Retention and account-deletion handling are defined in P15-T05 (privacy: export, deletion, retention). In deployed environments the application database role should not own `audit_events` (P15 hardening), so it cannot disable the triggers.
+
+## API protection (P04-T05)
+
+| Control | Setting (default) | Behaviour |
+|---|---|---|
+| Sign-in brute force | Keycloak realm: 5 failures, temporary lockout 1 to 15 minutes, never permanent | Wrong passwords and wrong TOTP codes count. Passwords never reach the API. |
+| Auth routes (`/api/v1/auth/*`) | 10 requests / 60 s per client IP | Stricter than any other budget. |
+| Failed authentication | 10 failures (401) / 300 s per client IP | Once spent, **every** request from that IP gets 429 until the window ends, so tokens cannot be guessed. |
+| General API | 600 requests / 60 s per client IP | Flood ceiling; health and metrics probes are exempt. |
+| Per account | 120 requests / 60 s per verified subject | Applied in `current_user` after the token is verified, before any database work. |
+| Request body | 1 MiB | 413 by `Content-Length`, or while streaming a chunked body. A malformed length is refused. |
+| CORS | Off | Only explicit https origins may be configured (`CORS_ALLOWED_ORIGINS`); no wildcard, no credentials. |
+
+- Exceeding a budget returns **429** problem+json (`type .../rate-limited`) with `Retry-After` in whole seconds; mobile clients wait at least that long before retrying.
+- Counters are fixed windows in Redis (`ws:rl:<budget>:<sha256>`; raw IPs and user ids are not stored). If Redis is unavailable, each process keeps its own counters and the outage is logged: limits stay on, they are never skipped.
+- The client IP is the direct peer. Behind a proxy or load balancer, run uvicorn with `--proxy-headers --forwarded-allow-ips=<proxy>` (P14); `X-Forwarded-For` is never trusted directly.
+- Every response carries `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: no-referrer`, `Cross-Origin-Resource-Policy: same-origin`, `Permissions-Policy`, `Cache-Control: no-store` and a deny-all `Content-Security-Policy` (except Swagger UI, which is disabled in production). Staging and production add `Strict-Transport-Security`.

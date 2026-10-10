@@ -8,6 +8,7 @@ from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from starlette.types import Scope
 
 from app.core.auth import AuthenticationError
 from app.core.authz import PermissionDeniedError, ResourceNotFoundError
@@ -18,8 +19,12 @@ PROBLEM_BASE = "https://wealthsphere.app/problems"
 MEDIA_TYPE = "application/problem+json"
 
 
+def _scope_cid(scope: Scope) -> str:
+    return str(scope.get("state", {}).get("correlation_id") or new_correlation_id())
+
+
 def _cid(request: Request) -> str:
-    return str(request.scope.get("state", {}).get("correlation_id") or new_correlation_id())
+    return _scope_cid(request.scope)
 
 
 def problem(
@@ -31,7 +36,20 @@ def problem(
     errors: list[dict[str, str]] | None = None,
     headers: dict[str, str] | None = None,
 ) -> JSONResponse:
-    cid = _cid(request)
+    return problem_response(request.scope, status, slug, title, detail, errors, headers)
+
+
+def problem_response(
+    scope: Scope,
+    status: int,
+    slug: str,
+    title: str,
+    detail: str | None = None,
+    errors: list[dict[str, str]] | None = None,
+    headers: dict[str, str] | None = None,
+) -> JSONResponse:
+    """A problem+json response; also usable as an ASGI app by middleware."""
+    cid = _scope_cid(scope)
     body: dict[str, object] = {
         "type": f"{PROBLEM_BASE}/{slug}",
         "title": title,
@@ -96,6 +114,12 @@ async def _invalid_value(request: Request, exc: Exception) -> JSONResponse:
     return problem(request, 422, "validation", "Validation failed", str(exc))
 
 
+async def _rate_limited(request: Request, exc: Exception) -> JSONResponse:
+    from app.core.ratelimit import RateLimitedError, too_many_requests
+
+    return too_many_requests(request.scope, cast(RateLimitedError, exc).retry_after)
+
+
 async def _unhandled(request: Request, exc: Exception) -> JSONResponse:
     cid = _cid(request)
     logger.error(
@@ -107,6 +131,7 @@ async def _unhandled(request: Request, exc: Exception) -> JSONResponse:
 
 
 def register_exception_handlers(app: FastAPI) -> None:
+    from app.core.ratelimit import RateLimitedError
     from app.modules.identity.service import InvalidProfileChangeError
 
     app.add_exception_handler(StarletteHTTPException, _http_exception)
@@ -115,4 +140,5 @@ def register_exception_handlers(app: FastAPI) -> None:
     app.add_exception_handler(InvalidProfileChangeError, _invalid_value)
     app.add_exception_handler(ResourceNotFoundError, _not_found)
     app.add_exception_handler(PermissionDeniedError, _forbidden)
+    app.add_exception_handler(RateLimitedError, _rate_limited)
     app.add_exception_handler(Exception, _unhandled)

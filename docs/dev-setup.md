@@ -53,19 +53,22 @@ The first Android build also needs NDK 28.2.13676358 (`sdkmanager --install "ndk
 
 ## Keycloak development realm
 
-`docker compose up` imports `infra/keycloak/realm-export.json` (realm `wealthsphere`) on first start. To re-import after changing the file, remove the realm in the admin console (or recreate the Keycloak database) and restart the container.
+`docker compose up` imports `infra/keycloak/realm-export.json` (realm `wealthsphere`) on first start. Import skips a realm that already exists: after changing realm-level settings in the file, run `python scripts/keycloak_dev.py sync-realm` (applies policies, lifetimes and brute-force settings; not clients, roles or users). For other changes, remove the realm in the admin console (or recreate the Keycloak database) and restart the container.
 
 - Mobile client `wealthsphere-mobile`: public, Authorization Code + PKCE (S256) only; implicit and password grants are off. Redirect URI `com.kmdmtisya.wealthsphere:/oauth2redirect`. Access tokens carry the audience `wealthsphere-api` and live 5 minutes; refresh tokens rotate.
 - Password policy: 12+ characters with upper, lower, digit and symbol, not the username or email, last 5 not reusable. New accounts must verify their email. TOTP MFA is available; enforcing it for every account is decided before production (P04-GATE).
+- Brute-force detection: 5 failed sign-ins (wrong password or TOTP code) lock the account temporarily, starting at 1 minute and growing to at most 15 minutes; never permanently, so nobody can disable someone else's account by guessing. Clear a dev lockout under Users > (user) or with the admin API.
 - Test users `alice@example.test`, `bob@example.test` (two users for cross-user tests) and `mfa@example.test` (must enrol TOTP) are imported **without passwords**. Set `KEYCLOAK_TEST_USER_PASSWORD` in `.env`, then:
 
 ```
 python scripts/keycloak_dev.py seed-users   # set passwords; reset the MFA user's enrolment
-python scripts/keycloak_dev.py smoke        # PKCE, rejected grants, TOTP enrolment and login
+python scripts/keycloak_dev.py smoke        # PKCE, rejected grants, TOTP, brute-force lockout
 ```
 
 ## Backend authentication
 
 The API verifies Keycloak access tokens (RS256, issuer, audience `wealthsphere-api`, expiry, authorised party `wealthsphere-mobile`) against the realm's JWKS. Set `OIDC_ISSUER` in `.env` to the realm URL exactly as it appears in the token's `iss` claim (locally `http://127.0.0.1:8081/realms/wealthsphere`). With no issuer configured every protected endpoint answers 401.
+
+Rate limits use Redis (`RATE_LIMIT_*` settings in `app/core/config.py`; see docs/security.md "API protection"). Set `RATE_LIMIT_ENABLED=false` only for local load experiments.
 
 A user row is created on the first valid request (`GET /api/v1/me`). `PATCH /api/v1/me/preferences` updates display name, base currency, locale, time zone and UI preferences.

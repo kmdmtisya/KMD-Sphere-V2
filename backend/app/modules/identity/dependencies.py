@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.concurrency import run_in_threadpool
 
 from app.core.auth import AuthenticationError, TokenVerifier
+from app.core.ratelimit import enforce_user_limit
 from app.db.session import get_session
 from app.modules.identity.service import CurrentUser, IdentityService, UserDisabledError
 
@@ -26,6 +27,7 @@ async def current_user(
         raise AuthenticationError("authentication is not configured")
     # Fetching signing keys may do blocking HTTP: keep it off the event loop.
     claims = await run_in_threadpool(verifier.verify, credentials.credentials)
+    await enforce_user_limit(request, f"{claims.issuer}|{claims.subject}")
     try:
         return await IdentityService(session).provision(claims)
     except UserDisabledError as e:
