@@ -715,3 +715,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-10T22:47:18+04:00 — COMPLETE P05-T10
 - duration: 21m 10s
 - evidence: PR #53 (commit 35cf698). Published spec: backend/openapi.json (export_openapi --check, Spectral clean); holdings now expose valuation-based value/native_value/value_as_of/value_source (null when unpriced, unconverted or closed). Mapping: docs/contracts/dto-mapping.json + generated dto-mapping.md lists every field of the live DTOs (PortfolioRef, PortfolioSummary, HoldingSummary, Account) as same/renamed/dto-only/api-only with resolution and owning task, and the pending DTOs with keys and owners. Decision: ADR-0013 (Proposed) hand-written DTOs on JsonReader plus contract check, no generated client. CI contract check: tests/test_dto_mapping.py (paths, methods, nested fields vs openapi.json; keys read per Dart class equal mapped keys; owners are real tasks; Markdown current); backend gate now also triggers on mobile lib, docs/contracts and EXECUTION_PLAN.md. 20/20 contract-drift mutants and 10/10 holding-value mutants caught. Local pytest 725 passed, coverage 90%. CI all gates pass.
+
+### 2026-10-11T01:52:07+04:00 — START P05-GATE
+- Phase P05 exit gate
+- prerequisites verified COMPLETED

@@ -555,9 +555,9 @@
   - [x] P05-T10.2 Diff against DTOs
   - [x] P05-T10.3 Decide generation approach
   - [x] P05-T10.4 Update DTO plan
-- [ ] **P05-GATE** · Phase P05 exit gate · `NOT_STARTED` ⬜
+- [ ] **P05-GATE** · Phase P05 exit gate · `IN_PROGRESS` 🔄
   - Deps: P05-T01, P05-T02, P05-T03, P05-T04, P05-T05, P05-T06, P05-T07, P05-T08, P05-T09, P05-T10 · Wave: W7 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-01.3, QG-03.2, QG-06.2, QG-06.5
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-11T01:52:07+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P05-GATE.1 Run gates
   - [ ] P05-GATE.2 Present summary
