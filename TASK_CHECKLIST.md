@@ -502,15 +502,15 @@
   - [x] P05-T03.1 Service and endpoints
   - [x] P05-T03.2 Ownership and audit
   - [x] P05-T03.3 Tests
-- [ ] **P05-T04** · Transaction ledger API · `NOT_STARTED` ⬜
+- [ ] **P05-T04** · Transaction ledger API · `IN_PROGRESS` 🔄
   - Deps: P05-T02, P05-T03, P04-T04 · Wave: W3 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T20:59:16+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P05-T04.1 Ledger model and validation per type
-  - [ ] P05-T04.2 Idempotency
-  - [ ] P05-T04.3 Correction flow
-  - [ ] P05-T04.4 Audit
-  - [ ] P05-T04.5 Tests
+  - [x] P05-T04.1 Ledger model and validation per type
+  - [x] P05-T04.2 Idempotency
+  - [x] P05-T04.3 Correction flow
+  - [x] P05-T04.4 Audit
+  - [x] P05-T04.5 Tests
 - [ ] **P05-T05** · Holdings calculation service · `NOT_STARTED` ⬜
   - Deps: P05-T04 · Wave: W4 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
