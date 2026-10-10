@@ -24,6 +24,8 @@ def make_settings(**overrides: object) -> Settings:
         "redis_host": "127.0.0.1",
         "redis_port": 6380,
         "readiness_timeout_seconds": 2.0,
+        # Per-app counters: tests never share rate-limit state through Redis.
+        "rate_limit_storage": "memory",
         **overrides,
     }
     return Settings(_env_file=None, **values)  # type: ignore[arg-type]

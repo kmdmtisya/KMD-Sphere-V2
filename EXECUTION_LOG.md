@@ -564,3 +564,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-10T05:27:02+04:00 — COMPLETE P04-T04
 - duration: 9m 23s
 - evidence: PR #34 (commit 382b429). audit_events table + migration 0003 with triggers rejecting UPDATE/DELETE/TRUNCATE; ORM before_update/before_delete guards; AuditWriter exposes only record(); details redacted via app.core.redaction (Decimal->str, floats dropped, 8 KiB cap); correlation ID stored per event; event written in the caller's transaction; risk-profile create/update audited. tests/test_audit.py 20 tests incl. DB-level UPDATE/DELETE/TRUNCATE rejection, stored-row redaction, correlation linkage via X-Correlation-ID, rollback when the event cannot be written. Local: ruff/format/mypy clean, pytest 209 passed. CI: backend gate pass (206 passed, 3 skipped live-Keycloak), security gate, mobile gate, tracker validate pass. 11 mutants all caught. Docs: docs/security.md Audit events.
+
+### 2026-10-10T05:28:55+04:00 — START P04-T05
+- API protection
+- prerequisites verified COMPLETED

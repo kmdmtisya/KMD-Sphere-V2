@@ -420,14 +420,14 @@
   - [x] P04-T04.2 Writer service
   - [x] P04-T04.3 Redaction
   - [x] P04-T04.4 Tests
-- [ ] **P04-T05** · API protection · `NOT_STARTED` ⬜
+- [ ] **P04-T05** · API protection · `IN_PROGRESS` 🔄
   - Deps: P04-T02 · Wave: W3 · Track: SEC · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T05:28:55+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P04-T05.1 Rate limiter
-  - [ ] P04-T05.2 Keycloak brute-force
-  - [ ] P04-T05.3 Limits and headers
-  - [ ] P04-T05.4 Tests
+  - [x] P04-T05.1 Rate limiter
+  - [x] P04-T05.2 Keycloak brute-force
+  - [x] P04-T05.3 Limits and headers
+  - [x] P04-T05.4 Tests
 - [ ] **P04-T06** · Mobile networking and authentication core · `NOT_STARTED` ⬜
   - Deps: P04-T01, P04-T02, P01-T06 · Wave: W3 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

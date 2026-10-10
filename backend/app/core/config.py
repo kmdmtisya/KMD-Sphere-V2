@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Literal
 from urllib.parse import quote_plus
 
-from pydantic import SecretStr
+from pydantic import SecretStr, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 _ROOT_ENV = Path(__file__).resolve().parents[3] / ".env"
@@ -45,6 +45,23 @@ class Settings(BaseSettings):
     oidc_jwks_url: str = ""
     jwks_cache_seconds: int = 300
     auth_leeway_seconds: int = 30
+
+    # API protection (P04-T05): requests per window, counted per client IP or per account.
+    # `rate_limit_storage=memory` keeps counters per process (tests; single-instance only).
+    rate_limit_enabled: bool = True
+    rate_limit_storage: Literal["redis", "memory"] = "redis"
+    rate_limit_auth_requests: int = 10
+    rate_limit_auth_window_seconds: int = 60
+    rate_limit_auth_failures: int = 10
+    rate_limit_auth_failure_window_seconds: int = 300
+    rate_limit_ip_requests: int = 600
+    rate_limit_ip_window_seconds: int = 60
+    rate_limit_user_requests: int = 120
+    rate_limit_user_window_seconds: int = 60
+    max_request_body_bytes: int = 1_048_576
+    # Browser origins allowed to call the API. Empty (the default) disables CORS: the mobile apps
+    # do not need it. A wildcard is never accepted.
+    cors_allowed_origins: list[str] = []
 
     db_pool_size: int = 5
     db_max_overflow: int = 5
@@ -87,6 +104,21 @@ class Settings(BaseSettings):
     @property
     def docs_enabled(self) -> bool:
         return self.environment != "production"
+
+    @property
+    def hsts_enabled(self) -> bool:
+        """Deployed environments are served over TLS only."""
+        return self.environment in ("staging", "production")
+
+    @field_validator("cors_allowed_origins")
+    @classmethod
+    def _explicit_origins(cls, origins: list[str]) -> list[str]:
+        for origin in origins:
+            if "*" in origin or not origin.startswith(
+                ("https://", "http://localhost", "http://127.0.0.1")
+            ):
+                raise ValueError(f"CORS origin must be an explicit https origin: {origin!r}")
+        return origins
 
 
 @lru_cache

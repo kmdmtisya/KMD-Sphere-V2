@@ -2,14 +2,26 @@ from collections.abc import AsyncIterator, Sequence
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from opentelemetry.sdk.trace import SpanProcessor
+from redis.asyncio import Redis
 
 from app.api import health, metrics
 from app.core.auth import JwksKeySource, TokenVerifier
 from app.core.config import Settings, get_settings
 from app.core.correlation import CorrelationIdMiddleware
 from app.core.errors import register_exception_handlers
+from app.core.http_protection import BodySizeLimitMiddleware, SecurityHeadersMiddleware
 from app.core.logging import configure_logging
+from app.core.ratelimit import (
+    CounterStore,
+    FallbackCounterStore,
+    MemoryCounterStore,
+    Policies,
+    RateLimiter,
+    RateLimitMiddleware,
+    RedisCounterStore,
+)
 from app.core.telemetry import Telemetry
 from app.db.session import Database
 from app.modules.identity import api as identity_api
@@ -20,16 +32,29 @@ def create_app(
     readiness_checks: dict[str, health.ReadinessCheck] | None = None,
     span_processors: Sequence[SpanProcessor] = (),
     token_verifier: TokenVerifier | None = None,
+    rate_limit_store: CounterStore | None = None,
 ) -> FastAPI:
     settings = settings or get_settings()
     configure_logging(settings.log_level)
     db = Database(settings)
     telemetry = Telemetry(settings, span_processors)
+    redis: Redis | None = None
+    if rate_limit_store is None:
+        if settings.rate_limit_storage == "memory":
+            rate_limit_store = MemoryCounterStore()
+        else:
+            # Short timeouts: a slow Redis falls back to per-process limits, not slow requests.
+            redis = Redis.from_url(
+                settings.redis_url, socket_connect_timeout=0.25, socket_timeout=0.25
+            )
+            rate_limit_store = FallbackCounterStore(RedisCounterStore(redis))
 
     @asynccontextmanager
     async def lifespan(_: FastAPI) -> AsyncIterator[None]:
         yield
         await db.dispose()
+        if redis is not None:
+            await redis.aclose()
         telemetry.shutdown()
 
     app = FastAPI(
@@ -59,7 +84,26 @@ def create_app(
         readiness_checks if readiness_checks is not None else health.default_checks(settings)
     )
     app.state.token_verifier = token_verifier or _default_verifier(settings)
+    policies = Policies.from_settings(settings)
+    limiter = RateLimiter(rate_limit_store)
+    app.state.rate_limiter = limiter if settings.rate_limit_enabled else None
+    app.state.rate_limit_policies = policies
+    # Added innermost first: headers wrap everything, so 413 and 429 answers carry them too.
+    app.add_middleware(BodySizeLimitMiddleware, max_bytes=settings.max_request_body_bytes)
+    if settings.rate_limit_enabled:
+        app.add_middleware(RateLimitMiddleware, limiter=limiter, policies=policies)
     app.add_middleware(CorrelationIdMiddleware)
+    if settings.cors_allowed_origins:
+        app.add_middleware(
+            CORSMiddleware,
+            allow_origins=settings.cors_allowed_origins,
+            allow_credentials=False,
+            allow_methods=["GET", "POST", "PATCH", "PUT", "DELETE"],
+            allow_headers=["Authorization", "Content-Type", "X-Correlation-ID"],
+            expose_headers=["X-Correlation-ID", "Retry-After"],
+            max_age=600,
+        )
+    app.add_middleware(SecurityHeadersMiddleware, hsts=settings.hsts_enabled)
     register_exception_handlers(app)
     app.include_router(health.router)
     app.include_router(metrics.router)

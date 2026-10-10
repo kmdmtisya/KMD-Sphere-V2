@@ -1,7 +1,8 @@
 """Development helpers for the local Keycloak realm (P04-T01). Standard library only.
 
     python scripts/keycloak_dev.py seed-users   # set dev passwords from .env, reset MFA enrolment
-    python scripts/keycloak_dev.py smoke        # verify PKCE, rejected grants and TOTP enrolment
+    python scripts/keycloak_dev.py smoke        # verify PKCE, rejected grants, TOTP, lockout
+    python scripts/keycloak_dev.py sync-realm   # apply realm-level settings from the export
 
 Reads KEYCLOAK_PORT, KEYCLOAK_ADMIN, KEYCLOAK_ADMIN_PASSWORD and KEYCLOAK_TEST_USER_PASSWORD from
 `.env` (git-ignored). Nothing secret is printed. For the local development stack only.
@@ -175,6 +176,21 @@ def seed_users() -> None:
     print(f"seeded {len(USERS)} users; mfa@example.test must enrol TOTP on next login")
 
 
+# -------------------------------------------------------------------------- sync realm
+def sync_realm() -> None:
+    """`--import-realm` only imports a realm that does not exist yet. This applies the export's
+    realm-level settings (policies, lifetimes, brute-force detection) to the running realm;
+    clients, roles and users are not touched."""
+    export = json.loads((ROOT / "infra/keycloak/realm-export.json").read_text(encoding="utf-8"))
+    settings = {
+        k: v for k, v in export.items() if not isinstance(v, (dict, list)) and k != "realm"
+    }
+    status, body = admin("PUT", "", admin_token(), settings)
+    if status != 204:
+        sys.exit(f"updating the realm failed ({status}): {str(body)[:200]}")
+    print(f"applied {len(settings)} realm settings")
+
+
 # ------------------------------------------------------------------------------- smoke
 def totp(raw_secret: str, at: float | None = None) -> str:
     """RFC 6238 code for Keycloak's raw TOTP secret (the hidden `totpSecret` form value; the
@@ -274,6 +290,14 @@ def login(
                 f"unexpected page (status {status}): {re.sub(r'<[^>]+>', ' ', page)[:200]}"
             )
     raise AssertionError("login did not complete")
+
+
+def password_attempt(username: str, password: str) -> tuple[int, dict, str]:
+    """One username/password submission on the login page; returns the raw response."""
+    op = opener()
+    _, challenge = pkce()
+    _, _, page = call(op, auth_url(challenge))
+    return call(op, form_action(page), {"username": username, "password": password})
 
 
 def exchange(code: str, verifier: str | None) -> tuple[int, dict]:
@@ -408,13 +432,42 @@ def smoke() -> None:
         and not cl["directAccessGrantsEnabled"],
     )
 
+    check(
+        "brute-force detection is on with temporary lockout",
+        realm.get("bruteForceProtected") is True
+        and realm.get("permanentLockout") is False
+        and realm.get("failureFactor", 99) <= 5,
+    )
+
+    # 7. Brute force: after repeated wrong passwords, even the right one is refused for a while.
+    bob = user_id(token, "bob@example.test")
+    admin("DELETE", f"/attack-detection/brute-force/users/{bob}", token)
+    try:
+        for _ in range(realm.get("failureFactor", 5)):
+            password_attempt("bob@example.test", "wrong-" + secrets.token_hex(6))
+        _, state = admin("GET", f"/attack-detection/brute-force/users/{bob}", token)
+        check(
+            "repeated wrong passwords lock the account",
+            isinstance(state, dict) and state.get("disabled") is True,
+        )
+        status, headers, _ = password_attempt("bob@example.test", password)
+        location = headers.get("Location", "")
+        check(
+            "a locked account cannot sign in with the right password",
+            not (status in (302, 303) and location.startswith(REDIRECT)),
+        )
+    finally:
+        admin("DELETE", f"/attack-detection/brute-force/users/{bob}", token)
+    code, verifier = login("bob@example.test", password)
+    check("clearing the lockout restores sign-in", exchange(code, verifier)[0] == 200)
+
     failed = [n for n, ok in results if not ok]
     print(f"\n{len(results) - len(failed)}/{len(results)} checks passed")
     sys.exit(1 if failed else 0)
 
 
 if __name__ == "__main__":
-    commands = {"seed-users": seed_users, "smoke": smoke}
+    commands = {"seed-users": seed_users, "smoke": smoke, "sync-realm": sync_realm}
     if len(sys.argv) != 2 or sys.argv[1] not in commands:
         sys.exit(__doc__)
     commands[sys.argv[1]]()

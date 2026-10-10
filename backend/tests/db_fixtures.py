@@ -27,7 +27,9 @@ async def migrated_settings() -> AsyncIterator[Settings]:
         await admin.execute(f'CREATE DATABASE "{name}"')
     finally:
         await admin.close()
-    settings = base.model_copy(update={"postgres_db": name, "oidc_issuer": ""})
+    settings = base.model_copy(
+        update={"postgres_db": name, "oidc_issuer": "", "rate_limit_storage": "memory"}
+    )
     cfg = Config(str(BACKEND / "alembic.ini"))
     cfg.set_main_option("script_location", str(BACKEND / "migrations"))
     cfg.attributes["sqlalchemy_url"] = settings.sqlalchemy_url
