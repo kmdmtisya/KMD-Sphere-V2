@@ -487,10 +487,10 @@
   - [x] P05-T01.4 FX table
   - [x] P05-T01.5 Constraints and indexes
   - [x] P05-T01.6 Schema tests
-- [ ] **P05-T02** · Asset model and search API · `IN_PROGRESS` 🔄
+- [x] **P05-T02** · Asset model and search API · `COMPLETED` ✅
   - Deps: P05-T01 · Wave: W2 · Track: BE · Size: M · Approval: no
-  - Started: 2026-10-10T20:21:39+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-10T20:21:39+04:00 · Completed: 2026-10-10T20:32:45+04:00 · Duration: 11m 06s · Blocker: —
+  - Evidence: PR #45 (commit b6ece56). Migration 0005 seeds 16 asset classes with metadata schemas (seed == catalogue, tested); new class works as a row only (tested). GET /api/v1/asset-classes, GET /api/v1/assets/search (global + own, escaped wildcards, deterministic ranking, class filter, limit 1-50), GET /api/v1/assets/{id} (other user's custom asset 404, IDOR-registered), POST /api/v1/assets (user-defined, metadata validated, audit event). Typed request/response schemas in OpenAPI (regenerated, Spectral clean). Local: ruff/format/mypy clean, pytest 379 passed, coverage 92.89%. 12/12 mutants caught. CI backend, mobile, security, tracker pass.
   - [x] P05-T02.1 Service and repository
   - [x] P05-T02.2 Endpoints
   - [x] P05-T02.3 Seed data

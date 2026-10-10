@@ -647,3 +647,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-10T20:21:39+04:00 — START P05-T02
 - Asset model and search API
 - prerequisites verified COMPLETED
+
+### 2026-10-10T20:32:45+04:00 — COMPLETE P05-T02
+- duration: 11m 06s
+- evidence: PR #45 (commit b6ece56). Migration 0005 seeds 16 asset classes with metadata schemas (seed == catalogue, tested); new class works as a row only (tested). GET /api/v1/asset-classes, GET /api/v1/assets/search (global + own, escaped wildcards, deterministic ranking, class filter, limit 1-50), GET /api/v1/assets/{id} (other user's custom asset 404, IDOR-registered), POST /api/v1/assets (user-defined, metadata validated, audit event). Typed request/response schemas in OpenAPI (regenerated, Spectral clean). Local: ruff/format/mypy clean, pytest 379 passed, coverage 92.89%. 12/12 mutants caught. CI backend, mobile, security, tracker pass.
