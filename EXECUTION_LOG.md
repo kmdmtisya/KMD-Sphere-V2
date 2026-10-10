@@ -568,3 +568,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-10T05:28:55+04:00 — START P04-T05
 - API protection
 - prerequisites verified COMPLETED
+
+### 2026-10-10T05:43:47+04:00 — COMPLETE P04-T05
+- duration: 14m 52s
+- evidence: PR #35 (commit 955a751). Redis-backed fixed-window rate limiter with per-process fallback (app/core/ratelimit.py): auth routes 10/60s per IP (stricter than general 600/60s per IP and 120/60s per verified account); 10 failed authentications/300s per IP then 429 for every request; 429 problem+json with Retry-After; probes exempt. Keycloak realm brute-force detection (5 failures, temporary lockout 1-15 min, not permanent) + keycloak_dev.py sync-realm. Body limit 1 MiB (413 by Content-Length, malformed length, streamed chunks), security headers (nosniff, DENY, no-referrer, CORP, Permissions-Policy, no-store, deny-all CSP except Swagger, HSTS staging/prod), CORS off by default with https-only explicit origins. Tests: tests/test_api_protection.py 24 (incl. live Redis) + realm test. Local: ruff/format/mypy clean, Spectral clean, pytest 234 passed. CI: backend gate (231 passed, 3 skipped live-Keycloak), security, mobile, tracker validate pass. 20 mutants all caught. Keycloak smoke 19/19 twice after seed-users (one earlier run without re-seeding failed the TOTP-login check). Docs: security.md API protection, dev-setup.md.
