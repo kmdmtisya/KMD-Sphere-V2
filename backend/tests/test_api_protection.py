@@ -28,6 +28,8 @@ from tests import auth_helpers as ah
 from tests.conftest import make_settings
 from tests.db_fixtures import migrated_settings  # noqa: F401
 
+pytestmark = pytest.mark.security
+
 # --------------------------------------------------------------------------- unit: counters
 
 

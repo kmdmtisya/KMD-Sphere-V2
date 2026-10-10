@@ -454,13 +454,13 @@
   - [x] P04-T08.3 Password reset entry
   - [x] P04-T08.4 Biometric prompt
   - [x] P04-T08.5 Tests
-- [ ] **P04-T09** · Security test suite v1 and threat model · `NOT_STARTED` ⬜
+- [ ] **P04-T09** · Security test suite v1 and threat model · `IN_PROGRESS` 🔄
   - Deps: P04-T03, P04-T04, P04-T05, P04-T07 · Wave: W5 · Track: SEC · Size: M · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T08:26:13+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P04-T09.1 Automated tests in CI
-  - [ ] P04-T09.2 Threat model
-  - [ ] P04-T09.3 Findings register
+  - [x] P04-T09.1 Automated tests in CI
+  - [x] P04-T09.2 Threat model
+  - [x] P04-T09.3 Findings register
 - [ ] **P04-GATE** · Phase P04 exit gate · `NOT_STARTED` ⬜
   - Deps: P04-T01, P04-T02, P04-T03, P04-T04, P04-T05, P04-T06, P04-T07, P04-T08, P04-T09 · Wave: W6 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-04.5, QG-05.4, QG-08.1
   - Started: — · Completed: — · Duration: — · Blocker: —

@@ -61,7 +61,10 @@ asyncio_default_fixture_loop_scope = "module"
 asyncio_default_test_loop_scope = "module"
 testpaths = ["tests"]
 addopts = "-ra --strict-markers"
-markers = ["integration: needs the docker compose stack (postgres, redis)"]
+markers = [
+    "integration: needs the docker compose stack (postgres, redis)",
+    "security: security test suite (authentication, authorization/IDOR, tokens, rate limits, audit, headers); run alone with -m security",
+]
 
 [tool.coverage.run]
 source = ["app"]

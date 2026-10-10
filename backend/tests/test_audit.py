@@ -33,6 +33,8 @@ from tests import auth_helpers as ah
 from tests.authz_harness import TwoUsers, two_users  # noqa: F401
 from tests.db_fixtures import migrated_settings  # noqa: F401
 
+pytestmark = pytest.mark.security
+
 # ------------------------------------------------------------------------- unit: redaction
 
 

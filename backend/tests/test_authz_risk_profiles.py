@@ -14,7 +14,7 @@ from tests import auth_helpers as ah
 from tests.authz_harness import TwoUsers, assert_hidden_from, two_users  # noqa: F401
 from tests.db_fixtures import migrated_settings  # noqa: F401
 
-pytestmark = pytest.mark.integration
+pytestmark = [pytest.mark.integration, pytest.mark.security]
 BASE = "/api/v1/risk-profiles"
 
 

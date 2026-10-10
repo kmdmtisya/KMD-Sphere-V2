@@ -1,6 +1,6 @@
 # Security Requirements and Controls
 
-Derived from CLAUDE.md (Security Rules), `SOLUTION_INTENT.md` section 23 and the implementation guide section 12. The threat model is produced in P04-T09.
+Derived from CLAUDE.md (Security Rules), `SOLUTION_INTENT.md` section 23 and the implementation guide section 12. The threat model is [threat-model.md](threat-model.md) and findings are tracked in [security-findings.md](security-findings.md) (P04-T09).
 
 ## Principles
 - Cross-user portfolio access is a critical security failure.

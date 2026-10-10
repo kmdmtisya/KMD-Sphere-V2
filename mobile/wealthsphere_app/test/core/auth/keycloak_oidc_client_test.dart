@@ -1,3 +1,6 @@
+@Tags(['security'])
+library;
+
 import 'package:dio/dio.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_test/flutter_test.dart';
