@@ -24,6 +24,7 @@ from app.core.ratelimit import (
 )
 from app.core.telemetry import Telemetry
 from app.db.session import Database
+from app.modules.assets import api as assets_api
 from app.modules.identity import api as identity_api
 
 
@@ -72,6 +73,10 @@ def create_app(
         openapi_tags=[
             {"name": "health", "description": "Liveness and readiness probes"},
             {"name": "identity", "description": "The signed-in user, profile and preferences"},
+            {
+                "name": "assets",
+                "description": "Asset classes, catalogue search and user-defined assets",
+            },
         ],
         docs_url="/docs" if settings.docs_enabled else None,
         redoc_url=None,
@@ -109,6 +114,8 @@ def create_app(
     app.include_router(metrics.router)
     app.include_router(identity_api.router)
     app.include_router(identity_api.risk_router)
+    app.include_router(assets_api.classes_router)
+    app.include_router(assets_api.router)
     telemetry.instrument(app)
     return app
 

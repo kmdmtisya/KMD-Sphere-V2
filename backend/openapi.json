@@ -1,6 +1,316 @@
 {
   "components": {
     "schemas": {
+      "AssetClassOut": {
+        "properties": {
+          "code": {
+            "description": "Stable identifier, e.g. `stock`, `real_estate`",
+            "title": "Code",
+            "type": "string"
+          },
+          "metadata_fields": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/MetadataField"
+            },
+            "description": "Facts an asset of this class may carry. Decimals are sent as strings.",
+            "title": "Metadata Fields",
+            "type": "object"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "valuation_mode": {
+            "description": "`market`: valued from prices. `manual`: valued from user-entered valuations.",
+            "enum": [
+              "market",
+              "manual"
+            ],
+            "title": "Valuation Mode",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "valuation_mode",
+          "metadata_fields"
+        ],
+        "title": "AssetClassOut",
+        "type": "object"
+      },
+      "AssetCreate": {
+        "additionalProperties": false,
+        "description": "A user-defined asset (a property, a private business, a SACCO share). Only its creator sees\nit. Listed instruments come from market data providers, not from this endpoint.",
+        "properties": {
+          "asset_class": {
+            "maxLength": 40,
+            "minLength": 2,
+            "pattern": "^[a-z][a-z0-9_]{1,39}$",
+            "title": "Asset Class",
+            "type": "string"
+          },
+          "country": {
+            "anyOf": [
+              {
+                "pattern": "^[A-Z]{2}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Country"
+          },
+          "currency": {
+            "pattern": "^[A-Z]{3}$",
+            "title": "Currency",
+            "type": "string"
+          },
+          "metadata": {
+            "additionalProperties": true,
+            "maxProperties": 30,
+            "title": "Metadata",
+            "type": "object"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "subtype": {
+            "anyOf": [
+              {
+                "maxLength": 64,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subtype"
+          },
+          "symbol": {
+            "anyOf": [
+              {
+                "maxLength": 32,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Symbol"
+          }
+        },
+        "required": [
+          "asset_class",
+          "name",
+          "currency"
+        ],
+        "title": "AssetCreate",
+        "type": "object"
+      },
+      "AssetOut": {
+        "properties": {
+          "asset_class": {
+            "description": "Asset class code",
+            "title": "Asset Class",
+            "type": "string"
+          },
+          "asset_class_name": {
+            "title": "Asset Class Name",
+            "type": "string"
+          },
+          "country": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "ISO 3166-1 alpha-2",
+            "title": "Country"
+          },
+          "currency": {
+            "description": "ISO 4217 code the asset is priced or valued in",
+            "title": "Currency",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "is_custom": {
+            "description": "True for an asset the caller defined (only they see it)",
+            "title": "Is Custom",
+            "type": "boolean"
+          },
+          "metadata": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            },
+            "description": "Type-specific facts. Decimals are strings, dates are YYYY-MM-DD.",
+            "title": "Metadata",
+            "type": "object"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "subtype": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subtype"
+          },
+          "symbol": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Symbol"
+          },
+          "valuation_mode": {
+            "enum": [
+              "market",
+              "manual"
+            ],
+            "title": "Valuation Mode",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "asset_class",
+          "symbol",
+          "name",
+          "subtype",
+          "currency",
+          "country",
+          "is_custom",
+          "asset_class_name",
+          "valuation_mode",
+          "metadata"
+        ],
+        "title": "AssetOut",
+        "type": "object"
+      },
+      "AssetSearchResult": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/AssetSummary"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "AssetSearchResult",
+        "type": "object"
+      },
+      "AssetSummary": {
+        "properties": {
+          "asset_class": {
+            "description": "Asset class code",
+            "title": "Asset Class",
+            "type": "string"
+          },
+          "country": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "ISO 3166-1 alpha-2",
+            "title": "Country"
+          },
+          "currency": {
+            "description": "ISO 4217 code the asset is priced or valued in",
+            "title": "Currency",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "is_custom": {
+            "description": "True for an asset the caller defined (only they see it)",
+            "title": "Is Custom",
+            "type": "boolean"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "subtype": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subtype"
+          },
+          "symbol": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Symbol"
+          }
+        },
+        "required": [
+          "id",
+          "asset_class",
+          "symbol",
+          "name",
+          "subtype",
+          "currency",
+          "country",
+          "is_custom"
+        ],
+        "title": "AssetSummary",
+        "type": "object"
+      },
       "DashboardLayout": {
         "additionalProperties": false,
         "properties": {
@@ -132,6 +442,31 @@
           "created_at"
         ],
         "title": "MeResponse",
+        "type": "object"
+      },
+      "MetadataField": {
+        "properties": {
+          "required": {
+            "title": "Required",
+            "type": "boolean"
+          },
+          "type": {
+            "enum": [
+              "string",
+              "decimal",
+              "date",
+              "integer",
+              "boolean"
+            ],
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "required"
+        ],
+        "title": "MetadataField",
         "type": "object"
       },
       "Preferences": {
@@ -460,6 +795,265 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/api/v1/asset-classes": {
+      "get": {
+        "description": "The asset classes and the metadata each one accepts.",
+        "operationId": "list_asset_classes_api_v1_asset_classes_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/AssetClassOut"
+                  },
+                  "title": "Response List Asset Classes Api V1 Asset Classes Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "List Asset Classes",
+        "tags": [
+          "assets"
+        ]
+      }
+    },
+    "/api/v1/assets": {
+      "post": {
+        "description": "Creates a user-defined asset (only the caller sees it).",
+        "operationId": "create_asset_api_v1_assets_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssetCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "422": {
+            "description": "Invalid asset"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Create Asset",
+        "tags": [
+          "assets"
+        ]
+      }
+    },
+    "/api/v1/assets/search": {
+      "get": {
+        "description": "Searches the global catalogue and the caller's own assets.",
+        "operationId": "search_assets_api_v1_assets_search_get",
+        "parameters": [
+          {
+            "description": "Symbol or name, any part",
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "default": "",
+              "description": "Symbol or name, any part",
+              "maxLength": 100,
+              "title": "Q",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Class code filter",
+            "in": "query",
+            "name": "asset_class",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[a-z][a-z0-9_]{1,39}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Class code filter",
+              "title": "Asset Class"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetSearchResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "422": {
+            "description": "Invalid search parameters"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Search Assets",
+        "tags": [
+          "assets"
+        ]
+      }
+    },
+    "/api/v1/assets/{asset_id}": {
+      "get": {
+        "description": "A catalogue asset, or one of the caller's own assets, with its metadata.",
+        "operationId": "get_asset_api_v1_assets__asset_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "asset_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Asset Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such asset for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Asset",
+        "tags": [
+          "assets"
+        ]
+      }
+    },
     "/api/v1/me": {
       "get": {
         "description": "The signed-in user, created on first sign-in.",
@@ -874,6 +1468,10 @@
     {
       "description": "The signed-in user, profile and preferences",
       "name": "identity"
+    },
+    {
+      "description": "Asset classes, catalogue search and user-defined assets",
+      "name": "assets"
     }
   ]
 }
