@@ -114,3 +114,10 @@ await session.commit()                         # the change and its event commit
 - **Settings:** turning the lock off or changing the timeout needs a successful device check first. On a device that cannot verify anyone, the lock can only be turned off.
 - **App switcher:** while the app is inactive a privacy cover replaces its content, so the Recents/app-switcher snapshot shows no financial data. Android 13+ also disables the Recents screenshot (`setRecentsScreenshotEnabled(false)`).
 - **Platform:** Android `MainActivity` is a `FlutterFragmentActivity` with AppCompat themes and `USE_BIOMETRIC`; iOS declares `NSFaceIDUsageDescription`.
+
+## Sign-in screens (P04-T08)
+
+- **No credentials in the app.** Screen 2 collects at most an optional email to pre-fill the hosted page (`login_hint`, validated). Passwords, TOTP codes, registration (`prompt=create`) and password reset happen only on Keycloak's pages; two-step verification is set up there too (`kc_action=CONFIGURE_TOTP`, from More > Account). The reset link is built from configuration only.
+- **Non-leaking errors.** Failures show one of a few fixed messages (cannot reach the sign-in service / sign-in did not complete / session ended); nothing names the account, provider error codes or tokens. Cancelling shows nothing.
+- **Biometric offer.** After the first sign-in on a device, a one-time sheet offers the app lock: turning it on needs a successful device check; "Not now" turns it off (an explicit choice right after a full sign-in). Devices without a screen lock are told that returning will require signing in again.
+- **DEMO mode.** "Explore with DEMO data" continues without an account; everything shown is labelled DEMO.

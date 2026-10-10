@@ -70,6 +70,8 @@ class AccountSection extends ConsumerWidget {
               const SizedBox(height: AppSpacing.s),
               const AppLockSettingsTile(),
               const SizedBox(height: AppSpacing.s),
+              const _TwoStepVerification(),
+              const SizedBox(height: AppSpacing.xs),
               OutlinedButton.icon(
                 key: const ValueKey('sign-out'),
                 onPressed: controller.signOut,
@@ -101,5 +103,60 @@ class _ServerAccount extends ConsumerWidget {
     }
     if (account.hasError) return Text(l10n.accountServerError, style: style);
     return const SizedBox.shrink();
+  }
+}
+
+/// Starts the identity provider's TOTP set-up; the session is kept whatever the outcome.
+class _TwoStepVerification extends ConsumerStatefulWidget {
+  const _TwoStepVerification();
+
+  @override
+  ConsumerState<_TwoStepVerification> createState() =>
+      _TwoStepVerificationState();
+}
+
+class _TwoStepVerificationState extends ConsumerState<_TwoStepVerification> {
+  bool _busy = false;
+  AuthFailure? _failure;
+
+  Future<void> _run() async {
+    setState(() {
+      _busy = true;
+      _failure = null;
+    });
+    final failure = await ref
+        .read(authControllerProvider.notifier)
+        .setUpTwoStepVerification();
+    if (mounted) {
+      setState(() {
+        _busy = false;
+        _failure = failure;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        OutlinedButton.icon(
+          key: const ValueKey('set-up-mfa'),
+          onPressed: _busy ? null : _run,
+          icon: const Icon(Icons.verified_user_outlined),
+          label: Text(l10n.mfaSetUp),
+        ),
+        if (_failure != null) ...[
+          const SizedBox(height: AppSpacing.xs),
+          StatusBanner(
+            icon: Icons.error_outline,
+            message: _failure == AuthFailure.network
+                ? l10n.accountSignInOffline
+                : l10n.mfaSetUpFailed,
+          ),
+        ],
+      ],
+    );
   }
 }

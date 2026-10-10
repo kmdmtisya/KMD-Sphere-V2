@@ -445,15 +445,15 @@
   - [x] P04-T07.2 Lock policy
   - [x] P04-T07.3 Privacy screen
   - [x] P04-T07.4 Tests
-- [ ] **P04-T08** · Auth screens: Welcome/Onboarding and Sign In/Up · `NOT_STARTED` ⬜
+- [ ] **P04-T08** · Auth screens: Welcome/Onboarding and Sign In/Up · `IN_PROGRESS` 🔄
   - Deps: P04-T06, P02-GATE · Wave: W4 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T07:35:24+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P04-T08.1 Welcome/onboarding carousel
-  - [ ] P04-T08.2 Sign in/up and MFA flow
-  - [ ] P04-T08.3 Password reset entry
-  - [ ] P04-T08.4 Biometric prompt
-  - [ ] P04-T08.5 Tests
+  - [x] P04-T08.1 Welcome/onboarding carousel
+  - [x] P04-T08.2 Sign in/up and MFA flow
+  - [x] P04-T08.3 Password reset entry
+  - [x] P04-T08.4 Biometric prompt
+  - [x] P04-T08.5 Tests
 - [ ] **P04-T09** · Security test suite v1 and threat model · `NOT_STARTED` ⬜
   - Deps: P04-T03, P04-T04, P04-T05, P04-T07 · Wave: W5 · Track: SEC · Size: M · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —

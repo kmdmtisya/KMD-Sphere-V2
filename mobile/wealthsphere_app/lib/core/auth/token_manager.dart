@@ -51,9 +51,12 @@ class TokenManager {
   /// Display-only claims of the current access token (unverified).
   Map<String, Object?> get claims => _tokens?.displayClaims ?? const {};
 
-  Future<void> signIn() async {
+  Future<void> signIn({
+    String? loginHint,
+    SignInIntent intent = SignInIntent.signIn,
+  }) async {
     await restore();
-    final tokens = await _client.signIn();
+    final tokens = await _client.signIn(loginHint: loginHint, intent: intent);
     await _store.write(tokens);
     _tokens = tokens;
   }

@@ -70,17 +70,34 @@ class AuthController extends Notifier<AuthState> {
     state = signedIn ? _signedIn() : const SignedOut();
   }
 
-  Future<void> signIn() async {
+  /// Signs in (or, with [register], creates an account) on the identity provider's pages.
+  Future<void> signIn({String? loginHint, bool register = false}) async {
     if (state is SigningIn) return;
     state = const SigningIn();
     try {
-      await _tokens.signIn();
+      await _tokens.signIn(
+        loginHint: loginHint,
+        intent: register ? SignInIntent.register : SignInIntent.signIn,
+      );
       if (ref.mounted) state = _signedIn();
     } on AuthException catch (e) {
       if (!ref.mounted) return;
       state = SignedOut(
         failure: e.failure == AuthFailure.cancelled ? null : e.failure,
       );
+    }
+  }
+
+  /// Runs the identity provider's two-step verification set-up for the signed-in user. Returns
+  /// null on success (or cancellation); the current session is kept whatever happens.
+  Future<AuthFailure?> setUpTwoStepVerification() async {
+    if (state is! SignedIn) return AuthFailure.signedOut;
+    try {
+      await _tokens.signIn(intent: SignInIntent.configureMfa);
+      if (ref.mounted) state = _signedIn();
+      return null;
+    } on AuthException catch (e) {
+      return e.failure == AuthFailure.cancelled ? null : e.failure;
     }
   }
 

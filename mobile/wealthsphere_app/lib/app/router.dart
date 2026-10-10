@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../features/ai_wealth/presentation/ai_wealth_screen.dart';
+import '../features/auth/application/auth_flow.dart';
+import '../features/auth/presentation/sign_in_screen.dart';
+import '../features/auth/presentation/welcome_screen.dart';
 import '../features/calculator/presentation/calculator_screen.dart';
 import '../features/calculator/presentation/forecast/forecast_screen.dart';
 import '../features/dashboard/presentation/home_screen.dart';
@@ -84,6 +87,14 @@ GoRouter createRouter({
             StatefulShellBranch(routes: [tabRoutes[tab]!()]),
         ],
       ),
+      GoRoute(
+        path: AppRoutes.welcome,
+        builder: (context, state) => const WelcomeScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.signIn,
+        builder: (context, state) => const SignInScreen(),
+      ),
       if (enableGallery)
         GoRoute(
           path: AppRoutes.gallery,
@@ -94,7 +105,12 @@ GoRouter createRouter({
 }
 
 final routerProvider = Provider<GoRouter>((ref) {
-  final router = createRouter();
+  // First launch starts with the introduction (screen 1).
+  final router = createRouter(
+    initialLocation: ref.read(initialOnboardingCompleteProvider)
+        ? AppRoutes.home
+        : AppRoutes.welcome,
+  );
   ref.onDispose(router.dispose);
   return router;
 });
