@@ -555,13 +555,13 @@
   - [x] P05-T10.2 Diff against DTOs
   - [x] P05-T10.3 Decide generation approach
   - [x] P05-T10.4 Update DTO plan
-- [ ] **P05-GATE** · Phase P05 exit gate · `IN_PROGRESS` 🔄
+- [x] **P05-GATE** · Phase P05 exit gate · `COMPLETED` ✅
   - Deps: P05-T01, P05-T02, P05-T03, P05-T04, P05-T05, P05-T06, P05-T07, P05-T08, P05-T09, P05-T10 · Wave: W7 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-01.3, QG-03.2, QG-06.2, QG-06.5
-  - Started: 2026-10-11T01:52:07+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P05-GATE.1 Run gates
-  - [ ] P05-GATE.2 Present summary
-  - [ ] P05-GATE.3 Record approval
+  - Started: 2026-10-11T01:52:07+04:00 · Completed: 2026-10-11T02:07:32+04:00 · Duration: 15m 25s · Blocker: —
+  - Evidence: P05 exit gate approved by the user 2026-10-11 after summary (PR #54). Gate summary presented 2026-10-11. QG-01.3, QG-03.2, QG-06.2 (critical) and QG-06.5 (critical) recorded with evidence; new tests/test_money.py gives money.py 100% coverage and 16/16 mutants caught. ADR-0012 and ADR-0013 accepted by the user. P05-T01..T10 complete. Backend 783 passed, coverage 90%, -m security 477 passed; CI gates pass on PR #54. · Approved by: user (mtisya@gmail.com)
+  - [x] P05-GATE.1 Run gates
+  - [x] P05-GATE.2 Present summary
+  - [x] P05-GATE.3 Record approval
 
 
 ## P06 — Analytics, Forecasting & Wealth Planning (Backend)

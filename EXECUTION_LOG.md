@@ -734,3 +734,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-11T02:04:24+04:00 — QG CHECK QG-06.5
 - evidence: Transaction history is auditable: ledger append-only (DB triggers reject UPDATE/DELETE/TRUNCATE, no update/delete routes, 405), corrections only via linked reversal entries, Idempotency-Key replays add nothing, one audit event per posting and reversal (test_audit, test_transactions_api), per-portfolio lock; test_integrity_suite checks after every step of 12 seeded random sequences: row immutability, reversal rules, no negative quantity on any date, holdings cache equals recomputation from the ledger, exactly one audit event per entry. 11/11 injected product regressions caught.
+
+### 2026-10-11T02:07:32+04:00 — AWAITING_VERIFICATION P05-GATE
+- evidence: Gate summary presented 2026-10-11. QG-01.3, QG-03.2, QG-06.2 (critical) and QG-06.5 (critical) recorded with evidence; new tests/test_money.py gives money.py 100% coverage and 16/16 mutants caught. ADR-0012 and ADR-0013 accepted by the user. P05-T01..T10 complete. Backend 783 passed, coverage 90%, -m security 477 passed; CI gates pass on PR #54.
+
+### 2026-10-11T02:07:32+04:00 — COMPLETE P05-GATE
+- duration: 15m 25s
+- evidence: P05 exit gate approved by the user 2026-10-11 after summary (PR #54). Gate summary presented 2026-10-11. QG-01.3, QG-03.2, QG-06.2 (critical) and QG-06.5 (critical) recorded with evidence; new tests/test_money.py gives money.py 100% coverage and 16/16 mutants caught. ADR-0012 and ADR-0013 accepted by the user. P05-T01..T10 complete. Backend 783 passed, coverage 90%, -m security 477 passed; CI gates pass on PR #54. · Approved by: user (mtisya@gmail.com)
