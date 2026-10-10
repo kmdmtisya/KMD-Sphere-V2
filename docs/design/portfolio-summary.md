@@ -1,6 +1,6 @@
 # Portfolio Summary (P05-T08)
 
-Status: Implemented in P05-T08. Market prices arrive in P09; until then assets are valued from manual valuations (P05-T07) or reported as unpriced. Performance figures (TWR, XIRR, returns over periods) are analytics (P06).
+Status: Implemented in P05-T08. Market prices arrive in P08 (P08-T05 ingestion, P08-T06 automatic valuation); until then assets are valued from manual valuations (P05-T07) or reported as unpriced. Performance figures (TWR, XIRR, returns over periods) are analytics (P06).
 
 The backend is the only place these figures are computed. Every figure is computed at full precision and rounded half-up to the currency's minor units only when published (ADR-0006).
 
@@ -17,7 +17,7 @@ The backend is the only place these figures are computed. Every figure is comput
 |---|---|
 | Has a latest valuation, and is not closed | The valuation (the whole position), converted to B at the latest rate |
 | Closed (a holding with quantity 0) | Not valued |
-| No valuation (and no price yet, P09) | **Unpriced**: listed, left out of `holdings_value` |
+| No valuation (and no price yet, P08) | **Unpriced**: listed, left out of `holdings_value` |
 
 An asset with valuations but no ledger entries (a house bought before using the app) is valued; its cost basis is unknown.
 

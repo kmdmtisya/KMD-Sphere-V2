@@ -1,0 +1,375 @@
+{
+  "about": "Mobile DTOs (P03-T01, DEMO fixtures) against the API (P05). Statuses: same, renamed (the API name differs), dto-only (the API has no such field yet), api-only (the DTO does not read it yet). Every difference names its resolution and the task that owns it. Checked by backend/tests/test_dto_mapping.py; docs/contracts/dto-mapping.md is generated from this file by scripts/dto_mapping.py.",
+  "live": [
+    {
+      "dto": "PortfolioRef",
+      "dart": "lib/shared/domain/wealth_models.dart",
+      "api": "GET /api/v1/portfolios",
+      "schema": "PortfolioOut",
+      "fields": [
+        {
+          "dto": "id",
+          "api": "id",
+          "status": "same"
+        },
+        {
+          "dto": "name",
+          "api": "name",
+          "status": "same"
+        },
+        {
+          "dto": "base_currency",
+          "api": "base_currency",
+          "status": "same"
+        },
+        {
+          "dto": null,
+          "api": "portfolio_type",
+          "status": "api-only",
+          "resolution": "Read in P07-T08 (settings) when portfolios can be edited in the app.",
+          "owner": "P07-T08"
+        },
+        {
+          "dto": null,
+          "api": "archived_at",
+          "status": "api-only",
+          "resolution": "The list hides archived portfolios by default; the DTO adds it with the archive flow.",
+          "owner": "P07-T08"
+        }
+      ],
+      "notes": "The DEMO pseudo-id `consolidated` matches GET /api/v1/portfolios/consolidated/summary."
+    },
+    {
+      "dto": "PortfolioSummary",
+      "dart": "lib/shared/domain/wealth_models.dart",
+      "api": "GET /api/v1/portfolios/{portfolio_id}/summary",
+      "schema": "SummaryOut",
+      "fields": [
+        {
+          "dto": "portfolio_id",
+          "api": "portfolio_ids",
+          "status": "renamed",
+          "resolution": "A list (the consolidated summary covers several); the live repository reads the first for one portfolio.",
+          "owner": "P09-T02"
+        },
+        {
+          "dto": "name",
+          "api": null,
+          "status": "dto-only",
+          "resolution": "Taken from the PortfolioRef already loaded (a lookup, not a calculation); the consolidated name is the localised \"All portfolios\".",
+          "owner": "P09-T02"
+        },
+        {
+          "dto": "base_currency",
+          "api": "currency",
+          "status": "renamed",
+          "resolution": "Mapped by the live repository.",
+          "owner": "P09-T02"
+        },
+        {
+          "dto": "value",
+          "api": "total_value",
+          "status": "renamed",
+          "resolution": "Mapped by the live repository.",
+          "owner": "P09-T02"
+        },
+        {
+          "dto": "invested",
+          "api": "net_contributions",
+          "status": "renamed",
+          "resolution": "\"Invested\" means money put in (deposits minus withdrawals).",
+          "owner": "P09-T02"
+        },
+        {
+          "dto": "profit_loss",
+          "api": null,
+          "status": "dto-only",
+          "resolution": "Total profit is a performance figure: the analytics API provides it. The app never derives it.",
+          "owner": "P06-T03"
+        },
+        {
+          "dto": "return_percent",
+          "api": null,
+          "status": "dto-only",
+          "resolution": "Return percentage comes from the performance engine (with its method stated). The app never derives it.",
+          "owner": "P06-T03"
+        },
+        {
+          "dto": "as_of",
+          "api": "freshness.data_as_of",
+          "status": "renamed",
+          "resolution": "The oldest input the figures use, so the app never shows them as fresher than they are.",
+          "owner": "P09-T02"
+        },
+        {
+          "dto": null,
+          "api": "holdings_value",
+          "status": "api-only",
+          "resolution": "Read with cash for the Home breakdown.",
+          "owner": "P09-T02"
+        },
+        {
+          "dto": null,
+          "api": "cash",
+          "status": "api-only",
+          "resolution": "Read for the Home breakdown.",
+          "owner": "P09-T02"
+        },
+        {
+          "dto": null,
+          "api": "unrealized_pl",
+          "status": "api-only",
+          "resolution": "Read by the Portfolio screen.",
+          "owner": "P09-T02"
+        },
+        {
+          "dto": null,
+          "api": "realized_pl",
+          "status": "api-only",
+          "resolution": "Read by the Portfolio screen.",
+          "owner": "P09-T02"
+        },
+        {
+          "dto": null,
+          "api": "currencies",
+          "status": "api-only",
+          "resolution": "Currency breakdown on Portfolio.",
+          "owner": "P09-T02"
+        },
+        {
+          "dto": null,
+          "api": "unpriced_assets",
+          "status": "api-only",
+          "resolution": "Shown as a notice so totals are never presented as complete when they are not.",
+          "owner": "P09-T02"
+        },
+        {
+          "dto": null,
+          "api": "freshness.complete",
+          "status": "api-only",
+          "resolution": "Drives the incomplete-data notice.",
+          "owner": "P09-T02"
+        }
+      ]
+    },
+    {
+      "dto": "HoldingSummary",
+      "dart": "lib/shared/domain/wealth_models.dart",
+      "api": "GET /api/v1/portfolios/{portfolio_id}/holdings",
+      "schema": "HoldingOut",
+      "fields": [
+        {
+          "dto": "symbol",
+          "api": "asset.symbol",
+          "status": "renamed",
+          "resolution": "Nested, and nullable for user-defined assets: the DTO field becomes optional.",
+          "owner": "P09-T04"
+        },
+        {
+          "dto": "name",
+          "api": "asset.name",
+          "status": "renamed",
+          "resolution": "Nested.",
+          "owner": "P09-T04"
+        },
+        {
+          "dto": "asset_class",
+          "api": "asset.asset_class",
+          "status": "renamed",
+          "resolution": "Nested.",
+          "owner": "P09-T04"
+        },
+        {
+          "dto": "value",
+          "api": "value",
+          "status": "same",
+          "resolution": "Added to the API in P05-T10 (latest valuation; prices from P08-T06). Nullable when unpriced: the DTO becomes optional and the UI shows \"no value yet\".",
+          "owner": "P09-T04"
+        },
+        {
+          "dto": "native_value",
+          "api": "native_value",
+          "status": "same",
+          "resolution": "Added in P05-T10; nullable like value.",
+          "owner": "P09-T04"
+        },
+        {
+          "dto": "change_percent",
+          "api": null,
+          "status": "dto-only",
+          "resolution": "Daily change needs market prices (ingestion P08-T05; shown by P09-T07).",
+          "owner": "P08-T05"
+        },
+        {
+          "dto": "as_of",
+          "api": "value_as_of",
+          "status": "renamed",
+          "resolution": "Mapped by the live repository.",
+          "owner": "P09-T04"
+        },
+        {
+          "dto": null,
+          "api": "quantity",
+          "status": "api-only",
+          "resolution": "Read by the holdings and investment details screens.",
+          "owner": "P07-T02"
+        },
+        {
+          "dto": null,
+          "api": "average_cost",
+          "status": "api-only",
+          "resolution": "Read by investment details.",
+          "owner": "P07-T04"
+        },
+        {
+          "dto": null,
+          "api": "cost_basis",
+          "status": "api-only",
+          "resolution": "Read by investment details.",
+          "owner": "P07-T04"
+        }
+      ]
+    },
+    {
+      "dto": "Account",
+      "dart": "lib/features/account/data/account_repository.dart",
+      "api": "GET /api/v1/me",
+      "schema": "MeResponse",
+      "fields": [
+        {
+          "dto": "id",
+          "api": "id",
+          "status": "same"
+        },
+        {
+          "dto": "email",
+          "api": "email",
+          "status": "same"
+        },
+        {
+          "dto": "base_currency",
+          "api": "base_currency",
+          "status": "same"
+        }
+      ]
+    }
+  ],
+  "pending": [
+    {
+      "dto": "PerformanceSeries, PerformancePoint",
+      "dart": "lib/shared/domain/wealth_models.dart",
+      "keys": [],
+      "owner": "P06-T03",
+      "resolution": "The performance engine and analytics API (P06-T03, P06-T09) adopt the DTO shapes or update this mapping."
+    },
+    {
+      "dto": "AllocationShare",
+      "dart": "lib/shared/domain/wealth_models.dart",
+      "keys": [
+        "label",
+        "value",
+        "weight_percent"
+      ],
+      "owner": "P06-T04",
+      "resolution": "Allocation analytics; weights come from the server (largest remainder, ADR-0006)."
+    },
+    {
+      "dto": "PerformanceMetrics",
+      "dart": "lib/shared/domain/wealth_models.dart",
+      "keys": [
+        "total_return_percent",
+        "cagr_percent",
+        "dividend_yield_percent",
+        "volatility_percent"
+      ],
+      "owner": "P06-T03",
+      "resolution": "Performance and risk metrics (P06-T03, P06-T08)."
+    },
+    {
+      "dto": "NetWorthSummary",
+      "dart": "lib/shared/domain/wealth_models.dart",
+      "keys": [
+        "assets",
+        "liabilities",
+        "net_worth",
+        "as_of"
+      ],
+      "owner": "P06-T07",
+      "resolution": "Net worth and liabilities module."
+    },
+    {
+      "dto": "IncomeSummary",
+      "dart": "lib/shared/domain/wealth_models.dart",
+      "keys": [
+        "monthly",
+        "yearly",
+        "as_of"
+      ],
+      "owner": "P06-T05",
+      "resolution": "Income and passive-income module."
+    },
+    {
+      "dto": "GoalsSummary, GoalProgress",
+      "dart": "lib/shared/domain/wealth_models.dart",
+      "keys": [
+        "id",
+        "name",
+        "progress_percent",
+        "status",
+        "on_track",
+        "total",
+        "items",
+        "as_of"
+      ],
+      "owner": "P06-T06",
+      "resolution": "Goals module."
+    },
+    {
+      "dto": "InsightSummary, EvidenceSourceDto",
+      "dart": "lib/shared/domain/wealth_models.dart",
+      "keys": [
+        "text",
+        "as_of",
+        "sources",
+        "label",
+        "provider"
+      ],
+      "owner": "P10-T06",
+      "resolution": "AI orchestrator (P10-T06): insights carry evidence with provider and as-of time."
+    },
+    {
+      "dto": "Forecast request and result",
+      "dart": "lib/features/forecast/domain/forecast_models.dart",
+      "keys": [
+        "initial_investment",
+        "monthly_contribution",
+        "annual_return_percent",
+        "years",
+        "inflation_percent",
+        "annual_fee_percent",
+        "final_nominal",
+        "final_real",
+        "total_contributions",
+        "total_growth",
+        "scenarios",
+        "assumptions"
+      ],
+      "owner": "P06-T02",
+      "resolution": "Forecast API (P06-T02) on the deterministic engine (P06-T01)."
+    },
+    {
+      "dto": "Chat events",
+      "dart": "lib/features/copilot/domain/chat_models.dart",
+      "keys": [
+        "type",
+        "text",
+        "kind",
+        "label",
+        "provider",
+        "as_of"
+      ],
+      "owner": "P10-T06",
+      "resolution": "AI orchestrator streaming events (docs/api-conventions.md, Streaming)."
+    }
+  ]
+}

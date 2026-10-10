@@ -39,7 +39,7 @@ jobs:
           base=""
           if [ "$EVENT" = "pull_request" ]; then base="$PR_BASE"; elif [ "$EVENT" = "push" ]; then base="$PUSH_BEFORE"; fi
           if [ -n "$base" ] && ! echo "$base" | grep -qE '^0+$' && git cat-file -e "$base^{commit}" 2>/dev/null; then
-            if git diff --name-only "$base" "$GITHUB_SHA" | grep -qE '^(backend/|scripts/|\.github/workflows/backend\.yml)'; then run=true; else run=false; fi
+            if git diff --name-only "$base" "$GITHUB_SHA" | grep -qE '^(backend/|scripts/|docs/contracts/|mobile/wealthsphere_app/lib/|EXECUTION_PLAN\.md|\.github/workflows/backend\.yml)'; then run=true; else run=false; fi
           fi
           echo "run=$run" >> "$GITHUB_OUTPUT"
           echo "Relevant changes: $run"

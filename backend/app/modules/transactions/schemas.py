@@ -115,3 +115,12 @@ class HoldingOut(BaseModel):
     expenses: Money = Field(description="Fees and taxes charged to the asset, incl. withholding")
     last_transaction_at: datetime | None
     computed_at: datetime
+    value: Money | None = Field(
+        description="Current value in the portfolio currency (latest valuation at the latest FX "
+        "rate; market prices from P08). Null when unpriced, unconverted or closed."
+    )
+    native_value: Money | None = Field(description="The same value in its own currency")
+    value_as_of: datetime | None = Field(description="When that value applied")
+    value_source: Literal["valuation"] | None = Field(
+        description="Where the value comes from (`price` arrives with market data, P08)"
+    )

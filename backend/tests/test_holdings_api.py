@@ -247,3 +247,80 @@ async def test_bob_cannot_read_alices_holdings(
     pid = await portfolio(http, h)
     await post(http, h, pid, trade("BUY", stock, 1, "1", "10"))
     await assert_hidden_from(http, two_users.bob, "GET", f"/api/v1/portfolios/{pid}/holdings")
+
+
+async def test_holdings_carry_their_latest_valuation(
+    http: httpx.AsyncClient,
+    two_users: TwoUsers,  # noqa: F811
+    stock: str,
+    db: asyncpg.Connection,
+) -> None:
+    from datetime import UTC, datetime, timedelta
+
+    h = two_users.alice.headers
+    pid = await portfolio(http, h)
+    await post(http, h, pid, trade("BUY", stock, 1, "10", "100"))
+    unpriced = (await holdings(http, h, pid))[0]
+    assert (unpriced["value"], unpriced["native_value"], unpriced["value_source"]) == (
+        None,
+        None,
+        None,
+    )
+
+    def valuation(asset: str, amount: str, ccy: str) -> dict[str, Any]:
+        return {
+            "asset_id": asset,
+            "value": m(amount, ccy),
+            "as_of": datetime.now(UTC).replace(microsecond=0).isoformat(),
+            "source": "test",
+        }
+
+    eur_rate = uuid.uuid4().hex[:2].upper()  # a currency no other test uses
+    code = "Z" + "".join(c for c in eur_rate if c.isalpha()).ljust(2, "Q")[:2]
+    await http.post(
+        f"/api/v1/portfolios/{pid}/valuations", headers=h, json=valuation(stock, "1500.00", "USD")
+    )
+    [held] = await holdings(http, h, pid)
+    assert held["value"] == m("1500.00")
+    assert held["native_value"] == m("1500.00")
+    assert held["value_source"] == "valuation"
+    assert held["value_as_of"] is not None
+
+    # A valuation in a currency without a rate: native value only.
+    second = await db.fetchval(
+        "INSERT INTO assets (asset_class_id, name, currency) "
+        "SELECT id, 'Foreign', $1 FROM asset_classes WHERE code = 'stock' RETURNING id",
+        code,
+    )
+    await post(http, h, pid, trade("BUY", str(second), 1, "1", "10"))
+    earlier = (datetime.now(UTC).replace(microsecond=0) - timedelta(minutes=1)).isoformat()
+    first = await http.post(
+        f"/api/v1/portfolios/{pid}/valuations",
+        headers=h,
+        json=valuation(str(second), "77.00", code) | {"as_of": earlier},
+    )
+    assert first.status_code == 201, first.text
+    foreign = next(x for x in await holdings(http, h, pid) if x["asset"]["id"] == str(second))
+    assert foreign["value"] is None
+    assert foreign["native_value"] == m("77.00", code)
+
+    # With a rate it is converted at that rate (1 unit = 1.25 USD) and rounded half-up.
+    await db.execute(
+        "INSERT INTO fx_rates (base_currency, quote_currency, rate, provider, rate_timestamp, "
+        "retrieved_at) VALUES ($1, 'USD', 1.25, 'test', now(), now())",
+        code,
+    )
+    newer = await http.post(
+        f"/api/v1/portfolios/{pid}/valuations",
+        headers=h,
+        json=valuation(str(second), "80.10", code),
+    )
+    assert newer.status_code == 201, newer.text
+    foreign = next(x for x in await holdings(http, h, pid) if x["asset"]["id"] == str(second))
+    assert foreign["value"] == m("100.13")  # 80.10 x 1.25 = 100.125
+    assert foreign["native_value"] == m("80.10", code)
+
+    # A closed position is not valued, even with a valuation.
+    await post(http, h, pid, trade("SELL", stock, 2, "10", "120"))
+    closed = next(x for x in await holdings(http, h, pid, closed=True) if x["asset"]["id"] == stock)
+    assert closed["value"] is None and closed["value_source"] is None
