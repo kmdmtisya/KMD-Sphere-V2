@@ -472,7 +472,7 @@
 
 ## P05 — Portfolio Core: Database & Backend
 
-- Phase approval: `PENDING`
+- Phase approval: `APPROVED by user (mtisya@gmail.com) at 2026-10-10T19:38:25+04:00`
 - Entry gates: prerequisite phase gates completed (P04); cumulative criteria QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-08.1,3,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
 - Exit gates: QG-01.3; QG-03.2; QG-06.2,5 — required by `P05-GATE` (Gates-done)
 - Release gates: —

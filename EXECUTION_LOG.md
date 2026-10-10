@@ -628,3 +628,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-10T19:35:29+04:00 — COMPLETE P04-GATE
 - duration: 1m 57s
 - evidence: P04 exit gate approved by the user 2026-10-10 after summary. QG-08.1 and QG-04.5 passed; QG-05.4 waived (user, expires 2026-12-31). P04-T01..T09 complete. Accepted risks: SF-10 (MFA optional); iOS biometrics/Keychain unverified on a device until the waiver expires. · Approved by: user (mtisya@gmail.com)
+
+### 2026-10-10T19:38:25+04:00 — PHASE APPROVED P05
+- approved by user (mtisya@gmail.com)
+- Portfolio Core: Database & Backend
