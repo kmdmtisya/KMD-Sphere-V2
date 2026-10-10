@@ -632,3 +632,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-10T19:38:25+04:00 — PHASE APPROVED P05
 - approved by user (mtisya@gmail.com)
 - Portfolio Core: Database & Backend
+
+### 2026-10-10T19:42:13+04:00 — START P05-T01
+- Core schema and migrations
+- prerequisites verified COMPLETED

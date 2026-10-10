@@ -18,7 +18,11 @@ if config.config_file_name is not None:
 
 # Import every module's models here so autogenerate and `alembic check` see them.
 import app.core.audit  # noqa: E402
-import app.modules.identity.models  # noqa: E402, F401
+import app.modules.assets.models  # noqa: E402
+import app.modules.identity.models  # noqa: E402
+import app.modules.market_data.models  # noqa: E402
+import app.modules.portfolio.models  # noqa: E402
+import app.modules.transactions.models  # noqa: E402, F401
 
 target_metadata = Base.metadata
 
