@@ -617,3 +617,14 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-10T19:30:26+04:00 — QG WAIVER W-001 for QG-05.4
 - justification: Deferred by the user (2026-10-10): no macOS device or simulator is available now, so Face ID and Keychain behaviour (including SF-18, Keychain items surviving app reinstall) cannot be exercised yet. Mitigations until then: Keychain options are unit-tested (first_unlock_this_device, not synced), iOS compiles in CI on every PR, NSFaceIDUsageDescription is declared, and the same lock logic is covered by shared tests and verified on Android. Must be verified on an iPhone or simulator before any iOS release (P16) and at the latest at this waiver's expiry.
 - approved by user (mtisya@gmail.com); risk owner user (mtisya@gmail.com); expires 2026-12-31
+
+### 2026-10-10T19:33:32+04:00 — START P04-GATE
+- Phase P04 exit gate
+- prerequisites verified COMPLETED
+
+### 2026-10-10T19:35:29+04:00 — AWAITING_VERIFICATION P04-GATE
+- evidence: Gate summary presented 2026-10-10. QG-08.1 passed (CI security suites: backend 208, mobile 128; main CI green). QG-04.5 passed (emulator fingerprint test). QG-05.4 waived by the user until 2026-12-31 (iOS Face ID/Keychain deferred). All P04 tasks T01-T09 complete. SF-10 accepted (MFA optional).
+
+### 2026-10-10T19:35:29+04:00 — COMPLETE P04-GATE
+- duration: 1m 57s
+- evidence: P04 exit gate approved by the user 2026-10-10 after summary. QG-08.1 and QG-04.5 passed; QG-05.4 waived (user, expires 2026-12-31). P04-T01..T09 complete. Accepted risks: SF-10 (MFA optional); iOS biometrics/Keychain unverified on a device until the waiver expires. · Approved by: user (mtisya@gmail.com)
