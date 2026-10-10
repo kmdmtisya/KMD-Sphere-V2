@@ -495,10 +495,10 @@
   - [x] P05-T02.2 Endpoints
   - [x] P05-T02.3 Seed data
   - [x] P05-T02.4 Tests
-- [ ] **P05-T03** · Portfolio CRUD API · `IN_PROGRESS` 🔄
+- [x] **P05-T03** · Portfolio CRUD API · `COMPLETED` ✅
   - Deps: P05-T01, P04-T03 · Wave: W2 · Track: BE · Size: M · Approval: no
-  - Started: 2026-10-10T20:35:31+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-10T20:35:31+04:00 · Completed: 2026-10-10T20:44:58+04:00 · Duration: 9m 27s · Blocker: —
+  - Evidence: PR #46 (commits f5859cb, 100770e). /api/v1/portfolios create/list/get/patch/archive; ownership via owned_by on reads and owner in UPDATE WHERE; cross-user access 404 (GET, PATCH, archive registered in IDOR registry and tested, data unchanged); audit events for create/update/archive (none for empty patch or repeat archive); names unique per user (409), base currency immutable, archived read-only (409), limit 100. Local: ruff/format/mypy clean, OpenAPI regenerated and Spectral clean, pytest 430 passed, coverage 92.22%. 13/14 mutants caught; the 14th was redundant code and was removed. CI backend, mobile, security, tracker pass.
   - [x] P05-T03.1 Service and endpoints
   - [x] P05-T03.2 Ownership and audit
   - [x] P05-T03.3 Tests

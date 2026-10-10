@@ -655,3 +655,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-10T20:35:31+04:00 — START P05-T03
 - Portfolio CRUD API
 - prerequisites verified COMPLETED
+
+### 2026-10-10T20:44:58+04:00 — COMPLETE P05-T03
+- duration: 9m 27s
+- evidence: PR #46 (commits f5859cb, 100770e). /api/v1/portfolios create/list/get/patch/archive; ownership via owned_by on reads and owner in UPDATE WHERE; cross-user access 404 (GET, PATCH, archive registered in IDOR registry and tested, data unchanged); audit events for create/update/archive (none for empty patch or repeat archive); names unique per user (409), base currency immutable, archived read-only (409), limit 100. Local: ruff/format/mypy clean, OpenAPI regenerated and Spectral clean, pytest 430 passed, coverage 92.22%. 13/14 mutants caught; the 14th was redundant code and was removed. CI backend, mobile, security, tracker pass.
