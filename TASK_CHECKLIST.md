@@ -412,14 +412,14 @@
   - [x] P04-T03.2 Two-user fixtures
   - [x] P04-T03.3 Policy ADR
   - [x] P04-T03.4 Example IDOR tests
-- [ ] **P04-T04** · Audit event infrastructure · `NOT_STARTED` ⬜
+- [ ] **P04-T04** · Audit event infrastructure · `IN_PROGRESS` 🔄
   - Deps: P04-T02 · Wave: W3 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T05:17:39+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P04-T04.1 Schema and migration
-  - [ ] P04-T04.2 Writer service
-  - [ ] P04-T04.3 Redaction
-  - [ ] P04-T04.4 Tests
+  - [x] P04-T04.1 Schema and migration
+  - [x] P04-T04.2 Writer service
+  - [x] P04-T04.3 Redaction
+  - [x] P04-T04.4 Tests
 - [ ] **P04-T05** · API protection · `NOT_STARTED` ⬜
   - Deps: P04-T02 · Wave: W3 · Track: SEC · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
