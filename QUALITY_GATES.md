@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-10T04:30:07+04:00 by `scripts/track.py`._
+_Generated at 2026-10-10T04:35:03+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -40,7 +40,7 @@ _Generated at 2026-10-10T04:30:07+04:00 by `scripts/track.py`._
 Waivers: 0 active (0 expired — must be resolved), 0 closed.
 Criteria satisfied overall: 22/146.
 
-Current phase **P13** exit-gate criteria outstanding: QG-13.1, QG-13.2, QG-13.3, QG-13.4, QG-13.5, QG-14.1, QG-14.2, QG-14.3, QG-15.1, QG-15.2, QG-15.3, QG-15.4, QG-15.5, QG-15.6, QG-16.1, QG-16.2, QG-16.3, QG-16.4, QG-16.5, QG-17.1, QG-17.2, QG-17.3, QG-17.4, QG-18.1, QG-18.2, QG-18.3, QG-18.4, QG-18.5, QG-19.1, QG-19.2, QG-19.3, QG-19.4, QG-19.5, QG-20.1, QG-20.2, QG-20.3, QG-20.4, QG-20.5.
+Current phase **P11** exit-gate criteria outstanding: QG-21.1, QG-21.2, QG-21.3, QG-21.4, QG-21.5, QG-22.1, QG-22.2, QG-22.3, QG-22.4, QG-22.5, QG-23.1, QG-23.2, QG-23.3, QG-23.4, QG-23.5, QG-24.1, QG-24.2, QG-24.3, QG-24.4, QG-24.5, QG-24.6, QG-24.7, QG-25.1, QG-25.2, QG-25.3, QG-25.4, QG-25.5.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -530,4 +530,4 @@ Changes to when a criterion is required are decisions, recorded here and in EXEC
 |---|---|---|---|---|
 | 2026-10-09 | QG-08.4 | Required phase P01 → P14; evidence task P01-T11 → P14-T04 | The criterion covers dependency **and container** scanning. Dependency scanning is already running in CI (P01-T11); no container images exist until P14-T04, so the container half cannot be satisfied earlier. Not a waiver: the full criterion still applies, at the phase where it can be met. | user (option b) |
 | 2026-10-09 | QG-13…QG-20 | Eight Forex gates (QG-FX-01…08, 38 criteria, all required at P13) added to the register | Forex Trading Intelligence module requested as workstream P13; mapping QG-FX-nn = QG-(12+nn). Additive: no existing criterion changed. Approved with phase P13. | user |
-| 2026-10-10 | QG-21…QG-25 | Five multi-currency gates (QG-FXCUR-01…05, 27 criteria, required at P11) added; QG-12.1 now covers every core gate (all except QG-12 and the optional Forex gates QG-13…QG-20) | Multi-Currency Reporting & FX Management requested as workstream P11 (ADR-0010). Additive; existing criteria unchanged apart from the QG-12.1 wording. Proposed, pending user approval of P11. | pending user approval |
+| 2026-10-10 | QG-21…QG-25 | Five multi-currency gates (QG-FXCUR-01…05, 27 criteria, required at P11) added; QG-12.1 now covers every core gate (all except QG-12 and the optional Forex gates QG-13…QG-20) | Multi-Currency Reporting & FX Management requested as workstream P11 (ADR-0010). Additive; existing criteria unchanged apart from the QG-12.1 wording. Approved with phase P11. | user |

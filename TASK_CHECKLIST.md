@@ -1018,7 +1018,7 @@
 
 ## P11 — Multi-Currency Reporting & FX Management (FXCUR workstream)
 
-- Phase approval: `PENDING`
+- Phase approval: `APPROVED by user (mtisya@gmail.com) at 2026-10-10T04:35:02+04:00`
 - Entry gates: prerequisite phase gates completed (P05, P06, P08, P09, P10); cumulative criteria QG-03.1–6; QG-06.1–7; QG-07.1,2,3,5,6,8; QG-08.1,3,6; QG-11.1–6 — enforced as dependencies of every wave-1 task
 - Exit gates: QG-21, QG-22, QG-23, QG-24, QG-25 — required by `P11-GATE` (Gates-done)
 - Release gates: P11-T11 and P11-T12 start only after QG-21..QG-25 are satisfied

@@ -1234,7 +1234,7 @@ An optional workstream (plan phase P13, ADR-0009) adds AI-assisted forex market 
 
 **Implementation rules for Claude Code:** read docs/design/forex-technical-design.md first; never add an order-placement code path; keep indicators, forecasts, pip values and position sizes in deterministic Decimal code with reference tests; report forecasts against random-walk and no-change baselines; never show indicative or delayed prices as live quotes; execute the P13 tasks only after the user approves the phase.
 
-## Multi-Currency Reporting (proposed extension, 2026-10-10)
+## Multi-Currency Reporting (approved extension, 2026-10-10)
 Plan phase P11 (FXCUR, ADR-0010) makes the reporting currency a global user setting: one choice (AED, USD, KES, EUR, GBP, JPY, CHF, CAD, AUD, ZAR initially) switches every financial figure in the app, using timestamped provider rates, consistent rate snapshots and historical rates for past figures. Underlying balances, transactions and records never change. It includes an FX provider service with fallback and caching, a currency converter screen and authorised AI currency tools, and is gated by QG-21…QG-25. See SOLUTION_INTENT section 8 and docs/design/multi-currency-design.md.
 
 **Implementation rules for Claude Code:** read docs/design/multi-currency-design.md first; extend the P05 FX service and P08 provider layer instead of adding parallel ones; never mutate stored amounts or rates when converting; convert on the backend in Decimal with one snapshot per response; never show a cached rate as current or invent a rate when providers fail.

@@ -524,3 +524,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 - tracker: QG-12.1 core release readiness now covers every gate except QG-12 and the optional Forex gates QG-13..QG-20 (so QG-21..QG-25 are core); one new test
 - documents: docs/design/multi-currency-design.md, docs/adr/0010-global-reporting-currency.md (Proposed), SOLUTION_INTENT section 8 extension, brief and guide sections
 - P11 phase approval PENDING; nothing implemented
+
+### 2026-10-10T04:35:02+04:00 — PHASE APPROVED P11
+- approved by user (mtisya@gmail.com)
+- Multi-Currency Reporting & FX Management (FXCUR workstream)

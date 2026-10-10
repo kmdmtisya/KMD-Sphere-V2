@@ -1,6 +1,6 @@
 # Multi-currency reporting and FX management (FXCUR): design
 
-Status: **Proposed**, awaiting user approval (P11-T01). Nothing here is implemented yet. Related: [ADR-0010](../adr/0010-global-reporting-currency.md), `EXECUTION_PLAN.md` phase P11 (FXCUR-01…12 = P11-T01…T12), quality gates QG-21…QG-25 (QG-FXCUR-01…05).
+Status: **Approved** by the user 2026-10-10 (scope and phase P11); decisions DEC-25..DEC-29 remain open. Nothing here is implemented yet. Related: [ADR-0010](../adr/0010-global-reporting-currency.md), `EXECUTION_PLAN.md` phase P11 (FXCUR-01…12 = P11-T01…T12), quality gates QG-21…QG-25 (QG-FXCUR-01…05).
 
 ## 1. Purpose and rules
 

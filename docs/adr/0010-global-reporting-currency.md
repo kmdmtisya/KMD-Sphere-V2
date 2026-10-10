@@ -1,6 +1,6 @@
 # ADR-0010: Global reporting currency and FX management (FXCUR)
 
-Status: **Proposed** (awaiting user approval at P11-T01)
+Status: Accepted (user approval, 2026-10-10; phase P11 approved)
 
 ## Context
 A request (2026-10-10) adds real-time multi-currency conversion: users switch every financial figure between currencies (for example AED 500,000 shown in USD, KES, EUR or GBP) using current provider rates, with historical rates for past figures and AI tools for currency questions. SOLUTION_INTENT section 8 already says each investment keeps its native currency and the user selects a reporting currency, and the plan already builds the foundations: the fx_rates table and FX service with base-currency conversion (P05-T01, P05-T06) and FX ingestion with history (P08-T05). What is missing is the reporting-currency layer across the whole app.

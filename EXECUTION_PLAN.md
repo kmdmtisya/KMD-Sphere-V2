@@ -4,7 +4,7 @@ _Version 1.0 · created 2026-10-09T12:49:16+04:00 · status: **DRAFT — awaitin
 
 This is the authoritative end-to-end roadmap for building WealthSphere from the current repository state to production release. It covers the Flutter design system and all 13 screens for Android/iOS, backend services, database, portfolio management, analytics, the compounding calculator, AI Wealth Copilot, AI Investment Intelligence, security, CI/CD, cloud infrastructure, testing and release.
 
-**Size:** 17 phases · 185 tasks (incl. 17 phase gates) · 746 subtasks · 25 quality gates with 146 criteria (QUALITY_GATES.md). Phase P13 and gates QG-13..QG-20 are the Forex Trading Intelligence workstream (FX, approved 2026-10-09). Phase P11 and gates QG-21..QG-25 are the Multi-Currency Reporting & FX Management workstream (FXCUR), proposed 2026-10-10 and **awaiting user approval**; see ADR-0010 and docs/design/multi-currency-design.md.
+**Size:** 17 phases · 185 tasks (incl. 17 phase gates) · 746 subtasks · 25 quality gates with 146 criteria (QUALITY_GATES.md). Phase P13 and gates QG-13..QG-20 are the Forex Trading Intelligence workstream (FX, approved 2026-10-09). Phase P11 and gates QG-21..QG-25 are the Multi-Currency Reporting & FX Management workstream (FXCUR), approved by the user 2026-10-10 (phase approval recorded in TASK_CHECKLIST.md); see ADR-0010 and docs/design/multi-currency-design.md.
 
 ## 1. Document map
 
