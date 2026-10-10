@@ -487,14 +487,14 @@
   - [x] P05-T01.4 FX table
   - [x] P05-T01.5 Constraints and indexes
   - [x] P05-T01.6 Schema tests
-- [ ] **P05-T02** · Asset model and search API · `NOT_STARTED` ⬜
+- [ ] **P05-T02** · Asset model and search API · `IN_PROGRESS` 🔄
   - Deps: P05-T01 · Wave: W2 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-10T20:21:39+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P05-T02.1 Service and repository
-  - [ ] P05-T02.2 Endpoints
-  - [ ] P05-T02.3 Seed data
-  - [ ] P05-T02.4 Tests
+  - [x] P05-T02.1 Service and repository
+  - [x] P05-T02.2 Endpoints
+  - [x] P05-T02.3 Seed data
+  - [x] P05-T02.4 Tests
 - [ ] **P05-T03** · Portfolio CRUD API · `NOT_STARTED` ⬜
   - Deps: P05-T01, P04-T03 · Wave: W2 · Track: BE · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

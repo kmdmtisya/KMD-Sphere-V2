@@ -6,6 +6,7 @@ from typing import Annotated, Any
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.api_responses import UNAUTHORIZED
 from app.db.session import get_session
 from app.modules.identity.dependencies import CurrentUserDep
 from app.modules.identity.schemas import (
@@ -20,18 +21,7 @@ from app.modules.identity.service import IdentityService
 router = APIRouter(prefix="/api/v1/me", tags=["identity"])
 SessionDep = Annotated[AsyncSession, Depends(get_session)]
 
-_UNAUTHORIZED: dict[int | str, dict[str, Any]] = {
-    401: {"description": "Missing, invalid or expired access token"},
-    429: {
-        "description": "Rate limit exceeded (docs/security.md, API protection)",
-        "headers": {
-            "Retry-After": {
-                "description": "Seconds to wait before retrying",
-                "schema": {"type": "integer", "minimum": 1},
-            }
-        },
-    },
-}
+_UNAUTHORIZED = UNAUTHORIZED
 
 
 @router.get("", response_model=MeResponse, responses=_UNAUTHORIZED)

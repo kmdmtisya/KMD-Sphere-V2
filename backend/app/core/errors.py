@@ -15,6 +15,12 @@ from app.core.authz import PermissionDeniedError, ResourceNotFoundError
 from app.core.correlation import HEADER_NAME, new_correlation_id
 
 logger = logging.getLogger(__name__)
+
+
+class InvalidValueError(ValueError):
+    """A well-formed request whose values break a business rule (answered with 422)."""
+
+
 PROBLEM_BASE = "https://wealthsphere.app/problems"
 MEDIA_TYPE = "application/problem+json"
 
@@ -138,6 +144,7 @@ def register_exception_handlers(app: FastAPI) -> None:
     app.add_exception_handler(RequestValidationError, _validation_error)
     app.add_exception_handler(AuthenticationError, _authentication)
     app.add_exception_handler(InvalidProfileChangeError, _invalid_value)
+    app.add_exception_handler(InvalidValueError, _invalid_value)
     app.add_exception_handler(ResourceNotFoundError, _not_found)
     app.add_exception_handler(PermissionDeniedError, _forbidden)
     app.add_exception_handler(RateLimitedError, _rate_limited)

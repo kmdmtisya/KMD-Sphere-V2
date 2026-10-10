@@ -643,3 +643,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-10T20:18:46+04:00 — COMPLETE P05-T01
 - duration: 36m 33s
 - evidence: PR #44 (commit 7dec617). Migration 0004 core schema (portfolios, members, asset classes, assets, asset metadata, append-only transactions, holdings, valuations, fx_rates); NUMERIC money/quantity/rate, UUID PKs and timestamps; round-trip and single head; 51 schema tests; 20/20 mutants caught; CI green. Design decisions in docs/design/data-model.md approved as proposed. · Approved by: user (mtisya@gmail.com)
+
+### 2026-10-10T20:21:39+04:00 — START P05-T02
+- Asset model and search API
+- prerequisites verified COMPLETED
