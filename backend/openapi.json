@@ -349,6 +349,68 @@
         "title": "DashboardLayout",
         "type": "object"
       },
+      "FxQuoteOut": {
+        "properties": {
+          "as_of": {
+            "description": "When the rate was valid (the provider's timestamp)",
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "base_currency": {
+            "title": "Base Currency",
+            "type": "string"
+          },
+          "inverted": {
+            "description": "Derived as 1 / rate from the opposite pair",
+            "title": "Inverted",
+            "type": "boolean"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "quote_currency": {
+            "title": "Quote Currency",
+            "type": "string"
+          },
+          "rate": {
+            "description": "1 unit of base_currency in quote_currency units",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Rate",
+            "type": "string"
+          },
+          "rule": {
+            "description": "`historical`: the rate for the given date; `latest`: the most recent rate",
+            "enum": [
+              "historical",
+              "latest"
+            ],
+            "title": "Rule",
+            "type": "string"
+          },
+          "stale": {
+            "description": "Older than one day (provisional threshold, DEC-26)",
+            "title": "Stale",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "base_currency",
+          "quote_currency",
+          "rate",
+          "as_of",
+          "provider",
+          "inverted",
+          "stale",
+          "rule"
+        ],
+        "title": "FxQuoteOut",
+        "type": "object"
+      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -1772,6 +1834,106 @@
         ]
       }
     },
+    "/api/v1/fx-rates/{base}/{quote}": {
+      "get": {
+        "description": "The rate from `base` to `quote`, chosen by the documented selection rules.",
+        "operationId": "get_fx_rate_api_v1_fx_rates__base___quote__get",
+        "parameters": [
+          {
+            "description": "ISO 4217 code",
+            "in": "path",
+            "name": "base",
+            "required": true,
+            "schema": {
+              "description": "ISO 4217 code",
+              "pattern": "^[A-Z]{3}$",
+              "title": "Base",
+              "type": "string"
+            }
+          },
+          {
+            "description": "ISO 4217 code",
+            "in": "path",
+            "name": "quote",
+            "required": true,
+            "schema": {
+              "description": "ISO 4217 code",
+              "pattern": "^[A-Z]{3}$",
+              "title": "Quote",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The historical rate for this day; omit for the latest rate",
+            "in": "query",
+            "name": "on",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The historical rate for this day; omit for the latest rate",
+              "title": "On"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FxQuoteOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No rate for this pair within the allowed age (fx-rate-unavailable)"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Fx Rate",
+        "tags": [
+          "fx"
+        ]
+      }
+    },
     "/api/v1/me": {
       "get": {
         "description": "The signed-in user, created on first sign-in.",
@@ -3085,6 +3247,10 @@
     {
       "description": "Positions derived from the ledger (ADR-0012)",
       "name": "holdings"
+    },
+    {
+      "description": "FX rates and the rules that select them",
+      "name": "fx"
     }
   ]
 }

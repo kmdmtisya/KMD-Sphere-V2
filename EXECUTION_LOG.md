@@ -675,3 +675,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-10T21:21:42+04:00 — COMPLETE P05-T05
 - duration: 17m 03s
 - evidence: PR #48 (commit 82c2bb1). ADR-0012 cost-basis method (weighted average cost in portfolio currency; Proposed, for user approval at P05-GATE). Pure holdings fold (Decimal, 50-digit context; stored rounded half-up to 8 dp; API to minor units per ADR-0006). Golden vectors (8, hand-computed: buys, partial sells with fees/tax, full sale, split as zero-value transfer-in, multi-rate FX, income/withholding, reversals, transfer out, repeating decimals) and Hypothesis properties (quantity, cost conservation, zero units zero cost, reversal == never posted, order independence) pass. Holdings cache (migration 0006 income/expenses) rebuilt in the same transaction as every posting/reversal; GET /api/v1/portfolios/{id}/holdings (IDOR-registered). Fixed T04 gap: sales/reversals now checked against date-ordered history. Local pytest 558 passed, coverage 90.97%, ruff/mypy/OpenAPI/Spectral clean. Mutants: 13/15 caught; remaining pair was redundant code, removed, then caught. CI all gates pass.
+
+### 2026-10-10T21:24:30+04:00 — START P05-T06
+- Multi-currency and FX conversion
+- prerequisites verified COMPLETED
+
+### 2026-10-10T21:39:55+04:00 — COMPLETE P05-T06
+- duration: 15m 25s
+- evidence: PR #49 (commit 133192e). FX service with documented rate-selection rules (historical by trade date within 7 days, latest with stale flag after 1 day, inverse pair only when no direct rate, deterministic ties; thresholds provisional until DEC-26) and GET /api/v1/fx-rates/{base}/{quote} with provenance (404 fx-rate-unavailable). Original transaction currency and rate preserved: postings store their own currency plus the rate used (user-supplied wins; otherwise the historical rate with provider and timestamp, rounded half-up to 12 dp). Conversion rounding explicit (ROUND_HALF_UP to target minor units) and tested with tie cases for KES/JPY/KWD and negatives. Local pytest 585 passed, coverage 90.93%, ruff/mypy/OpenAPI/Spectral clean. 13/13 mutants caught; a flaky test (colliding currency pairs) found and fixed; IDOR guard gained a reasoned exemption list for global-data routes. CI all gates pass.

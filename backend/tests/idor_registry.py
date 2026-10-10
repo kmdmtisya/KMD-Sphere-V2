@@ -40,3 +40,9 @@ IDOR_TESTS: dict[tuple[str, str], str] = {
         "tests.test_holdings_api::test_bob_cannot_read_alices_holdings"
     ),
 }
+
+# Routes whose path parameters identify global reference data, not anyone's resource, with the
+# reason. tests/test_idor_coverage.py checks that none of them takes a resource id (`{..._id}`).
+NOT_USER_RESOURCES: dict[tuple[str, str], str] = {
+    ("GET", "/api/v1/fx-rates/{base}/{quote}"): "currency codes; FX rates are global market data",
+}

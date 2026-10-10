@@ -7,7 +7,7 @@ import pytest
 
 from app.main import create_app
 from tests.conftest import make_settings
-from tests.idor_registry import IDOR_TESTS
+from tests.idor_registry import IDOR_TESTS, NOT_USER_RESOURCES
 
 pytestmark = pytest.mark.security
 
@@ -26,7 +26,7 @@ def _id_routes() -> set[tuple[str, str]]:
 
 
 def test_every_id_route_has_a_cross_user_test() -> None:
-    missing = sorted(_id_routes() - IDOR_TESTS.keys())
+    missing = sorted(_id_routes() - IDOR_TESTS.keys() - NOT_USER_RESOURCES.keys())
     assert not missing, f"add an IDOR test and register it in tests/idor_registry.py: {missing}"
 
 
@@ -40,3 +40,12 @@ def test_every_named_test_exists() -> None:
         module_name, _, function = target.partition("::")
         module = importlib.import_module(module_name)
         assert callable(getattr(module, function, None)), f"{route}: {target} not found"
+
+
+def test_exemptions_are_real_and_take_no_resource_id() -> None:
+    routes = _id_routes()
+    for route, reason in NOT_USER_RESOURCES.items():
+        assert route in routes, f"stale exemption: {route}"
+        assert "_id}" not in route[1], f"{route} takes a resource id: it needs an IDOR test"
+        assert reason.strip(), f"{route}: give a reason"
+        assert route not in IDOR_TESTS, f"{route} is both exempt and registered"
