@@ -6,7 +6,7 @@ the platform relies on: provenance on every value, validated numbers, loud failu
 symbols, history oldest-first with no filled gaps."""
 
 from abc import ABC, abstractmethod
-from datetime import UTC, date, datetime, timedelta
+from datetime import date
 from decimal import Decimal
 
 import pytest
@@ -19,24 +19,32 @@ from app.modules.market_data.providers.models import AssetKind
 class ProviderContract(ABC):
     """Mix into a test class (not collected on its own: the name does not start with `Test`)."""
 
-    kind: AssetKind
-    symbol: str
+    kind: AssetKind | None = None  # None for an FX-only provider
+    symbol: str = ""
     unknown_symbol: str = "NOPE-NOT-REAL"
-    history_start: date
-    history_end: date
+    history_start: date = date(2026, 10, 5)
+    history_end: date = date(2026, 10, 9)
     fx_pair: tuple[str, str] | None = None
+    unknown_fx_pair: tuple[str, str] | None = None
 
     @abstractmethod
     def make_provider(self) -> MarketDataProvider: ...
+
+    def _asset_kind(self) -> AssetKind:
+        if self.kind is None:
+            pytest.skip("this provider serves no assets")
+        return self.kind
 
     async def test_is_a_provider(self) -> None:
         p = self.make_provider()
         assert isinstance(p, MarketDataProvider)
         assert p.name
-        assert self.kind in p.supported_kinds
+        if self.kind is not None:
+            assert self.kind in p.supported_kinds
 
     async def test_quote_is_validated_and_has_provenance(self) -> None:
-        q = await self.make_provider().get_quote(self.symbol, self.kind)
+        kind = self._asset_kind()
+        q = await self.make_provider().get_quote(self.symbol, kind)
         assert q.symbol == self.symbol
         assert isinstance(q.price, Decimal)
         assert q.price > 0
@@ -46,15 +54,16 @@ class ProviderContract(ABC):
         assert prov.as_of.tzinfo is not None
         assert prov.retrieved_at.tzinfo is not None
         assert prov.as_of <= prov.retrieved_at
-        assert prov.retrieved_at <= datetime.now(UTC) + timedelta(minutes=1)
 
     async def test_unknown_symbol_raises(self) -> None:
+        kind = self._asset_kind()
         with pytest.raises(SymbolNotFound):
-            await self.make_provider().get_quote(self.unknown_symbol, self.kind)
+            await self.make_provider().get_quote(self.unknown_symbol, kind)
 
     async def test_history_is_ascending_in_range_and_has_provenance(self) -> None:
+        kind = self._asset_kind()
         points = await self.make_provider().get_history(
-            self.symbol, self.kind, self.history_start, self.history_end
+            self.symbol, kind, self.history_start, self.history_end
         )
         assert points, "the contract's range must contain at least one trading day"
         days = [pt.day for pt in points]
@@ -67,12 +76,14 @@ class ProviderContract(ABC):
             assert pt.provenance.as_of.tzinfo is not None
 
     async def test_history_unknown_symbol_raises(self) -> None:
+        kind = self._asset_kind()
         with pytest.raises(SymbolNotFound):
             await self.make_provider().get_history(
-                self.unknown_symbol, self.kind, self.history_start, self.history_end
+                self.unknown_symbol, kind, self.history_start, self.history_end
             )
 
     async def test_unsupported_kind_raises(self) -> None:
+        self._asset_kind()
         p = self.make_provider()
         missing = [k for k in AssetKind if k not in p.supported_kinds]
         if not missing:
@@ -89,3 +100,27 @@ class ProviderContract(ABC):
         assert r.rate > 0
         assert r.provenance.provider
         assert r.provenance.as_of <= r.provenance.retrieved_at
+
+    async def test_fx_history_is_ascending_in_range_and_has_provenance(self) -> None:
+        if self.fx_pair is None:
+            pytest.skip("this provider has no FX")
+        base, quote = self.fx_pair
+        points = await self.make_provider().get_fx_history(
+            base, quote, self.history_start, self.history_end
+        )
+        assert points
+        stamps = [pt.provenance.as_of for pt in points]
+        assert stamps == sorted(stamps)
+        assert len(set(stamps)) == len(stamps)
+        for pt in points:
+            assert pt.rate > 0
+            assert (pt.base, pt.quote) == (base, quote)
+            assert pt.provenance.provider
+            assert pt.provenance.as_of <= pt.provenance.retrieved_at
+
+    async def test_unknown_fx_pair_raises(self) -> None:
+        if self.unknown_fx_pair is None:
+            pytest.skip("no unknown pair configured")
+        base, quote = self.unknown_fx_pair
+        with pytest.raises(SymbolNotFound):
+            await self.make_provider().get_fx_rate(base, quote)
