@@ -122,5 +122,6 @@ class ProviderContract(ABC):
         if self.unknown_fx_pair is None:
             pytest.skip("no unknown pair configured")
         base, quote = self.unknown_fx_pair
-        with pytest.raises(SymbolNotFound):
+        # Either the provider does not know the pair or it does not cover that currency.
+        with pytest.raises((SymbolNotFound, UnsupportedKind)):
             await self.make_provider().get_fx_rate(base, quote)

@@ -33,6 +33,8 @@ class Settings(BaseSettings):
 
     # Market-data provider keys (P08-T03). Empty means the provider is not configured; keys come
     # from the environment or a secret manager, never from source, and never appear in logs.
+    # `fake` serves deterministic demo prices with no network (local development).
+    market_data_mode: Literal["real", "fake"] = "real"
     coingecko_api_key: SecretStr = SecretStr("")
     twelvedata_api_key: SecretStr = SecretStr("")
 

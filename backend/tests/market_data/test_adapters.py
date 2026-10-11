@@ -85,7 +85,7 @@ class TestEcb:
         assert usd_gbp.rate == Decimal("0.84763") / Decimal("1.1206")
 
     async def test_a_currency_the_ecb_does_not_publish_is_not_found(self) -> None:
-        with pytest.raises(SymbolNotFound, match="not published"):
+        with pytest.raises(UnsupportedKind, match="not published"):
             await ecb().get_fx_rate("USD", "AED")
 
     async def test_history_covers_the_requested_days_oldest_first(self) -> None:
@@ -97,7 +97,7 @@ class TestEcb:
         ]
 
     async def test_history_of_an_unpublished_pair_is_not_found(self) -> None:
-        with pytest.raises(SymbolNotFound):
+        with pytest.raises(UnsupportedKind):
             await ecb().get_fx_history("USD", "AED", date(2026, 10, 6), date(2026, 10, 8))
 
     async def test_old_history_uses_the_full_file(self) -> None:

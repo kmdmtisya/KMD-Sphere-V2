@@ -1,9 +1,9 @@
 """All consumers use the provider interface only (P08-T02 acceptance).
 
 Code outside the providers package may import the interface (`base`), the value types (`models`),
-the errors, and the resilience wrappers. It must never import a vendor adapter or the fake: those
-are wired in at one composition point (`providers/registry.py`, added with the adapters in
-P08-T03)."""
+the errors, the resilience wrappers and the registry that composes providers. It must never import
+a vendor adapter or the fake: those are wired in at one composition point (`providers/registry.py`).
+"""
 
 import ast
 from pathlib import Path
@@ -11,7 +11,8 @@ from pathlib import Path
 APP = Path(__file__).resolve().parents[2] / "app"
 PACKAGE = APP / "modules" / "market_data" / "providers"
 ROOT = "app.modules.market_data.providers"
-CONSUMER_SAFE = {"base", "models", "errors", "resilience"}
+# `registry` is the one place that names vendors; consumers ask it for MarketProviders.
+CONSUMER_SAFE = {"base", "models", "errors", "resilience", "registry"}
 # Modules that are allowed to import concrete providers (composition points).
 COMPOSITION = {PACKAGE / "registry.py"}
 
@@ -50,7 +51,7 @@ def test_the_guard_sees_a_bad_import(tmp_path: Path) -> None:
 
 
 def test_the_interface_modules_have_no_vendor_imports() -> None:
-    for name in CONSUMER_SAFE:
+    for name in CONSUMER_SAFE - {"registry"}:
         for module in _imports(PACKAGE / f"{name}.py"):
             assert not module.startswith(f"{ROOT}.fake"), name
 

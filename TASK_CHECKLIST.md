@@ -783,14 +783,14 @@
   - [x] P08-T04.2 Idempotency helper
   - [x] P08-T04.3 Dead-letter
   - [x] P08-T04.4 Tests
-- [ ] **P08-T05** · Price and FX ingestion · `NOT_STARTED` ⬜
+- [x] **P08-T05** · Price and FX ingestion · `COMPLETED` ✅
   - Deps: P08-T03, P08-T04 · Wave: W3 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P08-T05.1 market_prices schema
-  - [ ] P08-T05.2 Ingestion jobs
-  - [ ] P08-T05.3 Backfill
-  - [ ] P08-T05.4 Tests
+  - Started: 2026-10-12T02:44:54+04:00 · Completed: 2026-10-12T02:59:23+04:00 · Duration: 14m 29s · Blocker: —
+  - Evidence: market_prices table (migration 0011) with provider, as_of, retrieved_at and ingested_at on every row and constraints; idempotent quote, close, FX and backfill ingestion via ON CONFLICT DO NOTHING (overlapping backfills tested); own-currency-only storage, per-item failure isolation, outage fails the run for retry; staleness flags by kind; jobs and schedule on the P08-T04 infrastructure with idempotency keys; ruff/mypy strict clean; 38 new DB-backed tests; full backend suite 1641 passed. PR #85. CI all gates pass.
+  - [x] P08-T05.1 market_prices schema
+  - [x] P08-T05.2 Ingestion jobs
+  - [x] P08-T05.3 Backfill
+  - [x] P08-T05.4 Tests
 - [ ] **P08-T06** · Automatic valuation integration · `NOT_STARTED` ⬜
   - Deps: P08-T05, P05-T08 · Wave: W4 · Track: BE · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

@@ -983,3 +983,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T02:40:08+04:00 — COMPLETE P08-T04
 - duration: 30m 30s
 - evidence: Celery worker on RabbitMQ with late acks, retry with backoff and jitter, dead-letter queue plus job_failures table and CLI/metric for visibility, atomic idempotency claim (concurrency tested), beat schedule with heartbeat, migration 0010; local worker run against compose RabbitMQ executed jobs and dead-lettered a failing one with its arguments (RabbitMQ 4 needs --without-mingle/gossip, documented); ruff/mypy strict clean; 43 worker tests; full backend suite 1602 passed. PR #84. CI all checks pass.
+
+### 2026-10-12T02:44:54+04:00 — START P08-T05
+- Price and FX ingestion
+- prerequisites verified COMPLETED
+
+### 2026-10-12T02:59:23+04:00 — COMPLETE P08-T05
+- duration: 14m 29s
+- evidence: market_prices table (migration 0011) with provider, as_of, retrieved_at and ingested_at on every row and constraints; idempotent quote, close, FX and backfill ingestion via ON CONFLICT DO NOTHING (overlapping backfills tested); own-currency-only storage, per-item failure isolation, outage fails the run for retry; staleness flags by kind; jobs and schedule on the P08-T04 infrastructure with idempotency keys; ruff/mypy strict clean; 38 new DB-backed tests; full backend suite 1641 passed. PR #85. CI all gates pass.
