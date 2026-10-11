@@ -571,15 +571,15 @@
 - Exit gates: QG-03.4–5; QG-06.1,3,4,6 — required by `P06-GATE` (Gates-done)
 - Release gates: —
 
-- [ ] **P06-T01** · Compound forecast engine · `NOT_STARTED` ⬜
+- [x] **P06-T01** · Compound forecast engine · `COMPLETED` ✅
   - Deps: P01-T07, P01-T03, P01-GATE · Wave: W1 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P06-T01.1 Formula doc
-  - [ ] P06-T01.2 Implementation
-  - [ ] P06-T01.3 Solver
-  - [ ] P06-T01.4 Golden tests
-  - [ ] P06-T01.5 Property tests
+  - Started: 2026-10-11T10:38:33+04:00 · Completed: 2026-10-11T10:56:05+04:00 · Duration: 17m 32s · Blocker: —
+  - Evidence: PR #56 (commit 05107b5). app/modules/forecasting/engine.py: pure Decimal engine (50 digits; no float, I/O or LLM; AST guard test) for lump sum, monthly/quarterly/yearly end-of-period contributions with yearly escalation, nominal return compounded monthly/quarterly/yearly, fee drag, inflation-adjusted values, yearly series, scenarios, closed-form required-contribution solver (nominal or real target). Formula doc docs/design/forecast-engine.md (formulas, closed forms, solver, rounding half-up at output, growth derived after rounding, not modelled). Golden: 15 vectors from independent closed forms incl. zero rate, negative rate, 50-year horizon, escalation, fees, inflation, mixed frequencies, JPY/KWD; two match published tables. Properties (Hypothesis): decomposition, paid-in totals, monotonicity in return/fee/contributions/years/inflation, closed-form agreement, determinism; solver tests. tests/forecasting 57 passed; engine 100% line+branch coverage; 30/30 mutants caught (half-even survivor led to tie tests). Local suite 839 passed, 1 unrelated flaky FX test fixed separately in PR #57. CI all gates pass.
+  - [x] P06-T01.1 Formula doc
+  - [x] P06-T01.2 Implementation
+  - [x] P06-T01.3 Solver
+  - [x] P06-T01.4 Golden tests
+  - [x] P06-T01.5 Property tests
 - [ ] **P06-T02** · Forecast API · `NOT_STARTED` ⬜
   - Deps: P06-T01, P04-T02 · Wave: W2 · Track: BE · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
