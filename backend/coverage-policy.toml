@@ -12,6 +12,7 @@ critical = [
   "modules/portfolio",
   "modules/fx",
   "modules/market_data",
+  "worker",
   "modules/goals",
   "modules/networth",
   "modules/identity",

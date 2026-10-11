@@ -21,6 +21,7 @@ dependencies = [
   "tzdata>=2025.2",
   "httpx>=0.28",
   "defusedxml>=0.7.1",
+  "celery>=5.4",
 ]
 
 [dependency-groups]
@@ -34,6 +35,7 @@ dev = [
   "asyncpg-stubs>=0.32.0",
   "hypothesis>=6.168.5",
   "types-defusedxml>=0.7.0.20260504",
+  "celery-types>=0.26.0",
 ]
 
 [tool.uv]
