@@ -797,3 +797,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-11T14:44:29+04:00 — START P06-T07
 - Net worth and liabilities
 - prerequisites verified COMPLETED
+
+### 2026-10-11T15:12:20+04:00 — COMPLETE P06-T07
+- duration: 27m 51s
+- evidence: PR #63 (commit eacc71d). Schema: liabilities (migration 0009) with constraints (name, type, currency, non-negative balance/rate, unique name per user); upgrade/check/downgrade/upgrade clean; schema tests. Service/API: liabilities CRUD (future balance date refused, unseen asset refused alike, limit, audit events without amounts) and GET /api/v1/net-worth: net worth = total assets (active portfolios consolidated) - total liabilities in base currency (or ?currency=), liabilities each converted at the latest rate and rounded so assets - liabilities = net worth exactly; FX provenance: every rate used (portfolio base and liability currencies) with rate, as-of, provider, stale, inverted; freshness with completeness, unconverted currencies, stale FX, oldest liability balance. Pure tests + Hypothesis reconciliation; API tests incl. foreign-currency liability, missing rate, other reporting currency, isolation, IDOR for 3 id routes (registered; integrity sweep and snapshot include liabilities), repository write scoping. 29/29 mutants caught (on the green suite). Local 1217 passed, coverage 92%, networth 93.4%, -m security 632. Methods docs/design/net-worth.md. CI all gates pass.
