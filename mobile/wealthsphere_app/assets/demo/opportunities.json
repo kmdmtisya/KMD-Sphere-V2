@@ -1,0 +1,633 @@
+{
+  "demo": true,
+  "as_of": "2026-10-09T08:00:00Z",
+  "notice": "DEMO: these are example research ideas made from mock data. They are not live market data.",
+  "categories": [
+    {
+      "id": "funds",
+      "label": "Diversified funds"
+    },
+    {
+      "id": "income",
+      "label": "Income"
+    },
+    {
+      "id": "bonds",
+      "label": "Bonds"
+    },
+    {
+      "id": "emerging",
+      "label": "Emerging markets"
+    },
+    {
+      "id": "real_assets",
+      "label": "Real assets"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "o-glb",
+      "category": "funds",
+      "name": "Demo Global Index ETF",
+      "symbol": "DEMO-GLB",
+      "asset_class": "Equity ETF",
+      "summary": "A low-cost fund that holds thousands of companies across many countries.",
+      "risk": "medium",
+      "score": 78,
+      "score_factors": [
+        {
+          "label": "Cost",
+          "points": 22,
+          "max": 25,
+          "note": "Lower fees score higher."
+        },
+        {
+          "label": "Diversification",
+          "points": 22,
+          "max": 25,
+          "note": "More spread across holdings and regions scores higher."
+        },
+        {
+          "label": "Liquidity",
+          "points": 18,
+          "max": 20,
+          "note": "Easier to sell at a fair price scores higher."
+        },
+        {
+          "label": "Track record",
+          "points": 8,
+          "max": 15,
+          "note": "A longer history scores higher. Past results do not predict future returns."
+        },
+        {
+          "label": "Evidence quality",
+          "points": 8,
+          "max": 15,
+          "note": "More recent, independent sources score higher."
+        }
+      ],
+      "risks": [
+        "Share prices can fall sharply in a downturn.",
+        "Most holdings are in a few large markets.",
+        "Past results do not predict future returns."
+      ],
+      "evidence": [
+        {
+          "label": "Fund fact sheet",
+          "provider": "DEMO data",
+          "as_of": "2026-09-30T00:00:00Z"
+        },
+        {
+          "label": "Price history",
+          "provider": "DEMO feed",
+          "as_of": "2026-10-09T08:00:00Z"
+        }
+      ],
+      "as_of": "2026-10-09T08:00:00Z",
+      "attributes": [
+        {
+          "label": "Asset class",
+          "value": "Equity ETF"
+        },
+        {
+          "label": "Volatility",
+          "value": "Medium"
+        },
+        {
+          "label": "Income yield",
+          "value": "1.8%"
+        },
+        {
+          "label": "Fees",
+          "value": "0.12% a year"
+        },
+        {
+          "label": "Liquidity",
+          "value": "High"
+        },
+        {
+          "label": "Currency",
+          "value": "USD"
+        },
+        {
+          "label": "Typical holding period",
+          "value": "5 years or more"
+        }
+      ],
+      "research": [
+        {
+          "heading": "What it is",
+          "text": "An exchange-traded fund that tracks a broad index of large and mid-sized companies in developed and emerging markets."
+        },
+        {
+          "heading": "Things to check",
+          "text": "Look at the fees, the largest holdings and how much of the fund sits in one country before deciding whether it fits your plan."
+        }
+      ],
+      "simulate": {
+        "initial_investment": "5000.00",
+        "monthly_contribution": "300.00",
+        "annual_return": "7.00",
+        "conservative_return": "4.00",
+        "growth_return": "10.00",
+        "years": 20,
+        "inflation": "2.5",
+        "annual_fee": "0.12"
+      }
+    },
+    {
+      "id": "o-dvi",
+      "category": "income",
+      "name": "Demo High Dividend ETF",
+      "symbol": "DEMO-DVI",
+      "asset_class": "Equity ETF",
+      "summary": "A fund that holds companies with a record of paying dividends.",
+      "risk": "medium",
+      "score": 71,
+      "score_factors": [
+        {
+          "label": "Cost",
+          "points": 18,
+          "max": 25,
+          "note": "Lower fees score higher."
+        },
+        {
+          "label": "Diversification",
+          "points": 18,
+          "max": 25,
+          "note": "More spread across holdings and regions scores higher."
+        },
+        {
+          "label": "Liquidity",
+          "points": 18,
+          "max": 20,
+          "note": "Easier to sell at a fair price scores higher."
+        },
+        {
+          "label": "Track record",
+          "points": 9,
+          "max": 15,
+          "note": "A longer history scores higher. Past results do not predict future returns."
+        },
+        {
+          "label": "Evidence quality",
+          "points": 8,
+          "max": 15,
+          "note": "More recent, independent sources score higher."
+        }
+      ],
+      "risks": [
+        "Dividends can be cut or stopped.",
+        "Holdings are concentrated in a few sectors.",
+        "Prices can fall even while dividends are paid."
+      ],
+      "evidence": [
+        {
+          "label": "Fund fact sheet",
+          "provider": "DEMO data",
+          "as_of": "2026-09-30T00:00:00Z"
+        },
+        {
+          "label": "Dividend history",
+          "provider": "DEMO data",
+          "as_of": "2026-10-01T00:00:00Z"
+        }
+      ],
+      "as_of": "2026-10-09T08:00:00Z",
+      "attributes": [
+        {
+          "label": "Asset class",
+          "value": "Equity ETF"
+        },
+        {
+          "label": "Volatility",
+          "value": "Medium"
+        },
+        {
+          "label": "Income yield",
+          "value": "4.1%"
+        },
+        {
+          "label": "Fees",
+          "value": "0.30% a year"
+        },
+        {
+          "label": "Liquidity",
+          "value": "High"
+        },
+        {
+          "label": "Currency",
+          "value": "USD"
+        },
+        {
+          "label": "Typical holding period",
+          "value": "5 years or more"
+        }
+      ],
+      "research": [
+        {
+          "heading": "What it is",
+          "text": "A fund that favours companies with higher dividend payments, which can make its income larger than a broad index."
+        },
+        {
+          "heading": "Things to check",
+          "text": "A high yield can signal risk. Compare the yield with how long dividends have been paid."
+        }
+      ],
+      "simulate": {
+        "initial_investment": "5000.00",
+        "monthly_contribution": "250.00",
+        "annual_return": "6.00",
+        "conservative_return": "3.00",
+        "growth_return": "8.00",
+        "years": 15,
+        "inflation": "2.5",
+        "annual_fee": "0.30"
+      }
+    },
+    {
+      "id": "o-gov",
+      "category": "bonds",
+      "name": "Demo Government Bond Fund",
+      "symbol": "DEMO-GOV",
+      "asset_class": "Bond fund",
+      "summary": "A fund of government bonds of medium length.",
+      "risk": "low",
+      "score": 66,
+      "score_factors": [
+        {
+          "label": "Cost",
+          "points": 20,
+          "max": 25,
+          "note": "Lower fees score higher."
+        },
+        {
+          "label": "Diversification",
+          "points": 15,
+          "max": 25,
+          "note": "More spread across holdings and regions scores higher."
+        },
+        {
+          "label": "Liquidity",
+          "points": 18,
+          "max": 20,
+          "note": "Easier to sell at a fair price scores higher."
+        },
+        {
+          "label": "Track record",
+          "points": 7,
+          "max": 15,
+          "note": "A longer history scores higher. Past results do not predict future returns."
+        },
+        {
+          "label": "Evidence quality",
+          "points": 6,
+          "max": 15,
+          "note": "More recent, independent sources score higher."
+        }
+      ],
+      "risks": [
+        "Bond prices fall when interest rates rise.",
+        "Inflation can reduce what the income buys.",
+        "Returns are not guaranteed, even for government bonds."
+      ],
+      "evidence": [
+        {
+          "label": "Fund fact sheet",
+          "provider": "DEMO data",
+          "as_of": "2026-09-30T00:00:00Z"
+        }
+      ],
+      "as_of": "2026-10-09T08:00:00Z",
+      "attributes": [
+        {
+          "label": "Asset class",
+          "value": "Bond fund"
+        },
+        {
+          "label": "Volatility",
+          "value": "Low"
+        },
+        {
+          "label": "Income yield",
+          "value": "3.9%"
+        },
+        {
+          "label": "Fees",
+          "value": "0.15% a year"
+        },
+        {
+          "label": "Liquidity",
+          "value": "High"
+        },
+        {
+          "label": "Currency",
+          "value": "USD"
+        },
+        {
+          "label": "Typical holding period",
+          "value": "3 years or more"
+        }
+      ],
+      "research": [
+        {
+          "heading": "What it is",
+          "text": "A bond fund holding government debt with an average length of about six years."
+        },
+        {
+          "heading": "Things to check",
+          "text": "Look at the average length (duration): the longer it is, the more the price moves when rates change."
+        }
+      ],
+      "simulate": {
+        "initial_investment": "5000.00",
+        "monthly_contribution": "200.00",
+        "annual_return": "4.00",
+        "conservative_return": "2.00",
+        "growth_return": "5.00",
+        "years": 10,
+        "inflation": "2.5",
+        "annual_fee": "0.15"
+      }
+    },
+    {
+      "id": "o-emg",
+      "category": "emerging",
+      "name": "Demo Emerging Markets Fund",
+      "symbol": "DEMO-EMG",
+      "asset_class": "Equity fund",
+      "summary": "A fund of companies in fast-growing economies.",
+      "risk": "high",
+      "score": 59,
+      "score_factors": [
+        {
+          "label": "Cost",
+          "points": 14,
+          "max": 25,
+          "note": "Lower fees score higher."
+        },
+        {
+          "label": "Diversification",
+          "points": 17,
+          "max": 25,
+          "note": "More spread across holdings and regions scores higher."
+        },
+        {
+          "label": "Liquidity",
+          "points": 12,
+          "max": 20,
+          "note": "Easier to sell at a fair price scores higher."
+        },
+        {
+          "label": "Track record",
+          "points": 7,
+          "max": 15,
+          "note": "A longer history scores higher. Past results do not predict future returns."
+        },
+        {
+          "label": "Evidence quality",
+          "points": 9,
+          "max": 15,
+          "note": "More recent, independent sources score higher."
+        }
+      ],
+      "risks": [
+        "Prices can swing widely.",
+        "Currency moves can add to losses.",
+        "Some markets are harder to sell in quickly."
+      ],
+      "evidence": [
+        {
+          "label": "Fund fact sheet",
+          "provider": "DEMO data",
+          "as_of": "2026-09-30T00:00:00Z"
+        },
+        {
+          "label": "Index data",
+          "provider": "DEMO feed",
+          "as_of": "2026-10-09T08:00:00Z"
+        }
+      ],
+      "as_of": "2026-10-09T08:00:00Z",
+      "attributes": [
+        {
+          "label": "Asset class",
+          "value": "Equity fund"
+        },
+        {
+          "label": "Volatility",
+          "value": "High"
+        },
+        {
+          "label": "Income yield",
+          "value": "2.4%"
+        },
+        {
+          "label": "Fees",
+          "value": "0.65% a year"
+        },
+        {
+          "label": "Liquidity",
+          "value": "Medium"
+        },
+        {
+          "label": "Currency",
+          "value": "USD and others"
+        },
+        {
+          "label": "Typical holding period",
+          "value": "7 years or more"
+        }
+      ],
+      "research": [
+        {
+          "heading": "What it is",
+          "text": "A fund investing in companies based in or earning most of their income in emerging economies."
+        },
+        {
+          "heading": "Things to check",
+          "text": "Check how much of the fund sits in one or two countries and what the fees are compared with a global fund."
+        }
+      ],
+      "simulate": {
+        "initial_investment": "5000.00",
+        "monthly_contribution": "250.00",
+        "annual_return": "9.00",
+        "conservative_return": "3.00",
+        "growth_return": "14.00",
+        "years": 20,
+        "inflation": "2.5",
+        "annual_fee": "0.65"
+      }
+    },
+    {
+      "id": "o-ret",
+      "category": "real_assets",
+      "name": "Demo Real Estate Trust",
+      "symbol": "DEMO-RET",
+      "asset_class": "Property fund",
+      "summary": "A trust that owns and rents out commercial buildings.",
+      "risk": "medium",
+      "score": 62,
+      "score_factors": [
+        {
+          "label": "Cost",
+          "points": 17,
+          "max": 25,
+          "note": "Lower fees score higher."
+        },
+        {
+          "label": "Diversification",
+          "points": 14,
+          "max": 25,
+          "note": "More spread across holdings and regions scores higher."
+        },
+        {
+          "label": "Liquidity",
+          "points": 11,
+          "max": 20,
+          "note": "Easier to sell at a fair price scores higher."
+        },
+        {
+          "label": "Track record",
+          "points": 8,
+          "max": 15,
+          "note": "A longer history scores higher. Past results do not predict future returns."
+        },
+        {
+          "label": "Evidence quality",
+          "points": 12,
+          "max": 15,
+          "note": "More recent, independent sources score higher."
+        }
+      ],
+      "risks": [
+        "Property can be hard to sell quickly.",
+        "Rent income can fall if buildings stand empty.",
+        "Interest rate rises can lower the trust's value."
+      ],
+      "evidence": [
+        {
+          "label": "Trust report",
+          "provider": "DEMO data",
+          "as_of": "2026-09-15T00:00:00Z"
+        },
+        {
+          "label": "Price history",
+          "provider": "DEMO feed",
+          "as_of": "2026-10-09T08:00:00Z"
+        }
+      ],
+      "as_of": "2026-10-09T08:00:00Z",
+      "attributes": [
+        {
+          "label": "Asset class",
+          "value": "Property fund"
+        },
+        {
+          "label": "Volatility",
+          "value": "Medium"
+        },
+        {
+          "label": "Income yield",
+          "value": "5.0%"
+        },
+        {
+          "label": "Fees",
+          "value": "0.80% a year"
+        },
+        {
+          "label": "Liquidity",
+          "value": "Medium"
+        },
+        {
+          "label": "Currency",
+          "value": "USD"
+        },
+        {
+          "label": "Typical holding period",
+          "value": "5 years or more"
+        }
+      ],
+      "research": [
+        {
+          "heading": "What it is",
+          "text": "A trust that collects rent from a portfolio of buildings and passes most of it on as income."
+        },
+        {
+          "heading": "Things to check",
+          "text": "Look at how full the buildings are, how much the trust borrows and when the leases end."
+        }
+      ],
+      "simulate": {
+        "initial_investment": "5000.00",
+        "monthly_contribution": "250.00",
+        "annual_return": "6.00",
+        "conservative_return": "3.00",
+        "growth_return": "9.00",
+        "years": 15,
+        "inflation": "2.5",
+        "annual_fee": "0.80"
+      }
+    },
+    {
+      "id": "o-new",
+      "category": "funds",
+      "name": "Demo Thematic Fund (new)",
+      "symbol": "DEMO-NEW",
+      "asset_class": "Equity fund",
+      "summary": "A newly launched fund with a narrow theme.",
+      "risk": "high",
+      "score": null,
+      "score_factors": null,
+      "risks": [
+        "Very short history.",
+        "A narrow theme means a few companies drive results.",
+        "No independent sources are available yet."
+      ],
+      "evidence": [],
+      "as_of": "2026-10-09T08:00:00Z",
+      "attributes": [
+        {
+          "label": "Asset class",
+          "value": "Equity fund"
+        },
+        {
+          "label": "Volatility",
+          "value": "High"
+        },
+        {
+          "label": "Income yield",
+          "value": "0.0%"
+        },
+        {
+          "label": "Fees",
+          "value": "0.95% a year"
+        },
+        {
+          "label": "Liquidity",
+          "value": "Medium"
+        },
+        {
+          "label": "Currency",
+          "value": "USD"
+        },
+        {
+          "label": "Typical holding period",
+          "value": "Not enough history"
+        }
+      ],
+      "research": [
+        {
+          "heading": "What it is",
+          "text": "A fund launched this year that invests in a small group of companies linked by one theme."
+        },
+        {
+          "heading": "Things to check",
+          "text": "There is no evidence on file yet, so this idea has no score. Do not rely on it."
+        }
+      ],
+      "simulate": null
+    }
+  ]
+}

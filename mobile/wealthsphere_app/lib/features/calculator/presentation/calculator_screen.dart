@@ -101,6 +101,21 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
     super.dispose();
   }
 
+  /// Shows the provider's current inputs in the fields (or the defaults if there are none).
+  void _syncControllers() {
+    final inputs = ref.read(calculatorInputsProvider) ?? _defaults;
+    for (final f in CalculatorField.values) {
+      _controllers[f]?.text = inputs.text(f);
+    }
+    setState(() => _showFixHint = false);
+  }
+
+  void _clearPrefill() {
+    ref.read(calculatorPrefillProvider.notifier).clear();
+    ref.read(calculatorInputsProvider.notifier).reset();
+    _syncControllers();
+  }
+
   String? _validate(CalculatorField field, String? text) {
     final l10n = AppLocalizations.of(context);
     final issue =
@@ -171,6 +186,11 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
     final l10n = AppLocalizations.of(context);
     final inputs = ref.watch(calculatorInputsProvider) ?? _defaults;
     final notifier = ref.read(calculatorInputsProvider.notifier);
+    final prefill = ref.watch(calculatorPrefillProvider);
+    // A hand-off while this screen is already alive (the More tab keeps its state): show it.
+    ref.listen(calculatorPrefillProvider, (previous, next) {
+      if (next != null) _syncControllers();
+    });
     final symbol =
         CurrencyInfo.of(ForecastInputLimits.currency).symbol ??
         ForecastInputLimits.currency;
@@ -212,7 +232,9 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
             labelText: label,
             prefixText: prefix,
             suffixText: suffix,
-            helperText: helper,
+            helperText: prefill != null && prefill.fields.contains(f)
+                ? l10n.calcPrefilledHelper(prefill.sourceName)
+                : helper,
             helperMaxLines: 2,
           ),
           onFieldSubmitted: (_) {
@@ -243,6 +265,15 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    if (prefill != null) ...[
+                      StatusBanner(
+                        icon: Icons.science_outlined,
+                        message: l10n.calcPrefilled(prefill.sourceName),
+                        actionLabel: l10n.calcPrefilledClear,
+                        onAction: _clearPrefill,
+                      ),
+                      const SizedBox(height: AppSpacing.m),
+                    ],
                     field(
                       CalculatorField.initialInvestment,
                       l10n.calcInitialInvestment,

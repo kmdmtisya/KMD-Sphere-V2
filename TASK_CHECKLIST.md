@@ -712,15 +712,15 @@
   - [x] P07-T06.2 Findings tabs
   - [x] P07-T06.3 Scenario actions
   - [x] P07-T06.4 Tests
-- [ ] **P07-T07** · AI Investment Opportunities (screen 13) · `NOT_STARTED` ⬜
+- [ ] **P07-T07** · AI Investment Opportunities (screen 13) · `IN_PROGRESS` 🔄
   - Deps: P07-T01, P03-T04 · Wave: W3 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-11T22:32:31+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P07-T07.1 List and chips
-  - [ ] P07-T07.2 Research sheet
-  - [ ] P07-T07.3 Compare view
-  - [ ] P07-T07.4 Simulate hand-off
-  - [ ] P07-T07.5 Tests
+  - [x] P07-T07.1 List and chips
+  - [x] P07-T07.2 Research sheet
+  - [x] P07-T07.3 Compare view
+  - [x] P07-T07.4 Simulate hand-off
+  - [x] P07-T07.5 Tests
 - [ ] **P07-T08** · More hub, Net Worth, Income and Settings · `NOT_STARTED` ⬜
   - Deps: P07-T01 · Wave: W2 · Track: MOB · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
