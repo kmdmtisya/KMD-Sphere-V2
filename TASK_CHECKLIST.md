@@ -721,10 +721,10 @@
   - [x] P07-T07.3 Compare view
   - [x] P07-T07.4 Simulate hand-off
   - [x] P07-T07.5 Tests
-- [ ] **P07-T08** · More hub, Net Worth, Income and Settings · `IN_PROGRESS` 🔄
+- [x] **P07-T08** · More hub, Net Worth, Income and Settings · `COMPLETED` ✅
   - Deps: P07-T01 · Wave: W2 · Track: MOB · Size: M · Approval: no
-  - Started: 2026-10-11T23:06:06+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-11T23:06:06+04:00 · Completed: 2026-10-11T23:28:33+04:00 · Duration: 22m 27s · Blocker: —
+  - Evidence: More tab with net worth, income and settings (theme, app lock, account) views; unavailable items (Reports, Alerts, Documents, reporting currency, notifications) labelled Coming soon and not openable; demo totals tested equal to the Home dashboard; 49 new tests incl. accessibility guidelines light/dark 1x/2x LTR/RTL; analyze and format clean; full mobile suite 1351 passed locally. PR #77. CI all gates pass.
   - [x] P07-T08.1 More list
   - [x] P07-T08.2 Net worth and income views
   - [x] P07-T08.3 Settings
