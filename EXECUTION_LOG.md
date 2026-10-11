@@ -749,3 +749,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-11T10:38:33+04:00 — START P06-T01
 - Compound forecast engine
 - prerequisites verified COMPLETED
+
+### 2026-10-11T10:56:05+04:00 — COMPLETE P06-T01
+- duration: 17m 32s
+- evidence: PR #56 (commit 05107b5). app/modules/forecasting/engine.py: pure Decimal engine (50 digits; no float, I/O or LLM; AST guard test) for lump sum, monthly/quarterly/yearly end-of-period contributions with yearly escalation, nominal return compounded monthly/quarterly/yearly, fee drag, inflation-adjusted values, yearly series, scenarios, closed-form required-contribution solver (nominal or real target). Formula doc docs/design/forecast-engine.md (formulas, closed forms, solver, rounding half-up at output, growth derived after rounding, not modelled). Golden: 15 vectors from independent closed forms incl. zero rate, negative rate, 50-year horizon, escalation, fees, inflation, mixed frequencies, JPY/KWD; two match published tables. Properties (Hypothesis): decomposition, paid-in totals, monotonicity in return/fee/contributions/years/inflation, closed-form agreement, determinism; solver tests. tests/forecasting 57 passed; engine 100% line+branch coverage; 30/30 mutants caught (half-even survivor led to tie tests). Local suite 839 passed, 1 unrelated flaky FX test fixed separately in PR #57. CI all gates pass.
