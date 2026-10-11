@@ -4,6 +4,7 @@ of vendor payloads and errors, rate limiting, and key handling (P08-T03.1 to .4)
 import logging
 from datetime import UTC, date, datetime, timedelta
 from decimal import Decimal
+from urllib.parse import urlparse
 
 import pytest
 from pydantic import SecretStr
@@ -201,7 +202,7 @@ class TestCoinGecko:
         client = cg_client()
         p = CoinGeckoProvider(SecretStr(KEY), client, unlimited(), plan="pro", clock=clock)
         await p.get_quote("BTC", AssetKind.CRYPTO)
-        assert client.calls[0].url.startswith("https://pro-api.coingecko.com")
+        assert urlparse(client.calls[0].url).hostname == "pro-api.coingecko.com"
         assert "x-cg-pro-api-key" in client.calls[0].headers
 
     async def test_an_unmapped_symbol_is_not_found_without_a_call(self) -> None:
