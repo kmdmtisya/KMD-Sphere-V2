@@ -747,7 +747,7 @@
 
 ## P08 — Market Data & Research Integration (Backend)
 
-- Phase approval: `PENDING`
+- Phase approval: `APPROVED by user (mtisya@gmail.com) at 2026-10-12T01:15:12+04:00`
 - Entry gates: prerequisite phase gates completed (P05); cumulative criteria QG-01.1–3; QG-02.1–6; QG-03.1,2,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-06.2,5; QG-08.1,3,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
 - Exit gates: QG-06.7; QG-09.5; QG-11.4 — required by `P08-GATE` (Gates-done)
 - Release gates: —
