@@ -2170,5 +2170,122 @@
   "txErrTooOld": "The trade date can't be before 1 January 2000.",
   "@txErrTooOld": {
     "description": "Field error"
+  },
+  "investPricePerUnit": "Latest price per unit",
+  "@investPricePerUnit": {
+    "description": "Caption under the price"
+  },
+  "investTabsLabel": "Investment details",
+  "@investTabsLabel": {
+    "description": "Label of the detail tabs"
+  },
+  "investTabFundamentals": "Fundamentals",
+  "@investTabFundamentals": {
+    "description": "Detail tab"
+  },
+  "investTabIncome": "Income",
+  "@investTabIncome": {
+    "description": "Detail tab"
+  },
+  "investTabPosition": "Position",
+  "@investTabPosition": {
+    "description": "Detail tab"
+  },
+  "investTabTransactions": "Transactions",
+  "@investTabTransactions": {
+    "description": "Detail tab"
+  },
+  "investTabResearch": "Research",
+  "@investTabResearch": {
+    "description": "Detail tab"
+  },
+  "investFundamentalsEmpty": "No fundamentals are available for this investment.",
+  "@investFundamentalsEmpty": {
+    "description": "Empty tab"
+  },
+  "investIncomeEmpty": "This investment has not paid any income.",
+  "@investIncomeEmpty": {
+    "description": "Empty tab"
+  },
+  "investIncomeYield": "Yield",
+  "@investIncomeYield": {
+    "description": "Income fact"
+  },
+  "investIncomeFrequency": "Paid",
+  "@investIncomeFrequency": {
+    "description": "Income fact"
+  },
+  "investIncomeRecent": "Recent payments",
+  "@investIncomeRecent": {
+    "description": "Income list heading"
+  },
+  "investIncomeNote": "The yield is reported by the data provider. It is not a forecast of future income.",
+  "@investIncomeNote": {
+    "description": "Income disclaimer"
+  },
+  "investPositionQuantity": "Units held",
+  "@investPositionQuantity": {
+    "description": "Position fact"
+  },
+  "investPositionAverageCost": "Average cost per unit",
+  "@investPositionAverageCost": {
+    "description": "Position fact"
+  },
+  "investPositionCostBasis": "Cost basis",
+  "@investPositionCostBasis": {
+    "description": "Position fact"
+  },
+  "investPositionValue": "Value",
+  "@investPositionValue": {
+    "description": "Position fact"
+  },
+  "investPositionValueNative": "Value in {currency}",
+  "@investPositionValueNative": {
+    "description": "Position fact",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "investPositionPl": "Unrealised gain or loss",
+  "@investPositionPl": {
+    "description": "Position fact"
+  },
+  "investPositionNote": "Calculated by the server from your transactions and the latest price.",
+  "@investPositionNote": {
+    "description": "Position provenance"
+  },
+  "investTransactionsEmpty": "No transactions for this investment yet.",
+  "@investTransactionsEmpty": {
+    "description": "Empty tab"
+  },
+  "investResearchEmpty": "No research notes for this investment.",
+  "@investResearchEmpty": {
+    "description": "Empty tab"
+  },
+  "investResearchNote": "Research notes are informational. They do not predict returns and are not advice.",
+  "@investResearchNote": {
+    "description": "Research disclaimer"
+  },
+  "investWatchAdd": "Add to watchlist",
+  "@investWatchAdd": {
+    "description": "Watchlist action"
+  },
+  "investWatchRemove": "Remove from watchlist",
+  "@investWatchRemove": {
+    "description": "Watchlist action"
+  },
+  "investWatchAdded": "Added to your watchlist",
+  "@investWatchAdded": {
+    "description": "Watchlist confirmation"
+  },
+  "investWatchRemoved": "Removed from your watchlist",
+  "@investWatchRemoved": {
+    "description": "Watchlist confirmation"
+  },
+  "investNoTrading": "Informational only. WealthSphere does not place trades.",
+  "@investNoTrading": {
+    "description": "Shown on the investment screen"
   }
 }

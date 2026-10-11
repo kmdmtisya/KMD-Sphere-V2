@@ -24,6 +24,10 @@ abstract final class AppRoutes {
   /// Debug-only component gallery. Not registered in release builds.
   static const String gallery = '/_gallery';
 
+  /// One investment (an asset). The symbol is encoded, so an odd symbol never changes the path.
+  static String investment(String symbol) =>
+      '$holdings/${Uri.encodeComponent(symbol)}';
+
   /// One ledger entry. The id is encoded, so an odd id can never change the path.
   static String transaction(String id) =>
       '$transactions/${Uri.encodeComponent(id)}';

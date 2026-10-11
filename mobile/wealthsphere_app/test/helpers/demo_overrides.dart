@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
@@ -13,6 +14,12 @@ class SyncFileBundle extends CachingAssetBundle {
     final bytes = File(key).readAsBytesSync();
     return Future.value(ByteData.sublistView(bytes));
   }
+
+  /// Decodes on this isolate. The base class hands anything over 50 KB to a background isolate
+  /// (`compute`), which never finishes under fake async and would hang `pumpAndSettle`.
+  @override
+  Future<String> loadString(String key, {bool cache = true}) =>
+      Future.value(utf8.decode(File(key).readAsBytesSync()));
 }
 
 class _FixedBehavior extends DemoBehaviorNotifier {
