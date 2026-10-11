@@ -120,6 +120,34 @@ Dart: `mobile/wealthsphere_app/lib/features/forecast/domain/forecast_models.dart
 
 scenarios is keyed conservative, base and growth on both sides.
 
+### GoalsSummary - `GET /api/v1/goals/summary` (GoalsSummaryOut)
+
+Dart: `mobile/wealthsphere_app/lib/shared/domain/wealth_models.dart`
+
+| DTO field | API field | Status | Resolution | Owner |
+|---|---|---|---|---|
+| `on_track` | `on_track` | same |  |  |
+| `total` | `total` | same |  |  |
+| `items` | `items` | same |  |  |
+| `as_of` | `as_of` | same |  |  |
+| - | `notice` | api-only | Shown with goal statuses: they are estimates under stated assumptions. | P09-T05 |
+
+### GoalProgress - `GET /api/v1/goals/summary` (GoalSummaryItem)
+
+Dart: `mobile/wealthsphere_app/lib/shared/domain/wealth_models.dart`
+
+| DTO field | API field | Status | Resolution | Owner |
+|---|---|---|---|---|
+| `id` | `id` | same |  |  |
+| `name` | `name` | same |  |  |
+| `progress_percent` | `progress_percent` | same |  |  |
+| `status` | `status` | same |  |  |
+| - | `reached` | api-only | Shows a reached goal as done rather than on track. | P09-T05 |
+| - | `target` | api-only | The goal card shows the target. | P09-T05 |
+| - | `target_date` | api-only | The goal card shows the date. | P09-T05 |
+
+Full detail (gap, scenarios, required contribution, estimated completion) is GET /api/v1/goals/{goal_id}/progress, for the goal screen (P07-T05, P09-T05).
+
 ## DTOs whose API is not built yet
 
 These DEMO DTOs are the proposed contract; the owning task adopts them or updates this mapping.
@@ -131,6 +159,5 @@ These DEMO DTOs are the proposed contract; the owning task adopts them or update
 | PerformanceMetrics | `wealth_models.dart` | `total_return_percent`, `cagr_percent`, `dividend_yield_percent`, `volatility_percent` | P06-T09 | Returns and CAGR from the performance service (P06-T03), dividend yield from income (P06-T05), volatility from risk (P06-T08); published by the analytics API (P06-T09). |
 | NetWorthSummary | `wealth_models.dart` | `assets`, `liabilities`, `net_worth`, `as_of` | P06-T07 | Net worth and liabilities module. |
 | IncomeSummary | `wealth_models.dart` | `monthly`, `yearly`, `as_of` | P06-T09 | monthly = TTM net / 12 and yearly = TTM net from the income service (P06-T05, docs/design/income.md), published by the analytics API. |
-| GoalsSummary, GoalProgress | `wealth_models.dart` | `id`, `name`, `progress_percent`, `status`, `on_track`, `total`, `items`, `as_of` | P06-T06 | Goals module. |
 | InsightSummary, EvidenceSourceDto | `wealth_models.dart` | `text`, `as_of`, `sources`, `label`, `provider` | P10-T06 | AI orchestrator (P10-T06): insights carry evidence with provider and as-of time. |
 | Chat events | `chat_models.dart` | `type`, `text`, `kind`, `label`, `provider`, `as_of` | P10-T06 | AI orchestrator streaming events (docs/api-conventions.md, Streaming). |

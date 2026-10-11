@@ -403,6 +403,91 @@
         }
       ],
       "notes": "scenarios is keyed conservative, base and growth on both sides."
+    },
+    {
+      "dto": "GoalsSummary",
+      "dart": "lib/shared/domain/wealth_models.dart",
+      "api": "GET /api/v1/goals/summary",
+      "schema": "GoalsSummaryOut",
+      "fields": [
+        {
+          "dto": "on_track",
+          "api": "on_track",
+          "status": "same"
+        },
+        {
+          "dto": "total",
+          "api": "total",
+          "status": "same"
+        },
+        {
+          "dto": "items",
+          "api": "items",
+          "status": "same"
+        },
+        {
+          "dto": "as_of",
+          "api": "as_of",
+          "status": "same"
+        },
+        {
+          "dto": null,
+          "api": "notice",
+          "status": "api-only",
+          "resolution": "Shown with goal statuses: they are estimates under stated assumptions.",
+          "owner": "P09-T05"
+        }
+      ]
+    },
+    {
+      "dto": "GoalProgress",
+      "dart": "lib/shared/domain/wealth_models.dart",
+      "api": "GET /api/v1/goals/summary",
+      "schema": "GoalSummaryItem",
+      "fields": [
+        {
+          "dto": "id",
+          "api": "id",
+          "status": "same"
+        },
+        {
+          "dto": "name",
+          "api": "name",
+          "status": "same"
+        },
+        {
+          "dto": "progress_percent",
+          "api": "progress_percent",
+          "status": "same"
+        },
+        {
+          "dto": "status",
+          "api": "status",
+          "status": "same"
+        },
+        {
+          "dto": null,
+          "api": "reached",
+          "status": "api-only",
+          "resolution": "Shows a reached goal as done rather than on track.",
+          "owner": "P09-T05"
+        },
+        {
+          "dto": null,
+          "api": "target",
+          "status": "api-only",
+          "resolution": "The goal card shows the target.",
+          "owner": "P09-T05"
+        },
+        {
+          "dto": null,
+          "api": "target_date",
+          "status": "api-only",
+          "resolution": "The goal card shows the date.",
+          "owner": "P09-T05"
+        }
+      ],
+      "notes": "Full detail (gap, scenarios, required contribution, estimated completion) is GET /api/v1/goals/{goal_id}/progress, for the goal screen (P07-T05, P09-T05)."
     }
   ],
   "pending": [
@@ -458,22 +543,6 @@
       ],
       "owner": "P06-T09",
       "resolution": "monthly = TTM net / 12 and yearly = TTM net from the income service (P06-T05, docs/design/income.md), published by the analytics API."
-    },
-    {
-      "dto": "GoalsSummary, GoalProgress",
-      "dart": "lib/shared/domain/wealth_models.dart",
-      "keys": [
-        "id",
-        "name",
-        "progress_percent",
-        "status",
-        "on_track",
-        "total",
-        "items",
-        "as_of"
-      ],
-      "owner": "P06-T06",
-      "resolution": "Goals module."
     },
     {
       "dto": "InsightSummary, EvidenceSourceDto",

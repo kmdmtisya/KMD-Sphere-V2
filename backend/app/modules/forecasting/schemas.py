@@ -77,7 +77,7 @@ Years = Annotated[
 ]
 
 
-def _check_money(value: Money, limit: Limit, field: str) -> None:
+def check_money(value: Money, limit: Limit, field: str) -> None:
     if decimals_of(value.amount) > currency_minor_units(value.currency):
         raise ValueError(
             f"{field}: {value.currency} amounts have at most "
@@ -109,7 +109,7 @@ class ForecastAssumptions(BaseModel):
 
     def _check_amounts(self, amounts: dict[str, tuple[Money, Limit]]) -> None:
         for field, (money, limit) in amounts.items():
-            _check_money(money, limit, field)
+            check_money(money, limit, field)
             if money.currency != self.currency:
                 raise ValueError(f"{field}: must be in the same currency as initial_investment")
 

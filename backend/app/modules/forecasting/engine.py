@@ -3,7 +3,7 @@
 Pure functions: no I/O, no LLM, no binary floating point. A forecast illustrates the assumptions
 it is given; it is never a prediction or a guaranteed return."""
 
-from collections.abc import Mapping
+from collections.abc import Iterator, Mapping
 from dataclasses import dataclass, replace
 from decimal import Decimal, localcontext
 from enum import StrEnum
@@ -149,10 +149,98 @@ def required_contribution(
     )
 
 
+# ------------------------------------------------------------- horizons in months (P06-T06)
+
+
+def value_after(inp: ForecastInput, months: int) -> tuple[Decimal, Decimal]:
+    """Nominal and real (today's money) value after `months` months, unrounded. `inp.years` is
+    ignored: goals end on a date, not after whole years."""
+    _check_months(months, allow_zero=True)
+    _check(inp, inp.contribution)
+    with localcontext() as ctx:
+        ctx.prec = PRECISION
+        balance = inp.initial
+        for balance, _ in _steps(inp, inp.contribution, months):  # noqa: B007
+            pass
+        return balance, balance / _deflator(inp, months)
+
+
+def months_to_reach(
+    inp: ForecastInput, target: Decimal, *, real: bool = False, limit: int = MAX_YEARS * MONTHS
+) -> int | None:
+    """The first month (0 = now) at which the value reaches `target`, with the contribution of
+    `inp`; None when it does not within `limit` months."""
+    _check(inp, inp.contribution)
+    with localcontext() as ctx:
+        ctx.prec = PRECISION
+        if inp.initial >= target:
+            return 0
+        for month, (balance, _) in enumerate(_steps(inp, inp.contribution, limit), start=1):
+            if (balance / _deflator(inp, month) if real else balance) >= target:
+                return month
+    return None
+
+
+def required_contribution_by(
+    inp: ForecastInput, target: Decimal, months: int, *, real: bool = False
+) -> Decimal | None:
+    """The first-year contribution per period that reaches `target` after `months` months, every
+    other input fixed (unrounded; 0 when the initial amount alone reaches it). None when no
+    contribution falls within the horizon (yearly contributions and a date under a year away),
+    so no contribution can help."""
+    _check_months(months)
+    if target < 0:
+        raise InvalidForecast("the target must not be negative")
+    with localcontext() as ctx:
+        ctx.prec = PRECISION
+        nominal_target = target * _deflator(inp, months) if real else target
+        without = _final(inp, ZERO, months)
+        if without >= nominal_target:
+            return ZERO
+        per_unit = _final(inp, ONE, months) - without
+        return (nominal_target - without) / per_unit if per_unit > 0 else None
+
+
+def _final(inp: ForecastInput, contribution: Decimal, months: int) -> Decimal:
+    balance = inp.initial
+    for balance, _ in _steps(inp, contribution, months):  # noqa: B007
+        pass
+    return balance
+
+
+def _deflator(inp: ForecastInput, months: int) -> Decimal:
+    """(1 + inflation)^(months / 12)."""
+    base = ONE + inp.inflation_percent / HUNDRED
+    return base ** (months // MONTHS) * (base ** (Decimal(months % MONTHS) / MONTHS))
+
+
+def _check_months(months: int, *, allow_zero: bool = False) -> None:
+    if not (0 if allow_zero else 1) <= months <= MAX_YEARS * MONTHS:
+        raise InvalidForecast(f"the horizon must be at most {MAX_YEARS} years")
+
+
+# ------------------------------------------------------------------------------------ stepping
+
+
 def _simulate(inp: ForecastInput, contribution: Decimal) -> list[_Year]:
-    """Balance and contributions at the end of each year 0..n, unrounded. Steps month by month
-    at the monthly factor equivalent to the compounding; contributions are paid at the end of
-    each contribution period and step up once a year."""
+    """Balance and contributions at the end of each year 0..n, unrounded."""
+    if not 1 <= inp.years <= MAX_YEARS:
+        raise InvalidForecast(f"years must be between 1 and {MAX_YEARS}")
+    out = [_Year(inp.initial, inp.initial)]
+    for month, (balance, contributed) in enumerate(
+        _steps(inp, contribution, inp.years * MONTHS), start=1
+    ):
+        if month % MONTHS == 0:
+            out.append(_Year(balance, contributed))
+    return out
+
+
+def _steps(
+    inp: ForecastInput, contribution: Decimal, months: int
+) -> Iterator[tuple[Decimal, Decimal]]:
+    """Balance and contributions at the end of months 1..`months`. Steps at the monthly factor
+    equivalent to the compounding; contributions are paid at the end of each contribution period
+    and step up once a year."""
     _check(inp, contribution)
     m = inp.compounding.per_year
     periodic = ONE + (inp.annual_return_percent - inp.annual_fee_percent) / HUNDRED / m
@@ -161,21 +249,18 @@ def _simulate(inp: ForecastInput, contribution: Decimal) -> list[_Year]:
     escalation = ONE + inp.contribution_growth_percent / HUNDRED
 
     balance = contributed = inp.initial
-    out = [_Year(balance, contributed)]
-    for year in range(inp.years):
-        payment = contribution * escalation**year
-        for month in range(1, MONTHS + 1):
-            balance *= monthly
-            if month % every == 0:
-                balance += payment
-                contributed += payment
-        out.append(_Year(balance, contributed))
-    return out
+    payment = contribution
+    for month in range(1, months + 1):
+        if month > 1 and (month - 1) % MONTHS == 0:
+            payment = contribution * escalation ** ((month - 1) // MONTHS)
+        balance *= monthly
+        if month % every == 0:
+            balance += payment
+            contributed += payment
+        yield balance, contributed
 
 
 def _check(inp: ForecastInput, contribution: Decimal) -> None:
-    if not 1 <= inp.years <= MAX_YEARS:
-        raise InvalidForecast(f"years must be between 1 and {MAX_YEARS}")
     if inp.initial < 0 or contribution < 0:
         raise InvalidForecast("amounts must not be negative")
     m = inp.compounding.per_year

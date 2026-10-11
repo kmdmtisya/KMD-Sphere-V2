@@ -48,6 +48,22 @@ class SummaryService:
         portfolio = require_found(await self._portfolios.get(user_id, portfolio_id), "portfolio")
         return await self._compute(portfolio)
 
+    async def figures_in(
+        self, user_id: uuid.UUID, currency: str, portfolio_id: uuid.UUID | None = None
+    ) -> Summary:
+        """Unrounded figures in `currency`: of one of the user's portfolios, or of all their
+        active portfolios when `portfolio_id` is None (for goals and net worth). Raises
+        ResourceNotFoundError for a portfolio that is not the user's."""
+        if portfolio_id is None:
+            portfolios = await self._portfolios.list(user_id, include_archived=False)
+        else:
+            portfolios = [
+                require_found(await self._portfolios.get(user_id, portfolio_id), "portfolio")
+            ]
+        parts = [await self._compute(p) for p in portfolios]
+        rates = await self._rates({p.base_currency for p in portfolios}, currency)
+        return consolidate(currency, parts, rates)
+
     async def consolidated(self, user_id: uuid.UUID, currency: str | None) -> SummaryOut:
         reporting = currency or (await IdentityService(self._session).me(user_id)).base_currency
         portfolios = await self._portfolios.list(user_id, include_archived=False)

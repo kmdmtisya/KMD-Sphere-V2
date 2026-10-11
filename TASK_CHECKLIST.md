@@ -611,14 +611,14 @@
   - [x] P06-T05.2 Service
   - [x] P06-T05.3 Yield
   - [x] P06-T05.4 Tests
-- [ ] **P06-T06** · Goals module · `NOT_STARTED` ⬜
+- [ ] **P06-T06** · Goals module · `IN_PROGRESS` 🔄
   - Deps: P06-T01, P05-T08 · Wave: W2 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-11T13:50:07+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P06-T06.1 Schema/migration
-  - [ ] P06-T06.2 Service
-  - [ ] P06-T06.3 Endpoints
-  - [ ] P06-T06.4 Tests
+  - [x] P06-T06.1 Schema/migration
+  - [x] P06-T06.2 Service
+  - [x] P06-T06.3 Endpoints
+  - [x] P06-T06.4 Tests
 - [ ] **P06-T07** · Net worth and liabilities · `NOT_STARTED` ⬜
   - Deps: P06-T06, P05-T08 · Wave: W3 · Track: BE · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
