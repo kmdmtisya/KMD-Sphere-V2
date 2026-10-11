@@ -1,0 +1,5076 @@
+{
+  "demo": true,
+  "as_of": "2026-10-09T08:00:00Z",
+  "investments": {
+    "DEMO-GEQ": {
+      "symbol": "DEMO-GEQ",
+      "name": "Demo Global Equity Fund",
+      "asset_class": "Equities",
+      "currency": "USD",
+      "price": {
+        "value": {
+          "amount": "104.20",
+          "currency": "USD"
+        },
+        "change_percent": "1.80",
+        "as_of": "2026-10-09T08:00:00Z",
+        "source": {
+          "label": "Demo price",
+          "provider": "DEMO feed"
+        }
+      },
+      "performance": {
+        "month": [
+          {
+            "date": "2026-09-18",
+            "value": "105.10"
+          },
+          {
+            "date": "2026-09-19",
+            "value": "105.00"
+          },
+          {
+            "date": "2026-09-20",
+            "value": "104.77"
+          },
+          {
+            "date": "2026-09-21",
+            "value": "103.53"
+          },
+          {
+            "date": "2026-09-22",
+            "value": "102.99"
+          },
+          {
+            "date": "2026-09-23",
+            "value": "103.11"
+          },
+          {
+            "date": "2026-09-24",
+            "value": "104.46"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "105.30"
+          },
+          {
+            "date": "2026-09-26",
+            "value": "105.31"
+          },
+          {
+            "date": "2026-09-27",
+            "value": "104.14"
+          },
+          {
+            "date": "2026-09-28",
+            "value": "103.36"
+          },
+          {
+            "date": "2026-09-29",
+            "value": "103.24"
+          },
+          {
+            "date": "2026-09-30",
+            "value": "103.28"
+          },
+          {
+            "date": "2026-10-01",
+            "value": "104.18"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "105.30"
+          },
+          {
+            "date": "2026-10-03",
+            "value": "105.00"
+          },
+          {
+            "date": "2026-10-04",
+            "value": "104.38"
+          },
+          {
+            "date": "2026-10-05",
+            "value": "103.69"
+          },
+          {
+            "date": "2026-10-06",
+            "value": "102.90"
+          },
+          {
+            "date": "2026-10-07",
+            "value": "103.23"
+          },
+          {
+            "date": "2026-10-08",
+            "value": "104.77"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "104.20"
+          }
+        ],
+        "threeMonths": [
+          {
+            "date": "2026-07-17",
+            "value": "107.15"
+          },
+          {
+            "date": "2026-07-24",
+            "value": "107.03"
+          },
+          {
+            "date": "2026-07-31",
+            "value": "105.54"
+          },
+          {
+            "date": "2026-08-07",
+            "value": "104.77"
+          },
+          {
+            "date": "2026-08-14",
+            "value": "103.80"
+          },
+          {
+            "date": "2026-08-21",
+            "value": "104.57"
+          },
+          {
+            "date": "2026-08-28",
+            "value": "105.44"
+          },
+          {
+            "date": "2026-09-04",
+            "value": "105.76"
+          },
+          {
+            "date": "2026-09-11",
+            "value": "105.99"
+          },
+          {
+            "date": "2026-09-18",
+            "value": "104.99"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "103.60"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "103.03"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "104.20"
+          }
+        ],
+        "sixMonths": [
+          {
+            "date": "2026-04-17",
+            "value": "102.69"
+          },
+          {
+            "date": "2026-04-24",
+            "value": "102.83"
+          },
+          {
+            "date": "2026-05-01",
+            "value": "102.32"
+          },
+          {
+            "date": "2026-05-08",
+            "value": "101.20"
+          },
+          {
+            "date": "2026-05-15",
+            "value": "100.73"
+          },
+          {
+            "date": "2026-05-22",
+            "value": "100.93"
+          },
+          {
+            "date": "2026-05-29",
+            "value": "102.04"
+          },
+          {
+            "date": "2026-06-05",
+            "value": "103.48"
+          },
+          {
+            "date": "2026-06-12",
+            "value": "103.25"
+          },
+          {
+            "date": "2026-06-19",
+            "value": "103.07"
+          },
+          {
+            "date": "2026-06-26",
+            "value": "101.98"
+          },
+          {
+            "date": "2026-07-03",
+            "value": "101.37"
+          },
+          {
+            "date": "2026-07-10",
+            "value": "102.19"
+          },
+          {
+            "date": "2026-07-17",
+            "value": "103.01"
+          },
+          {
+            "date": "2026-07-24",
+            "value": "104.05"
+          },
+          {
+            "date": "2026-07-31",
+            "value": "104.57"
+          },
+          {
+            "date": "2026-08-07",
+            "value": "103.62"
+          },
+          {
+            "date": "2026-08-14",
+            "value": "102.68"
+          },
+          {
+            "date": "2026-08-21",
+            "value": "101.80"
+          },
+          {
+            "date": "2026-08-28",
+            "value": "102.83"
+          },
+          {
+            "date": "2026-09-04",
+            "value": "103.70"
+          },
+          {
+            "date": "2026-09-11",
+            "value": "104.59"
+          },
+          {
+            "date": "2026-09-18",
+            "value": "105.16"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "104.27"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "103.17"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "104.20"
+          }
+        ],
+        "year": [
+          {
+            "date": "2025-10-14",
+            "value": "112.39"
+          },
+          {
+            "date": "2025-11-13",
+            "value": "111.83"
+          },
+          {
+            "date": "2025-12-13",
+            "value": "109.91"
+          },
+          {
+            "date": "2026-01-12",
+            "value": "108.70"
+          },
+          {
+            "date": "2026-02-11",
+            "value": "107.29"
+          },
+          {
+            "date": "2026-03-13",
+            "value": "107.62"
+          },
+          {
+            "date": "2026-04-12",
+            "value": "108.05"
+          },
+          {
+            "date": "2026-05-12",
+            "value": "107.94"
+          },
+          {
+            "date": "2026-06-11",
+            "value": "107.73"
+          },
+          {
+            "date": "2026-07-11",
+            "value": "106.30"
+          },
+          {
+            "date": "2026-08-10",
+            "value": "104.48"
+          },
+          {
+            "date": "2026-09-09",
+            "value": "103.47"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "104.20"
+          }
+        ],
+        "all": [
+          {
+            "date": "2024-10-19",
+            "value": "79.51"
+          },
+          {
+            "date": "2024-11-18",
+            "value": "81.19"
+          },
+          {
+            "date": "2024-12-18",
+            "value": "81.07"
+          },
+          {
+            "date": "2025-01-17",
+            "value": "81.42"
+          },
+          {
+            "date": "2025-02-16",
+            "value": "81.58"
+          },
+          {
+            "date": "2025-03-18",
+            "value": "83.21"
+          },
+          {
+            "date": "2025-04-17",
+            "value": "85.31"
+          },
+          {
+            "date": "2025-05-17",
+            "value": "86.78"
+          },
+          {
+            "date": "2025-06-16",
+            "value": "88.54"
+          },
+          {
+            "date": "2025-07-16",
+            "value": "88.37"
+          },
+          {
+            "date": "2025-08-15",
+            "value": "88.64"
+          },
+          {
+            "date": "2025-09-14",
+            "value": "89.41"
+          },
+          {
+            "date": "2025-10-14",
+            "value": "90.69"
+          },
+          {
+            "date": "2025-11-13",
+            "value": "92.88"
+          },
+          {
+            "date": "2025-12-13",
+            "value": "94.47"
+          },
+          {
+            "date": "2026-01-12",
+            "value": "95.80"
+          },
+          {
+            "date": "2026-02-11",
+            "value": "95.82"
+          },
+          {
+            "date": "2026-03-13",
+            "value": "96.05"
+          },
+          {
+            "date": "2026-04-12",
+            "value": "96.28"
+          },
+          {
+            "date": "2026-05-12",
+            "value": "98.39"
+          },
+          {
+            "date": "2026-06-11",
+            "value": "99.95"
+          },
+          {
+            "date": "2026-07-11",
+            "value": "102.18"
+          },
+          {
+            "date": "2026-08-10",
+            "value": "103.26"
+          },
+          {
+            "date": "2026-09-09",
+            "value": "103.44"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "104.20"
+          }
+        ]
+      },
+      "fundamentals": {
+        "items": [
+          {
+            "label": "Expense ratio",
+            "value": "0.20%"
+          },
+          {
+            "label": "Number of holdings",
+            "value": "1,512"
+          },
+          {
+            "label": "Largest region",
+            "value": "North America (61%)"
+          },
+          {
+            "label": "Price to earnings",
+            "value": "18.4"
+          }
+        ],
+        "as_of": "2026-09-30T00:00:00Z",
+        "source": {
+          "label": "Fund fact sheet",
+          "provider": "DEMO data"
+        }
+      },
+      "income": {
+        "yield_percent": "1.9",
+        "frequency": "Quarterly",
+        "events": [
+          {
+            "date": "2026-09-20",
+            "amount": {
+              "amount": "184.20",
+              "currency": "USD"
+            },
+            "kind": "Dividend"
+          },
+          {
+            "date": "2026-06-20",
+            "amount": {
+              "amount": "176.80",
+              "currency": "USD"
+            },
+            "kind": "Dividend"
+          },
+          {
+            "date": "2026-03-20",
+            "amount": {
+              "amount": "169.10",
+              "currency": "USD"
+            },
+            "kind": "Dividend"
+          }
+        ],
+        "as_of": "2026-10-09T08:00:00Z",
+        "source": {
+          "label": "Demo income records",
+          "provider": "DEMO data"
+        }
+      },
+      "position": {
+        "quantity": "403.0710",
+        "average_cost": {
+          "amount": "95.2468",
+          "currency": "USD"
+        },
+        "cost_basis": {
+          "amount": "38391.22",
+          "currency": "USD"
+        },
+        "value": {
+          "amount": "42000.00",
+          "currency": "USD"
+        },
+        "native_value": {
+          "amount": "42000.00",
+          "currency": "USD"
+        },
+        "unrealised_pl": {
+          "amount": "3608.78",
+          "currency": "USD"
+        },
+        "unrealised_pl_percent": "9.4",
+        "as_of": "2026-10-09T08:00:00Z"
+      },
+      "research": [
+        {
+          "title": "Broad equity exposure",
+          "summary": "A diversified global equity fund. Past performance does not predict future returns.",
+          "as_of": "2026-10-01T00:00:00Z",
+          "source": {
+            "label": "Demo research note",
+            "provider": "DEMO research"
+          }
+        },
+        {
+          "title": "Concentration check",
+          "summary": "The five largest positions make up about a fifth of the fund. This is a description, not a recommendation.",
+          "as_of": "2026-10-01T00:00:00Z",
+          "source": {
+            "label": "Demo research note",
+            "provider": "DEMO research"
+          }
+        }
+      ]
+    },
+    "DEMO-BND": {
+      "symbol": "DEMO-BND",
+      "name": "Demo Aggregate Bond Fund",
+      "asset_class": "Bonds",
+      "currency": "USD",
+      "price": {
+        "value": {
+          "amount": "98.20",
+          "currency": "USD"
+        },
+        "change_percent": "-0.20",
+        "as_of": "2026-10-09T08:00:00Z",
+        "source": {
+          "label": "Demo price",
+          "provider": "DEMO feed"
+        }
+      },
+      "performance": {
+        "month": [
+          {
+            "date": "2026-09-18",
+            "value": "98.51"
+          },
+          {
+            "date": "2026-09-19",
+            "value": "97.81"
+          },
+          {
+            "date": "2026-09-20",
+            "value": "96.61"
+          },
+          {
+            "date": "2026-09-21",
+            "value": "96.33"
+          },
+          {
+            "date": "2026-09-22",
+            "value": "97.20"
+          },
+          {
+            "date": "2026-09-23",
+            "value": "97.99"
+          },
+          {
+            "date": "2026-09-24",
+            "value": "98.53"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "98.52"
+          },
+          {
+            "date": "2026-09-26",
+            "value": "98.47"
+          },
+          {
+            "date": "2026-09-27",
+            "value": "96.81"
+          },
+          {
+            "date": "2026-09-28",
+            "value": "96.73"
+          },
+          {
+            "date": "2026-09-29",
+            "value": "97.22"
+          },
+          {
+            "date": "2026-09-30",
+            "value": "98.13"
+          },
+          {
+            "date": "2026-10-01",
+            "value": "98.86"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "98.94"
+          },
+          {
+            "date": "2026-10-03",
+            "value": "98.24"
+          },
+          {
+            "date": "2026-10-04",
+            "value": "97.27"
+          },
+          {
+            "date": "2026-10-05",
+            "value": "97.23"
+          },
+          {
+            "date": "2026-10-06",
+            "value": "97.72"
+          },
+          {
+            "date": "2026-10-07",
+            "value": "98.10"
+          },
+          {
+            "date": "2026-10-08",
+            "value": "99.07"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "98.20"
+          }
+        ],
+        "threeMonths": [
+          {
+            "date": "2026-07-17",
+            "value": "99.95"
+          },
+          {
+            "date": "2026-07-24",
+            "value": "98.93"
+          },
+          {
+            "date": "2026-07-31",
+            "value": "98.16"
+          },
+          {
+            "date": "2026-08-07",
+            "value": "97.70"
+          },
+          {
+            "date": "2026-08-14",
+            "value": "97.91"
+          },
+          {
+            "date": "2026-08-21",
+            "value": "98.86"
+          },
+          {
+            "date": "2026-08-28",
+            "value": "99.72"
+          },
+          {
+            "date": "2026-09-04",
+            "value": "99.42"
+          },
+          {
+            "date": "2026-09-11",
+            "value": "98.63"
+          },
+          {
+            "date": "2026-09-18",
+            "value": "97.73"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "97.14"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "97.78"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "98.20"
+          }
+        ],
+        "sixMonths": [
+          {
+            "date": "2026-04-17",
+            "value": "98.01"
+          },
+          {
+            "date": "2026-04-24",
+            "value": "97.04"
+          },
+          {
+            "date": "2026-05-01",
+            "value": "96.13"
+          },
+          {
+            "date": "2026-05-08",
+            "value": "95.31"
+          },
+          {
+            "date": "2026-05-15",
+            "value": "96.05"
+          },
+          {
+            "date": "2026-05-22",
+            "value": "97.56"
+          },
+          {
+            "date": "2026-05-29",
+            "value": "97.99"
+          },
+          {
+            "date": "2026-06-05",
+            "value": "98.51"
+          },
+          {
+            "date": "2026-06-12",
+            "value": "97.66"
+          },
+          {
+            "date": "2026-06-19",
+            "value": "96.82"
+          },
+          {
+            "date": "2026-06-26",
+            "value": "96.14"
+          },
+          {
+            "date": "2026-07-03",
+            "value": "96.49"
+          },
+          {
+            "date": "2026-07-10",
+            "value": "97.35"
+          },
+          {
+            "date": "2026-07-17",
+            "value": "98.41"
+          },
+          {
+            "date": "2026-07-24",
+            "value": "98.59"
+          },
+          {
+            "date": "2026-07-31",
+            "value": "97.57"
+          },
+          {
+            "date": "2026-08-07",
+            "value": "96.93"
+          },
+          {
+            "date": "2026-08-14",
+            "value": "96.39"
+          },
+          {
+            "date": "2026-08-21",
+            "value": "97.10"
+          },
+          {
+            "date": "2026-08-28",
+            "value": "98.06"
+          },
+          {
+            "date": "2026-09-04",
+            "value": "98.69"
+          },
+          {
+            "date": "2026-09-11",
+            "value": "98.92"
+          },
+          {
+            "date": "2026-09-18",
+            "value": "98.43"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "96.94"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "96.89"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "98.20"
+          }
+        ],
+        "year": [
+          {
+            "date": "2025-10-14",
+            "value": "102.91"
+          },
+          {
+            "date": "2025-11-13",
+            "value": "101.64"
+          },
+          {
+            "date": "2025-12-13",
+            "value": "100.62"
+          },
+          {
+            "date": "2026-01-12",
+            "value": "99.92"
+          },
+          {
+            "date": "2026-02-11",
+            "value": "99.88"
+          },
+          {
+            "date": "2026-03-13",
+            "value": "100.58"
+          },
+          {
+            "date": "2026-04-12",
+            "value": "101.20"
+          },
+          {
+            "date": "2026-05-12",
+            "value": "100.65"
+          },
+          {
+            "date": "2026-06-11",
+            "value": "99.62"
+          },
+          {
+            "date": "2026-07-11",
+            "value": "98.47"
+          },
+          {
+            "date": "2026-08-10",
+            "value": "97.64"
+          },
+          {
+            "date": "2026-09-09",
+            "value": "98.02"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "98.20"
+          }
+        ],
+        "all": [
+          {
+            "date": "2024-10-19",
+            "value": "83.51"
+          },
+          {
+            "date": "2024-11-18",
+            "value": "83.75"
+          },
+          {
+            "date": "2024-12-18",
+            "value": "83.55"
+          },
+          {
+            "date": "2025-01-17",
+            "value": "83.57"
+          },
+          {
+            "date": "2025-02-16",
+            "value": "84.25"
+          },
+          {
+            "date": "2025-03-18",
+            "value": "86.44"
+          },
+          {
+            "date": "2025-04-17",
+            "value": "87.80"
+          },
+          {
+            "date": "2025-05-17",
+            "value": "87.96"
+          },
+          {
+            "date": "2025-06-16",
+            "value": "87.71"
+          },
+          {
+            "date": "2025-07-16",
+            "value": "87.49"
+          },
+          {
+            "date": "2025-08-15",
+            "value": "87.57"
+          },
+          {
+            "date": "2025-09-14",
+            "value": "89.20"
+          },
+          {
+            "date": "2025-10-14",
+            "value": "90.70"
+          },
+          {
+            "date": "2025-11-13",
+            "value": "92.48"
+          },
+          {
+            "date": "2025-12-13",
+            "value": "92.55"
+          },
+          {
+            "date": "2026-01-12",
+            "value": "92.45"
+          },
+          {
+            "date": "2026-02-11",
+            "value": "91.95"
+          },
+          {
+            "date": "2026-03-13",
+            "value": "92.87"
+          },
+          {
+            "date": "2026-04-12",
+            "value": "93.56"
+          },
+          {
+            "date": "2026-05-12",
+            "value": "94.97"
+          },
+          {
+            "date": "2026-06-11",
+            "value": "96.33"
+          },
+          {
+            "date": "2026-07-11",
+            "value": "97.53"
+          },
+          {
+            "date": "2026-08-10",
+            "value": "97.27"
+          },
+          {
+            "date": "2026-09-09",
+            "value": "96.49"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "98.20"
+          }
+        ]
+      },
+      "fundamentals": {
+        "items": [
+          {
+            "label": "Average duration",
+            "value": "6.1 years"
+          },
+          {
+            "label": "Yield to maturity",
+            "value": "4.3%"
+          },
+          {
+            "label": "Average credit quality",
+            "value": "A+"
+          },
+          {
+            "label": "Expense ratio",
+            "value": "0.12%"
+          }
+        ],
+        "as_of": "2026-09-30T00:00:00Z",
+        "source": {
+          "label": "Fund fact sheet",
+          "provider": "DEMO data"
+        }
+      },
+      "income": {
+        "yield_percent": "3.8",
+        "frequency": "Monthly",
+        "events": [
+          {
+            "date": "2026-09-28",
+            "amount": {
+              "amount": "88.40",
+              "currency": "USD"
+            },
+            "kind": "Interest"
+          },
+          {
+            "date": "2026-08-28",
+            "amount": {
+              "amount": "88.10",
+              "currency": "USD"
+            },
+            "kind": "Interest"
+          },
+          {
+            "date": "2026-07-28",
+            "amount": {
+              "amount": "87.60",
+              "currency": "USD"
+            },
+            "kind": "Interest"
+          }
+        ],
+        "as_of": "2026-10-09T08:00:00Z",
+        "source": {
+          "label": "Demo income records",
+          "provider": "DEMO data"
+        }
+      },
+      "position": {
+        "quantity": "269.8615",
+        "average_cost": {
+          "amount": "100.0000",
+          "currency": "USD"
+        },
+        "cost_basis": {
+          "amount": "26986.15",
+          "currency": "USD"
+        },
+        "value": {
+          "amount": "26500.40",
+          "currency": "USD"
+        },
+        "native_value": {
+          "amount": "26500.40",
+          "currency": "USD"
+        },
+        "unrealised_pl": {
+          "amount": "-485.75",
+          "currency": "USD"
+        },
+        "unrealised_pl_percent": "-1.8",
+        "as_of": "2026-10-09T08:00:00Z"
+      },
+      "research": [
+        {
+          "title": "Interest rate sensitivity",
+          "summary": "Bond prices usually fall when interest rates rise. Duration shows how strongly.",
+          "as_of": "2026-10-01T00:00:00Z",
+          "source": {
+            "label": "Demo research note",
+            "provider": "DEMO research"
+          }
+        }
+      ]
+    },
+    "DEMO-EMR": {
+      "symbol": "DEMO-EMR",
+      "name": "Demo Emirates Index Fund",
+      "asset_class": "Equities",
+      "currency": "AED",
+      "price": {
+        "value": {
+          "amount": "3.62",
+          "currency": "AED"
+        },
+        "change_percent": "2.40",
+        "as_of": "2026-10-09T08:00:00Z",
+        "source": {
+          "label": "Demo price",
+          "provider": "DEMO feed"
+        }
+      },
+      "performance": {
+        "month": [
+          {
+            "date": "2026-09-18",
+            "value": "3.61"
+          },
+          {
+            "date": "2026-09-19",
+            "value": "3.56"
+          },
+          {
+            "date": "2026-09-20",
+            "value": "3.54"
+          },
+          {
+            "date": "2026-09-21",
+            "value": "3.57"
+          },
+          {
+            "date": "2026-09-22",
+            "value": "3.63"
+          },
+          {
+            "date": "2026-09-23",
+            "value": "3.63"
+          },
+          {
+            "date": "2026-09-24",
+            "value": "3.63"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "3.61"
+          },
+          {
+            "date": "2026-09-26",
+            "value": "3.58"
+          },
+          {
+            "date": "2026-09-27",
+            "value": "3.55"
+          },
+          {
+            "date": "2026-09-28",
+            "value": "3.58"
+          },
+          {
+            "date": "2026-09-29",
+            "value": "3.61"
+          },
+          {
+            "date": "2026-09-30",
+            "value": "3.66"
+          },
+          {
+            "date": "2026-10-01",
+            "value": "3.64"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "3.63"
+          },
+          {
+            "date": "2026-10-03",
+            "value": "3.58"
+          },
+          {
+            "date": "2026-10-04",
+            "value": "3.57"
+          },
+          {
+            "date": "2026-10-05",
+            "value": "3.60"
+          },
+          {
+            "date": "2026-10-06",
+            "value": "3.64"
+          },
+          {
+            "date": "2026-10-07",
+            "value": "3.66"
+          },
+          {
+            "date": "2026-10-08",
+            "value": "3.66"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "3.62"
+          }
+        ],
+        "threeMonths": [
+          {
+            "date": "2026-07-17",
+            "value": "3.60"
+          },
+          {
+            "date": "2026-07-24",
+            "value": "3.55"
+          },
+          {
+            "date": "2026-07-31",
+            "value": "3.55"
+          },
+          {
+            "date": "2026-08-07",
+            "value": "3.56"
+          },
+          {
+            "date": "2026-08-14",
+            "value": "3.59"
+          },
+          {
+            "date": "2026-08-21",
+            "value": "3.63"
+          },
+          {
+            "date": "2026-08-28",
+            "value": "3.62"
+          },
+          {
+            "date": "2026-09-04",
+            "value": "3.61"
+          },
+          {
+            "date": "2026-09-11",
+            "value": "3.57"
+          },
+          {
+            "date": "2026-09-18",
+            "value": "3.57"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "3.60"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "3.62"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "3.62"
+          }
+        ],
+        "sixMonths": [
+          {
+            "date": "2026-04-17",
+            "value": "3.71"
+          },
+          {
+            "date": "2026-04-24",
+            "value": "3.68"
+          },
+          {
+            "date": "2026-05-01",
+            "value": "3.65"
+          },
+          {
+            "date": "2026-05-08",
+            "value": "3.69"
+          },
+          {
+            "date": "2026-05-15",
+            "value": "3.69"
+          },
+          {
+            "date": "2026-05-22",
+            "value": "3.72"
+          },
+          {
+            "date": "2026-05-29",
+            "value": "3.72"
+          },
+          {
+            "date": "2026-06-05",
+            "value": "3.68"
+          },
+          {
+            "date": "2026-06-12",
+            "value": "3.64"
+          },
+          {
+            "date": "2026-06-19",
+            "value": "3.63"
+          },
+          {
+            "date": "2026-06-26",
+            "value": "3.66"
+          },
+          {
+            "date": "2026-07-03",
+            "value": "3.69"
+          },
+          {
+            "date": "2026-07-10",
+            "value": "3.71"
+          },
+          {
+            "date": "2026-07-17",
+            "value": "3.69"
+          },
+          {
+            "date": "2026-07-24",
+            "value": "3.66"
+          },
+          {
+            "date": "2026-07-31",
+            "value": "3.61"
+          },
+          {
+            "date": "2026-08-07",
+            "value": "3.61"
+          },
+          {
+            "date": "2026-08-14",
+            "value": "3.62"
+          },
+          {
+            "date": "2026-08-21",
+            "value": "3.67"
+          },
+          {
+            "date": "2026-08-28",
+            "value": "3.69"
+          },
+          {
+            "date": "2026-09-04",
+            "value": "3.67"
+          },
+          {
+            "date": "2026-09-11",
+            "value": "3.62"
+          },
+          {
+            "date": "2026-09-18",
+            "value": "3.60"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "3.60"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "3.59"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "3.62"
+          }
+        ],
+        "year": [
+          {
+            "date": "2025-10-14",
+            "value": "3.46"
+          },
+          {
+            "date": "2025-11-13",
+            "value": "3.42"
+          },
+          {
+            "date": "2025-12-13",
+            "value": "3.44"
+          },
+          {
+            "date": "2026-01-12",
+            "value": "3.45"
+          },
+          {
+            "date": "2026-02-11",
+            "value": "3.50"
+          },
+          {
+            "date": "2026-03-13",
+            "value": "3.55"
+          },
+          {
+            "date": "2026-04-12",
+            "value": "3.55"
+          },
+          {
+            "date": "2026-05-12",
+            "value": "3.55"
+          },
+          {
+            "date": "2026-06-11",
+            "value": "3.53"
+          },
+          {
+            "date": "2026-07-11",
+            "value": "3.53"
+          },
+          {
+            "date": "2026-08-10",
+            "value": "3.58"
+          },
+          {
+            "date": "2026-09-09",
+            "value": "3.61"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "3.62"
+          }
+        ],
+        "all": [
+          {
+            "date": "2024-10-19",
+            "value": "3.28"
+          },
+          {
+            "date": "2024-11-18",
+            "value": "3.25"
+          },
+          {
+            "date": "2024-12-18",
+            "value": "3.28"
+          },
+          {
+            "date": "2025-01-17",
+            "value": "3.30"
+          },
+          {
+            "date": "2025-02-16",
+            "value": "3.34"
+          },
+          {
+            "date": "2025-03-18",
+            "value": "3.40"
+          },
+          {
+            "date": "2025-04-17",
+            "value": "3.40"
+          },
+          {
+            "date": "2025-05-17",
+            "value": "3.39"
+          },
+          {
+            "date": "2025-06-16",
+            "value": "3.38"
+          },
+          {
+            "date": "2025-07-16",
+            "value": "3.35"
+          },
+          {
+            "date": "2025-08-15",
+            "value": "3.40"
+          },
+          {
+            "date": "2025-09-14",
+            "value": "3.46"
+          },
+          {
+            "date": "2025-10-14",
+            "value": "3.50"
+          },
+          {
+            "date": "2025-11-13",
+            "value": "3.49"
+          },
+          {
+            "date": "2025-12-13",
+            "value": "3.48"
+          },
+          {
+            "date": "2026-01-12",
+            "value": "3.46"
+          },
+          {
+            "date": "2026-02-11",
+            "value": "3.46"
+          },
+          {
+            "date": "2026-03-13",
+            "value": "3.48"
+          },
+          {
+            "date": "2026-04-12",
+            "value": "3.55"
+          },
+          {
+            "date": "2026-05-12",
+            "value": "3.58"
+          },
+          {
+            "date": "2026-06-11",
+            "value": "3.59"
+          },
+          {
+            "date": "2026-07-11",
+            "value": "3.58"
+          },
+          {
+            "date": "2026-08-10",
+            "value": "3.56"
+          },
+          {
+            "date": "2026-09-09",
+            "value": "3.58"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "3.62"
+          }
+        ]
+      },
+      "fundamentals": {
+        "items": [
+          {
+            "label": "Expense ratio",
+            "value": "0.45%"
+          },
+          {
+            "label": "Number of holdings",
+            "value": "84"
+          },
+          {
+            "label": "Currency of the asset",
+            "value": "AED"
+          },
+          {
+            "label": "Price to earnings",
+            "value": "11.2"
+          }
+        ],
+        "as_of": "2026-09-30T00:00:00Z",
+        "source": {
+          "label": "Fund fact sheet",
+          "provider": "DEMO data"
+        }
+      },
+      "income": {
+        "yield_percent": "2.6",
+        "frequency": "Semi-annual",
+        "events": [
+          {
+            "date": "2026-07-15",
+            "amount": {
+              "amount": "190.00",
+              "currency": "USD"
+            },
+            "kind": "Dividend"
+          },
+          {
+            "date": "2026-01-15",
+            "amount": {
+              "amount": "182.50",
+              "currency": "USD"
+            },
+            "kind": "Dividend"
+          }
+        ],
+        "as_of": "2026-10-09T08:00:00Z",
+        "source": {
+          "label": "Demo income records",
+          "provider": "DEMO data"
+        }
+      },
+      "position": {
+        "quantity": "14963.9171",
+        "average_cost": {
+          "amount": "3.2293",
+          "currency": "AED"
+        },
+        "cost_basis": {
+          "amount": "13157.89",
+          "currency": "USD"
+        },
+        "value": {
+          "amount": "14750.00",
+          "currency": "USD"
+        },
+        "native_value": {
+          "amount": "54169.38",
+          "currency": "AED"
+        },
+        "unrealised_pl": {
+          "amount": "1592.11",
+          "currency": "USD"
+        },
+        "unrealised_pl_percent": "12.1",
+        "as_of": "2026-10-09T08:00:00Z"
+      },
+      "research": [
+        {
+          "title": "Currency effect",
+          "summary": "Values are converted from AED. Exchange-rate moves change the value in your portfolio currency.",
+          "as_of": "2026-10-01T00:00:00Z",
+          "source": {
+            "label": "Demo research note",
+            "provider": "DEMO research"
+          }
+        }
+      ]
+    },
+    "DEMO-CSH": {
+      "symbol": "DEMO-CSH",
+      "name": "Demo Cash Reserve",
+      "asset_class": "Cash",
+      "currency": "USD",
+      "price": {
+        "value": {
+          "amount": "1.00",
+          "currency": "USD"
+        },
+        "change_percent": "0.00",
+        "as_of": "2026-10-09T08:00:00Z",
+        "source": {
+          "label": "Demo price",
+          "provider": "DEMO feed"
+        }
+      },
+      "performance": {
+        "month": [
+          {
+            "date": "2026-09-18",
+            "value": "0.99"
+          },
+          {
+            "date": "2026-09-19",
+            "value": "0.99"
+          },
+          {
+            "date": "2026-09-20",
+            "value": "0.99"
+          },
+          {
+            "date": "2026-09-21",
+            "value": "1.01"
+          },
+          {
+            "date": "2026-09-22",
+            "value": "1.01"
+          },
+          {
+            "date": "2026-09-23",
+            "value": "1.01"
+          },
+          {
+            "date": "2026-09-24",
+            "value": "1.00"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "0.99"
+          },
+          {
+            "date": "2026-09-26",
+            "value": "0.99"
+          },
+          {
+            "date": "2026-09-27",
+            "value": "0.99"
+          },
+          {
+            "date": "2026-09-28",
+            "value": "1.00"
+          },
+          {
+            "date": "2026-09-29",
+            "value": "1.01"
+          },
+          {
+            "date": "2026-09-30",
+            "value": "1.01"
+          },
+          {
+            "date": "2026-10-01",
+            "value": "1.00"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "0.99"
+          },
+          {
+            "date": "2026-10-03",
+            "value": "0.99"
+          },
+          {
+            "date": "2026-10-04",
+            "value": "0.99"
+          },
+          {
+            "date": "2026-10-05",
+            "value": "1.00"
+          },
+          {
+            "date": "2026-10-06",
+            "value": "1.01"
+          },
+          {
+            "date": "2026-10-07",
+            "value": "1.01"
+          },
+          {
+            "date": "2026-10-08",
+            "value": "1.00"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "1.00"
+          }
+        ],
+        "threeMonths": [
+          {
+            "date": "2026-07-17",
+            "value": "0.97"
+          },
+          {
+            "date": "2026-07-24",
+            "value": "0.97"
+          },
+          {
+            "date": "2026-07-31",
+            "value": "0.97"
+          },
+          {
+            "date": "2026-08-07",
+            "value": "0.99"
+          },
+          {
+            "date": "2026-08-14",
+            "value": "0.99"
+          },
+          {
+            "date": "2026-08-21",
+            "value": "1.00"
+          },
+          {
+            "date": "2026-08-28",
+            "value": "0.99"
+          },
+          {
+            "date": "2026-09-04",
+            "value": "0.98"
+          },
+          {
+            "date": "2026-09-11",
+            "value": "0.98"
+          },
+          {
+            "date": "2026-09-18",
+            "value": "0.99"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "1.00"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "1.01"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "1.00"
+          }
+        ],
+        "sixMonths": [
+          {
+            "date": "2026-04-17",
+            "value": "1.01"
+          },
+          {
+            "date": "2026-04-24",
+            "value": "1.00"
+          },
+          {
+            "date": "2026-05-01",
+            "value": "1.01"
+          },
+          {
+            "date": "2026-05-08",
+            "value": "1.02"
+          },
+          {
+            "date": "2026-05-15",
+            "value": "1.03"
+          },
+          {
+            "date": "2026-05-22",
+            "value": "1.03"
+          },
+          {
+            "date": "2026-05-29",
+            "value": "1.01"
+          },
+          {
+            "date": "2026-06-05",
+            "value": "1.01"
+          },
+          {
+            "date": "2026-06-12",
+            "value": "1.00"
+          },
+          {
+            "date": "2026-06-19",
+            "value": "1.01"
+          },
+          {
+            "date": "2026-06-26",
+            "value": "1.02"
+          },
+          {
+            "date": "2026-07-03",
+            "value": "1.02"
+          },
+          {
+            "date": "2026-07-10",
+            "value": "1.02"
+          },
+          {
+            "date": "2026-07-17",
+            "value": "1.01"
+          },
+          {
+            "date": "2026-07-24",
+            "value": "1.00"
+          },
+          {
+            "date": "2026-07-31",
+            "value": "0.99"
+          },
+          {
+            "date": "2026-08-07",
+            "value": "1.00"
+          },
+          {
+            "date": "2026-08-14",
+            "value": "1.01"
+          },
+          {
+            "date": "2026-08-21",
+            "value": "1.02"
+          },
+          {
+            "date": "2026-08-28",
+            "value": "1.01"
+          },
+          {
+            "date": "2026-09-04",
+            "value": "1.00"
+          },
+          {
+            "date": "2026-09-11",
+            "value": "0.99"
+          },
+          {
+            "date": "2026-09-18",
+            "value": "0.99"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "1.00"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "1.01"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "1.00"
+          }
+        ],
+        "year": [
+          {
+            "date": "2025-10-14",
+            "value": "0.89"
+          },
+          {
+            "date": "2025-11-13",
+            "value": "0.89"
+          },
+          {
+            "date": "2025-12-13",
+            "value": "0.90"
+          },
+          {
+            "date": "2026-01-12",
+            "value": "0.93"
+          },
+          {
+            "date": "2026-02-11",
+            "value": "0.94"
+          },
+          {
+            "date": "2026-03-13",
+            "value": "0.95"
+          },
+          {
+            "date": "2026-04-12",
+            "value": "0.94"
+          },
+          {
+            "date": "2026-05-12",
+            "value": "0.95"
+          },
+          {
+            "date": "2026-06-11",
+            "value": "0.95"
+          },
+          {
+            "date": "2026-07-11",
+            "value": "0.97"
+          },
+          {
+            "date": "2026-08-10",
+            "value": "0.99"
+          },
+          {
+            "date": "2026-09-09",
+            "value": "1.01"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "1.00"
+          }
+        ],
+        "all": [
+          {
+            "date": "2024-10-19",
+            "value": "0.95"
+          },
+          {
+            "date": "2024-11-18",
+            "value": "0.95"
+          },
+          {
+            "date": "2024-12-18",
+            "value": "0.96"
+          },
+          {
+            "date": "2025-01-17",
+            "value": "0.97"
+          },
+          {
+            "date": "2025-02-16",
+            "value": "0.98"
+          },
+          {
+            "date": "2025-03-18",
+            "value": "0.98"
+          },
+          {
+            "date": "2025-04-17",
+            "value": "0.97"
+          },
+          {
+            "date": "2025-05-17",
+            "value": "0.96"
+          },
+          {
+            "date": "2025-06-16",
+            "value": "0.97"
+          },
+          {
+            "date": "2025-07-16",
+            "value": "0.97"
+          },
+          {
+            "date": "2025-08-15",
+            "value": "0.98"
+          },
+          {
+            "date": "2025-09-14",
+            "value": "0.99"
+          },
+          {
+            "date": "2025-10-14",
+            "value": "0.99"
+          },
+          {
+            "date": "2025-11-13",
+            "value": "0.98"
+          },
+          {
+            "date": "2025-12-13",
+            "value": "0.98"
+          },
+          {
+            "date": "2026-01-12",
+            "value": "0.97"
+          },
+          {
+            "date": "2026-02-11",
+            "value": "0.98"
+          },
+          {
+            "date": "2026-03-13",
+            "value": "0.99"
+          },
+          {
+            "date": "2026-04-12",
+            "value": "1.00"
+          },
+          {
+            "date": "2026-05-12",
+            "value": "1.00"
+          },
+          {
+            "date": "2026-06-11",
+            "value": "0.99"
+          },
+          {
+            "date": "2026-07-11",
+            "value": "0.99"
+          },
+          {
+            "date": "2026-08-10",
+            "value": "0.98"
+          },
+          {
+            "date": "2026-09-09",
+            "value": "0.99"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "1.00"
+          }
+        ]
+      },
+      "fundamentals": {
+        "items": [],
+        "as_of": "2026-09-30T00:00:00Z",
+        "source": {
+          "label": "Fund fact sheet",
+          "provider": "DEMO data"
+        }
+      },
+      "income": {
+        "yield_percent": "4.1",
+        "frequency": "Monthly",
+        "events": [
+          {
+            "date": "2026-09-30",
+            "amount": {
+              "amount": "24.30",
+              "currency": "USD"
+            },
+            "kind": "Interest"
+          },
+          {
+            "date": "2026-08-31",
+            "amount": {
+              "amount": "24.10",
+              "currency": "USD"
+            },
+            "kind": "Interest"
+          }
+        ],
+        "as_of": "2026-10-09T08:00:00Z",
+        "source": {
+          "label": "Demo income records",
+          "provider": "DEMO data"
+        }
+      },
+      "position": {
+        "quantity": "7000.0000",
+        "average_cost": {
+          "amount": "1.0000",
+          "currency": "USD"
+        },
+        "cost_basis": {
+          "amount": "7000.00",
+          "currency": "USD"
+        },
+        "value": {
+          "amount": "7000.00",
+          "currency": "USD"
+        },
+        "native_value": {
+          "amount": "7000.00",
+          "currency": "USD"
+        },
+        "unrealised_pl": {
+          "amount": "0.00",
+          "currency": "USD"
+        },
+        "unrealised_pl_percent": "0.0",
+        "as_of": "2026-10-09T08:00:00Z"
+      },
+      "research": []
+    },
+    "DEMO-TEC": {
+      "symbol": "DEMO-TEC",
+      "name": "Demo Technology ETF",
+      "asset_class": "Equities",
+      "currency": "USD",
+      "price": {
+        "value": {
+          "amount": "187.40",
+          "currency": "USD"
+        },
+        "change_percent": "3.10",
+        "as_of": "2026-10-09T08:00:00Z",
+        "source": {
+          "label": "Demo price",
+          "provider": "DEMO feed"
+        }
+      },
+      "performance": {
+        "month": [
+          {
+            "date": "2026-09-18",
+            "value": "185.68"
+          },
+          {
+            "date": "2026-09-19",
+            "value": "187.67"
+          },
+          {
+            "date": "2026-09-20",
+            "value": "189.22"
+          },
+          {
+            "date": "2026-09-21",
+            "value": "189.42"
+          },
+          {
+            "date": "2026-09-22",
+            "value": "189.89"
+          },
+          {
+            "date": "2026-09-23",
+            "value": "187.74"
+          },
+          {
+            "date": "2026-09-24",
+            "value": "186.52"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "186.12"
+          },
+          {
+            "date": "2026-09-26",
+            "value": "186.50"
+          },
+          {
+            "date": "2026-09-27",
+            "value": "188.35"
+          },
+          {
+            "date": "2026-09-28",
+            "value": "189.26"
+          },
+          {
+            "date": "2026-09-29",
+            "value": "189.36"
+          },
+          {
+            "date": "2026-09-30",
+            "value": "187.36"
+          },
+          {
+            "date": "2026-10-01",
+            "value": "185.86"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "185.48"
+          },
+          {
+            "date": "2026-10-03",
+            "value": "187.50"
+          },
+          {
+            "date": "2026-10-04",
+            "value": "188.34"
+          },
+          {
+            "date": "2026-10-05",
+            "value": "190.05"
+          },
+          {
+            "date": "2026-10-06",
+            "value": "189.05"
+          },
+          {
+            "date": "2026-10-07",
+            "value": "186.48"
+          },
+          {
+            "date": "2026-10-08",
+            "value": "185.38"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "187.40"
+          }
+        ],
+        "threeMonths": [
+          {
+            "date": "2026-07-17",
+            "value": "187.68"
+          },
+          {
+            "date": "2026-07-24",
+            "value": "189.48"
+          },
+          {
+            "date": "2026-07-31",
+            "value": "191.25"
+          },
+          {
+            "date": "2026-08-07",
+            "value": "192.00"
+          },
+          {
+            "date": "2026-08-14",
+            "value": "190.73"
+          },
+          {
+            "date": "2026-08-21",
+            "value": "189.66"
+          },
+          {
+            "date": "2026-08-28",
+            "value": "186.28"
+          },
+          {
+            "date": "2026-09-04",
+            "value": "186.81"
+          },
+          {
+            "date": "2026-09-11",
+            "value": "188.00"
+          },
+          {
+            "date": "2026-09-18",
+            "value": "189.58"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "190.79"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "189.35"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "187.40"
+          }
+        ],
+        "sixMonths": [
+          {
+            "date": "2026-04-17",
+            "value": "171.73"
+          },
+          {
+            "date": "2026-04-24",
+            "value": "173.33"
+          },
+          {
+            "date": "2026-05-01",
+            "value": "176.30"
+          },
+          {
+            "date": "2026-05-08",
+            "value": "177.96"
+          },
+          {
+            "date": "2026-05-15",
+            "value": "178.62"
+          },
+          {
+            "date": "2026-05-22",
+            "value": "177.42"
+          },
+          {
+            "date": "2026-05-29",
+            "value": "176.00"
+          },
+          {
+            "date": "2026-06-05",
+            "value": "175.14"
+          },
+          {
+            "date": "2026-06-12",
+            "value": "177.91"
+          },
+          {
+            "date": "2026-06-19",
+            "value": "180.51"
+          },
+          {
+            "date": "2026-06-26",
+            "value": "181.31"
+          },
+          {
+            "date": "2026-07-03",
+            "value": "181.34"
+          },
+          {
+            "date": "2026-07-10",
+            "value": "180.95"
+          },
+          {
+            "date": "2026-07-17",
+            "value": "179.32"
+          },
+          {
+            "date": "2026-07-24",
+            "value": "179.27"
+          },
+          {
+            "date": "2026-07-31",
+            "value": "181.63"
+          },
+          {
+            "date": "2026-08-07",
+            "value": "183.15"
+          },
+          {
+            "date": "2026-08-14",
+            "value": "185.76"
+          },
+          {
+            "date": "2026-08-21",
+            "value": "185.21"
+          },
+          {
+            "date": "2026-08-28",
+            "value": "184.43"
+          },
+          {
+            "date": "2026-09-04",
+            "value": "183.31"
+          },
+          {
+            "date": "2026-09-11",
+            "value": "182.69"
+          },
+          {
+            "date": "2026-09-18",
+            "value": "185.06"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "188.04"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "188.80"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "187.40"
+          }
+        ],
+        "year": [
+          {
+            "date": "2025-10-14",
+            "value": "197.51"
+          },
+          {
+            "date": "2025-11-13",
+            "value": "198.49"
+          },
+          {
+            "date": "2025-12-13",
+            "value": "199.44"
+          },
+          {
+            "date": "2026-01-12",
+            "value": "199.37"
+          },
+          {
+            "date": "2026-02-11",
+            "value": "197.28"
+          },
+          {
+            "date": "2026-03-13",
+            "value": "195.39"
+          },
+          {
+            "date": "2026-04-12",
+            "value": "191.20"
+          },
+          {
+            "date": "2026-05-12",
+            "value": "190.91"
+          },
+          {
+            "date": "2026-06-11",
+            "value": "191.27"
+          },
+          {
+            "date": "2026-07-11",
+            "value": "192.04"
+          },
+          {
+            "date": "2026-08-10",
+            "value": "192.43"
+          },
+          {
+            "date": "2026-09-09",
+            "value": "190.17"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "187.40"
+          }
+        ],
+        "all": [
+          {
+            "date": "2024-10-19",
+            "value": "146.01"
+          },
+          {
+            "date": "2024-11-18",
+            "value": "148.25"
+          },
+          {
+            "date": "2024-12-18",
+            "value": "152.36"
+          },
+          {
+            "date": "2025-01-17",
+            "value": "154.94"
+          },
+          {
+            "date": "2025-02-16",
+            "value": "155.92"
+          },
+          {
+            "date": "2025-03-18",
+            "value": "155.08"
+          },
+          {
+            "date": "2025-04-17",
+            "value": "155.25"
+          },
+          {
+            "date": "2025-05-17",
+            "value": "156.88"
+          },
+          {
+            "date": "2025-06-16",
+            "value": "160.03"
+          },
+          {
+            "date": "2025-07-16",
+            "value": "162.88"
+          },
+          {
+            "date": "2025-08-15",
+            "value": "165.90"
+          },
+          {
+            "date": "2025-09-14",
+            "value": "167.93"
+          },
+          {
+            "date": "2025-10-14",
+            "value": "167.63"
+          },
+          {
+            "date": "2025-11-13",
+            "value": "167.87"
+          },
+          {
+            "date": "2025-12-13",
+            "value": "168.16"
+          },
+          {
+            "date": "2026-01-12",
+            "value": "171.57"
+          },
+          {
+            "date": "2026-02-11",
+            "value": "174.70"
+          },
+          {
+            "date": "2026-03-13",
+            "value": "177.64"
+          },
+          {
+            "date": "2026-04-12",
+            "value": "179.12"
+          },
+          {
+            "date": "2026-05-12",
+            "value": "178.10"
+          },
+          {
+            "date": "2026-06-11",
+            "value": "178.94"
+          },
+          {
+            "date": "2026-07-11",
+            "value": "180.90"
+          },
+          {
+            "date": "2026-08-10",
+            "value": "183.68"
+          },
+          {
+            "date": "2026-09-09",
+            "value": "186.33"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "187.40"
+          }
+        ]
+      },
+      "fundamentals": {
+        "items": [
+          {
+            "label": "Expense ratio",
+            "value": "0.35%"
+          },
+          {
+            "label": "Number of holdings",
+            "value": "58"
+          },
+          {
+            "label": "Largest sector",
+            "value": "Software (46%)"
+          },
+          {
+            "label": "Price to earnings",
+            "value": "29.8"
+          }
+        ],
+        "as_of": "2026-09-30T00:00:00Z",
+        "source": {
+          "label": "Fund fact sheet",
+          "provider": "DEMO data"
+        }
+      },
+      "income": null,
+      "position": {
+        "quantity": "83.2452",
+        "average_cost": {
+          "amount": "154.1118",
+          "currency": "USD"
+        },
+        "cost_basis": {
+          "amount": "12829.07",
+          "currency": "USD"
+        },
+        "value": {
+          "amount": "15600.15",
+          "currency": "USD"
+        },
+        "native_value": {
+          "amount": "15600.15",
+          "currency": "USD"
+        },
+        "unrealised_pl": {
+          "amount": "2771.08",
+          "currency": "USD"
+        },
+        "unrealised_pl_percent": "21.6",
+        "as_of": "2026-10-09T08:00:00Z"
+      },
+      "research": [
+        {
+          "title": "Valuation and volatility",
+          "summary": "Technology funds can move sharply in both directions. Scenarios are illustrations, not forecasts.",
+          "as_of": "2026-10-01T00:00:00Z",
+          "source": {
+            "label": "Demo research note",
+            "provider": "DEMO research"
+          }
+        }
+      ]
+    },
+    "DEMO-KEN": {
+      "symbol": "DEMO-KEN",
+      "name": "Demo Nairobi Equity Fund",
+      "asset_class": "Equities",
+      "currency": "KES",
+      "price": {
+        "value": {
+          "amount": "12.45",
+          "currency": "KES"
+        },
+        "change_percent": "-1.10",
+        "as_of": "2026-10-09T08:00:00Z",
+        "source": {
+          "label": "Demo price",
+          "provider": "DEMO feed"
+        }
+      },
+      "performance": {
+        "month": [
+          {
+            "date": "2026-09-18",
+            "value": "12.46"
+          },
+          {
+            "date": "2026-09-19",
+            "value": "12.54"
+          },
+          {
+            "date": "2026-09-20",
+            "value": "12.59"
+          },
+          {
+            "date": "2026-09-21",
+            "value": "12.60"
+          },
+          {
+            "date": "2026-09-22",
+            "value": "12.42"
+          },
+          {
+            "date": "2026-09-23",
+            "value": "12.27"
+          },
+          {
+            "date": "2026-09-24",
+            "value": "12.35"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "12.45"
+          },
+          {
+            "date": "2026-09-26",
+            "value": "12.51"
+          },
+          {
+            "date": "2026-09-27",
+            "value": "12.63"
+          },
+          {
+            "date": "2026-09-28",
+            "value": "12.52"
+          },
+          {
+            "date": "2026-09-29",
+            "value": "12.44"
+          },
+          {
+            "date": "2026-09-30",
+            "value": "12.32"
+          },
+          {
+            "date": "2026-10-01",
+            "value": "12.28"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "12.37"
+          },
+          {
+            "date": "2026-10-03",
+            "value": "12.57"
+          },
+          {
+            "date": "2026-10-04",
+            "value": "12.62"
+          },
+          {
+            "date": "2026-10-05",
+            "value": "12.59"
+          },
+          {
+            "date": "2026-10-06",
+            "value": "12.38"
+          },
+          {
+            "date": "2026-10-07",
+            "value": "12.33"
+          },
+          {
+            "date": "2026-10-08",
+            "value": "12.35"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "12.45"
+          }
+        ],
+        "threeMonths": [
+          {
+            "date": "2026-07-17",
+            "value": "12.47"
+          },
+          {
+            "date": "2026-07-24",
+            "value": "12.60"
+          },
+          {
+            "date": "2026-07-31",
+            "value": "12.62"
+          },
+          {
+            "date": "2026-08-07",
+            "value": "12.57"
+          },
+          {
+            "date": "2026-08-14",
+            "value": "12.49"
+          },
+          {
+            "date": "2026-08-21",
+            "value": "12.37"
+          },
+          {
+            "date": "2026-08-28",
+            "value": "12.29"
+          },
+          {
+            "date": "2026-09-04",
+            "value": "12.45"
+          },
+          {
+            "date": "2026-09-11",
+            "value": "12.55"
+          },
+          {
+            "date": "2026-09-18",
+            "value": "12.61"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "12.59"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "12.43"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "12.45"
+          }
+        ],
+        "sixMonths": [
+          {
+            "date": "2026-04-17",
+            "value": "12.33"
+          },
+          {
+            "date": "2026-04-24",
+            "value": "12.45"
+          },
+          {
+            "date": "2026-05-01",
+            "value": "12.52"
+          },
+          {
+            "date": "2026-05-08",
+            "value": "12.54"
+          },
+          {
+            "date": "2026-05-15",
+            "value": "12.39"
+          },
+          {
+            "date": "2026-05-22",
+            "value": "12.27"
+          },
+          {
+            "date": "2026-05-29",
+            "value": "12.32"
+          },
+          {
+            "date": "2026-06-05",
+            "value": "12.35"
+          },
+          {
+            "date": "2026-06-12",
+            "value": "12.53"
+          },
+          {
+            "date": "2026-06-19",
+            "value": "12.60"
+          },
+          {
+            "date": "2026-06-26",
+            "value": "12.56"
+          },
+          {
+            "date": "2026-07-03",
+            "value": "12.41"
+          },
+          {
+            "date": "2026-07-10",
+            "value": "12.33"
+          },
+          {
+            "date": "2026-07-17",
+            "value": "12.32"
+          },
+          {
+            "date": "2026-07-24",
+            "value": "12.44"
+          },
+          {
+            "date": "2026-07-31",
+            "value": "12.56"
+          },
+          {
+            "date": "2026-08-07",
+            "value": "12.60"
+          },
+          {
+            "date": "2026-08-14",
+            "value": "12.55"
+          },
+          {
+            "date": "2026-08-21",
+            "value": "12.37"
+          },
+          {
+            "date": "2026-08-28",
+            "value": "12.26"
+          },
+          {
+            "date": "2026-09-04",
+            "value": "12.30"
+          },
+          {
+            "date": "2026-09-11",
+            "value": "12.40"
+          },
+          {
+            "date": "2026-09-18",
+            "value": "12.56"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "12.64"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "12.54"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "12.45"
+          }
+        ],
+        "year": [
+          {
+            "date": "2025-10-14",
+            "value": "12.59"
+          },
+          {
+            "date": "2025-11-13",
+            "value": "12.70"
+          },
+          {
+            "date": "2025-12-13",
+            "value": "12.72"
+          },
+          {
+            "date": "2026-01-12",
+            "value": "12.66"
+          },
+          {
+            "date": "2026-02-11",
+            "value": "12.57"
+          },
+          {
+            "date": "2026-03-13",
+            "value": "12.44"
+          },
+          {
+            "date": "2026-04-12",
+            "value": "12.35"
+          },
+          {
+            "date": "2026-05-12",
+            "value": "12.50"
+          },
+          {
+            "date": "2026-06-11",
+            "value": "12.59"
+          },
+          {
+            "date": "2026-07-11",
+            "value": "12.63"
+          },
+          {
+            "date": "2026-08-10",
+            "value": "12.61"
+          },
+          {
+            "date": "2026-09-09",
+            "value": "12.44"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "12.45"
+          }
+        ],
+        "all": [
+          {
+            "date": "2024-10-19",
+            "value": "8.81"
+          },
+          {
+            "date": "2024-11-18",
+            "value": "9.12"
+          },
+          {
+            "date": "2024-12-18",
+            "value": "9.28"
+          },
+          {
+            "date": "2025-01-17",
+            "value": "9.41"
+          },
+          {
+            "date": "2025-02-16",
+            "value": "9.44"
+          },
+          {
+            "date": "2025-03-18",
+            "value": "9.45"
+          },
+          {
+            "date": "2025-04-17",
+            "value": "9.61"
+          },
+          {
+            "date": "2025-05-17",
+            "value": "9.93"
+          },
+          {
+            "date": "2025-06-16",
+            "value": "10.20"
+          },
+          {
+            "date": "2025-07-16",
+            "value": "10.39"
+          },
+          {
+            "date": "2025-08-15",
+            "value": "10.49"
+          },
+          {
+            "date": "2025-09-14",
+            "value": "10.49"
+          },
+          {
+            "date": "2025-10-14",
+            "value": "10.49"
+          },
+          {
+            "date": "2025-11-13",
+            "value": "10.65"
+          },
+          {
+            "date": "2025-12-13",
+            "value": "10.97"
+          },
+          {
+            "date": "2026-01-12",
+            "value": "11.17"
+          },
+          {
+            "date": "2026-02-11",
+            "value": "11.37"
+          },
+          {
+            "date": "2026-03-13",
+            "value": "11.50"
+          },
+          {
+            "date": "2026-04-12",
+            "value": "11.52"
+          },
+          {
+            "date": "2026-05-12",
+            "value": "11.61"
+          },
+          {
+            "date": "2026-06-11",
+            "value": "11.72"
+          },
+          {
+            "date": "2026-07-11",
+            "value": "11.93"
+          },
+          {
+            "date": "2026-08-10",
+            "value": "12.20"
+          },
+          {
+            "date": "2026-09-09",
+            "value": "12.44"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "12.45"
+          }
+        ]
+      },
+      "fundamentals": {
+        "items": [
+          {
+            "label": "Expense ratio",
+            "value": "0.90%"
+          },
+          {
+            "label": "Number of holdings",
+            "value": "37"
+          },
+          {
+            "label": "Currency of the asset",
+            "value": "KES"
+          }
+        ],
+        "as_of": "2026-09-30T00:00:00Z",
+        "source": {
+          "label": "Fund fact sheet",
+          "provider": "DEMO data"
+        }
+      },
+      "income": {
+        "yield_percent": "4.4",
+        "frequency": "Annual",
+        "events": [
+          {
+            "date": "2026-04-30",
+            "amount": {
+              "amount": "310.00",
+              "currency": "USD"
+            },
+            "kind": "Dividend"
+          }
+        ],
+        "as_of": "2026-10-09T08:00:00Z",
+        "source": {
+          "label": "Demo income records",
+          "provider": "DEMO data"
+        }
+      },
+      "position": {
+        "quantity": "86548.4337",
+        "average_cost": {
+          "amount": "12.9958",
+          "currency": "KES"
+        },
+        "cost_basis": {
+          "amount": "8705.64",
+          "currency": "USD"
+        },
+        "value": {
+          "amount": "8340.00",
+          "currency": "USD"
+        },
+        "native_value": {
+          "amount": "1077528.00",
+          "currency": "KES"
+        },
+        "unrealised_pl": {
+          "amount": "-365.64",
+          "currency": "USD"
+        },
+        "unrealised_pl_percent": "-4.2",
+        "as_of": "2026-10-09T08:00:00Z"
+      },
+      "research": [
+        {
+          "title": "Local market",
+          "summary": "Returns depend on the local market and on the KES exchange rate.",
+          "as_of": "2026-10-01T00:00:00Z",
+          "source": {
+            "label": "Demo research note",
+            "provider": "DEMO research"
+          }
+        }
+      ]
+    },
+    "DEMO-CRY": {
+      "symbol": "DEMO-CRY",
+      "name": "Demo Digital Asset Trust",
+      "asset_class": "Alternatives",
+      "currency": "USD",
+      "price": {
+        "value": {
+          "amount": "64.80",
+          "currency": "USD"
+        },
+        "change_percent": "5.60",
+        "as_of": "2026-10-09T08:00:00Z",
+        "source": {
+          "label": "Demo price",
+          "provider": "DEMO feed"
+        }
+      },
+      "performance": {
+        "month": [
+          {
+            "date": "2026-09-18",
+            "value": "64.90"
+          },
+          {
+            "date": "2026-09-19",
+            "value": "65.26"
+          },
+          {
+            "date": "2026-09-20",
+            "value": "65.07"
+          },
+          {
+            "date": "2026-09-21",
+            "value": "64.28"
+          },
+          {
+            "date": "2026-09-22",
+            "value": "63.78"
+          },
+          {
+            "date": "2026-09-23",
+            "value": "64.07"
+          },
+          {
+            "date": "2026-09-24",
+            "value": "64.57"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "65.43"
+          },
+          {
+            "date": "2026-09-26",
+            "value": "65.31"
+          },
+          {
+            "date": "2026-09-27",
+            "value": "65.32"
+          },
+          {
+            "date": "2026-09-28",
+            "value": "64.29"
+          },
+          {
+            "date": "2026-09-29",
+            "value": "64.11"
+          },
+          {
+            "date": "2026-09-30",
+            "value": "64.10"
+          },
+          {
+            "date": "2026-10-01",
+            "value": "64.38"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "65.39"
+          },
+          {
+            "date": "2026-10-03",
+            "value": "65.34"
+          },
+          {
+            "date": "2026-10-04",
+            "value": "65.09"
+          },
+          {
+            "date": "2026-10-05",
+            "value": "64.47"
+          },
+          {
+            "date": "2026-10-06",
+            "value": "64.09"
+          },
+          {
+            "date": "2026-10-07",
+            "value": "64.07"
+          },
+          {
+            "date": "2026-10-08",
+            "value": "64.93"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "64.80"
+          }
+        ],
+        "threeMonths": [
+          {
+            "date": "2026-07-17",
+            "value": "65.01"
+          },
+          {
+            "date": "2026-07-24",
+            "value": "65.40"
+          },
+          {
+            "date": "2026-07-31",
+            "value": "65.05"
+          },
+          {
+            "date": "2026-08-07",
+            "value": "64.22"
+          },
+          {
+            "date": "2026-08-14",
+            "value": "64.18"
+          },
+          {
+            "date": "2026-08-21",
+            "value": "63.98"
+          },
+          {
+            "date": "2026-08-28",
+            "value": "64.51"
+          },
+          {
+            "date": "2026-09-04",
+            "value": "65.33"
+          },
+          {
+            "date": "2026-09-11",
+            "value": "65.61"
+          },
+          {
+            "date": "2026-09-18",
+            "value": "65.21"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "64.31"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "64.20"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "64.80"
+          }
+        ],
+        "sixMonths": [
+          {
+            "date": "2026-04-17",
+            "value": "65.71"
+          },
+          {
+            "date": "2026-04-24",
+            "value": "66.19"
+          },
+          {
+            "date": "2026-05-01",
+            "value": "65.47"
+          },
+          {
+            "date": "2026-05-08",
+            "value": "64.95"
+          },
+          {
+            "date": "2026-05-15",
+            "value": "64.65"
+          },
+          {
+            "date": "2026-05-22",
+            "value": "64.29"
+          },
+          {
+            "date": "2026-05-29",
+            "value": "64.80"
+          },
+          {
+            "date": "2026-06-05",
+            "value": "65.69"
+          },
+          {
+            "date": "2026-06-12",
+            "value": "65.66"
+          },
+          {
+            "date": "2026-06-19",
+            "value": "65.31"
+          },
+          {
+            "date": "2026-06-26",
+            "value": "64.88"
+          },
+          {
+            "date": "2026-07-03",
+            "value": "64.56"
+          },
+          {
+            "date": "2026-07-10",
+            "value": "64.31"
+          },
+          {
+            "date": "2026-07-17",
+            "value": "64.98"
+          },
+          {
+            "date": "2026-07-24",
+            "value": "65.75"
+          },
+          {
+            "date": "2026-07-31",
+            "value": "65.74"
+          },
+          {
+            "date": "2026-08-07",
+            "value": "65.50"
+          },
+          {
+            "date": "2026-08-14",
+            "value": "64.65"
+          },
+          {
+            "date": "2026-08-21",
+            "value": "64.00"
+          },
+          {
+            "date": "2026-08-28",
+            "value": "64.46"
+          },
+          {
+            "date": "2026-09-04",
+            "value": "64.70"
+          },
+          {
+            "date": "2026-09-11",
+            "value": "65.43"
+          },
+          {
+            "date": "2026-09-18",
+            "value": "65.61"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "65.04"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "64.77"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "64.80"
+          }
+        ],
+        "year": [
+          {
+            "date": "2025-10-14",
+            "value": "64.41"
+          },
+          {
+            "date": "2025-11-13",
+            "value": "64.84"
+          },
+          {
+            "date": "2025-12-13",
+            "value": "64.54"
+          },
+          {
+            "date": "2026-01-12",
+            "value": "63.77"
+          },
+          {
+            "date": "2026-02-11",
+            "value": "63.77"
+          },
+          {
+            "date": "2026-03-13",
+            "value": "63.63"
+          },
+          {
+            "date": "2026-04-12",
+            "value": "64.21"
+          },
+          {
+            "date": "2026-05-12",
+            "value": "65.08"
+          },
+          {
+            "date": "2026-06-11",
+            "value": "65.41"
+          },
+          {
+            "date": "2026-07-11",
+            "value": "65.06"
+          },
+          {
+            "date": "2026-08-10",
+            "value": "64.21"
+          },
+          {
+            "date": "2026-09-09",
+            "value": "64.15"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "64.80"
+          }
+        ],
+        "all": [
+          {
+            "date": "2024-10-19",
+            "value": "72.03"
+          },
+          {
+            "date": "2024-11-18",
+            "value": "72.27"
+          },
+          {
+            "date": "2024-12-18",
+            "value": "71.82"
+          },
+          {
+            "date": "2025-01-17",
+            "value": "70.70"
+          },
+          {
+            "date": "2025-02-16",
+            "value": "70.08"
+          },
+          {
+            "date": "2025-03-18",
+            "value": "69.48"
+          },
+          {
+            "date": "2025-04-17",
+            "value": "69.75"
+          },
+          {
+            "date": "2025-05-17",
+            "value": "70.20"
+          },
+          {
+            "date": "2025-06-16",
+            "value": "70.01"
+          },
+          {
+            "date": "2025-07-16",
+            "value": "69.79"
+          },
+          {
+            "date": "2025-08-15",
+            "value": "68.41"
+          },
+          {
+            "date": "2025-09-14",
+            "value": "67.89"
+          },
+          {
+            "date": "2025-10-14",
+            "value": "67.42"
+          },
+          {
+            "date": "2025-11-13",
+            "value": "67.81"
+          },
+          {
+            "date": "2025-12-13",
+            "value": "68.02"
+          },
+          {
+            "date": "2026-01-12",
+            "value": "68.28"
+          },
+          {
+            "date": "2026-02-11",
+            "value": "67.41"
+          },
+          {
+            "date": "2026-03-13",
+            "value": "66.50"
+          },
+          {
+            "date": "2026-04-12",
+            "value": "65.76"
+          },
+          {
+            "date": "2026-05-12",
+            "value": "65.69"
+          },
+          {
+            "date": "2026-06-11",
+            "value": "65.81"
+          },
+          {
+            "date": "2026-07-11",
+            "value": "66.16"
+          },
+          {
+            "date": "2026-08-10",
+            "value": "66.08"
+          },
+          {
+            "date": "2026-09-09",
+            "value": "65.66"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "64.80"
+          }
+        ]
+      },
+      "fundamentals": {
+        "items": [
+          {
+            "label": "Custody fee",
+            "value": "0.25%"
+          },
+          {
+            "label": "Trading hours",
+            "value": "Weekdays"
+          },
+          {
+            "label": "Volatility class",
+            "value": "Very high"
+          }
+        ],
+        "as_of": "2026-09-30T00:00:00Z",
+        "source": {
+          "label": "Fund fact sheet",
+          "provider": "DEMO data"
+        }
+      },
+      "income": null,
+      "position": {
+        "quantity": "123.4568",
+        "average_cost": {
+          "amount": "48.9057",
+          "currency": "USD"
+        },
+        "cost_basis": {
+          "amount": "6037.74",
+          "currency": "USD"
+        },
+        "value": {
+          "amount": "8000.00",
+          "currency": "USD"
+        },
+        "native_value": {
+          "amount": "8000.00",
+          "currency": "USD"
+        },
+        "unrealised_pl": {
+          "amount": "1962.26",
+          "currency": "USD"
+        },
+        "unrealised_pl_percent": "32.5",
+        "as_of": "2026-10-09T08:00:00Z"
+      },
+      "research": [
+        {
+          "title": "High volatility",
+          "summary": "This asset has historically had very large price swings. It can lose value quickly.",
+          "as_of": "2026-10-01T00:00:00Z",
+          "source": {
+            "label": "Demo research note",
+            "provider": "DEMO research"
+          }
+        }
+      ]
+    },
+    "DEMO-DIV": {
+      "symbol": "DEMO-DIV",
+      "name": "Demo Dividend Aristocrats",
+      "asset_class": "Equities",
+      "currency": "USD",
+      "price": {
+        "value": {
+          "amount": "58.10",
+          "currency": "USD"
+        },
+        "change_percent": "0.70",
+        "as_of": "2026-10-09T08:00:00Z",
+        "source": {
+          "label": "Demo price",
+          "provider": "DEMO feed"
+        }
+      },
+      "performance": {
+        "month": [
+          {
+            "date": "2026-09-18",
+            "value": "58.58"
+          },
+          {
+            "date": "2026-09-19",
+            "value": "57.99"
+          },
+          {
+            "date": "2026-09-20",
+            "value": "57.30"
+          },
+          {
+            "date": "2026-09-21",
+            "value": "57.04"
+          },
+          {
+            "date": "2026-09-22",
+            "value": "57.14"
+          },
+          {
+            "date": "2026-09-23",
+            "value": "57.84"
+          },
+          {
+            "date": "2026-09-24",
+            "value": "58.12"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "58.37"
+          },
+          {
+            "date": "2026-09-26",
+            "value": "58.21"
+          },
+          {
+            "date": "2026-09-27",
+            "value": "57.69"
+          },
+          {
+            "date": "2026-09-28",
+            "value": "57.10"
+          },
+          {
+            "date": "2026-09-29",
+            "value": "57.38"
+          },
+          {
+            "date": "2026-09-30",
+            "value": "57.93"
+          },
+          {
+            "date": "2026-10-01",
+            "value": "58.52"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "58.86"
+          },
+          {
+            "date": "2026-10-03",
+            "value": "58.52"
+          },
+          {
+            "date": "2026-10-04",
+            "value": "57.55"
+          },
+          {
+            "date": "2026-10-05",
+            "value": "57.30"
+          },
+          {
+            "date": "2026-10-06",
+            "value": "57.31"
+          },
+          {
+            "date": "2026-10-07",
+            "value": "57.86"
+          },
+          {
+            "date": "2026-10-08",
+            "value": "58.67"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "58.10"
+          }
+        ],
+        "threeMonths": [
+          {
+            "date": "2026-07-17",
+            "value": "56.92"
+          },
+          {
+            "date": "2026-07-24",
+            "value": "56.99"
+          },
+          {
+            "date": "2026-07-31",
+            "value": "56.52"
+          },
+          {
+            "date": "2026-08-07",
+            "value": "56.15"
+          },
+          {
+            "date": "2026-08-14",
+            "value": "56.32"
+          },
+          {
+            "date": "2026-08-21",
+            "value": "56.87"
+          },
+          {
+            "date": "2026-08-28",
+            "value": "57.81"
+          },
+          {
+            "date": "2026-09-04",
+            "value": "58.27"
+          },
+          {
+            "date": "2026-09-11",
+            "value": "58.07"
+          },
+          {
+            "date": "2026-09-18",
+            "value": "57.38"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "57.37"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "57.61"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "58.10"
+          }
+        ],
+        "sixMonths": [
+          {
+            "date": "2026-04-17",
+            "value": "57.51"
+          },
+          {
+            "date": "2026-04-24",
+            "value": "57.15"
+          },
+          {
+            "date": "2026-05-01",
+            "value": "56.79"
+          },
+          {
+            "date": "2026-05-08",
+            "value": "56.11"
+          },
+          {
+            "date": "2026-05-15",
+            "value": "56.17"
+          },
+          {
+            "date": "2026-05-22",
+            "value": "57.16"
+          },
+          {
+            "date": "2026-05-29",
+            "value": "57.64"
+          },
+          {
+            "date": "2026-06-05",
+            "value": "57.65"
+          },
+          {
+            "date": "2026-06-12",
+            "value": "57.41"
+          },
+          {
+            "date": "2026-06-19",
+            "value": "56.85"
+          },
+          {
+            "date": "2026-06-26",
+            "value": "56.46"
+          },
+          {
+            "date": "2026-07-03",
+            "value": "56.61"
+          },
+          {
+            "date": "2026-07-10",
+            "value": "57.38"
+          },
+          {
+            "date": "2026-07-17",
+            "value": "57.92"
+          },
+          {
+            "date": "2026-07-24",
+            "value": "58.20"
+          },
+          {
+            "date": "2026-07-31",
+            "value": "57.82"
+          },
+          {
+            "date": "2026-08-07",
+            "value": "57.15"
+          },
+          {
+            "date": "2026-08-14",
+            "value": "56.86"
+          },
+          {
+            "date": "2026-08-21",
+            "value": "56.99"
+          },
+          {
+            "date": "2026-08-28",
+            "value": "57.94"
+          },
+          {
+            "date": "2026-09-04",
+            "value": "58.36"
+          },
+          {
+            "date": "2026-09-11",
+            "value": "58.71"
+          },
+          {
+            "date": "2026-09-18",
+            "value": "58.25"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "57.55"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "57.34"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "58.10"
+          }
+        ],
+        "year": [
+          {
+            "date": "2025-10-14",
+            "value": "51.52"
+          },
+          {
+            "date": "2025-11-13",
+            "value": "52.03"
+          },
+          {
+            "date": "2025-12-13",
+            "value": "52.02"
+          },
+          {
+            "date": "2026-01-12",
+            "value": "52.09"
+          },
+          {
+            "date": "2026-02-11",
+            "value": "52.72"
+          },
+          {
+            "date": "2026-03-13",
+            "value": "53.72"
+          },
+          {
+            "date": "2026-04-12",
+            "value": "55.11"
+          },
+          {
+            "date": "2026-05-12",
+            "value": "56.02"
+          },
+          {
+            "date": "2026-06-11",
+            "value": "56.27"
+          },
+          {
+            "date": "2026-07-11",
+            "value": "56.02"
+          },
+          {
+            "date": "2026-08-10",
+            "value": "56.47"
+          },
+          {
+            "date": "2026-09-09",
+            "value": "57.16"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "58.10"
+          }
+        ],
+        "all": [
+          {
+            "date": "2024-10-19",
+            "value": "60.60"
+          },
+          {
+            "date": "2024-11-18",
+            "value": "59.88"
+          },
+          {
+            "date": "2024-12-18",
+            "value": "59.44"
+          },
+          {
+            "date": "2025-01-17",
+            "value": "58.64"
+          },
+          {
+            "date": "2025-02-16",
+            "value": "59.02"
+          },
+          {
+            "date": "2025-03-18",
+            "value": "59.18"
+          },
+          {
+            "date": "2025-04-17",
+            "value": "59.85"
+          },
+          {
+            "date": "2025-05-17",
+            "value": "60.05"
+          },
+          {
+            "date": "2025-06-16",
+            "value": "59.28"
+          },
+          {
+            "date": "2025-07-16",
+            "value": "58.87"
+          },
+          {
+            "date": "2025-08-15",
+            "value": "58.40"
+          },
+          {
+            "date": "2025-09-14",
+            "value": "58.52"
+          },
+          {
+            "date": "2025-10-14",
+            "value": "58.94"
+          },
+          {
+            "date": "2025-11-13",
+            "value": "59.25"
+          },
+          {
+            "date": "2025-12-13",
+            "value": "59.35"
+          },
+          {
+            "date": "2026-01-12",
+            "value": "59.25"
+          },
+          {
+            "date": "2026-02-11",
+            "value": "58.24"
+          },
+          {
+            "date": "2026-03-13",
+            "value": "57.90"
+          },
+          {
+            "date": "2026-04-12",
+            "value": "57.74"
+          },
+          {
+            "date": "2026-05-12",
+            "value": "58.27"
+          },
+          {
+            "date": "2026-06-11",
+            "value": "58.80"
+          },
+          {
+            "date": "2026-07-11",
+            "value": "58.99"
+          },
+          {
+            "date": "2026-08-10",
+            "value": "58.52"
+          },
+          {
+            "date": "2026-09-09",
+            "value": "57.65"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "58.10"
+          }
+        ]
+      },
+      "fundamentals": {
+        "items": [
+          {
+            "label": "Expense ratio",
+            "value": "0.30%"
+          },
+          {
+            "label": "Dividend growth streak",
+            "value": "25+ years"
+          },
+          {
+            "label": "Number of holdings",
+            "value": "65"
+          },
+          {
+            "label": "Price to earnings",
+            "value": "21.1"
+          }
+        ],
+        "as_of": "2026-09-30T00:00:00Z",
+        "source": {
+          "label": "Fund fact sheet",
+          "provider": "DEMO data"
+        }
+      },
+      "income": {
+        "yield_percent": "2.9",
+        "frequency": "Quarterly",
+        "events": [
+          {
+            "date": "2026-10-03",
+            "amount": {
+              "amount": "96.40",
+              "currency": "USD"
+            },
+            "kind": "Dividend"
+          },
+          {
+            "date": "2026-07-03",
+            "amount": {
+              "amount": "93.90",
+              "currency": "USD"
+            },
+            "kind": "Dividend"
+          },
+          {
+            "date": "2026-04-03",
+            "amount": {
+              "amount": "91.20",
+              "currency": "USD"
+            },
+            "kind": "Dividend"
+          }
+        ],
+        "as_of": "2026-10-09T08:00:00Z",
+        "source": {
+          "label": "Demo income records",
+          "provider": "DEMO data"
+        }
+      },
+      "position": {
+        "quantity": "168.6024",
+        "average_cost": {
+          "amount": "54.4007",
+          "currency": "USD"
+        },
+        "cost_basis": {
+          "amount": "9172.10",
+          "currency": "USD"
+        },
+        "value": {
+          "amount": "9795.80",
+          "currency": "USD"
+        },
+        "native_value": {
+          "amount": "9795.80",
+          "currency": "USD"
+        },
+        "unrealised_pl": {
+          "amount": "623.70",
+          "currency": "USD"
+        },
+        "unrealised_pl_percent": "6.8",
+        "as_of": "2026-10-09T08:00:00Z"
+      },
+      "research": [
+        {
+          "title": "Income focus",
+          "summary": "Dividends are not guaranteed and can be reduced or stopped.",
+          "as_of": "2026-10-01T00:00:00Z",
+          "source": {
+            "label": "Demo research note",
+            "provider": "DEMO research"
+          }
+        }
+      ]
+    },
+    "DEMO-KTB": {
+      "symbol": "DEMO-KTB",
+      "name": "Demo Kenya Treasury Fund",
+      "asset_class": "Bonds",
+      "currency": "KES",
+      "price": {
+        "value": {
+          "amount": "101.30",
+          "currency": "KES"
+        },
+        "change_percent": "0.30",
+        "as_of": "2026-10-09T08:00:00Z",
+        "source": {
+          "label": "Demo price",
+          "provider": "DEMO feed"
+        }
+      },
+      "performance": {
+        "month": [
+          {
+            "date": "2026-09-18",
+            "value": "102.51"
+          },
+          {
+            "date": "2026-09-19",
+            "value": "101.43"
+          },
+          {
+            "date": "2026-09-20",
+            "value": "100.43"
+          },
+          {
+            "date": "2026-09-21",
+            "value": "100.44"
+          },
+          {
+            "date": "2026-09-22",
+            "value": "101.40"
+          },
+          {
+            "date": "2026-09-23",
+            "value": "102.20"
+          },
+          {
+            "date": "2026-09-24",
+            "value": "102.52"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "102.41"
+          },
+          {
+            "date": "2026-09-26",
+            "value": "100.64"
+          },
+          {
+            "date": "2026-09-27",
+            "value": "100.01"
+          },
+          {
+            "date": "2026-09-28",
+            "value": "100.93"
+          },
+          {
+            "date": "2026-09-29",
+            "value": "101.39"
+          },
+          {
+            "date": "2026-09-30",
+            "value": "102.80"
+          },
+          {
+            "date": "2026-10-01",
+            "value": "102.80"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "101.83"
+          },
+          {
+            "date": "2026-10-03",
+            "value": "101.10"
+          },
+          {
+            "date": "2026-10-04",
+            "value": "100.14"
+          },
+          {
+            "date": "2026-10-05",
+            "value": "100.65"
+          },
+          {
+            "date": "2026-10-06",
+            "value": "101.74"
+          },
+          {
+            "date": "2026-10-07",
+            "value": "102.49"
+          },
+          {
+            "date": "2026-10-08",
+            "value": "102.69"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "101.30"
+          }
+        ],
+        "threeMonths": [
+          {
+            "date": "2026-07-17",
+            "value": "103.00"
+          },
+          {
+            "date": "2026-07-24",
+            "value": "102.06"
+          },
+          {
+            "date": "2026-07-31",
+            "value": "101.52"
+          },
+          {
+            "date": "2026-08-07",
+            "value": "101.43"
+          },
+          {
+            "date": "2026-08-14",
+            "value": "102.02"
+          },
+          {
+            "date": "2026-08-21",
+            "value": "103.34"
+          },
+          {
+            "date": "2026-08-28",
+            "value": "102.99"
+          },
+          {
+            "date": "2026-09-04",
+            "value": "102.44"
+          },
+          {
+            "date": "2026-09-11",
+            "value": "101.33"
+          },
+          {
+            "date": "2026-09-18",
+            "value": "100.15"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "100.80"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "101.81"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "101.30"
+          }
+        ],
+        "sixMonths": [
+          {
+            "date": "2026-04-17",
+            "value": "98.77"
+          },
+          {
+            "date": "2026-04-24",
+            "value": "97.81"
+          },
+          {
+            "date": "2026-05-01",
+            "value": "96.95"
+          },
+          {
+            "date": "2026-05-08",
+            "value": "97.84"
+          },
+          {
+            "date": "2026-05-15",
+            "value": "98.65"
+          },
+          {
+            "date": "2026-05-22",
+            "value": "99.64"
+          },
+          {
+            "date": "2026-05-29",
+            "value": "100.32"
+          },
+          {
+            "date": "2026-06-05",
+            "value": "99.48"
+          },
+          {
+            "date": "2026-06-12",
+            "value": "98.32"
+          },
+          {
+            "date": "2026-06-19",
+            "value": "97.70"
+          },
+          {
+            "date": "2026-06-26",
+            "value": "98.08"
+          },
+          {
+            "date": "2026-07-03",
+            "value": "99.35"
+          },
+          {
+            "date": "2026-07-10",
+            "value": "100.28"
+          },
+          {
+            "date": "2026-07-17",
+            "value": "100.58"
+          },
+          {
+            "date": "2026-07-24",
+            "value": "100.31"
+          },
+          {
+            "date": "2026-07-31",
+            "value": "99.73"
+          },
+          {
+            "date": "2026-08-07",
+            "value": "99.28"
+          },
+          {
+            "date": "2026-08-14",
+            "value": "99.56"
+          },
+          {
+            "date": "2026-08-21",
+            "value": "100.79"
+          },
+          {
+            "date": "2026-08-28",
+            "value": "101.49"
+          },
+          {
+            "date": "2026-09-04",
+            "value": "101.87"
+          },
+          {
+            "date": "2026-09-11",
+            "value": "100.88"
+          },
+          {
+            "date": "2026-09-18",
+            "value": "100.55"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "100.08"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "100.45"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "101.30"
+          }
+        ],
+        "year": [
+          {
+            "date": "2025-10-14",
+            "value": "107.00"
+          },
+          {
+            "date": "2025-11-13",
+            "value": "105.72"
+          },
+          {
+            "date": "2025-12-13",
+            "value": "104.85"
+          },
+          {
+            "date": "2026-01-12",
+            "value": "104.43"
+          },
+          {
+            "date": "2026-02-11",
+            "value": "104.68"
+          },
+          {
+            "date": "2026-03-13",
+            "value": "105.67"
+          },
+          {
+            "date": "2026-04-12",
+            "value": "104.99"
+          },
+          {
+            "date": "2026-05-12",
+            "value": "104.10"
+          },
+          {
+            "date": "2026-06-11",
+            "value": "102.66"
+          },
+          {
+            "date": "2026-07-11",
+            "value": "101.15"
+          },
+          {
+            "date": "2026-08-10",
+            "value": "101.47"
+          },
+          {
+            "date": "2026-09-09",
+            "value": "102.14"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "101.30"
+          }
+        ],
+        "all": [
+          {
+            "date": "2024-10-19",
+            "value": "72.37"
+          },
+          {
+            "date": "2024-11-18",
+            "value": "73.24"
+          },
+          {
+            "date": "2024-12-18",
+            "value": "73.60"
+          },
+          {
+            "date": "2025-01-17",
+            "value": "75.31"
+          },
+          {
+            "date": "2025-02-16",
+            "value": "76.99"
+          },
+          {
+            "date": "2025-03-18",
+            "value": "79.51"
+          },
+          {
+            "date": "2025-04-17",
+            "value": "80.50"
+          },
+          {
+            "date": "2025-05-17",
+            "value": "81.22"
+          },
+          {
+            "date": "2025-06-16",
+            "value": "80.99"
+          },
+          {
+            "date": "2025-07-16",
+            "value": "82.26"
+          },
+          {
+            "date": "2025-08-15",
+            "value": "83.05"
+          },
+          {
+            "date": "2025-09-14",
+            "value": "85.97"
+          },
+          {
+            "date": "2025-10-14",
+            "value": "87.42"
+          },
+          {
+            "date": "2025-11-13",
+            "value": "89.53"
+          },
+          {
+            "date": "2025-12-13",
+            "value": "89.90"
+          },
+          {
+            "date": "2026-01-12",
+            "value": "89.77"
+          },
+          {
+            "date": "2026-02-11",
+            "value": "90.46"
+          },
+          {
+            "date": "2026-03-13",
+            "value": "92.29"
+          },
+          {
+            "date": "2026-04-12",
+            "value": "94.29"
+          },
+          {
+            "date": "2026-05-12",
+            "value": "96.37"
+          },
+          {
+            "date": "2026-06-11",
+            "value": "97.48"
+          },
+          {
+            "date": "2026-07-11",
+            "value": "97.96"
+          },
+          {
+            "date": "2026-08-10",
+            "value": "98.11"
+          },
+          {
+            "date": "2026-09-09",
+            "value": "98.96"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "101.30"
+          }
+        ]
+      },
+      "fundamentals": {
+        "items": [
+          {
+            "label": "Maturity range",
+            "value": "2 to 10 years"
+          },
+          {
+            "label": "Average coupon",
+            "value": "12.4%"
+          },
+          {
+            "label": "Currency of the asset",
+            "value": "KES"
+          }
+        ],
+        "as_of": "2026-09-30T00:00:00Z",
+        "source": {
+          "label": "Fund fact sheet",
+          "provider": "DEMO data"
+        }
+      },
+      "income": {
+        "yield_percent": "12.1",
+        "frequency": "Semi-annual",
+        "events": [
+          {
+            "date": "2026-09-15",
+            "amount": {
+              "amount": "310.75",
+              "currency": "USD"
+            },
+            "kind": "Coupon"
+          },
+          {
+            "date": "2026-03-15",
+            "amount": {
+              "amount": "308.20",
+              "currency": "USD"
+            },
+            "kind": "Coupon"
+          }
+        ],
+        "as_of": "2026-10-09T08:00:00Z",
+        "source": {
+          "label": "Demo income records",
+          "provider": "DEMO data"
+        }
+      },
+      "position": {
+        "quantity": "6377.0977",
+        "average_cost": {
+          "amount": "100.0988",
+          "currency": "KES"
+        },
+        "cost_basis": {
+          "amount": "4940.71",
+          "currency": "USD"
+        },
+        "value": {
+          "amount": "5000.00",
+          "currency": "USD"
+        },
+        "native_value": {
+          "amount": "646000.00",
+          "currency": "KES"
+        },
+        "unrealised_pl": {
+          "amount": "59.29",
+          "currency": "USD"
+        },
+        "unrealised_pl_percent": "1.2",
+        "as_of": "2026-10-09T08:00:00Z"
+      },
+      "research": [
+        {
+          "title": "Currency and rate risk",
+          "summary": "Government bond prices move with interest rates, and the value changes with the KES exchange rate.",
+          "as_of": "2026-10-01T00:00:00Z",
+          "source": {
+            "label": "Demo research note",
+            "provider": "DEMO research"
+          }
+        }
+      ]
+    },
+    "DEMO-REI": {
+      "symbol": "DEMO-REI",
+      "name": "Demo Real Estate Trust",
+      "asset_class": "Real estate",
+      "currency": "AED",
+      "price": {
+        "value": {
+          "amount": "12.95",
+          "currency": "AED"
+        },
+        "change_percent": "0.90",
+        "as_of": "2026-10-09T08:00:00Z",
+        "source": {
+          "label": "Demo price",
+          "provider": "DEMO feed"
+        }
+      },
+      "performance": {
+        "month": [
+          {
+            "date": "2026-09-18",
+            "value": "12.94"
+          },
+          {
+            "date": "2026-09-19",
+            "value": "12.81"
+          },
+          {
+            "date": "2026-09-20",
+            "value": "12.90"
+          },
+          {
+            "date": "2026-09-21",
+            "value": "13.00"
+          },
+          {
+            "date": "2026-09-22",
+            "value": "13.13"
+          },
+          {
+            "date": "2026-09-23",
+            "value": "13.14"
+          },
+          {
+            "date": "2026-09-24",
+            "value": "13.06"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "12.86"
+          },
+          {
+            "date": "2026-09-26",
+            "value": "12.77"
+          },
+          {
+            "date": "2026-09-27",
+            "value": "12.84"
+          },
+          {
+            "date": "2026-09-28",
+            "value": "13.01"
+          },
+          {
+            "date": "2026-09-29",
+            "value": "13.14"
+          },
+          {
+            "date": "2026-09-30",
+            "value": "13.10"
+          },
+          {
+            "date": "2026-10-01",
+            "value": "12.97"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "12.86"
+          },
+          {
+            "date": "2026-10-03",
+            "value": "12.85"
+          },
+          {
+            "date": "2026-10-04",
+            "value": "12.85"
+          },
+          {
+            "date": "2026-10-05",
+            "value": "12.94"
+          },
+          {
+            "date": "2026-10-06",
+            "value": "13.13"
+          },
+          {
+            "date": "2026-10-07",
+            "value": "13.06"
+          },
+          {
+            "date": "2026-10-08",
+            "value": "12.97"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "12.95"
+          }
+        ],
+        "threeMonths": [
+          {
+            "date": "2026-07-17",
+            "value": "12.52"
+          },
+          {
+            "date": "2026-07-24",
+            "value": "12.47"
+          },
+          {
+            "date": "2026-07-31",
+            "value": "12.55"
+          },
+          {
+            "date": "2026-08-07",
+            "value": "12.73"
+          },
+          {
+            "date": "2026-08-14",
+            "value": "12.86"
+          },
+          {
+            "date": "2026-08-21",
+            "value": "12.88"
+          },
+          {
+            "date": "2026-08-28",
+            "value": "12.76"
+          },
+          {
+            "date": "2026-09-04",
+            "value": "12.75"
+          },
+          {
+            "date": "2026-09-11",
+            "value": "12.62"
+          },
+          {
+            "date": "2026-09-18",
+            "value": "12.72"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "12.89"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "13.07"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "12.95"
+          }
+        ],
+        "sixMonths": [
+          {
+            "date": "2026-04-17",
+            "value": "13.28"
+          },
+          {
+            "date": "2026-04-24",
+            "value": "13.19"
+          },
+          {
+            "date": "2026-05-01",
+            "value": "13.20"
+          },
+          {
+            "date": "2026-05-08",
+            "value": "13.35"
+          },
+          {
+            "date": "2026-05-15",
+            "value": "13.43"
+          },
+          {
+            "date": "2026-05-22",
+            "value": "13.45"
+          },
+          {
+            "date": "2026-05-29",
+            "value": "13.30"
+          },
+          {
+            "date": "2026-06-05",
+            "value": "13.17"
+          },
+          {
+            "date": "2026-06-12",
+            "value": "13.08"
+          },
+          {
+            "date": "2026-06-19",
+            "value": "13.07"
+          },
+          {
+            "date": "2026-06-26",
+            "value": "13.24"
+          },
+          {
+            "date": "2026-07-03",
+            "value": "13.30"
+          },
+          {
+            "date": "2026-07-10",
+            "value": "13.35"
+          },
+          {
+            "date": "2026-07-17",
+            "value": "13.22"
+          },
+          {
+            "date": "2026-07-24",
+            "value": "13.07"
+          },
+          {
+            "date": "2026-07-31",
+            "value": "13.00"
+          },
+          {
+            "date": "2026-08-07",
+            "value": "12.95"
+          },
+          {
+            "date": "2026-08-14",
+            "value": "13.06"
+          },
+          {
+            "date": "2026-08-21",
+            "value": "13.22"
+          },
+          {
+            "date": "2026-08-28",
+            "value": "13.23"
+          },
+          {
+            "date": "2026-09-04",
+            "value": "13.07"
+          },
+          {
+            "date": "2026-09-11",
+            "value": "12.97"
+          },
+          {
+            "date": "2026-09-18",
+            "value": "12.81"
+          },
+          {
+            "date": "2026-09-25",
+            "value": "12.88"
+          },
+          {
+            "date": "2026-10-02",
+            "value": "12.96"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "12.95"
+          }
+        ],
+        "year": [
+          {
+            "date": "2025-10-14",
+            "value": "11.29"
+          },
+          {
+            "date": "2025-11-13",
+            "value": "11.35"
+          },
+          {
+            "date": "2025-12-13",
+            "value": "11.53"
+          },
+          {
+            "date": "2026-01-12",
+            "value": "11.81"
+          },
+          {
+            "date": "2026-02-11",
+            "value": "12.04"
+          },
+          {
+            "date": "2026-03-13",
+            "value": "12.17"
+          },
+          {
+            "date": "2026-04-12",
+            "value": "12.15"
+          },
+          {
+            "date": "2026-05-12",
+            "value": "12.23"
+          },
+          {
+            "date": "2026-06-11",
+            "value": "12.22"
+          },
+          {
+            "date": "2026-07-11",
+            "value": "12.42"
+          },
+          {
+            "date": "2026-08-10",
+            "value": "12.68"
+          },
+          {
+            "date": "2026-09-09",
+            "value": "12.97"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "12.95"
+          }
+        ],
+        "all": [
+          {
+            "date": "2024-10-19",
+            "value": "13.51"
+          },
+          {
+            "date": "2024-11-18",
+            "value": "13.44"
+          },
+          {
+            "date": "2024-12-18",
+            "value": "13.45"
+          },
+          {
+            "date": "2025-01-17",
+            "value": "13.59"
+          },
+          {
+            "date": "2025-02-16",
+            "value": "13.65"
+          },
+          {
+            "date": "2025-03-18",
+            "value": "13.62"
+          },
+          {
+            "date": "2025-04-17",
+            "value": "13.56"
+          },
+          {
+            "date": "2025-05-17",
+            "value": "13.31"
+          },
+          {
+            "date": "2025-06-16",
+            "value": "13.23"
+          },
+          {
+            "date": "2025-07-16",
+            "value": "13.23"
+          },
+          {
+            "date": "2025-08-15",
+            "value": "13.33"
+          },
+          {
+            "date": "2025-09-14",
+            "value": "13.47"
+          },
+          {
+            "date": "2025-10-14",
+            "value": "13.41"
+          },
+          {
+            "date": "2025-11-13",
+            "value": "13.32"
+          },
+          {
+            "date": "2025-12-13",
+            "value": "13.13"
+          },
+          {
+            "date": "2026-01-12",
+            "value": "13.07"
+          },
+          {
+            "date": "2026-02-11",
+            "value": "13.04"
+          },
+          {
+            "date": "2026-03-13",
+            "value": "13.18"
+          },
+          {
+            "date": "2026-04-12",
+            "value": "13.21"
+          },
+          {
+            "date": "2026-05-12",
+            "value": "13.21"
+          },
+          {
+            "date": "2026-06-11",
+            "value": "13.06"
+          },
+          {
+            "date": "2026-07-11",
+            "value": "12.93"
+          },
+          {
+            "date": "2026-08-10",
+            "value": "12.87"
+          },
+          {
+            "date": "2026-09-09",
+            "value": "12.86"
+          },
+          {
+            "date": "2026-10-09",
+            "value": "12.95"
+          }
+        ]
+      },
+      "fundamentals": {
+        "items": [
+          {
+            "label": "Occupancy",
+            "value": "94%"
+          },
+          {
+            "label": "Number of properties",
+            "value": "23"
+          },
+          {
+            "label": "Currency of the asset",
+            "value": "AED"
+          }
+        ],
+        "as_of": "2026-09-30T00:00:00Z",
+        "source": {
+          "label": "Fund fact sheet",
+          "provider": "DEMO data"
+        }
+      },
+      "income": {
+        "yield_percent": "5.2",
+        "frequency": "Quarterly",
+        "events": [
+          {
+            "date": "2026-09-10",
+            "amount": {
+              "amount": "38.50",
+              "currency": "USD"
+            },
+            "kind": "Rent"
+          },
+          {
+            "date": "2026-06-10",
+            "amount": {
+              "amount": "38.10",
+              "currency": "USD"
+            },
+            "kind": "Rent"
+          }
+        ],
+        "as_of": "2026-10-09T08:00:00Z",
+        "source": {
+          "label": "Demo income records",
+          "provider": "DEMO data"
+        }
+      },
+      "position": {
+        "quantity": "850.7722",
+        "average_cost": {
+          "amount": "12.3451",
+          "currency": "AED"
+        },
+        "cost_basis": {
+          "amount": "2859.87",
+          "currency": "USD"
+        },
+        "value": {
+          "amount": "3000.00",
+          "currency": "USD"
+        },
+        "native_value": {
+          "amount": "11017.50",
+          "currency": "AED"
+        },
+        "unrealised_pl": {
+          "amount": "140.13",
+          "currency": "USD"
+        },
+        "unrealised_pl_percent": "4.9",
+        "as_of": "2026-10-09T08:00:00Z"
+      },
+      "research": [
+        {
+          "title": "Property exposure",
+          "summary": "Property funds are less liquid than shares and can be hard to sell in a downturn.",
+          "as_of": "2026-10-01T00:00:00Z",
+          "source": {
+            "label": "Demo research note",
+            "provider": "DEMO research"
+          }
+        }
+      ]
+    }
+  }
+}

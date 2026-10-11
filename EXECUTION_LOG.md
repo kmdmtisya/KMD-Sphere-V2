@@ -885,3 +885,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-11T20:42:42+04:00 — COMPLETE P07-T03
 - duration: 29m 16s
 - evidence: Transactions list with filter chips and month grouping, add-transaction flow (inline validation, review, confirmation) and correction view where reversals are linked entries, not edits; 89 new tests (validation, repository append-only rules, screens, routes, accessibility guidelines light/dark 1x/2x LTR/RTL); analyze and format clean; full mobile suite 1120 passed locally. PR #72. CI all gates pass.
+
+### 2026-10-11T20:52:29+04:00 — START P07-T04
+- Investment Details (screen 7)
+- prerequisites verified COMPLETED
+
+### 2026-10-11T21:15:05+04:00 — COMPLETE P07-T04
+- duration: 22m 36s
+- evidence: Investment Details screen: header with latest price, source and as-of time, price chart with period selector, fundamentals/income/position/transactions/research sections, watchlist action, no Buy/Sell/trade affordance (guard test across all sections); holdings rows open it; 34 new tests including accessibility guidelines light/dark 1x/2x LTR/RTL; analyze and format clean; full mobile suite 1154 passed locally. PR #73. CI all gates pass.

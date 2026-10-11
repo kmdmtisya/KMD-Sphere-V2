@@ -9,6 +9,7 @@ import '../features/auth/presentation/welcome_screen.dart';
 import '../features/calculator/presentation/calculator_screen.dart';
 import '../features/calculator/presentation/forecast/forecast_screen.dart';
 import '../features/dashboard/presentation/home_screen.dart';
+import '../features/investments/presentation/investment_detail_screen.dart';
 import '../features/portfolios/presentation/holdings_screen.dart';
 import '../features/portfolios/presentation/portfolio_overview_screen.dart';
 import '../features/transactions/domain/ledger_entry.dart';
@@ -39,7 +40,20 @@ final Map<AppTab, RouteBase Function()> tabRoutes =
         routes: [
           GoRoute(
             path: 'holdings',
-            builder: (context, state) => const HoldingsScreen(),
+            builder: (context, state) => HoldingsScreen(
+              onOpen: (holding) =>
+                  context.go(AppRoutes.investment(holding.symbol)),
+            ),
+            routes: [
+              GoRoute(
+                path: ':symbol',
+                builder: (context, state) => InvestmentDetailScreen(
+                  symbol: state.pathParameters['symbol']!,
+                  onOpenTransaction: (entry) =>
+                      context.go(AppRoutes.transaction(entry.id)),
+                ),
+              ),
+            ],
           ),
           GoRoute(
             path: 'transactions',

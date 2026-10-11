@@ -688,14 +688,14 @@
   - [x] P07-T03.3 Confirmation
   - [x] P07-T03.4 Correction view
   - [x] P07-T03.5 Tests
-- [ ] **P07-T04** · Investment Details (screen 7) · `NOT_STARTED` ⬜
+- [x] **P07-T04** · Investment Details (screen 7) · `COMPLETED` ✅
   - Deps: P07-T02 · Wave: W3 · Track: MOB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P07-T04.1 Header and chart
-  - [ ] P07-T04.2 Tabs
-  - [ ] P07-T04.3 Watchlist action
-  - [ ] P07-T04.4 Tests
+  - Started: 2026-10-11T20:52:29+04:00 · Completed: 2026-10-11T21:15:05+04:00 · Duration: 22m 36s · Blocker: —
+  - Evidence: Investment Details screen: header with latest price, source and as-of time, price chart with period selector, fundamentals/income/position/transactions/research sections, watchlist action, no Buy/Sell/trade affordance (guard test across all sections); holdings rows open it; 34 new tests including accessibility guidelines light/dark 1x/2x LTR/RTL; analyze and format clean; full mobile suite 1154 passed locally. PR #73. CI all gates pass.
+  - [x] P07-T04.1 Header and chart
+  - [x] P07-T04.2 Tabs
+  - [x] P07-T04.3 Watchlist action
+  - [x] P07-T04.4 Tests
 - [ ] **P07-T05** · Financial Goals (screen 11) · `NOT_STARTED` ⬜
   - Deps: P07-T01 · Wave: W2 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
