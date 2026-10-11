@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wealthsphere_app/app/app_routes.dart';
+import 'package:wealthsphere_app/features/goals/presentation/goals_screen.dart';
 
 import '../helpers/pump_router.dart';
 
@@ -290,7 +291,8 @@ void main() {
     final router = await pumpRouterApp(tester);
     router.go(AppRoutes.goals);
     await tester.pumpAndSettle();
-    expect(find.text('Coming soon'), findsOneWidget);
+    // The Goals tab is a real screen now (it was a placeholder).
+    expect(find.byType(GoalsScreen), findsOneWidget);
     expect(
       GoRouter.of(tester.element(find.byType(Scaffold).first)),
       same(router),

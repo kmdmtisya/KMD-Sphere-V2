@@ -13,6 +13,7 @@ abstract final class AppRoutes {
   static const String addTransaction = '/portfolio/transactions/add';
   static const String ai = '/ai';
   static const String goals = '/goals';
+  static const String addGoal = '/goals/add';
   static const String more = '/more';
   static const String calculator = '/more/calculator';
   static const String forecast = '/more/calculator/forecast';
@@ -23,6 +24,10 @@ abstract final class AppRoutes {
 
   /// Debug-only component gallery. Not registered in release builds.
   static const String gallery = '/_gallery';
+
+  /// One goal, and its edit form. The id is encoded so an odd id can never change the path.
+  static String goal(String id) => '$goals/${Uri.encodeComponent(id)}';
+  static String editGoal(String id) => '${goal(id)}/edit';
 
   /// One investment (an asset). The symbol is encoded, so an odd symbol never changes the path.
   static String investment(String symbol) =>

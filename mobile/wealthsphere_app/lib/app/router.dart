@@ -9,6 +9,9 @@ import '../features/auth/presentation/welcome_screen.dart';
 import '../features/calculator/presentation/calculator_screen.dart';
 import '../features/calculator/presentation/forecast/forecast_screen.dart';
 import '../features/dashboard/presentation/home_screen.dart';
+import '../features/goals/presentation/goal_detail_screen.dart';
+import '../features/goals/presentation/goal_form_screen.dart';
+import '../features/goals/presentation/goals_screen.dart';
 import '../features/investments/presentation/investment_detail_screen.dart';
 import '../features/portfolios/presentation/holdings_screen.dart';
 import '../features/portfolios/presentation/portfolio_overview_screen.dart';
@@ -96,7 +99,38 @@ final Map<AppTab, RouteBase Function()> tabRoutes =
       ),
       AppTab.goals: () => GoRoute(
         path: AppRoutes.goals,
-        builder: (context, state) => const GoalsPlaceholder(),
+        builder: (context, state) => GoalsScreen(
+          onOpen: (entry) => context.go(AppRoutes.goal(entry.goal.id)),
+          onAdd: () => context.go(AppRoutes.addGoal),
+        ),
+        routes: [
+          // Registered before ':id' so "add" is never read as a goal id.
+          GoRoute(
+            path: 'add',
+            builder: (context, state) => GoalFormScreen(
+              onSaved: (entry) => context.go(AppRoutes.goal(entry.goal.id)),
+            ),
+          ),
+          GoRoute(
+            path: ':id',
+            builder: (context, state) => GoalDetailScreen(
+              goalId: state.pathParameters['id']!,
+              onEdit: (goal) => context.go(AppRoutes.editGoal(goal.id)),
+              onAskAi: (goal) => context.go(
+                AppRoutes.aiWith(AiScope(AiScopeKind.goal, goal.id)),
+              ),
+            ),
+            routes: [
+              GoRoute(
+                path: 'edit',
+                builder: (context, state) => GoalFormScreen(
+                  goalId: state.pathParameters['id'],
+                  onSaved: (entry) => context.go(AppRoutes.goal(entry.goal.id)),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
       AppTab.more: () => GoRoute(
         path: AppRoutes.more,

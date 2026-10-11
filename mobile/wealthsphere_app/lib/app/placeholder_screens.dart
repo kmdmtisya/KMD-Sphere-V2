@@ -129,16 +129,6 @@ class AiPlaceholder extends StatelessWidget {
   }
 }
 
-class GoalsPlaceholder extends StatelessWidget {
-  const GoalsPlaceholder({super.key});
-
-  @override
-  Widget build(BuildContext context) => _PlaceholderPage(
-    title: AppLocalizations.of(context).tabGoals,
-    children: [_comingSoon(context)],
-  );
-}
-
 /// The More tab. Hosts the temporary theme switch until the real Settings screen exists.
 class MorePlaceholder extends ConsumerWidget {
   const MorePlaceholder({super.key});

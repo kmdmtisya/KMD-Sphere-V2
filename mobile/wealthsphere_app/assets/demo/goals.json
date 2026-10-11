@@ -1,0 +1,334 @@
+{
+  "demo": true,
+  "as_of": "2026-10-09T08:00:00Z",
+  "goals": [
+    {
+      "goal": {
+        "id": "g-home",
+        "name": "Home deposit",
+        "goal_type": "house_deposit",
+        "target": {
+          "amount": "80000.00",
+          "currency": "USD"
+        },
+        "target_date": "2028-06-30",
+        "target_in_todays_money": false,
+        "portfolio_id": null,
+        "assumptions": {
+          "contribution": {
+            "amount": "1500.00",
+            "currency": "USD"
+          },
+          "contribution_frequency": "monthly",
+          "contribution_growth_percent": "0",
+          "inflation_percent": "2.5",
+          "annual_fee_percent": "0.5",
+          "compounding_frequency": "monthly",
+          "returns": {
+            "base": "5",
+            "conservative": "3",
+            "growth": "7"
+          }
+        }
+      },
+      "figures": {
+        "status": "on_track",
+        "reached": false,
+        "overdue": false,
+        "progress_percent": "62.50",
+        "current_value": {
+          "amount": "50000.00",
+          "currency": "USD"
+        },
+        "gap": {
+          "amount": "30000.00",
+          "currency": "USD"
+        },
+        "months_left": 20,
+        "scenarios": [
+          {
+            "kind": "conservative",
+            "annual_return_percent": "3",
+            "projected_value": {
+              "amount": "83283.58",
+              "currency": "USD"
+            },
+            "reaches_target": true
+          },
+          {
+            "kind": "base",
+            "annual_return_percent": "5",
+            "projected_value": {
+              "amount": "85553.51",
+              "currency": "USD"
+            },
+            "reaches_target": true
+          },
+          {
+            "kind": "growth",
+            "annual_return_percent": "7",
+            "projected_value": {
+              "amount": "87890.35",
+              "currency": "USD"
+            },
+            "reaches_target": true
+          }
+        ],
+        "required_contribution": {
+          "amount": "1233.16",
+          "currency": "USD"
+        },
+        "estimated_completion": "2028-03-09",
+        "value_complete": true,
+        "value_as_of": "2026-10-09T08:00:00Z",
+        "notice": "Goal status and dates are estimates based on the assumptions shown. They are not guaranteed."
+      }
+    },
+    {
+      "goal": {
+        "id": "g-edu",
+        "name": "Education fund",
+        "goal_type": "education",
+        "target": {
+          "amount": "60000.00",
+          "currency": "USD"
+        },
+        "target_date": "2032-09-01",
+        "target_in_todays_money": false,
+        "portfolio_id": null,
+        "assumptions": {
+          "contribution": {
+            "amount": "400.00",
+            "currency": "USD"
+          },
+          "contribution_frequency": "monthly",
+          "contribution_growth_percent": "0",
+          "inflation_percent": "2.5",
+          "annual_fee_percent": "0.5",
+          "compounding_frequency": "monthly",
+          "returns": {
+            "base": "6",
+            "conservative": "4",
+            "growth": "8"
+          }
+        }
+      },
+      "figures": {
+        "status": "on_track",
+        "reached": false,
+        "overdue": false,
+        "progress_percent": "41.00",
+        "current_value": {
+          "amount": "24600.00",
+          "currency": "USD"
+        },
+        "gap": {
+          "amount": "35400.00",
+          "currency": "USD"
+        },
+        "months_left": 70,
+        "scenarios": [
+          {
+            "kind": "conservative",
+            "annual_return_percent": "4",
+            "projected_value": {
+              "amount": "62530.38",
+              "currency": "USD"
+            },
+            "reaches_target": true
+          },
+          {
+            "kind": "base",
+            "annual_return_percent": "6",
+            "projected_value": {
+              "amount": "68305.07",
+              "currency": "USD"
+            },
+            "reaches_target": true
+          },
+          {
+            "kind": "growth",
+            "annual_return_percent": "8",
+            "projected_value": {
+              "amount": "74700.29",
+              "currency": "USD"
+            },
+            "reaches_target": true
+          }
+        ],
+        "required_contribution": {
+          "amount": "300.62",
+          "currency": "USD"
+        },
+        "estimated_completion": "2031-09-09",
+        "value_complete": true,
+        "value_as_of": "2026-10-09T08:00:00Z",
+        "notice": "Goal status and dates are estimates based on the assumptions shown. They are not guaranteed."
+      }
+    },
+    {
+      "goal": {
+        "id": "g-ret",
+        "name": "Retirement at 60",
+        "goal_type": "retirement",
+        "target": {
+          "amount": "1500000.00",
+          "currency": "USD"
+        },
+        "target_date": "2046-01-01",
+        "target_in_todays_money": false,
+        "portfolio_id": null,
+        "assumptions": {
+          "contribution": {
+            "amount": "2000.00",
+            "currency": "USD"
+          },
+          "contribution_frequency": "monthly",
+          "contribution_growth_percent": "0",
+          "inflation_percent": "2.5",
+          "annual_fee_percent": "0.5",
+          "compounding_frequency": "monthly",
+          "returns": {
+            "base": "6",
+            "conservative": "4",
+            "growth": "8"
+          }
+        }
+      },
+      "figures": {
+        "status": "on_track",
+        "reached": false,
+        "overdue": false,
+        "progress_percent": "28.30",
+        "current_value": {
+          "amount": "424500.00",
+          "currency": "USD"
+        },
+        "gap": {
+          "amount": "1075500.00",
+          "currency": "USD"
+        },
+        "months_left": 230,
+        "scenarios": [
+          {
+            "kind": "conservative",
+            "annual_return_percent": "4",
+            "projected_value": {
+              "amount": "1602507.34",
+              "currency": "USD"
+            },
+            "reaches_target": true
+          },
+          {
+            "kind": "base",
+            "annual_return_percent": "6",
+            "projected_value": {
+              "amount": "2196479.30",
+              "currency": "USD"
+            },
+            "reaches_target": true
+          },
+          {
+            "kind": "growth",
+            "annual_return_percent": "8",
+            "projected_value": {
+              "amount": "3040001.67",
+              "currency": "USD"
+            },
+            "reaches_target": true
+          }
+        ],
+        "required_contribution": {
+          "amount": "379.64",
+          "currency": "USD"
+        },
+        "estimated_completion": "2040-10-09",
+        "value_complete": true,
+        "value_as_of": "2026-10-09T08:00:00Z",
+        "notice": "Goal status and dates are estimates based on the assumptions shown. They are not guaranteed."
+      }
+    },
+    {
+      "goal": {
+        "id": "g-trip",
+        "name": "Family travel",
+        "goal_type": "custom",
+        "target": {
+          "amount": "12000.00",
+          "currency": "USD"
+        },
+        "target_date": "2027-07-01",
+        "target_in_todays_money": false,
+        "portfolio_id": null,
+        "assumptions": {
+          "contribution": {
+            "amount": "150.00",
+            "currency": "USD"
+          },
+          "contribution_frequency": "monthly",
+          "contribution_growth_percent": "0",
+          "inflation_percent": "2.5",
+          "annual_fee_percent": "0.5",
+          "compounding_frequency": "monthly",
+          "returns": {
+            "base": "3",
+            "conservative": "1",
+            "growth": "5"
+          }
+        }
+      },
+      "figures": {
+        "status": "behind",
+        "reached": false,
+        "overdue": false,
+        "progress_percent": "18.00",
+        "current_value": {
+          "amount": "2160.00",
+          "currency": "USD"
+        },
+        "gap": {
+          "amount": "9840.00",
+          "currency": "USD"
+        },
+        "months_left": 8,
+        "scenarios": [
+          {
+            "kind": "conservative",
+            "annual_return_percent": "1",
+            "projected_value": {
+              "amount": "3377.95",
+              "currency": "USD"
+            },
+            "reaches_target": false
+          },
+          {
+            "kind": "base",
+            "annual_return_percent": "3",
+            "projected_value": {
+              "amount": "3414.13",
+              "currency": "USD"
+            },
+            "reaches_target": false
+          },
+          {
+            "kind": "growth",
+            "annual_return_percent": "5",
+            "projected_value": {
+              "amount": "3450.71",
+              "currency": "USD"
+            },
+            "reaches_target": false
+          }
+        ],
+        "required_contribution": {
+          "amount": "1213.88",
+          "currency": "USD"
+        },
+        "estimated_completion": "2031-09-09",
+        "value_complete": true,
+        "value_as_of": "2026-10-09T08:00:00Z",
+        "notice": "Goal status and dates are estimates based on the assumptions shown. They are not guaranteed."
+      }
+    }
+  ]
+}
