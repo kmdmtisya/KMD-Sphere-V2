@@ -136,10 +136,34 @@ class FakeProvider:
 
     async def get_fx_rate(self, base: str, quote: str) -> FxQuote:
         self._enter(f"fx:{base}{quote}")
+        return FxQuote(base, quote, await self._rate(base, quote), self._provenance())
+
+    async def get_fx_history(self, base: str, quote: str, start: date, end: date) -> list[FxQuote]:
+        self._enter(f"fxhistory:{base}{quote}")
+        current = await self._rate(base, quote)
+        points: list[FxQuote] = []
+        today = self._clock().date()
+        day = start
+        while day <= min(end, today):
+            if day.weekday() < 5:
+                step = Decimal((day.toordinal() % 7) - 3) * Decimal("0.001")
+                closed_at = datetime(day.year, day.month, day.day, 14, 15, tzinfo=UTC)
+                points.append(
+                    FxQuote(
+                        base,
+                        quote,
+                        (current * (Decimal(1) + step)).quantize(Decimal("0.00000001")),
+                        self._provenance(closed_at),
+                    )
+                )
+            day += timedelta(days=1)
+        return points
+
+    async def _rate(self, base: str, quote: str) -> Decimal:
         direct = self._fx.get((base, quote))
         if direct is not None:
-            return FxQuote(base, quote, direct, self._provenance())
+            return direct
         opposite = self._fx.get((quote, base))
         if opposite is not None:
-            return FxQuote(base, quote, Decimal(1) / opposite, self._provenance())
+            return Decimal(1) / opposite
         raise SymbolNotFound(f"{base}/{quote}")

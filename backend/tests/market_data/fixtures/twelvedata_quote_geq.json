@@ -1,0 +1,13 @@
+{
+  "symbol": "GEQ",
+  "name": "Example Global Equity ETF",
+  "exchange": "NYSE",
+  "currency": "USD",
+  "datetime": "2026-10-09",
+  "timestamp": 1791576000,
+  "open": "103.80",
+  "high": "104.60",
+  "low": "103.50",
+  "close": "104.20",
+  "is_market_open": false
+}

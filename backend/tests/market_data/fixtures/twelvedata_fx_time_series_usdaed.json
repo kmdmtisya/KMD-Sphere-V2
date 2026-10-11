@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "symbol": "USD/AED",
+    "interval": "1day",
+    "currency_base": "US Dollar"
+  },
+  "values": [
+    {
+      "datetime": "2026-10-08",
+      "close": "3.67250"
+    },
+    {
+      "datetime": "2026-10-09",
+      "close": "3.67260"
+    }
+  ],
+  "status": "ok"
+}

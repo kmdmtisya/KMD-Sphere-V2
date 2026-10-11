@@ -6,7 +6,7 @@ Feature code depends on one interface, so a vendor can be replaced without touch
 
 ## 1. Interface (`base.py`)
 
-`MarketDataProvider` (a `Protocol`): `name`, `supported_kinds`, and async `get_quote(symbol, kind)`, `get_history(symbol, kind, start, end)`, `get_fx_rate(base, quote)`.
+`MarketDataProvider` (a `Protocol`): `name`, `supported_kinds`, and async `get_quote(symbol, kind)`, `get_history(symbol, kind, start, end)`, `get_fx_rate(base, quote)`, `get_fx_history(base, quote, start, end)`.
 
 - Implementations raise the errors below, never a vendor exception.
 - They never return a guessed or filled-in value: if the vendor has nothing, they raise.
@@ -47,10 +47,24 @@ Time and sleeping are injected, so tests do not wait.
 
 Fixed prices and FX, a reproducible daily history (no weekends except crypto, never in the future). Scripted by tests: `set_outage`, `set_stale_by`, `fail_next(n, error)`, `rate_limit_next(n, retry_after)`, `set_price`; every call is recorded in `calls`. Wired in at composition time only.
 
-## 6. Contract tests
+## 6. Adapters (P08-T03)
 
-`tests/market_data/provider_contract.py` is the contract every provider must pass (provenance on every value, validated numbers, loud failure for unknown symbols, history ordered and in range). The fake runs it now; the adapters reuse it against recorded fixtures in P08-T03.
+| Adapter | Serves | Key | Notes |
+|---|---|---|---|
+| `ecb.py` | FX only | none | Daily euro reference rates (XML, parsed with `defusedxml`). Any pair is crossed through EUR. A currency the ECB does not publish (for example AED, KES) is `SymbolNotFound`; a fallback FX provider covers it. Indicative, not for transactions |
+| `coingecko.py` | crypto, quoted in USD | header `x-cg-demo-api-key` / `x-cg-pro-api-key` | Our symbol maps to a coin id. Production needs a paid plan and the attribution line |
+| `twelvedata.py` | equities, ETFs, indices, FX | header `Authorization: apikey ...` | Errors can arrive as HTTP 200 with a body code, mapped here. **Not for production on an Individual plan** (ADR-0014) |
 
-## 7. Rule enforced by a test
+Shared rules:
+- **HTTP boundary** (`http.py`): adapters use an injected `HttpClient`. Timeouts and connection errors are `ProviderUnavailable`, 429 is `RateLimited` (`Retry-After` honoured), 401/403 is `ProviderAuthError` (not retried, counts against health, lets a chain move on), 5xx is `ProviderUnavailable`. Messages name the provider and status, never the URL, headers or key.
+- **Decimals:** JSON is parsed with `parse_float=Decimal`; no vendor number passes through a float.
+- **Rate limiting** (`throttle.py`): a sliding-window `RateLimiter` per adapter (ECB 10 a minute, CoinGecko demo 30, Twelve Data Basic 8); calls wait instead of being refused.
+- **Keys:** `Settings.coingecko_api_key` and `twelvedata_api_key` are `SecretStr`, read from the environment (`.env.example` lists the names, empty), never in source. Each adapter's `repr` omits the key; a missing key fails with `ProviderAuthError` before any call. Tests prove the key is in no URL, parameter, error message, repr or log line.
+
+## 7. Contract tests
+
+`tests/market_data/provider_contract.py` is the contract every provider must pass (provenance on every value, validated numbers, loud failure for unknown symbols, history ordered and in range, FX including history). The fake and all three adapters run it offline against fixtures in `tests/market_data/fixtures/`: the ECB files are **recorded** from the real feed (2026-10-12); the CoinGecko and Twelve Data files are **synthetic** in the vendors' documented shapes, to be re-recorded once keys exist (see the fixtures README).
+
+## 8. Rule enforced by a test
 
 Code outside the package may import only `base`, `models`, `errors` and `resilience`; never an adapter or the fake (`tests/market_data/test_provider_architecture.py`). The composition point (`registry.py`) arrives with the adapters.

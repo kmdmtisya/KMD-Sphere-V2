@@ -25,6 +25,7 @@ from app.modules.market_data.providers.base import MarketDataProvider
 from app.modules.market_data.providers.errors import (
     AllProvidersFailed,
     CircuitOpen,
+    ProviderAuthError,
     ProviderError,
     ProviderUnavailable,
     RateLimited,
@@ -145,6 +146,10 @@ class ResilientProvider:
         while True:
             try:
                 result = await op()
+            except ProviderAuthError:
+                # Retrying with the same credentials cannot help.
+                self.breaker.record_failure()
+                raise
             except ProviderUnavailable as error:
                 if attempt >= self._retry.max_attempts:
                     self.breaker.record_failure()
@@ -169,6 +174,9 @@ class ResilientProvider:
 
     async def get_fx_rate(self, base: str, quote: str) -> FxQuote:
         return await self._call(lambda: self._inner.get_fx_rate(base, quote))
+
+    async def get_fx_history(self, base: str, quote: str, start: date, end: date) -> list[FxQuote]:
+        return await self._call(lambda: self._inner.get_fx_history(base, quote, start, end))
 
 
 class FallbackChain:
@@ -216,3 +224,6 @@ class FallbackChain:
 
     async def get_fx_rate(self, base: str, quote: str) -> FxQuote:
         return await self._first(lambda p: p.get_fx_rate(base, quote))
+
+    async def get_fx_history(self, base: str, quote: str, start: date, end: date) -> list[FxQuote]:
+        return await self._first(lambda p: p.get_fx_history(base, quote, start, end))

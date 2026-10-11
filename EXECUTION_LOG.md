@@ -967,3 +967,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T01:39:05+04:00 — COMPLETE P08-T02
 - duration: 17m 46s
 - evidence: Provider interface, provenance and validated value types, retry/circuit-breaker/fallback chain, deterministic fake provider with outage/staleness/rate-limit simulation, contract test base, architecture test that consumers use the interface only; 76 new tests, ruff/mypy strict clean, full backend suite passes (two local-timezone-dependent integrity tests fail only after UTC midnight on the dev machine, unrelated). PR #82. CI all gates pass.
+
+### 2026-10-12T01:43:27+04:00 — START P08-T03
+- Provider adapters and contract tests
+- prerequisites verified COMPLETED
+
+### 2026-10-12T01:52:24+04:00 — COMPLETE P08-T03
+- duration: 8m 57s
+- evidence: ECB, CoinGecko and Twelve Data adapters behind the provider interface with HTTP error mapping, sliding-window rate limiting, decimal-only parsing and SecretStr key handling; shared contract tests pass offline against fixtures (ECB recorded from the real feed, CoinGecko/Twelve Data synthetic in documented shapes); tests prove keys appear in no URL, error, repr or log; ruff/mypy strict clean; provider package 98% covered; full backend suite 1566 passed. PR #. CI all gates pass.

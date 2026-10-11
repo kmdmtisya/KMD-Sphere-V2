@@ -767,14 +767,14 @@
   - [x] P08-T02.2 Resilience policy
   - [x] P08-T02.3 Provenance model
   - [x] P08-T02.4 Fake provider
-- [ ] **P08-T03** · Provider adapters and contract tests · `NOT_STARTED` ⬜
+- [x] **P08-T03** · Provider adapters and contract tests · `COMPLETED` ✅
   - Deps: P08-T01, P08-T02 · Wave: W2 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P08-T03.1 Adapters
-  - [ ] P08-T03.2 Fixtures
-  - [ ] P08-T03.3 Rate limiting
-  - [ ] P08-T03.4 Secrets handling
+  - Started: 2026-10-12T01:43:27+04:00 · Completed: 2026-10-12T01:52:24+04:00 · Duration: 8m 57s · Blocker: —
+  - Evidence: ECB, CoinGecko and Twelve Data adapters behind the provider interface with HTTP error mapping, sliding-window rate limiting, decimal-only parsing and SecretStr key handling; shared contract tests pass offline against fixtures (ECB recorded from the real feed, CoinGecko/Twelve Data synthetic in documented shapes); tests prove keys appear in no URL, error, repr or log; ruff/mypy strict clean; provider package 98% covered; full backend suite 1566 passed. PR #. CI all gates pass.
+  - [x] P08-T03.1 Adapters
+  - [x] P08-T03.2 Fixtures
+  - [x] P08-T03.3 Rate limiting
+  - [x] P08-T03.4 Secrets handling
 - [ ] **P08-T04** · Async job infrastructure · `NOT_STARTED` ⬜
   - Deps: P01-T05, P01-T07, P05-GATE · Wave: W1 · Track: BE · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

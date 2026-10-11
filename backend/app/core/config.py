@@ -31,6 +31,11 @@ class Settings(BaseSettings):
     redis_host: str = "127.0.0.1"
     redis_port: int = 6380
 
+    # Market-data provider keys (P08-T03). Empty means the provider is not configured; keys come
+    # from the environment or a secret manager, never from source, and never appear in logs.
+    coingecko_api_key: SecretStr = SecretStr("")
+    twelvedata_api_key: SecretStr = SecretStr("")
+
     readiness_timeout_seconds: float = 2.0
     otel_service_name: str = "wealthsphere-api"
     otel_exporter_otlp_endpoint: str = ""

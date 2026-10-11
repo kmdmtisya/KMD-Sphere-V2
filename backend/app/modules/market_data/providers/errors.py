@@ -21,6 +21,12 @@ class RateLimited(ProviderUnavailable):
         self.retry_after = retry_after
 
 
+class ProviderAuthError(ProviderUnavailable):
+    """The provider refused our credentials (a missing, wrong or revoked key, or a plan that does
+    not include the call). Not retried (asking again changes nothing) but it does count against
+    the provider's health and lets a fallback chain move on. The message never contains the key."""
+
+
 class CircuitOpen(ProviderUnavailable):
     """The call was not made because the provider has failed repeatedly and is being left alone."""
 
