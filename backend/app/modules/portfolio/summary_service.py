@@ -87,6 +87,15 @@ class SummaryService:
         rates = await self._rates(currencies, portfolio.base_currency)
         return compute_summary(portfolio.base_currency, holdings, valuations, entries, rates)
 
+    async def rates(self, currencies: set[str], target: str) -> dict[str, Rate]:
+        """The latest rates from each of `currencies` into `target`, with their provenance (for
+        net worth). A currency without a usable rate is left out."""
+        return await self._rates(currencies, target)
+
+    async def reporting_currency(self, user_id: uuid.UUID, currency: str | None) -> str:
+        """`currency`, or the user's base currency when it is None."""
+        return currency or (await IdentityService(self._session).me(user_id)).base_currency
+
     async def _rates(self, currencies: set[str], target: str) -> dict[str, Rate]:
         """Latest rates into `target`. A missing rate is left out (the figures report it)."""
         rates: dict[str, Rate] = {}
@@ -95,7 +104,7 @@ class SummaryService:
                 q = await self._fx.quote(currency, target)
             except FxRateUnavailable:
                 continue
-            rates[currency] = Rate(currency, q.rate, q.as_of, q.stale)
+            rates[currency] = Rate(currency, q.rate, q.as_of, q.stale, q.provider, q.inverted)
         return rates
 
     async def _out(

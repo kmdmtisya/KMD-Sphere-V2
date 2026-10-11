@@ -29,6 +29,7 @@ from app.modules.forecasting import api as forecasting_api
 from app.modules.goals import api as goals_api
 from app.modules.identity import api as identity_api
 from app.modules.market_data import api as market_data_api
+from app.modules.networth import api as networth_api
 from app.modules.portfolio import api as portfolio_api
 from app.modules.portfolio import summary_api
 from app.modules.transactions import api as transactions_api
@@ -93,6 +94,10 @@ def create_app(
                 "description": "User-entered values of assets without a market price",
             },
             {
+                "name": "net worth",
+                "description": "Liabilities, and net worth with the FX rates used",
+            },
+            {
                 "name": "goals",
                 "description": "Goals and their progress under stated assumptions (estimates)",
             },
@@ -148,6 +153,8 @@ def create_app(
     app.include_router(valuations_api.router)
     app.include_router(forecasting_api.router)
     app.include_router(goals_api.router)
+    app.include_router(networth_api.router)
+    app.include_router(networth_api.networth_router)
     telemetry.instrument(app)
     return app
 
