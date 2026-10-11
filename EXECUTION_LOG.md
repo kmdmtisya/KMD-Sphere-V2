@@ -925,3 +925,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-11T23:28:33+04:00 — COMPLETE P07-T08
 - duration: 22m 27s
 - evidence: More tab with net worth, income and settings (theme, app lock, account) views; unavailable items (Reports, Alerts, Documents, reporting currency, notifications) labelled Coming soon and not openable; demo totals tested equal to the Home dashboard; 49 new tests incl. accessibility guidelines light/dark 1x/2x LTR/RTL; analyze and format clean; full mobile suite 1351 passed locally. PR #77. CI all gates pass.
+
+### 2026-10-11T23:38:06+04:00 — START P07-T09
+- Journeys and accessibility sweep (gate 3)
+- prerequisites verified COMPLETED

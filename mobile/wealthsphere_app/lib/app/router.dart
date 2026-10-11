@@ -59,8 +59,9 @@ final Map<AppTab, RouteBase Function()> tabRoutes =
                 path: ':symbol',
                 builder: (context, state) => InvestmentDetailScreen(
                   symbol: state.pathParameters['symbol']!,
+                  // Pushed, so Back returns to this investment (not the whole ledger).
                   onOpenTransaction: (entry) =>
-                      context.go(AppRoutes.transaction(entry.id)),
+                      context.push(AppRoutes.transaction(entry.id)),
                 ),
               ),
             ],
@@ -87,7 +88,8 @@ final Map<AppTab, RouteBase Function()> tabRoutes =
                 path: ':id',
                 builder: (context, state) => TransactionDetailScreen(
                   entryId: state.pathParameters['id']!,
-                  onOpenEntry: (id) => context.go(AppRoutes.transaction(id)),
+                  // Pushed, so Back returns to the entry the user came from.
+                  onOpenEntry: (id) => context.push(AppRoutes.transaction(id)),
                   onAddCorrected: (entry) =>
                       context.go(AppRoutes.addTransaction, extra: entry),
                 ),

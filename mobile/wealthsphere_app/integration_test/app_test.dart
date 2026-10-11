@@ -1,11 +1,13 @@
-// Integration journeys for UX Gate 2 (P03-T07, UI plan step 15).
+// Integration journeys for UX Gate 2 (P03-T07, UI plan step 15) and UX Gate 3 (P07-T09).
 //
 // These run the real app (DEMO data, real asset bundle, real on-device SharedPreferences) on an
 // attached device or emulator, not the synchronous test harness used by the widget tests:
 //
 //   flutter test integration_test/app_test.dart -d <device-id>
 //
-// Each journey matches one of the five listed in docs/UI_EXECUTION_PLAN.md step 15.
+// Journeys 1 to 5 match the five listed in docs/UI_EXECUTION_PLAN.md step 15. Journeys 6 to 10
+// cover the Gate 3 screens; the same flows also run in CI as widget tests
+// (test/journeys/gate3_journeys_test.dart).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -13,6 +15,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wealthsphere_app/app/app.dart';
 import 'package:wealthsphere_app/core/preferences/preferences_store.dart';
+import 'package:wealthsphere_app/shared/design_system/components/components.dart';
 import 'package:wealthsphere_app/shared/design_system/formatting/formatting.dart';
 import 'package:wealthsphere_app/shared/design_system/theme/theme.dart';
 
@@ -74,6 +77,65 @@ Future<void> waitForText(
     if (find.text(text).evaluate().isNotEmpty) return;
     await tester.pump(const Duration(seconds: 1));
   }
+  await tester.pumpAndSettle();
+}
+
+// ------------------------------------------------------------------------- Gate 3 helpers
+
+/// The vertical scrollable of the screen (or sheet) on top. A text field has a horizontal one.
+Finder get topScrollable => find
+    .byWidgetPredicate(
+      (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+    )
+    .last;
+
+/// Back to the top of the screen on top (a lazy list drops what scrolled far away).
+Future<void> toTop(WidgetTester tester) async {
+  await tester.drag(topScrollable, const Offset(0, 4000));
+  await tester.pumpAndSettle();
+}
+
+/// Scrolls the screen on top until [finder] is built and fully on screen.
+Future<void> bring(WidgetTester tester, Finder finder) async {
+  if (finder.evaluate().isEmpty) await toTop(tester);
+  if (finder.evaluate().isEmpty) {
+    await tester.scrollUntilVisible(finder, 300, scrollable: topScrollable);
+  }
+  await tester.ensureVisible(finder.first);
+  await tester.pumpAndSettle();
+}
+
+Future<void> press(WidgetTester tester, Finder finder) async {
+  await bring(tester, finder);
+  await tester.tap(finder.first);
+  await tester.pumpAndSettle(const Duration(seconds: 1));
+}
+
+Future<void> goBack(WidgetTester tester) async {
+  await tester.tap(find.byType(BackButton));
+  await tester.pumpAndSettle(const Duration(seconds: 1));
+}
+
+Finder textField(String label) => find.widgetWithText(TextField, label);
+
+/// The button called [label] on the card of the idea with [symbol].
+Finder buttonOn(String symbol, String label) => find.descendant(
+  of: find.ancestor(
+    of: find.textContaining(symbol),
+    matching: find.byType(OpportunityCard),
+  ),
+  matching: find.widgetWithText(OutlinedButton, label),
+);
+
+/// Lets a snack bar finish, so it does not cover what the next step taps.
+Future<void> dismissSnackBar(WidgetTester tester) async {
+  await tester.pump(const Duration(seconds: 6));
+  await tester.pumpAndSettle();
+}
+
+Future<void> pickTodayOrLater(WidgetTester tester) async {
+  await press(tester, find.text('Select a date'));
+  await tester.tap(find.text('OK'));
   await tester.pumpAndSettle();
 }
 
@@ -247,4 +309,180 @@ void main() {
       );
     },
   );
+
+  testWidgets(
+    'journey 6: holdings, search and filter, an investment, its transactions',
+    (tester) async {
+      await launchApp(tester);
+      await tapTab(tester, 'Portfolio');
+      await revealAndTap(tester, find.text('View all holdings'));
+      expect(find.textContaining('10 investments'), findsOneWidget);
+
+      await tester.enterText(textField('Search investments'), 'bond');
+      await tester.pumpAndSettle();
+      expect(find.textContaining('1 investment'), findsOneWidget);
+      await tester.tap(find.byTooltip('Clear search'));
+      await tester.pumpAndSettle();
+
+      await press(tester, find.widgetWithText(ChoiceChip, 'Equities'));
+      expect(find.textContaining('in Equities'), findsOneWidget);
+
+      await press(tester, find.text('DEMO-GEQ'));
+      expect(find.text('Demo Global Equity Fund'), findsWidgets);
+      expect(find.text('Buy'), findsNothing, reason: 'no trade action');
+      await press(tester, find.widgetWithText(ChoiceChip, 'Transactions'));
+      expect(find.byType(TransactionTile), findsWidgets);
+
+      await press(tester, find.byType(TransactionTile).first);
+      await goBack(tester);
+      expect(find.text('Demo Global Equity Fund'), findsWidgets);
+      await goBack(tester);
+      expect(find.text('Holdings'), findsWidgets);
+    },
+  );
+
+  testWidgets(
+    'journey 7: add a transaction, then correct it with a linked reversal',
+    (tester) async {
+      await launchApp(tester);
+      await tapTab(tester, 'Portfolio');
+      await press(tester, find.text('Transactions'));
+      await bring(tester, find.text('Reversed'));
+      expect(find.text('Reversed'), findsOneWidget);
+
+      await press(tester, find.text('Add transaction'));
+      await press(tester, find.text('Review'));
+      await toTop(tester);
+      expect(find.text('Portfolio is required.'), findsOneWidget);
+
+      await press(
+        tester,
+        find.widgetWithText(DropdownButtonFormField<String>, 'Portfolio'),
+      );
+      await tester.tap(find.text('Growth').last);
+      await tester.pumpAndSettle();
+      await press(
+        tester,
+        find.widgetWithText(DropdownButtonFormField<String>, 'Investment'),
+      );
+      await tester.tap(find.text('Demo Technology ETF').last);
+      await tester.pumpAndSettle();
+      await pickTodayOrLater(tester);
+      await tester.enterText(textField('Quantity'), '5');
+      await tester.enterText(textField('Price per unit'), '190.10');
+      await press(tester, find.text('Review'));
+      expect(find.text('Check before saving'), findsOneWidget);
+      await press(tester, find.text('Save transaction'));
+      expect(find.text('Transaction recorded'), findsOneWidget);
+
+      await press(tester, find.text('View transaction'));
+      await press(tester, find.text('Correct this entry'));
+      await tester.tap(find.text('Add reversal'));
+      await tester.pumpAndSettle();
+      await toTop(tester);
+      expect(
+        find.text('Reversal added. The entry is now marked as reversed.'),
+        findsOneWidget,
+      );
+      await press(tester, find.text('Add corrected entry'));
+      expect(find.textContaining('corrected version'), findsOneWidget);
+    },
+  );
+
+  testWidgets('journey 8: goals, add one with validation, view and edit it', (
+    tester,
+  ) async {
+    await launchApp(tester);
+    await tapTab(tester, 'Goals');
+    expect(
+      find.text('3 of 4 goals on track under your assumptions'),
+      findsOneWidget,
+    );
+
+    await press(tester, find.text('Add goal'));
+    await press(tester, find.text('Save goal'));
+    await toTop(tester);
+    expect(find.text('Enter a name for the goal.'), findsOneWidget);
+
+    await tester.enterText(textField('Goal name'), 'Car');
+    await tester.enterText(textField('Target amount'), '20000');
+    await pickTodayOrLater(tester);
+    await tester.enterText(textField('Contribution'), '300');
+    await tester.enterText(textField('Base annual return (%)'), '5');
+    await press(tester, find.text('Save goal'));
+    expect(find.textContaining("The demo can't calculate it"), findsOneWidget);
+
+    await dismissSnackBar(tester);
+    await press(tester, find.text('Edit goal'));
+    await tester.enterText(textField('Contribution'), '450');
+    await press(tester, find.text('Save goal'));
+    await dismissSnackBar(tester);
+    await bring(tester, find.text('Your assumptions'));
+    expect(find.text('Your assumptions'), findsOneWidget);
+  });
+
+  testWidgets(
+    'journey 9: Portfolio Doctor, then opportunities, compare and simulate',
+    (tester) async {
+      await launchApp(tester);
+      await tapTab(tester, 'AI Wealth');
+
+      await tester.tap(find.byTooltip('Portfolio Doctor'));
+      await tester.pumpAndSettle(const Duration(seconds: 1));
+      expect(find.text('Portfolio health'), findsOneWidget);
+      await press(tester, find.widgetWithText(ChoiceChip, 'Currency (1)'));
+      await press(tester, find.textContaining('weakened 10%'));
+      expect(find.text('What it would mean'), findsOneWidget);
+      await press(tester, find.text('Close'));
+      await goBack(tester);
+
+      await tester.tap(find.byTooltip('Investment opportunities'));
+      await tester.pumpAndSettle(const Duration(seconds: 1));
+      expect(find.textContaining('not live market data'), findsOneWidget);
+      await press(tester, find.widgetWithText(FilledButton, 'Research').first);
+      expect(find.text('What it is'), findsOneWidget);
+      await press(tester, find.text('Close'));
+
+      await press(tester, buttonOn('DEMO-GLB', 'Compare'));
+      await press(tester, buttonOn('DEMO-DVI', 'Compare'));
+      await press(tester, find.text('Compare 2 selected'));
+      expect(find.text('Compare ideas'), findsOneWidget);
+      await goBack(tester);
+
+      await press(tester, buttonOn('DEMO-GLB', 'Simulate'));
+      expect(
+        find.textContaining('Pre-filled from Demo Global Index ETF (DEMO)'),
+        findsOneWidget,
+      );
+      await press(tester, find.byKey(const ValueKey('calculate')));
+      expect(find.text('Wealth forecast'), findsWidgets);
+    },
+  );
+
+  testWidgets('journey 10: More, net worth, income, settings and theme', (
+    tester,
+  ) async {
+    await launchApp(tester);
+    await tapTab(tester, 'More');
+    expect(find.text('Coming soon'), findsWidgets);
+
+    await press(tester, find.text('Net worth'));
+    expect(find.text(r'$168,286.35'), findsOneWidget);
+    await goBack(tester);
+    await press(tester, find.text('Income'));
+    expect(find.text(r'$1,245.30'), findsOneWidget);
+    await goBack(tester);
+
+    await press(tester, find.text('Settings'));
+    Brightness shown() =>
+        Theme.of(tester.element(find.byType(Scaffold).last)).brightness;
+    // The device may be in dark mode, so choose both explicitly.
+    await press(tester, find.text('Light'));
+    expect(shown(), Brightness.light);
+    await press(tester, find.text('Dark'));
+    expect(shown(), Brightness.dark);
+    await press(tester, find.text('System'));
+    await goBack(tester);
+    expect(find.text('Your wealth'), findsOneWidget);
+  });
 }
