@@ -649,13 +649,13 @@
   - [x] P06-T10.1 Document formulas
   - [x] P06-T10.2 Independent vectors
   - [x] P06-T10.3 User review
-- [ ] **P06-GATE** · Phase P06 exit gate · `IN_PROGRESS` 🔄
+- [x] **P06-GATE** · Phase P06 exit gate · `COMPLETED` ✅
   - Deps: P06-T01, P06-T02, P06-T03, P06-T04, P06-T05, P06-T06, P06-T07, P06-T08, P06-T09, P06-T10 · Wave: W6 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-03.4, QG-03.5, QG-06.1, QG-06.3, QG-06.4, QG-06.6
-  - Started: 2026-10-11T18:36:52+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P06-GATE.1 Run gates
-  - [ ] P06-GATE.2 Present summary
-  - [ ] P06-GATE.3 Record approval
+  - Started: 2026-10-11T18:36:52+04:00 · Completed: 2026-10-11T18:51:04+04:00 · Duration: 14m 12s · Blocker: —
+  - Evidence: P06 exit gate approved by the user 2026-10-11 after summary (PR #68). Gate summary presented 2026-10-11 and approved by the user. P06-T01..T10 complete (PRs #56-#67); QG-03.4 (traceability matrix, PR #68), QG-03.5, QG-06.1, QG-06.3, QG-06.4 and QG-06.6 recorded with evidence. Backend 1425 passed, coverage 92%, module policy OK; -m security passed; CI gates pass. Accepted carry-forwards: listed assets are valued only from manual valuations until market prices (P08); the DEMO forecast fixture is regenerated in P09-T03; liability balance history is future work; fx and ai modules not yet built. · Approved by: user (mtisya@gmail.com)
+  - [x] P06-GATE.1 Run gates
+  - [x] P06-GATE.2 Present summary
+  - [x] P06-GATE.3 Record approval
 
 
 ## P07 — Remaining Screens with DEMO Data (UX Gate 3)
