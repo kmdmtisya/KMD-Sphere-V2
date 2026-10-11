@@ -704,10 +704,10 @@
   - [x] P07-T05.2 Add/edit
   - [x] P07-T05.3 Required contribution display
   - [x] P07-T05.4 Tests
-- [ ] **P07-T06** · Portfolio Doctor (screen 12) · `IN_PROGRESS` 🔄
+- [x] **P07-T06** · Portfolio Doctor (screen 12) · `COMPLETED` ✅
   - Deps: P07-T01 · Wave: W2 · Track: MOB · Size: M · Approval: no
-  - Started: 2026-10-11T22:01:20+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-11T22:01:20+04:00 · Completed: 2026-10-11T22:22:23+04:00 · Duration: 21m 03s · Blocker: —
+  - Evidence: Portfolio Doctor screen: health overview with severity shown as icon and word, findings by type with the figures behind them, DEMO what-if scenarios in a sheet, no trade/rebalance action anywhere (guard test across all filter states); entry from AI Wealth; 30 new tests incl. accessibility guidelines light/dark 1x/2x LTR/RTL; analyze and format clean; full mobile suite 1255 passed locally. PR #75. CI all gates pass.
   - [x] P07-T06.1 Overview
   - [x] P07-T06.2 Findings tabs
   - [x] P07-T06.3 Scenario actions
