@@ -679,10 +679,10 @@
   - [x] P07-T02.1 Screen
   - [x] P07-T02.2 Search/filter/sort
   - [x] P07-T02.3 Tests
-- [ ] **P07-T03** · Transactions (screen 8) and add-transaction flow · `IN_PROGRESS` 🔄
+- [x] **P07-T03** · Transactions (screen 8) and add-transaction flow · `COMPLETED` ✅
   - Deps: P07-T01 · Wave: W2 · Track: MOB · Size: L · Approval: no
-  - Started: 2026-10-11T20:13:26+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-11T20:13:26+04:00 · Completed: 2026-10-11T20:42:42+04:00 · Duration: 29m 16s · Blocker: —
+  - Evidence: Transactions list with filter chips and month grouping, add-transaction flow (inline validation, review, confirmation) and correction view where reversals are linked entries, not edits; 89 new tests (validation, repository append-only rules, screens, routes, accessibility guidelines light/dark 1x/2x LTR/RTL); analyze and format clean; full mobile suite 1120 passed locally. PR #72. CI all gates pass.
   - [x] P07-T03.1 List and filters
   - [x] P07-T03.2 Add flow
   - [x] P07-T03.3 Confirmation
