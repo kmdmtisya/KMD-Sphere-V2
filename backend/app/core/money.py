@@ -42,7 +42,8 @@ def round_half_up(value: Decimal, places: int) -> Decimal:
 def round_up(value: Decimal, places: int) -> Decimal:
     """Towards positive infinity: for an amount that must be enough (a required contribution,
     ADR-0006 exception 1). Not for presenting results."""
-    return value.quantize(Decimal(1).scaleb(-places), rounding=ROUND_CEILING)
+    rounded = value.quantize(Decimal(1).scaleb(-places), rounding=ROUND_CEILING)
+    return rounded + 0  # never a negative zero
 
 
 _DECIMAL = re.compile(DECIMAL_PATTERN)
