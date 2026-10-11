@@ -31,11 +31,11 @@ def test_matches_the_annuity_closed_form() -> None:
         expected = (Decimal(1000000) - 10000 * growth) / ((growth - 1) / i)
     result = required_contribution(DEFAULTS, Decimal(1000000))
     assert abs(result.exact - expected) < Decimal("1e-40")
-    assert result.amount == expected.quantize(Decimal("0.01"), rounding="ROUND_HALF_UP")
-    assert result.amount == Decimal("1725.37")
+    assert result.amount == expected.quantize(Decimal("0.01"), rounding="ROUND_CEILING")
+    assert result.amount == Decimal("1725.38")  # 1725.3726 rounded up (ADR-0006 exception 1)
     assert not result.reached_without_contributions
-    # Paying the rounded amount lands within half a cent x 553.7 (the value per unit) of target.
-    assert result.projection.final_nominal == Decimal("999998.55")
+    # Paying the rounded-up amount always reaches the target (half-up gave 999998.55).
+    assert result.projection.final_nominal == Decimal("1000004.09")
 
 
 def test_its_own_contribution_is_ignored() -> None:
@@ -107,8 +107,8 @@ def test_the_exact_amount_reaches_the_target(
         assert reached >= target - unit
         return
     assert result.exact > 0
-    # With the rounded amount the target is met to within rounding: half a unit per unit of
-    # contribution value, plus the rounding of the reported value itself.
+    # Rounded up: never short of the target (beyond the rounding of the reported value), and
+    # over it by at most one unit per unit of contribution value.
     with localcontext() as ctx:
         ctx.prec = 60
         zero = replace(inp, contribution=Decimal(0))
@@ -116,7 +116,8 @@ def test_the_exact_amount_reaches_the_target(
         per_unit = _exact_final(one) - _exact_final(zero)
         if real:
             per_unit /= (1 + inp.inflation_percent / 100) ** inp.years
-    assert abs(reached - target) <= unit / 2 * per_unit + unit
+    assert reached >= target - unit / 2
+    assert reached - target <= unit * per_unit + unit
 
 
 @settings(max_examples=80, deadline=None)

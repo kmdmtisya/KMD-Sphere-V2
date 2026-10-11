@@ -1,6 +1,7 @@
 """P06-T10: the application's financial engines against an independent oracle (tests/oracle.py,
 exact rational arithmetic written from the specification). Methods: docs/financial-methods.md."""
 
+import math
 import uuid
 from datetime import UTC, date, datetime, timedelta
 from decimal import Decimal
@@ -461,10 +462,9 @@ def test_the_workbook_vectors() -> None:
     assert (o.to_decimal(value, 2), o.to_decimal(paid, 2)) == (D("321473.53"), D("130000.00"))
 
     goal = required_contribution(defaults, D(1000000))
-    assert goal.amount == D("1725.37")
-    assert o.to_decimal(o.required_monthly(F(10000), F(1000000), F(8), F(1, 2), 240), 2) == D(
-        "1725.37"
-    )
+    monthly = o.required_monthly(F(10000), F(1000000), F(8), F(1, 2), 240)
+    assert goal.amount == D("1725.38")  # rounded up so it is enough (ADR-0006 exception 1)
+    assert math.ceil(monthly * 100) == 172538 and o.to_decimal(monthly, 2) == D("1725.37")
 
     ledger = [
         o.Tx("1", "BUY", DAY0, 1, "a", F(10), F(1000), F(4), F(0), F(1)),

@@ -8,7 +8,7 @@ import pytest
 from hypothesis import given, settings
 from hypothesis import strategies as st
 
-from app.modules.forecasting.engine import ForecastInput, Frequency, value_after
+from app.modules.forecasting.engine import Frequency
 from app.modules.goals.progress import (
     Assumptions,
     GoalInput,
@@ -171,12 +171,10 @@ def test_status_and_required_contribution_agree(
     # Measured on the unrounded projection (a rounded 1.00 can still be short of 1.00).
     assert (p.status == "on_track") == base.reaches_target
     assert p.required_contribution is not None
-    # Paying the required amount reaches the target (to within rounding of the amount).
+    # Paying the required amount (rounded up) reaches the target.
     paying = progress(replace(goal, assumptions=replace(goal.assumptions,
                                                         contribution=p.required_contribution)),
                       current, TODAY)  # fmt: skip
-    # Half a cent of rounding per unit of contribution value, plus the rounding of the projection.
-    unit = ForecastInput("USD", D(0), D(1), rate, 1)
-    per_unit = value_after(unit, months)[0]
-    assert paying.scenarios[0].nominal >= target - D("0.005") * per_unit - D("0.01")
+    # Rounded up, it is never short: only the projection's own rounding (half a cent) remains.
+    assert paying.scenarios[0].nominal >= target - D("0.005")
     assert D(0) <= p.progress_percent <= 100

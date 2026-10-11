@@ -173,9 +173,9 @@ async def test_goal_returns_the_required_contribution(
     assert r.status_code == 200, r.text
     body = r.json()
     # Closed form: (T - PV (1+i)^N) / (((1+i)^N - 1) / i), i = 7.5%/12, N = 240.
-    assert body["required_contribution"] == usd("1725.37")
+    assert body["required_contribution"] == usd("1725.38")  # rounded up, ADR-0006
     assert body["reached_without_contributions"] is False
-    assert body["projection"]["final_nominal"] == usd("999998.55")  # within rounding
+    assert body["projection"]["final_nominal"] == usd("1000004.09")  # never short
     assert body["notice"] == NOTICE and body["assumptions"]["target_in_todays_money"] is False
     _no_json_numbers(body)
 
@@ -184,8 +184,9 @@ async def test_goal_returns_the_required_contribution(
             http, two_users, "/api/v1/forecasts/goal", GOAL | {"target_in_todays_money": True}
         )
     ).json()
-    assert Decimal(real["required_contribution"]["amount"]) > Decimal("1725.37")
-    assert abs(Decimal(real["projection"]["final_real"]["amount"]) - 1000000) <= 2
+    assert Decimal(real["required_contribution"]["amount"]) > Decimal("1725.38")
+    reached = Decimal(real["projection"]["final_real"]["amount"])
+    assert 0 <= reached - 1000000 <= 5  # rounded up: never short, and over by cents of a month
 
     reached = (
         await post(http, two_users, "/api/v1/forecasts/goal", GOAL | {"target": usd("40000.00")})

@@ -128,3 +128,26 @@ def test_money_amount_is_written_as_a_string_with_its_digits() -> None:
 def test_money_rejects_numbers_bad_codes_and_extra_fields(payload: dict[str, object]) -> None:
     with pytest.raises(ValidationError):
         Money.model_validate(payload)
+
+
+@pytest.mark.parametrize(
+    ("value", "places", "expected"),
+    [
+        ("1725.3726", 2, "1725.38"),  # up, where half-up gives 1725.37
+        ("1725.3701", 2, "1725.38"),
+        ("1725.37", 2, "1725.37"),  # already exact: unchanged
+        ("0.001", 2, "0.01"),
+        ("0", 2, "0.00"),
+        ("1500.2", 0, "1501"),
+        ("1.0001", 3, "1.001"),
+        ("-0.009", 2, "0.00"),  # towards positive infinity
+    ],
+)
+def test_round_up_is_for_amounts_that_must_be_enough(
+    value: str, places: int, expected: str
+) -> None:
+    from app.core.money import round_up
+
+    result = round_up(Decimal(value), places)
+    assert str(result) == expected
+    assert result >= Decimal(value)

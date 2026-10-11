@@ -8,7 +8,7 @@ from datetime import date
 from decimal import Decimal, localcontext
 from typing import Literal
 
-from app.core.money import minor_units, round_half_up
+from app.core.money import minor_units, round_half_up, round_up
 from app.modules.forecasting.engine import (
     MAX_YEARS,
     ForecastInput,
@@ -121,7 +121,7 @@ def progress(goal: GoalInput, current: Decimal, today: date) -> Progress:
         exact = required_contribution_by(
             base_input, goal.target, months, real=goal.target_in_todays_money
         )
-        required = None if exact is None else round_half_up(exact, places)
+        required = None if exact is None else round_up(exact, places)
     completion = months_to_reach(
         base_input, goal.target, real=goal.target_in_todays_money, limit=SEARCH_MONTHS
     )
