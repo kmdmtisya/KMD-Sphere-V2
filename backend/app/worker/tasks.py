@@ -9,6 +9,7 @@ import redis
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import get_settings
+from app.modules.alerts.evaluation import evaluate_alerts
 from app.modules.market_data.ingestion import (
     IngestFailure,
     IngestResult,
@@ -173,5 +174,27 @@ def backfill_fx_job(base: str, quote: str, start: str, end: str) -> dict[str, ob
             return await backfill_fx(session, fx, base, quote, first, last)
 
         return await _guarded(sessions, "backfill_fx", f"{base}{quote}:{start}:{end}", work)
+
+    return run_async(go)
+
+
+# ----------------------------------------------------------------------------------- alerts
+@celery_app.task(base=JobTask, name="app.worker.tasks.evaluate_alerts")
+def evaluate_alerts_job(bucket: str | None = None) -> dict[str, object]:
+    """Fires the active alerts whose condition holds on fresh data. Runs after price ingestion;
+    evaluating the same data again fires nothing more."""
+    key = bucket or _bucket(datetime.now(UTC), 15)
+
+    async def go(sessions: SessionFactory) -> dict[str, object]:
+        outcome = await run_once(sessions, "evaluate_alerts", key, evaluate_alerts)
+        if outcome.skipped or outcome.value is None:
+            return {"skipped": True}
+        r = outcome.value
+        return {
+            "evaluated": r.evaluated,
+            "triggered": r.triggered,
+            "skipped_by_preferences": r.skipped_by_preferences,
+            "skipped_no_fresh_data": r.skipped_no_fresh_data,
+        }
 
     return run_async(go)

@@ -60,6 +60,21 @@ IDOR_TESTS: dict[tuple[str, str], str] = {
     ("GET", "/api/v1/portfolios/{portfolio_id}/summary"): (
         "tests.test_summary_api::test_bob_cannot_read_alices_summary"
     ),
+    ("DELETE", "/api/v1/watchlist/{asset_id}"): (
+        "tests.test_alerts_api::test_bob_cannot_remove_alices_watchlist_item"
+    ),
+    ("GET", "/api/v1/alerts/{alert_id}"): (
+        "tests.test_alerts_api::test_bob_cannot_read_alices_alert"
+    ),
+    ("PATCH", "/api/v1/alerts/{alert_id}"): (
+        "tests.test_alerts_api::test_bob_cannot_change_alices_alert"
+    ),
+    ("DELETE", "/api/v1/alerts/{alert_id}"): (
+        "tests.test_alerts_api::test_bob_cannot_delete_alices_alert"
+    ),
+    ("POST", "/api/v1/alerts/events/{event_id}/seen"): (
+        "tests.test_alerts_api::test_bob_cannot_mark_alices_event_seen"
+    ),
     ("GET", "/api/v1/goals/{goal_id}"): "tests.test_goals_api::test_bob_cannot_read_alices_goal",
     ("PATCH", "/api/v1/goals/{goal_id}"): (
         "tests.test_goals_api::test_bob_cannot_change_alices_goal"

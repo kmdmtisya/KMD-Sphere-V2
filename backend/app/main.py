@@ -31,6 +31,7 @@ from app.core.ratelimit import (
 )
 from app.core.telemetry import Telemetry
 from app.db.session import Database
+from app.modules.alerts import api as alerts_api
 from app.modules.assets import api as assets_api
 from app.modules.forecasting import api as forecasting_api
 from app.modules.goals import api as goals_api
@@ -173,6 +174,9 @@ def create_app(
     app.include_router(assets_api.classes_router)
     app.include_router(assets_api.router)
     app.include_router(summary_api.router)  # before the portfolio routes (consolidated)
+    app.include_router(alerts_api.watchlist_router)
+    app.include_router(alerts_api.alerts_router)
+    app.include_router(alerts_api.preferences_router)
     app.include_router(portfolio_api.router)
     app.include_router(transactions_api.router)
     app.include_router(transactions_api.holdings_router)

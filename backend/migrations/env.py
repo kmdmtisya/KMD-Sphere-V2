@@ -18,6 +18,7 @@ if config.config_file_name is not None:
 
 # Import every module's models here so autogenerate and `alembic check` see them.
 import app.core.audit  # noqa: E402
+import app.modules.alerts.models  # noqa: E402
 import app.modules.assets.models  # noqa: E402
 import app.modules.goals.models  # noqa: E402
 import app.modules.identity.models  # noqa: E402
