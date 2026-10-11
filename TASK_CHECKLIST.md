@@ -712,10 +712,10 @@
   - [x] P07-T06.2 Findings tabs
   - [x] P07-T06.3 Scenario actions
   - [x] P07-T06.4 Tests
-- [ ] **P07-T07** · AI Investment Opportunities (screen 13) · `IN_PROGRESS` 🔄
+- [x] **P07-T07** · AI Investment Opportunities (screen 13) · `COMPLETED` ✅
   - Deps: P07-T01, P03-T04 · Wave: W3 · Track: MOB · Size: L · Approval: no
-  - Started: 2026-10-11T22:32:31+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-11T22:32:31+04:00 · Completed: 2026-10-11T22:55:56+04:00 · Duration: 23m 25s · Blocker: —
+  - Evidence: AI Investment Opportunities screen (DEMO): category chips, OpportunityCards with risk, evidence, data-as-of and an explained score (factors add up, tested), research sheet, compare view (up to 3, no ranking), Simulate hand-off that pre-fills the calculator with marked, editable example assumptions (also when the calculator is already open); banner and badges state the ideas are mock, not live; no trade actions (guard test); 47 new tests incl. accessibility guidelines light/dark 1x/2x LTR/RTL; analyze and format clean; full mobile suite 1302 passed locally. PR #76. CI all gates pass.
   - [x] P07-T07.1 List and chips
   - [x] P07-T07.2 Research sheet
   - [x] P07-T07.3 Compare view
