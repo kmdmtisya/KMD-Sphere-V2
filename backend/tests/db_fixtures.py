@@ -28,7 +28,12 @@ async def migrated_settings() -> AsyncIterator[Settings]:
     finally:
         await admin.close()
     settings = base.model_copy(
-        update={"postgres_db": name, "oidc_issuer": "", "rate_limit_storage": "memory"}
+        update={
+            "postgres_db": name,
+            "oidc_issuer": "",
+            "rate_limit_storage": "memory",
+            "analytics_cache": "memory",
+        }
     )
     cfg = Config(str(BACKEND / "alembic.ini"))
     cfg.set_main_option("script_location", str(BACKEND / "migrations"))

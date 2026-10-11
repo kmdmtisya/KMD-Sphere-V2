@@ -25,7 +25,7 @@ MAX_POINTS = 1000
 RateAt = Callable[[str, date], Decimal | None]  # currency, day -> rate into the base currency
 
 
-class Frequency(StrEnum):
+class SeriesFrequency(StrEnum):
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -55,15 +55,15 @@ class Point:
     unconverted: frozenset[str]  # currencies without a historical rate on the date
 
 
-def dates(start: date, end: date, frequency: Frequency) -> list[date]:
+def dates(start: date, end: date, frequency: SeriesFrequency) -> list[date]:
     """`start`, then the end of each period up to `end`, and `end` itself. Monthly periods end
     on the last day of each month; weekly ones every 7 days."""
     if end < start:
         raise ValueError("end must not be before start")
     out = [start]
-    if frequency == Frequency.DAILY:
+    if frequency == SeriesFrequency.DAILY:
         out += [start + timedelta(days=i) for i in range(1, (end - start).days + 1)]
-    elif frequency == Frequency.WEEKLY:
+    elif frequency == SeriesFrequency.WEEKLY:
         day = start + timedelta(days=7)
         while day < end:
             out.append(day)

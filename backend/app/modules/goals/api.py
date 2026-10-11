@@ -7,10 +7,11 @@ import uuid
 from datetime import UTC, datetime
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends, Request, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.api_responses import UNAUTHORIZED, conflict, invalid, not_found
+from app.core.cache import ResponseCache
 from app.db.session import get_session
 from app.modules.goals.schemas import (
     GoalCreate,
@@ -53,9 +54,18 @@ async def list_goals(user: CurrentUserDep, session: SessionDep) -> list[GoalOut]
 
 
 @router.get("/summary", response_model=GoalsSummaryOut, responses=UNAUTHORIZED)
-async def goals_summary(user: CurrentUserDep, session: SessionDep) -> GoalsSummaryOut:
+async def goals_summary(
+    request: Request, user: CurrentUserDep, session: SessionDep
+) -> GoalsSummaryOut:
     """Progress and status of every goal, and how many are on track (estimates)."""
-    return await GoalService(session).summary(user.id, _now())
+    cache: ResponseCache = request.app.state.response_cache
+    return await cache.cached(
+        user.id,
+        "goals-summary",
+        {},
+        GoalsSummaryOut,
+        lambda: GoalService(session).summary(user.id, _now()),
+    )
 
 
 @router.get("/{goal_id}", response_model=GoalOut, responses={**UNAUTHORIZED, **_NOT_FOUND})

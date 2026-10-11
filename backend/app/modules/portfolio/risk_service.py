@@ -22,7 +22,7 @@ from app.modules.market_data.fx import (
 )
 from app.modules.market_data.service import FxService
 from app.modules.portfolio import history
-from app.modules.portfolio.history import Frequency, Point, Valued
+from app.modules.portfolio.history import Point, SeriesFrequency, Valued
 from app.modules.portfolio.repository import PortfolioRepository
 from app.modules.transactions.holdings_service import HoldingsService
 from app.modules.transactions.valuations_service import ValuationService
@@ -31,7 +31,7 @@ from app.modules.transactions.valuations_service import ValuationService
 @dataclass(frozen=True)
 class PortfolioRisk:
     currency: str
-    frequency: Frequency
+    frequency: SeriesFrequency
     start: date
     end: date
     points: list[Point]
@@ -49,7 +49,7 @@ class RiskService:
         self,
         user_id: uuid.UUID,
         portfolio_id: uuid.UUID,
-        frequency: Frequency = Frequency.MONTHLY,
+        frequency: SeriesFrequency = SeriesFrequency.MONTHLY,
         start: date | None = None,
         end: date | None = None,
         now: datetime | None = None,

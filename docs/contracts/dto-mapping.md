@@ -31,8 +31,8 @@ Dart: `mobile/wealthsphere_app/lib/shared/domain/wealth_models.dart`
 | `base_currency` | `currency` | renamed | Mapped by the live repository. | P09-T02 |
 | `value` | `total_value` | renamed | Mapped by the live repository. | P09-T02 |
 | `invested` | `net_contributions` | renamed | "Invested" means money put in (deposits minus withdrawals). | P09-T02 |
-| `profit_loss` | - | dto-only | total_gain from the performance service (P06-T03, docs/design/performance.md), published by the analytics API. The app never derives it. | P06-T09 |
-| `return_percent` | - | dto-only | simple_return from the performance service (P06-T03; method stated in docs/design/performance.md), published by the analytics API. The app never derives it. | P06-T09 |
+| `profit_loss` | - | dto-only | From GET /api/v1/portfolios/{portfolio_id}/performance (profit_loss); the live repository combines it with the summary. The app never derives it. | P09-T02 |
+| `return_percent` | - | dto-only | From GET /api/v1/portfolios/{portfolio_id}/performance (return_percent); the live repository combines it with the summary. The app never derives it. | P09-T02 |
 | `as_of` | `freshness.data_as_of` | renamed | The oldest input the figures use, so the app never shows them as fresher than they are. | P09-T02 |
 | - | `holdings_value` | api-only | Read with cash for the Home breakdown. | P09-T02 |
 | - | `cash` | api-only | Read for the Home breakdown. | P09-T02 |
@@ -165,15 +165,40 @@ Dart: `mobile/wealthsphere_app/lib/shared/domain/wealth_models.dart`
 | - | `fx_rates` | api-only | FX provenance shown with converted figures. | P09-T05 |
 | - | `freshness.complete` | api-only | Drives the incomplete-data notice. | P09-T05 |
 
+### IncomeSummary - `GET /api/v1/income/summary` (IncomeSummaryOut)
+
+Dart: `mobile/wealthsphere_app/lib/shared/domain/wealth_models.dart`
+
+| DTO field | API field | Status | Resolution | Owner |
+|---|---|---|---|---|
+| `monthly` | `monthly` | same |  |  |
+| `yearly` | `yearly` | same |  |  |
+| `as_of` | `as_of` | same |  |  |
+| - | `currency` | api-only | Also on every Money. | P09-T05 |
+| - | `yearly_gross` | api-only | Income screen: before fees and taxes. | P09-T05 |
+| - | `portfolios` | api-only | Income screen: per portfolio. | P09-T05 |
+| - | `complete` | api-only | Drives the incomplete-data notice. | P09-T05 |
+
+### AllocationShare - `GET /api/v1/portfolios/{portfolio_id}/allocation` (SliceOut)
+
+Dart: `mobile/wealthsphere_app/lib/shared/domain/wealth_models.dart`
+
+| DTO field | API field | Status | Resolution | Owner |
+|---|---|---|---|---|
+| `label` | `key` | renamed | The API gives the code (asset class, currency, ISO country, sector) or null for unclassified; the app localises it for display. | P09-T02 |
+| `value` | `value` | same |  |  |
+| `weight_percent` | `weight_percent` | same |  |  |
+| - | `parts` | api-only | Number of positions in the slice (shown in details). | P09-T02 |
+
+The response groups slices by dimension: asset_class, currency_exposure, country and sector.
+
 ## DTOs whose API is not built yet
 
 These DEMO DTOs are the proposed contract; the owning task adopts them or updates this mapping.
 
 | DTO | Dart | JSON keys | Owner | Resolution |
 |---|---|---|---|---|
-| PerformanceSeries, PerformancePoint | `wealth_models.dart` | - | P06-T09 | Historical values come from the series builder (P06-T08); the analytics API (P06-T09) adopts these shapes or updates this mapping. |
-| AllocationShare | `wealth_models.dart` | `label`, `value`, `weight_percent` | P06-T04 | Allocation analytics; weights come from the server (largest remainder, ADR-0006). |
-| PerformanceMetrics | `wealth_models.dart` | `total_return_percent`, `cagr_percent`, `dividend_yield_percent`, `volatility_percent` | P06-T09 | Returns and CAGR from the performance service (P06-T03), dividend yield from income (P06-T05), volatility from risk (P06-T08); published by the analytics API (P06-T09). |
-| IncomeSummary | `wealth_models.dart` | `monthly`, `yearly`, `as_of` | P06-T09 | monthly = TTM net / 12 and yearly = TTM net from the income service (P06-T05, docs/design/income.md), published by the analytics API. |
+| PerformanceSeries, PerformancePoint | `wealth_models.dart` | - | P09-T02 | GET /api/v1/portfolios/{portfolio_id}/risk returns the value series (points with on, value, complete); the live repository maps it to these DTOs. |
+| PerformanceMetrics | `wealth_models.dart` | `total_return_percent`, `cagr_percent`, `dividend_yield_percent`, `volatility_percent` | P09-T02 | Composed by the live repository: return from /performance, CAGR as the annualised time-weighted return and volatility from /risk, dividend yield from /income. |
 | InsightSummary, EvidenceSourceDto | `wealth_models.dart` | `text`, `as_of`, `sources`, `label`, `provider` | P10-T06 | AI orchestrator (P10-T06): insights carry evidence with provider and as-of time. |
 | Chat events | `chat_models.dart` | `type`, `text`, `kind`, `label`, `provider`, `as_of` | P10-T06 | AI orchestrator streaming events (docs/api-conventions.md, Streaming). |

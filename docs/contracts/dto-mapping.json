@@ -84,15 +84,15 @@
           "dto": "profit_loss",
           "api": null,
           "status": "dto-only",
-          "resolution": "total_gain from the performance service (P06-T03, docs/design/performance.md), published by the analytics API. The app never derives it.",
-          "owner": "P06-T09"
+          "resolution": "From GET /api/v1/portfolios/{portfolio_id}/performance (profit_loss); the live repository combines it with the summary. The app never derives it.",
+          "owner": "P09-T02"
         },
         {
           "dto": "return_percent",
           "api": null,
           "status": "dto-only",
-          "resolution": "simple_return from the performance service (P06-T03; method stated in docs/design/performance.md), published by the analytics API. The app never derives it.",
-          "owner": "P06-T09"
+          "resolution": "From GET /api/v1/portfolios/{portfolio_id}/performance (return_percent); the live repository combines it with the summary. The app never derives it.",
+          "owner": "P09-T02"
         },
         {
           "dto": "as_of",
@@ -558,6 +558,90 @@
           "owner": "P09-T05"
         }
       ]
+    },
+    {
+      "dto": "IncomeSummary",
+      "dart": "lib/shared/domain/wealth_models.dart",
+      "api": "GET /api/v1/income/summary",
+      "schema": "IncomeSummaryOut",
+      "fields": [
+        {
+          "dto": "monthly",
+          "api": "monthly",
+          "status": "same"
+        },
+        {
+          "dto": "yearly",
+          "api": "yearly",
+          "status": "same"
+        },
+        {
+          "dto": "as_of",
+          "api": "as_of",
+          "status": "same"
+        },
+        {
+          "dto": null,
+          "api": "currency",
+          "status": "api-only",
+          "resolution": "Also on every Money.",
+          "owner": "P09-T05"
+        },
+        {
+          "dto": null,
+          "api": "yearly_gross",
+          "status": "api-only",
+          "resolution": "Income screen: before fees and taxes.",
+          "owner": "P09-T05"
+        },
+        {
+          "dto": null,
+          "api": "portfolios",
+          "status": "api-only",
+          "resolution": "Income screen: per portfolio.",
+          "owner": "P09-T05"
+        },
+        {
+          "dto": null,
+          "api": "complete",
+          "status": "api-only",
+          "resolution": "Drives the incomplete-data notice.",
+          "owner": "P09-T05"
+        }
+      ]
+    },
+    {
+      "dto": "AllocationShare",
+      "dart": "lib/shared/domain/wealth_models.dart",
+      "api": "GET /api/v1/portfolios/{portfolio_id}/allocation",
+      "schema": "SliceOut",
+      "fields": [
+        {
+          "dto": "label",
+          "api": "key",
+          "status": "renamed",
+          "resolution": "The API gives the code (asset class, currency, ISO country, sector) or null for unclassified; the app localises it for display.",
+          "owner": "P09-T02"
+        },
+        {
+          "dto": "value",
+          "api": "value",
+          "status": "same"
+        },
+        {
+          "dto": "weight_percent",
+          "api": "weight_percent",
+          "status": "same"
+        },
+        {
+          "dto": null,
+          "api": "parts",
+          "status": "api-only",
+          "resolution": "Number of positions in the slice (shown in details).",
+          "owner": "P09-T02"
+        }
+      ],
+      "notes": "The response groups slices by dimension: asset_class, currency_exposure, country and sector."
     }
   ],
   "pending": [
@@ -565,19 +649,8 @@
       "dto": "PerformanceSeries, PerformancePoint",
       "dart": "lib/shared/domain/wealth_models.dart",
       "keys": [],
-      "owner": "P06-T09",
-      "resolution": "Historical values come from the series builder (P06-T08); the analytics API (P06-T09) adopts these shapes or updates this mapping."
-    },
-    {
-      "dto": "AllocationShare",
-      "dart": "lib/shared/domain/wealth_models.dart",
-      "keys": [
-        "label",
-        "value",
-        "weight_percent"
-      ],
-      "owner": "P06-T04",
-      "resolution": "Allocation analytics; weights come from the server (largest remainder, ADR-0006)."
+      "owner": "P09-T02",
+      "resolution": "GET /api/v1/portfolios/{portfolio_id}/risk returns the value series (points with on, value, complete); the live repository maps it to these DTOs."
     },
     {
       "dto": "PerformanceMetrics",
@@ -588,19 +661,8 @@
         "dividend_yield_percent",
         "volatility_percent"
       ],
-      "owner": "P06-T09",
-      "resolution": "Returns and CAGR from the performance service (P06-T03), dividend yield from income (P06-T05), volatility from risk (P06-T08); published by the analytics API (P06-T09)."
-    },
-    {
-      "dto": "IncomeSummary",
-      "dart": "lib/shared/domain/wealth_models.dart",
-      "keys": [
-        "monthly",
-        "yearly",
-        "as_of"
-      ],
-      "owner": "P06-T09",
-      "resolution": "monthly = TTM net / 12 and yearly = TTM net from the income service (P06-T05, docs/design/income.md), published by the analytics API."
+      "owner": "P09-T02",
+      "resolution": "Composed by the live repository: return from /performance, CAGR as the annualised time-weighted return and volatility from /risk, dividend yield from /income."
     },
     {
       "dto": "InsightSummary, EvidenceSourceDto",

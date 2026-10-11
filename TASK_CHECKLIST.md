@@ -635,13 +635,13 @@
   - [x] P06-T08.2 Volatility
   - [x] P06-T08.3 Drawdown
   - [x] P06-T08.4 Tests
-- [ ] **P06-T09** · Analytics API and caching · `NOT_STARTED` ⬜
+- [ ] **P06-T09** · Analytics API and caching · `IN_PROGRESS` 🔄
   - Deps: P06-T03, P06-T04, P06-T05, P06-T07, P06-T08 · Wave: W4 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-11T15:43:25+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P06-T09.1 Endpoints
-  - [ ] P06-T09.2 Cache keys and invalidation
-  - [ ] P06-T09.3 Authorisation tests
+  - [x] P06-T09.1 Endpoints
+  - [x] P06-T09.2 Cache keys and invalidation
+  - [x] P06-T09.3 Authorisation tests
 - [ ] **P06-T10** · Financial correctness review · `NOT_STARTED` ⬜
   - Deps: P06-T09, P06-T02 · Wave: W5 · Track: QA · Size: M · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —

@@ -1,6 +1,59 @@
 {
   "components": {
     "schemas": {
+      "AllocationOut": {
+        "properties": {
+          "asset_class": {
+            "$ref": "#/components/schemas/DimensionOut"
+          },
+          "complete": {
+            "title": "Complete",
+            "type": "boolean"
+          },
+          "concentration": {
+            "$ref": "#/components/schemas/ConcentrationOut"
+          },
+          "country": {
+            "$ref": "#/components/schemas/DimensionOut"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "currency_exposure": {
+            "$ref": "#/components/schemas/DimensionOut"
+          },
+          "portfolio_id": {
+            "format": "uuid",
+            "title": "Portfolio Id",
+            "type": "string"
+          },
+          "sector": {
+            "$ref": "#/components/schemas/DimensionOut"
+          },
+          "total": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "unpriced_assets": {
+            "title": "Unpriced Assets",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "portfolio_id",
+          "currency",
+          "total",
+          "asset_class",
+          "currency_exposure",
+          "country",
+          "sector",
+          "concentration",
+          "complete",
+          "unpriced_assets"
+        ],
+        "title": "AllocationOut",
+        "type": "object"
+      },
       "AssetClassOut": {
         "properties": {
           "code": {
@@ -146,6 +199,68 @@
           "currency"
         ],
         "title": "AssetCreate",
+        "type": "object"
+      },
+      "AssetIncomeOut": {
+        "properties": {
+          "all_time": {
+            "$ref": "#/components/schemas/TotalsOut"
+          },
+          "asset_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Null: income without an asset (cash interest)",
+            "title": "Asset Id"
+          },
+          "current_yield_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Yield Percent"
+          },
+          "trailing_12m": {
+            "$ref": "#/components/schemas/TotalsOut"
+          },
+          "yield_on_cost_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Yield On Cost Percent"
+          }
+        },
+        "required": [
+          "asset_id",
+          "trailing_12m",
+          "all_time",
+          "current_yield_percent",
+          "yield_on_cost_percent"
+        ],
+        "title": "AssetIncomeOut",
         "type": "object"
       },
       "AssetOut": {
@@ -455,6 +570,113 @@
         "title": "CompoundForecastOut",
         "type": "object"
       },
+      "ConcentrationOut": {
+        "properties": {
+          "effective_positions": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effective Positions"
+          },
+          "hhi": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Herfindahl index of the positions (0 to 1)",
+            "title": "Hhi"
+          },
+          "largest": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Asset id, or cash:<currency>",
+            "title": "Largest"
+          },
+          "positions": {
+            "title": "Positions",
+            "type": "integer"
+          },
+          "top_1_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Top 1 Percent"
+          },
+          "top_3_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Top 3 Percent"
+          },
+          "top_5_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Top 5 Percent"
+          }
+        },
+        "required": [
+          "positions",
+          "hhi",
+          "effective_positions",
+          "top_1_percent",
+          "top_3_percent",
+          "top_5_percent",
+          "largest"
+        ],
+        "title": "ConcentrationOut",
+        "type": "object"
+      },
       "CurrencyShare": {
         "properties": {
           "currency": {
@@ -531,6 +753,120 @@
           "order"
         ],
         "title": "DashboardLayout",
+        "type": "object"
+      },
+      "DashboardOut": {
+        "properties": {
+          "as_of": {
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "complete": {
+            "description": "False when assets are unpriced or amounts in a currency could not be converted",
+            "title": "Complete",
+            "type": "boolean"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "goals": {
+            "$ref": "#/components/schemas/GoalsCard",
+            "description": "Goal statuses are estimates under stated assumptions"
+          },
+          "income": {
+            "$ref": "#/components/schemas/IncomeCard"
+          },
+          "net_worth": {
+            "$ref": "#/components/schemas/NetWorthCard"
+          }
+        },
+        "required": [
+          "currency",
+          "net_worth",
+          "income",
+          "goals",
+          "complete",
+          "as_of"
+        ],
+        "title": "DashboardOut",
+        "type": "object"
+      },
+      "DimensionOut": {
+        "properties": {
+          "hhi": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Herfindahl index of the slices (0 to 1)",
+            "title": "Hhi"
+          },
+          "slices": {
+            "items": {
+              "$ref": "#/components/schemas/SliceOut"
+            },
+            "title": "Slices",
+            "type": "array"
+          }
+        },
+        "required": [
+          "slices",
+          "hhi"
+        ],
+        "title": "DimensionOut",
+        "type": "object"
+      },
+      "DrawdownOut": {
+        "properties": {
+          "depth_percent": {
+            "description": "Fall from the peak, <= 0",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Depth Percent",
+            "type": "string"
+          },
+          "peak": {
+            "format": "date",
+            "title": "Peak",
+            "type": "string"
+          },
+          "recovered": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recovered"
+          },
+          "trough": {
+            "format": "date",
+            "title": "Trough",
+            "type": "string"
+          }
+        },
+        "required": [
+          "depth_percent",
+          "peak",
+          "trough",
+          "recovered"
+        ],
+        "title": "DrawdownOut",
         "type": "object"
       },
       "ForecastProjection": {
@@ -1447,6 +1783,24 @@
         "title": "GoalUpdate",
         "type": "object"
       },
+      "GoalsCard": {
+        "properties": {
+          "on_track": {
+            "title": "On Track",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "on_track",
+          "total"
+        ],
+        "title": "GoalsCard",
+        "type": "object"
+      },
       "GoalsSummaryOut": {
         "properties": {
           "as_of": {
@@ -1619,6 +1973,76 @@
           "value_source"
         ],
         "title": "HoldingOut",
+        "type": "object"
+      },
+      "IncomeCard": {
+        "properties": {
+          "monthly": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "yearly": {
+            "$ref": "#/components/schemas/Money"
+          }
+        },
+        "required": [
+          "monthly",
+          "yearly"
+        ],
+        "title": "IncomeCard",
+        "type": "object"
+      },
+      "IncomeSummaryOut": {
+        "properties": {
+          "as_of": {
+            "format": "date",
+            "title": "As Of",
+            "type": "string"
+          },
+          "complete": {
+            "title": "Complete",
+            "type": "boolean"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "monthly": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Passive income a month: trailing 12 months net / 12"
+          },
+          "portfolios": {
+            "items": {
+              "$ref": "#/components/schemas/PortfolioIncomeLine"
+            },
+            "title": "Portfolios",
+            "type": "array"
+          },
+          "unconverted_currencies": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Unconverted Currencies",
+            "type": "array"
+          },
+          "yearly": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Passive income a year: trailing 12 months net"
+          },
+          "yearly_gross": {
+            "$ref": "#/components/schemas/Money"
+          }
+        },
+        "required": [
+          "currency",
+          "monthly",
+          "yearly",
+          "yearly_gross",
+          "portfolios",
+          "unconverted_currencies",
+          "complete",
+          "as_of"
+        ],
+        "title": "IncomeSummaryOut",
         "type": "object"
       },
       "LiabilityCreate": {
@@ -2086,6 +2510,68 @@
         "title": "Money",
         "type": "object"
       },
+      "MoneyWeightedOut": {
+        "properties": {
+          "annual_return_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "XIRR (actual/365), annualised even for periods under a year",
+            "title": "Annual Return Percent"
+          },
+          "status": {
+            "enum": [
+              "ok",
+              "insufficient_flows",
+              "no_sign_change",
+              "no_rate_in_range"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "unique": {
+            "description": "The flows change sign once, so no other rate solves them",
+            "title": "Unique",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "status",
+          "annual_return_percent",
+          "unique"
+        ],
+        "title": "MoneyWeightedOut",
+        "type": "object"
+      },
+      "NetWorthCard": {
+        "properties": {
+          "assets": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "liabilities": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "net_worth": {
+            "$ref": "#/components/schemas/Money"
+          }
+        },
+        "required": [
+          "assets",
+          "liabilities",
+          "net_worth"
+        ],
+        "title": "NetWorthCard",
+        "type": "object"
+      },
       "NetWorthFreshness": {
         "properties": {
           "complete": {
@@ -2219,6 +2705,133 @@
         "title": "NetWorthOut",
         "type": "object"
       },
+      "PerformanceOut": {
+        "properties": {
+          "as_of": {
+            "format": "date",
+            "title": "As Of",
+            "type": "string"
+          },
+          "complete": {
+            "description": "False when assets are unpriced or currencies unconverted",
+            "title": "Complete",
+            "type": "boolean"
+          },
+          "contributions": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Deposits and transfers in"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "expenses": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "first_flow": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "First Flow"
+          },
+          "income": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "money_weighted": {
+            "$ref": "#/components/schemas/MoneyWeightedOut"
+          },
+          "net_invested": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "notice": {
+            "title": "Notice",
+            "type": "string"
+          },
+          "portfolio_id": {
+            "format": "uuid",
+            "title": "Portfolio Id",
+            "type": "string"
+          },
+          "profit_loss": {
+            "$ref": "#/components/schemas/Money",
+            "description": "total_value - net_invested"
+          },
+          "realized_pl": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "return_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "profit_loss / contributions; null when nothing was put in",
+            "title": "Return Percent"
+          },
+          "total_value": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "unrealized_pl": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "withdrawals": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Withdrawals and transfers out"
+          }
+        },
+        "required": [
+          "portfolio_id",
+          "currency",
+          "as_of",
+          "total_value",
+          "contributions",
+          "withdrawals",
+          "net_invested",
+          "profit_loss",
+          "return_percent",
+          "money_weighted",
+          "realized_pl",
+          "unrealized_pl",
+          "income",
+          "expenses",
+          "complete",
+          "first_flow",
+          "notice"
+        ],
+        "title": "PerformanceOut",
+        "type": "object"
+      },
+      "PeriodOut": {
+        "properties": {
+          "period": {
+            "description": "YYYY-MM or YYYY",
+            "title": "Period",
+            "type": "string"
+          },
+          "totals": {
+            "$ref": "#/components/schemas/TotalsOut"
+          }
+        },
+        "required": [
+          "period",
+          "totals"
+        ],
+        "title": "PeriodOut",
+        "type": "object"
+      },
       "PortfolioCreate": {
         "additionalProperties": false,
         "properties": {
@@ -2264,6 +2877,130 @@
           "base_currency"
         ],
         "title": "PortfolioCreate",
+        "type": "object"
+      },
+      "PortfolioIncomeLine": {
+        "properties": {
+          "portfolio_id": {
+            "format": "uuid",
+            "title": "Portfolio Id",
+            "type": "string"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The same in the summary currency; null without a rate"
+          },
+          "yearly": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Trailing net in the portfolio's currency"
+          }
+        },
+        "required": [
+          "portfolio_id",
+          "yearly",
+          "value"
+        ],
+        "title": "PortfolioIncomeLine",
+        "type": "object"
+      },
+      "PortfolioIncomeOut": {
+        "properties": {
+          "as_of": {
+            "format": "date",
+            "title": "As Of",
+            "type": "string"
+          },
+          "by_asset": {
+            "items": {
+              "$ref": "#/components/schemas/AssetIncomeOut"
+            },
+            "title": "By Asset",
+            "type": "array"
+          },
+          "by_type": {
+            "items": {
+              "$ref": "#/components/schemas/TypeIncomeOut"
+            },
+            "title": "By Type",
+            "type": "array"
+          },
+          "complete": {
+            "title": "Complete",
+            "type": "boolean"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "monthly": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Trailing 12 months net / 12"
+          },
+          "months": {
+            "items": {
+              "$ref": "#/components/schemas/PeriodOut"
+            },
+            "title": "Months",
+            "type": "array"
+          },
+          "portfolio_id": {
+            "format": "uuid",
+            "title": "Portfolio Id",
+            "type": "string"
+          },
+          "portfolio_yield_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Trailing gross / total value; null when the value is not positive",
+            "title": "Portfolio Yield Percent"
+          },
+          "trailing_12m": {
+            "$ref": "#/components/schemas/TotalsOut"
+          },
+          "yearly": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Trailing 12 months net"
+          },
+          "years": {
+            "items": {
+              "$ref": "#/components/schemas/PeriodOut"
+            },
+            "title": "Years",
+            "type": "array"
+          }
+        },
+        "required": [
+          "portfolio_id",
+          "currency",
+          "as_of",
+          "trailing_12m",
+          "monthly",
+          "yearly",
+          "portfolio_yield_percent",
+          "months",
+          "years",
+          "by_asset",
+          "by_type",
+          "complete"
+        ],
+        "title": "PortfolioIncomeOut",
         "type": "object"
       },
       "PortfolioOut": {
@@ -2555,6 +3292,165 @@
           }
         },
         "title": "ReversalCreate",
+        "type": "object"
+      },
+      "RiskOut": {
+        "properties": {
+          "as_of": {
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "end": {
+            "format": "date",
+            "title": "End",
+            "type": "string"
+          },
+          "frequency": {
+            "enum": [
+              "daily",
+              "weekly",
+              "monthly"
+            ],
+            "title": "Frequency",
+            "type": "string"
+          },
+          "incomplete_points": {
+            "title": "Incomplete Points",
+            "type": "integer"
+          },
+          "max_drawdown": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DrawdownOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "notice": {
+            "title": "Notice",
+            "type": "string"
+          },
+          "period_volatility_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Period Volatility Percent"
+          },
+          "points": {
+            "items": {
+              "$ref": "#/components/schemas/SeriesPointOut"
+            },
+            "title": "Points",
+            "type": "array"
+          },
+          "portfolio_id": {
+            "format": "uuid",
+            "title": "Portfolio Id",
+            "type": "string"
+          },
+          "returns": {
+            "description": "Number of period returns measured",
+            "title": "Returns",
+            "type": "integer"
+          },
+          "start": {
+            "format": "date",
+            "title": "Start",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "ok",
+              "insufficient_data",
+              "incomplete_data",
+              "undefined_period"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "time_weighted_annualized_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Only for ranges of at least a year",
+            "title": "Time Weighted Annualized Percent"
+          },
+          "time_weighted_return_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Time Weighted Return Percent"
+          },
+          "volatility_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Annualised",
+            "title": "Volatility Percent"
+          }
+        },
+        "required": [
+          "portfolio_id",
+          "currency",
+          "frequency",
+          "start",
+          "end",
+          "status",
+          "points",
+          "returns",
+          "volatility_percent",
+          "period_volatility_percent",
+          "max_drawdown",
+          "time_weighted_return_percent",
+          "time_weighted_annualized_percent",
+          "incomplete_points",
+          "as_of",
+          "notice"
+        ],
+        "title": "RiskOut",
         "type": "object"
       },
       "RiskProfileCreate": {
@@ -2849,6 +3745,85 @@
         "title": "ScenarioOutcomeOut",
         "type": "object"
       },
+      "SeriesFrequency": {
+        "enum": [
+          "daily",
+          "weekly",
+          "monthly"
+        ],
+        "title": "SeriesFrequency",
+        "type": "string"
+      },
+      "SeriesPointOut": {
+        "properties": {
+          "complete": {
+            "title": "Complete",
+            "type": "boolean"
+          },
+          "on": {
+            "format": "date",
+            "title": "On",
+            "type": "string"
+          },
+          "value": {
+            "$ref": "#/components/schemas/Money"
+          }
+        },
+        "required": [
+          "on",
+          "value",
+          "complete"
+        ],
+        "title": "SeriesPointOut",
+        "type": "object"
+      },
+      "SliceOut": {
+        "properties": {
+          "key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Asset class code, currency, ISO country or sector; null is unclassified",
+            "title": "Key"
+          },
+          "parts": {
+            "title": "Parts",
+            "type": "integer"
+          },
+          "value": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "weight_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "2 decimals, adding up to 100; null when not meaningful (negative parts)",
+            "title": "Weight Percent"
+          }
+        },
+        "required": [
+          "key",
+          "value",
+          "weight_percent",
+          "parts"
+        ],
+        "title": "SliceOut",
+        "type": "object"
+      },
       "SummaryOut": {
         "description": "Server-authoritative totals. Money is in `currency`, rounded to its minor units.",
         "properties": {
@@ -2937,6 +3912,36 @@
           "freshness"
         ],
         "title": "SummaryOut",
+        "type": "object"
+      },
+      "TotalsOut": {
+        "properties": {
+          "fees": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "gross": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "net": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "payments": {
+            "title": "Payments",
+            "type": "integer"
+          },
+          "taxes": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Withholding and other taxes on the income"
+          }
+        },
+        "required": [
+          "gross",
+          "fees",
+          "taxes",
+          "net",
+          "payments"
+        ],
+        "title": "TotalsOut",
         "type": "object"
       },
       "TransactionCreate": {
@@ -3365,6 +4370,27 @@
           "next_cursor"
         ],
         "title": "TransactionPage",
+        "type": "object"
+      },
+      "TypeIncomeOut": {
+        "properties": {
+          "all_time": {
+            "$ref": "#/components/schemas/TotalsOut"
+          },
+          "income_type": {
+            "title": "Income Type",
+            "type": "string"
+          },
+          "trailing_12m": {
+            "$ref": "#/components/schemas/TotalsOut"
+          }
+        },
+        "required": [
+          "income_type",
+          "trailing_12m",
+          "all_time"
+        ],
+        "title": "TypeIncomeOut",
         "type": "object"
       },
       "ValidationError": {
@@ -3892,6 +4918,79 @@
         "summary": "Get Asset",
         "tags": [
           "assets"
+        ]
+      }
+    },
+    "/api/v1/dashboard": {
+      "get": {
+        "description": "Net worth, passive income and goals on track for the signed-in user.",
+        "operationId": "dashboard_api_v1_dashboard_get",
+        "parameters": [
+          {
+            "description": "Defaults to the user's base currency",
+            "in": "query",
+            "name": "currency",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Z]{3}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Defaults to the user's base currency",
+              "title": "Currency"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Dashboard",
+        "tags": [
+          "dashboard"
         ]
       }
     },
@@ -4564,6 +5663,79 @@
         "summary": "Goal Progress",
         "tags": [
           "goals"
+        ]
+      }
+    },
+    "/api/v1/income/summary": {
+      "get": {
+        "description": "Passive income across all active portfolios, each converted at the latest rate.",
+        "operationId": "income_summary_api_v1_income_summary_get",
+        "parameters": [
+          {
+            "description": "Defaults to the user's base currency",
+            "in": "query",
+            "name": "currency",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Z]{3}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Defaults to the user's base currency",
+              "title": "Currency"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IncomeSummaryOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Income Summary",
+        "tags": [
+          "income"
         ]
       }
     },
@@ -5365,6 +6537,73 @@
         ]
       }
     },
+    "/api/v1/portfolios/{portfolio_id}/allocation": {
+      "get": {
+        "description": "Allocation by asset class, currency, country and sector, and concentration\n(docs/design/allocation.md).",
+        "operationId": "portfolio_allocation_api_v1_portfolios__portfolio_id__allocation_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "portfolio_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Portfolio Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllocationOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such portfolio for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Portfolio Allocation",
+        "tags": [
+          "analytics"
+        ]
+      }
+    },
     "/api/v1/portfolios/{portfolio_id}/archive": {
       "post": {
         "description": "Archives a portfolio: it stays readable but cannot change. Repeating it is harmless.",
@@ -5512,6 +6751,249 @@
         "summary": "List Holdings",
         "tags": [
           "holdings"
+        ]
+      }
+    },
+    "/api/v1/portfolios/{portfolio_id}/income": {
+      "get": {
+        "description": "Dividends, interest, coupons, rent and distributions: trailing 12 months, by month, year,\nasset and type, and yields.",
+        "operationId": "portfolio_income_api_v1_portfolios__portfolio_id__income_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "portfolio_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Portfolio Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PortfolioIncomeOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such portfolio for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Portfolio Income",
+        "tags": [
+          "income"
+        ]
+      }
+    },
+    "/api/v1/portfolios/{portfolio_id}/performance": {
+      "get": {
+        "description": "Profit, simple return and money-weighted return (XIRR) from the ledger and the latest\nvaluations (docs/design/performance.md).",
+        "operationId": "portfolio_performance_api_v1_portfolios__portfolio_id__performance_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "portfolio_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Portfolio Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PerformanceOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such portfolio for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Portfolio Performance",
+        "tags": [
+          "analytics"
+        ]
+      }
+    },
+    "/api/v1/portfolios/{portfolio_id}/risk": {
+      "get": {
+        "description": "The value series, volatility, maximum drawdown and time-weighted return, or an explicit\nstatus when the data cannot support them (docs/design/risk.md).",
+        "operationId": "portfolio_risk_api_v1_portfolios__portfolio_id__risk_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "portfolio_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Portfolio Id",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Spacing of the value series",
+            "in": "query",
+            "name": "frequency",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/SeriesFrequency",
+              "default": "monthly",
+              "description": "Spacing of the value series"
+            }
+          },
+          {
+            "description": "Default: the first entry or valuation",
+            "in": "query",
+            "name": "start",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Default: the first entry or valuation",
+              "title": "Start"
+            }
+          },
+          {
+            "description": "Default: today",
+            "in": "query",
+            "name": "end",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Default: today",
+              "title": "End"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such portfolio for this user"
+          },
+          "422": {
+            "description": "Invalid range (after today, or too many points)"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Portfolio Risk",
+        "tags": [
+          "analytics"
         ]
       }
     },
@@ -6888,6 +8370,18 @@
     {
       "description": "User-entered values of assets without a market price",
       "name": "valuations"
+    },
+    {
+      "description": "Performance, allocation and risk of a portfolio (cached per user)",
+      "name": "analytics"
+    },
+    {
+      "description": "Income and passive income",
+      "name": "income"
+    },
+    {
+      "description": "The Home screen's figures in one call",
+      "name": "dashboard"
     },
     {
       "description": "Liabilities, and net worth with the FX rates used",

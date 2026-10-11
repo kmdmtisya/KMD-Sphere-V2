@@ -6,7 +6,7 @@ from decimal import Decimal
 
 import pytest
 
-from app.modules.portfolio.history import MAX_POINTS, Frequency, Valued, build, dates
+from app.modules.portfolio.history import MAX_POINTS, SeriesFrequency, Valued, build, dates
 from app.modules.transactions.holdings import Entry
 
 D = Decimal
@@ -14,38 +14,43 @@ A, H = uuid.UUID(int=1), uuid.UUID(int=2)
 
 
 def test_monthly_dates_end_on_month_ends() -> None:
-    assert dates(date(2025, 1, 15), date(2025, 4, 10), Frequency.MONTHLY) == [
+    assert dates(date(2025, 1, 15), date(2025, 4, 10), SeriesFrequency.MONTHLY) == [
         date(2025, 1, 15), date(2025, 1, 31), date(2025, 2, 28), date(2025, 3, 31),
         date(2025, 4, 10),
     ]  # fmt: skip
-    assert dates(date(2025, 1, 31), date(2025, 2, 28), Frequency.MONTHLY) == [
+    assert dates(date(2025, 1, 31), date(2025, 2, 28), SeriesFrequency.MONTHLY) == [
         date(2025, 1, 31),
         date(2025, 2, 28),
     ]
-    assert dates(date(2024, 12, 31), date(2025, 1, 1), Frequency.MONTHLY) == [
+    assert dates(date(2024, 12, 31), date(2025, 1, 1), SeriesFrequency.MONTHLY) == [
         date(2024, 12, 31),
         date(2025, 1, 1),
     ]
 
 
 def test_weekly_and_daily_dates() -> None:
-    assert dates(date(2025, 1, 1), date(2025, 1, 20), Frequency.WEEKLY) == [
+    assert dates(date(2025, 1, 1), date(2025, 1, 20), SeriesFrequency.WEEKLY) == [
         date(2025, 1, 1), date(2025, 1, 8), date(2025, 1, 15), date(2025, 1, 20),
     ]  # fmt: skip
-    assert dates(date(2025, 1, 1), date(2025, 1, 15), Frequency.WEEKLY)[-1] == date(2025, 1, 15)
-    assert dates(date(2025, 1, 1), date(2025, 1, 3), Frequency.DAILY) == [
+    assert dates(date(2025, 1, 1), date(2025, 1, 15), SeriesFrequency.WEEKLY)[-1] == date(
+        2025, 1, 15
+    )
+    assert dates(date(2025, 1, 1), date(2025, 1, 3), SeriesFrequency.DAILY) == [
         date(2025, 1, 1), date(2025, 1, 2), date(2025, 1, 3)]  # fmt: skip
-    assert dates(date(2025, 1, 1), date(2025, 1, 1), Frequency.DAILY) == [date(2025, 1, 1)]
-    assert [f.per_year for f in Frequency] == [365, 52, 12]
+    assert dates(date(2025, 1, 1), date(2025, 1, 1), SeriesFrequency.DAILY) == [date(2025, 1, 1)]
+    assert [f.per_year for f in SeriesFrequency] == [365, 52, 12]
 
 
 def test_date_limits() -> None:
     with pytest.raises(ValueError, match="before"):
-        dates(date(2025, 2, 1), date(2025, 1, 1), Frequency.DAILY)
+        dates(date(2025, 2, 1), date(2025, 1, 1), SeriesFrequency.DAILY)
     start = date(2020, 1, 1)
-    assert len(dates(start, start + timedelta(days=MAX_POINTS - 1), Frequency.DAILY)) == MAX_POINTS
+    assert (
+        len(dates(start, start + timedelta(days=MAX_POINTS - 1), SeriesFrequency.DAILY))
+        == MAX_POINTS
+    )
     with pytest.raises(ValueError, match="at most"):
-        dates(start, start + timedelta(days=MAX_POINTS), Frequency.DAILY)
+        dates(start, start + timedelta(days=MAX_POINTS), SeriesFrequency.DAILY)
 
 
 T0 = datetime(2025, 1, 1, tzinfo=UTC)
@@ -86,7 +91,7 @@ VALUATIONS = [
 
 
 def test_value_history_from_the_ledger() -> None:
-    days = dates(date(2025, 1, 1), date(2025, 4, 30), Frequency.MONTHLY)
+    days = dates(date(2025, 1, 1), date(2025, 4, 30), SeriesFrequency.MONTHLY)
     points = build(LEDGER, VALUATIONS, eur_rate, days)
     got = [(p.on, p.value, p.flow_next, p.complete, p.unpriced) for p in points]
     assert got == [

@@ -809,3 +809,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-11T15:39:42+04:00 — COMPLETE P06-T08
 - duration: 23m 30s
 - evidence: PR #64 (commit 4239456). Series builder (portfolio/history.py, pure): end-of-day portfolio value per daily/weekly/monthly date from the ledger as of the date (quantities, cash per currency, newest valuation per held position, valuation-only assets from their first valuation), historical FX rule per currency, external flows to the next point, completeness (unpriced/unconverted). Risk (analytics/risk.py, pure Decimal): flow-adjusted period returns, sample volatility annualised by sqrt(periods/year), maximum drawdown of the return index with peak/trough/recovery, TWR via the T03 function. Methodology documented in docs/design/risk.md; insufficient data returns an explicit state (insufficient_data < 6 returns, incomplete_data, undefined_period), never partial figures. Service portfolio/risk_service.py, authorised (404 for another user), ranges validated. Tests: hand-computed history, volatility cross-checked with the statistics module, drawdown cases, Hypothesis (flows do not change returns), service on the real ledger incl. historical FX age limit. 28/28 mutants caught (3 equivalent removed/documented). Local 1243 passed, coverage 92%, analytics 100%, history 100%. CI all gates pass.
+
+### 2026-10-11T15:43:25+04:00 — START P06-T09
+- Analytics API and caching
+- prerequisites verified COMPLETED

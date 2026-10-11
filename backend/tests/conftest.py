@@ -26,6 +26,7 @@ def make_settings(**overrides: object) -> Settings:
         "readiness_timeout_seconds": 2.0,
         # Per-app counters: tests never share rate-limit state through Redis.
         "rate_limit_storage": "memory",
+        "analytics_cache": "memory",
         **overrides,
     }
     return Settings(_env_file=None, **values)  # type: ignore[arg-type]
