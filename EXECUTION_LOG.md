@@ -975,3 +975,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T01:52:24+04:00 — COMPLETE P08-T03
 - duration: 8m 57s
 - evidence: ECB, CoinGecko and Twelve Data adapters behind the provider interface with HTTP error mapping, sliding-window rate limiting, decimal-only parsing and SecretStr key handling; shared contract tests pass offline against fixtures (ECB recorded from the real feed, CoinGecko/Twelve Data synthetic in documented shapes); tests prove keys appear in no URL, error, repr or log; ruff/mypy strict clean; provider package 98% covered; full backend suite 1566 passed. PR #. CI all gates pass.
+
+### 2026-10-12T02:09:38+04:00 — START P08-T04
+- Async job infrastructure
+- prerequisites verified COMPLETED

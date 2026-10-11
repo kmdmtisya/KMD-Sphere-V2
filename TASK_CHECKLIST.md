@@ -775,14 +775,14 @@
   - [x] P08-T03.2 Fixtures
   - [x] P08-T03.3 Rate limiting
   - [x] P08-T03.4 Secrets handling
-- [ ] **P08-T04** · Async job infrastructure · `NOT_STARTED` ⬜
+- [ ] **P08-T04** · Async job infrastructure · `IN_PROGRESS` 🔄
   - Deps: P01-T05, P01-T07, P05-GATE · Wave: W1 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T02:09:38+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P08-T04.1 Worker setup
-  - [ ] P08-T04.2 Idempotency helper
-  - [ ] P08-T04.3 Dead-letter
-  - [ ] P08-T04.4 Tests
+  - [x] P08-T04.1 Worker setup
+  - [x] P08-T04.2 Idempotency helper
+  - [x] P08-T04.3 Dead-letter
+  - [x] P08-T04.4 Tests
 - [ ] **P08-T05** · Price and FX ingestion · `NOT_STARTED` ⬜
   - Deps: P08-T03, P08-T04 · Wave: W3 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

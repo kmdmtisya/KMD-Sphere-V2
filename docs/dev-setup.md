@@ -89,3 +89,7 @@ The app signs in with Authorization Code + PKCE in the system browser (Custom Ta
 App lock: a restored session opens locked. On an emulator without a screen lock the lock screen offers only Sign out; set one with `adb shell locksettings set-pin <pin>` (remove it with `adb shell locksettings clear --old <pin>`), or turn app lock off under More > Account.
 
 Plain HTTP is allowed only to `127.0.0.1`, `localhost` and `10.0.2.2`, and only in debug builds (Android `src/debug` network security config; iOS `NSAllowsLocalNetworking`). A fresh emulator's Chrome shows its first-run screen on the first sign-in; dismiss it once.
+
+## Background workers (P08-T04)
+
+With the stack up (`make up`): `make worker` starts a Celery worker, `make beat` the scheduler, `make dead-letters` lists failed jobs. Details and the RabbitMQ 4 caveat: [docs/design/jobs.md](design/jobs.md).

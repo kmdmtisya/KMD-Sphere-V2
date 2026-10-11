@@ -36,6 +36,12 @@ class Settings(BaseSettings):
     coingecko_api_key: SecretStr = SecretStr("")
     twelvedata_api_key: SecretStr = SecretStr("")
 
+    # Message broker for the background workers (P08-T04). Credentials come from the environment.
+    rabbitmq_user: str = ""
+    rabbitmq_password: SecretStr = SecretStr("")
+    rabbitmq_host: str = "127.0.0.1"
+    rabbitmq_port: int = 5673
+
     readiness_timeout_seconds: float = 2.0
     otel_service_name: str = "wealthsphere-api"
     otel_exporter_otlp_endpoint: str = ""
@@ -75,6 +81,13 @@ class Settings(BaseSettings):
     db_pool_size: int = 5
     db_max_overflow: int = 5
     db_connect_timeout_seconds: float = 5.0
+
+    @property
+    def broker_url(self) -> str:
+        """AMQP URL for Celery. Contains the password: never log it."""
+        user = quote_plus(self.rabbitmq_user)
+        password = quote_plus(self.rabbitmq_password.get_secret_value())
+        return f"amqp://{user}:{password}@{self.rabbitmq_host}:{self.rabbitmq_port}//"
 
     @property
     def database_dsn(self) -> str:

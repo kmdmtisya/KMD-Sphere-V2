@@ -24,7 +24,8 @@ import app.modules.identity.models  # noqa: E402
 import app.modules.market_data.models  # noqa: E402
 import app.modules.networth.models  # noqa: E402
 import app.modules.portfolio.models  # noqa: E402
-import app.modules.transactions.models  # noqa: E402, F401
+import app.modules.transactions.models  # noqa: E402
+import app.worker.models  # noqa: E402, F401
 
 target_metadata = Base.metadata
 
