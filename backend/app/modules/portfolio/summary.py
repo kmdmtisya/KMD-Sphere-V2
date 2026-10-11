@@ -63,6 +63,10 @@ class Summary:
     unpriced_assets: list[uuid.UUID] = field(default_factory=list)
     unconverted_currencies: set[str] = field(default_factory=set)
     valued_positions: int = 0
+    # Each valued position and each currency's cash balance, in `currency` (for allocation).
+    positions: dict[uuid.UUID, Decimal] = field(default_factory=dict)
+    position_currencies: dict[uuid.UUID, str] = field(default_factory=dict)  # of the valuation
+    cash_balances: dict[str, Decimal] = field(default_factory=dict)
 
     @property
     def total_value(self) -> Decimal:
@@ -143,6 +147,8 @@ def compute_summary(
             s.inputs_as_of.append(v.as_of)
             _add(s, v.currency, v.value, converted)
             s.holdings_value += converted
+            s.positions[asset_id] = converted
+            s.position_currencies[asset_id] = v.currency
             s.valued_positions += 1
             if h is not None:
                 s.cost_basis += h.cost_basis
@@ -174,6 +180,7 @@ def compute_summary(
                 continue
             _add(s, currency, balance, converted)
             s.cash += converted
+            s.cash_balances[currency] = converted
     return s
 
 
@@ -208,6 +215,11 @@ def consolidate(reporting_currency: str, parts: list[Summary], rates: dict[str, 
                 setattr(s, name, getattr(s, name) + getattr(part, name) * factor)
             for currency, amount in part.converted.items():
                 _add(s, currency, part.native[currency], amount * factor)
+            for asset_id, value in part.positions.items():
+                s.positions[asset_id] = s.positions.get(asset_id, ZERO) + value * factor
+                s.position_currencies.setdefault(asset_id, part.position_currencies[asset_id])
+            for currency, value in part.cash_balances.items():
+                s.cash_balances[currency] = s.cash_balances.get(currency, ZERO) + value * factor
     return s
 
 

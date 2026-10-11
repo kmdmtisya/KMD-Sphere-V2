@@ -596,13 +596,13 @@
   - [x] P06-T03.2 XIRR
   - [x] P06-T03.3 TWR
   - [x] P06-T03.4 Golden and property tests
-- [ ] **P06-T04** · Allocation and concentration analytics · `NOT_STARTED` ⬜
+- [x] **P06-T04** · Allocation and concentration analytics · `COMPLETED` ✅
   - Deps: P05-T05, P05-T06, P05-GATE · Wave: W1 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P06-T04.1 Allocation
-  - [ ] P06-T04.2 Concentration
-  - [ ] P06-T04.3 Tests
+  - Started: 2026-10-11T12:09:50+04:00 · Completed: 2026-10-11T12:34:16+04:00 · Duration: 24m 26s · Blocker: —
+  - Evidence: PR #60 (commit 42aba63). analytics/allocation.py (pure Decimal): allocation by asset class, currency (of the valuation), country (asset.country) and sector (asset sector metadata, trimmed), unclassified slice so every dimension totals the same; weights to 2 dp by largest remainder adding to exactly 100.00 (ADR-0006), null when total <= 0 or any part negative; concentration HHI, effective positions, top-1/3/5 shares, largest, HHI per dimension. portfolio/allocation_service.py on the summary's per-position values and cash balances (summary + consolidate extended), authorised. AssetService.classifications. Methods docs/design/allocation.md. Tests: hand-computed portfolio, edge cases, Hypothesis (weights sum to exactly 100.00 and within 0.01 of exact, HHI bounds, order independence), service test on the real ledger reconciling with GET summary currency values and shares, IDOR. 29/29 mutants caught. Local 1006 passed, coverage 92%, allocation 100%. CI all gates pass.
+  - [x] P06-T04.1 Allocation
+  - [x] P06-T04.2 Concentration
+  - [x] P06-T04.3 Tests
 - [ ] **P06-T05** · Income and passive-income module · `NOT_STARTED` ⬜
   - Deps: P05-T04, P05-GATE · Wave: W1 · Track: BE · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

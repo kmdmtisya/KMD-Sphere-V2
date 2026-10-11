@@ -1,6 +1,7 @@
 """Asset use cases: classes, search, detail and user-defined assets."""
 
 import uuid
+from dataclasses import dataclass
 from typing import Any
 
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -21,6 +22,14 @@ from app.modules.assets.schemas import (
 )
 
 MAX_RESULTS = 50
+
+
+@dataclass(frozen=True)
+class Classification:
+    asset_class: str  # class code
+    country: str | None  # ISO 3166-1 alpha-2
+    sector: str | None
+    currency: str
 
 
 class AssetService:
@@ -60,6 +69,22 @@ class AssetService:
         rows = await self._repo.get_many(asset_ids)
         return {asset.id: _summary(asset, cls, user_id) for asset, cls in rows}
 
+    async def classifications(self, asset_ids: list[uuid.UUID]) -> dict[uuid.UUID, Classification]:
+        """Class, country, sector and currency of assets a portfolio holds, for allocation (the
+        caller has authorised the portfolio). The sector is the `sector` metadata, when the asset
+        has one."""
+        rows = await self._repo.get_many(asset_ids)
+        sectors = await self._repo.metadata_values([a.id for a, _ in rows], "sector")
+        return {
+            asset.id: Classification(
+                asset_class=cls.code,
+                country=asset.country,
+                sector=_sector(sectors.get(asset.id)),
+                currency=asset.currency,
+            )
+            for asset, cls in rows
+        }
+
     async def is_visible(self, user_id: uuid.UUID, asset_id: uuid.UUID) -> bool:
         """Whether the user may use this asset (an active catalogue asset or one of theirs)."""
         return await self._repo.get_visible(user_id, asset_id) is not None
@@ -98,6 +123,11 @@ class AssetService:
             valuation_mode=asset_class.valuation_mode,
             metadata=await self._repo.metadata(asset.id),
         )
+
+
+def _sector(value: object) -> str | None:
+    """Sectors are free text; surrounding spaces are ignored and an empty one is no sector."""
+    return (value.strip() or None) if isinstance(value, str) else None
 
 
 def _summary(asset: Asset, asset_class: AssetClass, user_id: uuid.UUID) -> AssetSummary:
