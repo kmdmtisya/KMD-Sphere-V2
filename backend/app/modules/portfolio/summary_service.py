@@ -43,6 +43,11 @@ class SummaryService:
         summary = await self._compute(portfolio)
         return await self._out(user_id, [portfolio.id], summary, now)
 
+    async def figures(self, user_id: uuid.UUID, portfolio_id: uuid.UUID) -> Summary:
+        """The unrounded figures of one of the user's portfolios (for analytics)."""
+        portfolio = require_found(await self._portfolios.get(user_id, portfolio_id), "portfolio")
+        return await self._compute(portfolio)
+
     async def consolidated(self, user_id: uuid.UUID, currency: str | None) -> SummaryOut:
         reporting = currency or (await IdentityService(self._session).me(user_id)).base_currency
         portfolios = await self._portfolios.list(user_id, include_archived=False)

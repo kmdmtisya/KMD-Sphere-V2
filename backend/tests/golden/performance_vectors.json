@@ -1,0 +1,119 @@
+{
+  "about": "Performance golden vectors (P06-T03). XIRR uses actual/365 like spreadsheet XIRR. Sources: 'published' values come from the Microsoft Excel XIRR documentation example; 'exact' values are constructed so the answer is known in closed form (checked by hand); tolerance is the largest allowed absolute difference.",
+  "xirr": [
+    {
+      "name": "Excel documentation example",
+      "source": "published: Microsoft Support, XIRR function, example result 0.373362535; Excel stops iterating within 0.000001% (1e-8), so the published value is only that accurate",
+      "flows": [["2008-01-01", "-10000"], ["2008-03-01", "2750"], ["2008-10-30", "4250"], ["2009-02-15", "3250"], ["2009-04-01", "2750"]],
+      "status": "ok", "rate": "0.373362535", "tolerance": "1e-8", "unique": true
+    },
+    {
+      "name": "one year at 10%",
+      "source": "exact: 1000 grows to 1100 in 365 days",
+      "flows": [["2021-01-01", "-1000"], ["2022-01-01", "1100"]],
+      "status": "ok", "rate": "0.1", "tolerance": "1e-11", "unique": true
+    },
+    {
+      "name": "two deposits at 10%",
+      "source": "exact: 1000 x 1.1^2 + 1000 x 1.1 = 2310 (2021 and 2022 have 365 days)",
+      "flows": [["2021-01-01", "-1000"], ["2022-01-01", "-1000"], ["2023-01-01", "2310"]],
+      "status": "ok", "rate": "0.1", "tolerance": "1e-11", "unique": true
+    },
+    {
+      "name": "a loss of half",
+      "source": "exact: 1000 falls to 500 in 365 days",
+      "flows": [["2021-01-01", "-1000"], ["2022-01-01", "500"]],
+      "status": "ok", "rate": "-0.5", "tolerance": "1e-11", "unique": true
+    },
+    {
+      "name": "same-day flows are netted",
+      "source": "exact: -1500 and +500 on one day are -1000; then 1100 a year later",
+      "flows": [["2021-01-01", "-1500"], ["2021-01-01", "500"], ["2022-01-01", "1100"]],
+      "status": "ok", "rate": "0.1", "tolerance": "1e-11", "unique": true
+    },
+    {
+      "name": "two roots, the one nearest 10% is reported",
+      "source": "exact: -100 + 230/(1+r) - 132/(1+r)^2 = 0 has roots 10% and 20%",
+      "flows": [["2021-01-01", "-100"], ["2022-01-01", "230"], ["2023-01-01", "-132"]],
+      "status": "ok", "rate": "0.1", "tolerance": "0", "unique": false
+    },
+    {
+      "name": "two roots off the grid, the one nearest 10% is reported",
+      "source": "exact: -100 + 515/(1+r) - 460/(1+r)^2 = 0 has roots 15% and 300%",
+      "flows": [["2021-01-01", "-100"], ["2022-01-01", "515"], ["2023-01-01", "-460"]],
+      "status": "ok", "rate": "0.15", "tolerance": "1e-11", "unique": false
+    },
+    {
+      "name": "break-even",
+      "source": "exact: 1000 back as 1000",
+      "flows": [["2021-01-01", "-1000"], ["2021-07-01", "1000"]],
+      "status": "ok", "rate": "0", "tolerance": "0", "unique": true
+    },
+    {"name": "no flows", "source": "edge case", "flows": [], "status": "insufficient_flows"},
+    {"name": "single flow", "source": "edge case", "flows": [["2021-01-01", "-1000"]], "status": "insufficient_flows"},
+    {"name": "zero flows only", "source": "edge case", "flows": [["2021-01-01", "0"], ["2022-01-01", "0"]], "status": "insufficient_flows"},
+    {"name": "flows that net to zero", "source": "edge case", "flows": [["2021-01-01", "-1000"], ["2021-01-01", "1000"]], "status": "insufficient_flows"},
+    {"name": "all invested, nothing back", "source": "edge case", "flows": [["2021-01-01", "-1000"], ["2022-01-01", "-500"]], "status": "no_sign_change"},
+    {"name": "all received", "source": "edge case", "flows": [["2021-01-01", "1000"], ["2022-01-01", "500"]], "status": "no_sign_change"},
+    {
+      "name": "beyond 1,000,000% a year",
+      "source": "edge case: 1 becomes 10 in 60 days, about 1,200,000% a year (10^(365/60) - 1)",
+      "flows": [["2021-01-01", "-1"], ["2021-03-02", "10"]],
+      "status": "no_rate_in_range"
+    }
+  ],
+  "twr": [
+    {
+      "name": "a deposit between two 10% periods",
+      "source": "exact: 1000 -> 1100 (+10%), deposit 500, 1600 -> 1760 (+10%): 1.1 x 1.1 - 1",
+      "points": [["2021-01-01", "0", "1000"], ["2021-07-01", "1100", "500"], ["2022-01-01", "1760", "0"]],
+      "status": "ok", "cumulative": "0.21", "annualized": "0.21"
+    },
+    {
+      "name": "a withdrawal between a gain and a loss",
+      "source": "exact: 1000 -> 1200 (+20%), withdraw 700, 500 -> 450 (-10%): 1.2 x 0.9 - 1",
+      "points": [["2021-01-01", "0", "1000"], ["2021-04-01", "1200", "-700"], ["2021-08-01", "450", "0"]],
+      "status": "ok", "cumulative": "0.08", "annualized": null
+    },
+    {
+      "name": "an emptied portfolio between deposits",
+      "source": "exact: 1000 -> 1100, all 1100 withdrawn, empty, 500 deposited -> 550: 1.1 x 1.1 - 1",
+      "points": [["2021-01-01", "0", "1000"], ["2021-03-01", "1100", "-1100"], ["2021-06-01", "0", "500"], ["2021-09-01", "550", "0"]],
+      "status": "ok", "cumulative": "0.21", "annualized": null
+    },
+    {
+      "name": "the flow on the last day is ignored",
+      "source": "exact: 1000 -> 1050, then a deposit after the end",
+      "points": [["2021-01-01", "0", "1000"], ["2021-02-01", "1050", "99999"]],
+      "status": "ok", "cumulative": "0.05", "annualized": null
+    },
+    {"name": "one point", "source": "edge case", "points": [["2021-01-01", "0", "1000"]], "status": "insufficient_data"},
+    {"name": "no points", "source": "edge case", "points": [], "status": "insufficient_data"},
+    {
+      "name": "value from nothing",
+      "source": "edge case: nothing invested but a value appears",
+      "points": [["2021-01-01", "0", "0"], ["2021-02-01", "100", "0"]],
+      "status": "undefined_period"
+    },
+    {
+      "name": "more withdrawn than held",
+      "source": "edge case: 100 held, 150 withdrawn",
+      "points": [["2021-01-01", "0", "100"], ["2021-02-01", "100", "-150"], ["2021-03-01", "10", "0"]],
+      "status": "undefined_period"
+    },
+    {
+      "name": "negative value",
+      "source": "edge case",
+      "points": [["2021-01-01", "0", "100"], ["2021-02-01", "-5", "0"]],
+      "status": "undefined_period"
+    }
+  ],
+  "cagr": [
+    {"name": "doubling in 20 years", "source": "exact: 2^(1/20) - 1 = 0.0352649238...", "start": "1000", "end": "2000", "from": "2000-01-01", "days": 7300, "cagr": "0.03526492384137750", "tolerance": "1e-15"},
+    {"name": "one year", "source": "exact", "start": "1000", "end": "1080", "from": "2021-01-01", "days": 365, "cagr": "0.08", "tolerance": "1e-20"},
+    {"name": "total loss", "source": "edge case: -100%", "start": "1000", "end": "0", "from": "2021-01-01", "days": 730, "cagr": "-1", "tolerance": "0"},
+    {"name": "shorter than a year", "source": "edge case: not annualised", "start": "1000", "end": "1100", "from": "2021-01-01", "days": 364, "cagr": null},
+    {"name": "no starting value", "source": "edge case", "start": "0", "end": "1100", "from": "2021-01-01", "days": 800, "cagr": null},
+    {"name": "negative end value", "source": "edge case", "start": "1000", "end": "-1", "from": "2021-01-01", "days": 800, "cagr": null}
+  ]
+}

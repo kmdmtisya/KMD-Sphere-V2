@@ -84,15 +84,15 @@
           "dto": "profit_loss",
           "api": null,
           "status": "dto-only",
-          "resolution": "Total profit is a performance figure: the analytics API provides it. The app never derives it.",
-          "owner": "P06-T03"
+          "resolution": "total_gain from the performance service (P06-T03, docs/design/performance.md), published by the analytics API. The app never derives it.",
+          "owner": "P06-T09"
         },
         {
           "dto": "return_percent",
           "api": null,
           "status": "dto-only",
-          "resolution": "Return percentage comes from the performance engine (with its method stated). The app never derives it.",
-          "owner": "P06-T03"
+          "resolution": "simple_return from the performance service (P06-T03; method stated in docs/design/performance.md), published by the analytics API. The app never derives it.",
+          "owner": "P06-T09"
         },
         {
           "dto": "as_of",
@@ -410,8 +410,8 @@
       "dto": "PerformanceSeries, PerformancePoint",
       "dart": "lib/shared/domain/wealth_models.dart",
       "keys": [],
-      "owner": "P06-T03",
-      "resolution": "The performance engine and analytics API (P06-T03, P06-T09) adopt the DTO shapes or update this mapping."
+      "owner": "P06-T09",
+      "resolution": "Historical values come from the series builder (P06-T08); the analytics API (P06-T09) adopts these shapes or updates this mapping."
     },
     {
       "dto": "AllocationShare",
@@ -433,8 +433,8 @@
         "dividend_yield_percent",
         "volatility_percent"
       ],
-      "owner": "P06-T03",
-      "resolution": "Performance and risk metrics (P06-T03, P06-T08)."
+      "owner": "P06-T09",
+      "resolution": "Returns and CAGR from the performance service (P06-T03), dividend yield from income (P06-T05), volatility from risk (P06-T08); published by the analytics API (P06-T09)."
     },
     {
       "dto": "NetWorthSummary",
