@@ -4,7 +4,7 @@ The ECB publishes about 30 currencies against the euro once a working day (aroun
 pair is crossed through EUR: 1 base = (EUR per base)^-1 x (quote per EUR). Rates are indicative
 ("for information purposes only"): the app labels them so and never uses them for transactions.
 The ECB does not publish every currency (for example AED and KES are missing): such a pair is
-`SymbolNotFound`, and a fallback FX provider covers it (ADR-0014, DEC-25).
+`UnsupportedKind`, so a fallback chain moves on to the next FX provider (ADR-0014, DEC-25).
 
 Only FX is served; quotes and history for assets are `UnsupportedKind`."""
 
@@ -17,7 +17,6 @@ from defusedxml import DefusedXmlException, ElementTree
 
 from app.modules.market_data.providers.errors import (
     ProviderDataError,
-    SymbolNotFound,
     UnsupportedKind,
 )
 from app.modules.market_data.providers.http import HttpClient, HttpxClient, check_status
@@ -115,7 +114,7 @@ class EcbProvider:
     def _quote(self, day: date, table: dict[str, Decimal], base: str, quote: str) -> FxQuote:
         rate = _cross(table, base, quote)
         if rate is None:
-            raise SymbolNotFound(f"{base}/{quote} (not published by the ECB)")
+            raise UnsupportedKind(f"{base}/{quote} (not published by the ECB)")
         as_of = _published(day)
         retrieved = max(self._now(), as_of)
         return FxQuote(base, quote, rate, Provenance(self.name, as_of, retrieved))
@@ -135,7 +134,7 @@ class EcbProvider:
             if start <= day <= end
         ]
         if not points and not any(_cross(t, base, quote) is not None for t in rates.values()):
-            raise SymbolNotFound(f"{base}/{quote} (not published by the ECB)")
+            raise UnsupportedKind(f"{base}/{quote} (not published by the ECB)")
         return points
 
     async def get_quote(self, symbol: str, kind: AssetKind) -> PriceQuote:
