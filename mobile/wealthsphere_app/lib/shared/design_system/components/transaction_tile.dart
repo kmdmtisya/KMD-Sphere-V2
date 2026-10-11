@@ -88,25 +88,25 @@ class TransactionTile extends StatelessWidget {
   final bool reversed;
   final VoidCallback? onTap;
 
-  CashDirection get _direction => direction ?? _defaultDirection(kind);
+  CashDirection get _direction => direction ?? defaultDirection(kind);
 
-  static CashDirection _defaultDirection(TransactionKind kind) =>
-      switch (kind) {
-        TransactionKind.buy ||
-        TransactionKind.withdrawal ||
-        TransactionKind.fee ||
-        TransactionKind.tax => CashDirection.outflow,
-        TransactionKind.sell ||
-        TransactionKind.deposit ||
-        TransactionKind.dividend ||
-        TransactionKind.interest ||
-        TransactionKind.coupon ||
-        TransactionKind.rent ||
-        TransactionKind.distribution => CashDirection.inflow,
-        TransactionKind.transferIn ||
-        TransactionKind.transferOut ||
-        TransactionKind.valuationAdjustment => CashDirection.none,
-      };
+  /// The cash effect of an entry of [kind] (see [direction]).
+  static CashDirection defaultDirection(TransactionKind kind) => switch (kind) {
+    TransactionKind.buy ||
+    TransactionKind.withdrawal ||
+    TransactionKind.fee ||
+    TransactionKind.tax => CashDirection.outflow,
+    TransactionKind.sell ||
+    TransactionKind.deposit ||
+    TransactionKind.dividend ||
+    TransactionKind.interest ||
+    TransactionKind.coupon ||
+    TransactionKind.rent ||
+    TransactionKind.distribution => CashDirection.inflow,
+    TransactionKind.transferIn ||
+    TransactionKind.transferOut ||
+    TransactionKind.valuationAdjustment => CashDirection.none,
+  };
 
   static IconData _icon(TransactionKind kind) => switch (kind) {
     TransactionKind.buy => Icons.add_shopping_cart_rounded,

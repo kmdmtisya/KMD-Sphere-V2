@@ -1787,5 +1787,388 @@
   "holdingsValueNote": "Values are shown in the portfolio currency. Investments in another currency also show their own value.",
   "@holdingsValueNote": {
     "description": "Explains converted and native amounts"
+  },
+  "ledgerTitle": "Transactions",
+  "@ledgerTitle": {
+    "description": "Title of the transactions screen"
+  },
+  "ledgerOpen": "Transactions",
+  "@ledgerOpen": {
+    "description": "Link to the transactions screen"
+  },
+  "ledgerAdd": "Add transaction",
+  "@ledgerAdd": {
+    "description": "Starts the add transaction flow"
+  },
+  "ledgerFilterAll": "All",
+  "@ledgerFilterAll": {
+    "description": "Filter chip: every entry"
+  },
+  "ledgerFilterTrades": "Trades",
+  "@ledgerFilterTrades": {
+    "description": "Filter chip: buys and sales"
+  },
+  "ledgerFilterCash": "Cash",
+  "@ledgerFilterCash": {
+    "description": "Filter chip: deposits and withdrawals"
+  },
+  "ledgerFilterIncome": "Income",
+  "@ledgerFilterIncome": {
+    "description": "Filter chip: dividends, interest and similar"
+  },
+  "ledgerFilterCosts": "Fees and taxes",
+  "@ledgerFilterCosts": {
+    "description": "Filter chip: fees and taxes"
+  },
+  "ledgerFilterOther": "Other",
+  "@ledgerFilterOther": {
+    "description": "Filter chip: transfers and adjustments"
+  },
+  "ledgerCount": "{count, plural, =1{1 entry} other{{count} entries}}",
+  "@ledgerCount": {
+    "description": "Number of ledger entries shown",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ledgerShowing": "showing {filter}",
+  "@ledgerShowing": {
+    "description": "Current filter, spoken",
+    "placeholders": {
+      "filter": {
+        "type": "String"
+      }
+    }
+  },
+  "ledgerEmptyTitle": "No transactions yet",
+  "@ledgerEmptyTitle": {
+    "description": "Empty ledger"
+  },
+  "ledgerEmptyMessage": "Add your first transaction to start your ledger.",
+  "@ledgerEmptyMessage": {
+    "description": "Empty ledger"
+  },
+  "ledgerNoMatchTitle": "No entries of this type",
+  "@ledgerNoMatchTitle": {
+    "description": "Filter matches nothing"
+  },
+  "ledgerNoMatchMessage": "Choose another filter to see more.",
+  "@ledgerNoMatchMessage": {
+    "description": "Filter matches nothing"
+  },
+  "ledgerShowAll": "Show all",
+  "@ledgerShowAll": {
+    "description": "Clears the ledger filter"
+  },
+  "ledgerReversalOf": "Reversal of {name}",
+  "@ledgerReversalOf": {
+    "description": "Label of a reversal entry",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "ledgerReversalPlain": "Reversal",
+  "@ledgerReversalPlain": {
+    "description": "Label of a reversal entry without an asset"
+  },
+  "ledgerAppendOnlyNote": "Entries are never edited. A mistake is corrected with a linked reversal, so the history stays complete.",
+  "@ledgerAppendOnlyNote": {
+    "description": "Explains the append-only ledger"
+  },
+  "ledgerDetailTitle": "Transaction",
+  "@ledgerDetailTitle": {
+    "description": "Title of the transaction detail screen"
+  },
+  "ledgerFieldType": "Type",
+  "@ledgerFieldType": {
+    "description": "Detail field"
+  },
+  "ledgerFieldAsset": "Investment",
+  "@ledgerFieldAsset": {
+    "description": "Detail field"
+  },
+  "ledgerFieldDate": "Trade date",
+  "@ledgerFieldDate": {
+    "description": "Detail field"
+  },
+  "ledgerFieldQuantity": "Quantity",
+  "@ledgerFieldQuantity": {
+    "description": "Detail field"
+  },
+  "ledgerFieldUnitPrice": "Price per unit",
+  "@ledgerFieldUnitPrice": {
+    "description": "Detail field"
+  },
+  "ledgerFieldAmount": "Amount",
+  "@ledgerFieldAmount": {
+    "description": "Detail field"
+  },
+  "ledgerFieldFee": "Fee",
+  "@ledgerFieldFee": {
+    "description": "Detail field"
+  },
+  "ledgerFieldSource": "Source",
+  "@ledgerFieldSource": {
+    "description": "Detail field"
+  },
+  "ledgerFieldNote": "Note",
+  "@ledgerFieldNote": {
+    "description": "Detail field"
+  },
+  "ledgerFieldRecorded": "Recorded",
+  "@ledgerFieldRecorded": {
+    "description": "Detail field"
+  },
+  "ledgerSourceManual": "Entered by you",
+  "@ledgerSourceManual": {
+    "description": "Entry source"
+  },
+  "ledgerSourceImport": "Imported",
+  "@ledgerSourceImport": {
+    "description": "Entry source"
+  },
+  "ledgerSourceSystem": "Added by the system",
+  "@ledgerSourceSystem": {
+    "description": "Entry source"
+  },
+  "ledgerHistoryTitle": "History",
+  "@ledgerHistoryTitle": {
+    "description": "Section of linked entries"
+  },
+  "ledgerHistoryLive": "No corrections. This entry is live.",
+  "@ledgerHistoryLive": {
+    "description": "History of an uncorrected entry"
+  },
+  "ledgerHistoryReversedBy": "Cancelled by a later reversal. It no longer counts.",
+  "@ledgerHistoryReversedBy": {
+    "description": "History of a reversed entry"
+  },
+  "ledgerHistoryReverses": "This reversal cancels an earlier entry. It is final.",
+  "@ledgerHistoryReverses": {
+    "description": "History of a reversal"
+  },
+  "ledgerViewReversal": "View the reversal",
+  "@ledgerViewReversal": {
+    "description": "Opens the reversal entry"
+  },
+  "ledgerViewOriginal": "View the original entry",
+  "@ledgerViewOriginal": {
+    "description": "Opens the reversed entry"
+  },
+  "ledgerCorrect": "Correct this entry",
+  "@ledgerCorrect": {
+    "description": "Starts a correction"
+  },
+  "ledgerCorrectTitle": "Correct this entry?",
+  "@ledgerCorrectTitle": {
+    "description": "Correction dialog title"
+  },
+  "ledgerCorrectBody": "Entries are never edited. This adds a reversal that cancels the entry; you can then add the corrected one. Both stay in your history.",
+  "@ledgerCorrectBody": {
+    "description": "Correction dialog text"
+  },
+  "ledgerCorrectNoteLabel": "Reason (optional)",
+  "@ledgerCorrectNoteLabel": {
+    "description": "Correction reason field"
+  },
+  "ledgerCorrectConfirm": "Add reversal",
+  "@ledgerCorrectConfirm": {
+    "description": "Confirms the correction"
+  },
+  "ledgerCancel": "Cancel",
+  "@ledgerCancel": {
+    "description": "Dismisses a dialog"
+  },
+  "ledgerReversalDone": "Reversal added. The entry is now marked as reversed.",
+  "@ledgerReversalDone": {
+    "description": "Shown after a reversal"
+  },
+  "ledgerAddCorrected": "Add corrected entry",
+  "@ledgerAddCorrected": {
+    "description": "Opens the add flow prefilled from a reversed entry"
+  },
+  "ledgerReverseFailed": "The reversal could not be added. Try again.",
+  "@ledgerReverseFailed": {
+    "description": "Reversal failed"
+  },
+  "ledgerErrNotFound": "This entry no longer exists.",
+  "@ledgerErrNotFound": {
+    "description": "Reversal refused"
+  },
+  "ledgerErrAlreadyReversed": "This entry has already been reversed.",
+  "@ledgerErrAlreadyReversed": {
+    "description": "Reversal refused"
+  },
+  "ledgerErrIsReversal": "A reversal cannot be reversed.",
+  "@ledgerErrIsReversal": {
+    "description": "Reversal refused"
+  },
+  "addTxTitle": "Add transaction",
+  "@addTxTitle": {
+    "description": "Title of the add flow"
+  },
+  "addTxCorrectionBanner": "You are adding a corrected version of an earlier entry. Check each value.",
+  "@addTxCorrectionBanner": {
+    "description": "Shown when the add flow is prefilled from a reversed entry"
+  },
+  "addTxPortfolio": "Portfolio",
+  "@addTxPortfolio": {
+    "description": "Form field"
+  },
+  "addTxType": "Type",
+  "@addTxType": {
+    "description": "Form field"
+  },
+  "addTxAsset": "Investment",
+  "@addTxAsset": {
+    "description": "Form field"
+  },
+  "addTxDate": "Trade date",
+  "@addTxDate": {
+    "description": "Form field"
+  },
+  "addTxDateHint": "Select a date",
+  "@addTxDateHint": {
+    "description": "Date field placeholder"
+  },
+  "addTxQuantity": "Quantity",
+  "@addTxQuantity": {
+    "description": "Form field"
+  },
+  "addTxUnitPrice": "Price per unit",
+  "@addTxUnitPrice": {
+    "description": "Form field"
+  },
+  "addTxAmount": "Amount",
+  "@addTxAmount": {
+    "description": "Form field"
+  },
+  "addTxFee": "Fee (optional)",
+  "@addTxFee": {
+    "description": "Form field"
+  },
+  "addTxNote": "Note (optional)",
+  "@addTxNote": {
+    "description": "Form field"
+  },
+  "addTxCurrencyNote": "Amounts are in {currency}, the portfolio currency.",
+  "@addTxCurrencyNote": {
+    "description": "Explains the posting currency",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "addTxReview": "Review",
+  "@addTxReview": {
+    "description": "Moves to the review step"
+  },
+  "addTxBackToEdit": "Back to edit",
+  "@addTxBackToEdit": {
+    "description": "Returns to the form"
+  },
+  "addTxSave": "Save transaction",
+  "@addTxSave": {
+    "description": "Saves the entry"
+  },
+  "addTxSaving": "Saving",
+  "@addTxSaving": {
+    "description": "Shown while saving"
+  },
+  "addTxReviewTitle": "Check before saving",
+  "@addTxReviewTitle": {
+    "description": "Review step heading"
+  },
+  "addTxServerTotalNote": "The total is calculated by the server when the entry is saved.",
+  "@addTxServerTotalNote": {
+    "description": "Trades show no total in the app"
+  },
+  "addTxDemoNote": "DEMO: this entry is only kept while the app is open. Nothing is sent to an account.",
+  "@addTxDemoNote": {
+    "description": "Demo save note"
+  },
+  "addTxFixFields": "{count, plural, =1{Fix 1 field to continue} other{Fix {count} fields to continue}}",
+  "@addTxFixFields": {
+    "description": "Summary of form problems",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "addTxSaveFailed": "The transaction could not be saved. Check your connection and try again.",
+  "@addTxSaveFailed": {
+    "description": "Save failed"
+  },
+  "addTxRetry": "Try again",
+  "@addTxRetry": {
+    "description": "Retries the save"
+  },
+  "addTxDoneTitle": "Transaction recorded",
+  "@addTxDoneTitle": {
+    "description": "Confirmation heading"
+  },
+  "addTxDoneMessage": "It has been added to the ledger. It can't be edited, but it can be corrected with a linked reversal.",
+  "@addTxDoneMessage": {
+    "description": "Confirmation text"
+  },
+  "addTxViewEntry": "View transaction",
+  "@addTxViewEntry": {
+    "description": "Opens the saved entry"
+  },
+  "addTxAddAnother": "Add another",
+  "@addTxAddAnother": {
+    "description": "Starts a new entry"
+  },
+  "addTxBackToList": "Back to transactions",
+  "@addTxBackToList": {
+    "description": "Returns to the list"
+  },
+  "txErrRequired": "{field} is required.",
+  "@txErrRequired": {
+    "description": "Field error",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "txErrNotANumber": "Use digits and a decimal point only, like 1250.50.",
+  "@txErrNotANumber": {
+    "description": "Field error"
+  },
+  "txErrNotPositive": "Enter a number greater than zero.",
+  "@txErrNotPositive": {
+    "description": "Field error"
+  },
+  "txErrNegative": "Enter a positive number. Choose the type (such as Withdrawal or Sell) instead of using a minus sign.",
+  "@txErrNegative": {
+    "description": "Field error"
+  },
+  "txErrTooManyDecimals": "Use at most {places, plural, =0{no decimal places} =1{1 decimal place} other{{places} decimal places}}.",
+  "@txErrTooManyDecimals": {
+    "description": "Field error",
+    "placeholders": {
+      "places": {
+        "type": "int"
+      }
+    }
+  },
+  "txErrTooLarge": "That number is too large. Check for extra digits.",
+  "@txErrTooLarge": {
+    "description": "Field error"
+  },
+  "txErrFutureDate": "The trade date can't be in the future.",
+  "@txErrFutureDate": {
+    "description": "Field error"
+  },
+  "txErrTooOld": "The trade date can't be before 1 January 2000.",
+  "@txErrTooOld": {
+    "description": "Field error"
   }
 }

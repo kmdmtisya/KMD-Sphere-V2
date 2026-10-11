@@ -11,6 +11,10 @@ import '../features/calculator/presentation/forecast/forecast_screen.dart';
 import '../features/dashboard/presentation/home_screen.dart';
 import '../features/portfolios/presentation/holdings_screen.dart';
 import '../features/portfolios/presentation/portfolio_overview_screen.dart';
+import '../features/transactions/domain/ledger_entry.dart';
+import '../features/transactions/presentation/add_transaction_screen.dart';
+import '../features/transactions/presentation/transaction_detail_screen.dart';
+import '../features/transactions/presentation/transactions_screen.dart';
 import 'app_routes.dart';
 import 'app_shell.dart';
 import 'app_tab.dart';
@@ -36,6 +40,35 @@ final Map<AppTab, RouteBase Function()> tabRoutes =
           GoRoute(
             path: 'holdings',
             builder: (context, state) => const HoldingsScreen(),
+          ),
+          GoRoute(
+            path: 'transactions',
+            builder: (context, state) => TransactionsScreen(
+              onOpen: (entry) => context.go(AppRoutes.transaction(entry.id)),
+              onAdd: () => context.go(AppRoutes.addTransaction),
+            ),
+            routes: [
+              // Registered before ':id' so "add" is never read as an entry id.
+              GoRoute(
+                path: 'add',
+                builder: (context, state) => AddTransactionScreen(
+                  correctionOf: state.extra is LedgerEntry
+                      ? state.extra! as LedgerEntry
+                      : null,
+                  onOpenEntry: (id) => context.go(AppRoutes.transaction(id)),
+                  onDone: () => context.go(AppRoutes.transactions),
+                ),
+              ),
+              GoRoute(
+                path: ':id',
+                builder: (context, state) => TransactionDetailScreen(
+                  entryId: state.pathParameters['id']!,
+                  onOpenEntry: (id) => context.go(AppRoutes.transaction(id)),
+                  onAddCorrected: (entry) =>
+                      context.go(AppRoutes.addTransaction, extra: entry),
+                ),
+              ),
+            ],
           ),
         ],
       ),

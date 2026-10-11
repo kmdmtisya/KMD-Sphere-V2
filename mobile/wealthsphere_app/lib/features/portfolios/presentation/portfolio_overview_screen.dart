@@ -317,9 +317,18 @@ class _HoldingsPreview extends ConsumerWidget {
               ),
             Align(
               alignment: AlignmentDirectional.centerEnd,
-              child: TextButton(
-                onPressed: () => context.go(AppRoutes.holdings),
-                child: Text(l10n.viewAllHoldings),
+              child: Wrap(
+                alignment: WrapAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () => context.go(AppRoutes.transactions),
+                    child: Text(l10n.ledgerOpen),
+                  ),
+                  TextButton(
+                    onPressed: () => context.go(AppRoutes.holdings),
+                    child: Text(l10n.viewAllHoldings),
+                  ),
+                ],
               ),
             ),
           ],
