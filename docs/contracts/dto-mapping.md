@@ -130,7 +130,7 @@ These DEMO DTOs are the proposed contract; the owning task adopts them or update
 | AllocationShare | `wealth_models.dart` | `label`, `value`, `weight_percent` | P06-T04 | Allocation analytics; weights come from the server (largest remainder, ADR-0006). |
 | PerformanceMetrics | `wealth_models.dart` | `total_return_percent`, `cagr_percent`, `dividend_yield_percent`, `volatility_percent` | P06-T09 | Returns and CAGR from the performance service (P06-T03), dividend yield from income (P06-T05), volatility from risk (P06-T08); published by the analytics API (P06-T09). |
 | NetWorthSummary | `wealth_models.dart` | `assets`, `liabilities`, `net_worth`, `as_of` | P06-T07 | Net worth and liabilities module. |
-| IncomeSummary | `wealth_models.dart` | `monthly`, `yearly`, `as_of` | P06-T05 | Income and passive-income module. |
+| IncomeSummary | `wealth_models.dart` | `monthly`, `yearly`, `as_of` | P06-T09 | monthly = TTM net / 12 and yearly = TTM net from the income service (P06-T05, docs/design/income.md), published by the analytics API. |
 | GoalsSummary, GoalProgress | `wealth_models.dart` | `id`, `name`, `progress_percent`, `status`, `on_track`, `total`, `items`, `as_of` | P06-T06 | Goals module. |
 | InsightSummary, EvidenceSourceDto | `wealth_models.dart` | `text`, `as_of`, `sources`, `label`, `provider` | P10-T06 | AI orchestrator (P10-T06): insights carry evidence with provider and as-of time. |
 | Chat events | `chat_models.dart` | `type`, `text`, `kind`, `label`, `provider`, `as_of` | P10-T06 | AI orchestrator streaming events (docs/api-conventions.md, Streaming). |

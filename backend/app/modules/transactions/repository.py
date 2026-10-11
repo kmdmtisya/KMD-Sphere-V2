@@ -15,7 +15,7 @@ from app.core.authz import owned_by
 from app.core.money import round_half_up
 from app.modules.portfolio.models import Portfolio
 from app.modules.transactions.holdings import Entry, Position
-from app.modules.transactions.models import Holding, Transaction
+from app.modules.transactions.models import Holding, IncomeEvent, Transaction
 
 _reversal = aliased(Transaction, name="reversal")
 
@@ -97,6 +97,36 @@ class LedgerRepository:
                 Holding.portfolio_id == portfolio_id, Holding.asset_id == asset_id
             )
         )
+
+    async def add_income_event(self, row: Transaction) -> None:
+        self._session.add(
+            IncomeEvent(
+                transaction_id=row.id,
+                portfolio_id=row.portfolio_id,
+                asset_id=row.asset_id,
+                income_type=row.transaction_type,
+                paid_on=row.trade_date,
+                currency=row.currency,
+                gross=row.gross_amount,
+                fees=row.fees,
+                taxes=row.taxes,
+                fx_rate=row.fx_rate_to_portfolio_currency,
+            )
+        )
+        await self._session.flush()
+
+    async def delete_income_event(self, transaction_id: uuid.UUID) -> None:
+        await self._session.execute(
+            delete(IncomeEvent).where(IncomeEvent.transaction_id == transaction_id)
+        )
+
+    async def income_events(self, portfolio_id: uuid.UUID) -> list[IncomeEvent]:
+        result = await self._session.execute(
+            select(IncomeEvent)
+            .where(IncomeEvent.portfolio_id == portfolio_id)
+            .order_by(IncomeEvent.paid_on, IncomeEvent.transaction_id)
+        )
+        return list(result.scalars().all())
 
     async def holdings(self, portfolio_id: uuid.UUID, include_closed: bool) -> list[Holding]:
         stmt = select(Holding).where(Holding.portfolio_id == portfolio_id)

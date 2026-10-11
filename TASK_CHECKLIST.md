@@ -603,14 +603,14 @@
   - [x] P06-T04.1 Allocation
   - [x] P06-T04.2 Concentration
   - [x] P06-T04.3 Tests
-- [ ] **P06-T05** · Income and passive-income module · `NOT_STARTED` ⬜
+- [x] **P06-T05** · Income and passive-income module · `COMPLETED` ✅
   - Deps: P05-T04, P05-GATE · Wave: W1 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P06-T05.1 Schema/migration
-  - [ ] P06-T05.2 Service
-  - [ ] P06-T05.3 Yield
-  - [ ] P06-T05.4 Tests
+  - Started: 2026-10-11T13:11:27+04:00 · Completed: 2026-10-11T13:15:12+04:00 · Duration: 3m 45s · Blocker: —
+  - Evidence: PR #61 (commit 52054ed). Schema/migration: income_events (migration 0007) one row per ledger income entry (DIVIDEND, INTEREST, COUPON, RENT, DISTRIBUTION), linked by unique FK transaction_id, with type/currency/non-negative/positive-rate constraints; backfill copies existing effective income entries (migration test on a scratch DB: kept entry copied, reversed entry and reversal not, downgrade drops the table); upgrade/check/downgrade/upgrade clean. Linked to the ledger: written in the same DB transaction as each posting, deleted with the reversal, no row on idempotent replay; integrity suite checks after every random step that income_events equals the effective income entries; IDOR snapshot includes it. Service: networth income (TTM with leap-day rule, 12 calendar months, years, by asset and type, current yield and yield on cost, portfolio yield, monthly/yearly passive income), authorised; fixtures reconcile (hand-computed TTM 489.7 gross / 451.03 net, months, years, yields), isolation from other portfolios and users tested. 34/34 mutants caught (a missing portfolio filter survived first and led to the isolation test). Append-only TRUNCATE test now asserts the FK refusal and the trigger with CASCADE. Local 1031 passed, coverage 92%, networth 100%, module policy OK, -m security 506. Methods docs/design/income.md. Process: the implementation was first committed on local main without a branch or tracker start (push refused); it was moved to the branch before any push and the start was recorded afterwards. CI all gates pass.
+  - [x] P06-T05.1 Schema/migration
+  - [x] P06-T05.2 Service
+  - [x] P06-T05.3 Yield
+  - [x] P06-T05.4 Tests
 - [ ] **P06-T06** · Goals module · `NOT_STARTED` ⬜
   - Deps: P06-T01, P05-T08 · Wave: W2 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
