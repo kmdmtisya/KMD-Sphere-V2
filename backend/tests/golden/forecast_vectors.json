@@ -1,0 +1,300 @@
+{
+  "about": "Compound forecast golden vectors (P06-T01). Expected values come from closed-form formulas (lump sum, level and growing annuities at the equivalent per-period rate; docs/design/forecast-engine.md), computed independently of the engine's month-by-month loop at 60 digits and rounded half-up to the currency's minor units. The first two match published compound-interest tables.",
+  "cases": [
+    {
+      "name": "textbook lump sum",
+      "note": "10,000 at 5% compounded yearly for 10 years = 16,288.95 (published tables)",
+      "input": {
+        "currency": "USD",
+        "compounding": "yearly",
+        "contribution_frequency": "monthly",
+        "initial": "10000.00",
+        "contribution": "0",
+        "annual_return_percent": "5",
+        "years": 10
+      },
+      "expected": {
+        "final_nominal": "16288.95",
+        "final_real": "16288.95",
+        "total_contributions": "10000.00",
+        "total_growth": "6288.95"
+      }
+    },
+    {
+      "name": "textbook annuity",
+      "note": "100 a month at 6% compounded monthly for 10 years = 16,387.93 (published tables)",
+      "input": {
+        "currency": "USD",
+        "compounding": "monthly",
+        "contribution_frequency": "monthly",
+        "initial": "0",
+        "contribution": "100.00",
+        "annual_return_percent": "6",
+        "years": 10
+      },
+      "expected": {
+        "final_nominal": "16387.93",
+        "final_real": "16387.93",
+        "total_contributions": "12000.00",
+        "total_growth": "4387.93"
+      }
+    },
+    {
+      "name": "zero rate",
+      "note": "growth is exactly zero",
+      "input": {
+        "currency": "USD",
+        "compounding": "monthly",
+        "contribution_frequency": "monthly",
+        "initial": "10000.00",
+        "contribution": "500.00",
+        "annual_return_percent": "0",
+        "years": 20
+      },
+      "expected": {
+        "final_nominal": "130000.00",
+        "final_real": "130000.00",
+        "total_contributions": "130000.00",
+        "total_growth": "0.00"
+      }
+    },
+    {
+      "name": "negative rate",
+      "note": "-10% a year: the value falls below what was paid in",
+      "input": {
+        "currency": "USD",
+        "compounding": "yearly",
+        "contribution_frequency": "yearly",
+        "initial": "2000.00",
+        "contribution": "100.00",
+        "annual_return_percent": "-10",
+        "years": 5
+      },
+      "expected": {
+        "final_nominal": "1590.49",
+        "final_real": "1590.49",
+        "total_contributions": "2500.00",
+        "total_growth": "-909.51"
+      }
+    },
+    {
+      "name": "50-year horizon",
+      "note": "long horizon, monthly",
+      "input": {
+        "currency": "USD",
+        "compounding": "monthly",
+        "contribution_frequency": "monthly",
+        "initial": "1000.00",
+        "contribution": "200.00",
+        "annual_return_percent": "7",
+        "years": 50
+      },
+      "expected": {
+        "final_nominal": "1122394.60",
+        "final_real": "1122394.60",
+        "total_contributions": "121000.00",
+        "total_growth": "1001394.60"
+      }
+    },
+    {
+      "name": "escalation",
+      "note": "contribution grows 5% a year (growing annuity)",
+      "input": {
+        "currency": "USD",
+        "compounding": "yearly",
+        "contribution_frequency": "yearly",
+        "initial": "0",
+        "contribution": "1000.00",
+        "annual_return_percent": "6",
+        "years": 10,
+        "contribution_growth_percent": "5"
+      },
+      "expected": {
+        "final_nominal": "16195.31",
+        "final_real": "16195.31",
+        "total_contributions": "12577.89",
+        "total_growth": "3617.42"
+      }
+    },
+    {
+      "name": "escalation monthly",
+      "note": "monthly contributions stepping up 3% each year",
+      "input": {
+        "currency": "USD",
+        "compounding": "monthly",
+        "contribution_frequency": "monthly",
+        "initial": "5000.00",
+        "contribution": "250.00",
+        "annual_return_percent": "7",
+        "years": 15,
+        "contribution_growth_percent": "3"
+      },
+      "expected": {
+        "final_nominal": "108821.12",
+        "final_real": "108821.12",
+        "total_contributions": "60796.74",
+        "total_growth": "48024.38"
+      }
+    },
+    {
+      "name": "fees",
+      "note": "1% fee reduces 8% to a net 7%",
+      "input": {
+        "currency": "USD",
+        "compounding": "monthly",
+        "contribution_frequency": "monthly",
+        "initial": "10000.00",
+        "contribution": "500.00",
+        "annual_return_percent": "8",
+        "years": 10,
+        "annual_fee_percent": "1"
+      },
+      "expected": {
+        "final_nominal": "106639.02",
+        "final_real": "106639.02",
+        "total_contributions": "70000.00",
+        "total_growth": "36639.02"
+      }
+    },
+    {
+      "name": "inflation",
+      "note": "real value in today's money at 3% inflation",
+      "input": {
+        "currency": "USD",
+        "compounding": "monthly",
+        "contribution_frequency": "monthly",
+        "initial": "10000.00",
+        "contribution": "500.00",
+        "annual_return_percent": "8",
+        "years": 10,
+        "annual_fee_percent": "1",
+        "inflation_percent": "3"
+      },
+      "expected": {
+        "final_nominal": "106639.02",
+        "final_real": "79349.44",
+        "total_contributions": "70000.00",
+        "total_growth": "36639.02"
+      }
+    },
+    {
+      "name": "quarterly contributions, monthly compounding",
+      "note": "mixed frequencies",
+      "input": {
+        "currency": "USD",
+        "compounding": "monthly",
+        "contribution_frequency": "quarterly",
+        "initial": "2000.00",
+        "contribution": "1500.00",
+        "annual_return_percent": "6",
+        "years": 8
+      },
+      "expected": {
+        "final_nominal": "64336.51",
+        "final_real": "64336.51",
+        "total_contributions": "50000.00",
+        "total_growth": "14336.51"
+      }
+    },
+    {
+      "name": "monthly contributions, yearly compounding",
+      "note": "equivalent monthly rate (1 + r)^(1/12)",
+      "input": {
+        "currency": "USD",
+        "compounding": "yearly",
+        "contribution_frequency": "monthly",
+        "initial": "0",
+        "contribution": "100.00",
+        "annual_return_percent": "12",
+        "years": 5
+      },
+      "expected": {
+        "final_nominal": "8034.13",
+        "final_real": "8034.13",
+        "total_contributions": "6000.00",
+        "total_growth": "2034.13"
+      }
+    },
+    {
+      "name": "quarterly compounding, yearly contributions",
+      "note": "contribution at each year end",
+      "input": {
+        "currency": "USD",
+        "compounding": "quarterly",
+        "contribution_frequency": "yearly",
+        "initial": "1000.00",
+        "contribution": "1200.00",
+        "annual_return_percent": "4",
+        "years": 12
+      },
+      "expected": {
+        "final_nominal": "19705.79",
+        "final_real": "19705.79",
+        "total_contributions": "15400.00",
+        "total_growth": "4305.79"
+      }
+    },
+    {
+      "name": "calculator defaults",
+      "note": "the mobile calculator's opening inputs (base scenario)",
+      "input": {
+        "currency": "USD",
+        "compounding": "monthly",
+        "contribution_frequency": "monthly",
+        "initial": "10000.00",
+        "contribution": "500.00",
+        "annual_return_percent": "8",
+        "years": 20,
+        "annual_fee_percent": "0.5",
+        "inflation_percent": "2.5"
+      },
+      "expected": {
+        "final_nominal": "321473.53",
+        "final_real": "196185.96",
+        "total_contributions": "130000.00",
+        "total_growth": "191473.53"
+      }
+    },
+    {
+      "name": "JPY",
+      "note": "no minor units",
+      "input": {
+        "currency": "JPY",
+        "compounding": "monthly",
+        "contribution_frequency": "monthly",
+        "initial": "1000000",
+        "contribution": "30000",
+        "annual_return_percent": "3",
+        "years": 25,
+        "inflation_percent": "1"
+      },
+      "expected": {
+        "final_nominal": "15495254",
+        "final_real": "12082710",
+        "total_contributions": "10000000",
+        "total_growth": "5495254"
+      }
+    },
+    {
+      "name": "KWD",
+      "note": "three minor units",
+      "input": {
+        "currency": "KWD",
+        "compounding": "monthly",
+        "contribution_frequency": "monthly",
+        "initial": "1500.000",
+        "contribution": "75.500",
+        "annual_return_percent": "4.25",
+        "years": 7,
+        "annual_fee_percent": "0.35",
+        "inflation_percent": "2"
+      },
+      "expected": {
+        "final_nominal": "9248.614",
+        "final_real": "8051.475",
+        "total_contributions": "7842.000",
+        "total_growth": "1406.614"
+      }
+    }
+  ]
+}

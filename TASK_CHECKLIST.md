@@ -571,15 +571,15 @@
 - Exit gates: QG-03.4–5; QG-06.1,3,4,6 — required by `P06-GATE` (Gates-done)
 - Release gates: —
 
-- [ ] **P06-T01** · Compound forecast engine · `NOT_STARTED` ⬜
+- [ ] **P06-T01** · Compound forecast engine · `IN_PROGRESS` 🔄
   - Deps: P01-T07, P01-T03, P01-GATE · Wave: W1 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-11T10:38:33+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P06-T01.1 Formula doc
-  - [ ] P06-T01.2 Implementation
-  - [ ] P06-T01.3 Solver
-  - [ ] P06-T01.4 Golden tests
-  - [ ] P06-T01.5 Property tests
+  - [x] P06-T01.1 Formula doc
+  - [x] P06-T01.2 Implementation
+  - [x] P06-T01.3 Solver
+  - [x] P06-T01.4 Golden tests
+  - [x] P06-T01.5 Property tests
 - [ ] **P06-T02** · Forecast API · `NOT_STARTED` ⬜
   - Deps: P06-T01, P04-T02 · Wave: W2 · Track: BE · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
