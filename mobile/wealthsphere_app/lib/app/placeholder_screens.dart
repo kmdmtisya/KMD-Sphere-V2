@@ -107,17 +107,6 @@ class PortfolioPlaceholder extends StatelessWidget {
   }
 }
 
-class HoldingsPlaceholder extends StatelessWidget {
-  const HoldingsPlaceholder({super.key});
-
-  @override
-  Widget build(BuildContext context) => _PlaceholderPage(
-    title: AppLocalizations.of(context).holdingsTitle,
-    showBackButton: true,
-    children: [_comingSoon(context)],
-  );
-}
-
 class AiPlaceholder extends StatelessWidget {
   const AiPlaceholder({this.scope, super.key});
 

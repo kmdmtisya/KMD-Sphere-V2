@@ -1691,5 +1691,101 @@
   "opportunitySimulate": "Simulate",
   "@opportunitySimulate": {
     "description": "Pre-fills a scenario with an idea"
+  },
+  "holdingsSearchLabel": "Search investments",
+  "@holdingsSearchLabel": {
+    "description": "Label of the holdings search field"
+  },
+  "holdingsSearchHint": "Name or symbol",
+  "@holdingsSearchHint": {
+    "description": "Hint of the holdings search field"
+  },
+  "holdingsClearSearch": "Clear search",
+  "@holdingsClearSearch": {
+    "description": "Clears the holdings search"
+  },
+  "holdingsFilterLabel": "Asset class",
+  "@holdingsFilterLabel": {
+    "description": "Label of the asset class chips"
+  },
+  "holdingsFilterAll": "All",
+  "@holdingsFilterAll": {
+    "description": "Asset class chip that shows everything"
+  },
+  "holdingsSortLabel": "Sort",
+  "@holdingsSortLabel": {
+    "description": "Label of the sort menu"
+  },
+  "holdingsSortValueDesc": "Value, high to low",
+  "@holdingsSortValueDesc": {
+    "description": "Sort order"
+  },
+  "holdingsSortValueAsc": "Value, low to high",
+  "@holdingsSortValueAsc": {
+    "description": "Sort order"
+  },
+  "holdingsSortNameAsc": "Name, A to Z",
+  "@holdingsSortNameAsc": {
+    "description": "Sort order"
+  },
+  "holdingsSortChangeDesc": "Change, best first",
+  "@holdingsSortChangeDesc": {
+    "description": "Sort order"
+  },
+  "holdingsSortChangeAsc": "Change, worst first",
+  "@holdingsSortChangeAsc": {
+    "description": "Sort order"
+  },
+  "holdingsCount": "{count, plural, =1{1 investment} other{{count} investments}}",
+  "@holdingsCount": {
+    "description": "Number of holdings shown",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "holdingsInClass": "in {assetClass}",
+  "@holdingsInClass": {
+    "description": "Filter by asset class, spoken",
+    "placeholders": {
+      "assetClass": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsMatching": "matching {search}",
+  "@holdingsMatching": {
+    "description": "Filter by search, spoken",
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsSortedBy": "sorted by {sort}",
+  "@holdingsSortedBy": {
+    "description": "Current sort, spoken",
+    "placeholders": {
+      "sort": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsNoMatchTitle": "No matching investments",
+  "@holdingsNoMatchTitle": {
+    "description": "Shown when filters match nothing"
+  },
+  "holdingsNoMatchMessage": "Try a different search or clear the filters.",
+  "@holdingsNoMatchMessage": {
+    "description": "Shown when filters match nothing"
+  },
+  "holdingsClearFilters": "Clear filters",
+  "@holdingsClearFilters": {
+    "description": "Clears the search and asset class"
+  },
+  "holdingsValueNote": "Values are shown in the portfolio currency. Investments in another currency also show their own value.",
+  "@holdingsValueNote": {
+    "description": "Explains converted and native amounts"
   }
 }

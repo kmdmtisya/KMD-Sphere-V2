@@ -672,13 +672,13 @@
   - [x] P07-T01.1 Four components
   - [x] P07-T01.2 Gallery entries
   - [x] P07-T01.3 Tests and goldens
-- [ ] **P07-T02** · Investments / Holdings (screen 5) · `NOT_STARTED` ⬜
+- [ ] **P07-T02** · Investments / Holdings (screen 5) · `IN_PROGRESS` 🔄
   - Deps: P07-T01 · Wave: W2 · Track: MOB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-11T19:46:13+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P07-T02.1 Screen
-  - [ ] P07-T02.2 Search/filter/sort
-  - [ ] P07-T02.3 Tests
+  - [x] P07-T02.1 Screen
+  - [x] P07-T02.2 Search/filter/sort
+  - [x] P07-T02.3 Tests
 - [ ] **P07-T03** · Transactions (screen 8) and add-transaction flow · `NOT_STARTED` ⬜
   - Deps: P07-T01 · Wave: W2 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
