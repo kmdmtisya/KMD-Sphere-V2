@@ -64,6 +64,7 @@ async def list_watchlist(user: CurrentUserDep, session: SessionDep) -> list[Watc
 async def remove_from_watchlist(
     asset_id: uuid.UUID, user: CurrentUserDep, session: SessionDep
 ) -> Response:
+    """Removes an asset from the watchlist."""
     await WatchlistService(session).remove(user.id, asset_id)
     return Response(status_code=204)
 
@@ -88,6 +89,7 @@ async def create_alert(body: AlertCreate, user: CurrentUserDep, session: Session
 
 @alerts_router.get("", response_model=list[AlertOut], responses=UNAUTHORIZED)
 async def list_alerts(user: CurrentUserDep, session: SessionDep) -> list[AlertOut]:
+    """Your alerts, with their status."""
     return await AlertService(session).list(user.id)
 
 
@@ -109,6 +111,7 @@ async def list_alert_events(
 async def mark_alert_event_seen(
     event_id: uuid.UUID, user: CurrentUserDep, session: SessionDep
 ) -> AlertEventOut:
+    """Marks one of your alert events as seen."""
     return await AlertService(session).mark_seen(user.id, event_id)
 
 
@@ -118,6 +121,7 @@ async def mark_alert_event_seen(
     responses={**UNAUTHORIZED, **not_found("alert")},
 )
 async def get_alert(alert_id: uuid.UUID, user: CurrentUserDep, session: SessionDep) -> AlertOut:
+    """One of your alerts."""
     return await AlertService(session).get(user.id, alert_id)
 
 
@@ -139,6 +143,7 @@ async def update_alert(
     responses={**UNAUTHORIZED, **not_found("alert")},
 )
 async def delete_alert(alert_id: uuid.UUID, user: CurrentUserDep, session: SessionDep) -> Response:
+    """Deletes one of your alerts (its events go with it)."""
     await AlertService(session).delete(user.id, alert_id)
     return Response(status_code=204)
 

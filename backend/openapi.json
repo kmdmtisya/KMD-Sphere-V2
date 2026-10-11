@@ -5286,6 +5286,7 @@
     },
     "/api/v1/alerts": {
       "get": {
+        "description": "Your alerts, with their status.",
         "operationId": "list_alerts_api_v1_alerts_get",
         "responses": {
           "200": {
@@ -5453,6 +5454,7 @@
     },
     "/api/v1/alerts/events/{event_id}/seen": {
       "post": {
+        "description": "Marks one of your alert events as seen.",
         "operationId": "mark_alert_event_seen_api_v1_alerts_events__event_id__seen_post",
         "parameters": [
           {
@@ -5519,6 +5521,7 @@
     },
     "/api/v1/alerts/{alert_id}": {
       "delete": {
+        "description": "Deletes one of your alerts (its events go with it).",
         "operationId": "delete_alert_api_v1_alerts__alert_id__delete",
         "parameters": [
           {
@@ -5576,6 +5579,7 @@
         ]
       },
       "get": {
+        "description": "One of your alerts.",
         "operationId": "get_alert_api_v1_alerts__alert_id__get",
         "parameters": [
           {
@@ -9430,6 +9434,7 @@
     },
     "/api/v1/watchlist/{asset_id}": {
       "delete": {
+        "description": "Removes an asset from the watchlist.",
         "operationId": "remove_from_watchlist_api_v1_watchlist__asset_id__delete",
         "parameters": [
           {
@@ -9596,6 +9601,14 @@
     {
       "description": "Liabilities, and net worth with the FX rates used",
       "name": "net worth"
+    },
+    {
+      "description": "Assets the user follows, with latest prices",
+      "name": "watchlist"
+    },
+    {
+      "description": "Price and allocation alerts, their events and preferences",
+      "name": "alerts"
     },
     {
       "description": "Goals and their progress under stated assumptions (estimates)",

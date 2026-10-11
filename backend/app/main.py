@@ -123,6 +123,11 @@ def create_app(
                 "name": "net worth",
                 "description": "Liabilities, and net worth with the FX rates used",
             },
+            {"name": "watchlist", "description": "Assets the user follows, with latest prices"},
+            {
+                "name": "alerts",
+                "description": "Price and allocation alerts, their events and preferences",
+            },
             {
                 "name": "goals",
                 "description": "Goals and their progress under stated assumptions (estimates)",
