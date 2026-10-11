@@ -752,13 +752,13 @@
 - Exit gates: QG-06.7; QG-09.5; QG-11.4 — required by `P08-GATE` (Gates-done)
 - Release gates: —
 
-- [ ] **P08-T01** · Provider selection and licensing decision · `NOT_STARTED` ⬜
+- [x] **P08-T01** · Provider selection and licensing decision · `COMPLETED` ✅
   - Deps: P05-T01, P05-GATE · Wave: W1 · Track: DOC · Size: S · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P08-T01.1 Requirements matrix
-  - [ ] P08-T01.2 Candidate evaluation
-  - [ ] P08-T01.3 ADR
+  - Started: 2026-10-12T01:19:19+04:00 · Completed: 2026-10-12T01:19:20+04:00 · Duration: 0m 01s · Blocker: —
+  - Evidence: ADR-0014 accepted. User approved P08-T01 and the P08 run on 2026-10-12, adopting the recommended selection (ECB FX, CoinGecko crypto, Twelve Data equities adapter). Acceptance caveat recorded: licence for in-app display and storage is not yet confirmed for any provider; production use blocked until it is. · Approved by: user (mtisya@gmail.com)
+  - [x] P08-T01.1 Requirements matrix
+  - [x] P08-T01.2 Candidate evaluation
+  - [x] P08-T01.3 ADR
 - [ ] **P08-T02** · Provider abstraction layer · `NOT_STARTED` ⬜
   - Deps: P05-T01, P05-GATE · Wave: W1 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
