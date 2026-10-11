@@ -699,6 +699,126 @@
         "title": "FxQuoteOut",
         "type": "object"
       },
+      "GoalAssumptions": {
+        "additionalProperties": false,
+        "properties": {
+          "annual_fee_percent": {
+            "default": "0",
+            "description": "Yearly fee on the balance, in percent (0 to 5, at most 2 decimals)",
+            "examples": [
+              "8.00"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Annual Fee Percent",
+            "type": "string"
+          },
+          "compounding_frequency": {
+            "$ref": "#/components/schemas/Frequency",
+            "default": "monthly"
+          },
+          "contribution": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Paid at the end of each contribution period in the first year, then increased yearly by contribution_growth_percent (0 to 10000000; in the target's currency)"
+          },
+          "contribution_frequency": {
+            "$ref": "#/components/schemas/Frequency",
+            "default": "monthly"
+          },
+          "contribution_growth_percent": {
+            "default": "0",
+            "description": "Yearly increase of the contribution, in percent (0 to 20, at most 2 decimals)",
+            "examples": [
+              "8.00"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Contribution Growth Percent",
+            "type": "string"
+          },
+          "inflation_percent": {
+            "default": "0",
+            "description": "Assumed yearly inflation, in percent (0 to 30, at most 2 decimals)",
+            "examples": [
+              "8.00"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Inflation Percent",
+            "type": "string"
+          },
+          "returns": {
+            "$ref": "#/components/schemas/GoalReturns"
+          }
+        },
+        "required": [
+          "contribution",
+          "returns"
+        ],
+        "title": "GoalAssumptions",
+        "type": "object"
+      },
+      "GoalCreate": {
+        "additionalProperties": false,
+        "properties": {
+          "assumptions": {
+            "$ref": "#/components/schemas/GoalAssumptions"
+          },
+          "goal_type": {
+            "default": "wealth",
+            "enum": [
+              "wealth",
+              "retirement",
+              "education",
+              "house_deposit",
+              "business_capital",
+              "custom"
+            ],
+            "title": "Goal Type",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "portfolio_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The portfolio that funds the goal; null for all portfolios",
+            "title": "Portfolio Id"
+          },
+          "target": {
+            "$ref": "#/components/schemas/Money",
+            "description": "The value to reach (0.01 to 10000000000)"
+          },
+          "target_date": {
+            "description": "After today and at most 60 years ahead",
+            "format": "date",
+            "title": "Target Date",
+            "type": "string"
+          },
+          "target_in_todays_money": {
+            "default": false,
+            "description": "True: the target is in today's money and grows with inflation to the date",
+            "title": "Target In Todays Money",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "target",
+          "target_date",
+          "assumptions"
+        ],
+        "title": "GoalCreate",
+        "type": "object"
+      },
       "GoalForecastIn": {
         "additionalProperties": false,
         "description": "Find the contribution that reaches `target` after `years`.",
@@ -826,6 +946,462 @@
           "assumptions"
         ],
         "title": "GoalForecastOut",
+        "type": "object"
+      },
+      "GoalOut": {
+        "properties": {
+          "assumptions": {
+            "$ref": "#/components/schemas/GoalAssumptions"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "goal_type": {
+            "enum": [
+              "wealth",
+              "retirement",
+              "education",
+              "house_deposit",
+              "business_capital",
+              "custom"
+            ],
+            "title": "Goal Type",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "portfolio_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Portfolio Id"
+          },
+          "target": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "target_date": {
+            "format": "date",
+            "title": "Target Date",
+            "type": "string"
+          },
+          "target_in_todays_money": {
+            "title": "Target In Todays Money",
+            "type": "boolean"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "goal_type",
+          "target",
+          "target_date",
+          "target_in_todays_money",
+          "portfolio_id",
+          "assumptions",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "GoalOut",
+        "type": "object"
+      },
+      "GoalProgressOut": {
+        "properties": {
+          "as_of": {
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "assumptions": {
+            "$ref": "#/components/schemas/GoalAssumptions"
+          },
+          "current_value": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Value of the funding portfolios, in the target's currency"
+          },
+          "estimated_completion": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "When the base scenario reaches the target with the current contribution; null if not within 100 years",
+            "title": "Estimated Completion"
+          },
+          "gap": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Target - current value, at least 0"
+          },
+          "goal_id": {
+            "format": "uuid",
+            "title": "Goal Id",
+            "type": "string"
+          },
+          "months_left": {
+            "description": "Whole months until the target date (negative after it)",
+            "title": "Months Left",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "notice": {
+            "title": "Notice",
+            "type": "string"
+          },
+          "overdue": {
+            "description": "The target date has passed without reaching the target",
+            "title": "Overdue",
+            "type": "boolean"
+          },
+          "progress_percent": {
+            "description": "Current value / target, 0 to 100",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Progress Percent",
+            "type": "string"
+          },
+          "reached": {
+            "description": "The current value already meets the target",
+            "title": "Reached",
+            "type": "boolean"
+          },
+          "required_contribution": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Per contribution period in the first year to reach the target by the date (base scenario); null when reached, overdue, or no contribution falls before the date"
+          },
+          "scenarios": {
+            "items": {
+              "$ref": "#/components/schemas/ScenarioOutcomeOut"
+            },
+            "title": "Scenarios",
+            "type": "array"
+          },
+          "status": {
+            "description": "Under the base scenario's assumptions; an estimate",
+            "enum": [
+              "on_track",
+              "behind"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "target": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "target_date": {
+            "format": "date",
+            "title": "Target Date",
+            "type": "string"
+          },
+          "target_in_todays_money": {
+            "title": "Target In Todays Money",
+            "type": "boolean"
+          },
+          "value_as_of": {
+            "description": "The oldest input of the current value",
+            "format": "date-time",
+            "title": "Value As Of",
+            "type": "string"
+          },
+          "value_complete": {
+            "description": "False when assets are unpriced or currencies unconverted (value understated)",
+            "title": "Value Complete",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "goal_id",
+          "name",
+          "status",
+          "reached",
+          "overdue",
+          "progress_percent",
+          "current_value",
+          "gap",
+          "target",
+          "target_date",
+          "target_in_todays_money",
+          "months_left",
+          "scenarios",
+          "required_contribution",
+          "estimated_completion",
+          "value_complete",
+          "value_as_of",
+          "assumptions",
+          "as_of",
+          "notice"
+        ],
+        "title": "GoalProgressOut",
+        "type": "object"
+      },
+      "GoalReturns": {
+        "additionalProperties": false,
+        "description": "The annual return of each scenario (conservative <= base <= growth). Only base is\nrequired; the goal's status is measured against it.",
+        "properties": {
+          "base": {
+            "description": "Assumed nominal annual return, in percent (-20 to 50, at most 2 decimals)",
+            "examples": [
+              "8.00"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Base",
+            "type": "string"
+          },
+          "conservative": {
+            "anyOf": [
+              {
+                "description": "Assumed nominal annual return, in percent (-20 to 50, at most 2 decimals)",
+                "examples": [
+                  "8.00"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Conservative"
+          },
+          "growth": {
+            "anyOf": [
+              {
+                "description": "Assumed nominal annual return, in percent (-20 to 50, at most 2 decimals)",
+                "examples": [
+                  "8.00"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Growth"
+          }
+        },
+        "required": [
+          "base"
+        ],
+        "title": "GoalReturns",
+        "type": "object"
+      },
+      "GoalSummaryItem": {
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "progress_percent": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Progress Percent",
+            "type": "string"
+          },
+          "reached": {
+            "title": "Reached",
+            "type": "boolean"
+          },
+          "status": {
+            "enum": [
+              "on_track",
+              "behind"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "target": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "target_date": {
+            "format": "date",
+            "title": "Target Date",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "progress_percent",
+          "status",
+          "reached",
+          "target",
+          "target_date"
+        ],
+        "title": "GoalSummaryItem",
+        "type": "object"
+      },
+      "GoalUpdate": {
+        "additionalProperties": false,
+        "description": "PATCH body: any subset. `assumptions` replaces all assumptions at once. Send\n`portfolio_id: null` to fund the goal from all portfolios.",
+        "properties": {
+          "assumptions": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GoalAssumptions"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "goal_type": {
+            "anyOf": [
+              {
+                "enum": [
+                  "wealth",
+                  "retirement",
+                  "education",
+                  "house_deposit",
+                  "business_capital",
+                  "custom"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Goal Type"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "portfolio_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Portfolio Id"
+          },
+          "target": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "target_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Date"
+          },
+          "target_in_todays_money": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target In Todays Money"
+          }
+        },
+        "title": "GoalUpdate",
+        "type": "object"
+      },
+      "GoalsSummaryOut": {
+        "properties": {
+          "as_of": {
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/GoalSummaryItem"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "notice": {
+            "title": "Notice",
+            "type": "string"
+          },
+          "on_track": {
+            "title": "On Track",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "on_track",
+          "total",
+          "items",
+          "as_of",
+          "notice"
+        ],
+        "title": "GoalsSummaryOut",
         "type": "object"
       },
       "HTTPValidationError": {
@@ -1684,6 +2260,48 @@
           "assumptions"
         ],
         "title": "ScenarioForecastOut",
+        "type": "object"
+      },
+      "ScenarioOutcomeOut": {
+        "properties": {
+          "annual_return_percent": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Annual Return Percent",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "conservative",
+              "base",
+              "growth"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "projected_value": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Projected value on the target date"
+          },
+          "projected_value_real": {
+            "$ref": "#/components/schemas/Money",
+            "description": "The same in today's money"
+          },
+          "reaches_target": {
+            "title": "Reaches Target",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "kind",
+          "annual_return_percent",
+          "projected_value",
+          "projected_value_real",
+          "reaches_target"
+        ],
+        "title": "ScenarioOutcomeOut",
         "type": "object"
       },
       "SummaryOut": {
@@ -2994,6 +3612,413 @@
         "summary": "Get Fx Rate",
         "tags": [
           "fx"
+        ]
+      }
+    },
+    "/api/v1/goals": {
+      "get": {
+        "description": "The signed-in user's goals, by target date.",
+        "operationId": "list_goals_api_v1_goals_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/GoalOut"
+                  },
+                  "title": "Response List Goals Api V1 Goals Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "List Goals",
+        "tags": [
+          "goals"
+        ]
+      },
+      "post": {
+        "description": "Creates a goal with its target, date, funding and assumptions.",
+        "operationId": "create_goal_api_v1_goals_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GoalCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoalOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "409": {
+            "description": "Name already used, or the goal limit is reached"
+          },
+          "422": {
+            "description": "Invalid goal (limits, dates, currencies or portfolio)"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Create Goal",
+        "tags": [
+          "goals"
+        ]
+      }
+    },
+    "/api/v1/goals/summary": {
+      "get": {
+        "description": "Progress and status of every goal, and how many are on track (estimates).",
+        "operationId": "goals_summary_api_v1_goals_summary_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoalsSummaryOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Goals Summary",
+        "tags": [
+          "goals"
+        ]
+      }
+    },
+    "/api/v1/goals/{goal_id}": {
+      "delete": {
+        "description": "Deletes a goal (goals are plans; nothing in the ledger changes).",
+        "operationId": "delete_goal_api_v1_goals__goal_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "goal_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Goal Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such goal for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Delete Goal",
+        "tags": [
+          "goals"
+        ]
+      },
+      "get": {
+        "description": "One of the signed-in user's goals.",
+        "operationId": "get_goal_api_v1_goals__goal_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "goal_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Goal Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoalOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such goal for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Goal",
+        "tags": [
+          "goals"
+        ]
+      },
+      "patch": {
+        "description": "Changes any part of a goal; `assumptions` replaces all assumptions.",
+        "operationId": "update_goal_api_v1_goals__goal_id__patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "goal_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Goal Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GoalUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoalOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such goal for this user"
+          },
+          "409": {
+            "description": "Name already used"
+          },
+          "422": {
+            "description": "Invalid change"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Update Goal",
+        "tags": [
+          "goals"
+        ]
+      }
+    },
+    "/api/v1/goals/{goal_id}/progress": {
+      "get": {
+        "description": "Progress, gap, scenario projections, required contribution and estimated completion,\nunder the goal's stated assumptions (an estimate, not guaranteed).",
+        "operationId": "goal_progress_api_v1_goals__goal_id__progress_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "goal_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Goal Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoalProgressOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such goal for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Goal Progress",
+        "tags": [
+          "goals"
         ]
       }
     },
@@ -4947,6 +5972,10 @@
     {
       "description": "User-entered values of assets without a market price",
       "name": "valuations"
+    },
+    {
+      "description": "Goals and their progress under stated assumptions (estimates)",
+      "name": "goals"
     },
     {
       "description": "Compound, scenario and goal projections (illustrative, never guaranteed)",

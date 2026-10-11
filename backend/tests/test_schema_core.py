@@ -36,6 +36,8 @@ CORE_TABLES = {
     "income_events",
     "valuations",
     "fx_rates",
+    "goals",
+    "goal_scenarios",
 }
 MONEY_LIKE = {
     "amount",
@@ -697,3 +699,63 @@ async def test_one_income_event_per_ledger_entry(
         await income_event(db, world, transaction_id=tx)
     with pytest.raises(asyncpg.ForeignKeyViolationError):
         await income_event(db, world, transaction_id=uuid.uuid4())
+
+
+# ------------------------------------------------------------------------------ goals (P06-T06)
+
+
+async def new_goal(conn: asyncpg.Connection, user: uuid.UUID, **overrides: Any) -> uuid.UUID:
+    from datetime import date
+
+    cols: dict[str, Any] = {
+        "user_id": user,
+        "name": f"G {uuid.uuid4().hex[:6]}",
+        "target_amount": Decimal("1000"),
+        "target_currency": "USD",
+        "target_date": date(2030, 1, 1),
+    }
+    cols.update(overrides)
+    return await insert(conn, "goals", **cols)
+
+
+@pytest.mark.integration
+@pytest.mark.parametrize(
+    ("overrides", "constraint"),
+    [
+        ({"name": "  "}, "ck_goals_name"),
+        ({"goal_type": "yacht"}, "goal_type"),
+        ({"target_currency": "usd"}, "target_currency"),
+        ({"target_amount": Decimal(0)}, "target_amount_positive"),
+        ({"contribution": Decimal(-1)}, "contribution_non_negative"),
+        ({"contribution_frequency": "weekly"}, "contribution_frequency"),
+        ({"compounding_frequency": "daily"}, "compounding_frequency"),
+        ({"inflation_percent": Decimal(-1)}, "percents_non_negative"),
+    ],
+)
+async def test_goals_reject_invalid_rows(
+    db: asyncpg.Connection,
+    world: dict[str, uuid.UUID],
+    overrides: dict[str, Any],
+    constraint: str,
+) -> None:
+    with pytest.raises(asyncpg.CheckViolationError, match=constraint):
+        await new_goal(db, world["user"], **overrides)
+
+
+@pytest.mark.integration
+async def test_goal_scenarios_one_per_kind_and_deleted_with_the_goal(
+    db: asyncpg.Connection, world: dict[str, uuid.UUID]
+) -> None:
+    goal = await new_goal(db, world["user"])
+    await insert(db, "goal_scenarios", goal_id=goal, kind="base", annual_return_percent=Decimal(5))
+    with pytest.raises(asyncpg.UniqueViolationError, match="uq_goal_scenarios_goal_id_kind"):
+        await insert(db, "goal_scenarios", goal_id=goal, kind="base",
+                     annual_return_percent=Decimal(6))  # fmt: skip
+    with pytest.raises(asyncpg.CheckViolationError, match="kind"):
+        await insert(db, "goal_scenarios", goal_id=goal, kind="wild",
+                     annual_return_percent=Decimal(6))  # fmt: skip
+    await db.execute("DELETE FROM goals WHERE id = $1", goal)
+    assert await db.fetchval("SELECT count(*) FROM goal_scenarios WHERE goal_id = $1", goal) == 0
+    with pytest.raises(asyncpg.UniqueViolationError, match="uq_goals_user_id_name"):
+        await new_goal(db, world["user"], name="Same")
+        await new_goal(db, world["user"], name="Same")

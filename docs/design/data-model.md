@@ -19,6 +19,8 @@ erDiagram
   assets ||--o{ holdings : "held"
   transactions ||--o| income_events : "income entry"
   portfolios ||--o{ income_events : "received"
+  portfolios |o--o{ goals : "funds"
+  goals ||--|{ goal_scenarios : "assumes"
   portfolios ||--o{ valuations : "manual values"
   assets ||--o{ valuations : "valued"
   fx_rates {
@@ -39,6 +41,7 @@ erDiagram
 | `transactions` | **Append-only ledger**, the source of truth | 14 types. Own currency and the FX rate to the portfolio currency, with its time and source. Idempotency key. Reversal link. |
 | `holdings` | Derived position per asset per portfolio: quantity, cost basis, realised profit, income, expenses (migration 0006) | A cache rebuilt from the ledger in the same transaction as every posting; weighted average cost (ADR-0012). |
 | `income_events` | One row per income entry of the ledger (dividend, interest, coupon, rent, distribution): asset, type, date paid, currency, gross, fees, taxes, rate (migration 0007, P06-T05) | An index for income queries, written and removed in the same transaction as the ledger entry and its reversal; rebuildable from the ledger (docs/design/income.md). |
+| `goals`, `goal_scenarios` | A user's goals (target, date, funding portfolio or all, shared assumptions) and one return per scenario (conservative, base, growth) (migration 0008, P06-T06) | Plans, not financial records: changed and deleted with audit events; scenarios are deleted with their goal (docs/design/goals.md). |
 | `valuations` | User-entered values for assets without a market price | One per asset per as-of instant; source label. |
 | `fx_rates` | Timestamped exchange rates | Positive; one row per pair, provider and instant. P11 extends it. |
 
