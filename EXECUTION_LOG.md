@@ -873,3 +873,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-11T19:46:13+04:00 — START P07-T02
 - Investments / Holdings (screen 5)
 - prerequisites verified COMPLETED
+
+### 2026-10-11T20:02:57+04:00 — COMPLETE P07-T02
+- duration: 16m 44s
+- evidence: Holdings screen (screen 5) at /portfolio/holdings replaces the placeholder: search (name or symbol), asset-class chips (wrapping, fully visible at 2x), five sort orders with stable ties; every row shows the converted value and, for other-currency assets, the native value; results line is a live region so search, filter and sort changes are announced, chip selection is spoken as a word; loading skeleton, error and retry, empty portfolio, no-match state with Clear filters, pull to refresh. Query logic only arranges backend figures. 25 tests (query logic, screen behaviour, route and back, tap-target/label/strict/contrast guidelines in light/dark, 1x/2x, LTR/RTL); full suite 1031 passed, flutter analyze clean. PR #71. CI all gates pass.
