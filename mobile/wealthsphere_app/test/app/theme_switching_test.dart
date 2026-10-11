@@ -23,9 +23,25 @@ Widget appWith(
 Brightness shownBrightness(WidgetTester tester) =>
     Theme.of(tester.element(find.byType(Scaffold).first)).brightness;
 
-/// The theme switch lives on the More tab (temporary Settings placeholder).
+/// The theme switch lives in Settings, reached from the More tab.
 Future<void> openMore(WidgetTester tester) async {
   await tester.tap(find.text('More'));
+  await tester.pumpAndSettle();
+  await tester.scrollUntilVisible(
+    find.text('Settings'),
+    200,
+    scrollable: find.byType(Scrollable).last,
+  );
+  await tester.ensureVisible(find.text('Settings'));
+  await tester.pumpAndSettle();
+  await tester.tap(find.text('Settings'));
+  await tester.pumpAndSettle();
+  await tester.scrollUntilVisible(
+    find.text('Dark'),
+    200,
+    scrollable: find.byType(Scrollable).last,
+  );
+  await tester.ensureVisible(find.text('Dark'));
   await tester.pumpAndSettle();
 }
 
@@ -110,7 +126,7 @@ void main() {
   );
 
   testWidgets(
-    'the placeholder screen fits a small phone at 2.0x text without overflow',
+    'the settings screen fits a small phone at 2.0x text without overflow',
     (tester) async {
       tester.view.physicalSize = const Size(320, 568);
       tester.view.devicePixelRatio = 1;

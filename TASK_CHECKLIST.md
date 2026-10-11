@@ -721,14 +721,14 @@
   - [x] P07-T07.3 Compare view
   - [x] P07-T07.4 Simulate hand-off
   - [x] P07-T07.5 Tests
-- [ ] **P07-T08** · More hub, Net Worth, Income and Settings · `NOT_STARTED` ⬜
+- [ ] **P07-T08** · More hub, Net Worth, Income and Settings · `IN_PROGRESS` 🔄
   - Deps: P07-T01 · Wave: W2 · Track: MOB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-11T23:06:06+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P07-T08.1 More list
-  - [ ] P07-T08.2 Net worth and income views
-  - [ ] P07-T08.3 Settings
-  - [ ] P07-T08.4 Tests
+  - [x] P07-T08.1 More list
+  - [x] P07-T08.2 Net worth and income views
+  - [x] P07-T08.3 Settings
+  - [x] P07-T08.4 Tests
 - [ ] **P07-T09** · Journeys and accessibility sweep (gate 3) · `NOT_STARTED` ⬜
   - Deps: P07-T02, P07-T03, P07-T04, P07-T05, P07-T06, P07-T07, P07-T08 · Wave: W4 · Track: QA · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
