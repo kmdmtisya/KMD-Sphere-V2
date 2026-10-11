@@ -759,14 +759,14 @@
   - [x] P08-T01.1 Requirements matrix
   - [x] P08-T01.2 Candidate evaluation
   - [x] P08-T01.3 ADR
-- [ ] **P08-T02** · Provider abstraction layer · `NOT_STARTED` ⬜
+- [x] **P08-T02** · Provider abstraction layer · `COMPLETED` ✅
   - Deps: P05-T01, P05-GATE · Wave: W1 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P08-T02.1 Interfaces
-  - [ ] P08-T02.2 Resilience policy
-  - [ ] P08-T02.3 Provenance model
-  - [ ] P08-T02.4 Fake provider
+  - Started: 2026-10-12T01:21:19+04:00 · Completed: 2026-10-12T01:39:05+04:00 · Duration: 17m 46s · Blocker: —
+  - Evidence: Provider interface, provenance and validated value types, retry/circuit-breaker/fallback chain, deterministic fake provider with outage/staleness/rate-limit simulation, contract test base, architecture test that consumers use the interface only; 76 new tests, ruff/mypy strict clean, full backend suite passes (two local-timezone-dependent integrity tests fail only after UTC midnight on the dev machine, unrelated). PR #82. CI all gates pass.
+  - [x] P08-T02.1 Interfaces
+  - [x] P08-T02.2 Resilience policy
+  - [x] P08-T02.3 Provenance model
+  - [x] P08-T02.4 Fake provider
 - [ ] **P08-T03** · Provider adapters and contract tests · `NOT_STARTED` ⬜
   - Deps: P08-T01, P08-T02 · Wave: W2 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
