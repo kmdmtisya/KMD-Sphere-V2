@@ -7,16 +7,16 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-11T18:24:11+04:00 by `scripts/track.py`._
+_Generated at 2026-10-11T18:51:04+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
 | QG-01 | Architecture and Design | 🔄 IN_PROGRESS | 4/5 | Unassigned | — |
 | QG-02 | Code Quality | ✅ PASSED | 6/6 | Unassigned | — |
-| QG-03 | Automated Testing | 🔄 IN_PROGRESS | 3/6 | Unassigned | — |
+| QG-03 | Automated Testing | 🔄 IN_PROGRESS | 5/6 | Unassigned | — |
 | QG-04 | Android Platform | 🔄 IN_PROGRESS | 5/7 | Unassigned | — |
 | QG-05 | iOS Platform | 🔄 IN_PROGRESS | 4/6 | Unassigned | — |
-| QG-06 | Financial Accuracy and Data Integrity | 🔄 IN_PROGRESS | 2/7 | Unassigned | — |
+| QG-06 | Financial Accuracy and Data Integrity | 🔄 IN_PROGRESS | 6/7 | Unassigned | — |
 | QG-07 | AI Reliability and Investment Intelligence | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
 | QG-08 | Security and Privacy | 🔄 IN_PROGRESS | 3/8 | Unassigned | — |
 | QG-09 | Performance and Scalability | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
@@ -38,9 +38,9 @@ _Generated at 2026-10-11T18:24:11+04:00 by `scripts/track.py`._
 | QG-25 | QG-FXCUR-05: AI Integration | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 29/146.
+Criteria satisfied overall: 35/146.
 
-Current phase **P06** exit-gate criteria outstanding: QG-03.4, QG-03.5, QG-06.1, QG-06.3, QG-06.4, QG-06.6.
+Current phase **P11** exit-gate criteria outstanding: QG-21.1, QG-21.2, QG-21.3, QG-21.4, QG-21.5, QG-22.1, QG-22.2, QG-22.3, QG-22.4, QG-22.5, QG-23.1, QG-23.2, QG-23.3, QG-23.4, QG-23.5, QG-24.1, QG-24.2, QG-24.3, QG-24.4, QG-24.5, QG-24.6, QG-24.7, QG-25.1, QG-25.2, QG-25.3, QG-25.4, QG-25.5.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -85,16 +85,16 @@ Approved By: —
 - [x] QG-03.1 All required unit tests pass · Required: P01 · By: P01-T09,P01-T10 · Evidence: Required unit tests pass: backend pytest 109 passed (0 skipped in CI; coverage 96.6%, per-module report in job summary) and mobile flutter test passed, in PR #4 CI and on main after merge (runs 37944172314 backend, 37944172316 mobile) · Verified: 2026-10-09T18:33:57+04:00
 - [x] QG-03.2 All required integration tests pass · Required: P05 · By: P05-T09 · Evidence: Integration tests pass: backend pytest 783 passed locally (coverage 90%) and in CI on PR #54 (real PostgreSQL, migrations up/down/up), covering schema, assets, portfolios, ledger, holdings, FX, valuations, summary, and the P05-T09 authorisation sweep plus 12x30 randomised ledger sequences; -m security 477 passed. · Verified: 2026-10-11T02:04:24+04:00
 - [ ] QG-03.3 Relevant end-to-end tests pass · Required: P09 · By: P09-T10
-- [ ] QG-03.4 Critical financial calculations achieve 100% requirement/edge-case coverage through documented test cases · Required: P06 · By: P06-T10 · CRITICAL
-- [ ] QG-03.5 At least 85% automated line coverage for business-critical backend modules, without using coverage as a substitute for meaningful tests · Required: P06 · By: P06-T10
+- [x] QG-03.4 Critical financial calculations achieve 100% requirement/edge-case coverage through documented test cases · Required: P06 · By: P06-T10 · Evidence: Every financial method and edge case maps to named tests: docs/financial-test-matrix.md (generated from docs/contracts/financial-test-matrix.json), 52 requirements over sections 1-13 and 15 of docs/financial-methods.md. backend/tests/test_financial_matrix.py (CI) fails if a listed test or file is missing, a formula section 1-12 has no requirement, or any public function of the 13 financial modules is covered by no requirement (so 100% is mechanical); 10/10 deliberate breaks of the matrix were caught. Edge cases are tested per method (zero/negative rates, 50-year horizon, ties, leap days, empty/undefined periods, unconvertible currencies, negative cash, closed positions, reversals). PR #68. · Verified: 2026-10-11T18:50:51+04:00 · CRITICAL
+- [x] QG-03.5 At least 85% automated line coverage for business-critical backend modules, without using coverage as a substitute for meaningful tests · Required: P06 · By: P06-T10 · Evidence: Per-module line coverage policy passes (coverage-policy.toml, threshold 85%): analytics 100%, forecasting 100%, portfolio 96.6%, assets 93.5%, networth 91.8%, goals 91.1%, transactions 88.0%, identity 87.2%; whole backend 92%; 1425 tests pass. Meaningful tests, not coverage padding: golden vectors, properties, an independent oracle and mutation checks for every P06 task. modules/fx and modules/ai do not exist yet and are checked once they do. · Verified: 2026-10-11T18:50:52+04:00
 - [x] QG-03.6 No unresolved critical test failures · Required: P01 · By: P01-T15 · Evidence: No unresolved critical test failures: backend 109 passed (96.6% coverage, 0 skipped in CI incl. integration against service containers), mobile flutter test passed, all four required checks green on PR #4 (backend gate, mobile gate, security gate, tracker validate); a deliberately failing check on throwaway PR #5 made 'backend gate' fail and the merge was refused by the base-branch policy · Verified: 2026-10-09T18:14:49+04:00
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
 Start Timestamp: 2026-10-09T18:14:49+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-11T02:04:24+04:00  
-Evidence: 3/6 criteria verified; latest QG-03.2 at 2026-10-11T02:04:24+04:00  
+Verification Timestamp: 2026-10-11T18:50:52+04:00  
+Evidence: 5/6 criteria verified; latest QG-03.5 at 2026-10-11T18:50:52+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -140,20 +140,20 @@ Approved By: —
 
 ### QG-06: Financial Accuracy and Data Integrity
 
-- [ ] QG-06.1 Financial calculations are deterministic and reproducible · Required: P06 · By: P06-T01 · CRITICAL
+- [x] QG-06.1 Financial calculations are deterministic and reproducible · Required: P06 · By: P06-T01 · Evidence: Engines are pure Decimal functions (50-digit context, 34 for roots) with no float, I/O, clock or LLM; syntax-tree guard tests in forecasting, performance, allocation and income fail on float or banned imports; determinism tests (same input, same output) and order-independence properties; XIRR uses a fixed grid and bisection with a bounded step count so it always terminates. · Verified: 2026-10-11T18:50:52+04:00 · CRITICAL
 - [x] QG-06.2 Decimal precision and rounding rules are tested · Required: P05 · By: P05-T05 · Evidence: Decimal precision and rounding tested: ADR-0006 ROUND_HALF_UP with tie cases (positive/negative, 0/2/3/12 places) and ISO 4217 minor units in tests/test_money.py (money.py 100% coverage, 16/16 mutants caught); strict string-only decimal parsing refuses numbers, exponents, signs, whitespace; golden vectors and Hypothesis properties for holdings (test_holdings), FX rounding (test_fx), posting rules (test_transaction_rules), largest-remainder percentages and summary (test_portfolio_summary); NUMERIC columns checked in test_schema_core. · Verified: 2026-10-11T02:04:24+04:00 · CRITICAL
-- [ ] QG-06.3 Compound-growth calculations are verified against independently calculated reference cases · Required: P06 · By: P06-T10 · CRITICAL
-- [ ] QG-06.4 Portfolio valuations, realized/unrealized gains, fees, income and currency conversions reconcile correctly · Required: P06 · By: P06-T10 · CRITICAL
+- [x] QG-06.3 Compound-growth calculations are verified against independently calculated reference cases · Required: P06 · By: P06-T10 · Evidence: Compound growth verified against independent references: published tables (10,000 at 5% yearly for 10 years = 16,288.95; 100 a month at 6% for 10 years = 16,387.93), closed forms (lump sum, level and growing annuities), and the independent exact-fraction oracle (tests/oracle.py, tests/test_cross_check.py) on random inputs for all contribution frequencies, escalation and the required-contribution annuity formula over 1-720 months; workbook vectors in docs/financial-methods.md section 15. · Verified: 2026-10-11T18:50:52+04:00 · CRITICAL
+- [x] QG-06.4 Portfolio valuations, realized/unrealized gains, fees, income and currency conversions reconcile correctly · Required: P06 · By: P06-T10 · Evidence: Valuations, realised/unrealised gains, fees, income and FX conversions reconcile: gain = realised + unrealised + income - expenses on a real ledger (test_a_complete_usd_portfolio_reconciles); the summary, performance, income and net-worth figures agree with each other and with the oracle on random ledgers (holdings, cash, values, P&L, net contributions, income totals, net worth rounding); FX per documented rules with provenance; allocation reconciles with the summary's currency breakdown. · Verified: 2026-10-11T18:50:53+04:00 · CRITICAL
 - [x] QG-06.5 Transaction history is auditable · Required: P05 · By: P05-T09 · Evidence: Transaction history is auditable: ledger append-only (DB triggers reject UPDATE/DELETE/TRUNCATE, no update/delete routes, 405), corrections only via linked reversal entries, Idempotency-Key replays add nothing, one audit event per posting and reversal (test_audit, test_transactions_api), per-portfolio lock; test_integrity_suite checks after every step of 12 seeded random sequences: row immutability, reversal rules, no negative quantity on any date, holdings cache equals recomputation from the ledger, exactly one audit event per entry. 11/11 injected product regressions caught. · Verified: 2026-10-11T02:04:24+04:00 · CRITICAL
-- [ ] QG-06.6 No unexplained financial reconciliation differences · Required: P06 · By: P06-T10 · CRITICAL
+- [x] QG-06.6 No unexplained financial reconciliation differences · Required: P06 · By: P06-T10 · Evidence: No unexplained reconciliation differences: 13 oracle cross-check properties on random inputs agree to 1e-30 (exactly for rounded outputs); 16 deliberately injected engine bugs were each caught by the cross-check alone; every convention that could differ is documented and was decided by the user on 2026-10-11 (docs/financial-methods.md section 14); the integrity suite checks holdings, income events, audit events and the summary after every step of 12 random ledgers. · Verified: 2026-10-11T18:50:53+04:00 · CRITICAL
 - [ ] QG-06.7 Historical prices and FX rates retain their timestamps and provenance · Required: P08 · By: P08-T05 · CRITICAL
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
 Start Timestamp: 2026-10-11T02:04:23+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-11T02:04:24+04:00  
-Evidence: 2/7 criteria verified; latest QG-06.5 at 2026-10-11T02:04:24+04:00  
+Verification Timestamp: 2026-10-11T18:50:53+04:00  
+Evidence: 6/7 criteria verified; latest QG-06.6 at 2026-10-11T18:50:53+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —

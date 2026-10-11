@@ -828,3 +828,32 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-11T18:24:11+04:00 — COMPLETE P06-T10
 - duration: 2h 05m 54s
 - evidence: docs/financial-methods.md documents every formula with derivation, rounding, edge cases and independent check; tests/oracle.py + tests/test_cross_check.py re-implement the formulas with exact rational arithmetic (Newton at 80 digits for XIRR, exact variance for volatility) and compare on random inputs and named vectors; 16/16 injected engine bugs caught by the cross-check alone. User review 2026-10-11: the user approved the recommended answers to the 8 review questions (section 14): round-up required contribution (ADR-0006 exception 1), 12-return risk floor, Modified Dietz period returns, assumed deposits for performance/risk (reported separately), and confirmed fee drag, nominal forecast return, gross yields and CAGR from one year. Implemented and mutation-checked in PR #67 (12/12 Dietz, 15/15 assumed-deposit mutants caught). Local 1363 passed, coverage 92%, -m security 697; CI all gates pass. PRs #66 and #67. · Approved by: user (mtisya@gmail.com)
+
+### 2026-10-11T18:36:52+04:00 — START P06-GATE
+- Phase P06 exit gate
+- prerequisites verified COMPLETED
+
+### 2026-10-11T18:50:51+04:00 — QG CHECK QG-03.4
+- evidence: Every financial method and edge case maps to named tests: docs/financial-test-matrix.md (generated from docs/contracts/financial-test-matrix.json), 52 requirements over sections 1-13 and 15 of docs/financial-methods.md. backend/tests/test_financial_matrix.py (CI) fails if a listed test or file is missing, a formula section 1-12 has no requirement, or any public function of the 13 financial modules is covered by no requirement (so 100% is mechanical); 10/10 deliberate breaks of the matrix were caught. Edge cases are tested per method (zero/negative rates, 50-year horizon, ties, leap days, empty/undefined periods, unconvertible currencies, negative cash, closed positions, reversals). PR #68.
+
+### 2026-10-11T18:50:52+04:00 — QG CHECK QG-03.5
+- evidence: Per-module line coverage policy passes (coverage-policy.toml, threshold 85%): analytics 100%, forecasting 100%, portfolio 96.6%, assets 93.5%, networth 91.8%, goals 91.1%, transactions 88.0%, identity 87.2%; whole backend 92%; 1425 tests pass. Meaningful tests, not coverage padding: golden vectors, properties, an independent oracle and mutation checks for every P06 task. modules/fx and modules/ai do not exist yet and are checked once they do.
+
+### 2026-10-11T18:50:52+04:00 — QG CHECK QG-06.1
+- evidence: Engines are pure Decimal functions (50-digit context, 34 for roots) with no float, I/O, clock or LLM; syntax-tree guard tests in forecasting, performance, allocation and income fail on float or banned imports; determinism tests (same input, same output) and order-independence properties; XIRR uses a fixed grid and bisection with a bounded step count so it always terminates.
+
+### 2026-10-11T18:50:52+04:00 — QG CHECK QG-06.3
+- evidence: Compound growth verified against independent references: published tables (10,000 at 5% yearly for 10 years = 16,288.95; 100 a month at 6% for 10 years = 16,387.93), closed forms (lump sum, level and growing annuities), and the independent exact-fraction oracle (tests/oracle.py, tests/test_cross_check.py) on random inputs for all contribution frequencies, escalation and the required-contribution annuity formula over 1-720 months; workbook vectors in docs/financial-methods.md section 15.
+
+### 2026-10-11T18:50:53+04:00 — QG CHECK QG-06.4
+- evidence: Valuations, realised/unrealised gains, fees, income and FX conversions reconcile: gain = realised + unrealised + income - expenses on a real ledger (test_a_complete_usd_portfolio_reconciles); the summary, performance, income and net-worth figures agree with each other and with the oracle on random ledgers (holdings, cash, values, P&L, net contributions, income totals, net worth rounding); FX per documented rules with provenance; allocation reconciles with the summary's currency breakdown.
+
+### 2026-10-11T18:50:53+04:00 — QG CHECK QG-06.6
+- evidence: No unexplained reconciliation differences: 13 oracle cross-check properties on random inputs agree to 1e-30 (exactly for rounded outputs); 16 deliberately injected engine bugs were each caught by the cross-check alone; every convention that could differ is documented and was decided by the user on 2026-10-11 (docs/financial-methods.md section 14); the integrity suite checks holdings, income events, audit events and the summary after every step of 12 random ledgers.
+
+### 2026-10-11T18:51:04+04:00 — AWAITING_VERIFICATION P06-GATE
+- evidence: Gate summary presented 2026-10-11 and approved by the user. P06-T01..T10 complete (PRs #56-#67); QG-03.4 (traceability matrix, PR #68), QG-03.5, QG-06.1, QG-06.3, QG-06.4 and QG-06.6 recorded with evidence. Backend 1425 passed, coverage 92%, module policy OK; -m security passed; CI gates pass. Accepted carry-forwards: listed assets are valued only from manual valuations until market prices (P08); the DEMO forecast fixture is regenerated in P09-T03; liability balance history is future work; fx and ai modules not yet built.
+
+### 2026-10-11T18:51:04+04:00 — COMPLETE P06-GATE
+- duration: 14m 12s
+- evidence: P06 exit gate approved by the user 2026-10-11 after summary (PR #68). Gate summary presented 2026-10-11 and approved by the user. P06-T01..T10 complete (PRs #56-#67); QG-03.4 (traceability matrix, PR #68), QG-03.5, QG-06.1, QG-06.3, QG-06.4 and QG-06.6 recorded with evidence. Backend 1425 passed, coverage 92%, module policy OK; -m security passed; CI gates pass. Accepted carry-forwards: listed assets are valued only from manual valuations until market prices (P08); the DEMO forecast fixture is regenerated in P09-T03; liability balance history is future work; fx and ai modules not yet built. · Approved by: user (mtisya@gmail.com)

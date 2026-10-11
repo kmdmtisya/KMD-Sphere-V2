@@ -13,6 +13,8 @@ This document lists every formula WealthSphere uses to produce a financial figur
 
 ## How the formulas are checked
 
+**Traceability (QG-03.4):** [financial-test-matrix.md](financial-test-matrix.md) maps every requirement and edge case below to the tests that prove it, and CI fails if a listed test is missing, a section has no requirement, or a public function of a financial module is covered by none.
+
 | Check | What it is | Where |
 |---|---|---|
 | Golden vectors | Hand-computed or published values (for example Excel's XIRR example, compound-interest tables) | `backend/tests/golden/*.json`, each module's tests |
