@@ -8,12 +8,12 @@ from decimal import Decimal, localcontext
 from enum import StrEnum
 from itertools import pairwise
 
-from app.modules.analytics.performance import TwrResult, ValuePoint, twr
+from app.modules.analytics.performance import TwrResult, TwrStatus
 
 ZERO = Decimal(0)
 ONE = Decimal(1)
 PRECISION = 34
-MIN_RETURNS = 6  # fewer period returns are not enough to measure risk
+MIN_RETURNS = 12  # fewer period returns are not enough to measure risk (P06-T10 review)
 
 
 class RiskStatus(StrEnum):
@@ -29,6 +29,10 @@ class Observation:
     value: Decimal  # end of day
     flow_next: Decimal  # external flows during the next period (+ in, - out)
     complete: bool = True
+    # The dated flows that make up `flow_next`. A flow is made at the start of its day, so it is
+    # invested for the rest of the period (Modified Dietz). Without dates, the whole `flow_next`
+    # is counted at the start of the period.
+    flows: tuple[tuple[date, Decimal], ...] = ()
 
 
 @dataclass(frozen=True)
@@ -69,25 +73,54 @@ def measure(series: Sequence[Observation], periods_per_year: int) -> Risk:
         period,
         annual,
         max_drawdown(index(series[0].on, returns)),
-        twr(ValuePoint(o.on, o.value, o.flow_next) for o in series),
+        chain(returns, (series[-1].on - series[0].on).days),
     )
 
 
 def period_returns(series: Sequence[Observation]) -> list[tuple[date, Decimal]] | None:
-    """r = V_next / (V + F) - 1 for each period, with the period's external flows F counted at
-    its start. A period that starts and ends empty has no return (skipped); one that starts at
+    """The Modified Dietz return of each period: r = (V_end - V_start - F) / (V_start + sum of
+    w_i F_i), where a flow dated t has weight w = (period end - t + 1) / period days (it is made
+    at the start of day t). Flows without dates are counted at the start (w = 1), which is the
+    daily case. A period that starts and ends empty has no return (skipped); one that starts at
     zero or below but ends with a value is undefined (None for the whole series)."""
     out = []
     with localcontext() as ctx:
         ctx.prec = PRECISION
         for start, end in pairwise(series):
-            base = start.value + start.flow_next
+            days = (end.on - start.on).days
+            if start.flows:
+                weighted = sum((_weight(t, end.on, days) * f for t, f in start.flows), ZERO)
+            else:
+                weighted = start.flow_next
+            base = start.value + weighted
             if base == 0 and end.value == 0:
                 continue
             if base <= 0 or end.value < 0:
                 return None
-            out.append((end.on, end.value / base - ONE))
+            out.append((end.on, (end.value - start.value - start.flow_next) / base))
     return out
+
+
+def _weight(flow_day: date, period_end: date, days: int) -> Decimal:
+    """The share of the period a flow made at the start of `flow_day` is invested."""
+    return Decimal((period_end - flow_day).days + 1) / Decimal(days)
+
+
+def chain(returns: Sequence[tuple[date, Decimal]], days: int) -> TwrResult:
+    """The time-weighted return of a series: its period returns linked (annualised for at least
+    a year)."""
+    with localcontext() as ctx:
+        ctx.prec = PRECISION
+        growth = ONE
+        for _, r in returns:
+            growth *= ONE + r
+        cumulative = growth - ONE
+    annualized = None
+    if days >= 365 and growth > 0:
+        with localcontext() as ctx:
+            ctx.prec = PRECISION
+            annualized = (growth.ln() * Decimal(365) / days).exp() - ONE
+    return TwrResult(TwrStatus.OK, cumulative, annualized, days)
 
 
 def volatility(returns: Sequence[Decimal], periods_per_year: int) -> tuple[Decimal, Decimal]:

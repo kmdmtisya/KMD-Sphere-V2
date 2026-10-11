@@ -46,6 +46,12 @@ class PerformanceOut(BaseModel):
     expenses: Money
     complete: bool = Field(description="False when assets are unpriced or currencies unconverted")
     first_flow: date | None
+    assumed_deposits: Money = Field(
+        description="Cash that purchases and other postings needed but no recorded deposit "
+        "provided, counted as contributions so the return is not undefined. Included in "
+        "contributions, net_invested and total_value."
+    )
+    assumed_deposit_count: int
     notice: str
 
 
@@ -118,5 +124,9 @@ class RiskOut(BaseModel):
         description="Only for ranges of at least a year"
     )
     incomplete_points: int
+    assumed_deposit_count: int = Field(
+        description="Postings that needed cash no recorded deposit provided; each is treated as "
+        "a deposit on its date"
+    )
     as_of: datetime
     notice: str

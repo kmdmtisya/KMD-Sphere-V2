@@ -1,6 +1,6 @@
 # ADR-0006: Rounding conventions
 
-Status: Accepted (user approval, 2026-10-09)
+Status: Accepted (user approval, 2026-10-09; exception 1 approved at the P06-T10 review, 2026-10-11)
 
 ## Context
 Money must be exact and reproducible across Flutter, Python and PostgreSQL. Python's `Decimal` defaults to half-even, while PostgreSQL `round(numeric)`, spreadsheets and bank statements round ties away from zero.
@@ -17,6 +17,10 @@ Money must be exact and reproducible across Flutter, Python and PostgreSQL. Pyth
 4. **Allocation** (splitting an amount into parts that must sum to the total) uses the largest-remainder method.
 5. Percent displays use 2 decimals. Quantities keep their natural precision (crypto up to 8).
 6. Every rounding point has a unit test with tie cases (x.005, x.5, negatives).
+
+## Exceptions
+
+1. **Amounts that must be enough are rounded up** (towards positive infinity) to the currency's minor units: the required contribution of a forecast or a goal (P06-T10 review, 2026-10-11). Paying the rounded amount then always reaches the target; half-up could leave it a little short. Helper: `app.core.money.round_up`. Results shown to the user (values, totals, returns) remain half-up.
 
 ## Consequences
 The database, API and UI agree on ties. The small statistical bias of half-up is avoided on large sums because sums use unrounded values. Deviations require a new ADR.

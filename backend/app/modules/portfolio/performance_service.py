@@ -2,7 +2,7 @@
 Methods: docs/design/performance.md. Published by the analytics API (P06-T09)."""
 
 import uuid
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import UTC, date, datetime
 from decimal import Decimal
 
@@ -16,6 +16,7 @@ from app.modules.analytics.performance import (
     totals,
     xirr,
 )
+from app.modules.portfolio.assumed import with_assumed_deposits
 from app.modules.portfolio.summary_service import SummaryService
 from app.modules.transactions.holdings_service import HoldingsService
 
@@ -39,6 +40,8 @@ class PortfolioPerformance:
     expenses: Decimal
     complete: bool  # false when assets are unpriced or currencies unconverted
     first_flow: date | None
+    assumed_deposits: Decimal = Decimal(0)  # counted as contributions, in the base currency
+    assumed_count: int = 0
 
 
 class PerformanceService:
@@ -50,9 +53,10 @@ class PerformanceService:
         self, user_id: uuid.UUID, portfolio_id: uuid.UUID, today: date | None = None
     ) -> PortfolioPerformance:
         """Raises ResourceNotFoundError (404) unless the portfolio is the user's."""
-        summary = await self._summaries.figures(user_id, portfolio_id)
-        flows = external_flows(await self._holdings.entries(portfolio_id))
-        return measure(
+        summary = await self._summaries.figures(user_id, portfolio_id, assume_deposits=True)
+        entries, assumed = with_assumed_deposits(await self._holdings.entries(portfolio_id))
+        flows = external_flows(entries)
+        result = measure(
             summary.currency,
             today or datetime.now(UTC).date(),
             summary.total_value,
@@ -62,6 +66,11 @@ class PerformanceService:
             income=summary.income,
             expenses=summary.expenses,
             complete=summary.complete,
+        )
+        return replace(
+            result,
+            assumed_deposits=sum((a.base_amount for a in assumed), Decimal(0)),
+            assumed_count=len(assumed),
         )
 
 

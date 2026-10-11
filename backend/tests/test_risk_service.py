@@ -116,7 +116,7 @@ async def test_value_history_and_risk(
     # The flat's value at each month end: up 10%, down 10%, alternately.
     ends, level = [], D(1000)
     day = month_end(START)
-    for i in range(8):
+    for i in range(12):
         level = level * (D("1.1") if i % 2 == 0 else D("0.9"))
         await value(http, h, pid, house, day, str(level.quantize(D("0.01"))))
         ends.append((day, level.quantize(D("0.01"))))
@@ -127,15 +127,16 @@ async def test_value_history_and_risk(
     assert r.currency == "USD" and r.frequency == SeriesFrequency.MONTHLY and r.start == START
     assert [(p.on, p.value) for p in r.points] == [(START, D("1000.00")), *ends]
     assert all(p.complete for p in r.points)
-    assert r.risk.status == RiskStatus.OK and len(r.risk.returns) == 8
-    for got, expected in zip(r.risk.returns, ["0.1", "-0.1"] * 4, strict=True):
+    assert r.risk.status == RiskStatus.OK and len(r.risk.returns) == 12
+    for got, expected in zip(r.risk.returns, ["0.1", "-0.1"] * 6, strict=True):
         assert abs(got - D(expected)) < D("0.0001")  # valuations are rounded to cents
     assert r.risk.volatility is not None
-    assert abs(r.risk.volatility - D("0.3703")) < D("0.001")  # sample sd x sqrt(12)
-    # The 1.1 peak is never regained: the fall runs to the last point, (1.1 x 0.9)^4 / 1.1 - 1.
+    # Sample sd of twelve alternating +/-10% returns: sqrt(12 x 0.01 / 11); x sqrt(12).
+    assert abs(r.risk.volatility - D("0.3618")) < D("0.001")
+    # The 1.1 peak is never regained: the fall runs to the last point, (1.1 x 0.9)^6 / 1.1 - 1.
     drawdown = r.risk.max_drawdown
     assert drawdown is not None and drawdown.recovered is None and drawdown.peak == ends[0][0]
-    assert abs(drawdown.depth - (D("0.99") ** 4 / D("1.1") - 1)) < D("0.001")
+    assert abs(drawdown.depth - (D("0.99") ** 6 / D("1.1") - 1)) < D("0.001")
 
 
 async def test_a_deposit_is_not_a_return(
@@ -145,8 +146,8 @@ async def test_a_deposit_is_not_a_return(
 ) -> None:
     h = two_users.alice.headers
     pid = await portfolio(http, h)
-    day = START
-    for _ in range(8):  # 100 a month into cash: no growth at all
+    day = date(TODAY.year - 2, TODAY.month, 1)  # 14 monthly deposits, all in the past
+    for _ in range(14):  # 100 a month into cash: no growth at all
         await post(http, h, pid, day, transaction_type="DEPOSIT", gross_amount=m("100.00"))
         day = month_end(day) + timedelta(days=1)
     r = await risk(app, two_users.alice.id, pid, end=day - timedelta(days=1))
@@ -220,3 +221,38 @@ async def test_another_users_portfolio_is_not_found(
     pid = await portfolio(http, two_users.alice.headers)
     with pytest.raises(ResourceNotFoundError):
         await risk(app, two_users.bob.id, pid)
+
+
+async def test_a_mid_month_deposit_is_weighted_by_the_days_it_was_invested(
+    app: FastAPI,
+    http: httpx.AsyncClient,
+    two_users: TwoUsers,  # noqa: F811
+) -> None:
+    """Modified Dietz (review decision 4): a deposit on the 15th of a month is invested for the
+    rest of that month only, so it weighs less than a deposit at the start of the month."""
+    h = two_users.alice.headers
+    pid = await portfolio(http, h)
+    first_end = month_end(START)
+    second_start = first_end + timedelta(days=1)
+    second_end = month_end(second_start)
+    length = (second_end - first_end).days
+    await post(http, h, pid, START, transaction_type="DEPOSIT", gross_amount=m("1000.00"))
+    await post(http, h, pid, second_start + timedelta(days=14), transaction_type="DEPOSIT",
+               gross_amount=m("500.00"))  # fmt: skip
+    await post(http, h, pid, second_start + timedelta(days=19), transaction_type="INTEREST",
+               gross_amount=m("30.00"))  # fmt: skip
+
+    r = await risk(app, two_users.alice.id, pid, end=second_end)
+    assert [(p.on, p.value) for p in r.points] == [
+        (START, D("1000.00")),
+        (first_end, D("1000.00")),
+        (second_end, D("1530.00")),
+    ]
+    assert r.points[1].flows == ((second_start + timedelta(days=14), D("500.00")),)
+    assert r.risk.status == RiskStatus.INSUFFICIENT_DATA  # only two returns
+    assert len(r.risk.returns) == 2 and r.risk.returns[0] == 0
+    # The 15th is day 15 of the second month: invested for (length - 15 + 1) of its length days.
+    weight = D(length - 14) / D(length)
+    expected = D(30) / (D(1000) + weight * D(500))
+    assert abs(r.risk.returns[1] - expected) < D("1e-25")
+    assert r.risk.returns[1] > D(30) / D(1500)  # more than if the deposit counted from day 1

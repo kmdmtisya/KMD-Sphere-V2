@@ -21,7 +21,7 @@ The portfolio's value at the **end of each date** of a series, in its base curre
 - **Cash:** each currency's balance on the date, from the same cash rules as the summary.
 - **Conversion:** amounts in another currency use the **historical rate** for that date. That is the P05-T06 rule: the newest rate at or before the end of the day, at most 7 days old, with the opposite pair inverted only when there is no direct rate. A currency without such a rate is **unconverted** and left out.
 - **Completeness:** a point is `complete` only when nothing is unpriced or unconverted.
-- **`flow_next`:** the external flows (docs/design/performance.md, section 1) after the date up to the next date.
+- **`flows` and `flow_next`:** the dated external flows (docs/design/performance.md, section 1) after the date up to the next date, and their sum.
 
 ### Dates
 
@@ -39,17 +39,21 @@ Market prices (P08) will value listed assets on each date. Until then, an asset 
 
 ## 2. Period returns
 
-For each period from point k to point k+1:
+Each period from point k to point k+1 has a **Modified Dietz** return (the P06-T10 review chose it for weekly and monthly series):
 
-`r = V(k+1) / (V(k) + F(k)) - 1`
+`r = (V_end - V_start - F) / (V_start + sum of w_i x F_i)`
 
-Here V is the end-of-day value and F(k) is the period's external flows, counted at the **start** of the period. This removes deposits and withdrawals from the return (time-weighted).
+- V is the end-of-day value, F the sum of the period's external flows, and F_i each flow.
+- **Weight:** a flow dated t is made at the start of day t, so it is invested for the rest of the period: `w = (period end - t + 1) / days in the period`. A deposit on the first day of a month weighs almost 1, one on the last day 1/days.
+- This removes deposits and withdrawals from the return and weights each by how long it was invested.
+- **Daily series are unchanged:** a one-day period has weight 1, so `r = V_end / (V_start + F) - 1`.
+- Flows without dates are counted from the start of the period (weight 1).
 
+Edge cases:
 - A period that starts and ends empty has no return.
-- A period that starts at zero or below but ends with a value makes the series **undefined**.
-- Counting flows at the start is exact when flows fall on the point dates. Otherwise it is an approximation that daily points make negligible; P06-T10 reviews it.
+- A period whose weighted base is zero or below but that ends with a value makes the series **undefined**.
 
-The series' time-weighted return is the T03 `twr` of the same points (docs/design/performance.md, section 6).
+The series' time-weighted return is its period returns **linked**: the product of (1 + r) minus 1, annualised for at least a year. The exact sub-period `twr` of docs/design/performance.md (section 6) applies when flows fall on the point dates.
 
 ## 3. Volatility
 
@@ -73,12 +77,12 @@ The earliest of equal falls is reported. A series that never falls has depth 0.
 
 | Status | When | Figures |
 |---|---|---|
-| `ok` | a complete series with at least 6 period returns | all |
-| `insufficient_data` | fewer than 6 period returns (a new portfolio, a short range) | the returns only |
+| `ok` | a complete series with at least 12 period returns | all |
+| `insufficient_data` | fewer than 12 period returns (a new portfolio, a short range) | the returns only |
 | `incomplete_data` | any point in the range has unpriced positions or unconverted currencies | none (with the number of incomplete points) |
 | `undefined_period` | a period starts at zero or below but ends with a value | none |
 
-Six returns is a deliberately low floor (half a year of months). Volatility from few returns is very uncertain; the API states the number of returns with the figure.
+Twelve returns (a year of months) is the floor, chosen at the P06-T10 review: volatility from fewer points is mostly noise. The API states the number of returns with the figure.
 
 ## 6. Precision
 

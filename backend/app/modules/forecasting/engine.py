@@ -8,7 +8,7 @@ from dataclasses import dataclass, replace
 from decimal import Decimal, localcontext
 from enum import StrEnum
 
-from app.core.money import minor_units, round_half_up
+from app.core.money import minor_units, round_half_up, round_up
 
 # Plenty of digits for 720 monthly steps and fractional powers; nothing is rounded inside.
 PRECISION = 50
@@ -73,7 +73,7 @@ class Projection:
 
 @dataclass(frozen=True)
 class RequiredContribution:
-    amount: Decimal  # per contribution period in the first year, rounded to the currency
+    amount: Decimal  # per period in the first year, rounded up to the currency (ADR-0006)
     exact: Decimal  # unrounded, for further calculation
     reached_without_contributions: bool
     projection: Projection  # the forecast with `amount` as the contribution
@@ -140,7 +140,7 @@ def required_contribution(
         per_unit = _simulate(inp, ONE)[-1].balance - without
         reached = without >= nominal_target
         exact = ZERO if reached else (nominal_target - without) / per_unit
-    amount = round_half_up(exact, minor_units(inp.currency))
+    amount = round_up(exact, minor_units(inp.currency))  # enough to reach the target
     return RequiredContribution(
         amount=amount,
         exact=exact,

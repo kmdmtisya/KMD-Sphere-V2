@@ -1,6 +1,6 @@
 # Financial methods
 
-Status: Draft for the P06-T10 review (2026-10-11). **It needs the user's review of the methods and rounding (P06-T10.3).** The decisions to confirm are listed in section 14.
+Status: Reviewed and approved by the user on 2026-10-11 (P06-T10.3), with the decisions in section 14.
 
 This document lists every formula WealthSphere uses to produce a financial figure. For each one it gives the derivation or definition, the rounding, the edge cases, and where it is **checked independently**. The detailed design documents are linked; this is the single place to review them.
 
@@ -104,7 +104,8 @@ Per asset and portfolio, in the portfolio currency, each posting at its own rate
 
 - **External flows** (portfolio currency, at posting rates): deposits and transfers in (+); withdrawals and transfers out (-).
 - **Profit/loss** = total value - net invested.
-- **Simple return** = profit / contributions (inflows). Null when nothing was put in.
+- **Assumed deposits:** where a posting would take a currency's cash below zero, the shortfall is treated as a deposit on that date at that posting's rate, for performance and risk only; it is reported separately (`assumed_deposits`). Without any money in (no deposits and no purchases), return figures are still undefined.
+- **Simple return** = profit / contributions (inflows, including assumed deposits). Null when nothing was put in.
 - **CAGR** = (end / start)^(365/days) - 1, only for at least 365 days.
 - **XIRR** solves Σ aᵢ / (1 + r)^((dᵢ - d₀)/365) = 0, with spreadsheet day count (actual/365):
   - same-day flows are netted;
@@ -142,7 +143,7 @@ Per asset and portfolio, in the portfolio currency, each posting at its own rate
   - growth = value - contributions, after rounding;
   - real value = nominal / (1 + π)^(years).
 - **Scenarios:** the same inputs with the user's three returns.
-- **Required contribution:** the final value is linear in the contribution C, so C = (T' - FV(0)) / (FV(1) - FV(0)), and the solver never iterates.
+- **Required contribution:** the final value is linear in the contribution C, so C = (T' - FV(0)) / (FV(1) - FV(0)), and the solver never iterates. The result is **rounded up** to the currency's minor units (ADR-0006 exception 1), so paying it always reaches the target.
 - **Independent checks:**
   - published tables: 10,000 at 5% yearly for 10 years = 16,288.95, and 100 a month at 6% for 10 years = 16,387.93;
   - closed forms for every frequency mix;
@@ -172,10 +173,10 @@ Per asset and portfolio, in the portfolio currency, each posting at its own rate
 ## 12. Value history and risk (docs/design/risk.md)
 
 - **Value history:** the end-of-day value at each date, from the ledger as of that date, the newest valuation, and the historical rate. A point is complete only when nothing is unpriced or unconverted.
-- **Period returns:** r = V(k+1) / (V(k) + F(k)) - 1, with the period's flows at its start.
+- **Period returns:** Modified Dietz, r = (V_end - V_start - F) / (V_start + Σ wᵢFᵢ), with w = (period end - t + 1) / days for a flow made at the start of day t (daily series: w = 1). The series' time-weighted return links the period returns.
 - **Volatility:** sample standard deviation (n - 1) × √(periods a year): 365, 52 or 12.
 - **Maximum drawdown:** on the linked return index (flows removed), with peak, trough and recovery dates.
-- **Statuses:** `insufficient_data` (< 6 returns), `incomplete_data`, `undefined_period`. No partial figures are given.
+- **Statuses:** `insufficient_data` (< 12 returns), `incomplete_data`, `undefined_period`. No partial figures are given.
 - **Independent checks:**
   - volatility² equals the exact rational sample variance (× periods a year);
   - alternating ±10% monthly gives exactly 40.00% annualised;
@@ -191,21 +192,23 @@ Per asset and portfolio, in the portfolio currency, each posting at its own rate
 | HHI | 4 decimals; effective positions 2 |
 | Posting FX rate | 12 decimals (stored) |
 | Holdings cache | 8 decimals (stored); quantity 12 |
-| Forecast and goal amounts | minor units; growth = rounded value - rounded contributions |
+| Forecast and goal amounts | minor units, half-up; growth = rounded value - rounded contributions. **Exception:** required contributions are rounded up |
 | Net worth | rounded lines, totals summed from them |
 
-## 14. Decisions for the user (P06-T10.3)
+## 14. Review decisions (P06-T10.3)
 
-These are choices that a different, also reasonable, convention would answer differently. Each is documented where it is used. Please confirm or choose otherwise.
+The user approved the following on 2026-10-11 (the recommendations were put to the user and approved as proposed). Items marked *changed* altered the implementation; the others confirmed it.
 
-1. **Purchases recorded without deposits.** Such a portfolio has no external flows, so its simple return and XIRR are reported as undefined, never guessed. *Alternative:* treat each purchase's cash shortfall as an implicit deposit, so return figures appear. (performance.md section 8)
-2. **Fees in forecasts** are a drag on the rate: i = (r - f) / m. *Alternative:* a multiplicative fee, (1 + r/m)(1 - f/m). The difference is under 0.01% a year at usual values.
-3. **The return in forecasts is nominal, compounded m times a year** (8% monthly is 8.30% effective). *Alternative:* an effective annual rate. The current DEMO fixture used that, which is why its numbers differ slightly.
-4. **Flows in risk returns are counted at the start of each period.** This is exact with daily points. *Alternative:* the Modified Dietz midpoint for weekly and monthly series.
-5. **Yields are on gross income** (before withholding tax). *Alternative:* net.
-6. **Risk needs at least 6 period returns** (half a year of months). *Alternative:* a higher floor such as 12.
-7. **The required contribution is rounded half-up**, so paying it reaches the target to within rounding (a shortfall of under 3 on a 20-year plan). *Alternative:* round up (ceiling) so it always reaches the target. That would be a stated exception to ADR-0006.
-8. **CAGR only for at least a year.** XIRR is annualised for any period, and for shorter periods the app should show the simple return.
+| # | Decision | Outcome |
+|---|---|---|
+| 1 | Purchases recorded without deposits | **Changed.** The cash shortfall counts as an assumed deposit on its date (section 7, performance.md section 8), reported separately. |
+| 2 | Fees in forecasts | Confirmed: subtracted from the rate, (r - f) / m. |
+| 3 | Forecast return | Confirmed: nominal, compounded at the chosen frequency. The DEMO fixture will be regenerated in P09-T03. |
+| 4 | Flows in risk returns | **Changed.** Modified Dietz, flows weighted by the days invested (section 12); daily series unchanged. |
+| 5 | Yields | Confirmed: on gross income, before withholding tax. |
+| 6 | Minimum history for risk | **Changed.** 12 period returns (was 6). |
+| 7 | Required contribution rounding | **Changed.** Rounded up, so paying it always reaches the target (ADR-0006 exception 1). |
+| 8 | CAGR | Confirmed: only for periods of at least a year; shorter periods show the simple return. |
 
 ## 15. Cross-check vectors (the "workbook")
 
@@ -214,7 +217,7 @@ Each value below was computed by the independent oracle (exact arithmetic) and i
 | # | Inputs | Expected |
 |---|---|---|
 | 1 | Forecast: 10,000 + 500 a month, 8% - 0.5% fee, monthly, 20 years | 321,473.53 nominal; 130,000.00 paid in |
-| 2 | Goal: 1,000,000 in 240 months from 10,000 at 8% - 0.5% | 1,725.37 a month |
+| 2 | Goal: 1,000,000 in 240 months from 10,000 at 8% - 0.5% | 1,725.38 a month (1,725.3726 rounded up) |
 | 3 | Holdings: section 3's example | cost 1,653.00; realised 97.00; average 110.20 |
 | 4 | Allocation: three equal parts | 33.34 / 33.33 / 33.33 |
 | 5 | TWR: 0 + 1,000 → 1,100, + 500 → 1,760 | 21% |

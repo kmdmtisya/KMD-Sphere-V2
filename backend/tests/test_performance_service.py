@@ -184,7 +184,37 @@ async def test_a_complete_usd_portfolio_reconciles(
     assert p.simple_return == Decimal("0.1039")
 
 
-async def test_purchases_without_deposits_claim_no_return(
+async def test_purchases_without_deposits_are_counted_as_assumed_deposits(
+    app: FastAPI,
+    http: httpx.AsyncClient,
+    two_users: TwoUsers,  # noqa: F811
+    db: asyncpg.Connection,
+) -> None:
+    """Review decision 1: cash a purchase needed but no deposit provided counts as a deposit
+    made on that date, so a return exists; it is reported as assumed."""
+    h = two_users.alice.headers
+    pid, stock = await portfolio(http, h), await asset(db)
+    await post(http, h, pid, "BUY", 1, asset_id=stock, quantity="1", unit_price=m("100"))
+    await post(http, h, pid, "BUY", 50, asset_id=stock, quantity="1", unit_price=m("150"),
+               fees=m("2.00"))  # fmt: skip
+    await valuation(http, h, pid, stock, "300.00")
+    p = await performance(app, two_users.alice.id, pid)
+    # Assumed: 100 on day 1 and 152 on day 50. Value 300 + cash 0.
+    assert (p.assumed_deposits, p.assumed_count) == (Decimal("252.00"), 2)
+    assert (p.contributions, p.withdrawals, p.net_invested) == (
+        Decimal(252),
+        Decimal(0),
+        Decimal(252),
+    )
+    assert p.total_value == Decimal(300) and p.total_gain == Decimal("48.00")
+    assert p.simple_return is not None and abs(p.simple_return - Decimal("48") / 252) < Decimal(
+        "1e-25"
+    )
+    assert p.money_weighted.status == XirrStatus.OK and p.complete
+    assert p.first_flow == START + timedelta(days=1)
+
+
+async def test_recorded_deposits_are_not_assumed_again(
     app: FastAPI,
     http: httpx.AsyncClient,
     two_users: TwoUsers,  # noqa: F811
@@ -192,11 +222,24 @@ async def test_purchases_without_deposits_claim_no_return(
 ) -> None:
     h = two_users.alice.headers
     pid, stock = await portfolio(http, h), await asset(db)
+    await post(http, h, pid, "DEPOSIT", 0, gross_amount=m("120.00"))
     await post(http, h, pid, "BUY", 1, asset_id=stock, quantity="1", unit_price=m("100"))
+    await post(http, h, pid, "BUY", 2, asset_id=stock, quantity="1", unit_price=m("100"))
+    await valuation(http, h, pid, stock, "210.00")
     p = await performance(app, two_users.alice.id, pid)
-    assert p.contributions == 0 and p.simple_return is None
-    assert p.money_weighted.status == XirrStatus.INSUFFICIENT_FLOWS
-    assert not p.complete  # the stock has no value yet
+    assert (p.assumed_deposits, p.assumed_count) == (Decimal("80.00"), 1)  # only the 80 missing
+    assert p.contributions == Decimal("200.00") and p.total_value == Decimal("210.00")
+
+
+async def test_nothing_is_assumed_without_a_shortfall(
+    app: FastAPI,
+    http: httpx.AsyncClient,
+    two_users: TwoUsers,  # noqa: F811
+) -> None:
+    pid = await portfolio(http, two_users.alice.headers)
+    await post(http, two_users.alice.headers, pid, "DEPOSIT", 0, gross_amount=m("100.00"))
+    p = await performance(app, two_users.alice.id, pid)
+    assert (p.assumed_deposits, p.assumed_count) == (Decimal(0), 0)
 
 
 async def test_an_empty_portfolio(

@@ -53,6 +53,7 @@ class Point:
     complete: bool
     unpriced: int  # open positions without a valuation as of the date
     unconverted: frozenset[str]  # currencies without a historical rate on the date
+    flows: tuple[tuple[date, Decimal], ...] = ()  # the dated flows that make up `flow_next`
 
 
 def dates(start: date, end: date, frequency: SeriesFrequency) -> list[date]:
@@ -139,7 +140,8 @@ def build(
                 else:
                     value += converted
             following = days[n + 1] if n + 1 < len(days) else day
-            flow_next = sum((f.amount for f in flows if day < f.on <= following), ZERO)
+            between = tuple((f.on, f.amount) for f in flows if day < f.on <= following)
+            flow_next = sum((a for _, a in between), ZERO)
             points.append(
                 Point(
                     day,
@@ -148,6 +150,7 @@ def build(
                     not unpriced and not unconverted,
                     unpriced,
                     frozenset(unconverted),
+                    between,
                 )
             )
     return points

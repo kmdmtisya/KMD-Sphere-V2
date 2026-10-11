@@ -474,3 +474,36 @@ async def test_a_portfolio_in_a_currency_without_a_rate_makes_everything_incompl
     )
     assert (await book.get("/api/v1/income/summary"))["complete"] is False
     assert (await book.get("/api/v1/dashboard"))["complete"] is False
+
+
+async def test_assumed_deposits_are_reported_in_performance_and_risk(
+    http: httpx.AsyncClient,
+    two_users: TwoUsers,  # noqa: F811
+) -> None:
+    """Review decision 1: a purchase without a recorded deposit counts as a deposit, so the
+    return exists, and the response says it is assumed."""
+    book = Book(http, two_users.alice.headers)
+    pid, stock = await book.portfolio(), await book.asset()
+    await book.post(pid, "BUY", asset_id=stock, quantity="1", unit_price=m("100"))
+    await book.value(pid, stock, "130.00")
+    p = await book.get(f"/api/v1/portfolios/{pid}/performance")
+    assert (p["assumed_deposits"], p["assumed_deposit_count"]) == (m("100.00"), 1)
+    assert p["contributions"] == m("100.00") and p["total_value"] == m("130.00")
+    assert p["profit_loss"] == m("30.00") and p["return_percent"] == "30"
+    assert p["money_weighted"]["status"] == "ok"
+    r = await book.get(f"/api/v1/portfolios/{pid}/risk")
+    assert r["assumed_deposit_count"] == 1
+
+    # A portfolio with its deposit recorded assumes nothing.
+    other = await book.portfolio()
+    await book.post(other, "DEPOSIT", gross_amount=m("100.00"))
+    await book.post(other, "BUY", asset_id=stock, quantity="1", unit_price=m("100"))
+    q = await book.get(f"/api/v1/portfolios/{other}/performance")
+    assert (q["assumed_deposits"], q["assumed_deposit_count"]) == (m("0.00"), 0)
+    # The summary does not assume anything: it shows the negative cash as it is.
+    s = await book.get(f"/api/v1/portfolios/{pid}/summary")
+    assert s["cash"] == m("-100.00")
+    # Nor do allocation or net worth: the assumption is for performance and risk only.
+    a = await book.get(f"/api/v1/portfolios/{pid}/allocation")
+    assert a["total"] == m("30.00")  # 130 of stock less the 100 of negative cash
+    assert (await book.get("/api/v1/net-worth"))["assets"] == m("30.00")

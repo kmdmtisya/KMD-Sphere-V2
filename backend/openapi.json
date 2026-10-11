@@ -2712,6 +2712,14 @@
             "title": "As Of",
             "type": "string"
           },
+          "assumed_deposit_count": {
+            "title": "Assumed Deposit Count",
+            "type": "integer"
+          },
+          "assumed_deposits": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Cash that purchases and other postings needed but no recorded deposit provided, counted as contributions so the return is not undefined. Included in contributions, net_invested and total_value."
+          },
           "complete": {
             "description": "False when assets are unpriced or currencies unconverted",
             "title": "Complete",
@@ -2809,6 +2817,8 @@
           "expenses",
           "complete",
           "first_flow",
+          "assumed_deposits",
+          "assumed_deposit_count",
           "notice"
         ],
         "title": "PerformanceOut",
@@ -3301,6 +3311,11 @@
             "title": "As Of",
             "type": "string"
           },
+          "assumed_deposit_count": {
+            "description": "Postings that needed cash no recorded deposit provided; each is treated as a deposit on its date",
+            "title": "Assumed Deposit Count",
+            "type": "integer"
+          },
           "currency": {
             "title": "Currency",
             "type": "string"
@@ -3447,6 +3462,7 @@
           "time_weighted_return_percent",
           "time_weighted_annualized_percent",
           "incomplete_points",
+          "assumed_deposit_count",
           "as_of",
           "notice"
         ],
