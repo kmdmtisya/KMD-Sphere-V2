@@ -252,6 +252,157 @@
           "status": "same"
         }
       ]
+    },
+    {
+      "dto": "CompoundForecastRequest",
+      "dart": "lib/features/forecast/domain/forecast_models.dart",
+      "api": "POST /api/v1/forecasts/scenarios",
+      "schema": "ScenarioForecastIn",
+      "fields": [
+        {
+          "dto": "initial_investment",
+          "api": "initial_investment",
+          "status": "same"
+        },
+        {
+          "dto": "monthly_contribution",
+          "api": "contribution",
+          "status": "renamed",
+          "resolution": "The amount is per contribution period (monthly, quarterly or yearly), so the API names it contribution; the live repository maps it, also in the echoed assumptions.",
+          "owner": "P09-T03"
+        },
+        {
+          "dto": "annual_return_percent",
+          "api": "annual_return_percent",
+          "status": "same"
+        },
+        {
+          "dto": "years",
+          "api": "years",
+          "status": "same"
+        },
+        {
+          "dto": "contribution_growth_percent",
+          "api": "contribution_growth_percent",
+          "status": "same"
+        },
+        {
+          "dto": "inflation_percent",
+          "api": "inflation_percent",
+          "status": "same"
+        },
+        {
+          "dto": "annual_fee_percent",
+          "api": "annual_fee_percent",
+          "status": "same"
+        },
+        {
+          "dto": "compounding_frequency",
+          "api": "compounding_frequency",
+          "status": "same"
+        },
+        {
+          "dto": "contribution_frequency",
+          "api": "contribution_frequency",
+          "status": "same"
+        },
+        {
+          "dto": "conservative_return_percent",
+          "api": "conservative_return_percent",
+          "status": "same"
+        },
+        {
+          "dto": "growth_return_percent",
+          "api": "growth_return_percent",
+          "status": "same"
+        }
+      ],
+      "notes": "Limits are shared with the calculator (tests/forecasting/test_limits_shared.py). POST /api/v1/forecasts/compound takes the same fields without the two scenario rates."
+    },
+    {
+      "dto": "ScenarioResult",
+      "dart": "lib/features/forecast/domain/forecast_models.dart",
+      "api": "POST /api/v1/forecasts/scenarios",
+      "schema": "ForecastProjection",
+      "fields": [
+        {
+          "dto": "annual_return_percent",
+          "api": "annual_return_percent",
+          "status": "same"
+        },
+        {
+          "dto": "nominal",
+          "api": "nominal",
+          "status": "same"
+        },
+        {
+          "dto": "real",
+          "api": "real",
+          "status": "same"
+        },
+        {
+          "dto": "final_nominal",
+          "api": "final_nominal",
+          "status": "same"
+        },
+        {
+          "dto": "final_real",
+          "api": "final_real",
+          "status": "same"
+        },
+        {
+          "dto": "total_contributions",
+          "api": "total_contributions",
+          "status": "same"
+        },
+        {
+          "dto": "total_growth",
+          "api": "total_growth",
+          "status": "same"
+        },
+        {
+          "dto": null,
+          "api": "contributions",
+          "status": "api-only",
+          "resolution": "Cumulative paid-in series for the contributions-versus-growth chart.",
+          "owner": "P09-T03"
+        }
+      ],
+      "notes": "Series items are {year, value} on both sides (YearValue)."
+    },
+    {
+      "dto": "CompoundForecastResponse",
+      "dart": "lib/features/forecast/domain/forecast_models.dart",
+      "api": "POST /api/v1/forecasts/scenarios",
+      "schema": "ScenarioForecastOut",
+      "fields": [
+        {
+          "dto": "currency",
+          "api": "currency",
+          "status": "same"
+        },
+        {
+          "dto": "scenarios",
+          "api": "scenarios",
+          "status": "same"
+        },
+        {
+          "dto": "assumptions",
+          "api": "assumptions",
+          "status": "same"
+        },
+        {
+          "dto": "as_of",
+          "api": "as_of",
+          "status": "same"
+        },
+        {
+          "dto": "notice",
+          "api": "notice",
+          "status": "same"
+        }
+      ],
+      "notes": "scenarios is keyed conservative, base and growth on both sides."
     }
   ],
   "pending": [
@@ -336,26 +487,6 @@
       ],
       "owner": "P10-T06",
       "resolution": "AI orchestrator (P10-T06): insights carry evidence with provider and as-of time."
-    },
-    {
-      "dto": "Forecast request and result",
-      "dart": "lib/features/forecast/domain/forecast_models.dart",
-      "keys": [
-        "initial_investment",
-        "monthly_contribution",
-        "annual_return_percent",
-        "years",
-        "inflation_percent",
-        "annual_fee_percent",
-        "final_nominal",
-        "final_real",
-        "total_contributions",
-        "total_growth",
-        "scenarios",
-        "assumptions"
-      ],
-      "owner": "P06-T02",
-      "resolution": "Forecast API (P06-T02) on the deterministic engine (P06-T01)."
     },
     {
       "dto": "Chat events",

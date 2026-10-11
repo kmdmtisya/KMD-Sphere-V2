@@ -25,6 +25,7 @@ from app.core.ratelimit import (
 from app.core.telemetry import Telemetry
 from app.db.session import Database
 from app.modules.assets import api as assets_api
+from app.modules.forecasting import api as forecasting_api
 from app.modules.identity import api as identity_api
 from app.modules.market_data import api as market_data_api
 from app.modules.portfolio import api as portfolio_api
@@ -90,6 +91,11 @@ def create_app(
                 "name": "valuations",
                 "description": "User-entered values of assets without a market price",
             },
+            {
+                "name": "forecasts",
+                "description": "Compound, scenario and goal projections (illustrative, never "
+                "guaranteed)",
+            },
         ],
         docs_url="/docs" if settings.docs_enabled else None,
         redoc_url=None,
@@ -135,6 +141,7 @@ def create_app(
     app.include_router(transactions_api.holdings_router)
     app.include_router(market_data_api.router)
     app.include_router(valuations_api.router)
+    app.include_router(forecasting_api.router)
     telemetry.instrument(app)
     return app
 

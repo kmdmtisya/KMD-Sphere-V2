@@ -580,14 +580,14 @@
   - [x] P06-T01.3 Solver
   - [x] P06-T01.4 Golden tests
   - [x] P06-T01.5 Property tests
-- [ ] **P06-T02** · Forecast API · `NOT_STARTED` ⬜
+- [x] **P06-T02** · Forecast API · `COMPLETED` ✅
   - Deps: P06-T01, P04-T02 · Wave: W2 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P06-T02.1 Schemas
-  - [ ] P06-T02.2 Endpoints
-  - [ ] P06-T02.3 Limits shared with mobile
-  - [ ] P06-T02.4 Tests
+  - Started: 2026-10-11T11:00:40+04:00 · Completed: 2026-10-11T11:29:18+04:00 · Duration: 28m 38s · Blocker: —
+  - Evidence: PR #58 (commit 718a72f). POST /api/v1/forecasts/compound, /scenarios, /goal on the P06-T01 engine; typed Pydantic schemas in OpenAPI (Spectral clean, forecasts tag). Limits in app/modules/forecasting/limits.py identical to the mobile ForecastInputLimits, enforced by tests/forecasting/test_limits_shared.py parsing the Dart source (any difference or unmirrored limit fails); strict string decimals, whole JSON-integer years, one currency, conservative <= base <= growth, unknown fields refused. Responses return nominal and real (and contributions) yearly series, echo the validated assumptions and carry the not-guaranteed notice. Auth required (401 tests). Forecast DTOs moved to live in docs/contracts/dto-mapping (monthly_contribution renamed to contribution, owner P09-T03). 69 API tests incl. all 15 golden vectors through the API; 34/34 mutants caught. Local 940 passed, coverage 91%, forecasting 100%; -m security 495 passed. CI all gates pass.
+  - [x] P06-T02.1 Schemas
+  - [x] P06-T02.2 Endpoints
+  - [x] P06-T02.3 Limits shared with mobile
+  - [x] P06-T02.4 Tests
 - [ ] **P06-T03** · Performance engine · `NOT_STARTED` ⬜
   - Deps: P05-T05, P05-T06, P05-GATE · Wave: W1 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
