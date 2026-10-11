@@ -635,10 +635,10 @@
   - [x] P06-T08.2 Volatility
   - [x] P06-T08.3 Drawdown
   - [x] P06-T08.4 Tests
-- [ ] **P06-T09** · Analytics API and caching · `IN_PROGRESS` 🔄
+- [x] **P06-T09** · Analytics API and caching · `COMPLETED` ✅
   - Deps: P06-T03, P06-T04, P06-T05, P06-T07, P06-T08 · Wave: W4 · Track: BE · Size: L · Approval: no
-  - Started: 2026-10-11T15:43:25+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-11T15:43:25+04:00 · Completed: 2026-10-11T16:13:34+04:00 · Duration: 30m 09s · Blocker: —
+  - Evidence: PR #65 (commit 1221ad3). Endpoints per guide section 8 with typed schemas in OpenAPI (Spectral clean): GET /portfolios/{id}/performance, /allocation, /income, /risk; GET /income/summary; GET /dashboard; net worth and goals summary cached too. Redis cache (app/core/cache.py): keys contain the requesting user id and a per-user generation; routes authorise before computing and only successful answers are stored, so the cache never serves another user's data (tested: Bob 404 on Alice's cached portfolio, nothing stored under his id; unit tests). Invalidated on ledger changes: InvalidationMiddleware bumps the user's generation after any successful write before the response is sent (tested for postings, reversals, valuations, liabilities, goals, portfolio archive; failed writes, reads, forecasts and other users' writes do not). TTL 300 s; Redis outage computes without cache. IDOR tests for the 4 portfolio routes (registered). Found and fixed: memory store counters not readable (generation stuck), schema-name collision splitting forecast/goal schemas (new contract guard). 27/28 mutants caught (1 equivalent, documented). Local 1320 passed, coverage 92%, -m security 693. Docs: docs/design/analytics-api.md, docs/security.md. CI all gates pass.
   - [x] P06-T09.1 Endpoints
   - [x] P06-T09.2 Cache keys and invalidation
   - [x] P06-T09.3 Authorisation tests
