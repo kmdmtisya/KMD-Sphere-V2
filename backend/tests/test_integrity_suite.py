@@ -13,7 +13,7 @@ import json
 import random
 import uuid
 from collections.abc import AsyncIterator
-from datetime import UTC, date, datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from decimal import Decimal
 from typing import Any
 
@@ -33,7 +33,7 @@ from tests.db_fixtures import migrated_settings  # noqa: F401
 from tests.idor_registry import IDOR_TESTS
 
 pytestmark = [pytest.mark.integration, pytest.mark.security]
-TODAY = date.today()
+TODAY = datetime.now(UTC).date()  # the API judges dates in UTC
 
 
 @pytest.fixture(scope="module")
@@ -174,7 +174,26 @@ async def alice_world(
             },
         )
     )
+    await ok(await http.post("/api/v1/watchlist", headers=h, json={"asset_id": asset["id"]}))
+    alert = await ok(
+        await http.post(
+            "/api/v1/alerts",
+            headers=h,
+            json={
+                "alert_type": "price_above",
+                "asset_id": stock,
+                "threshold_price": m("10.00"),
+            },
+        )
+    )
+    event_id = await db.fetchval(
+        "INSERT INTO alert_events (alert_id, user_id, trigger_key, observed_value, observed_as_of) "
+        "SELECT id, user_id, 'sweep', 11, now() FROM alerts WHERE id = $1 RETURNING id",
+        alert["id"] if isinstance(alert["id"], uuid.UUID) else uuid.UUID(alert["id"]),
+    )
     return {
+        "alert_id": alert["id"],
+        "event_id": str(event_id),
         "liability_id": debt["id"],
         "goal_id": goal["id"],
         "portfolio_id": pid,
@@ -206,6 +225,8 @@ BODIES: dict[tuple[str, str], dict[str, Any] | None] = {
     ("PATCH", "/api/v1/risk-profiles/{risk_profile_id}"): {"risk_tolerance": "aggressive"},
     ("PATCH", "/api/v1/goals/{goal_id}"): {"name": "Taken by Bob"},
     ("PATCH", "/api/v1/liabilities/{liability_id}"): {"balance": m("0.00")},
+    ("PATCH", "/api/v1/alerts/{alert_id}"): {"status": "paused"},
+    ("POST", "/api/v1/alerts/events/{event_id}/seen"): None,
 }
 
 # Every table that holds a user's data, for the before/after snapshot.
@@ -222,6 +243,9 @@ SNAPSHOT_TABLES = (
     "goals",
     "goal_scenarios",
     "liabilities",
+    "watchlist_items",
+    "alerts",
+    "alert_events",
 )
 
 
@@ -244,6 +268,9 @@ async def snapshot(db: asyncpg.Connection, user_id: str) -> dict[str, str]:
         "user_profiles": "SELECT * FROM user_profiles WHERE user_id = $1",
         "goals": "SELECT * FROM goals WHERE user_id = $1 ORDER BY id",
         "liabilities": "SELECT * FROM liabilities WHERE user_id = $1 ORDER BY id",
+        "watchlist_items": "SELECT * FROM watchlist_items WHERE user_id = $1 ORDER BY id",
+        "alerts": "SELECT * FROM alerts WHERE user_id = $1 ORDER BY id",
+        "alert_events": "SELECT * FROM alert_events WHERE user_id = $1 ORDER BY id",
         "goal_scenarios": "SELECT s.* FROM goal_scenarios s JOIN goals g ON g.id = s.goal_id "
         "WHERE g.user_id = $1 ORDER BY s.id",
     }
