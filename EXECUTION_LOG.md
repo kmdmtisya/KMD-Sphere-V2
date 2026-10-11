@@ -959,3 +959,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T01:19:20+04:00 — COMPLETE P08-T01
 - duration: 0m 01s
 - evidence: ADR-0014 accepted. User approved P08-T01 and the P08 run on 2026-10-12, adopting the recommended selection (ECB FX, CoinGecko crypto, Twelve Data equities adapter). Acceptance caveat recorded: licence for in-app display and storage is not yet confirmed for any provider; production use blocked until it is. · Approved by: user (mtisya@gmail.com)
+
+### 2026-10-12T01:21:19+04:00 — START P08-T02
+- Provider abstraction layer
+- prerequisites verified COMPLETED
