@@ -679,15 +679,15 @@
   - [x] P07-T02.1 Screen
   - [x] P07-T02.2 Search/filter/sort
   - [x] P07-T02.3 Tests
-- [ ] **P07-T03** · Transactions (screen 8) and add-transaction flow · `NOT_STARTED` ⬜
+- [x] **P07-T03** · Transactions (screen 8) and add-transaction flow · `COMPLETED` ✅
   - Deps: P07-T01 · Wave: W2 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P07-T03.1 List and filters
-  - [ ] P07-T03.2 Add flow
-  - [ ] P07-T03.3 Confirmation
-  - [ ] P07-T03.4 Correction view
-  - [ ] P07-T03.5 Tests
+  - Started: 2026-10-11T20:13:26+04:00 · Completed: 2026-10-11T20:42:42+04:00 · Duration: 29m 16s · Blocker: —
+  - Evidence: Transactions list with filter chips and month grouping, add-transaction flow (inline validation, review, confirmation) and correction view where reversals are linked entries, not edits; 89 new tests (validation, repository append-only rules, screens, routes, accessibility guidelines light/dark 1x/2x LTR/RTL); analyze and format clean; full mobile suite 1120 passed locally. PR #72. CI all gates pass.
+  - [x] P07-T03.1 List and filters
+  - [x] P07-T03.2 Add flow
+  - [x] P07-T03.3 Confirmation
+  - [x] P07-T03.4 Correction view
+  - [x] P07-T03.5 Tests
 - [ ] **P07-T04** · Investment Details (screen 7) · `NOT_STARTED` ⬜
   - Deps: P07-T02 · Wave: W3 · Track: MOB · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

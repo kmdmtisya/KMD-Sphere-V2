@@ -81,6 +81,13 @@ abstract final class DateLabels {
     () => '${_iso(value)} ${_two(value.hour)}:${_two(value.minute)}',
   );
 
+  /// `March 2024` (en): a month heading.
+  static String monthYear(DateTime value, {String locale = 'en'}) => _safe(
+    locale,
+    (l) => DateFormat.yMMMM(l).format(value),
+    () => '${value.year.toString().padLeft(4, '0')}-${_two(value.month)}',
+  );
+
   /// `Mar 12` (en): compact axis label.
   static String dayMonth(DateTime value, {String locale = 'en'}) => _safe(
     locale,

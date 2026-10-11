@@ -9,6 +9,8 @@ abstract final class AppRoutes {
   static const String home = '/home';
   static const String portfolio = '/portfolio';
   static const String holdings = '/portfolio/holdings';
+  static const String transactions = '/portfolio/transactions';
+  static const String addTransaction = '/portfolio/transactions/add';
   static const String ai = '/ai';
   static const String goals = '/goals';
   static const String more = '/more';
@@ -21,6 +23,10 @@ abstract final class AppRoutes {
 
   /// Debug-only component gallery. Not registered in release builds.
   static const String gallery = '/_gallery';
+
+  /// One ledger entry. The id is encoded, so an odd id can never change the path.
+  static String transaction(String id) =>
+      '$transactions/${Uri.encodeComponent(id)}';
 
   /// The query parameter that carries the AI chat context.
   static const String aiScopeParam = 'scope';
