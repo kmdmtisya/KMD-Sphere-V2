@@ -611,10 +611,10 @@
   - [x] P06-T05.2 Service
   - [x] P06-T05.3 Yield
   - [x] P06-T05.4 Tests
-- [ ] **P06-T06** · Goals module · `IN_PROGRESS` 🔄
+- [x] **P06-T06** · Goals module · `COMPLETED` ✅
   - Deps: P06-T01, P05-T08 · Wave: W2 · Track: BE · Size: L · Approval: no
-  - Started: 2026-10-11T13:50:07+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-11T13:50:07+04:00 · Completed: 2026-10-11T14:41:18+04:00 · Duration: 51m 11s · Blocker: —
+  - Evidence: PR #62 (commit 67dc653). Schema: goals and goal_scenarios (migration 0008) with constraints (name, type, currency, positive target, non-negative contribution/percents, frequencies, unique name per user, one scenario per kind; scenarios cascade with the goal); upgrade/check/downgrade/upgrade clean; schema tests. Service: progress via the forecast engine (new month-horizon functions value_after, months_to_reach, required_contribution_by; T01 tests unchanged): progress %, gap, months left, per-scenario projections nominal/real, status on_track/behind from the base scenario only under stated assumptions, reached/overdue, required contribution, estimated completion; every response echoes assumptions and the not-guaranteed notice; current value from one or all portfolios converted to the goal currency with completeness and as-of. API: /api/v1/goals CRUD, /summary, /{id}/progress; typed schemas, OpenAPI + Spectral clean. Ownership: 404 for another user's goal (IDOR tests for all four id routes, registered; integrity sweep and snapshot include goals), foreign/missing funding portfolio refused alike (422), owner in every repository UPDATE/DELETE (direct test). Audit events on create/update/delete. 39/39 mutants caught. Local 1149 passed, coverage 92%, goals 91%, -m security 576. Methods docs/design/goals.md. CI all gates pass.
   - [x] P06-T06.1 Schema/migration
   - [x] P06-T06.2 Service
   - [x] P06-T06.3 Endpoints
