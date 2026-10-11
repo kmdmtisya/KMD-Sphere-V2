@@ -704,14 +704,14 @@
   - [x] P07-T05.2 Add/edit
   - [x] P07-T05.3 Required contribution display
   - [x] P07-T05.4 Tests
-- [ ] **P07-T06** · Portfolio Doctor (screen 12) · `NOT_STARTED` ⬜
+- [x] **P07-T06** · Portfolio Doctor (screen 12) · `COMPLETED` ✅
   - Deps: P07-T01 · Wave: W2 · Track: MOB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P07-T06.1 Overview
-  - [ ] P07-T06.2 Findings tabs
-  - [ ] P07-T06.3 Scenario actions
-  - [ ] P07-T06.4 Tests
+  - Started: 2026-10-11T22:01:20+04:00 · Completed: 2026-10-11T22:22:23+04:00 · Duration: 21m 03s · Blocker: —
+  - Evidence: Portfolio Doctor screen: health overview with severity shown as icon and word, findings by type with the figures behind them, DEMO what-if scenarios in a sheet, no trade/rebalance action anywhere (guard test across all filter states); entry from AI Wealth; 30 new tests incl. accessibility guidelines light/dark 1x/2x LTR/RTL; analyze and format clean; full mobile suite 1255 passed locally. PR #75. CI all gates pass.
+  - [x] P07-T06.1 Overview
+  - [x] P07-T06.2 Findings tabs
+  - [x] P07-T06.3 Scenario actions
+  - [x] P07-T06.4 Tests
 - [ ] **P07-T07** · AI Investment Opportunities (screen 13) · `NOT_STARTED` ⬜
   - Deps: P07-T01, P03-T04 · Wave: W3 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

@@ -37,9 +37,12 @@ String sectionHeading(AppLocalizations l10n, SectionKind kind) =>
 /// [scope] comes from the route (`/ai?scope=...`) and can be changed or removed by the user; it is
 /// sent with each question, and the server enforces what it may access.
 class AiWealthScreen extends ConsumerStatefulWidget {
-  const AiWealthScreen({this.scope, super.key});
+  const AiWealthScreen({this.scope, this.onOpenDoctor, super.key});
 
   final AiScope? scope;
+
+  /// Opens the Portfolio Doctor. Null hides the entry.
+  final VoidCallback? onOpenDoctor;
 
   @override
   ConsumerState<AiWealthScreen> createState() => _AiWealthScreenState();
@@ -199,10 +202,15 @@ class _AiWealthScreenState extends ConsumerState<AiWealthScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.aiTitle),
-        // Header slot: Opportunities and Portfolio Doctor entries arrive at gate 3.
-        actions: const [
-          DemoBadge(),
-          SizedBox(width: AppSpacing.m),
+        actions: [
+          if (widget.onOpenDoctor != null)
+            IconButton(
+              tooltip: l10n.doctorEntryTooltip,
+              icon: const Icon(Icons.health_and_safety_outlined),
+              onPressed: widget.onOpenDoctor,
+            ),
+          const DemoBadge(),
+          const SizedBox(width: AppSpacing.m),
         ],
       ),
       body: Column(

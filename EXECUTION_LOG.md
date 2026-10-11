@@ -901,3 +901,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-11T21:50:45+04:00 — COMPLETE P07-T05
 - duration: 25m 41s
 - evidence: Goals tab with progress-ring cards, goal detail with required contribution labelled as an assumption-based estimate, scenarios and assumptions, add/edit form with inline human-readable validation on backend limits (no pre-filled returns); 94 new tests incl. validation limits, repository rules and accessibility guidelines light/dark 1x/2x LTR/RTL; analyze and format clean; full mobile suite 1225 passed locally. PR #74. CI all gates pass.
+
+### 2026-10-11T22:01:20+04:00 — START P07-T06
+- Portfolio Doctor (screen 12)
+- prerequisites verified COMPLETED
+
+### 2026-10-11T22:22:23+04:00 — COMPLETE P07-T06
+- duration: 21m 03s
+- evidence: Portfolio Doctor screen: health overview with severity shown as icon and word, findings by type with the figures behind them, DEMO what-if scenarios in a sheet, no trade/rebalance action anywhere (guard test across all filter states); entry from AI Wealth; 30 new tests incl. accessibility guidelines light/dark 1x/2x LTR/RTL; analyze and format clean; full mobile suite 1255 passed locally. PR #75. CI all gates pass.

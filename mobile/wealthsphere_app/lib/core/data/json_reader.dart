@@ -42,6 +42,16 @@ class JsonReader {
 
   String? stringOrNull(String key) => has(key) ? string(key) : null;
 
+  /// The value of the string at [key] as one of [values], matched by `name`. An unknown name is a
+  /// loud [FormatException] naming the field.
+  T enumByName<T extends Enum>(String key, List<T> values) {
+    final name = string(key);
+    for (final v in values) {
+      if (v.name == name) return v;
+    }
+    throw FormatException('${_at(key)} is not a known value: "$name"');
+  }
+
   int integer(String key) {
     final v = _raw(key);
     if (v is! int) {

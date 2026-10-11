@@ -1,0 +1,376 @@
+{
+  "demo": true,
+  "as_of": "2026-10-09T08:00:00Z",
+  "reports": {
+    "p-retire": {
+      "as_of": "2026-10-09T08:00:00Z",
+      "findings": [
+        {
+          "id": "f-concentration",
+          "kind": "concentration",
+          "severity": "high",
+          "title": "Demo Global Equity Fund is 46.5% of the portfolio",
+          "explanation": "A large share in one investment means its ups and downs move the whole portfolio.",
+          "facts": [
+            {
+              "label": "Largest holding",
+              "value": "Demo Global Equity Fund"
+            },
+            {
+              "label": "Share of portfolio",
+              "value": "46.5%"
+            },
+            {
+              "label": "Top three holdings together",
+              "value": "92.2%"
+            }
+          ],
+          "scenario_ids": [
+            "s-cap"
+          ]
+        },
+        {
+          "id": "f-currency",
+          "kind": "currency",
+          "severity": "medium",
+          "title": "16.3% of the portfolio is in AED",
+          "explanation": "Investments in other currencies change in value when exchange rates move, in addition to their own price moves.",
+          "facts": [
+            {
+              "label": "Outside the portfolio currency",
+              "value": "16.3%"
+            },
+            {
+              "label": "Currencies",
+              "value": "AED"
+            }
+          ],
+          "scenario_ids": [
+            "s-fx"
+          ]
+        },
+        {
+          "id": "f-liquidity",
+          "kind": "liquidity",
+          "severity": "low",
+          "title": "Cash is 7.8% of the portfolio",
+          "explanation": "Cash can be used quickly. A small share means most of the portfolio would need to be sold to raise money.",
+          "facts": [
+            {
+              "label": "Cash share",
+              "value": "7.8%"
+            }
+          ],
+          "scenario_ids": []
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "s-cap",
+          "title": "What if the largest holding were 20% of the portfolio?",
+          "description": "Shows how the concentration reading would change if the largest holding made up 20% of the total.",
+          "assumptions": [
+            "The rest of the portfolio is scaled evenly to make up the difference",
+            "No transaction costs, taxes or price changes"
+          ],
+          "effect": "The largest holding would be 20.0% of the portfolio instead of 46.5%."
+        },
+        {
+          "id": "s-fx",
+          "title": "What if AED weakened 10% against the dollar?",
+          "description": "Shows the effect on today's value of a 10% fall in those currencies.",
+          "assumptions": [
+            "Only exchange rates change",
+            "Prices in the local currency stay the same"
+          ],
+          "effect": "The portfolio would be worth about $1,475 less (1.6% of its value)."
+        }
+      ]
+    },
+    "p-growth": {
+      "as_of": "2026-10-09T08:00:00Z",
+      "findings": [
+        {
+          "id": "f-concentration",
+          "kind": "concentration",
+          "severity": "high",
+          "title": "Demo Technology ETF is 48.8% of the portfolio",
+          "explanation": "A large share in one investment means its ups and downs move the whole portfolio.",
+          "facts": [
+            {
+              "label": "Largest holding",
+              "value": "Demo Technology ETF"
+            },
+            {
+              "label": "Share of portfolio",
+              "value": "48.8%"
+            },
+            {
+              "label": "Top three holdings together",
+              "value": "100.0%"
+            }
+          ],
+          "scenario_ids": [
+            "s-cap"
+          ]
+        },
+        {
+          "id": "f-currency",
+          "kind": "currency",
+          "severity": "medium",
+          "title": "26.1% of the portfolio is in KES",
+          "explanation": "Investments in other currencies change in value when exchange rates move, in addition to their own price moves.",
+          "facts": [
+            {
+              "label": "Outside the portfolio currency",
+              "value": "26.1%"
+            },
+            {
+              "label": "Currencies",
+              "value": "KES"
+            }
+          ],
+          "scenario_ids": [
+            "s-fx"
+          ]
+        },
+        {
+          "id": "f-volatility",
+          "kind": "volatility",
+          "severity": "medium",
+          "title": "25.0% is in very volatile assets",
+          "explanation": "Digital assets have had very large price swings in the past. A fall can be quick and deep.",
+          "facts": [
+            {
+              "label": "Share of portfolio",
+              "value": "25.0%"
+            },
+            {
+              "label": "Historical volatility class",
+              "value": "Very high"
+            }
+          ],
+          "scenario_ids": [
+            "s-drop"
+          ]
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "s-cap",
+          "title": "What if the largest holding were 20% of the portfolio?",
+          "description": "Shows how the concentration reading would change if the largest holding made up 20% of the total.",
+          "assumptions": [
+            "The rest of the portfolio is scaled evenly to make up the difference",
+            "No transaction costs, taxes or price changes"
+          ],
+          "effect": "The largest holding would be 20.0% of the portfolio instead of 48.8%."
+        },
+        {
+          "id": "s-fx",
+          "title": "What if KES weakened 10% against the dollar?",
+          "description": "Shows the effect on today's value of a 10% fall in those currencies.",
+          "assumptions": [
+            "Only exchange rates change",
+            "Prices in the local currency stay the same"
+          ],
+          "effect": "The portfolio would be worth about $834 less (2.6% of its value)."
+        },
+        {
+          "id": "s-drop",
+          "title": "What if these assets fell 40%?",
+          "description": "Shows the effect on today's value of a 40% fall in the most volatile assets.",
+          "assumptions": [
+            "Everything else stays the same"
+          ],
+          "effect": "The portfolio would be worth about $3,200 less (10.0% of its value)."
+        }
+      ]
+    },
+    "p-income": {
+      "as_of": "2026-10-09T08:00:00Z",
+      "findings": [
+        {
+          "id": "f-concentration",
+          "kind": "concentration",
+          "severity": "high",
+          "title": "Demo Dividend Aristocrats is 55.0% of the portfolio",
+          "explanation": "A large share in one investment means its ups and downs move the whole portfolio.",
+          "facts": [
+            {
+              "label": "Largest holding",
+              "value": "Demo Dividend Aristocrats"
+            },
+            {
+              "label": "Share of portfolio",
+              "value": "55.0%"
+            },
+            {
+              "label": "Top three holdings together",
+              "value": "100.0%"
+            }
+          ],
+          "scenario_ids": [
+            "s-cap"
+          ]
+        },
+        {
+          "id": "f-currency",
+          "kind": "currency",
+          "severity": "high",
+          "title": "45.0% of the portfolio is in AED and KES",
+          "explanation": "Investments in other currencies change in value when exchange rates move, in addition to their own price moves.",
+          "facts": [
+            {
+              "label": "Outside the portfolio currency",
+              "value": "45.0%"
+            },
+            {
+              "label": "Currencies",
+              "value": "AED, KES"
+            }
+          ],
+          "scenario_ids": [
+            "s-fx"
+          ]
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "s-cap",
+          "title": "What if the largest holding were 20% of the portfolio?",
+          "description": "Shows how the concentration reading would change if the largest holding made up 20% of the total.",
+          "assumptions": [
+            "The rest of the portfolio is scaled evenly to make up the difference",
+            "No transaction costs, taxes or price changes"
+          ],
+          "effect": "The largest holding would be 20.0% of the portfolio instead of 55.0%."
+        },
+        {
+          "id": "s-fx",
+          "title": "What if AED and KES weakened 10% against the dollar?",
+          "description": "Shows the effect on today's value of a 10% fall in those currencies.",
+          "assumptions": [
+            "Only exchange rates change",
+            "Prices in the local currency stay the same"
+          ],
+          "effect": "The portfolio would be worth about $800 less (4.5% of its value)."
+        }
+      ]
+    },
+    "consolidated": {
+      "as_of": "2026-10-09T08:00:00Z",
+      "findings": [
+        {
+          "id": "f-concentration",
+          "kind": "concentration",
+          "severity": "high",
+          "title": "Demo Global Equity Fund is 30.0% of the portfolio",
+          "explanation": "A large share in one investment means its ups and downs move the whole portfolio.",
+          "facts": [
+            {
+              "label": "Largest holding",
+              "value": "Demo Global Equity Fund"
+            },
+            {
+              "label": "Share of portfolio",
+              "value": "30.0%"
+            },
+            {
+              "label": "Top three holdings together",
+              "value": "60.1%"
+            }
+          ],
+          "scenario_ids": [
+            "s-cap"
+          ]
+        },
+        {
+          "id": "f-currency",
+          "kind": "currency",
+          "severity": "medium",
+          "title": "22.2% of the portfolio is in AED and KES",
+          "explanation": "Investments in other currencies change in value when exchange rates move, in addition to their own price moves.",
+          "facts": [
+            {
+              "label": "Outside the portfolio currency",
+              "value": "22.2%"
+            },
+            {
+              "label": "Currencies",
+              "value": "AED, KES"
+            }
+          ],
+          "scenario_ids": [
+            "s-fx"
+          ]
+        },
+        {
+          "id": "f-volatility",
+          "kind": "volatility",
+          "severity": "medium",
+          "title": "5.7% is in very volatile assets",
+          "explanation": "Digital assets have had very large price swings in the past. A fall can be quick and deep.",
+          "facts": [
+            {
+              "label": "Share of portfolio",
+              "value": "5.7%"
+            },
+            {
+              "label": "Historical volatility class",
+              "value": "Very high"
+            }
+          ],
+          "scenario_ids": [
+            "s-drop"
+          ]
+        },
+        {
+          "id": "f-liquidity",
+          "kind": "liquidity",
+          "severity": "low",
+          "title": "Cash is 5.0% of the portfolio",
+          "explanation": "Cash can be used quickly. A small share means most of the portfolio would need to be sold to raise money.",
+          "facts": [
+            {
+              "label": "Cash share",
+              "value": "5.0%"
+            }
+          ],
+          "scenario_ids": []
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "s-cap",
+          "title": "What if the largest holding were 20% of the portfolio?",
+          "description": "Shows how the concentration reading would change if the largest holding made up 20% of the total.",
+          "assumptions": [
+            "The rest of the portfolio is scaled evenly to make up the difference",
+            "No transaction costs, taxes or price changes"
+          ],
+          "effect": "The largest holding would be 20.0% of the portfolio instead of 30.0%."
+        },
+        {
+          "id": "s-fx",
+          "title": "What if AED and KES weakened 10% against the dollar?",
+          "description": "Shows the effect on today's value of a 10% fall in those currencies.",
+          "assumptions": [
+            "Only exchange rates change",
+            "Prices in the local currency stay the same"
+          ],
+          "effect": "The portfolio would be worth about $3,109 less (2.2% of its value)."
+        },
+        {
+          "id": "s-drop",
+          "title": "What if these assets fell 40%?",
+          "description": "Shows the effect on today's value of a 40% fall in the most volatile assets.",
+          "assumptions": [
+            "Everything else stays the same"
+          ],
+          "effect": "The portfolio would be worth about $3,200 less (2.3% of its value)."
+        }
+      ]
+    }
+  }
+}

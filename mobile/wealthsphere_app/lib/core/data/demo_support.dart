@@ -22,6 +22,10 @@ final dataSourceModeProvider =
 class DataLoadException implements Exception {
   const DataLoadException(this.message);
 
+  /// No [what] with this [id] exists.
+  DataLoadException.unknown(String what, String id)
+    : message = 'Unknown $what "$id"';
+
   final String message;
 
   @override
