@@ -671,7 +671,7 @@
   - Evidence: —
   - [x] P07-T01.1 Four components
   - [x] P07-T01.2 Gallery entries
-  - [ ] P07-T01.3 Tests and goldens
+  - [x] P07-T01.3 Tests and goldens
 - [ ] **P07-T02** · Investments / Holdings (screen 5) · `NOT_STARTED` ⬜
   - Deps: P07-T01 · Wave: W2 · Track: MOB · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
