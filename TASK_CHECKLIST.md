@@ -580,14 +580,14 @@
   - [x] P06-T01.3 Solver
   - [x] P06-T01.4 Golden tests
   - [x] P06-T01.5 Property tests
-- [ ] **P06-T02** · Forecast API · `NOT_STARTED` ⬜
+- [ ] **P06-T02** · Forecast API · `IN_PROGRESS` 🔄
   - Deps: P06-T01, P04-T02 · Wave: W2 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-11T11:00:40+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P06-T02.1 Schemas
-  - [ ] P06-T02.2 Endpoints
-  - [ ] P06-T02.3 Limits shared with mobile
-  - [ ] P06-T02.4 Tests
+  - [x] P06-T02.1 Schemas
+  - [x] P06-T02.2 Endpoints
+  - [x] P06-T02.3 Limits shared with mobile
+  - [x] P06-T02.4 Tests
 - [ ] **P06-T03** · Performance engine · `NOT_STARTED` ⬜
   - Deps: P05-T05, P05-T06, P05-GATE · Wave: W1 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

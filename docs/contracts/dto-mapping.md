@@ -69,6 +69,57 @@ Dart: `mobile/wealthsphere_app/lib/features/account/data/account_repository.dart
 | `email` | `email` | same |  |  |
 | `base_currency` | `base_currency` | same |  |  |
 
+### CompoundForecastRequest - `POST /api/v1/forecasts/scenarios` (ScenarioForecastIn)
+
+Dart: `mobile/wealthsphere_app/lib/features/forecast/domain/forecast_models.dart`
+
+| DTO field | API field | Status | Resolution | Owner |
+|---|---|---|---|---|
+| `initial_investment` | `initial_investment` | same |  |  |
+| `monthly_contribution` | `contribution` | renamed | The amount is per contribution period (monthly, quarterly or yearly), so the API names it contribution; the live repository maps it, also in the echoed assumptions. | P09-T03 |
+| `annual_return_percent` | `annual_return_percent` | same |  |  |
+| `years` | `years` | same |  |  |
+| `contribution_growth_percent` | `contribution_growth_percent` | same |  |  |
+| `inflation_percent` | `inflation_percent` | same |  |  |
+| `annual_fee_percent` | `annual_fee_percent` | same |  |  |
+| `compounding_frequency` | `compounding_frequency` | same |  |  |
+| `contribution_frequency` | `contribution_frequency` | same |  |  |
+| `conservative_return_percent` | `conservative_return_percent` | same |  |  |
+| `growth_return_percent` | `growth_return_percent` | same |  |  |
+
+Limits are shared with the calculator (tests/forecasting/test_limits_shared.py). POST /api/v1/forecasts/compound takes the same fields without the two scenario rates.
+
+### ScenarioResult - `POST /api/v1/forecasts/scenarios` (ForecastProjection)
+
+Dart: `mobile/wealthsphere_app/lib/features/forecast/domain/forecast_models.dart`
+
+| DTO field | API field | Status | Resolution | Owner |
+|---|---|---|---|---|
+| `annual_return_percent` | `annual_return_percent` | same |  |  |
+| `nominal` | `nominal` | same |  |  |
+| `real` | `real` | same |  |  |
+| `final_nominal` | `final_nominal` | same |  |  |
+| `final_real` | `final_real` | same |  |  |
+| `total_contributions` | `total_contributions` | same |  |  |
+| `total_growth` | `total_growth` | same |  |  |
+| - | `contributions` | api-only | Cumulative paid-in series for the contributions-versus-growth chart. | P09-T03 |
+
+Series items are {year, value} on both sides (YearValue).
+
+### CompoundForecastResponse - `POST /api/v1/forecasts/scenarios` (ScenarioForecastOut)
+
+Dart: `mobile/wealthsphere_app/lib/features/forecast/domain/forecast_models.dart`
+
+| DTO field | API field | Status | Resolution | Owner |
+|---|---|---|---|---|
+| `currency` | `currency` | same |  |  |
+| `scenarios` | `scenarios` | same |  |  |
+| `assumptions` | `assumptions` | same |  |  |
+| `as_of` | `as_of` | same |  |  |
+| `notice` | `notice` | same |  |  |
+
+scenarios is keyed conservative, base and growth on both sides.
+
 ## DTOs whose API is not built yet
 
 These DEMO DTOs are the proposed contract; the owning task adopts them or updates this mapping.
@@ -82,5 +133,4 @@ These DEMO DTOs are the proposed contract; the owning task adopts them or update
 | IncomeSummary | `wealth_models.dart` | `monthly`, `yearly`, `as_of` | P06-T05 | Income and passive-income module. |
 | GoalsSummary, GoalProgress | `wealth_models.dart` | `id`, `name`, `progress_percent`, `status`, `on_track`, `total`, `items`, `as_of` | P06-T06 | Goals module. |
 | InsightSummary, EvidenceSourceDto | `wealth_models.dart` | `text`, `as_of`, `sources`, `label`, `provider` | P10-T06 | AI orchestrator (P10-T06): insights carry evidence with provider and as-of time. |
-| Forecast request and result | `forecast_models.dart` | `initial_investment`, `monthly_contribution`, `annual_return_percent`, `years`, `inflation_percent`, `annual_fee_percent`, `final_nominal`, `final_real`, `total_contributions`, `total_growth`, `scenarios`, `assumptions` | P06-T02 | Forecast API (P06-T02) on the deterministic engine (P06-T01). |
 | Chat events | `chat_models.dart` | `type`, `text`, `kind`, `label`, `provider`, `as_of` | P10-T06 | AI orchestrator streaming events (docs/api-conventions.md, Streaming). |

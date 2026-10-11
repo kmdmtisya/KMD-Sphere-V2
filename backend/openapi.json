@@ -311,6 +311,116 @@
         "title": "AssetSummary",
         "type": "object"
       },
+      "CompoundForecastIn": {
+        "additionalProperties": false,
+        "properties": {
+          "annual_fee_percent": {
+            "default": "0",
+            "description": "Yearly fee on the balance, in percent (0 to 5, at most 2 decimals)",
+            "examples": [
+              "8.00"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Annual Fee Percent",
+            "type": "string"
+          },
+          "annual_return_percent": {
+            "description": "Assumed nominal annual return, in percent (-20 to 50, at most 2 decimals)",
+            "examples": [
+              "8.00"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Annual Return Percent",
+            "type": "string"
+          },
+          "compounding_frequency": {
+            "$ref": "#/components/schemas/Frequency",
+            "default": "monthly"
+          },
+          "contribution": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Paid at the end of each contribution period in the first year, then increased yearly by contribution_growth_percent (0 to 10000000)"
+          },
+          "contribution_frequency": {
+            "$ref": "#/components/schemas/Frequency",
+            "default": "monthly"
+          },
+          "contribution_growth_percent": {
+            "default": "0",
+            "description": "Yearly increase of the contribution, in percent (0 to 20, at most 2 decimals)",
+            "examples": [
+              "8.00"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Contribution Growth Percent",
+            "type": "string"
+          },
+          "inflation_percent": {
+            "default": "0",
+            "description": "Assumed yearly inflation, in percent (0 to 30, at most 2 decimals)",
+            "examples": [
+              "8.00"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Inflation Percent",
+            "type": "string"
+          },
+          "initial_investment": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Invested at the start (0 to 1000000000)"
+          },
+          "years": {
+            "description": "Horizon in whole years (1 to 60)",
+            "maximum": 60.0,
+            "minimum": 1.0,
+            "title": "Years",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "initial_investment",
+          "annual_return_percent",
+          "years",
+          "contribution"
+        ],
+        "title": "CompoundForecastIn",
+        "type": "object"
+      },
+      "CompoundForecastOut": {
+        "properties": {
+          "as_of": {
+            "description": "When the forecast was computed",
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "assumptions": {
+            "$ref": "#/components/schemas/CompoundForecastIn",
+            "description": "The inputs, as validated"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "notice": {
+            "description": "Shown with every forecast: projections are not guaranteed",
+            "title": "Notice",
+            "type": "string"
+          },
+          "projection": {
+            "$ref": "#/components/schemas/ForecastProjection"
+          }
+        },
+        "required": [
+          "currency",
+          "as_of",
+          "notice",
+          "projection",
+          "assumptions"
+        ],
+        "title": "CompoundForecastOut",
+        "type": "object"
+      },
       "CurrencyShare": {
         "properties": {
           "currency": {
@@ -388,6 +498,99 @@
         ],
         "title": "DashboardLayout",
         "type": "object"
+      },
+      "ForecastProjection": {
+        "properties": {
+          "annual_return_percent": {
+            "description": "The return this projection assumes",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Annual Return Percent",
+            "type": "string"
+          },
+          "contributions": {
+            "description": "Paid in so far, including the initial investment",
+            "items": {
+              "$ref": "#/components/schemas/YearValue"
+            },
+            "title": "Contributions",
+            "type": "array"
+          },
+          "final_nominal": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "final_real": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Final value in today's money"
+          },
+          "nominal": {
+            "description": "Value at the end of each year",
+            "items": {
+              "$ref": "#/components/schemas/YearValue"
+            },
+            "title": "Nominal",
+            "type": "array"
+          },
+          "real": {
+            "description": "The same values in today's money",
+            "items": {
+              "$ref": "#/components/schemas/YearValue"
+            },
+            "title": "Real",
+            "type": "array"
+          },
+          "total_contributions": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Paid in, including the initial investment"
+          },
+          "total_growth": {
+            "$ref": "#/components/schemas/Money",
+            "description": "final_nominal - total_contributions (negative after losses)"
+          }
+        },
+        "required": [
+          "annual_return_percent",
+          "nominal",
+          "real",
+          "contributions",
+          "final_nominal",
+          "final_real",
+          "total_contributions",
+          "total_growth"
+        ],
+        "title": "ForecastProjection",
+        "type": "object"
+      },
+      "ForecastScenarios": {
+        "properties": {
+          "base": {
+            "$ref": "#/components/schemas/ForecastProjection"
+          },
+          "conservative": {
+            "$ref": "#/components/schemas/ForecastProjection"
+          },
+          "growth": {
+            "$ref": "#/components/schemas/ForecastProjection"
+          }
+        },
+        "required": [
+          "conservative",
+          "base",
+          "growth"
+        ],
+        "title": "ForecastScenarios",
+        "type": "object"
+      },
+      "Frequency": {
+        "enum": [
+          "monthly",
+          "quarterly",
+          "yearly"
+        ],
+        "title": "Frequency",
+        "type": "string"
       },
       "Freshness": {
         "properties": {
@@ -494,6 +697,135 @@
           "rule"
         ],
         "title": "FxQuoteOut",
+        "type": "object"
+      },
+      "GoalForecastIn": {
+        "additionalProperties": false,
+        "description": "Find the contribution that reaches `target` after `years`.",
+        "properties": {
+          "annual_fee_percent": {
+            "default": "0",
+            "description": "Yearly fee on the balance, in percent (0 to 5, at most 2 decimals)",
+            "examples": [
+              "8.00"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Annual Fee Percent",
+            "type": "string"
+          },
+          "annual_return_percent": {
+            "description": "Assumed nominal annual return, in percent (-20 to 50, at most 2 decimals)",
+            "examples": [
+              "8.00"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Annual Return Percent",
+            "type": "string"
+          },
+          "compounding_frequency": {
+            "$ref": "#/components/schemas/Frequency",
+            "default": "monthly"
+          },
+          "contribution_frequency": {
+            "$ref": "#/components/schemas/Frequency",
+            "default": "monthly"
+          },
+          "contribution_growth_percent": {
+            "default": "0",
+            "description": "Yearly increase of the contribution, in percent (0 to 20, at most 2 decimals)",
+            "examples": [
+              "8.00"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Contribution Growth Percent",
+            "type": "string"
+          },
+          "inflation_percent": {
+            "default": "0",
+            "description": "Assumed yearly inflation, in percent (0 to 30, at most 2 decimals)",
+            "examples": [
+              "8.00"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Inflation Percent",
+            "type": "string"
+          },
+          "initial_investment": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Invested at the start (0 to 1000000000)"
+          },
+          "target": {
+            "$ref": "#/components/schemas/Money",
+            "description": "The value to reach (0.01 to 10000000000)"
+          },
+          "target_in_todays_money": {
+            "default": false,
+            "description": "True: the target is in today's money and is grown by inflation to the horizon. False: the target is a nominal amount at the horizon.",
+            "title": "Target In Todays Money",
+            "type": "boolean"
+          },
+          "years": {
+            "description": "Horizon in whole years (1 to 60)",
+            "maximum": 60.0,
+            "minimum": 1.0,
+            "title": "Years",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "initial_investment",
+          "annual_return_percent",
+          "years",
+          "target"
+        ],
+        "title": "GoalForecastIn",
+        "type": "object"
+      },
+      "GoalForecastOut": {
+        "properties": {
+          "as_of": {
+            "description": "When the forecast was computed",
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "assumptions": {
+            "$ref": "#/components/schemas/GoalForecastIn",
+            "description": "The inputs, as validated"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "notice": {
+            "description": "Shown with every forecast: projections are not guaranteed",
+            "title": "Notice",
+            "type": "string"
+          },
+          "projection": {
+            "$ref": "#/components/schemas/ForecastProjection",
+            "description": "The forecast with that contribution"
+          },
+          "reached_without_contributions": {
+            "description": "The initial investment alone reaches the target",
+            "title": "Reached Without Contributions",
+            "type": "boolean"
+          },
+          "required_contribution": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Per contribution period in the first year (then increased yearly by contribution_growth_percent). Rounded half-up, so the target is met to within rounding."
+          }
+        },
+        "required": [
+          "currency",
+          "as_of",
+          "notice",
+          "required_contribution",
+          "reached_without_contributions",
+          "projection",
+          "assumptions"
+        ],
+        "title": "GoalForecastOut",
         "type": "object"
       },
       "HTTPValidationError": {
@@ -1221,6 +1553,137 @@
           }
         },
         "title": "RiskProfileUpdate",
+        "type": "object"
+      },
+      "ScenarioForecastIn": {
+        "additionalProperties": false,
+        "description": "The base assumptions plus a conservative and a growth return (conservative <= base <=\ngrowth), each chosen by the user.",
+        "properties": {
+          "annual_fee_percent": {
+            "default": "0",
+            "description": "Yearly fee on the balance, in percent (0 to 5, at most 2 decimals)",
+            "examples": [
+              "8.00"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Annual Fee Percent",
+            "type": "string"
+          },
+          "annual_return_percent": {
+            "description": "Assumed nominal annual return, in percent (-20 to 50, at most 2 decimals)",
+            "examples": [
+              "8.00"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Annual Return Percent",
+            "type": "string"
+          },
+          "compounding_frequency": {
+            "$ref": "#/components/schemas/Frequency",
+            "default": "monthly"
+          },
+          "conservative_return_percent": {
+            "description": "Assumed nominal annual return, in percent (-20 to 50, at most 2 decimals)",
+            "examples": [
+              "8.00"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Conservative Return Percent",
+            "type": "string"
+          },
+          "contribution": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Paid at the end of each contribution period in the first year, then increased yearly by contribution_growth_percent (0 to 10000000)"
+          },
+          "contribution_frequency": {
+            "$ref": "#/components/schemas/Frequency",
+            "default": "monthly"
+          },
+          "contribution_growth_percent": {
+            "default": "0",
+            "description": "Yearly increase of the contribution, in percent (0 to 20, at most 2 decimals)",
+            "examples": [
+              "8.00"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Contribution Growth Percent",
+            "type": "string"
+          },
+          "growth_return_percent": {
+            "description": "Assumed nominal annual return, in percent (-20 to 50, at most 2 decimals)",
+            "examples": [
+              "8.00"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Growth Return Percent",
+            "type": "string"
+          },
+          "inflation_percent": {
+            "default": "0",
+            "description": "Assumed yearly inflation, in percent (0 to 30, at most 2 decimals)",
+            "examples": [
+              "8.00"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Inflation Percent",
+            "type": "string"
+          },
+          "initial_investment": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Invested at the start (0 to 1000000000)"
+          },
+          "years": {
+            "description": "Horizon in whole years (1 to 60)",
+            "maximum": 60.0,
+            "minimum": 1.0,
+            "title": "Years",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "initial_investment",
+          "annual_return_percent",
+          "years",
+          "contribution",
+          "conservative_return_percent",
+          "growth_return_percent"
+        ],
+        "title": "ScenarioForecastIn",
+        "type": "object"
+      },
+      "ScenarioForecastOut": {
+        "properties": {
+          "as_of": {
+            "description": "When the forecast was computed",
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "assumptions": {
+            "$ref": "#/components/schemas/ScenarioForecastIn",
+            "description": "The inputs, as validated"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "notice": {
+            "description": "Shown with every forecast: projections are not guaranteed",
+            "title": "Notice",
+            "type": "string"
+          },
+          "scenarios": {
+            "$ref": "#/components/schemas/ForecastScenarios"
+          }
+        },
+        "required": [
+          "currency",
+          "as_of",
+          "notice",
+          "scenarios",
+          "assumptions"
+        ],
+        "title": "ScenarioForecastOut",
         "type": "object"
       },
       "SummaryOut": {
@@ -1964,6 +2427,30 @@
         },
         "title": "ValuationUpdate",
         "type": "object"
+      },
+      "YearValue": {
+        "properties": {
+          "value": {
+            "description": "Amount in the forecast currency",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Value",
+            "type": "string"
+          },
+          "year": {
+            "description": "Years from now (0 is the start)",
+            "title": "Year",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "year",
+          "value"
+        ],
+        "title": "YearValue",
+        "type": "object"
       }
     },
     "securitySchemes": {
@@ -2242,6 +2729,171 @@
         "summary": "Get Asset",
         "tags": [
           "assets"
+        ]
+      }
+    },
+    "/api/v1/forecasts/compound": {
+      "post": {
+        "description": "Project one set of assumptions: yearly nominal and real values, contributions and growth.\nAn illustration of the assumptions, not a prediction.",
+        "operationId": "compound_forecast_api_v1_forecasts_compound_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompoundForecastIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompoundForecastOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "422": {
+            "description": "Invalid forecast assumptions (outside the published limits)"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Compound Forecast",
+        "tags": [
+          "forecasts"
+        ]
+      }
+    },
+    "/api/v1/forecasts/goal": {
+      "post": {
+        "description": "The first-year contribution per period that reaches a target, with the resulting\nprojection.",
+        "operationId": "goal_forecast_api_v1_forecasts_goal_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GoalForecastIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoalForecastOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "422": {
+            "description": "Invalid forecast assumptions (outside the published limits)"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Goal Forecast",
+        "tags": [
+          "forecasts"
+        ]
+      }
+    },
+    "/api/v1/forecasts/scenarios": {
+      "post": {
+        "description": "The same assumptions under the user's conservative, base and growth returns.",
+        "operationId": "scenario_forecast_api_v1_forecasts_scenarios_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScenarioForecastIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScenarioForecastOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "422": {
+            "description": "Invalid forecast assumptions (outside the published limits)"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Scenario Forecast",
+        "tags": [
+          "forecasts"
         ]
       }
     },
@@ -4295,6 +4947,10 @@
     {
       "description": "User-entered values of assets without a market price",
       "name": "valuations"
+    },
+    {
+      "description": "Compound, scenario and goal projections (illustrative, never guaranteed)",
+      "name": "forecasts"
     }
   ]
 }

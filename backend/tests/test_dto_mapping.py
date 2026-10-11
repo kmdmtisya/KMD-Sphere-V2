@@ -50,11 +50,14 @@ def _dart_keys(dart: str) -> set[str]:
 
 
 def _read_by(dart: str, dto: str) -> set[str]:
-    """The JSON keys one Dart class reads through its JsonReader (`r.string('key')`, ...)."""
+    """The JSON keys one Dart class reads through its JsonReader (`r.string('key')`, ...) or
+    through a local helper called with the key (`series('nominal')`). Keys read on nested readers
+    (`p.integer('year')`) belong to the nested object, not to this class."""
     source = (MOBILE / dart).read_text("utf-8")
     match = re.search(rf"^class {dto}\b(.*?)(?=^class |\Z)", source, re.M | re.S)
     assert match, f"no class {dto} in {dart}"
-    return set(re.findall(r"\br\.\w+\(\s*'([a-z][a-z0-9_]*)'", match.group(1)))
+    call = r"(?:\br\.\w+|(?<![\w.])[a-z]\w*)\(\s*'([a-z][a-z0-9_]*)'"
+    return set(re.findall(call, match.group(1)))
 
 
 def _task_exists(task: str) -> bool:

@@ -68,6 +68,31 @@ The final value is linear in C: `FV(C) = FV(0) + C x A`, where `A = FV(1) - FV(0
 - Percentages are echoed as given; they are inputs, not results.
 - The required contribution is rounded half-up like any other amount, so paying it reaches the target to within rounding: the shortfall is at most half a minor unit times A (on a 20-year monthly plan at 8% with no fee, A is about 589, so at most about 2.95 in the target currency). The unrounded value is used for any further calculation.
 
+## API (P06-T02)
+
+All three need a signed-in user, read no user data, and echo the validated inputs as `assumptions` with a fixed notice that projections are illustrative and not guaranteed.
+
+| Endpoint | Input | Output |
+|---|---|---|
+| `POST /api/v1/forecasts/compound` | the assumptions and `contribution` | one `projection` |
+| `POST /api/v1/forecasts/scenarios` | the same plus `conservative_return_percent` and `growth_return_percent` (conservative <= base <= growth) | `scenarios.conservative`, `.base`, `.growth` (the mobile calculator's shape) |
+| `POST /api/v1/forecasts/goal` | the assumptions without a contribution, plus `target` and `target_in_todays_money` | `required_contribution`, `reached_without_contributions` and the resulting `projection` |
+
+Each projection has yearly `nominal`, `real` and `contributions` series (`{year, value}`) and the final values as Money. Limits (`app/modules/forecasting/limits.py`; the mobile calculator has the same values, enforced by `tests/forecasting/test_limits_shared.py`):
+
+| Field | Minimum | Maximum | Decimals |
+|---|---|---|---|
+| `initial_investment` | 0 | 1,000,000,000 | the currency's minor units |
+| `contribution` | 0 | 10,000,000 | the currency's minor units |
+| `annual_return_percent`, scenario returns | -20 | 50 | 2 |
+| `years` | 1 | 60 | whole (a JSON integer) |
+| `contribution_growth_percent` | 0 | 20 | 2 |
+| `inflation_percent` | 0 | 30 | 2 |
+| `annual_fee_percent` | 0 | 5 | 2 |
+| `target` (goal) | 0.01 | 10,000,000,000 | the currency's minor units |
+
+All amounts in one request share the currency of `initial_investment`. Percentages and amounts are strings (JSON numbers are refused); unknown fields are refused.
+
 ## Not modelled
 
 Taxes (no tax assumptions are applied; the guide allows them only where explicitly modelled), withdrawals, contributions at the start of a period, contribution holidays, variable returns (sequence risk) and probability distributions. Each would be an explicit, separately documented extension.
