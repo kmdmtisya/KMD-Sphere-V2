@@ -627,14 +627,14 @@
   - [x] P06-T07.2 Service
   - [x] P06-T07.3 Endpoint
   - [x] P06-T07.4 Tests
-- [ ] **P06-T08** · Risk metrics and historical series · `NOT_STARTED` ⬜
+- [x] **P06-T08** · Risk metrics and historical series · `COMPLETED` ✅
   - Deps: P06-T03 · Wave: W2 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P06-T08.1 Series builder
-  - [ ] P06-T08.2 Volatility
-  - [ ] P06-T08.3 Drawdown
-  - [ ] P06-T08.4 Tests
+  - Started: 2026-10-11T15:16:12+04:00 · Completed: 2026-10-11T15:39:42+04:00 · Duration: 23m 30s · Blocker: —
+  - Evidence: PR #64 (commit 4239456). Series builder (portfolio/history.py, pure): end-of-day portfolio value per daily/weekly/monthly date from the ledger as of the date (quantities, cash per currency, newest valuation per held position, valuation-only assets from their first valuation), historical FX rule per currency, external flows to the next point, completeness (unpriced/unconverted). Risk (analytics/risk.py, pure Decimal): flow-adjusted period returns, sample volatility annualised by sqrt(periods/year), maximum drawdown of the return index with peak/trough/recovery, TWR via the T03 function. Methodology documented in docs/design/risk.md; insufficient data returns an explicit state (insufficient_data < 6 returns, incomplete_data, undefined_period), never partial figures. Service portfolio/risk_service.py, authorised (404 for another user), ranges validated. Tests: hand-computed history, volatility cross-checked with the statistics module, drawdown cases, Hypothesis (flows do not change returns), service on the real ledger incl. historical FX age limit. 28/28 mutants caught (3 equivalent removed/documented). Local 1243 passed, coverage 92%, analytics 100%, history 100%. CI all gates pass.
+  - [x] P06-T08.1 Series builder
+  - [x] P06-T08.2 Volatility
+  - [x] P06-T08.3 Drawdown
+  - [x] P06-T08.4 Tests
 - [ ] **P06-T09** · Analytics API and caching · `NOT_STARTED` ⬜
   - Deps: P06-T03, P06-T04, P06-T05, P06-T07, P06-T08 · Wave: W4 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

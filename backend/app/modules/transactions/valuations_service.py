@@ -156,6 +156,16 @@ class ValuationService:
         await self._owned(user_id, portfolio_id)
         return [_out(v) for v in await self.latest_rows(portfolio_id, at)]
 
+    async def all_rows(self, portfolio_id: uuid.UUID) -> list[Valuation]:
+        """Every valuation of a portfolio, oldest first (for value series); the caller has
+        authorised the portfolio."""
+        result = await self._session.execute(
+            select(Valuation)
+            .where(Valuation.portfolio_id == portfolio_id)
+            .order_by(Valuation.as_of, Valuation.id)
+        )
+        return list(result.scalars())
+
     async def latest_rows(self, portfolio_id: uuid.UUID, at: datetime | None) -> list[Valuation]:
         """For other services (the summary); the caller has authorised the portfolio."""
         moment = at or datetime.now(UTC)
