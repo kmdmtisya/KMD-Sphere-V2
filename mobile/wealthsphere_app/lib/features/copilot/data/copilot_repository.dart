@@ -95,7 +95,11 @@ final copilotRepositoryProvider = Provider<CopilotRepository>((ref) {
       final behavior = ref.read(demoBehaviorProvider.notifier);
       return DemoCopilotRepository(
         ref.watch(demoAssetsProvider),
-        () => ref.read(demoBehaviorProvider),
+        // A stream can outlive its provider (the app is torn down mid-answer): read the behaviour
+        // only while the provider is alive.
+        () => ref.mounted
+            ? ref.read(demoBehaviorProvider)
+            : const DemoBehavior(latency: Duration.zero),
         behavior.gate,
       );
   }

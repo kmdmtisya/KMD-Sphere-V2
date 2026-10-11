@@ -729,13 +729,13 @@
   - [x] P07-T08.2 Net worth and income views
   - [x] P07-T08.3 Settings
   - [x] P07-T08.4 Tests
-- [ ] **P07-T09** · Journeys and accessibility sweep (gate 3) · `NOT_STARTED` ⬜
+- [x] **P07-T09** · Journeys and accessibility sweep (gate 3) · `COMPLETED` ✅
   - Deps: P07-T02, P07-T03, P07-T04, P07-T05, P07-T06, P07-T07, P07-T08 · Wave: W4 · Track: QA · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P07-T09.1 Journeys
-  - [ ] P07-T09.2 Accessibility sweep
-  - [ ] P07-T09.3 QA checklist
+  - Started: 2026-10-11T23:38:06+04:00 · Completed: 2026-10-12T01:01:43+04:00 · Duration: 1h 23m 37s · Blocker: —
+  - Evidence: Journeys 6-10 added (CI widget journeys and device integration journeys); accessibility sweep extended to 24 screens/states, 192 tests passing incl. strict tap target and every-Text contrast; QA record docs/design/qa-gate3.md with manual device checklist honestly Not run; Android emulator API 37: journeys 1-10 pass in final full run (earlier cold-start failures recorded); analyze/format clean; full suite 1508 passed locally. PR #78. CI all gates pass.
+  - [x] P07-T09.1 Journeys
+  - [x] P07-T09.2 Accessibility sweep
+  - [x] P07-T09.3 QA checklist
 - [ ] **P07-GATE** · UX Gate 3 review · `NOT_STARTED` ⬜
   - Deps: P07-T01, P07-T02, P07-T03, P07-T04, P07-T05, P07-T06, P07-T07, P07-T08, P07-T09 · Wave: W5 · Track: GATE · Size: S · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —

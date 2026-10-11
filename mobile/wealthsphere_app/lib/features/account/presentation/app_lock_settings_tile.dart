@@ -51,8 +51,22 @@ class AppLockSettingsTile extends ConsumerWidget {
         SwitchListTile(
           key: const ValueKey('app-lock-switch'),
           contentPadding: EdgeInsets.zero,
-          title: Text(l10n.appLockSetting),
-          subtitle: known && !canUse ? Text(l10n.appLockUnavailableHint) : null,
+          // A disabled tile greys its text below readable contrast; the label and the reason it
+          // is off must stay readable (the switch itself still looks disabled).
+          title: Text(
+            l10n.appLockSetting,
+            style: context.wealthText.body.copyWith(
+              color: context.wealthColors.textPrimary,
+            ),
+          ),
+          subtitle: known && !canUse
+              ? Text(
+                  l10n.appLockUnavailableHint,
+                  style: context.wealthText.caption.copyWith(
+                    color: context.wealthColors.textMuted,
+                  ),
+                )
+              : null,
           value: settings.enabled,
           onChanged: !known || (!canUse && !settings.enabled)
               ? null

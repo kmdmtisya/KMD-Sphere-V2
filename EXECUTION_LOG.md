@@ -925,3 +925,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-11T23:28:33+04:00 — COMPLETE P07-T08
 - duration: 22m 27s
 - evidence: More tab with net worth, income and settings (theme, app lock, account) views; unavailable items (Reports, Alerts, Documents, reporting currency, notifications) labelled Coming soon and not openable; demo totals tested equal to the Home dashboard; 49 new tests incl. accessibility guidelines light/dark 1x/2x LTR/RTL; analyze and format clean; full mobile suite 1351 passed locally. PR #77. CI all gates pass.
+
+### 2026-10-11T23:38:06+04:00 — START P07-T09
+- Journeys and accessibility sweep (gate 3)
+- prerequisites verified COMPLETED
+
+### 2026-10-12T01:01:43+04:00 — COMPLETE P07-T09
+- duration: 1h 23m 37s
+- evidence: Journeys 6-10 added (CI widget journeys and device integration journeys); accessibility sweep extended to 24 screens/states, 192 tests passing incl. strict tap target and every-Text contrast; QA record docs/design/qa-gate3.md with manual device checklist honestly Not run; Android emulator API 37: journeys 1-10 pass in final full run (earlier cold-start failures recorded); analyze/format clean; full suite 1508 passed locally. PR #78. CI all gates pass.
