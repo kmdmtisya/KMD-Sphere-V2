@@ -649,9 +649,9 @@
   - [x] P06-T10.1 Document formulas
   - [x] P06-T10.2 Independent vectors
   - [x] P06-T10.3 User review
-- [ ] **P06-GATE** · Phase P06 exit gate · `NOT_STARTED` ⬜
+- [ ] **P06-GATE** · Phase P06 exit gate · `IN_PROGRESS` 🔄
   - Deps: P06-T01, P06-T02, P06-T03, P06-T04, P06-T05, P06-T06, P06-T07, P06-T08, P06-T09, P06-T10 · Wave: W6 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-03.4, QG-03.5, QG-06.1, QG-06.3, QG-06.4, QG-06.6
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-11T18:36:52+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P06-GATE.1 Run gates
   - [ ] P06-GATE.2 Present summary
