@@ -619,14 +619,14 @@
   - [x] P06-T06.2 Service
   - [x] P06-T06.3 Endpoints
   - [x] P06-T06.4 Tests
-- [ ] **P06-T07** · Net worth and liabilities · `NOT_STARTED` ⬜
+- [x] **P06-T07** · Net worth and liabilities · `COMPLETED` ✅
   - Deps: P06-T06, P05-T08 · Wave: W3 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P06-T07.1 Schema/migration
-  - [ ] P06-T07.2 Service
-  - [ ] P06-T07.3 Endpoint
-  - [ ] P06-T07.4 Tests
+  - Started: 2026-10-11T14:44:29+04:00 · Completed: 2026-10-11T15:12:20+04:00 · Duration: 27m 51s · Blocker: —
+  - Evidence: PR #63 (commit eacc71d). Schema: liabilities (migration 0009) with constraints (name, type, currency, non-negative balance/rate, unique name per user); upgrade/check/downgrade/upgrade clean; schema tests. Service/API: liabilities CRUD (future balance date refused, unseen asset refused alike, limit, audit events without amounts) and GET /api/v1/net-worth: net worth = total assets (active portfolios consolidated) - total liabilities in base currency (or ?currency=), liabilities each converted at the latest rate and rounded so assets - liabilities = net worth exactly; FX provenance: every rate used (portfolio base and liability currencies) with rate, as-of, provider, stale, inverted; freshness with completeness, unconverted currencies, stale FX, oldest liability balance. Pure tests + Hypothesis reconciliation; API tests incl. foreign-currency liability, missing rate, other reporting currency, isolation, IDOR for 3 id routes (registered; integrity sweep and snapshot include liabilities), repository write scoping. 29/29 mutants caught (on the green suite). Local 1217 passed, coverage 92%, networth 93.4%, -m security 632. Methods docs/design/net-worth.md. CI all gates pass.
+  - [x] P06-T07.1 Schema/migration
+  - [x] P06-T07.2 Service
+  - [x] P06-T07.3 Endpoint
+  - [x] P06-T07.4 Tests
 - [ ] **P06-T08** · Risk metrics and historical series · `NOT_STARTED` ⬜
   - Deps: P06-T03 · Wave: W2 · Track: BE · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

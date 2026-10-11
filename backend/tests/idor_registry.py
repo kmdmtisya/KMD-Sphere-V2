@@ -70,6 +70,15 @@ IDOR_TESTS: dict[tuple[str, str], str] = {
     ("GET", "/api/v1/goals/{goal_id}/progress"): (
         "tests.test_goals_api::test_bob_cannot_see_alices_goal_progress"
     ),
+    ("GET", "/api/v1/liabilities/{liability_id}"): (
+        "tests.test_networth_api::test_bob_cannot_read_alices_liability"
+    ),
+    ("PATCH", "/api/v1/liabilities/{liability_id}"): (
+        "tests.test_networth_api::test_bob_cannot_change_alices_liability"
+    ),
+    ("DELETE", "/api/v1/liabilities/{liability_id}"): (
+        "tests.test_networth_api::test_bob_cannot_delete_alices_liability"
+    ),
 }
 
 # Routes whose path parameters identify global reference data, not anyone's resource, with the

@@ -161,7 +161,21 @@ async def alice_world(
             },
         )
     )
+    debt = await ok(
+        await http.post(
+            "/api/v1/liabilities",
+            headers=h,
+            json={
+                "name": "Alice mortgage",
+                "liability_type": "mortgage",
+                "balance": m("40000.00"),
+                "balance_as_of": TODAY.isoformat(),
+                "asset_id": asset["id"],
+            },
+        )
+    )
     return {
+        "liability_id": debt["id"],
         "goal_id": goal["id"],
         "portfolio_id": pid,
         "transaction_id": tx["id"],
@@ -191,6 +205,7 @@ BODIES: dict[tuple[str, str], dict[str, Any] | None] = {
     ("PATCH", "/api/v1/portfolios/{portfolio_id}/valuations/{valuation_id}"): {"source": "bob"},
     ("PATCH", "/api/v1/risk-profiles/{risk_profile_id}"): {"risk_tolerance": "aggressive"},
     ("PATCH", "/api/v1/goals/{goal_id}"): {"name": "Taken by Bob"},
+    ("PATCH", "/api/v1/liabilities/{liability_id}"): {"balance": m("0.00")},
 }
 
 # Every table that holds a user's data, for the before/after snapshot.
@@ -206,6 +221,7 @@ SNAPSHOT_TABLES = (
     "user_profiles",
     "goals",
     "goal_scenarios",
+    "liabilities",
 )
 
 
@@ -227,6 +243,7 @@ async def snapshot(db: asyncpg.Connection, user_id: str) -> dict[str, str]:
         "risk_profiles": "SELECT * FROM risk_profiles WHERE user_id = $1 ORDER BY id",
         "user_profiles": "SELECT * FROM user_profiles WHERE user_id = $1",
         "goals": "SELECT * FROM goals WHERE user_id = $1 ORDER BY id",
+        "liabilities": "SELECT * FROM liabilities WHERE user_id = $1 ORDER BY id",
         "goal_scenarios": "SELECT s.* FROM goal_scenarios s JOIN goals g ON g.id = s.goal_id "
         "WHERE g.user_id = $1 ORDER BY s.id",
     }

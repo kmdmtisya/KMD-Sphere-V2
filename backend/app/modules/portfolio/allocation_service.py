@@ -41,7 +41,11 @@ class AllocationService:
 
     async def portfolio(self, user_id: uuid.UUID, portfolio_id: uuid.UUID) -> PortfolioAllocation:
         """Raises ResourceNotFoundError (404) unless the portfolio is the user's."""
-        summary = await self._summaries.figures(user_id, portfolio_id)
+        return await self.of(await self._summaries.figures(user_id, portfolio_id))
+
+    async def of(self, summary: Summary) -> PortfolioAllocation:
+        """The allocation of a summary the caller has authorised (one portfolio or a
+        consolidated one, for net worth)."""
         classes = await self._assets.classifications(sorted(summary.positions))
         return measure(summary, classes)
 

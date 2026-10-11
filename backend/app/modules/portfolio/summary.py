@@ -41,6 +41,8 @@ class Rate:
     rate: Decimal
     as_of: datetime
     stale: bool
+    provider: str = ""
+    inverted: bool = False  # derived as 1 / rate from the opposite pair
 
 
 @dataclass

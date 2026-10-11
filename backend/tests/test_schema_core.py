@@ -38,6 +38,7 @@ CORE_TABLES = {
     "fx_rates",
     "goals",
     "goal_scenarios",
+    "liabilities",
 }
 MONEY_LIKE = {
     "amount",
@@ -759,3 +760,37 @@ async def test_goal_scenarios_one_per_kind_and_deleted_with_the_goal(
     with pytest.raises(asyncpg.UniqueViolationError, match="uq_goals_user_id_name"):
         await new_goal(db, world["user"], name="Same")
         await new_goal(db, world["user"], name="Same")
+
+
+# ------------------------------------------------------------------------ liabilities (P06-T07)
+
+
+@pytest.mark.integration
+@pytest.mark.parametrize(
+    ("overrides", "constraint"),
+    [
+        ({"name": " "}, "ck_liabilities_name"),
+        ({"liability_type": "iou"}, "liability_type"),
+        ({"currency": "usd"}, "ck_liabilities_currency"),
+        ({"balance": Decimal(-1)}, "balance_non_negative"),
+        ({"interest_rate_percent": Decimal(-1)}, "interest_rate_non_negative"),
+    ],
+)
+async def test_liabilities_reject_invalid_rows(
+    db: asyncpg.Connection,
+    world: dict[str, uuid.UUID],
+    overrides: dict[str, Any],
+    constraint: str,
+) -> None:
+    from datetime import date
+
+    cols: dict[str, Any] = {
+        "user_id": world["user"],
+        "name": f"L {uuid.uuid4().hex[:6]}",
+        "liability_type": "mortgage",
+        "currency": "USD",
+        "balance": Decimal("100"),
+        "balance_as_of": date(2026, 1, 1),
+    }
+    with pytest.raises(asyncpg.CheckViolationError, match=constraint):
+        await insert(db, "liabilities", **(cols | overrides))

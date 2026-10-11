@@ -39,6 +39,40 @@
         "title": "AssetClassOut",
         "type": "object"
       },
+      "AssetClassShare": {
+        "properties": {
+          "asset_class": {
+            "title": "Asset Class",
+            "type": "string"
+          },
+          "share_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Share of assets (2 decimals, adding up to 100); null when not meaningful",
+            "title": "Share Percent"
+          },
+          "value": {
+            "$ref": "#/components/schemas/Money"
+          }
+        },
+        "required": [
+          "asset_class",
+          "value",
+          "share_percent"
+        ],
+        "title": "AssetClassShare",
+        "type": "object"
+      },
       "AssetCreate": {
         "additionalProperties": false,
         "description": "A user-defined asset (a property, a private business, a SACCO share). Only its creator sees\nit. Listed instruments come from market data providers, not from this endpoint.",
@@ -697,6 +731,52 @@
           "rule"
         ],
         "title": "FxQuoteOut",
+        "type": "object"
+      },
+      "FxRateUsed": {
+        "properties": {
+          "as_of": {
+            "description": "When the rate was valid (the provider's timestamp)",
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "currency": {
+            "description": "Converted from this currency into the net-worth currency",
+            "title": "Currency",
+            "type": "string"
+          },
+          "inverted": {
+            "description": "Derived as 1 / rate from the opposite pair",
+            "title": "Inverted",
+            "type": "boolean"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "rate": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Rate",
+            "type": "string"
+          },
+          "stale": {
+            "title": "Stale",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "currency",
+          "rate",
+          "as_of",
+          "provider",
+          "stale",
+          "inverted"
+        ],
+        "title": "FxRateUsed",
         "type": "object"
       },
       "GoalAssumptions": {
@@ -1541,6 +1621,338 @@
         "title": "HoldingOut",
         "type": "object"
       },
+      "LiabilityCreate": {
+        "additionalProperties": false,
+        "properties": {
+          "asset_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The asset securing it (for example a mortgaged property)",
+            "title": "Asset Id"
+          },
+          "balance": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Outstanding amount (0 to 10000000000), in the liability's currency"
+          },
+          "balance_as_of": {
+            "description": "When the balance applied (today or earlier)",
+            "format": "date",
+            "title": "Balance As Of",
+            "type": "string"
+          },
+          "interest_rate_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Annual interest rate in percent (0 to 100), for reference",
+            "title": "Interest Rate Percent"
+          },
+          "liability_type": {
+            "enum": [
+              "mortgage",
+              "personal_loan",
+              "car_loan",
+              "student_loan",
+              "business_loan",
+              "credit_card",
+              "other"
+            ],
+            "title": "Liability Type",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "liability_type",
+          "balance",
+          "balance_as_of"
+        ],
+        "title": "LiabilityCreate",
+        "type": "object"
+      },
+      "LiabilityLine": {
+        "properties": {
+          "balance": {
+            "$ref": "#/components/schemas/Money",
+            "description": "In the liability's own currency"
+          },
+          "balance_as_of": {
+            "format": "date",
+            "title": "Balance As Of",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "liability_type": {
+            "enum": [
+              "mortgage",
+              "personal_loan",
+              "car_loan",
+              "student_loan",
+              "business_loan",
+              "credit_card",
+              "other"
+            ],
+            "title": "Liability Type",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "In the net-worth currency at the latest rate; null without a rate"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "liability_type",
+          "balance",
+          "value",
+          "balance_as_of"
+        ],
+        "title": "LiabilityLine",
+        "type": "object"
+      },
+      "LiabilityOut": {
+        "properties": {
+          "asset_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Asset Id"
+          },
+          "balance": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "balance_as_of": {
+            "format": "date",
+            "title": "Balance As Of",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "interest_rate_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interest Rate Percent"
+          },
+          "liability_type": {
+            "enum": [
+              "mortgage",
+              "personal_loan",
+              "car_loan",
+              "student_loan",
+              "business_loan",
+              "credit_card",
+              "other"
+            ],
+            "title": "Liability Type",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "liability_type",
+          "balance",
+          "balance_as_of",
+          "interest_rate_percent",
+          "asset_id",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "LiabilityOut",
+        "type": "object"
+      },
+      "LiabilityTypeTotal": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "liability_type": {
+            "enum": [
+              "mortgage",
+              "personal_loan",
+              "car_loan",
+              "student_loan",
+              "business_loan",
+              "credit_card",
+              "other"
+            ],
+            "title": "Liability Type",
+            "type": "string"
+          },
+          "value": {
+            "$ref": "#/components/schemas/Money"
+          }
+        },
+        "required": [
+          "liability_type",
+          "value",
+          "count"
+        ],
+        "title": "LiabilityTypeTotal",
+        "type": "object"
+      },
+      "LiabilityUpdate": {
+        "additionalProperties": false,
+        "description": "PATCH body: any subset. Send `asset_id` or `interest_rate_percent` as null to clear it.",
+        "properties": {
+          "asset_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Asset Id"
+          },
+          "balance": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "balance_as_of": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Balance As Of"
+          },
+          "interest_rate_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interest Rate Percent"
+          },
+          "liability_type": {
+            "anyOf": [
+              {
+                "enum": [
+                  "mortgage",
+                  "personal_loan",
+                  "car_loan",
+                  "student_loan",
+                  "business_loan",
+                  "credit_card",
+                  "other"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Liability Type"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          }
+        },
+        "title": "LiabilityUpdate",
+        "type": "object"
+      },
       "LiveStatus": {
         "properties": {
           "status": {
@@ -1672,6 +2084,139 @@
           "currency"
         ],
         "title": "Money",
+        "type": "object"
+      },
+      "NetWorthFreshness": {
+        "properties": {
+          "complete": {
+            "description": "False when assets are unpriced, or amounts in a currency without a rate are left out",
+            "title": "Complete",
+            "type": "boolean"
+          },
+          "computed_at": {
+            "format": "date-time",
+            "title": "Computed At",
+            "type": "string"
+          },
+          "data_as_of": {
+            "description": "The oldest valuation or rate the assets use",
+            "format": "date-time",
+            "title": "Data As Of",
+            "type": "string"
+          },
+          "oldest_liability_balance": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The oldest balance date of the liabilities (user-entered figures)",
+            "title": "Oldest Liability Balance"
+          },
+          "stale_fx": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Stale Fx",
+            "type": "array"
+          },
+          "unconverted_currencies": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Unconverted Currencies",
+            "type": "array"
+          },
+          "unpriced_assets": {
+            "title": "Unpriced Assets",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "computed_at",
+          "data_as_of",
+          "complete",
+          "unpriced_assets",
+          "unconverted_currencies",
+          "stale_fx",
+          "oldest_liability_balance"
+        ],
+        "title": "NetWorthFreshness",
+        "type": "object"
+      },
+      "NetWorthOut": {
+        "properties": {
+          "as_of": {
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "assets": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Total value of the user's active portfolios"
+          },
+          "assets_by_class": {
+            "items": {
+              "$ref": "#/components/schemas/AssetClassShare"
+            },
+            "title": "Assets By Class",
+            "type": "array"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "freshness": {
+            "$ref": "#/components/schemas/NetWorthFreshness"
+          },
+          "fx_rates": {
+            "description": "Every conversion into the net-worth currency",
+            "items": {
+              "$ref": "#/components/schemas/FxRateUsed"
+            },
+            "title": "Fx Rates",
+            "type": "array"
+          },
+          "liabilities": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Sum of the converted liabilities"
+          },
+          "liabilities_by_type": {
+            "items": {
+              "$ref": "#/components/schemas/LiabilityTypeTotal"
+            },
+            "title": "Liabilities By Type",
+            "type": "array"
+          },
+          "liability_lines": {
+            "items": {
+              "$ref": "#/components/schemas/LiabilityLine"
+            },
+            "title": "Liability Lines",
+            "type": "array"
+          },
+          "net_worth": {
+            "$ref": "#/components/schemas/Money",
+            "description": "assets - liabilities"
+          }
+        },
+        "required": [
+          "currency",
+          "assets",
+          "liabilities",
+          "net_worth",
+          "assets_by_class",
+          "liabilities_by_type",
+          "liability_lines",
+          "fx_rates",
+          "freshness",
+          "as_of"
+        ],
+        "title": "NetWorthOut",
         "type": "object"
       },
       "PortfolioCreate": {
@@ -4022,6 +4567,304 @@
         ]
       }
     },
+    "/api/v1/liabilities": {
+      "get": {
+        "description": "The signed-in user's liabilities, by name.",
+        "operationId": "list_liabilities_api_v1_liabilities_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/LiabilityOut"
+                  },
+                  "title": "Response List Liabilities Api V1 Liabilities Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "List Liabilities",
+        "tags": [
+          "net worth"
+        ]
+      },
+      "post": {
+        "description": "Records something the user owes, with the date its balance applied.",
+        "operationId": "create_liability_api_v1_liabilities_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LiabilityCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LiabilityOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "409": {
+            "description": "Name already used, or the liability limit is reached"
+          },
+          "422": {
+            "description": "Invalid liability (limits, date or asset)"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Create Liability",
+        "tags": [
+          "net worth"
+        ]
+      }
+    },
+    "/api/v1/liabilities/{liability_id}": {
+      "delete": {
+        "description": "Deletes a liability (for example one paid off).",
+        "operationId": "delete_liability_api_v1_liabilities__liability_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "liability_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Liability Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such liability for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Delete Liability",
+        "tags": [
+          "net worth"
+        ]
+      },
+      "get": {
+        "description": "One of the signed-in user's liabilities.",
+        "operationId": "get_liability_api_v1_liabilities__liability_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "liability_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Liability Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LiabilityOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such liability for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Liability",
+        "tags": [
+          "net worth"
+        ]
+      },
+      "patch": {
+        "description": "Updates a liability, for example its latest balance.",
+        "operationId": "update_liability_api_v1_liabilities__liability_id__patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "liability_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Liability Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LiabilityUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LiabilityOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such liability for this user"
+          },
+          "409": {
+            "description": "Name already used"
+          },
+          "422": {
+            "description": "Invalid change"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Update Liability",
+        "tags": [
+          "net worth"
+        ]
+      }
+    },
     "/api/v1/me": {
       "get": {
         "description": "The signed-in user, created on first sign-in.",
@@ -4116,6 +4959,79 @@
         "summary": "Update Preferences",
         "tags": [
           "identity"
+        ]
+      }
+    },
+    "/api/v1/net-worth": {
+      "get": {
+        "description": "Total assets (the user's active portfolios) minus total liabilities, in one currency,\nwith the FX rates used and how fresh and complete the figures are.",
+        "operationId": "get_net_worth_api_v1_net_worth_get",
+        "parameters": [
+          {
+            "description": "Defaults to the user's base currency",
+            "in": "query",
+            "name": "currency",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Z]{3}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Defaults to the user's base currency",
+              "title": "Currency"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NetWorthOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Net Worth",
+        "tags": [
+          "net worth"
         ]
       }
     },
@@ -5972,6 +6888,10 @@
     {
       "description": "User-entered values of assets without a market price",
       "name": "valuations"
+    },
+    {
+      "description": "Liabilities, and net worth with the FX rates used",
+      "name": "net worth"
     },
     {
       "description": "Goals and their progress under stated assumptions (estimates)",

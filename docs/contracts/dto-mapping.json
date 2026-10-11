@@ -488,6 +488,76 @@
         }
       ],
       "notes": "Full detail (gap, scenarios, required contribution, estimated completion) is GET /api/v1/goals/{goal_id}/progress, for the goal screen (P07-T05, P09-T05)."
+    },
+    {
+      "dto": "NetWorthSummary",
+      "dart": "lib/shared/domain/wealth_models.dart",
+      "api": "GET /api/v1/net-worth",
+      "schema": "NetWorthOut",
+      "fields": [
+        {
+          "dto": "assets",
+          "api": "assets",
+          "status": "same"
+        },
+        {
+          "dto": "liabilities",
+          "api": "liabilities",
+          "status": "same"
+        },
+        {
+          "dto": "net_worth",
+          "api": "net_worth",
+          "status": "same"
+        },
+        {
+          "dto": "as_of",
+          "api": "as_of",
+          "status": "same"
+        },
+        {
+          "dto": null,
+          "api": "currency",
+          "status": "api-only",
+          "resolution": "The net-worth currency (also on every Money).",
+          "owner": "P09-T05"
+        },
+        {
+          "dto": null,
+          "api": "assets_by_class",
+          "status": "api-only",
+          "resolution": "Asset breakdown on the Net Worth screen.",
+          "owner": "P09-T05"
+        },
+        {
+          "dto": null,
+          "api": "liabilities_by_type",
+          "status": "api-only",
+          "resolution": "Liability breakdown on the Net Worth screen.",
+          "owner": "P09-T05"
+        },
+        {
+          "dto": null,
+          "api": "liability_lines",
+          "status": "api-only",
+          "resolution": "Each liability with its converted value.",
+          "owner": "P09-T05"
+        },
+        {
+          "dto": null,
+          "api": "fx_rates",
+          "status": "api-only",
+          "resolution": "FX provenance shown with converted figures.",
+          "owner": "P09-T05"
+        },
+        {
+          "dto": null,
+          "api": "freshness.complete",
+          "status": "api-only",
+          "resolution": "Drives the incomplete-data notice.",
+          "owner": "P09-T05"
+        }
+      ]
     }
   ],
   "pending": [
@@ -520,18 +590,6 @@
       ],
       "owner": "P06-T09",
       "resolution": "Returns and CAGR from the performance service (P06-T03), dividend yield from income (P06-T05), volatility from risk (P06-T08); published by the analytics API (P06-T09)."
-    },
-    {
-      "dto": "NetWorthSummary",
-      "dart": "lib/shared/domain/wealth_models.dart",
-      "keys": [
-        "assets",
-        "liabilities",
-        "net_worth",
-        "as_of"
-      ],
-      "owner": "P06-T07",
-      "resolution": "Net worth and liabilities module."
     },
     {
       "dto": "IncomeSummary",
