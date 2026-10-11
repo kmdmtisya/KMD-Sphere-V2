@@ -13,6 +13,7 @@ import pytest
 from fastapi import FastAPI
 
 from app.core.config import Settings
+from app.core.money import minor_units
 from app.main import create_app
 from tests import auth_helpers as ah
 from tests.authz_harness import TwoUsers, two_users  # noqa: F401
@@ -61,9 +62,11 @@ _USED: set[str] = set()
 
 
 def _code(prefix: str) -> str:
+    """A fresh code with the default 2 minor units (the tests post 2-decimal amounts; XAF, XOF
+    and XPF, which the X prefix can produce, have none)."""
     while True:
         code = prefix + "".join(secrets.choice(string.ascii_uppercase) for _ in range(2))
-        if code not in _USED:
+        if code not in _USED and minor_units(code) == 2:
             _USED.add(code)
             return code
 
