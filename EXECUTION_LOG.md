@@ -979,3 +979,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T02:09:38+04:00 — START P08-T04
 - Async job infrastructure
 - prerequisites verified COMPLETED
+
+### 2026-10-12T02:40:08+04:00 — COMPLETE P08-T04
+- duration: 30m 30s
+- evidence: Celery worker on RabbitMQ with late acks, retry with backoff and jitter, dead-letter queue plus job_failures table and CLI/metric for visibility, atomic idempotency claim (concurrency tested), beat schedule with heartbeat, migration 0010; local worker run against compose RabbitMQ executed jobs and dead-lettered a failing one with its arguments (RabbitMQ 4 needs --without-mingle/gossip, documented); ruff/mypy strict clean; 43 worker tests; full backend suite 1602 passed. PR #84. CI all checks pass.

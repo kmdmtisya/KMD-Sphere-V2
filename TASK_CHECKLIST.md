@@ -775,10 +775,10 @@
   - [x] P08-T03.2 Fixtures
   - [x] P08-T03.3 Rate limiting
   - [x] P08-T03.4 Secrets handling
-- [ ] **P08-T04** · Async job infrastructure · `IN_PROGRESS` 🔄
+- [x] **P08-T04** · Async job infrastructure · `COMPLETED` ✅
   - Deps: P01-T05, P01-T07, P05-GATE · Wave: W1 · Track: BE · Size: M · Approval: no
-  - Started: 2026-10-12T02:09:38+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-12T02:09:38+04:00 · Completed: 2026-10-12T02:40:08+04:00 · Duration: 30m 30s · Blocker: —
+  - Evidence: Celery worker on RabbitMQ with late acks, retry with backoff and jitter, dead-letter queue plus job_failures table and CLI/metric for visibility, atomic idempotency claim (concurrency tested), beat schedule with heartbeat, migration 0010; local worker run against compose RabbitMQ executed jobs and dead-lettered a failing one with its arguments (RabbitMQ 4 needs --without-mingle/gossip, documented); ruff/mypy strict clean; 43 worker tests; full backend suite 1602 passed. PR #84. CI all checks pass.
   - [x] P08-T04.1 Worker setup
   - [x] P08-T04.2 Idempotency helper
   - [x] P08-T04.3 Dead-letter
