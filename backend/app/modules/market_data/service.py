@@ -55,6 +55,36 @@ class FxService:
         ]
         return select_rate(base, quote, candidates, when, now=now)
 
+    async def history(
+        self, currencies: set[str], quote: str, start: datetime, end: datetime
+    ) -> list[StoredRate]:
+        """Every stored rate between each of `currencies` and `quote` (either direction) that
+        the historical rule could choose for a moment in [start, end] (for value series)."""
+        others = sorted(currencies - {quote})
+        if not others:
+            return []
+        result = await self._session.execute(
+            select(FxRate).where(
+                or_(
+                    (FxRate.base_currency.in_(others)) & (FxRate.quote_currency == quote),
+                    (FxRate.base_currency == quote) & (FxRate.quote_currency.in_(others)),
+                ),
+                FxRate.rate_timestamp <= end,
+                FxRate.rate_timestamp >= start - HISTORICAL_MAX_AGE,
+            )
+        )
+        return [
+            StoredRate(
+                r.base_currency,
+                r.quote_currency,
+                r.rate,
+                r.provider,
+                r.rate_timestamp,
+                r.retrieved_at,
+            )
+            for r in result.scalars()
+        ]
+
     async def rate_for_posting(self, base: str, quote: str, trade_date: date) -> Quote:
         """The historical rate for a posting on `trade_date`, rounded to the 12 decimals the
         ledger stores."""

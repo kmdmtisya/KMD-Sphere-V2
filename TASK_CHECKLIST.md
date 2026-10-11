@@ -627,14 +627,14 @@
   - [x] P06-T07.2 Service
   - [x] P06-T07.3 Endpoint
   - [x] P06-T07.4 Tests
-- [ ] **P06-T08** · Risk metrics and historical series · `NOT_STARTED` ⬜
+- [ ] **P06-T08** · Risk metrics and historical series · `IN_PROGRESS` 🔄
   - Deps: P06-T03 · Wave: W2 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-11T15:16:12+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P06-T08.1 Series builder
-  - [ ] P06-T08.2 Volatility
-  - [ ] P06-T08.3 Drawdown
-  - [ ] P06-T08.4 Tests
+  - [x] P06-T08.1 Series builder
+  - [x] P06-T08.2 Volatility
+  - [x] P06-T08.3 Drawdown
+  - [x] P06-T08.4 Tests
 - [ ] **P06-T09** · Analytics API and caching · `NOT_STARTED` ⬜
   - Deps: P06-T03, P06-T04, P06-T05, P06-T07, P06-T08 · Wave: W4 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
