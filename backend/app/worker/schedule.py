@@ -7,6 +7,7 @@ from celery.schedules import crontab
 
 HEARTBEAT_EVERY_SECONDS = 60.0
 PRICE_INGEST_EVERY_SECONDS = 900.0
+ALERT_EVALUATION_EVERY_SECONDS = 900.0
 
 
 def build_schedule() -> dict[str, dict[str, Any]]:
@@ -21,6 +22,12 @@ def build_schedule() -> dict[str, dict[str, Any]]:
         "price-ingest": {
             "task": "app.worker.tasks.ingest_prices",
             "schedule": PRICE_INGEST_EVERY_SECONDS,
+        },
+        # Alerts are checked on the same cadence, shortly after the quotes arrive. Only fresh data
+        # fires an alert.
+        "alert-evaluation": {
+            "task": "app.worker.tasks.evaluate_alerts",
+            "schedule": ALERT_EVALUATION_EVERY_SECONDS,
         },
         # The ECB publishes around 14:15 Central European Time (12:15 or 13:15 UTC).
         "fx-ingest": {

@@ -799,9 +799,9 @@
   - [x] P08-T06.2 Fallback rules
   - [x] P08-T06.3 API fields
   - [x] P08-T06.4 Tests
-- [ ] **P08-T07** · Watchlists and alerts backend · `NOT_STARTED` ⬜
+- [ ] **P08-T07** · Watchlists and alerts backend · `IN_PROGRESS` 🔄
   - Deps: P08-T05 · Wave: W4 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T03:21:54+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P08-T07.1 Schema
   - [ ] P08-T07.2 Endpoints
