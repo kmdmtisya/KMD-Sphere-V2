@@ -642,13 +642,13 @@
   - [x] P06-T09.1 Endpoints
   - [x] P06-T09.2 Cache keys and invalidation
   - [x] P06-T09.3 Authorisation tests
-- [ ] **P06-T10** · Financial correctness review · `IN_PROGRESS` 🔄
+- [x] **P06-T10** · Financial correctness review · `COMPLETED` ✅
   - Deps: P06-T09, P06-T02 · Wave: W5 · Track: QA · Size: M · Approval: yes
-  - Started: 2026-10-11T16:18:17+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-11T16:18:17+04:00 · Completed: 2026-10-11T18:24:11+04:00 · Duration: 2h 05m 54s · Blocker: —
+  - Evidence: docs/financial-methods.md documents every formula with derivation, rounding, edge cases and independent check; tests/oracle.py + tests/test_cross_check.py re-implement the formulas with exact rational arithmetic (Newton at 80 digits for XIRR, exact variance for volatility) and compare on random inputs and named vectors; 16/16 injected engine bugs caught by the cross-check alone. User review 2026-10-11: the user approved the recommended answers to the 8 review questions (section 14): round-up required contribution (ADR-0006 exception 1), 12-return risk floor, Modified Dietz period returns, assumed deposits for performance/risk (reported separately), and confirmed fee drag, nominal forecast return, gross yields and CAGR from one year. Implemented and mutation-checked in PR #67 (12/12 Dietz, 15/15 assumed-deposit mutants caught). Local 1363 passed, coverage 92%, -m security 697; CI all gates pass. PRs #66 and #67. · Approved by: user (mtisya@gmail.com)
   - [x] P06-T10.1 Document formulas
   - [x] P06-T10.2 Independent vectors
-  - [ ] P06-T10.3 User review
+  - [x] P06-T10.3 User review
 - [ ] **P06-GATE** · Phase P06 exit gate · `NOT_STARTED` ⬜
   - Deps: P06-T01, P06-T02, P06-T03, P06-T04, P06-T05, P06-T06, P06-T07, P06-T08, P06-T09, P06-T10 · Wave: W6 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-03.4, QG-03.5, QG-06.1, QG-06.3, QG-06.4, QG-06.6
   - Started: — · Completed: — · Duration: — · Blocker: —
