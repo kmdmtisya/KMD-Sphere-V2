@@ -50,6 +50,10 @@ class Settings(BaseSettings):
     # `rate_limit_storage=memory` keeps counters per process (tests; single-instance only).
     rate_limit_enabled: bool = True
     rate_limit_storage: Literal["redis", "memory"] = "redis"
+    # Analytics response cache (P06-T09): "redis" in deployments, "memory" per process (tests),
+    # "off" to compute every time. Entries expire after `analytics_cache_seconds`.
+    analytics_cache: Literal["redis", "memory", "off"] = "redis"
+    analytics_cache_seconds: int = 300
     rate_limit_auth_requests: int = 10
     rate_limit_auth_window_seconds: int = 60
     rate_limit_auth_failures: int = 10

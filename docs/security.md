@@ -96,6 +96,13 @@ await session.commit()                         # the change and its event commit
 - The client IP is the direct peer. Behind a proxy or load balancer, run uvicorn with `--proxy-headers --forwarded-allow-ips=<proxy>` (P14); `X-Forwarded-For` is never trusted directly.
 - Every response carries `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: no-referrer`, `Cross-Origin-Resource-Policy: same-origin`, `Permissions-Policy`, `Cache-Control: no-store` and a deny-all `Content-Security-Policy` (except Swagger UI, which is disabled in production). Staging and production add `Strict-Transport-Security`.
 
+## Analytics cache (P06-T09)
+
+- Analytics answers are cached in Redis under keys that contain the requesting user's id, and only after the route has authorised the request. A cached answer is never read back for another user, and refused requests store nothing (tests: `tests/test_analytics_api.py`, `tests/test_cache.py`).
+- Any successful write by a user invalidates their cached answers before the response is sent (a per-user generation counter). Entries also expire after `analytics_cache_seconds` (300).
+- Cached answers hold financial figures, so Redis must stay internal and password-protected, with TLS in deployed environments (P14). If Redis is down, answers are computed without it.
+- Design: docs/design/analytics-api.md.
+
 ## Mobile session tokens (P04-T06)
 
 - **Sign-in:** Authorization Code + PKCE (S256) through AppAuth in the system browser; public client, no secret on the device; no `offline_access` scope. iOS uses an ephemeral browser session, so no SSO cookie outlives sign-out.

@@ -92,3 +92,11 @@ def test_money_like_fields_are_strings_never_numbers() -> None:
 
 def test_internal_endpoints_are_not_in_the_public_contract() -> None:
     assert "/metrics" not in _spec()["paths"]
+
+
+def test_schema_names_are_unique() -> None:
+    """Two models or enums with the same name make FastAPI split every schema that uses them
+    into -Input and -Output variants, silently renaming the contract (seen in P06-T09)."""
+    schemas = json.loads(CONTRACT.read_text("utf-8"))["components"]["schemas"]
+    split = [name for name in schemas if name.endswith(("-Input", "-Output"))]
+    assert not split, f"rename the colliding model or enum: {split}"

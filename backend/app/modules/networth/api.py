@@ -4,10 +4,11 @@ import uuid
 from datetime import UTC, datetime
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, Query, Response
+from fastapi import APIRouter, Depends, Query, Request, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.api_responses import UNAUTHORIZED, conflict, invalid, not_found
+from app.core.cache import ResponseCache
 from app.core.money import CURRENCY_PATTERN
 from app.db.session import get_session
 from app.modules.identity.dependencies import CurrentUserDep
@@ -90,6 +91,7 @@ async def delete_liability(
 
 @networth_router.get("", response_model=NetWorthOut, responses=UNAUTHORIZED)
 async def get_net_worth(
+    request: Request,
     user: CurrentUserDep,
     session: SessionDep,
     currency: Annotated[
@@ -99,4 +101,11 @@ async def get_net_worth(
 ) -> NetWorthOut:
     """Total assets (the user's active portfolios) minus total liabilities, in one currency,
     with the FX rates used and how fresh and complete the figures are."""
-    return await NetWorthService(session).user(user.id, currency, _now())
+    cache: ResponseCache = request.app.state.response_cache
+    return await cache.cached(
+        user.id,
+        "net-worth",
+        {"currency": currency},
+        NetWorthOut,
+        lambda: NetWorthService(session).user(user.id, currency, _now()),
+    )

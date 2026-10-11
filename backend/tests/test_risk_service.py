@@ -20,7 +20,7 @@ from app.core.errors import InvalidValueError
 from app.core.money import minor_units
 from app.main import create_app
 from app.modules.analytics.risk import RiskStatus
-from app.modules.portfolio.history import Frequency
+from app.modules.portfolio.history import SeriesFrequency
 from app.modules.portfolio.risk_service import PortfolioRisk, RiskService
 from tests import auth_helpers as ah
 from tests.authz_harness import TwoUsers, two_users  # noqa: F401
@@ -124,7 +124,7 @@ async def test_value_history_and_risk(
     await value(http, h, pid, house, START, "1000.00")
 
     r = await risk(app, two_users.alice.id, pid, end=ends[-1][0])
-    assert r.currency == "USD" and r.frequency == Frequency.MONTHLY and r.start == START
+    assert r.currency == "USD" and r.frequency == SeriesFrequency.MONTHLY and r.start == START
     assert [(p.on, p.value) for p in r.points] == [(START, D("1000.00")), *ends]
     assert all(p.complete for p in r.points)
     assert r.risk.status == RiskStatus.OK and len(r.risk.returns) == 8
@@ -174,7 +174,7 @@ async def test_historical_fx_rates_convert_each_point(
     pid = await portfolio(http, h)
     await post(http, h, pid, first, transaction_type="DEPOSIT", currency=fx,
                gross_amount=m("1000.00", fx), fx_rate_to_portfolio_currency="0.5")  # fmt: skip
-    r = await risk(app, two_users.alice.id, pid, frequency=Frequency.DAILY, start=first,
+    r = await risk(app, two_users.alice.id, pid, frequency=SeriesFrequency.DAILY, start=first,
                    end=second + timedelta(days=10))  # fmt: skip
     by_day = {p.on: p for p in r.points}
     assert by_day[first].value == D("500.0")
@@ -204,9 +204,10 @@ async def test_ranges_are_checked(
     two_users: TwoUsers,  # noqa: F811
 ) -> None:
     pid = await portfolio(http, two_users.alice.headers)
+    daily = SeriesFrequency.DAILY
     for kw in ({"end": TODAY + timedelta(days=1)},
                {"start": TODAY, "end": TODAY - timedelta(days=1)},
-               {"start": TODAY - timedelta(days=2000), "frequency": Frequency.DAILY}):  # fmt: skip
+               {"start": TODAY - timedelta(days=2000), "frequency": daily}):  # fmt: skip
         with pytest.raises(InvalidValueError):
             await risk(app, two_users.alice.id, pid, **kw)
 

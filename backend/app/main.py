@@ -6,8 +6,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from opentelemetry.sdk.trace import SpanProcessor
 from redis.asyncio import Redis
 
-from app.api import health, metrics
+from app.api import dashboard, health, metrics
 from app.core.auth import JwksKeySource, TokenVerifier
+from app.core.cache import (
+    CacheStore,
+    InvalidationMiddleware,
+    MemoryCacheStore,
+    RedisCacheStore,
+    ResponseCache,
+)
 from app.core.config import Settings, get_settings
 from app.core.correlation import CorrelationIdMiddleware
 from app.core.errors import register_exception_handlers
@@ -30,8 +37,9 @@ from app.modules.goals import api as goals_api
 from app.modules.identity import api as identity_api
 from app.modules.market_data import api as market_data_api
 from app.modules.networth import api as networth_api
+from app.modules.networth import income_api
+from app.modules.portfolio import analytics_api, summary_api
 from app.modules.portfolio import api as portfolio_api
-from app.modules.portfolio import summary_api
 from app.modules.transactions import api as transactions_api
 from app.modules.transactions import valuations_api
 
@@ -57,6 +65,17 @@ def create_app(
                 settings.redis_url, socket_connect_timeout=0.25, socket_timeout=0.25
             )
             rate_limit_store = FallbackCounterStore(RedisCounterStore(redis))
+
+    cache_store: CacheStore | None = None
+    if settings.analytics_cache == "memory":
+        cache_store = MemoryCacheStore()
+    elif settings.analytics_cache == "redis":
+        if redis is None:
+            redis = Redis.from_url(
+                settings.redis_url, socket_connect_timeout=0.25, socket_timeout=0.25
+            )
+        cache_store = RedisCacheStore(redis)
+    response_cache = ResponseCache(cache_store, settings.analytics_cache_seconds)
 
     @asynccontextmanager
     async def lifespan(_: FastAPI) -> AsyncIterator[None]:
@@ -94,6 +113,12 @@ def create_app(
                 "description": "User-entered values of assets without a market price",
             },
             {
+                "name": "analytics",
+                "description": "Performance, allocation and risk of a portfolio (cached per user)",
+            },
+            {"name": "income", "description": "Income and passive income"},
+            {"name": "dashboard", "description": "The Home screen's figures in one call"},
+            {
                 "name": "net worth",
                 "description": "Liabilities, and net worth with the FX rates used",
             },
@@ -122,10 +147,12 @@ def create_app(
     limiter = RateLimiter(rate_limit_store)
     app.state.rate_limiter = limiter if settings.rate_limit_enabled else None
     app.state.rate_limit_policies = policies
+    app.state.response_cache = response_cache
     # Added innermost first: headers wrap everything, so 413 and 429 answers carry them too.
     app.add_middleware(BodySizeLimitMiddleware, max_bytes=settings.max_request_body_bytes)
     if settings.rate_limit_enabled:
         app.add_middleware(RateLimitMiddleware, limiter=limiter, policies=policies)
+    app.add_middleware(InvalidationMiddleware, cache=response_cache)
     app.add_middleware(CorrelationIdMiddleware)
     if settings.cors_allowed_origins:
         app.add_middleware(
@@ -155,6 +182,9 @@ def create_app(
     app.include_router(goals_api.router)
     app.include_router(networth_api.router)
     app.include_router(networth_api.networth_router)
+    app.include_router(income_api.router)
+    app.include_router(analytics_api.router)
+    app.include_router(dashboard.router)
     telemetry.instrument(app)
     return app
 

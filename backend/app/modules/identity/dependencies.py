@@ -29,9 +29,12 @@ async def current_user(
     claims = await run_in_threadpool(verifier.verify, credentials.credentials)
     await enforce_user_limit(request, f"{claims.issuer}|{claims.subject}")
     try:
-        return await IdentityService(session).provision(claims)
+        user = await IdentityService(session).provision(claims)
     except UserDisabledError as e:
         raise AuthenticationError("account disabled") from e
+    # For InvalidationMiddleware: a successful write invalidates this user's cached analytics.
+    request.state.user_id = user.id
+    return user
 
 
 CurrentUserDep = Annotated[CurrentUser, Depends(current_user)]

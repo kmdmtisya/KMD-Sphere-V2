@@ -4,11 +4,12 @@ Published by the analytics API (P06-T09)."""
 import uuid
 from dataclasses import dataclass
 from datetime import UTC, date, datetime
-from decimal import Decimal
+from decimal import Decimal, localcontext
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.modules.networth.income import (
+    ZERO,
     Period,
     Totals,
     by_month,
@@ -19,6 +20,7 @@ from app.modules.networth.income import (
     totals,
     trailing,
 )
+from app.modules.portfolio.service import PortfolioService
 from app.modules.portfolio.summary import Summary
 from app.modules.portfolio.summary_service import SummaryService
 from app.modules.transactions.holdings_service import HoldingsService
@@ -60,8 +62,28 @@ class PortfolioIncome:
     complete: bool  # the value the yield is measured against is complete
 
 
+@dataclass(frozen=True)
+class PortfolioLine:
+    portfolio_id: uuid.UUID
+    currency: str
+    trailing_12m: Totals  # in the portfolio's currency
+    converted_net: Decimal | None  # trailing net in the reporting currency; None without a rate
+
+
+@dataclass(frozen=True)
+class UserIncome:
+    currency: str
+    as_of: date
+    yearly_gross: Decimal
+    yearly: Decimal  # trailing net of all active portfolios, converted
+    monthly_average: Decimal
+    portfolios: list[PortfolioLine]
+    unconverted: frozenset[str]  # portfolio currencies without a rate (left out)
+
+
 class IncomeService:
     def __init__(self, session: AsyncSession) -> None:
+        self._session = session
         self._summaries = SummaryService(session)
         self._events = IncomeEventService(session)
         self._holdings = HoldingsService(session)
@@ -75,6 +97,48 @@ class IncomeService:
         # A closed position has a cost basis of exactly 0 (ADR-0012), so no yield on cost.
         costs = {h.asset_id: h.cost_basis for h in await self._holdings.positions(portfolio_id)}
         return measure(summary, payments, costs, today or datetime.now(UTC).date())
+
+    async def user(
+        self, user_id: uuid.UUID, currency: str | None, today: date | None = None
+    ) -> UserIncome:
+        """Trailing income of all the user's active portfolios, each converted from its base
+        currency at the latest rate (docs/design/income.md, section 7)."""
+        day = today or datetime.now(UTC).date()
+        reporting = await self._summaries.reporting_currency(user_id, currency)
+        portfolios = await PortfolioService(self._session).list(user_id, False)
+        rates = await self._summaries.rates({p.base_currency for p in portfolios}, reporting)
+        lines = []
+        gross = net = ZERO
+        with localcontext() as ctx:
+            ctx.prec = 50
+            for p in portfolios:
+                t = (await self.portfolio(user_id, p.id, day)).trailing_12m
+                if p.base_currency == reporting:
+                    factor: Decimal | None = Decimal(1)
+                else:
+                    rate = rates.get(p.base_currency)
+                    factor = None if rate is None else rate.rate
+                if factor is not None:
+                    gross += t.gross * factor
+                    net += t.net * factor
+                lines.append(
+                    PortfolioLine(
+                        p.id, p.base_currency, t, None if factor is None else t.net * factor
+                    )
+                )
+        return UserIncome(
+            currency=reporting,
+            as_of=day,
+            yearly_gross=gross,
+            yearly=net,
+            monthly_average=monthly(net),
+            portfolios=lines,
+            unconverted=frozenset(
+                p.base_currency
+                for p in portfolios
+                if p.base_currency != reporting and p.base_currency not in rates
+            ),
+        )
 
 
 def measure(
