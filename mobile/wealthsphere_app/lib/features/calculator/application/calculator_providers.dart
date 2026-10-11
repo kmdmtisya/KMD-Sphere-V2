@@ -116,12 +116,41 @@ class CalculatorInputsNotifier extends Notifier<CalculatorInputs?> {
   void setContribution(Frequency f, {required CalculatorInputs base}) =>
       state = (state ?? base).copyWith(contribution: f);
 
+  /// Replaces every input at once (a hand-off from another screen).
+  void replace(CalculatorInputs inputs) => state = inputs;
+
   void reset() => state = null;
 }
 
 final calculatorInputsProvider =
     NotifierProvider<CalculatorInputsNotifier, CalculatorInputs?>(
       CalculatorInputsNotifier.new,
+    );
+
+/// Marks the calculator's inputs as example assumptions handed over from another screen (for
+/// example a research idea), so they are never mistaken for the user's own plan or a prediction.
+class CalculatorPrefill {
+  const CalculatorPrefill({required this.sourceName, required this.fields});
+
+  /// What the assumptions came from, as shown to the user ("Demo Global Index ETF").
+  final String sourceName;
+
+  /// The fields that were filled in.
+  final Set<CalculatorField> fields;
+}
+
+class CalculatorPrefillNotifier extends Notifier<CalculatorPrefill?> {
+  @override
+  CalculatorPrefill? build() => null;
+
+  void set(CalculatorPrefill prefill) => state = prefill;
+
+  void clear() => state = null;
+}
+
+final calculatorPrefillProvider =
+    NotifierProvider<CalculatorPrefillNotifier, CalculatorPrefill?>(
+      CalculatorPrefillNotifier.new,
     );
 
 /// The last forecast the backend returned, with the request it answers (for the Forecast screen).

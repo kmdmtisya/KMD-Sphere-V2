@@ -2741,5 +2741,173 @@
   "doctorAskAi": "Ask AI about these findings",
   "@doctorAskAi": {
     "description": "Opens AI Wealth with the portfolio as context"
+  },
+  "oppTitle": "Opportunities",
+  "@oppTitle": {
+    "description": "Title of the AI Investment Opportunities screen"
+  },
+  "oppEntryTooltip": "Investment opportunities",
+  "@oppEntryTooltip": {
+    "description": "Opens the opportunities screen from AI Wealth"
+  },
+  "oppFilterGroup": "Research category",
+  "@oppFilterGroup": {
+    "description": "Label of the category chips"
+  },
+  "oppFilterAll": "All",
+  "@oppFilterAll": {
+    "description": "Shows every category"
+  },
+  "oppCount": "{count, plural, =1{1 idea} other{{count} ideas}}",
+  "@oppCount": {
+    "description": "Number of ideas shown",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "oppInCategory": "in {category}",
+  "@oppInCategory": {
+    "description": "Category filter, spoken",
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "oppEmptyTitle": "No ideas in this category",
+  "@oppEmptyTitle": {
+    "description": "Empty category"
+  },
+  "oppEmptyMessage": "Choose another category to see more.",
+  "@oppEmptyMessage": {
+    "description": "Empty category"
+  },
+  "oppShowAll": "Show all categories",
+  "@oppShowAll": {
+    "description": "Clears the category filter"
+  },
+  "oppNoTrades": "WealthSphere never places trades. These ideas are for research only.",
+  "@oppNoTrades": {
+    "description": "Shown on the opportunities screen"
+  },
+  "oppInComparison": "In comparison",
+  "@oppInComparison": {
+    "description": "Marks an idea chosen for comparison"
+  },
+  "oppCompareLimit": "You can compare up to {max} ideas at a time.",
+  "@oppCompareLimit": {
+    "description": "Shown when the compare limit is reached",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "oppCompareBar": "Compare {count} selected",
+  "@oppCompareBar": {
+    "description": "Opens the comparison",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "oppCompareNeedTwo": "Choose at least two ideas to compare.",
+  "@oppCompareNeedTwo": {
+    "description": "Shown with fewer than two ideas chosen"
+  },
+  "oppCompareClear": "Clear selection",
+  "@oppCompareClear": {
+    "description": "Empties the comparison"
+  },
+  "oppCompareTitle": "Compare ideas",
+  "@oppCompareTitle": {
+    "description": "Title of the comparison screen"
+  },
+  "oppCompareNote": "Side-by-side facts from the evidence on file. This is not a ranking or advice.",
+  "@oppCompareNote": {
+    "description": "Comparison disclaimer"
+  },
+  "oppCompareRisk": "Risk",
+  "@oppCompareRisk": {
+    "description": "Comparison row"
+  },
+  "oppCompareScore": "Research score",
+  "@oppCompareScore": {
+    "description": "Comparison row"
+  },
+  "oppCompareNoScore": "No score (no evidence)",
+  "@oppCompareNoScore": {
+    "description": "Comparison row value"
+  },
+  "oppCompareBack": "Back to ideas",
+  "@oppCompareBack": {
+    "description": "Returns from an empty comparison"
+  },
+  "oppCompareValueLine": "{name}: {value}",
+  "@oppCompareValueLine": {
+    "description": "One idea's value in a comparison row",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "oppResearchTitle": "Research",
+  "@oppResearchTitle": {
+    "description": "Title of the research sheet"
+  },
+  "oppResearchClose": "Close",
+  "@oppResearchClose": {
+    "description": "Closes the research sheet"
+  },
+  "oppScoreIntro": "The score adds five factors. It describes the evidence on file, not how the idea will perform.",
+  "@oppScoreIntro": {
+    "description": "Explains the research score"
+  },
+  "oppScoreFactor": "{label}: {points} of {max}. {note}",
+  "@oppScoreFactor": {
+    "description": "One factor of the research score",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "points": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      },
+      "note": {
+        "type": "String"
+      }
+    }
+  },
+  "calcPrefilled": "Pre-filled from {name} (DEMO). These are example assumptions, not predictions.",
+  "@calcPrefilled": {
+    "description": "Calculator banner after a hand-off from a research idea",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "calcPrefilledClear": "Clear",
+  "@calcPrefilledClear": {
+    "description": "Removes the hand-off values from the calculator"
+  },
+  "calcPrefilledHelper": "Example assumption from {name}. Change it freely.",
+  "@calcPrefilledHelper": {
+    "description": "Helper under a pre-filled calculator field",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../features/ai_wealth/doctor/presentation/doctor_screen.dart';
+import '../features/ai_wealth/opportunities/presentation/compare_screen.dart';
+import '../features/ai_wealth/opportunities/presentation/opportunities_screen.dart';
 import '../features/ai_wealth/presentation/ai_wealth_screen.dart';
 import '../features/auth/application/auth_flow.dart';
 import '../features/auth/presentation/sign_in_screen.dart';
@@ -97,8 +99,24 @@ final Map<AppTab, RouteBase Function()> tabRoutes =
             state.uri.queryParameters[AppRoutes.aiScopeParam],
           ),
           onOpenDoctor: () => context.go(AppRoutes.doctor),
+          onOpenOpportunities: () => context.go(AppRoutes.opportunities),
         ),
         routes: [
+          GoRoute(
+            path: 'opportunities',
+            builder: (context, state) => OpportunitiesScreen(
+              onCompare: () => context.go(AppRoutes.compareOpportunities),
+              onSimulated: () => context.go(AppRoutes.calculator),
+            ),
+            routes: [
+              GoRoute(
+                path: 'compare',
+                builder: (context, state) => CompareScreen(
+                  onBack: () => context.go(AppRoutes.opportunities),
+                ),
+              ),
+            ],
+          ),
           GoRoute(
             path: 'doctor',
             builder: (context, state) => DoctorScreen(
