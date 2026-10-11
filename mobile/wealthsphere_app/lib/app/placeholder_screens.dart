@@ -1,9 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../features/account/presentation/account_section.dart';
 import '../l10n/generated/app_localizations.dart';
 import '../shared/design_system/components/components.dart';
 import '../shared/design_system/theme/theme.dart';
@@ -124,60 +121,6 @@ class AiPlaceholder extends StatelessWidget {
           const SizedBox(height: AppSpacing.m),
         ],
         _comingSoon(context),
-      ],
-    );
-  }
-}
-
-/// The More tab. Hosts the temporary theme switch until the real Settings screen exists.
-class MorePlaceholder extends ConsumerWidget {
-  const MorePlaceholder({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
-    final mode = ref.watch(themeModeProvider);
-    return _PlaceholderPage(
-      title: l10n.tabMore,
-      children: [
-        const AccountSection(),
-        const SizedBox(height: AppSpacing.l),
-        OutlinedButton(
-          onPressed: () => context.push(AppRoutes.calculator),
-          child: Text(l10n.moreCalculator),
-        ),
-        if (kDebugMode) ...[
-          const SizedBox(height: AppSpacing.s),
-          OutlinedButton(
-            onPressed: () => context.push(AppRoutes.gallery),
-            child: const Text('Component gallery (debug)'),
-          ),
-        ],
-        const SizedBox(height: AppSpacing.xl),
-        Text(l10n.themeLabel, style: context.wealthText.caption),
-        const SizedBox(height: AppSpacing.xs),
-        SegmentedButton<ThemeMode>(
-          segments: [
-            ButtonSegment(
-              value: ThemeMode.system,
-              label: Text(l10n.themeSystem),
-              icon: const Icon(Icons.brightness_auto),
-            ),
-            ButtonSegment(
-              value: ThemeMode.light,
-              label: Text(l10n.themeLight),
-              icon: const Icon(Icons.light_mode),
-            ),
-            ButtonSegment(
-              value: ThemeMode.dark,
-              label: Text(l10n.themeDark),
-              icon: const Icon(Icons.dark_mode),
-            ),
-          ],
-          selected: {mode},
-          onSelectionChanged: (selection) =>
-              ref.read(themeModeProvider.notifier).setMode(selection.first),
-        ),
       ],
     );
   }

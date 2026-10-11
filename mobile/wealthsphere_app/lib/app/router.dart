@@ -16,6 +16,10 @@ import '../features/goals/presentation/goal_detail_screen.dart';
 import '../features/goals/presentation/goal_form_screen.dart';
 import '../features/goals/presentation/goals_screen.dart';
 import '../features/investments/presentation/investment_detail_screen.dart';
+import '../features/more/presentation/income_screen.dart';
+import '../features/more/presentation/more_screen.dart';
+import '../features/more/presentation/net_worth_screen.dart';
+import '../features/more/presentation/settings_screen.dart';
 import '../features/portfolios/presentation/holdings_screen.dart';
 import '../features/portfolios/presentation/portfolio_overview_screen.dart';
 import '../features/transactions/domain/ledger_entry.dart';
@@ -164,8 +168,26 @@ final Map<AppTab, RouteBase Function()> tabRoutes =
       ),
       AppTab.more: () => GoRoute(
         path: AppRoutes.more,
-        builder: (context, state) => const MorePlaceholder(),
+        builder: (context, state) => MoreScreen(
+          onOpenNetWorth: () => context.go(AppRoutes.netWorth),
+          onOpenIncome: () => context.go(AppRoutes.income),
+          onOpenCalculator: () => context.go(AppRoutes.calculator),
+          onOpenSettings: () => context.go(AppRoutes.settings),
+          onOpenGallery: () => context.push(AppRoutes.gallery),
+        ),
         routes: [
+          GoRoute(
+            path: 'net-worth',
+            builder: (context, state) => const NetWorthScreen(),
+          ),
+          GoRoute(
+            path: 'income',
+            builder: (context, state) => const IncomeScreen(),
+          ),
+          GoRoute(
+            path: 'settings',
+            builder: (context, state) => const SettingsScreen(),
+          ),
           GoRoute(
             path: 'calculator',
             builder: (context, state) => const CalculatorScreen(),

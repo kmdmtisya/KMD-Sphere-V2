@@ -1,0 +1,170 @@
+{
+  "demo": true,
+  "as_of": "2026-10-09T08:00:00Z",
+  "net_worth": {
+    "net_worth": {
+      "amount": "168286.35",
+      "currency": "USD"
+    },
+    "assets": {
+      "total": {
+        "amount": "186486.35",
+        "currency": "USD"
+      },
+      "items": [
+        {
+          "label": "Investment portfolios",
+          "kind": "investments",
+          "value": {
+            "amount": "139986.35",
+            "currency": "USD"
+          },
+          "share_percent": "75.07"
+        },
+        {
+          "label": "Savings and cash accounts",
+          "kind": "cash",
+          "value": {
+            "amount": "12500.00",
+            "currency": "USD"
+          },
+          "share_percent": "6.70"
+        },
+        {
+          "label": "Land plot (your estimate)",
+          "kind": "property",
+          "value": {
+            "amount": "20000.00",
+            "currency": "USD"
+          },
+          "share_percent": "10.72"
+        },
+        {
+          "label": "Vehicle (your estimate)",
+          "kind": "other",
+          "value": {
+            "amount": "14000.00",
+            "currency": "USD"
+          },
+          "share_percent": "7.51"
+        }
+      ]
+    },
+    "liabilities": {
+      "total": {
+        "amount": "18200.00",
+        "currency": "USD"
+      },
+      "items": [
+        {
+          "label": "Car loan",
+          "kind": "loan",
+          "value": {
+            "amount": "11200.00",
+            "currency": "USD"
+          }
+        },
+        {
+          "label": "Credit card",
+          "kind": "credit",
+          "value": {
+            "amount": "3000.00",
+            "currency": "USD"
+          }
+        },
+        {
+          "label": "Personal loan",
+          "kind": "loan",
+          "value": {
+            "amount": "4000.00",
+            "currency": "USD"
+          }
+        }
+      ]
+    },
+    "as_of": "2026-10-09T08:00:00Z"
+  },
+  "income": {
+    "monthly": {
+      "amount": "1245.30",
+      "currency": "USD"
+    },
+    "yearly": {
+      "amount": "14943.60",
+      "currency": "USD"
+    },
+    "by_source": [
+      {
+        "label": "Dividends",
+        "yearly": {
+          "amount": "9120.40",
+          "currency": "USD"
+        },
+        "share_percent": "61.03"
+      },
+      {
+        "label": "Interest",
+        "yearly": {
+          "amount": "2450.00",
+          "currency": "USD"
+        },
+        "share_percent": "16.39"
+      },
+      {
+        "label": "Bond coupons",
+        "yearly": {
+          "amount": "1980.20",
+          "currency": "USD"
+        },
+        "share_percent": "13.25"
+      },
+      {
+        "label": "Rent",
+        "yearly": {
+          "amount": "1393.00",
+          "currency": "USD"
+        },
+        "share_percent": "9.32"
+      }
+    ],
+    "recent": [
+      {
+        "date": "2026-10-03",
+        "kind": "Dividend",
+        "asset_name": "Demo Dividend Aristocrats",
+        "amount": {
+          "amount": "96.40",
+          "currency": "USD"
+        }
+      },
+      {
+        "date": "2026-09-30",
+        "kind": "Interest",
+        "asset_name": "Demo Cash Reserve",
+        "amount": {
+          "amount": "24.30",
+          "currency": "USD"
+        }
+      },
+      {
+        "date": "2026-09-20",
+        "kind": "Dividend",
+        "asset_name": "Demo Global Equity Fund",
+        "amount": {
+          "amount": "184.20",
+          "currency": "USD"
+        }
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "Coupon",
+        "asset_name": "Demo Aggregate Bond Fund",
+        "amount": {
+          "amount": "310.75",
+          "currency": "USD"
+        }
+      }
+    ],
+    "as_of": "2026-10-09T08:00:00Z"
+  }
+}

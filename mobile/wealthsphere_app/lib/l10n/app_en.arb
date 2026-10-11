@@ -2909,5 +2909,155 @@
         "type": "String"
       }
     }
+  },
+  "moreSectionWealth": "Your wealth",
+  "@moreSectionWealth": {
+    "description": "More tab section heading"
+  },
+  "moreSectionSoon": "Coming soon",
+  "@moreSectionSoon": {
+    "description": "More tab section heading"
+  },
+  "moreSectionApp": "App",
+  "@moreSectionApp": {
+    "description": "More tab section heading"
+  },
+  "moreNetWorth": "Net worth",
+  "@moreNetWorth": {
+    "description": "More tab entry and screen title"
+  },
+  "moreNetWorthSub": "Assets, liabilities and what is left",
+  "@moreNetWorthSub": {
+    "description": "More tab entry detail"
+  },
+  "moreIncome": "Income",
+  "@moreIncome": {
+    "description": "More tab entry and screen title"
+  },
+  "moreIncomeSub": "Dividends, interest, rent and coupons",
+  "@moreIncomeSub": {
+    "description": "More tab entry detail"
+  },
+  "moreCalculatorSub": "Try a what-if for savings and returns",
+  "@moreCalculatorSub": {
+    "description": "More tab entry detail"
+  },
+  "moreSettings": "Settings",
+  "@moreSettings": {
+    "description": "More tab entry and screen title"
+  },
+  "moreSettingsSub": "Appearance, security and account",
+  "@moreSettingsSub": {
+    "description": "More tab entry detail"
+  },
+  "moreReports": "Reports",
+  "@moreReports": {
+    "description": "More tab entry that is not available yet"
+  },
+  "moreAlerts": "Alerts",
+  "@moreAlerts": {
+    "description": "More tab entry that is not available yet"
+  },
+  "moreDocuments": "Documents",
+  "@moreDocuments": {
+    "description": "More tab entry that is not available yet"
+  },
+  "moreComingSoon": "Coming soon",
+  "@moreComingSoon": {
+    "description": "Label of an entry that is not available yet"
+  },
+  "moreComingSoonSpoken": "{name}, coming soon, not available yet",
+  "@moreComingSoonSpoken": {
+    "description": "Spoken form of a coming soon entry",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "nwAssets": "Assets",
+  "@nwAssets": {
+    "description": "Net worth section"
+  },
+  "nwLiabilities": "Liabilities",
+  "@nwLiabilities": {
+    "description": "Net worth section"
+  },
+  "nwNetWorth": "Net worth",
+  "@nwNetWorth": {
+    "description": "Net worth headline label"
+  },
+  "nwShare": "{percent} of assets",
+  "@nwShare": {
+    "description": "Share of total assets",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "nwNoLiabilities": "No liabilities recorded.",
+  "@nwNoLiabilities": {
+    "description": "Empty liabilities"
+  },
+  "nwNote": "Calculated by the server from your portfolios, accounts and the values you entered. Values you estimated yourself are marked as such.",
+  "@nwNote": {
+    "description": "Net worth provenance"
+  },
+  "incomeMonthly": "Monthly average",
+  "@incomeMonthly": {
+    "description": "Income figure"
+  },
+  "incomeYearly": "Last 12 months",
+  "@incomeYearly": {
+    "description": "Income figure"
+  },
+  "incomeBySource": "By source",
+  "@incomeBySource": {
+    "description": "Income section"
+  },
+  "incomeRecent": "Recent payments",
+  "@incomeRecent": {
+    "description": "Income section"
+  },
+  "incomeNoRecent": "No recent payments.",
+  "@incomeNoRecent": {
+    "description": "Empty recent payments"
+  },
+  "incomeNote": "Income received in the past. It is not a forecast: payments can change or stop.",
+  "@incomeNote": {
+    "description": "Income disclaimer"
+  },
+  "settingsAppearance": "Appearance",
+  "@settingsAppearance": {
+    "description": "Settings section"
+  },
+  "settingsSecurity": "Security",
+  "@settingsSecurity": {
+    "description": "Settings section"
+  },
+  "settingsPreferences": "Preferences",
+  "@settingsPreferences": {
+    "description": "Settings section"
+  },
+  "settingsCurrency": "Reporting currency",
+  "@settingsCurrency": {
+    "description": "Settings entry that is not available yet"
+  },
+  "settingsNotifications": "Notifications",
+  "@settingsNotifications": {
+    "description": "Settings entry that is not available yet"
+  },
+  "settingsAbout": "About",
+  "@settingsAbout": {
+    "description": "Settings section"
+  },
+  "settingsAboutBody": "WealthSphere shows your own data and calculations. It is not financial advice and never places trades.",
+  "@settingsAboutBody": {
+    "description": "About text"
+  },
+  "settingsDemoBuild": "Demo build: figures are examples, not your accounts.",
+  "@settingsDemoBuild": {
+    "description": "About text"
   }
 }

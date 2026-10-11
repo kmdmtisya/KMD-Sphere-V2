@@ -917,3 +917,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-11T22:55:56+04:00 — COMPLETE P07-T07
 - duration: 23m 25s
 - evidence: AI Investment Opportunities screen (DEMO): category chips, OpportunityCards with risk, evidence, data-as-of and an explained score (factors add up, tested), research sheet, compare view (up to 3, no ranking), Simulate hand-off that pre-fills the calculator with marked, editable example assumptions (also when the calculator is already open); banner and badges state the ideas are mock, not live; no trade actions (guard test); 47 new tests incl. accessibility guidelines light/dark 1x/2x LTR/RTL; analyze and format clean; full mobile suite 1302 passed locally. PR #76. CI all gates pass.
+
+### 2026-10-11T23:06:06+04:00 — START P07-T08
+- More hub, Net Worth, Income and Settings
+- prerequisites verified COMPLETED
+
+### 2026-10-11T23:28:33+04:00 — COMPLETE P07-T08
+- duration: 22m 27s
+- evidence: More tab with net worth, income and settings (theme, app lock, account) views; unavailable items (Reports, Alerts, Documents, reporting currency, notifications) labelled Coming soon and not openable; demo totals tested equal to the Home dashboard; 49 new tests incl. accessibility guidelines light/dark 1x/2x LTR/RTL; analyze and format clean; full mobile suite 1351 passed locally. PR #77. CI all gates pass.

@@ -18,6 +18,9 @@ abstract final class AppRoutes {
   static const String goals = '/goals';
   static const String addGoal = '/goals/add';
   static const String more = '/more';
+  static const String netWorth = '/more/net-worth';
+  static const String income = '/more/income';
+  static const String settings = '/more/settings';
   static const String calculator = '/more/calculator';
   static const String forecast = '/more/calculator/forecast';
 
