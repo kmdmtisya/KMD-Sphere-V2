@@ -13,6 +13,7 @@ from app.modules.assets.service import AssetService
 from app.modules.identity.service import IdentityService
 from app.modules.market_data.fx import FxRateUnavailable
 from app.modules.market_data.service import FxService
+from app.modules.portfolio.assumed import with_assumed_deposits
 from app.modules.portfolio.models import Portfolio
 from app.modules.portfolio.repository import PortfolioRepository
 from app.modules.portfolio.summary import (
@@ -43,10 +44,14 @@ class SummaryService:
         summary = await self._compute(portfolio)
         return await self._out(user_id, [portfolio.id], summary, now)
 
-    async def figures(self, user_id: uuid.UUID, portfolio_id: uuid.UUID) -> Summary:
-        """The unrounded figures of one of the user's portfolios (for analytics)."""
+    async def figures(
+        self, user_id: uuid.UUID, portfolio_id: uuid.UUID, *, assume_deposits: bool = False
+    ) -> Summary:
+        """The unrounded figures of one of the user's portfolios (for analytics). With
+        `assume_deposits`, a posting that would overdraw a currency is covered by an assumed
+        deposit (portfolio/assumed.py), as performance does."""
         portfolio = require_found(await self._portfolios.get(user_id, portfolio_id), "portfolio")
-        return await self._compute(portfolio)
+        return await self._compute(portfolio, assume_deposits=assume_deposits)
 
     async def figures_in(
         self, user_id: uuid.UUID, currency: str, portfolio_id: uuid.UUID | None = None
@@ -73,7 +78,7 @@ class SummaryService:
         summary = consolidate(reporting, parts, rates)
         return await self._out(user_id, [p.id for p in portfolios], summary, now)
 
-    async def _compute(self, portfolio: Portfolio) -> Summary:
+    async def _compute(self, portfolio: Portfolio, *, assume_deposits: bool = False) -> Summary:
         holdings = [
             HoldingInput(h.asset_id, h.quantity, h.cost_basis, h.realized_pl, h.income, h.expenses)
             for h in await self._holdings.positions(portfolio.id)
@@ -83,6 +88,8 @@ class SummaryService:
             for v in await self._valuations.latest_rows(portfolio.id, None)
         ]
         entries = await self._holdings.entries(portfolio.id)
+        if assume_deposits:
+            entries, _ = with_assumed_deposits(entries)
         currencies = {v.currency for v in valuations} | {e.currency for e in entries}
         rates = await self._rates(currencies, portfolio.base_currency)
         return compute_summary(portfolio.base_currency, holdings, valuations, entries, rates)

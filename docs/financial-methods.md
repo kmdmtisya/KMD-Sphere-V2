@@ -1,6 +1,6 @@
 # Financial methods
 
-Status: Draft for the P06-T10 review (2026-10-11). **It needs the user's review of the methods and rounding (P06-T10.3).** The decisions to confirm are listed in section 14.
+Status: Reviewed and approved by the user on 2026-10-11 (P06-T10.3), with the decisions in section 14.
 
 This document lists every formula WealthSphere uses to produce a financial figure. For each one it gives the derivation or definition, the rounding, the edge cases, and where it is **checked independently**. The detailed design documents are linked; this is the single place to review them.
 
@@ -104,7 +104,8 @@ Per asset and portfolio, in the portfolio currency, each posting at its own rate
 
 - **External flows** (portfolio currency, at posting rates): deposits and transfers in (+); withdrawals and transfers out (-).
 - **Profit/loss** = total value - net invested.
-- **Simple return** = profit / contributions (inflows). Null when nothing was put in.
+- **Assumed deposits:** where a posting would take a currency's cash below zero, the shortfall is treated as a deposit on that date at that posting's rate, for performance and risk only; it is reported separately (`assumed_deposits`). Without any money in (no deposits and no purchases), return figures are still undefined.
+- **Simple return** = profit / contributions (inflows, including assumed deposits). Null when nothing was put in.
 - **CAGR** = (end / start)^(365/days) - 1, only for at least 365 days.
 - **XIRR** solves Σ aᵢ / (1 + r)^((dᵢ - d₀)/365) = 0, with spreadsheet day count (actual/365):
   - same-day flows are netted;
@@ -194,18 +195,20 @@ Per asset and portfolio, in the portfolio currency, each posting at its own rate
 | Forecast and goal amounts | minor units, half-up; growth = rounded value - rounded contributions. **Exception:** required contributions are rounded up |
 | Net worth | rounded lines, totals summed from them |
 
-## 14. Decisions for the user (P06-T10.3)
+## 14. Review decisions (P06-T10.3)
 
-These are choices that a different, also reasonable, convention would answer differently. Each is documented where it is used. Please confirm or choose otherwise.
+The user approved the following on 2026-10-11 (the recommendations were put to the user and approved as proposed). Items marked *changed* altered the implementation; the others confirmed it.
 
-1. **Purchases recorded without deposits.** Such a portfolio has no external flows, so its simple return and XIRR are reported as undefined, never guessed. *Alternative:* treat each purchase's cash shortfall as an implicit deposit, so return figures appear. (performance.md section 8)
-2. **Fees in forecasts** are a drag on the rate: i = (r - f) / m. *Alternative:* a multiplicative fee, (1 + r/m)(1 - f/m). The difference is under 0.01% a year at usual values.
-3. **The return in forecasts is nominal, compounded m times a year** (8% monthly is 8.30% effective). *Alternative:* an effective annual rate. The current DEMO fixture used that, which is why its numbers differ slightly.
-4. **Flows in risk returns are counted at the start of each period.** This is exact with daily points. *Alternative:* the Modified Dietz midpoint for weekly and monthly series.
-5. **Yields are on gross income** (before withholding tax). *Alternative:* net.
-6. **Risk needs at least 6 period returns** (half a year of months). *Alternative:* a higher floor such as 12.
-7. **The required contribution is rounded half-up**, so paying it reaches the target to within rounding (a shortfall of under 3 on a 20-year plan). *Alternative:* round up (ceiling) so it always reaches the target. That would be a stated exception to ADR-0006.
-8. **CAGR only for at least a year.** XIRR is annualised for any period, and for shorter periods the app should show the simple return.
+| # | Decision | Outcome |
+|---|---|---|
+| 1 | Purchases recorded without deposits | **Changed.** The cash shortfall counts as an assumed deposit on its date (section 7, performance.md section 8), reported separately. |
+| 2 | Fees in forecasts | Confirmed: subtracted from the rate, (r - f) / m. |
+| 3 | Forecast return | Confirmed: nominal, compounded at the chosen frequency. The DEMO fixture will be regenerated in P09-T03. |
+| 4 | Flows in risk returns | **Changed.** Modified Dietz, flows weighted by the days invested (section 12); daily series unchanged. |
+| 5 | Yields | Confirmed: on gross income, before withholding tax. |
+| 6 | Minimum history for risk | **Changed.** 12 period returns (was 6). |
+| 7 | Required contribution rounding | **Changed.** Rounded up, so paying it always reaches the target (ADR-0006 exception 1). |
+| 8 | CAGR | Confirmed: only for periods of at least a year; shorter periods show the simple return. |
 
 ## 15. Cross-check vectors (the "workbook")
 

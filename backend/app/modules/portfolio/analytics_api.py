@@ -80,6 +80,8 @@ async def portfolio_performance(
             expenses=money(p.expenses),
             complete=p.complete,
             first_flow=p.first_flow,
+            assumed_deposits=money(p.assumed_deposits),
+            assumed_deposit_count=p.assumed_count,
             notice=PAST_NOTICE,
         )
 
@@ -192,6 +194,7 @@ async def portfolio_risk(
             time_weighted_return_percent=None if tw is None else percent(tw.cumulative),
             time_weighted_annualized_percent=None if tw is None else percent(tw.annualized),
             incomplete_points=k.incomplete_points,
+            assumed_deposit_count=r.assumed_count,
             as_of=now,
             notice=PAST_NOTICE,
         )

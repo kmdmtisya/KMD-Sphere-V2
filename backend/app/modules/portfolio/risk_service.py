@@ -22,6 +22,7 @@ from app.modules.market_data.fx import (
 )
 from app.modules.market_data.service import FxService
 from app.modules.portfolio import history
+from app.modules.portfolio.assumed import with_assumed_deposits
 from app.modules.portfolio.history import Point, SeriesFrequency, Valued
 from app.modules.portfolio.repository import PortfolioRepository
 from app.modules.transactions.holdings_service import HoldingsService
@@ -36,6 +37,7 @@ class PortfolioRisk:
     end: date
     points: list[Point]
     risk: Risk
+    assumed_count: int = 0  # assumed deposits behind the series
 
 
 class RiskService:
@@ -59,7 +61,7 @@ class RiskService:
         portfolio = require_found(await self._portfolios.get(user_id, portfolio_id), "portfolio")
         moment = now or datetime.now(UTC)
         today = moment.date()
-        entries = await self._holdings.entries(portfolio_id)
+        entries, assumed = with_assumed_deposits(await self._holdings.entries(portfolio_id))
         valued = [
             Valued(v.asset_id, v.value, v.currency, v.as_of)
             for v in await self._valuations.all_rows(portfolio_id)
@@ -84,7 +86,7 @@ class RiskService:
             [Observation(p.on, p.value, p.flow_next, p.complete, p.flows) for p in points],
             frequency.per_year,
         )
-        return PortfolioRisk(base, frequency, start, end, points, risk)
+        return PortfolioRisk(base, frequency, start, end, points, risk, len(assumed))
 
 
 class _RateBook:

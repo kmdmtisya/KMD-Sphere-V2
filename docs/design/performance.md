@@ -104,8 +104,15 @@ The flow on the last point is after the end of the measurement and is ignored. T
 - Calculations use the decimal module (34 digits for XIRR and TWR powers, 50 elsewhere). Nothing is rounded inside a calculation.
 - Rates are returned unrounded. The API (P06-T09) publishes percentages to 2 decimals and amounts to the currency's minor units, half-up (ADR-0006).
 
-## 8. Open question for the P06-T10 review
+## 8. Assumed deposits (P06-T10 review, decision 1)
 
-A portfolio recorded with purchases but no deposits has negative cash and no external flows. Its simple return and XIRR are therefore undefined (`null`, `insufficient_flows`); they are reported as such, never guessed.
+Many people record purchases without the deposits that paid for them. Without a deposit there are no external flows, and a return cannot be defined. So, **for performance and risk**, wherever a posting would take a currency's cash below zero, the shortfall is treated as a deposit:
 
-The alternative is to treat each purchase's cash shortfall as an implicit deposit. That is a product decision for the user, to be taken at the P06-T10 review.
+- made on that posting's date (just before it), in that currency, at that posting's FX rate;
+- never stored and never shown as a transaction;
+- included in `contributions`, `net_invested`, the money-weighted flows and the value series, so the return is defined;
+- reported separately as `assumed_deposits` (in the base currency) and `assumed_deposit_count`, so the figures are never presented as based only on recorded deposits.
+
+Each currency has its own cash, a sale or income adds to it before a later purchase, and a withdrawal beyond the balance is covered the same way. Reversed entries are ignored.
+
+**The summary does not assume anything.** It still shows negative cash as it is (docs/design/portfolio-summary.md, section 3), so the performance `total_value` can be higher than the summary's by the assumed deposits.
