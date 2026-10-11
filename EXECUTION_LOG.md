@@ -777,3 +777,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-11T12:34:16+04:00 — COMPLETE P06-T04
 - duration: 24m 26s
 - evidence: PR #60 (commit 42aba63). analytics/allocation.py (pure Decimal): allocation by asset class, currency (of the valuation), country (asset.country) and sector (asset sector metadata, trimmed), unclassified slice so every dimension totals the same; weights to 2 dp by largest remainder adding to exactly 100.00 (ADR-0006), null when total <= 0 or any part negative; concentration HHI, effective positions, top-1/3/5 shares, largest, HHI per dimension. portfolio/allocation_service.py on the summary's per-position values and cash balances (summary + consolidate extended), authorised. AssetService.classifications. Methods docs/design/allocation.md. Tests: hand-computed portfolio, edge cases, Hypothesis (weights sum to exactly 100.00 and within 0.01 of exact, HHI bounds, order independence), service test on the real ledger reconciling with GET summary currency values and shares, IDOR. 29/29 mutants caught. Local 1006 passed, coverage 92%, allocation 100%. CI all gates pass.
+
+### 2026-10-11T13:11:27+04:00 — START P06-T05
+- Income and passive-income module
+- prerequisites verified COMPLETED

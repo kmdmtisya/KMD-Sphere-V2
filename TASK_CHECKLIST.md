@@ -603,14 +603,14 @@
   - [x] P06-T04.1 Allocation
   - [x] P06-T04.2 Concentration
   - [x] P06-T04.3 Tests
-- [ ] **P06-T05** · Income and passive-income module · `NOT_STARTED` ⬜
+- [ ] **P06-T05** · Income and passive-income module · `IN_PROGRESS` 🔄
   - Deps: P05-T04, P05-GATE · Wave: W1 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-11T13:11:27+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P06-T05.1 Schema/migration
-  - [ ] P06-T05.2 Service
-  - [ ] P06-T05.3 Yield
-  - [ ] P06-T05.4 Tests
+  - [x] P06-T05.1 Schema/migration
+  - [x] P06-T05.2 Service
+  - [x] P06-T05.3 Yield
+  - [x] P06-T05.4 Tests
 - [ ] **P06-T06** · Goals module · `NOT_STARTED` ⬜
   - Deps: P06-T01, P05-T08 · Wave: W2 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
