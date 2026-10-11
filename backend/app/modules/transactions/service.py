@@ -30,6 +30,7 @@ from app.modules.market_data.service import FxService
 from app.modules.portfolio.models import Portfolio
 from app.modules.transactions.holdings import Entry, never_negative
 from app.modules.transactions.holdings_service import HoldingsService
+from app.modules.transactions.income_events_service import IncomeEventService
 from app.modules.transactions.models import Transaction
 from app.modules.transactions.repository import Cursor, LedgerRepository, ListFilter
 from app.modules.transactions.rules import (
@@ -257,6 +258,7 @@ class LedgerService:
             await HoldingsService(self._session).rebuild_asset(
                 portfolio_id, row.asset_id, portfolio.base_currency
             )
+        await IncomeEventService(self._session).record(row)
         await self._audit.record(
             action,
             Actor.user(user_id),

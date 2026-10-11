@@ -26,6 +26,7 @@ from app.core.config import Settings
 from app.core.money import round_half_up
 from app.main import create_app
 from app.modules.transactions.holdings import Entry, compute, effective, never_negative
+from app.modules.transactions.income_events_service import Payment, expected_payments
 from tests import auth_helpers as ah
 from tests.authz_harness import TwoUsers, assert_hidden_from, two_users  # noqa: F401
 from tests.db_fixtures import migrated_settings  # noqa: F401
@@ -182,6 +183,7 @@ SNAPSHOT_TABLES = (
     "portfolios",
     "transactions",
     "holdings",
+    "income_events",
     "valuations",
     "assets",
     "asset_metadata",
@@ -198,6 +200,8 @@ async def snapshot(db: asyncpg.Connection, user_id: str) -> dict[str, str]:
         "WHERE p.user_id = $1 ORDER BY t.id",
         "holdings": "SELECT h.* FROM holdings h JOIN portfolios p ON p.id = h.portfolio_id "
         "WHERE p.user_id = $1 ORDER BY h.id",
+        "income_events": "SELECT i.* FROM income_events i "
+        "JOIN portfolios p ON p.id = i.portfolio_id WHERE p.user_id = $1 ORDER BY i.id",
         "valuations": "SELECT v.* FROM valuations v JOIN portfolios p ON p.id = v.portfolio_id "
         "WHERE p.user_id = $1 ORDER BY v.id",
         "assets": "SELECT * FROM assets WHERE owner_user_id = $1 ORDER BY id",
@@ -368,6 +372,19 @@ async def check_invariants(
         assert row["quantity"] >= 0, context
         for field in ("cost_basis", "realized_pl", "income", "expenses"):
             assert row[field] == round_half_up(getattr(position, field), 8), f"{context}: {field}"
+
+    # The income events are exactly the effective income entries (P06-T05).
+    stored_income = [
+        Payment(
+            r["transaction_id"], r["asset_id"], r["income_type"], r["paid_on"], r["currency"],
+            r["gross"], r["fees"], r["taxes"], r["fx_rate"],
+        )
+        for r in await db.fetch(
+            "SELECT * FROM income_events WHERE portfolio_id = $1 ORDER BY paid_on, transaction_id",
+            uuid.UUID(pid),
+        )
+    ]  # fmt: skip
+    assert stored_income == expected_payments(entries), f"{context}: income events differ"
 
     # One audit event per ledger entry.
     events = await db.fetchval(

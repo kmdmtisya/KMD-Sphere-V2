@@ -33,6 +33,7 @@ CORE_TABLES = {
     "asset_metadata",
     "transactions",
     "holdings",
+    "income_events",
     "valuations",
     "fx_rates",
 }
@@ -48,6 +49,8 @@ MONEY_LIKE = {
     "quantity",
     "rate",
     "fx_rate_to_portfolio_currency",
+    "gross",
+    "fx_rate",
 }
 
 # ------------------------------------------------------------------------------ metadata
@@ -71,7 +74,7 @@ def test_every_money_quantity_and_rate_column_is_numeric() -> None:
             if column.name in MONEY_LIKE:
                 assert isinstance(column.type, Numeric), f"{table.name}.{column.name}"
                 seen += 1
-    assert seen >= 11  # 6 on transactions, 3 on holdings, value, rate
+    assert seen >= 15  # 6 on transactions, 3 on holdings, value, rate, 4 on income_events
 
 
 def _numeric(table: str, column: str) -> "Numeric[Any]":
@@ -396,8 +399,12 @@ async def test_posted_transactions_cannot_be_changed_or_deleted(
     ):
         with pytest.raises(asyncpg.InsufficientPrivilegeError, match="append-only"):
             await db.execute(sql, tx)
-    with pytest.raises(asyncpg.InsufficientPrivilegeError, match="TRUNCATE"):
+    # income_events references the ledger (P06-T05), so a plain TRUNCATE is refused by the foreign
+    # key; with CASCADE it reaches the append-only trigger, which refuses it too.
+    with pytest.raises(asyncpg.FeatureNotSupportedError, match="foreign key"):
         await db.execute("TRUNCATE transactions")
+    with pytest.raises(asyncpg.InsufficientPrivilegeError, match="TRUNCATE"):
+        await db.execute("TRUNCATE transactions CASCADE")
     assert await db.fetchval("SELECT gross_amount FROM transactions WHERE id = $1", tx) == Decimal(
         "100.00"
     )
@@ -634,3 +641,59 @@ async def test_the_indexes_that_serve_the_main_queries_exist(db: asyncpg.Connect
         "ix_fx_rates_pair_rate_timestamp",
     }
     assert expected <= names, expected - names
+
+
+# -------------------------------------------------------------------- income events (P06-T05)
+
+
+async def income_event(
+    conn: asyncpg.Connection, world: dict[str, uuid.UUID], **overrides: Any
+) -> uuid.UUID:
+    from datetime import date
+
+    tx = await post(conn, world["portfolio"], world["user"], transaction_type="INTEREST")
+    cols: dict[str, Any] = {
+        "transaction_id": tx,
+        "portfolio_id": world["portfolio"],
+        "income_type": "INTEREST",
+        "paid_on": date(2026, 10, 1),
+        "currency": "USD",
+        "gross": Decimal("10"),
+        "fx_rate": Decimal("1"),
+    }
+    cols.update(overrides)
+    return await insert(conn, "income_events", **cols)
+
+
+@pytest.mark.integration
+@pytest.mark.parametrize(
+    ("overrides", "constraint"),
+    [
+        ({"income_type": "BUY"}, "income_type"),
+        ({"currency": "usd"}, "currency"),
+        ({"gross": Decimal("-1")}, "amounts_non_negative"),
+        ({"fees": Decimal("-1")}, "amounts_non_negative"),
+        ({"taxes": Decimal("-0.01")}, "amounts_non_negative"),
+        ({"fx_rate": Decimal("0")}, "fx_rate_positive"),
+    ],
+)
+async def test_income_events_reject_invalid_rows(
+    db: asyncpg.Connection,
+    world: dict[str, uuid.UUID],
+    overrides: dict[str, Any],
+    constraint: str,
+) -> None:
+    with pytest.raises(asyncpg.CheckViolationError, match=constraint):
+        await income_event(db, world, **overrides)
+
+
+@pytest.mark.integration
+async def test_one_income_event_per_ledger_entry(
+    db: asyncpg.Connection, world: dict[str, uuid.UUID]
+) -> None:
+    first = await income_event(db, world)
+    tx = await db.fetchval("SELECT transaction_id FROM income_events WHERE id = $1", first)
+    with pytest.raises(asyncpg.UniqueViolationError, match="uq_income_events_transaction_id"):
+        await income_event(db, world, transaction_id=tx)
+    with pytest.raises(asyncpg.ForeignKeyViolationError):
+        await income_event(db, world, transaction_id=uuid.uuid4())

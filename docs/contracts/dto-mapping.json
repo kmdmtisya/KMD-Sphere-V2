@@ -456,8 +456,8 @@
         "yearly",
         "as_of"
       ],
-      "owner": "P06-T05",
-      "resolution": "Income and passive-income module."
+      "owner": "P06-T09",
+      "resolution": "monthly = TTM net / 12 and yearly = TTM net from the income service (P06-T05, docs/design/income.md), published by the analytics API."
     },
     {
       "dto": "GoalsSummary, GoalProgress",

@@ -150,6 +150,41 @@ class Holding(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     computed_at: Mapped[datetime] = mapped_column(server_default=text("now()"))
 
 
+INCOME_TYPES = ("DIVIDEND", "INTEREST", "COUPON", "RENT", "DISTRIBUTION")
+_INCOME_SQL = ", ".join(f"'{t}'" for t in INCOME_TYPES)
+
+
+class IncomeEvent(UUIDPrimaryKeyMixin, TimestampMixin, Base):
+    """One income payment, linked to the ledger entry that recorded it (P06-T05). Written in the
+    same database transaction as the entry, and removed when the entry is reversed, so it can
+    always be rebuilt from the ledger. Amounts are in `currency`; `fx_rate` converts them to the
+    portfolio's base currency (the posting's own rate)."""
+
+    __tablename__ = "income_events"
+    __table_args__ = (
+        UniqueConstraint("transaction_id", name="uq_income_events_transaction_id"),
+        CheckConstraint(f"income_type IN ({_INCOME_SQL})", name="income_type"),
+        CheckConstraint("currency ~ '^[A-Z]{3}$'", name="currency"),
+        CheckConstraint("gross >= 0 AND fees >= 0 AND taxes >= 0", name="amounts_non_negative"),
+        CheckConstraint("fx_rate > 0", name="fx_rate_positive"),
+        Index("ix_income_events_portfolio_id_paid_on", "portfolio_id", "paid_on"),
+        Index("ix_income_events_asset_id", "asset_id"),
+    )
+
+    transaction_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("transactions.id", ondelete="RESTRICT")
+    )
+    portfolio_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("portfolios.id", ondelete="CASCADE"))
+    asset_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("assets.id", ondelete="RESTRICT"))
+    income_type: Mapped[str] = mapped_column(String(24))
+    paid_on: Mapped[date] = mapped_column()
+    currency: Mapped[str] = mapped_column(String(3))
+    gross: Mapped[Decimal] = mapped_column(AMOUNT)
+    fees: Mapped[Decimal] = mapped_column(AMOUNT, server_default=text("0"))
+    taxes: Mapped[Decimal] = mapped_column(AMOUNT, server_default=text("0"))  # e.g. withholding
+    fx_rate: Mapped[Decimal] = mapped_column(RATE)
+
+
 class Valuation(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     """A user-entered value of an asset (property, private business, pension) as of a date."""
 
