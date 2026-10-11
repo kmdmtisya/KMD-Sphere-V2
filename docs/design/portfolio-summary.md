@@ -1,6 +1,6 @@
 # Portfolio Summary (P05-T08)
 
-Status: Implemented in P05-T08. Market prices arrive in P08 (P08-T05 ingestion, P08-T06 automatic valuation); until then assets are valued from manual valuations (P05-T07) or reported as unpriced. Performance figures (TWR, XIRR, returns over periods) are analytics (P06).
+Status: Implemented in P05-T08; extended in P08-T06: a position is valued from the latest market price, falling back to the latest manual valuation (P05-T07), or reported as unpriced. The rules are in [valuation-sources.md](valuation-sources.md). Performance figures (TWR, XIRR, returns over periods) are analytics (P06).
 
 The backend is the only place these figures are computed. Every figure is computed at full precision and rounded half-up to the currency's minor units only when published (ADR-0006).
 
@@ -15,9 +15,9 @@ The backend is the only place these figures are computed. Every figure is comput
 
 | Position | Value |
 |---|---|
-| Has a latest valuation, and is not closed | The valuation (the whole position), converted to B at the latest rate |
+| Has a value (latest market price x quantity, or the latest manual valuation; see valuation-sources.md), and is not closed | That value, converted to B at the latest rate |
 | Closed (a holding with quantity 0) | Not valued |
-| No valuation (and no price yet, P08) | **Unpriced**: listed, left out of `holdings_value` |
+| No price and no valuation | **Unpriced**: listed, left out of `holdings_value` |
 
 An asset with valuations but no ledger entries (a house bought before using the app) is valued; its cost basis is unknown.
 
@@ -55,7 +55,8 @@ Per native currency: the valued positions and cash in that currency, in the curr
 ## 6. Freshness and completeness
 
 - `computed_at`: when the summary was computed.
-- `data_as_of`: the **oldest** input used (valuation as-of or FX rate time), so the summary is never presented as fresher than its stalest part.
+- `stale_prices`: positions valued from a market price older than its freshness window; they are still in the value, at that price and its as-of time (not counted as incomplete).
+- `data_as_of`: the **oldest** input used (price or valuation as-of, or FX rate time), so the summary is never presented as fresher than its stalest part.
 - `stale_fx`: currencies whose rate is older than one day (provisional threshold, DEC-26).
 - `unpriced_assets`: open positions without a value.
 - `unconverted_currencies`: currencies with no usable rate to B. Amounts in them are left out of every total.

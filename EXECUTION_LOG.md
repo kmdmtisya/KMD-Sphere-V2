@@ -991,3 +991,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T02:59:23+04:00 — COMPLETE P08-T05
 - duration: 14m 29s
 - evidence: market_prices table (migration 0011) with provider, as_of, retrieved_at and ingested_at on every row and constraints; idempotent quote, close, FX and backfill ingestion via ON CONFLICT DO NOTHING (overlapping backfills tested); own-currency-only storage, per-item failure isolation, outage fails the run for retry; staleness flags by kind; jobs and schedule on the P08-T04 infrastructure with idempotency keys; ruff/mypy strict clean; 38 new DB-backed tests; full backend suite 1641 passed. PR #85. CI all gates pass.
+
+### 2026-10-12T03:04:55+04:00 — START P08-T06
+- Automatic valuation integration
+- prerequisites verified COMPLETED
+
+### 2026-10-12T03:17:50+04:00 — COMPLETE P08-T06
+- duration: 12m 55s
+- evidence: Positions valued from the latest market price with fallback to manual valuations (newer manual valuation wins, tie goes to price, manual classes ignore prices, unpriced never guessed); stale prices still used and flagged per holding (value_stale, value_as_of, value_provider) and in the summary (freshness.stale_prices, data_as_of); OpenAPI, contract mapping and financial test matrix updated; 19 new tests incl. API-level; ruff/mypy strict clean; existing tests unchanged; full backend suite 1661 passed. PR #86. CI all gates pass.

@@ -14,6 +14,7 @@ from app.modules.assets.schemas import AssetSummary
 from app.modules.assets.service import AssetService
 from app.modules.market_data.fx import FxRateUnavailable
 from app.modules.market_data.service import FxService
+from app.modules.market_data.valuation import PositionValuer
 from app.modules.transactions.holdings import Entry, compute
 from app.modules.transactions.models import Holding
 from app.modules.transactions.repository import LedgerRepository
@@ -25,6 +26,9 @@ class _Value:
     native: Money
     converted: Money | None
     as_of: datetime
+    source: str
+    stale: bool
+    provider: str | None
 
 
 class HoldingsService:
@@ -60,7 +64,9 @@ class HoldingsService:
         )
         rows = await self._repo.holdings(portfolio_id, include_closed)
         assets = await self._assets.summaries(user_id, [h.asset_id for h in rows])
-        values = await self._values(portfolio_id, portfolio.base_currency)
+        values = await self._values(
+            portfolio_id, portfolio.base_currency, {h.asset_id: h.quantity for h in rows}
+        )
         out = [
             _out(h, assets[h.asset_id], values.get(h.asset_id) if h.quantity > 0 else None)
             for h in rows
@@ -68,14 +74,16 @@ class HoldingsService:
         ]
         return sorted(out, key=lambda h: (h.asset.name.lower(), str(h.asset.id)))
 
-    async def _values(self, portfolio_id: uuid.UUID, base: str) -> dict[uuid.UUID, _Value]:
-        """Latest valuation per asset, converted to the portfolio currency at the latest rate
-        (the same rules as the summary, docs/design/portfolio-summary.md)."""
-        from app.modules.transactions.valuations_service import ValuationService
-
+    async def _values(
+        self, portfolio_id: uuid.UUID, base: str, quantities: dict[uuid.UUID, Decimal]
+    ) -> dict[uuid.UUID, _Value]:
+        """Value per open position: the latest market price, else the latest manual valuation,
+        converted to the portfolio currency at the latest rate (the same rules as the summary,
+        docs/design/valuation-sources.md and portfolio-summary.md)."""
         out: dict[uuid.UUID, _Value] = {}
         rates: dict[str, Decimal | None] = {}
-        for v in await ValuationService(self._session).latest_rows(portfolio_id, None):
+        values = await PositionValuer(self._session).values(portfolio_id, quantities)
+        for v in values.values():
             if v.currency not in rates:
                 try:
                     rates[v.currency] = (
@@ -90,6 +98,9 @@ class HoldingsService:
                 ),
                 converted=_money(v.value * rate, base) if rate is not None else None,
                 as_of=v.as_of,
+                source=v.source,
+                stale=v.stale,
+                provider=v.provider,
             )
         return out
 
@@ -116,5 +127,7 @@ def _out(h: Holding, asset: AssetSummary, value: _Value | None) -> HoldingOut:
         value=value.converted if value else None,
         native_value=value.native if value else None,
         value_as_of=value.as_of if value else None,
-        value_source="valuation" if value else None,
+        value_source=value.source if value else None,
+        value_stale=value.stale if value else None,
+        value_provider=value.provider if value else None,
     )

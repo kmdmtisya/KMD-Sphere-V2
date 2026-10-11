@@ -791,14 +791,14 @@
   - [x] P08-T05.2 Ingestion jobs
   - [x] P08-T05.3 Backfill
   - [x] P08-T05.4 Tests
-- [ ] **P08-T06** · Automatic valuation integration · `NOT_STARTED` ⬜
+- [x] **P08-T06** · Automatic valuation integration · `COMPLETED` ✅
   - Deps: P08-T05, P05-T08 · Wave: W4 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P08-T06.1 Service update
-  - [ ] P08-T06.2 Fallback rules
-  - [ ] P08-T06.3 API fields
-  - [ ] P08-T06.4 Tests
+  - Started: 2026-10-12T03:04:55+04:00 · Completed: 2026-10-12T03:17:50+04:00 · Duration: 12m 55s · Blocker: —
+  - Evidence: Positions valued from the latest market price with fallback to manual valuations (newer manual valuation wins, tie goes to price, manual classes ignore prices, unpriced never guessed); stale prices still used and flagged per holding (value_stale, value_as_of, value_provider) and in the summary (freshness.stale_prices, data_as_of); OpenAPI, contract mapping and financial test matrix updated; 19 new tests incl. API-level; ruff/mypy strict clean; existing tests unchanged; full backend suite 1661 passed. PR #86. CI all gates pass.
+  - [x] P08-T06.1 Service update
+  - [x] P08-T06.2 Fallback rules
+  - [x] P08-T06.3 API fields
+  - [x] P08-T06.4 Tests
 - [ ] **P08-T07** · Watchlists and alerts backend · `NOT_STARTED` ⬜
   - Deps: P08-T05 · Wave: W4 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

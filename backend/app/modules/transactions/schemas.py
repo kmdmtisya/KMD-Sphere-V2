@@ -116,11 +116,21 @@ class HoldingOut(BaseModel):
     last_transaction_at: datetime | None
     computed_at: datetime
     value: Money | None = Field(
-        description="Current value in the portfolio currency (latest valuation at the latest FX "
-        "rate; market prices from P08). Null when unpriced, unconverted or closed."
+        description="Current value in the portfolio currency: quantity x the latest market price, "
+        "else the latest manual valuation, at the latest FX rate (a newer manual valuation wins "
+        "over an older price). Null when unpriced, unconverted or closed."
     )
     native_value: Money | None = Field(description="The same value in its own currency")
-    value_as_of: datetime | None = Field(description="When that value applied")
-    value_source: Literal["valuation"] | None = Field(
-        description="Where the value comes from (`price` arrives with market data, P08)"
+    value_as_of: datetime | None = Field(
+        description="When that value applied: the price's time, or the valuation's"
+    )
+    value_source: Literal["price", "valuation"] | None = Field(
+        description="`price`: a market price; `valuation`: the user's own manual valuation"
+    )
+    value_stale: bool | None = Field(
+        description="True when the value uses a market price older than its freshness window "
+        "(still shown, with `value_as_of`); null when there is no value"
+    )
+    value_provider: str | None = Field(
+        description="The market-data provider of the price; null for a manual valuation"
     )

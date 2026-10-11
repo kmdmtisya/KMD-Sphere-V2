@@ -20,7 +20,13 @@ class CurrencyShare(BaseModel):
 
 class Freshness(BaseModel):
     computed_at: datetime
-    data_as_of: datetime = Field(description="The oldest valuation or FX rate the figures use")
+    data_as_of: datetime = Field(
+        description="The oldest price, valuation or FX rate the figures use"
+    )
+    stale_prices: list[AssetSummary] = Field(
+        description="Positions valued from a market price older than its freshness window; they "
+        "are still in the value, at that price and its as-of time"
+    )
     stale_fx: list[str] = Field(description="Currencies whose FX rate is older than a day")
     unconverted_currencies: list[str] = Field(
         description="Currencies without a usable FX rate; their amounts are left out of totals"
@@ -35,7 +41,7 @@ class SummaryOut(BaseModel):
     currency: str
     total_value: Money = Field(description="holdings_value + cash")
     holdings_value: Money = Field(
-        description="Valued positions (latest valuations until prices arrive in P08)"
+        description="Valued positions (latest market prices, else the latest manual valuations)"
     )
     cash: Money = Field(description="Cash from the ledger; negative if deposits are not recorded")
     cost_basis: Money = Field(description="Of the valued positions with a ledger cost")

@@ -13,6 +13,7 @@ from app.modules.assets.service import AssetService
 from app.modules.identity.service import IdentityService
 from app.modules.market_data.fx import FxRateUnavailable
 from app.modules.market_data.service import FxService
+from app.modules.market_data.valuation import PositionValuer
 from app.modules.portfolio.assumed import with_assumed_deposits
 from app.modules.portfolio.models import Portfolio
 from app.modules.portfolio.repository import PortfolioRepository
@@ -84,8 +85,12 @@ class SummaryService:
             for h in await self._holdings.positions(portfolio.id)
         ]
         valuations = [
-            ValuationInput(v.asset_id, v.value, v.currency, v.as_of)
-            for v in await self._valuations.latest_rows(portfolio.id, None)
+            ValuationInput(v.asset_id, v.value, v.currency, v.as_of, v.source, v.stale)
+            for v in (
+                await PositionValuer(self._session).values(
+                    portfolio.id, {h.asset_id: h.quantity for h in holdings}
+                )
+            ).values()
         ]
         entries = await self._holdings.entries(portfolio.id)
         if assume_deposits:
@@ -121,6 +126,7 @@ class SummaryService:
         rows = sorted(s.converted)
         shares = percentages([s.converted[c] for c in rows])
         unpriced = await self._assets.summaries(user_id, sorted(set(s.unpriced_assets)))
+        stale = await self._assets.summaries(user_id, sorted(set(s.stale_prices)))
         return SummaryOut(
             portfolio_ids=ids,
             currency=ccy,
@@ -147,6 +153,7 @@ class SummaryService:
             freshness=Freshness(
                 computed_at=now,
                 data_as_of=s.data_as_of(now),
+                stale_prices=[stale[a] for a in sorted(stale, key=str)],
                 stale_fx=sorted(s.stale_fx),
                 unconverted_currencies=sorted(s.unconverted_currencies),
                 complete=s.complete,

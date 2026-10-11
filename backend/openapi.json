@@ -975,7 +975,7 @@
             "type": "string"
           },
           "data_as_of": {
-            "description": "The oldest valuation or FX rate the figures use",
+            "description": "The oldest price, valuation or FX rate the figures use",
             "format": "date-time",
             "title": "Data As Of",
             "type": "string"
@@ -986,6 +986,14 @@
               "type": "string"
             },
             "title": "Stale Fx",
+            "type": "array"
+          },
+          "stale_prices": {
+            "description": "Positions valued from a market price older than its freshness window; they are still in the value, at that price and its as-of time",
+            "items": {
+              "$ref": "#/components/schemas/AssetSummary"
+            },
+            "title": "Stale Prices",
             "type": "array"
           },
           "unconverted_currencies": {
@@ -1000,6 +1008,7 @@
         "required": [
           "computed_at",
           "data_as_of",
+          "stale_prices",
           "stale_fx",
           "unconverted_currencies",
           "complete"
@@ -1928,7 +1937,7 @@
                 "type": "null"
               }
             ],
-            "description": "Current value in the portfolio currency (latest valuation at the latest FX rate; market prices from P08). Null when unpriced, unconverted or closed."
+            "description": "Current value in the portfolio currency: quantity x the latest market price, else the latest manual valuation, at the latest FX rate (a newer manual valuation wins over an older price). Null when unpriced, unconverted or closed."
           },
           "value_as_of": {
             "anyOf": [
@@ -1940,21 +1949,48 @@
                 "type": "null"
               }
             ],
-            "description": "When that value applied",
+            "description": "When that value applied: the price's time, or the valuation's",
             "title": "Value As Of"
           },
-          "value_source": {
+          "value_provider": {
             "anyOf": [
               {
-                "const": "valuation",
                 "type": "string"
               },
               {
                 "type": "null"
               }
             ],
-            "description": "Where the value comes from (`price` arrives with market data, P08)",
+            "description": "The market-data provider of the price; null for a manual valuation",
+            "title": "Value Provider"
+          },
+          "value_source": {
+            "anyOf": [
+              {
+                "enum": [
+                  "price",
+                  "valuation"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "`price`: a market price; `valuation`: the user's own manual valuation",
             "title": "Value Source"
+          },
+          "value_stale": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "True when the value uses a market price older than its freshness window (still shown, with `value_as_of`); null when there is no value",
+            "title": "Value Stale"
           }
         },
         "required": [
@@ -1970,7 +2006,9 @@
           "value",
           "native_value",
           "value_as_of",
-          "value_source"
+          "value_source",
+          "value_stale",
+          "value_provider"
         ],
         "title": "HoldingOut",
         "type": "object"
@@ -3870,7 +3908,7 @@
           },
           "holdings_value": {
             "$ref": "#/components/schemas/Money",
-            "description": "Valued positions (latest valuations until prices arrive in P08)"
+            "description": "Valued positions (latest market prices, else the latest manual valuations)"
           },
           "income": {
             "$ref": "#/components/schemas/Money"
