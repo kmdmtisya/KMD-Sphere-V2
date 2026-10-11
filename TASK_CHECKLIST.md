@@ -704,14 +704,14 @@
   - [x] P07-T05.2 Add/edit
   - [x] P07-T05.3 Required contribution display
   - [x] P07-T05.4 Tests
-- [ ] **P07-T06** · Portfolio Doctor (screen 12) · `NOT_STARTED` ⬜
+- [ ] **P07-T06** · Portfolio Doctor (screen 12) · `IN_PROGRESS` 🔄
   - Deps: P07-T01 · Wave: W2 · Track: MOB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-11T22:01:20+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P07-T06.1 Overview
-  - [ ] P07-T06.2 Findings tabs
-  - [ ] P07-T06.3 Scenario actions
-  - [ ] P07-T06.4 Tests
+  - [x] P07-T06.1 Overview
+  - [x] P07-T06.2 Findings tabs
+  - [x] P07-T06.3 Scenario actions
+  - [x] P07-T06.4 Tests
 - [ ] **P07-T07** · AI Investment Opportunities (screen 13) · `NOT_STARTED` ⬜
   - Deps: P07-T01, P03-T04 · Wave: W3 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

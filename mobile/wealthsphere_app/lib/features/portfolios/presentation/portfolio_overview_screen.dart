@@ -11,6 +11,7 @@ import '../../../shared/design_system/tokens/tokens.dart';
 import '../../../shared/domain/chart_mapping.dart';
 import '../../../shared/domain/wealth_models.dart';
 import '../application/portfolio_providers.dart';
+import 'portfolio_scope_switcher.dart';
 
 /// The Portfolio tab for one portfolio, or all of them combined. Switching the portfolio reloads
 /// every section; each section loads, fails and retries on its own.
@@ -25,7 +26,7 @@ class PortfolioOverviewScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: _Switcher(selectedId: id),
+        title: const PortfolioScopeSwitcher(),
         actions: const [
           DemoBadge(),
           SizedBox(width: AppSpacing.m),
@@ -59,35 +60,6 @@ class PortfolioOverviewScreen extends ConsumerWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _Switcher extends ConsumerWidget {
-  const _Switcher({required this.selectedId});
-
-  final String selectedId;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final list = ref.watch(portfolioListProvider);
-    final consolidated = ref
-        .watch(portfolioSummaryProvider(PortfolioRef.consolidatedId))
-        .value;
-    return PortfolioSwitcher(
-      portfolios: [
-        for (final p in list.value ?? const <PortfolioRef>[])
-          PortfolioOption(
-            id: p.id,
-            name: p.name,
-            value: ref.watch(portfolioSummaryProvider(p.id)).value?.value,
-          ),
-      ],
-      selectedId: selectedId == PortfolioRef.consolidatedId ? null : selectedId,
-      consolidatedValue: consolidated?.value,
-      onSelected: (id) => ref
-          .read(selectedPortfolioIdProvider.notifier)
-          .select(id ?? PortfolioRef.consolidatedId),
     );
   }
 }

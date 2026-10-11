@@ -2677,5 +2677,69 @@
   "goalErrNotFound": "This goal no longer exists.",
   "@goalErrNotFound": {
     "description": "Save refused"
+  },
+  "doctorTitle": "Portfolio Doctor",
+  "@doctorTitle": {
+    "description": "Title of the Portfolio Doctor screen"
+  },
+  "doctorEntryTooltip": "Portfolio Doctor",
+  "@doctorEntryTooltip": {
+    "description": "Opens the Portfolio Doctor from AI Wealth"
+  },
+  "doctorLookCloser": "Look closer",
+  "@doctorLookCloser": {
+    "description": "Heading of the findings detail list"
+  },
+  "doctorFilterGroup": "Finding type",
+  "@doctorFilterGroup": {
+    "description": "Label of the finding type chips"
+  },
+  "doctorFilterAll": "All",
+  "@doctorFilterAll": {
+    "description": "Shows every finding"
+  },
+  "doctorFilterCount": "{label} ({count})",
+  "@doctorFilterCount": {
+    "description": "A finding type chip with its count",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "doctorFactsHeading": "The figures behind it",
+  "@doctorFactsHeading": {
+    "description": "Heading above a finding's facts"
+  },
+  "doctorScenarioHeading": "Try a scenario",
+  "@doctorScenarioHeading": {
+    "description": "Heading above scenario buttons"
+  },
+  "doctorScenarioAssumptions": "Assumptions",
+  "@doctorScenarioAssumptions": {
+    "description": "Scenario sheet heading"
+  },
+  "doctorScenarioEffect": "What it would mean",
+  "@doctorScenarioEffect": {
+    "description": "Scenario sheet heading"
+  },
+  "doctorScenarioNote": "An illustration from your current holdings and the assumptions above. It is not a forecast or advice, and no trades are placed.",
+  "@doctorScenarioNote": {
+    "description": "Scenario disclaimer"
+  },
+  "doctorScenarioClose": "Close",
+  "@doctorScenarioClose": {
+    "description": "Closes the scenario sheet"
+  },
+  "doctorNoTrades": "The Portfolio Doctor only describes and illustrates. It never places trades.",
+  "@doctorNoTrades": {
+    "description": "Shown on the Portfolio Doctor"
+  },
+  "doctorAskAi": "Ask AI about these findings",
+  "@doctorAskAi": {
+    "description": "Opens AI Wealth with the portfolio as context"
   }
 }

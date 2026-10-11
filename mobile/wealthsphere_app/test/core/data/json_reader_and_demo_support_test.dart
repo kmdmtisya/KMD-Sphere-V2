@@ -21,6 +21,8 @@ class _MapBundle extends CachingAssetBundle {
   }
 }
 
+enum Level { low, medium }
+
 void main() {
   group('JsonReader is strict', () {
     test('reads strings, integers, decimals and money', () {
@@ -164,6 +166,46 @@ void main() {
         big,
       );
     });
+  });
+
+  group('JsonReader.enumByName', () {
+    test('reads a known name', () {
+      expect(
+        JsonReader({'k': 'medium'}).enumByName('k', Level.values),
+        Level.medium,
+      );
+    });
+
+    test('rejects an unknown name loudly, naming the field', () {
+      expect(
+        () => JsonReader({'k': 'extreme'}).enumByName('k', Level.values),
+        throwsA(
+          isA<FormatException>().having(
+            (e) => e.message,
+            'message',
+            allOf(contains(r'$.k'), contains('extreme')),
+          ),
+        ),
+      );
+    });
+
+    test('rejects a missing or non-string value', () {
+      expect(
+        () => JsonReader({}).enumByName('k', Level.values),
+        throwsFormatException,
+      );
+      expect(
+        () => JsonReader({'k': 1}).enumByName('k', Level.values),
+        throwsFormatException,
+      );
+    });
+  });
+
+  test('DataLoadException.unknown names what was not found', () {
+    expect(
+      DataLoadException.unknown('portfolio', 'p-9').message,
+      'Unknown portfolio "p-9"',
+    );
   });
 
   group('DemoAssets', () {

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../features/ai_wealth/doctor/presentation/doctor_screen.dart';
 import '../features/ai_wealth/presentation/ai_wealth_screen.dart';
 import '../features/auth/application/auth_flow.dart';
 import '../features/auth/presentation/sign_in_screen.dart';
@@ -95,7 +96,18 @@ final Map<AppTab, RouteBase Function()> tabRoutes =
           scope: AiScope.tryParse(
             state.uri.queryParameters[AppRoutes.aiScopeParam],
           ),
+          onOpenDoctor: () => context.go(AppRoutes.doctor),
         ),
+        routes: [
+          GoRoute(
+            path: 'doctor',
+            builder: (context, state) => DoctorScreen(
+              onAskAi: (portfolioId) => context.go(
+                AppRoutes.aiWith(AiScope(AiScopeKind.portfolio, portfolioId)),
+              ),
+            ),
+          ),
+        ],
       ),
       AppTab.goals: () => GoRoute(
         path: AppRoutes.goals,

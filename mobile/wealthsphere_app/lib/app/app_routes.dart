@@ -12,6 +12,7 @@ abstract final class AppRoutes {
   static const String transactions = '/portfolio/transactions';
   static const String addTransaction = '/portfolio/transactions/add';
   static const String ai = '/ai';
+  static const String doctor = '/ai/doctor';
   static const String goals = '/goals';
   static const String addGoal = '/goals/add';
   static const String more = '/more';
