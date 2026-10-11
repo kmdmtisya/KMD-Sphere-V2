@@ -1,0 +1,60 @@
+name: goldens
+
+# Golden images are authoritative only on the Linux runner (mobile/wealthsphere_app/dart_test.yaml),
+# so new or intentionally changed ones are generated here, not on a developer's Windows machine.
+#
+# Push a branch named goldens/<anything> pointing at the commit to generate for; the run uploads
+# the images as an artifact (`goldens`), which is then reviewed and committed to the feature branch:
+#
+#   git push origin HEAD:refs/heads/goldens/p07-t01
+#   gh run download <run id> -n goldens -D mobile/wealthsphere_app
+#
+# This workflow changes nothing in the repository and runs for no other branch.
+
+on:
+  push:
+    branches: ["goldens/**"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: goldens-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FLUTTER_VERSION: "3.47.5"
+
+defaults:
+  run:
+    working-directory: mobile/wealthsphere_app
+
+jobs:
+  generate:
+    name: generate golden images
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - name: Install dependencies and generate localisation
+        run: |
+          flutter pub get
+          flutter gen-l10n
+
+      - name: Generate golden images
+        run: flutter test --update-goldens --tags golden
+
+      - name: Upload golden images
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: goldens
+          path: |
+            mobile/wealthsphere_app/test/**/goldens/*.png
+          if-no-files-found: error

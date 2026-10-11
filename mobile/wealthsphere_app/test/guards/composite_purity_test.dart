@@ -13,6 +13,10 @@ void main() {
     'scenario_card.dart',
     'evidence_source_chip.dart',
     'ai_chat_composer.dart',
+    'transaction_tile.dart',
+    'goal_progress_card.dart',
+    'portfolio_health_card.dart',
+    'opportunity_card.dart',
   ];
 
   for (final name in composites) {

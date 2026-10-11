@@ -257,6 +257,137 @@ final List<GallerySection> gallerySections = [
     ]),
   ),
   GallerySection(
+    id: 'activity',
+    title: 'Transactions and goals',
+    builder: (context, {required animated}) => _stack([
+      TransactionTile(
+        kind: TransactionKind.buy,
+        date: DateTime.utc(2026, 10, 2),
+        amount: _usd('1004.00'),
+        assetName: 'Demo Global Equity Fund',
+        quantity: '10',
+        unitPrice: r'$100.00',
+        fee: _usd('4.00'),
+      ),
+      TransactionTile(
+        kind: TransactionKind.dividend,
+        date: DateTime.utc(2026, 9, 28),
+        amount: _usd('30.00'),
+        assetName: 'Demo Regional Bond',
+      ),
+      TransactionTile(
+        kind: TransactionKind.deposit,
+        date: DateTime.utc(2026, 9, 1),
+        amount: _usd('500.00'),
+        reversed: true,
+      ),
+      TransactionTile(
+        kind: TransactionKind.transferIn,
+        date: DateTime.utc(2026, 8, 15),
+        amount: _usd('1200.00'),
+        assetName: 'Demo Global Equity Fund',
+        quantity: '12',
+      ),
+      GoalProgressCard(
+        name: 'House deposit',
+        progressPercent: _d('62'),
+        status: GoalProgressStatus.onTrack,
+        target: _usd('50000.00'),
+        targetDate: DateTime.utc(2028, 6, 1),
+        current: _usd('31000.00'),
+      ),
+      GoalProgressCard(
+        name: 'Education fund',
+        progressPercent: _d('18'),
+        status: GoalProgressStatus.behind,
+        target: _usd('80000.00'),
+        targetDate: DateTime.utc(2032, 9, 1),
+        current: _usd('14400.00'),
+      ),
+      GoalProgressCard(
+        name: 'Emergency fund',
+        progressPercent: _d('100'),
+        status: GoalProgressStatus.reached,
+        target: _usd('10000.00'),
+        targetDate: DateTime.utc(2026, 12, 1),
+      ),
+    ]),
+  ),
+  GallerySection(
+    id: 'insight_cards',
+    title: 'Portfolio health and opportunities',
+    builder: (context, {required animated}) => _stack([
+      PortfolioHealthCard(
+        asOf: _now.subtract(const Duration(hours: 1)),
+        now: _now,
+        findings: const [
+          HealthFinding(
+            kind: HealthFindingKind.concentration,
+            severity: RiskLevel.high,
+            title: 'One position is 52% of the portfolio',
+            explanation:
+                'Demo Global Equity Fund is the largest part of the value.',
+          ),
+          HealthFinding(
+            kind: HealthFindingKind.currency,
+            severity: RiskLevel.medium,
+            title: '38% is held in one foreign currency',
+            explanation: 'Exchange-rate moves affect this part of the value.',
+          ),
+          HealthFinding(
+            kind: HealthFindingKind.liquidity,
+            severity: RiskLevel.low,
+            title: 'Cash covers 4% of the portfolio',
+            explanation: 'The cash balance is small next to the investments.',
+          ),
+        ],
+      ),
+      PortfolioHealthCard(findings: const [], asOf: _now, now: _now),
+      OpportunityCard(
+        name: 'Demo Dividend Fund',
+        symbol: 'DEMO3',
+        assetClass: 'Equity fund',
+        summary: 'Pays a steady income and holds many companies.',
+        risk: RiskLevel.medium,
+        score: 72,
+        scoreExplanation: const Text(
+          'Weighted from income stability, cost, diversification and past '
+          'volatility. Each part is shown in the research view.',
+        ),
+        risks: const [
+          'Dividends can be cut.',
+          'The fund can lose value, including in the first year.',
+        ],
+        evidence: [
+          EvidenceSource(
+            label: 'Fund factsheet (demo)',
+            provider: 'Demo Data Co.',
+            asOf: _now.subtract(const Duration(days: 2)),
+          ),
+          EvidenceSource(
+            label: 'Price history (demo)',
+            provider: 'Demo Data Co.',
+            asOf: _now.subtract(const Duration(hours: 3)),
+          ),
+        ],
+        asOf: _now.subtract(const Duration(hours: 3)),
+        now: _now,
+        isDemo: true,
+        onResearch: () {},
+        onCompare: () {},
+        onSimulate: () {},
+      ),
+      OpportunityCard(
+        name: 'Demo Idea Without Evidence',
+        risk: RiskLevel.high,
+        evidence: const [],
+        asOf: _now.subtract(const Duration(days: 1)),
+        now: _now,
+        isDemo: true,
+      ),
+    ]),
+  ),
+  GallerySection(
     id: 'navigation',
     title: 'Navigation and input',
     builder: (context, {required animated}) => _stack([

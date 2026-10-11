@@ -1465,5 +1465,231 @@
   "biometricOfferOk": "OK",
   "@biometricOfferOk": {
     "description": "Dismisses the sheet"
+  },
+  "txBuy": "Buy",
+  "@txBuy": {
+    "description": "Ledger transaction type"
+  },
+  "txSell": "Sell",
+  "@txSell": {
+    "description": "Ledger transaction type"
+  },
+  "txDeposit": "Deposit",
+  "@txDeposit": {
+    "description": "Ledger transaction type"
+  },
+  "txWithdrawal": "Withdrawal",
+  "@txWithdrawal": {
+    "description": "Ledger transaction type"
+  },
+  "txDividend": "Dividend",
+  "@txDividend": {
+    "description": "Ledger transaction type"
+  },
+  "txInterest": "Interest",
+  "@txInterest": {
+    "description": "Ledger transaction type"
+  },
+  "txCoupon": "Coupon",
+  "@txCoupon": {
+    "description": "Ledger transaction type"
+  },
+  "txRent": "Rent",
+  "@txRent": {
+    "description": "Ledger transaction type"
+  },
+  "txDistribution": "Distribution",
+  "@txDistribution": {
+    "description": "Ledger transaction type"
+  },
+  "txFee": "Fee",
+  "@txFee": {
+    "description": "Ledger transaction type"
+  },
+  "txTax": "Tax",
+  "@txTax": {
+    "description": "Ledger transaction type"
+  },
+  "txTransferIn": "Transfer in",
+  "@txTransferIn": {
+    "description": "Ledger transaction type"
+  },
+  "txTransferOut": "Transfer out",
+  "@txTransferOut": {
+    "description": "Ledger transaction type"
+  },
+  "txValuationAdjustment": "Valuation adjustment",
+  "@txValuationAdjustment": {
+    "description": "Ledger transaction type"
+  },
+  "txMoneyIn": "Money in",
+  "@txMoneyIn": {
+    "description": "Direction of a transaction's cash effect, spoken"
+  },
+  "txMoneyOut": "Money out",
+  "@txMoneyOut": {
+    "description": "Direction of a transaction's cash effect, spoken"
+  },
+  "txNoCash": "No cash movement",
+  "@txNoCash": {
+    "description": "A transaction that moves units or value, not cash, spoken"
+  },
+  "txReversed": "Reversed",
+  "@txReversed": {
+    "description": "A ledger entry that has been corrected by a reversal"
+  },
+  "txQuantityAt": "{quantity} at {price}",
+  "@txQuantityAt": {
+    "description": "Units and unit price of a trade",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "txFeeLine": "Fee {amount}",
+  "@txFeeLine": {
+    "description": "Fee charged on a transaction",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "goalStatusReached": "reached",
+  "@goalStatusReached": {
+    "description": "Goal status"
+  },
+  "goalCardTarget": "Target {amount} by {date}",
+  "@goalCardTarget": {
+    "description": "A goal's target and date",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "goalCardNow": "Now {amount}",
+  "@goalCardNow": {
+    "description": "A goal's current value",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "goalCardEstimate": "Estimate based on your assumptions. It is not guaranteed.",
+  "@goalCardEstimate": {
+    "description": "Shown with every goal status"
+  },
+  "healthTitle": "Portfolio health",
+  "@healthTitle": {
+    "description": "Title of the portfolio health card"
+  },
+  "healthFindingsCount": "{count, plural, =0{No findings} =1{1 finding} other{{count} findings}}",
+  "@healthFindingsCount": {
+    "description": "Number of observations",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "healthKindConcentration": "Concentration",
+  "@healthKindConcentration": {
+    "description": "Kind of a portfolio finding"
+  },
+  "healthKindCurrency": "Currency",
+  "@healthKindCurrency": {
+    "description": "Kind of a portfolio finding"
+  },
+  "healthKindLiquidity": "Liquidity",
+  "@healthKindLiquidity": {
+    "description": "Kind of a portfolio finding"
+  },
+  "healthKindVolatility": "Volatility",
+  "@healthKindVolatility": {
+    "description": "Kind of a portfolio finding"
+  },
+  "healthKindIncome": "Income",
+  "@healthKindIncome": {
+    "description": "Kind of a portfolio finding"
+  },
+  "healthNoFindings": "Nothing to flag from the checks that could be run.",
+  "@healthNoFindings": {
+    "description": "Shown when there are no findings"
+  },
+  "healthNote": "Observations from your own data. They are not advice.",
+  "@healthNote": {
+    "description": "Shown with the portfolio health card"
+  },
+  "healthFindingSpoken": "{kind}, {risk}: {title}. {explanation}",
+  "@healthFindingSpoken": {
+    "description": "Spoken portfolio finding",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "risk": {
+        "type": "String"
+      },
+      "title": {
+        "type": "String"
+      },
+      "explanation": {
+        "type": "String"
+      }
+    }
+  },
+  "opportunityCandidate": "Research candidate",
+  "@opportunityCandidate": {
+    "description": "Label of an investment idea"
+  },
+  "opportunityNotAdvice": "For research only. Not advice, and returns are never guaranteed.",
+  "@opportunityNotAdvice": {
+    "description": "Shown with every investment idea"
+  },
+  "opportunityScore": "Research score {score} of 100",
+  "@opportunityScore": {
+    "description": "A research score",
+    "placeholders": {
+      "score": {
+        "type": "String"
+      }
+    }
+  },
+  "opportunityScoreWhy": "How this score is made",
+  "@opportunityScoreWhy": {
+    "description": "Title of the score explanation"
+  },
+  "opportunityNoEvidence": "No evidence yet. Do not rely on this idea.",
+  "@opportunityNoEvidence": {
+    "description": "Shown when an idea has no evidence sources"
+  },
+  "opportunityEvidenceTitle": "Evidence",
+  "@opportunityEvidenceTitle": {
+    "description": "Title of the evidence list"
+  },
+  "opportunityRisksTitle": "Risks and assumptions",
+  "@opportunityRisksTitle": {
+    "description": "Title of the risks list"
+  },
+  "opportunityResearch": "Research",
+  "@opportunityResearch": {
+    "description": "Opens the evidence for an idea"
+  },
+  "opportunityCompare": "Compare",
+  "@opportunityCompare": {
+    "description": "Compares an idea with another"
+  },
+  "opportunitySimulate": "Simulate",
+  "@opportunitySimulate": {
+    "description": "Pre-fills a scenario with an idea"
   }
 }

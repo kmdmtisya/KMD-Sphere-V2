@@ -10,6 +10,7 @@ Workflows live in `.github/workflows/`. Each workflow runs on every pull request
 | `mobile.yml` | **`mobile gate`** | Fails if any job above failed or was wrongly skipped |
 | `backend.yml` | `lint, types, tests, migrations` | `ruff format --check`, `ruff check`, `mypy` (strict), OpenAPI contract up to date and Spectral-clean, Alembic upgrade/check/downgrade/upgrade and single head, `pytest` with coverage (`--cov-fail-under=85`) and the per-module policy against PostgreSQL (pgvector) and Redis service containers |
 | `backend.yml` | **`backend gate`** | Same gate pattern as mobile |
+| `goldens.yml` | `generate golden images` | Not a check. Runs only on pushes to `goldens/**` branches: regenerates golden images on ubuntu-24.04 and uploads them as an artifact to commit to the feature branch (`git push origin HEAD:refs/heads/goldens/<task>`, then `gh run download <id> -n goldens -D mobile/wealthsphere_app`) |
 | `security.yml` | secret scan, dependency audit, CodeQL, Trivy, SBOM | See `SECURITY.md` |
 | `security.yml` | **`security gate`** | Fails unless all five security jobs succeeded |
 | `tracker.yml` | **`tracker validate`** | `python scripts/track.py validate` and the tracker test suite (`tests/tracker`, 88 tests: lifecycle, validation, quality gates, robustness) |

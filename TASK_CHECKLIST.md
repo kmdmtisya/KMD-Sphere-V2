@@ -665,12 +665,12 @@
 - Exit gates: none — required by `P07-GATE` (Gates-done)
 - Release gates: —
 
-- [ ] **P07-T01** · Deferred shared components · `NOT_STARTED` ⬜
+- [ ] **P07-T01** · Deferred shared components · `IN_PROGRESS` 🔄
   - Deps: P03-GATE · Wave: W1 · Track: MOB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-11T19:11:39+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P07-T01.1 Four components
-  - [ ] P07-T01.2 Gallery entries
+  - [x] P07-T01.1 Four components
+  - [x] P07-T01.2 Gallery entries
   - [ ] P07-T01.3 Tests and goldens
 - [ ] **P07-T02** · Investments / Holdings (screen 5) · `NOT_STARTED` ⬜
   - Deps: P07-T01 · Wave: W2 · Track: MOB · Size: M · Approval: no
