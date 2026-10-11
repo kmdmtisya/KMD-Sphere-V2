@@ -761,3 +761,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-11T11:29:18+04:00 — COMPLETE P06-T02
 - duration: 28m 38s
 - evidence: PR #58 (commit 718a72f). POST /api/v1/forecasts/compound, /scenarios, /goal on the P06-T01 engine; typed Pydantic schemas in OpenAPI (Spectral clean, forecasts tag). Limits in app/modules/forecasting/limits.py identical to the mobile ForecastInputLimits, enforced by tests/forecasting/test_limits_shared.py parsing the Dart source (any difference or unmirrored limit fails); strict string decimals, whole JSON-integer years, one currency, conservative <= base <= growth, unknown fields refused. Responses return nominal and real (and contributions) yearly series, echo the validated assumptions and carry the not-guaranteed notice. Auth required (401 tests). Forecast DTOs moved to live in docs/contracts/dto-mapping (monthly_contribution renamed to contribution, owner P09-T03). 69 API tests incl. all 15 golden vectors through the API; 34/34 mutants caught. Local 940 passed, coverage 91%, forecasting 100%; -m security 495 passed. CI all gates pass.
+
+### 2026-10-11T11:32:48+04:00 — START P06-T03
+- Performance engine
+- prerequisites verified COMPLETED

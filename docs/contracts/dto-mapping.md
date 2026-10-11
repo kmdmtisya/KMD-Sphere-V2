@@ -31,8 +31,8 @@ Dart: `mobile/wealthsphere_app/lib/shared/domain/wealth_models.dart`
 | `base_currency` | `currency` | renamed | Mapped by the live repository. | P09-T02 |
 | `value` | `total_value` | renamed | Mapped by the live repository. | P09-T02 |
 | `invested` | `net_contributions` | renamed | "Invested" means money put in (deposits minus withdrawals). | P09-T02 |
-| `profit_loss` | - | dto-only | Total profit is a performance figure: the analytics API provides it. The app never derives it. | P06-T03 |
-| `return_percent` | - | dto-only | Return percentage comes from the performance engine (with its method stated). The app never derives it. | P06-T03 |
+| `profit_loss` | - | dto-only | total_gain from the performance service (P06-T03, docs/design/performance.md), published by the analytics API. The app never derives it. | P06-T09 |
+| `return_percent` | - | dto-only | simple_return from the performance service (P06-T03; method stated in docs/design/performance.md), published by the analytics API. The app never derives it. | P06-T09 |
 | `as_of` | `freshness.data_as_of` | renamed | The oldest input the figures use, so the app never shows them as fresher than they are. | P09-T02 |
 | - | `holdings_value` | api-only | Read with cash for the Home breakdown. | P09-T02 |
 | - | `cash` | api-only | Read for the Home breakdown. | P09-T02 |
@@ -126,9 +126,9 @@ These DEMO DTOs are the proposed contract; the owning task adopts them or update
 
 | DTO | Dart | JSON keys | Owner | Resolution |
 |---|---|---|---|---|
-| PerformanceSeries, PerformancePoint | `wealth_models.dart` | - | P06-T03 | The performance engine and analytics API (P06-T03, P06-T09) adopt the DTO shapes or update this mapping. |
+| PerformanceSeries, PerformancePoint | `wealth_models.dart` | - | P06-T09 | Historical values come from the series builder (P06-T08); the analytics API (P06-T09) adopts these shapes or updates this mapping. |
 | AllocationShare | `wealth_models.dart` | `label`, `value`, `weight_percent` | P06-T04 | Allocation analytics; weights come from the server (largest remainder, ADR-0006). |
-| PerformanceMetrics | `wealth_models.dart` | `total_return_percent`, `cagr_percent`, `dividend_yield_percent`, `volatility_percent` | P06-T03 | Performance and risk metrics (P06-T03, P06-T08). |
+| PerformanceMetrics | `wealth_models.dart` | `total_return_percent`, `cagr_percent`, `dividend_yield_percent`, `volatility_percent` | P06-T09 | Returns and CAGR from the performance service (P06-T03), dividend yield from income (P06-T05), volatility from risk (P06-T08); published by the analytics API (P06-T09). |
 | NetWorthSummary | `wealth_models.dart` | `assets`, `liabilities`, `net_worth`, `as_of` | P06-T07 | Net worth and liabilities module. |
 | IncomeSummary | `wealth_models.dart` | `monthly`, `yearly`, `as_of` | P06-T05 | Income and passive-income module. |
 | GoalsSummary, GoalProgress | `wealth_models.dart` | `id`, `name`, `progress_percent`, `status`, `on_track`, `total`, `items`, `as_of` | P06-T06 | Goals module. |

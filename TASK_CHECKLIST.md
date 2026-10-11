@@ -588,14 +588,14 @@
   - [x] P06-T02.2 Endpoints
   - [x] P06-T02.3 Limits shared with mobile
   - [x] P06-T02.4 Tests
-- [ ] **P06-T03** · Performance engine · `NOT_STARTED` ⬜
+- [ ] **P06-T03** · Performance engine · `IN_PROGRESS` 🔄
   - Deps: P05-T05, P05-T06, P05-GATE · Wave: W1 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-11T11:32:48+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P06-T03.1 Return and CAGR
-  - [ ] P06-T03.2 XIRR
-  - [ ] P06-T03.3 TWR
-  - [ ] P06-T03.4 Golden and property tests
+  - [x] P06-T03.1 Return and CAGR
+  - [x] P06-T03.2 XIRR
+  - [x] P06-T03.3 TWR
+  - [x] P06-T03.4 Golden and property tests
 - [ ] **P06-T04** · Allocation and concentration analytics · `NOT_STARTED` ⬜
   - Deps: P05-T05, P05-T06, P05-GATE · Wave: W1 · Track: BE · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
