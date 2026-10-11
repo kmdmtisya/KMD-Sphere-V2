@@ -13,7 +13,7 @@ from app.modules.analytics.performance import TwrResult, ValuePoint, twr
 ZERO = Decimal(0)
 ONE = Decimal(1)
 PRECISION = 34
-MIN_RETURNS = 6  # fewer period returns are not enough to measure risk
+MIN_RETURNS = 12  # fewer period returns are not enough to measure risk (P06-T10 review)
 
 
 class RiskStatus(StrEnum):

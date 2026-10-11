@@ -108,29 +108,30 @@ def series_of(returns: list[str], start: str = "1000") -> list[Observation]:
 
 
 def test_measure_ok() -> None:
-    r = measure(series_of(["0.1", "-0.1", "0.1", "-0.1", "0.1", "-0.1"]), 12)
-    assert r.status == RiskStatus.OK and r.points == 7 and len(r.returns) == 6
+    r = measure(series_of(["0.1", "-0.1"] * 6), 12)
+    assert r.status == RiskStatus.OK and r.points == 13 and len(r.returns) == 12
     assert r.volatility is not None and r.period_volatility is not None
-    # Index 1, 1.1, 0.99, 1.089, 0.9801, 1.07811, 0.970299: the 1.1 peak is never regained.
-    on = days(7)
-    assert r.max_drawdown == Drawdown(D("0.970299") / D("1.1") - 1, on[1], on[6], None)
+    # Index 1, 1.1, 0.99, 1.089, 0.9801, ...: the 1.1 peak is never regained, and the lowest
+    # point is the last one, 0.99^6.
+    on = days(13)
+    assert r.max_drawdown == Drawdown(D("0.99") ** 6 / D("1.1") - 1, on[1], on[12], None)
     assert r.time_weighted is not None and r.time_weighted.status == TwrStatus.OK
     assert r.time_weighted.cumulative is not None
-    assert abs(r.time_weighted.cumulative - (D("1.1") * D("0.9")) ** 3 + 1) < D("1e-30")
+    assert abs(r.time_weighted.cumulative - (D("1.1") * D("0.9")) ** 6 + 1) < D("1e-30")
 
 
 def test_measure_needs_enough_returns() -> None:
-    assert MIN_RETURNS == 6  # the documented floor (docs/design/risk.md)
-    r = measure(series_of(["0.1"] * 5), 12)
-    assert r.status == RiskStatus.INSUFFICIENT_DATA and len(r.returns) == 5
-    assert measure(series_of(["0.1"] * 6), 12).status == RiskStatus.OK
+    assert MIN_RETURNS == 12  # the documented floor (docs/design/risk.md; P06-T10 review)
+    r = measure(series_of(["0.1"] * 11), 12)
+    assert r.status == RiskStatus.INSUFFICIENT_DATA and len(r.returns) == 11
+    assert measure(series_of(["0.1"] * 12), 12).status == RiskStatus.OK
     assert r.volatility is None and r.max_drawdown is None and r.time_weighted is None
     assert measure([], 12).status == RiskStatus.INSUFFICIENT_DATA
     assert measure(series_of([]), 12).status == RiskStatus.INSUFFICIENT_DATA
 
 
 def test_measure_refuses_incomplete_and_undefined_series() -> None:
-    s = series_of(["0.1"] * 8)
+    s = series_of(["0.1"] * 14)
     s[3] = Observation(s[3].on, s[3].value, s[3].flow_next, complete=False)
     r = measure(s, 12)
     assert (r.status, r.incomplete_points, r.returns) == (RiskStatus.INCOMPLETE_DATA, 1, ())

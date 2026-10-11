@@ -73,12 +73,12 @@ The earliest of equal falls is reported. A series that never falls has depth 0.
 
 | Status | When | Figures |
 |---|---|---|
-| `ok` | a complete series with at least 6 period returns | all |
-| `insufficient_data` | fewer than 6 period returns (a new portfolio, a short range) | the returns only |
+| `ok` | a complete series with at least 12 period returns | all |
+| `insufficient_data` | fewer than 12 period returns (a new portfolio, a short range) | the returns only |
 | `incomplete_data` | any point in the range has unpriced positions or unconverted currencies | none (with the number of incomplete points) |
 | `undefined_period` | a period starts at zero or below but ends with a value | none |
 
-Six returns is a deliberately low floor (half a year of months). Volatility from few returns is very uncertain; the API states the number of returns with the figure.
+Twelve returns (a year of months) is the floor, chosen at the P06-T10 review: volatility from fewer points is mostly noise. The API states the number of returns with the figure.
 
 ## 6. Precision
 

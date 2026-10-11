@@ -142,7 +142,7 @@ Per asset and portfolio, in the portfolio currency, each posting at its own rate
   - growth = value - contributions, after rounding;
   - real value = nominal / (1 + π)^(years).
 - **Scenarios:** the same inputs with the user's three returns.
-- **Required contribution:** the final value is linear in the contribution C, so C = (T' - FV(0)) / (FV(1) - FV(0)), and the solver never iterates.
+- **Required contribution:** the final value is linear in the contribution C, so C = (T' - FV(0)) / (FV(1) - FV(0)), and the solver never iterates. The result is **rounded up** to the currency's minor units (ADR-0006 exception 1), so paying it always reaches the target.
 - **Independent checks:**
   - published tables: 10,000 at 5% yearly for 10 years = 16,288.95, and 100 a month at 6% for 10 years = 16,387.93;
   - closed forms for every frequency mix;
@@ -175,7 +175,7 @@ Per asset and portfolio, in the portfolio currency, each posting at its own rate
 - **Period returns:** r = V(k+1) / (V(k) + F(k)) - 1, with the period's flows at its start.
 - **Volatility:** sample standard deviation (n - 1) × √(periods a year): 365, 52 or 12.
 - **Maximum drawdown:** on the linked return index (flows removed), with peak, trough and recovery dates.
-- **Statuses:** `insufficient_data` (< 6 returns), `incomplete_data`, `undefined_period`. No partial figures are given.
+- **Statuses:** `insufficient_data` (< 12 returns), `incomplete_data`, `undefined_period`. No partial figures are given.
 - **Independent checks:**
   - volatility² equals the exact rational sample variance (× periods a year);
   - alternating ±10% monthly gives exactly 40.00% annualised;
@@ -191,7 +191,7 @@ Per asset and portfolio, in the portfolio currency, each posting at its own rate
 | HHI | 4 decimals; effective positions 2 |
 | Posting FX rate | 12 decimals (stored) |
 | Holdings cache | 8 decimals (stored); quantity 12 |
-| Forecast and goal amounts | minor units; growth = rounded value - rounded contributions |
+| Forecast and goal amounts | minor units, half-up; growth = rounded value - rounded contributions. **Exception:** required contributions are rounded up |
 | Net worth | rounded lines, totals summed from them |
 
 ## 14. Decisions for the user (P06-T10.3)
@@ -214,7 +214,7 @@ Each value below was computed by the independent oracle (exact arithmetic) and i
 | # | Inputs | Expected |
 |---|---|---|
 | 1 | Forecast: 10,000 + 500 a month, 8% - 0.5% fee, monthly, 20 years | 321,473.53 nominal; 130,000.00 paid in |
-| 2 | Goal: 1,000,000 in 240 months from 10,000 at 8% - 0.5% | 1,725.37 a month |
+| 2 | Goal: 1,000,000 in 240 months from 10,000 at 8% - 0.5% | 1,725.38 a month (1,725.3726 rounded up) |
 | 3 | Holdings: section 3's example | cost 1,653.00; realised 97.00; average 110.20 |
 | 4 | Allocation: three equal parts | 33.34 / 33.33 / 33.33 |
 | 5 | TWR: 0 + 1,000 → 1,100, + 500 → 1,760 | 21% |
