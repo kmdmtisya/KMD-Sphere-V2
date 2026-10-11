@@ -89,6 +89,17 @@ class AssetRepository:
         )
         return [(asset, cls) for asset, cls in result.all()]
 
+    async def metadata_values(self, asset_ids: list[uuid.UUID], key: str) -> dict[uuid.UUID, Any]:
+        """One metadata key for several assets (assets without it are left out)."""
+        if not asset_ids:
+            return {}
+        result = await self._session.execute(
+            select(AssetMetadata.asset_id, AssetMetadata.value).where(
+                AssetMetadata.asset_id.in_(asset_ids), AssetMetadata.key == key
+            )
+        )
+        return {asset_id: value for asset_id, value in result.all()}  # noqa: C416
+
     async def metadata(self, asset_id: uuid.UUID) -> dict[str, Any]:
         result = await self._session.execute(
             select(AssetMetadata.key, AssetMetadata.value)

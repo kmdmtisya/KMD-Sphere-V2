@@ -596,13 +596,13 @@
   - [x] P06-T03.2 XIRR
   - [x] P06-T03.3 TWR
   - [x] P06-T03.4 Golden and property tests
-- [ ] **P06-T04** · Allocation and concentration analytics · `NOT_STARTED` ⬜
+- [ ] **P06-T04** · Allocation and concentration analytics · `IN_PROGRESS` 🔄
   - Deps: P05-T05, P05-T06, P05-GATE · Wave: W1 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-11T12:09:50+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P06-T04.1 Allocation
-  - [ ] P06-T04.2 Concentration
-  - [ ] P06-T04.3 Tests
+  - [x] P06-T04.1 Allocation
+  - [x] P06-T04.2 Concentration
+  - [x] P06-T04.3 Tests
 - [ ] **P06-T05** · Income and passive-income module · `NOT_STARTED` ⬜
   - Deps: P05-T04, P05-GATE · Wave: W1 · Track: BE · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
