@@ -2287,5 +2287,395 @@
   "investNoTrading": "Informational only. WealthSphere does not place trades.",
   "@investNoTrading": {
     "description": "Shown on the investment screen"
+  },
+  "goalsAdd": "Add goal",
+  "@goalsAdd": {
+    "description": "Starts the add goal form"
+  },
+  "goalsSummary": "{onTrack} of {total} goals on track under your assumptions",
+  "@goalsSummary": {
+    "description": "Summary above the goal list",
+    "placeholders": {
+      "onTrack": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "goalsSummaryNote": "Status is an estimate based on the assumptions you set. It is not a promise.",
+  "@goalsSummaryNote": {
+    "description": "Disclaimer under the goals summary"
+  },
+  "goalsEmptyTitle": "No goals yet",
+  "@goalsEmptyTitle": {
+    "description": "Empty goals list"
+  },
+  "goalsEmptyMessage": "Set a target and a date to see how far along you are.",
+  "@goalsEmptyMessage": {
+    "description": "Empty goals list"
+  },
+  "goalsPendingNote": "The server calculates this goal's progress. The demo can't, so no estimate is shown.",
+  "@goalsPendingNote": {
+    "description": "Shown on a goal without figures"
+  },
+  "goalDetailTitle": "Goal",
+  "@goalDetailTitle": {
+    "description": "Title of the goal detail screen"
+  },
+  "goalDetailEdit": "Edit goal",
+  "@goalDetailEdit": {
+    "description": "Opens the edit form"
+  },
+  "goalFigCurrent": "Current value",
+  "@goalFigCurrent": {
+    "description": "Goal figure"
+  },
+  "goalFigGap": "Still to go",
+  "@goalFigGap": {
+    "description": "Goal figure"
+  },
+  "goalFigTimeLeft": "Time left",
+  "@goalFigTimeLeft": {
+    "description": "Goal figure"
+  },
+  "goalMonths": "{count, plural, =0{Due now} =1{1 month} other{{count} months}}",
+  "@goalMonths": {
+    "description": "Months until the target date",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "goalOverdue": "The target date has passed",
+  "@goalOverdue": {
+    "description": "Shown when the date passed without reaching the target"
+  },
+  "goalFigEstimatedCompletion": "Estimated completion",
+  "@goalFigEstimatedCompletion": {
+    "description": "Goal figure"
+  },
+  "goalEstimatedNone": "Not within 100 years at the current contribution",
+  "@goalEstimatedNone": {
+    "description": "No completion estimate"
+  },
+  "goalRequiredTitle": "Required contribution",
+  "@goalRequiredTitle": {
+    "description": "Section heading"
+  },
+  "goalRequiredValue": "{amount} {period}",
+  "@goalRequiredValue": {
+    "description": "Required contribution amount",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "goalPeriodMonthly": "per month",
+  "@goalPeriodMonthly": {
+    "description": "Contribution period"
+  },
+  "goalPeriodQuarterly": "per quarter",
+  "@goalPeriodQuarterly": {
+    "description": "Contribution period"
+  },
+  "goalPeriodYearly": "per year",
+  "@goalPeriodYearly": {
+    "description": "Contribution period"
+  },
+  "goalRequiredExplain": "An estimate: the contribution that would reach the target by the date if your base return assumption holds. It is not guaranteed.",
+  "@goalRequiredExplain": {
+    "description": "Explains the required contribution"
+  },
+  "goalRequiredReached": "No extra contribution is needed: the goal is reached.",
+  "@goalRequiredReached": {
+    "description": "Required contribution"
+  },
+  "goalRequiredUnavailable": "Not available for this goal (the date has passed, or no contribution falls before it).",
+  "@goalRequiredUnavailable": {
+    "description": "Required contribution"
+  },
+  "goalRequiredPending": "Calculated by the server. The demo can't calculate it for a goal you added or changed.",
+  "@goalRequiredPending": {
+    "description": "Required contribution"
+  },
+  "goalYourContribution": "Your contribution: {amount} {period}",
+  "@goalYourContribution": {
+    "description": "Current contribution",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "goalScenariosTitle": "Scenarios",
+  "@goalScenariosTitle": {
+    "description": "Section heading"
+  },
+  "goalScenarioConservative": "Conservative",
+  "@goalScenarioConservative": {
+    "description": "Scenario name"
+  },
+  "goalScenarioBase": "Base",
+  "@goalScenarioBase": {
+    "description": "Scenario name"
+  },
+  "goalScenarioGrowth": "Growth",
+  "@goalScenarioGrowth": {
+    "description": "Scenario name"
+  },
+  "goalScenarioReaches": "reaches the target",
+  "@goalScenarioReaches": {
+    "description": "Scenario outcome"
+  },
+  "goalScenarioMisses": "falls short of the target",
+  "@goalScenarioMisses": {
+    "description": "Scenario outcome"
+  },
+  "goalScenarioLine": "{rate} a year, projected {value}",
+  "@goalScenarioLine": {
+    "description": "Scenario detail",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "goalScenariosNote": "Scenarios use the return rates you chose. They are illustrations, not forecasts or promises.",
+  "@goalScenariosNote": {
+    "description": "Scenario disclaimer"
+  },
+  "goalAssumptionsTitle": "Your assumptions",
+  "@goalAssumptionsTitle": {
+    "description": "Section heading"
+  },
+  "goalAssumpContribution": "Contribution",
+  "@goalAssumpContribution": {
+    "description": "Assumption"
+  },
+  "goalAssumpContributionGrowth": "Yearly contribution increase",
+  "@goalAssumpContributionGrowth": {
+    "description": "Assumption"
+  },
+  "goalAssumpInflation": "Inflation",
+  "@goalAssumpInflation": {
+    "description": "Assumption"
+  },
+  "goalAssumpFee": "Annual fee",
+  "@goalAssumpFee": {
+    "description": "Assumption"
+  },
+  "goalAssumpBase": "Base return",
+  "@goalAssumpBase": {
+    "description": "Assumption"
+  },
+  "goalAssumpConservative": "Conservative return",
+  "@goalAssumpConservative": {
+    "description": "Assumption"
+  },
+  "goalAssumpGrowthReturn": "Growth return",
+  "@goalAssumpGrowthReturn": {
+    "description": "Assumption"
+  },
+  "goalAssumpTodaysMoney": "Target in today's money",
+  "@goalAssumpTodaysMoney": {
+    "description": "Assumption"
+  },
+  "goalYes": "Yes",
+  "@goalYes": {
+    "description": "Yes"
+  },
+  "goalNo": "No",
+  "@goalNo": {
+    "description": "No"
+  },
+  "goalFundedBy": "Funded by",
+  "@goalFundedBy": {
+    "description": "Which portfolio funds the goal"
+  },
+  "goalFundedAll": "All portfolios",
+  "@goalFundedAll": {
+    "description": "Funded by every portfolio"
+  },
+  "goalValueIncomplete": "Some assets are unpriced or unconverted, so the current value may be understated.",
+  "@goalValueIncomplete": {
+    "description": "Warning about the current value"
+  },
+  "goalAskAi": "Ask AI about this goal",
+  "@goalAskAi": {
+    "description": "Opens AI Wealth with this goal as context"
+  },
+  "goalTypeWealth": "Wealth",
+  "@goalTypeWealth": {
+    "description": "Goal type"
+  },
+  "goalTypeRetirement": "Retirement",
+  "@goalTypeRetirement": {
+    "description": "Goal type"
+  },
+  "goalTypeEducation": "Education",
+  "@goalTypeEducation": {
+    "description": "Goal type"
+  },
+  "goalTypeHouseDeposit": "House deposit",
+  "@goalTypeHouseDeposit": {
+    "description": "Goal type"
+  },
+  "goalTypeBusinessCapital": "Business capital",
+  "@goalTypeBusinessCapital": {
+    "description": "Goal type"
+  },
+  "goalTypeCustom": "Custom",
+  "@goalTypeCustom": {
+    "description": "Goal type"
+  },
+  "goalFormAddTitle": "Add goal",
+  "@goalFormAddTitle": {
+    "description": "Title of the add form"
+  },
+  "goalFormEditTitle": "Edit goal",
+  "@goalFormEditTitle": {
+    "description": "Title of the edit form"
+  },
+  "goalFormName": "Goal name",
+  "@goalFormName": {
+    "description": "Form field"
+  },
+  "goalFormType": "Type",
+  "@goalFormType": {
+    "description": "Form field"
+  },
+  "goalFormTarget": "Target amount",
+  "@goalFormTarget": {
+    "description": "Form field"
+  },
+  "goalFormTargetDate": "Target date",
+  "@goalFormTargetDate": {
+    "description": "Form field"
+  },
+  "goalFormTodaysMoney": "Target is in today's money",
+  "@goalFormTodaysMoney": {
+    "description": "Form switch"
+  },
+  "goalFormTodaysMoneyHelp": "On: the target grows with inflation to the date. Off: it is the amount on that date.",
+  "@goalFormTodaysMoneyHelp": {
+    "description": "Explains the switch"
+  },
+  "goalFormFunding": "Funded by",
+  "@goalFormFunding": {
+    "description": "Form field"
+  },
+  "goalFormAssumptionsHeading": "Assumptions",
+  "@goalFormAssumptionsHeading": {
+    "description": "Form section heading"
+  },
+  "goalFormContribution": "Contribution",
+  "@goalFormContribution": {
+    "description": "Form field"
+  },
+  "goalFormFrequency": "Contribution frequency",
+  "@goalFormFrequency": {
+    "description": "Form field"
+  },
+  "goalFormBaseReturn": "Base annual return (%)",
+  "@goalFormBaseReturn": {
+    "description": "Form field"
+  },
+  "goalFormConservative": "Conservative return (%, optional)",
+  "@goalFormConservative": {
+    "description": "Form field"
+  },
+  "goalFormGrowthReturn": "Growth return (%, optional)",
+  "@goalFormGrowthReturn": {
+    "description": "Form field"
+  },
+  "goalFormContributionGrowth": "Yearly contribution increase (%, optional)",
+  "@goalFormContributionGrowth": {
+    "description": "Form field"
+  },
+  "goalFormInflation": "Inflation (%, optional)",
+  "@goalFormInflation": {
+    "description": "Form field"
+  },
+  "goalFormFee": "Annual fee (%, optional)",
+  "@goalFormFee": {
+    "description": "Form field"
+  },
+  "goalFormAssumptionsNote": "You choose every rate. WealthSphere does not suggest returns, and none are guaranteed.",
+  "@goalFormAssumptionsNote": {
+    "description": "Form note"
+  },
+  "goalFormSave": "Save goal",
+  "@goalFormSave": {
+    "description": "Saves the goal"
+  },
+  "goalFormSaving": "Saving",
+  "@goalFormSaving": {
+    "description": "Shown while saving"
+  },
+  "goalFormFixFields": "{count, plural, =1{Fix 1 field to continue} other{Fix {count} fields to continue}}",
+  "@goalFormFixFields": {
+    "description": "Summary of form problems",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "goalFormSaveFailed": "The goal could not be saved. Try again.",
+  "@goalFormSaveFailed": {
+    "description": "Save failed"
+  },
+  "goalFormSaved": "Goal saved",
+  "@goalFormSaved": {
+    "description": "Shown after saving"
+  },
+  "goalFormDemoNote": "DEMO: goals you add or change are kept only while the app is open, and the demo shows no estimate for them.",
+  "@goalFormDemoNote": {
+    "description": "Demo note"
+  },
+  "goalErrNameRequired": "Enter a name for the goal.",
+  "@goalErrNameRequired": {
+    "description": "Field error"
+  },
+  "goalErrNameTooLong": "Use at most 100 characters.",
+  "@goalErrNameTooLong": {
+    "description": "Field error"
+  },
+  "goalErrNameTaken": "You already have a goal with this name.",
+  "@goalErrNameTaken": {
+    "description": "Field error"
+  },
+  "goalErrDateRequired": "Choose a target date.",
+  "@goalErrDateRequired": {
+    "description": "Field error"
+  },
+  "goalErrDatePast": "The target date must be after today.",
+  "@goalErrDatePast": {
+    "description": "Field error"
+  },
+  "goalErrDateTooFar": "The target date can't be more than 60 years ahead.",
+  "@goalErrDateTooFar": {
+    "description": "Field error"
+  },
+  "goalErrTooMany": "You have reached the limit of 50 goals.",
+  "@goalErrTooMany": {
+    "description": "Save refused"
+  },
+  "goalErrNotFound": "This goal no longer exists.",
+  "@goalErrNotFound": {
+    "description": "Save refused"
   }
 }

@@ -696,14 +696,14 @@
   - [x] P07-T04.2 Tabs
   - [x] P07-T04.3 Watchlist action
   - [x] P07-T04.4 Tests
-- [ ] **P07-T05** · Financial Goals (screen 11) · `NOT_STARTED` ⬜
+- [ ] **P07-T05** · Financial Goals (screen 11) · `IN_PROGRESS` 🔄
   - Deps: P07-T01 · Wave: W2 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-11T21:25:04+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P07-T05.1 Goal list
-  - [ ] P07-T05.2 Add/edit
-  - [ ] P07-T05.3 Required contribution display
-  - [ ] P07-T05.4 Tests
+  - [x] P07-T05.1 Goal list
+  - [x] P07-T05.2 Add/edit
+  - [x] P07-T05.3 Required contribution display
+  - [x] P07-T05.4 Tests
 - [ ] **P07-T06** · Portfolio Doctor (screen 12) · `NOT_STARTED` ⬜
   - Deps: P07-T01 · Wave: W2 · Track: MOB · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

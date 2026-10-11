@@ -142,7 +142,17 @@ abstract final class ForecastInputLimits {
     DecimalInput input, {
     bool required = true,
   }) {
-    final limit = of(field);
+    return validateLimit(of(field), text, input, required: required);
+  }
+
+  /// Validates [text] against [limit]. Null means valid. Shared by every form that takes a
+  /// number with a stated range (the calculator and the goal form).
+  static InputIssue? validateLimit(
+    NumericLimit limit,
+    String text,
+    DecimalInput input, {
+    bool required = true,
+  }) {
     if (text.trim().isEmpty) {
       return required ? const InputIssue(IssueKind.required) : null;
     }
