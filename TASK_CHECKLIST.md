@@ -799,14 +799,14 @@
   - [x] P08-T06.2 Fallback rules
   - [x] P08-T06.3 API fields
   - [x] P08-T06.4 Tests
-- [ ] **P08-T07** · Watchlists and alerts backend · `IN_PROGRESS` 🔄
+- [x] **P08-T07** · Watchlists and alerts backend · `COMPLETED` ✅
   - Deps: P08-T05 · Wave: W4 · Track: BE · Size: L · Approval: no
-  - Started: 2026-10-12T03:21:54+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P08-T07.1 Schema
-  - [ ] P08-T07.2 Endpoints
-  - [ ] P08-T07.3 Evaluator
-  - [ ] P08-T07.4 Tests
+  - Started: 2026-10-12T03:21:54+04:00 · Completed: 2026-10-12T03:56:24+04:00 · Duration: 34m 30s · Blocker: —
+  - Evidence: Watchlist, alerts, events and preferences API with migration 0012; evaluation job fires only on fresh data, one-shot and idempotent, honouring preferences; cross-user tests for all id routes plus the integrity sweep; 36 new tests, full backend suite green. Merged in PR 87.
+  - [x] P08-T07.1 Schema
+  - [x] P08-T07.2 Endpoints
+  - [x] P08-T07.3 Evaluator
+  - [x] P08-T07.4 Tests
 - [ ] **P08-T08** · Failover, caching and degradation tests · `NOT_STARTED` ⬜
   - Deps: P08-T05, P08-T06 · Wave: W5 · Track: QA · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
