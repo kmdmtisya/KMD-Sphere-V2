@@ -791,14 +791,14 @@
   - [x] P08-T05.2 Ingestion jobs
   - [x] P08-T05.3 Backfill
   - [x] P08-T05.4 Tests
-- [ ] **P08-T06** · Automatic valuation integration · `NOT_STARTED` ⬜
+- [ ] **P08-T06** · Automatic valuation integration · `IN_PROGRESS` 🔄
   - Deps: P08-T05, P05-T08 · Wave: W4 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T03:04:55+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P08-T06.1 Service update
-  - [ ] P08-T06.2 Fallback rules
-  - [ ] P08-T06.3 API fields
-  - [ ] P08-T06.4 Tests
+  - [x] P08-T06.1 Service update
+  - [x] P08-T06.2 Fallback rules
+  - [x] P08-T06.3 API fields
+  - [x] P08-T06.4 Tests
 - [ ] **P08-T07** · Watchlists and alerts backend · `NOT_STARTED` ⬜
   - Deps: P08-T05 · Wave: W4 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

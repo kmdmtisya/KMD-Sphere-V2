@@ -31,6 +31,10 @@ class ValuationInput:
     value: Decimal
     currency: str
     as_of: datetime
+    # Where the value came from (a market price or a manual valuation) and whether a price is
+    # older than its freshness window (P08-T06).
+    source: str = "valuation"
+    stale: bool = False
 
 
 @dataclass(frozen=True)
@@ -63,6 +67,8 @@ class Summary:
     inputs_as_of: list[datetime] = field(default_factory=list)
     stale_fx: set[str] = field(default_factory=set)
     unpriced_assets: list[uuid.UUID] = field(default_factory=list)
+    # Positions valued from a price older than its freshness window (still counted in the value).
+    stale_prices: list[uuid.UUID] = field(default_factory=list)
     unconverted_currencies: set[str] = field(default_factory=set)
     valued_positions: int = 0
     # Each valued position and each currency's cash balance, in `currency` (for allocation).
@@ -147,6 +153,8 @@ def compute_summary(
             if converted is None:
                 continue
             s.inputs_as_of.append(v.as_of)
+            if v.stale:
+                s.stale_prices.append(asset_id)
             _add(s, v.currency, v.value, converted)
             s.holdings_value += converted
             s.positions[asset_id] = converted
@@ -208,6 +216,7 @@ def consolidate(reporting_currency: str, parts: list[Summary], rates: dict[str, 
             s.inputs_as_of.extend(part.inputs_as_of)
             s.stale_fx |= part.stale_fx
             s.unpriced_assets.extend(part.unpriced_assets)
+            s.stale_prices.extend(part.stale_prices)
             s.unconverted_currencies |= part.unconverted_currencies
             factor = convert(Decimal(1), part.currency)
             if factor is None:
