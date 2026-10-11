@@ -765,3 +765,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-11T11:32:48+04:00 — START P06-T03
 - Performance engine
 - prerequisites verified COMPLETED
+
+### 2026-10-11T12:05:29+04:00 — COMPLETE P06-T03
+- duration: 32m 41s
+- evidence: PR #59 (commit 412e18e). analytics/performance.py (pure Decimal, AST guard against float/IO): external flows (deposits, withdrawals, transfers at posting rate; reversals excluded), simple return, CAGR (actual/365, >= 1 year), XIRR (actual/365; fixed rate grid, bracket nearest 10%, bisection to 1e-12, always terminates; explicit statuses insufficient_flows / no_sign_change / no_rate_in_range; unique flag), TWR with external flows and emptied portfolios (insufficient_data / undefined_period; annualised only >= 1 year). portfolio/performance_service.py: per-portfolio figures from ledger + summary, authorised (404 for another user). Golden vectors incl. Microsoft Excel XIRR documentation example (0.373362535 within Excel's 1e-8; our NPV residual 2e-9 vs Excel's -8.6e-6) and exact constructed cases, all edge cases; Hypothesis properties (NPV zero at rate, scale/shift invariance, XIRR=TWR=CAGR without flows, TWR independent of flows); service tests on the real ledger incl. reconciliation gain = realised + unrealised + income - expenses. 34/34 mutants caught. Local 986 passed, coverage 92%, analytics 100%. Methods docs/design/performance.md; open question (purchases without deposits) recorded for P06-T10. CI all gates pass.
