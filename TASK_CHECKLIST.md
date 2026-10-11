@@ -688,10 +688,10 @@
   - [x] P07-T03.3 Confirmation
   - [x] P07-T03.4 Correction view
   - [x] P07-T03.5 Tests
-- [ ] **P07-T04** · Investment Details (screen 7) · `IN_PROGRESS` 🔄
+- [x] **P07-T04** · Investment Details (screen 7) · `COMPLETED` ✅
   - Deps: P07-T02 · Wave: W3 · Track: MOB · Size: M · Approval: no
-  - Started: 2026-10-11T20:52:29+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-11T20:52:29+04:00 · Completed: 2026-10-11T21:15:05+04:00 · Duration: 22m 36s · Blocker: —
+  - Evidence: Investment Details screen: header with latest price, source and as-of time, price chart with period selector, fundamentals/income/position/transactions/research sections, watchlist action, no Buy/Sell/trade affordance (guard test across all sections); holdings rows open it; 34 new tests including accessibility guidelines light/dark 1x/2x LTR/RTL; analyze and format clean; full mobile suite 1154 passed locally. PR #73. CI all gates pass.
   - [x] P07-T04.1 Header and chart
   - [x] P07-T04.2 Tabs
   - [x] P07-T04.3 Watchlist action
