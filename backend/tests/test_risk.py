@@ -168,3 +168,90 @@ def test_flows_do_not_change_the_returns(steps: list[tuple[Decimal, Decimal]]) -
         assert abs(got - expected) < D("1e-25")
     assert result.max_drawdown is not None and D(-1) <= result.max_drawdown.depth <= 0
     assert result.volatility is not None and result.volatility >= 0
+
+
+# ------------------------------------------------------------ Modified Dietz (review decision 4)
+
+
+def dated(
+    start: date, end: date, value: str, nxt: str, *flows: tuple[int, str]
+) -> list[Observation]:
+    """Two observations; `flows` are (day of the period, amount)."""
+    detail = tuple((start + timedelta(days=d), D(a)) for d, a in flows)
+    total = sum((x for _, x in detail), D(0))
+    return [Observation(start, D(value), total, True, detail), Observation(end, D(nxt), D(0))]
+
+
+def test_a_late_deposit_counts_for_less_of_the_period() -> None:
+    a, b = date(2025, 1, 31), date(2025, 3, 2)  # a 30-day period
+    early = dated(a, b, "1000", "1600", (1, "500"))  # made at the start of day 1: invested 30/30
+    late = dated(a, b, "1000", "1600", (30, "500"))  # made on the last day: invested 1/30
+    middle = dated(a, b, "1000", "1600", (10, "500"))  # 21/30 = 0.7
+    [(_, got_early)] = period_returns(early) or []
+    [(_, got_middle)] = period_returns(middle) or []
+    assert abs(got_early - D("100") / D("1500")) < D("1e-25")
+    assert abs(got_middle - D("100") / D("1350")) < D("1e-25")
+    [(_, got)] = period_returns(late) or []
+    assert abs(got - D("100") / (D(1000) + D(500) / 30)) < D("1e-25")
+    # Without dates the whole flow counts from the start, as for daily series.
+    [(_, undated)] = (
+        period_returns([Observation(a, D(1000), D(500)), Observation(b, D(1600), D(0))]) or []
+    )
+    assert abs(undated - D("100") / D("1500")) < D("1e-25")
+
+
+def test_several_flows_and_withdrawals() -> None:
+    a, b = date(2025, 1, 31), date(2025, 3, 2)
+    s = dated(a, b, "1000", "1150", (5, "200"), (20, "-100"))
+    # base = 1000 + 26/30 x 200 - 11/30 x 100; return = (1150 - 1000 - 100) / base
+    [(_, got)] = period_returns(s) or []
+    expected = D(50) / (D(1000) + D(26) / 30 * 200 - D(11) / 30 * 100)
+    assert abs(got - expected) < D("1e-25")
+
+
+def test_daily_series_are_unchanged_by_the_weighting() -> None:
+    a = date(2025, 1, 1)
+    s = dated(a, a + timedelta(days=1), "1000", "1650", (1, "500"))
+    [(_, got)] = period_returns(s) or []
+    assert abs(got - D("150") / D("1500")) < D("1e-25")
+
+
+def test_dated_flows_chain_into_the_time_weighted_return() -> None:
+    a = date(2025, 1, 31)
+    at = [a + timedelta(days=30 * i) for i in range(14)]
+    series = []
+    for i in range(13):  # a mid-period deposit every period; the value grows by 2% net of it
+        flow = D(100)
+        series.append(
+            Observation(at[i], D(1000) + 40 * i, flow, True, ((at[i] + timedelta(days=15), flow),))
+        )
+    series.append(Observation(at[13], D(1000) + 40 * 13, D(0)))
+    r = measure(series, 12)
+    returns = period_returns(series)
+    assert r.status == RiskStatus.OK and returns is not None and len(returns) == 13
+    assert r.returns == tuple(x for _, x in returns)
+    growth = D(1)
+    for _, x in returns:
+        growth *= 1 + x
+    assert r.time_weighted is not None and r.time_weighted.cumulative is not None
+    assert abs(r.time_weighted.cumulative - (growth - 1)) < D("1e-25")
+    assert r.time_weighted.days == 390 and r.time_weighted.annualized is not None
+
+
+def test_chain_links_returns_and_annualises_full_years() -> None:
+    from app.modules.analytics.risk import chain
+
+    a = date(2025, 1, 1)
+    pairs = [(a + timedelta(days=365), D("0.21"))]
+    result = chain(pairs, 365)
+    assert (result.cumulative, result.status) == (D("0.21"), TwrStatus.OK)
+    assert result.annualized is not None and abs(result.annualized - D("0.21")) < D("1e-30")
+    assert chain(pairs, 364).annualized is None
+    assert chain([(a, D("-1"))], 400).annualized is None  # a total loss cannot be annualised
+
+
+def test_chain_annualises_over_two_years() -> None:
+    from app.modules.analytics.risk import chain
+
+    result = chain([(date(2027, 1, 1), D("0.21"))], 730)  # 21% over two years = 10% a year
+    assert result.annualized is not None and abs(result.annualized - D("0.1")) < D("1e-25")

@@ -172,7 +172,7 @@ Per asset and portfolio, in the portfolio currency, each posting at its own rate
 ## 12. Value history and risk (docs/design/risk.md)
 
 - **Value history:** the end-of-day value at each date, from the ledger as of that date, the newest valuation, and the historical rate. A point is complete only when nothing is unpriced or unconverted.
-- **Period returns:** r = V(k+1) / (V(k) + F(k)) - 1, with the period's flows at its start.
+- **Period returns:** Modified Dietz, r = (V_end - V_start - F) / (V_start + Σ wᵢFᵢ), with w = (period end - t + 1) / days for a flow made at the start of day t (daily series: w = 1). The series' time-weighted return links the period returns.
 - **Volatility:** sample standard deviation (n - 1) × √(periods a year): 365, 52 or 12.
 - **Maximum drawdown:** on the linked return index (flows removed), with peak, trough and recovery dates.
 - **Statuses:** `insufficient_data` (< 12 returns), `incomplete_data`, `undefined_period`. No partial figures are given.

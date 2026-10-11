@@ -131,6 +131,7 @@ def test_a_flow_on_the_next_point_belongs_to_the_period_before_it() -> None:
     ledger = [entry("DEPOSIT", date(2025, 1, 1), "100"), entry("DEPOSIT", date(2025, 1, 31), "50")]
     points = build(ledger, [], eur_rate, [date(2025, 1, 1), date(2025, 1, 31)])
     assert [(p.value, p.flow_next) for p in points] == [(D(100), D(50)), (D(150), D(0))]
+    assert points[0].flows == ((date(2025, 1, 31), D(50)),) and points[1].flows == ()
 
 
 def test_a_valuation_in_a_currency_without_a_rate_is_left_out() -> None:

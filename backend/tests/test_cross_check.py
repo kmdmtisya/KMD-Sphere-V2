@@ -485,3 +485,33 @@ def test_the_workbook_vectors() -> None:
     ]
     assert twr(points).cumulative == D("0.21")
     assert o.sample_variance([F(1, 10), F(-1, 10), F(1, 10), F(-1, 10)]) == F(1, 75)
+
+
+@settings(max_examples=100, deadline=None)
+@given(
+    st.decimals(min_value=1, max_value=100000, places=2),
+    st.decimals(min_value=0, max_value=200000, places=2),
+    st.integers(7, 40),
+    st.lists(
+        st.tuples(st.integers(1, 40), st.decimals(min_value=-500, max_value=5000, places=2)),
+        max_size=6,
+    ),
+)
+def test_modified_dietz_matches_the_oracle(
+    start: Decimal, end: Decimal, length: int, raw: list[tuple[int, Decimal]]
+) -> None:
+    from app.modules.analytics.risk import Observation, period_returns
+
+    flows = [(min(d, length), a) for d, a in raw]
+    first = DAY0
+    detail = tuple((first + timedelta(days=d), a) for d, a in flows)
+    total = sum((a for _, a in detail), D(0))
+    weighted = sum((F(length - d + 1, length) * o.frac(a) for d, a in flows), F(0))
+    assume(o.frac(start) + weighted > 0)
+    series = [Observation(first, start, total, True, detail),
+              Observation(first + timedelta(days=length), end, D(0))]  # fmt: skip
+    got = period_returns(series)
+    assert got is not None
+    expected = o.modified_dietz(o.frac(start), o.frac(end), length,
+                                [(d, o.frac(a)) for d, a in flows])  # fmt: skip
+    assert close(got[0][1], expected, F(1, 10**28))

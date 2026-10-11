@@ -247,3 +247,14 @@ def _newton(terms: list[tuple[Decimal, Decimal]], rate: Decimal) -> Decimal | No
             if abs(step) < Decimal("1e-40"):
                 return rate
     return None
+
+
+def modified_dietz(
+    start_value: Fraction, end_value: Fraction, period_days: int,
+    flows: Sequence[tuple[int, Fraction]],
+) -> Fraction:  # fmt: off
+    """Return of one period. Each flow is (day of the period it is made, 1..period_days, at the
+    start of that day, amount); it is invested for the remaining period_days - day + 1 days."""
+    total = sum((a for _, a in flows), F(0))
+    base = start_value + sum((F(period_days - d + 1, period_days) * a for d, a in flows), F(0))
+    return (end_value - start_value - total) / base

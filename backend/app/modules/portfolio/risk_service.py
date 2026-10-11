@@ -81,7 +81,7 @@ class RiskService:
         rate = _RateBook(base, stored, moment)
         points = history.build(entries, valued, rate, days)
         risk = measure(
-            [Observation(p.on, p.value, p.flow_next, p.complete) for p in points],
+            [Observation(p.on, p.value, p.flow_next, p.complete, p.flows) for p in points],
             frequency.per_year,
         )
         return PortfolioRisk(base, frequency, start, end, points, risk)
