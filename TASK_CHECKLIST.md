@@ -696,10 +696,10 @@
   - [x] P07-T04.2 Tabs
   - [x] P07-T04.3 Watchlist action
   - [x] P07-T04.4 Tests
-- [ ] **P07-T05** · Financial Goals (screen 11) · `IN_PROGRESS` 🔄
+- [x] **P07-T05** · Financial Goals (screen 11) · `COMPLETED` ✅
   - Deps: P07-T01 · Wave: W2 · Track: MOB · Size: L · Approval: no
-  - Started: 2026-10-11T21:25:04+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-11T21:25:04+04:00 · Completed: 2026-10-11T21:50:45+04:00 · Duration: 25m 41s · Blocker: —
+  - Evidence: Goals tab with progress-ring cards, goal detail with required contribution labelled as an assumption-based estimate, scenarios and assumptions, add/edit form with inline human-readable validation on backend limits (no pre-filled returns); 94 new tests incl. validation limits, repository rules and accessibility guidelines light/dark 1x/2x LTR/RTL; analyze and format clean; full mobile suite 1225 passed locally. PR #74. CI all gates pass.
   - [x] P07-T05.1 Goal list
   - [x] P07-T05.2 Add/edit
   - [x] P07-T05.3 Required contribution display
