@@ -660,7 +660,7 @@
 
 ## P07 — Remaining Screens with DEMO Data (UX Gate 3)
 
-- Phase approval: `PENDING`
+- Phase approval: `APPROVED by user (mtisya@gmail.com) at 2026-10-11T19:06:55+04:00`
 - Entry gates: prerequisite phase gates completed (P03); cumulative criteria QG-01.1,2,5; QG-02.1–6; QG-03.1,6; QG-04.1–4; QG-05.1–3; QG-08.3,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
 - Exit gates: none — required by `P07-GATE` (Gates-done)
 - Release gates: —
