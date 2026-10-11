@@ -948,3 +948,14 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T01:15:12+04:00 — PHASE APPROVED P08
 - approved by user (mtisya@gmail.com)
 - Market Data & Research Integration (Backend)
+
+### 2026-10-12T01:19:19+04:00 — START P08-T01
+- Provider selection and licensing decision
+- prerequisites verified COMPLETED
+
+### 2026-10-12T01:19:20+04:00 — AWAITING_VERIFICATION P08-T01
+- evidence: ADR-0014 and docs/market-data-providers.md: requirements matrix, candidates evaluated from public pricing/terms pages fetched 2026-10-12 (CoinGecko, Twelve Data, ECB), selection per asset class. Licence for in-app display/storage NOT confirmed for any provider; production use is blocked on written licence confirmation (ADR section 4).
+
+### 2026-10-12T01:19:20+04:00 — COMPLETE P08-T01
+- duration: 0m 01s
+- evidence: ADR-0014 accepted. User approved P08-T01 and the P08 run on 2026-10-12, adopting the recommended selection (ECB FX, CoinGecko crypto, Twelve Data equities adapter). Acceptance caveat recorded: licence for in-app display and storage is not yet confirmed for any provider; production use blocked until it is. · Approved by: user (mtisya@gmail.com)
