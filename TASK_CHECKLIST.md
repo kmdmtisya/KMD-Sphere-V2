@@ -672,13 +672,13 @@
   - [x] P07-T01.1 Four components
   - [x] P07-T01.2 Gallery entries
   - [x] P07-T01.3 Tests and goldens
-- [ ] **P07-T02** · Investments / Holdings (screen 5) · `NOT_STARTED` ⬜
+- [x] **P07-T02** · Investments / Holdings (screen 5) · `COMPLETED` ✅
   - Deps: P07-T01 · Wave: W2 · Track: MOB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P07-T02.1 Screen
-  - [ ] P07-T02.2 Search/filter/sort
-  - [ ] P07-T02.3 Tests
+  - Started: 2026-10-11T19:46:13+04:00 · Completed: 2026-10-11T20:02:57+04:00 · Duration: 16m 44s · Blocker: —
+  - Evidence: Holdings screen (screen 5) at /portfolio/holdings replaces the placeholder: search (name or symbol), asset-class chips (wrapping, fully visible at 2x), five sort orders with stable ties; every row shows the converted value and, for other-currency assets, the native value; results line is a live region so search, filter and sort changes are announced, chip selection is spoken as a word; loading skeleton, error and retry, empty portfolio, no-match state with Clear filters, pull to refresh. Query logic only arranges backend figures. 25 tests (query logic, screen behaviour, route and back, tap-target/label/strict/contrast guidelines in light/dark, 1x/2x, LTR/RTL); full suite 1031 passed, flutter analyze clean. PR #71. CI all gates pass.
+  - [x] P07-T02.1 Screen
+  - [x] P07-T02.2 Search/filter/sort
+  - [x] P07-T02.3 Tests
 - [ ] **P07-T03** · Transactions (screen 8) and add-transaction flow · `NOT_STARTED` ⬜
   - Deps: P07-T01 · Wave: W2 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

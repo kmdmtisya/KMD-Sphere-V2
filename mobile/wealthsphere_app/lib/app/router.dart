@@ -9,6 +9,7 @@ import '../features/auth/presentation/welcome_screen.dart';
 import '../features/calculator/presentation/calculator_screen.dart';
 import '../features/calculator/presentation/forecast/forecast_screen.dart';
 import '../features/dashboard/presentation/home_screen.dart';
+import '../features/portfolios/presentation/holdings_screen.dart';
 import '../features/portfolios/presentation/portfolio_overview_screen.dart';
 import 'app_routes.dart';
 import 'app_shell.dart';
@@ -34,7 +35,7 @@ final Map<AppTab, RouteBase Function()> tabRoutes =
         routes: [
           GoRoute(
             path: 'holdings',
-            builder: (context, state) => const HoldingsPlaceholder(),
+            builder: (context, state) => const HoldingsScreen(),
           ),
         ],
       ),
