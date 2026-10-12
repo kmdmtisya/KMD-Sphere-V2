@@ -132,7 +132,7 @@ void main() {
       expect(d.recent, isNotEmpty);
       final shares = d.bySource.fold(
         Decimal.zero,
-        (a, s) => a + s.sharePercent,
+        (a, s) => a + s.sharePercent!,
       );
       expect(
         (shares - Decimal.fromInt(100)).abs() <= Decimal.parse('0.05'),

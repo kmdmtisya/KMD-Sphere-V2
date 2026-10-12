@@ -85,7 +85,7 @@ void main() {
         find.text('3 of 4 goals on track under your assumptions'),
         findsOneWidget,
       );
-      expect(find.textContaining('not a promise'), findsOneWidget);
+      expect(find.textContaining('not guaranteed'), findsWidgets);
       expect(find.text('DEMO'), findsWidgets);
     });
 

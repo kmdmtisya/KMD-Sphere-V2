@@ -78,7 +78,8 @@ class GoalsScreen extends ConsumerWidget {
                     ),
                   ),
                   Text(
-                    l10n.goalsSummaryNote,
+                    // The server's own wording for what the statuses rest on.
+                    withFigures.first.figures!.notice,
                     style: context.wealthText.caption.copyWith(
                       color: context.wealthColors.textMuted,
                     ),
