@@ -2,7 +2,6 @@
 window, honest status, the cached board, and the /api/v1/fx endpoints."""
 
 import secrets
-import string
 import uuid
 from collections.abc import AsyncIterator
 from datetime import UTC, date, datetime, timedelta
@@ -43,6 +42,7 @@ from app.modules.market_data.providers.registry import MarketProviders
 from tests import auth_helpers as ah
 from tests.authz_harness import TwoUsers, two_users  # noqa: F401
 from tests.db_fixtures import migrated_settings  # noqa: F401
+from tests.fx.codes import unique_code
 
 pytestmark = pytest.mark.integration
 
@@ -105,8 +105,7 @@ class StubFx:
 
 
 def pivot_code() -> str:
-    """A pivot no other test uses, so rows never mix (the rate table is shared)."""
-    return "Q" + "".join(secrets.choice(string.ascii_uppercase) for _ in range(2)) + ""
+    return unique_code()
 
 
 def far_window() -> datetime:

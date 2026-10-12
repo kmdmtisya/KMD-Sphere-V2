@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-13T01:53:30+04:00 by `scripts/track.py`._
+_Generated at 2026-10-13T02:21:23+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -31,16 +31,16 @@ _Generated at 2026-10-13T01:53:30+04:00 by `scripts/track.py`._
 | QG-18 | QG-FX-06: AI Trading Intelligence | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
 | QG-19 | QG-FX-07: Mobile Experience | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
 | QG-20 | QG-FX-08: Release and Regulatory Readiness | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
-| QG-21 | QG-FXCUR-01: Exchange Rate Accuracy | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
-| QG-22 | QG-FXCUR-02: Portfolio Consistency | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
-| QG-23 | QG-FXCUR-03: Data Reliability | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
-| QG-24 | QG-FXCUR-04: Android and iOS | ⬜ NOT_STARTED | 0/7 | Unassigned | — |
-| QG-25 | QG-FXCUR-05: AI Integration | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
+| QG-21 | QG-FXCUR-01: Exchange Rate Accuracy | ✅ PASSED | 5/5 | Unassigned | — |
+| QG-22 | QG-FXCUR-02: Portfolio Consistency | ✅ PASSED | 5/5 | Unassigned | — |
+| QG-23 | QG-FXCUR-03: Data Reliability | ✅ PASSED | 5/5 | Unassigned | — |
+| QG-24 | QG-FXCUR-04: Android and iOS | ✅ PASSED | 7/7 | Unassigned | — |
+| QG-25 | QG-FXCUR-05: AI Integration | ✅ PASSED | 5/5 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 50/146.
+Criteria satisfied overall: 77/146.
 
-Current phase **P11** exit-gate criteria outstanding: QG-21.1, QG-21.2, QG-21.3, QG-21.4, QG-21.5, QG-22.1, QG-22.2, QG-22.3, QG-22.4, QG-22.5, QG-23.1, QG-23.2, QG-23.3, QG-23.4, QG-23.5, QG-24.1, QG-24.2, QG-24.3, QG-24.4, QG-24.5, QG-24.6, QG-24.7, QG-25.1, QG-25.2, QG-25.3, QG-25.4, QG-25.5.
+Current phase **P11** exit-gate criteria outstanding: none.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -424,92 +424,92 @@ Approved By: —
 
 ### QG-21: QG-FXCUR-01: Exchange Rate Accuracy
 
-- [ ] QG-21.1 Retrieved rates are validated against provider responses · Required: P11 · By: P11-T03 · CRITICAL
-- [ ] QG-21.2 Base/quote direction is verified for direct and inverse rates · Required: P11 · By: P11-T04 · CRITICAL
-- [ ] QG-21.3 Cross-rate calculations and the recorded rate path are verified · Required: P11 · By: P11-T04 · CRITICAL
-- [ ] QG-21.4 Decimal precision is verified (no binary floating point) · Required: P11 · By: P11-T04 · CRITICAL
-- [ ] QG-21.5 Currency-specific rounding is verified · Required: P11 · By: P11-T04 · CRITICAL
+- [x] QG-21.1 Retrieved rates are validated against provider responses · Required: P11 · By: P11-T03 · Evidence: reports/quality/qg-21-exchange-rate-accuracy.md: ExchangeRate-API adapter contract and validation tests (exact decimals, base/target/day checks, documented error types, unusable bodies refused) and recorded ECB fixtures; ExchangeRate-API fixtures are documentation-shaped synthetic (fixture-only approval), to be re-recorded at P11-T12. · Verified: 2026-10-13T02:13:13+04:00 · CRITICAL
+- [x] QG-21.2 Base/quote direction is verified for direct and inverse rates · Required: P11 · By: P11-T04 · Evidence: reports/quality/qg-21: direct/inverse direction tests in tests/test_fx.py and tests/fx/test_conversion.py; snapshot and FX service check the stored direction. · Verified: 2026-10-13T02:13:13+04:00 · CRITICAL
+- [x] QG-21.3 Cross-rate calculations and the recorded rate path are verified · Required: P11 · By: P11-T04 · Evidence: reports/quality/qg-21: cross-rate tests (financial matrix F-05) with path, older-leg age and stale flag; property tests: cross rate equals the exact ratio to 45 digits. · Verified: 2026-10-13T02:13:13+04:00 · CRITICAL
+- [x] QG-21.4 Decimal precision is verified (no binary floating point) · Required: P11 · By: P11-T04 · Evidence: reports/quality/qg-21: no float columns (schema test), Decimal JSON parsing, ExactRate for derived rates, exact-fraction property tests, no JSON floats in tool results. · Verified: 2026-10-13T02:13:14+04:00 · CRITICAL
+- [x] QG-21.5 Currency-specific rounding is verified · Required: P11 · By: P11-T04 · Evidence: reports/quality/qg-21: rounding once, half-up, to currencies.decimal_places (JPY 0); rounding error at most half a unit (property test). · Verified: 2026-10-13T02:13:14+04:00 · CRITICAL
 
-Status: NOT_STARTED  
+Status: PASSED  
 Owner: Unassigned  
-Start Timestamp: —  
-End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Start Timestamp: 2026-10-13T02:13:11+04:00  
+End Timestamp: 2026-10-13T02:13:22+04:00  
+Verification Timestamp: 2026-10-13T02:13:22+04:00  
+Evidence: All criteria verified with evidence in reports/quality/qg-21-exchange-rate-accuracy.md (P11-T10).  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
 
 ### QG-22: QG-FXCUR-02: Portfolio Consistency
 
-- [ ] QG-22.1 Portfolio totals reconcile after currency conversion · Required: P11 · By: P11-T06 · CRITICAL
-- [ ] QG-22.2 Original transaction values remain unchanged · Required: P11 · By: P11-T06 · CRITICAL
-- [ ] QG-22.3 Multi-currency holdings aggregate correctly · Required: P11 · By: P11-T06 · CRITICAL
-- [ ] QG-22.4 Historical reporting uses the appropriate historical rates · Required: P11 · By: P11-T05 · CRITICAL
-- [ ] QG-22.5 Dashboard and report totals agree for the same rate snapshot · Required: P11 · By: P11-T09 · CRITICAL
+- [x] QG-22.1 Portfolio totals reconcile after currency conversion · Required: P11 · By: P11-T06 · Evidence: reports/quality/qg-22: reconciliation test (converted total equals the sum of converted parts under one snapshot). · Verified: 2026-10-13T02:13:15+04:00 · CRITICAL
+- [x] QG-22.2 Original transaction values remain unchanged · Required: P11 · By: P11-T06 · Evidence: reports/quality/qg-22: stored transaction, portfolio and goal rows identical before and after currency switches; forecast inputs unchanged. · Verified: 2026-10-13T02:13:15+04:00 · CRITICAL
+- [x] QG-22.3 Multi-currency holdings aggregate correctly · Required: P11 · By: P11-T06 · Evidence: reports/quality/qg-22: multi-currency portfolios (USD+AED, AED+KES) aggregated under one snapshot, hand-computed total 10,137.60 EUR. · Verified: 2026-10-13T02:13:16+04:00 · CRITICAL
+- [x] QG-22.4 Historical reporting uses the appropriate historical rates · Required: P11 · By: P11-T05 · Evidence: reports/quality/qg-22: tests/fx/test_history.py (each day its own rate, missing days flagged, posting uses trade-date rate) and conversion on a past day. · Verified: 2026-10-13T02:13:16+04:00 · CRITICAL
+- [x] QG-22.5 Dashboard and report totals agree for the same rate snapshot · Required: P11 · By: P11-T09 · Evidence: reports/quality/qg-22: integration drill: dashboard, consolidated summary, net worth and AI tool share the snapshot id and total. · Verified: 2026-10-13T02:13:16+04:00 · CRITICAL
 
-Status: NOT_STARTED  
+Status: PASSED  
 Owner: Unassigned  
-Start Timestamp: —  
-End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Start Timestamp: 2026-10-13T02:13:12+04:00  
+End Timestamp: 2026-10-13T02:13:23+04:00  
+Verification Timestamp: 2026-10-13T02:13:23+04:00  
+Evidence: All criteria verified with evidence in reports/quality/qg-22-portfolio-consistency.md (P11-T10).  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
 
 ### QG-23: QG-FXCUR-03: Data Reliability
 
-- [ ] QG-23.1 Provider outages are handled without inventing rates · Required: P11 · By: P11-T03
-- [ ] QG-23.2 Stale-rate detection is tested · Required: P11 · By: P11-T03
-- [ ] QG-23.3 Fallback provider is tested · Required: P11 · By: P11-T03
-- [ ] QG-23.4 Rate timestamps and status are displayed · Required: P11 · By: P11-T07
-- [ ] QG-23.5 Cache behaviour is verified · Required: P11 · By: P11-T03
+- [x] QG-23.1 Provider outages are handled without inventing rates · Required: P11 · By: P11-T03 · Evidence: reports/quality/qg-23: total-outage tests keep the last good rates with status and age; nothing invented; missing currencies stay missing. · Verified: 2026-10-13T02:13:16+04:00
+- [x] QG-23.2 Stale-rate detection is tested · Required: P11 · By: P11-T03 · Evidence: reports/quality/qg-23: status windows per provider tested at boundaries; stale labels on board, reporting block and single rate. · Verified: 2026-10-13T02:13:17+04:00
+- [x] QG-23.3 Fallback provider is tested · Required: P11 · By: P11-T03 · Evidence: reports/quality/qg-23: fallback for missing pairs, provider down, bad data and refused key; resilient batch retry. · Verified: 2026-10-13T02:13:17+04:00
+- [x] QG-23.4 Rate timestamps and status are displayed · Required: P11 · By: P11-T07 · Evidence: reports/quality/qg-23: API rates carry provider, type, times, status; mobile FX status line and converter show time and status (widget tests, e2e journey 8). · Verified: 2026-10-13T02:13:18+04:00
+- [x] QG-23.5 Cache behaviour is verified · Required: P11 · By: P11-T03 · Evidence: reports/quality/qg-23: one refresh per window (second call reaches no provider), window released after failure, quota arithmetic, cache invalidated by refresh and status computed per read. · Verified: 2026-10-13T02:13:18+04:00
 
-Status: NOT_STARTED  
+Status: PASSED  
 Owner: Unassigned  
-Start Timestamp: —  
-End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Start Timestamp: 2026-10-13T02:13:12+04:00  
+End Timestamp: 2026-10-13T02:13:24+04:00  
+Verification Timestamp: 2026-10-13T02:13:24+04:00  
+Evidence: All criteria verified with evidence in reports/quality/qg-23-data-reliability.md (P11-T10).  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
 
 ### QG-24: QG-FXCUR-04: Android and iOS
 
-- [ ] QG-24.1 Currency selector functions correctly · Required: P11 · By: P11-T07
-- [ ] QG-24.2 Converted figures update throughout the app · Required: P11 · By: P11-T07
-- [ ] QG-24.3 Currency preference persists and syncs · Required: P11 · By: P11-T07
-- [ ] QG-24.4 Dark and light modes work · Required: P11 · By: P11-T07
-- [ ] QG-24.5 Loading and error states are tested · Required: P11 · By: P11-T07
-- [ ] QG-24.6 Flutter tests pass · Required: P11 · By: P11-T07
-- [ ] QG-24.7 Android and iOS builds pass · Required: P11 · By: P11-T07
+- [x] QG-24.1 Currency selector functions correctly · Required: P11 · By: P11-T07 · Evidence: reports/quality/qg-24: selector widget tests (search, recents, empty, save, failed save) and e2e journey 8 on the real backend. · Verified: 2026-10-13T02:13:19+04:00
+- [x] QG-24.2 Converted figures update throughout the app · Required: P11 · By: P11-T07 · Evidence: reports/quality/qg-24: figures re-requested after a switch (provider test); e2e journey 8 shows the server's EUR net worth on Home. · Verified: 2026-10-13T02:13:19+04:00
+- [x] QG-24.3 Currency preference persists and syncs · Required: P11 · By: P11-T07 · Evidence: reports/quality/qg-24: server-stored setting, two-session backend test; demo keeps it on device and says so. · Verified: 2026-10-13T02:13:19+04:00
+- [x] QG-24.4 Dark and light modes work · Required: P11 · By: P11-T07 · Evidence: reports/quality/qg-24: converter in the accessibility sweep light/dark x LTR/RTL x 1x/2x. · Verified: 2026-10-13T02:13:20+04:00
+- [x] QG-24.5 Loading and error states are tested · Required: P11 · By: P11-T07 · Evidence: reports/quality/qg-24: selector loading/error/empty/failed-save and converter validation/failure states tested. · Verified: 2026-10-13T02:13:20+04:00
+- [x] QG-24.6 Flutter tests pass · Required: P11 · By: P11-T07 · Evidence: reports/quality/qg-24: Flutter 1,755 tests pass, analyze and format clean. · Verified: 2026-10-13T02:13:20+04:00
+- [x] QG-24.7 Android and iOS builds pass · Required: P11 · By: P11-T07 · Evidence: reports/quality/qg-24: CI PR #131 android debug build pass and ios compile (no codesign) pass; device runs belong to release (P16). · Verified: 2026-10-13T02:13:20+04:00
 
-Status: NOT_STARTED  
+Status: PASSED  
 Owner: Unassigned  
-Start Timestamp: —  
-End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Start Timestamp: 2026-10-13T02:13:12+04:00  
+End Timestamp: 2026-10-13T02:13:24+04:00  
+Verification Timestamp: 2026-10-13T02:13:24+04:00  
+Evidence: All criteria verified with evidence in reports/quality/qg-24-android-ios.md (P11-T10).  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
 
 ### QG-25: QG-FXCUR-05: AI Integration
 
-- [ ] QG-25.1 AI uses only authorised FX tools · Required: P11 · By: P11-T08 · CRITICAL
-- [ ] QG-25.2 AI does not invent exchange rates · Required: P11 · By: P11-T08 · CRITICAL
-- [ ] QG-25.3 AI conversions match backend results for the same snapshot · Required: P11 · By: P11-T08 · CRITICAL
-- [ ] QG-25.4 Rate timestamps and sources are available in answers · Required: P11 · By: P11-T08
-- [ ] QG-25.5 User financial data remains protected (ownership enforced) · Required: P11 · By: P11-T08 · CRITICAL
+- [x] QG-25.1 AI uses only authorised FX tools · Required: P11 · By: P11-T08 · Evidence: reports/quality/qg-25: five FX tools on the allow-list and governance table (allow-list test); no user id in schemas. · Verified: 2026-10-13T02:13:21+04:00 · CRITICAL
+- [x] QG-25.2 AI does not invent exchange rates · Required: P11 · By: P11-T08 · Evidence: reports/quality/qg-25: fx evaluation set 30/30 zero tolerance and chat drill refusing an invented amount; contextual restatement limit documented. · Verified: 2026-10-13T02:13:21+04:00 · CRITICAL
+- [x] QG-25.3 AI conversions match backend results for the same snapshot · Required: P11 · By: P11-T08 · Evidence: reports/quality/qg-25: tool rate and conversion equal /fx/rates and /fx/convert for the same snapshot id; portfolio value equals the summary API. · Verified: 2026-10-13T02:13:21+04:00 · CRITICAL
+- [x] QG-25.4 Rate timestamps and sources are available in answers · Required: P11 · By: P11-T08 · Evidence: reports/quality/qg-25: FX tool results carry rate, providers, time, status and snapshot id; source events in the chat stream. · Verified: 2026-10-13T02:13:21+04:00
+- [x] QG-25.5 User financial data remains protected (ownership enforced) · Required: P11 · By: P11-T08 · Evidence: reports/quality/qg-25: another user's portfolio is not_found for value and exposure tools with nothing leaked; smuggled user_id refused. · Verified: 2026-10-13T02:13:22+04:00 · CRITICAL
 
-Status: NOT_STARTED  
+Status: PASSED  
 Owner: Unassigned  
-Start Timestamp: —  
-End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Start Timestamp: 2026-10-13T02:13:12+04:00  
+End Timestamp: 2026-10-13T02:13:25+04:00  
+Verification Timestamp: 2026-10-13T02:13:25+04:00  
+Evidence: All criteria verified with evidence in reports/quality/qg-25-ai-integration.md (P11-T10).  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —

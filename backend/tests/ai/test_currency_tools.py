@@ -2,8 +2,6 @@
 for the same snapshot."""
 
 import json
-import secrets
-import string
 import uuid
 from collections.abc import AsyncIterator
 from datetime import UTC, datetime, time, timedelta
@@ -23,6 +21,7 @@ from app.main import create_app
 from tests import auth_helpers as ah
 from tests.authz_harness import TwoUsers, two_users  # noqa: F401
 from tests.db_fixtures import migrated_settings  # noqa: F401
+from tests.fx.codes import unique_code
 
 pytestmark = [pytest.mark.integration, pytest.mark.security]
 CURRENCY_TOOLS = {
@@ -36,7 +35,7 @@ PAST = datetime.now(UTC).date() - timedelta(days=20)
 
 
 def code() -> str:
-    return "Q" + "".join(secrets.choice(string.ascii_uppercase) for _ in range(2))
+    return unique_code()
 
 
 @pytest.fixture

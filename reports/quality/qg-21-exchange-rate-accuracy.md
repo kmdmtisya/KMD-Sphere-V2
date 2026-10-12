@@ -1,0 +1,11 @@
+# QG-21 (QG-FXCUR-01): Exchange Rate Accuracy — P11-T10, 2026-10-13
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| 21.1 Retrieved rates are validated against provider responses | `tests/market_data/test_exchangerate_api.py`: contract tests (positive, provenance, ascending history, unknown pair), exact Decimal parsing of the vendor numbers, base/target/day checks, every documented `error-type` and HTTP failure mapped, unusable bodies (negative, boolean, missing time, wrong base) refused; ECB adapter contract tests from **recorded** ECB files. **Limit:** ExchangeRate-API fixtures are synthetic (documentation-shaped; no key; fixture-only approval of P11-T03); re-record them when the key and licence exist (P11-T12). | Pass |
+| 21.2 Base/quote direction is verified for direct and inverse rates | `tests/test_fx.py` (inverse only without a direct rate, exact inverse), `tests/fx/test_conversion.py::test_identity_direct_inverse_and_cross_rates`, the snapshot looks pairs up by (base, quote) key, the FX service checks the stored direction | Pass |
+| 21.3 Cross-rate calculations and the recorded rate path are verified | `tests/test_fx.py::test_a_cross_rate_goes_through_the_pivot_with_its_path` and the stale, older-leg and stored-pair-wins cases (financial matrix F-05); `tests/fx/test_conversion.py` (path AED→pivot→KES; exact ratio to 45 digits in property tests); paths returned by `/fx/rates` | Pass |
+| 21.4 Decimal precision is verified (no binary floating point) | Schema test: no float column in the FX tables; vendor JSON parsed with `parse_float=Decimal`; `ExactRate` keeps derived rates exact on the wire; property tests against exact fractions; tool results checked for JSON floats | Pass |
+| 21.5 Currency-specific rounding is verified | `tests/fx/test_conversion.py::test_conversion_rounds_once_to_the_target_precision` (JPY 0, KES/USD 2, midpoint half-up, liabilities); rounding error at most half a unit (property test); `currencies.decimal_places` equal ISO minor units (schema test) | Pass |
+
+Run: `cd backend && uv run pytest tests/fx tests/test_fx.py tests/market_data/test_exchangerate_api.py -q` (passed; 3 consecutive runs after the test-code isolation fix of this task).

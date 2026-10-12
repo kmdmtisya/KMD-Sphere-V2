@@ -1,8 +1,6 @@
 """Historical rates (P11-T05): past figures use their own day's rate, missing days are flagged and
 never filled, and the three rate concepts stay apart."""
 
-import secrets
-import string
 import uuid
 from collections.abc import AsyncIterator
 from datetime import UTC, date, datetime, time, timedelta
@@ -22,6 +20,7 @@ from app.modules.market_data.service import FxService
 from tests import auth_helpers as ah
 from tests.authz_harness import TwoUsers, two_users  # noqa: F401
 from tests.db_fixtures import migrated_settings  # noqa: F401
+from tests.fx.codes import unique_code
 
 pytestmark = pytest.mark.integration
 
@@ -29,7 +28,7 @@ MON = date(2026, 9, 7)  # a Monday
 
 
 def code() -> str:
-    return "Q" + "".join(secrets.choice(string.ascii_uppercase) for _ in range(2))
+    return unique_code()
 
 
 def at_noon(day: date) -> datetime:
