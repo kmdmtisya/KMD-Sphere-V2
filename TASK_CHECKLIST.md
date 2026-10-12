@@ -925,7 +925,7 @@
 
 ## P10 — AI Tool Layer & Wealth Copilot
 
-- Phase approval: `PENDING`
+- Phase approval: `APPROVED by user (mtisya@gmail.com) at 2026-10-12T15:51:51+04:00`
 - Entry gates: prerequisite phase gates completed (P04, P05, P06); cumulative criteria QG-01.1–3; QG-02.1–6; QG-03.1,2,4,5,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-06.1–6; QG-08.1,3,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
 - Exit gates: QG-07.1,2,3,5,6,8; QG-11.3 — required by `P10-GATE` (Gates-done)
 - Release gates: —
