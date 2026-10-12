@@ -50,6 +50,7 @@ class NetWorthScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: AppSpacing.xs),
                     DataAsOfLabel(asOf: d.asOf),
+                    DataQualityNotice(complete: d.complete),
                   ],
                 ),
               ),

@@ -355,6 +355,11 @@ class _GoalsSection extends ConsumerWidget {
                 l10n: l10n,
                 colors: colors,
               ),
+            if (g.notice != null)
+              Text(
+                g.notice!,
+                style: text.caption.copyWith(color: colors.textMuted),
+              ),
           ],
         ),
       ),

@@ -2,7 +2,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/data/demo_support.dart';
 import '../../../core/data/json_reader.dart';
+import '../../../core/network/api_client.dart';
+import '../../../core/network/asset_class_names.dart';
+import '../../../shared/domain/wealth_models.dart';
+import '../../portfolios/data/portfolio_repository.dart';
+import '../../transactions/data/transaction_repository.dart';
 import '../domain/more_models.dart';
+import 'live_more_repository.dart';
 
 /// The wealth views behind the More tab. Read-only.
 abstract interface class MoreRepository {
@@ -39,6 +45,12 @@ final moreRepositoryProvider = Provider<MoreRepository>((ref) {
         ref.read(demoBehaviorProvider.notifier).gate,
       );
     case DataSourceMode.live:
-      liveNotWired('MoreRepository');
+      final ledger = ref.watch(transactionRepositoryProvider);
+      return LiveMoreRepository(
+        ref.watch(apiClientProvider),
+        ref.watch(assetClassNamesProvider),
+        ref.watch(portfolioRepositoryProvider).portfolios,
+        () => ledger.entries(PortfolioRef.consolidatedId),
+      );
   }
 });

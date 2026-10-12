@@ -76,6 +76,7 @@ class _Headline extends StatelessWidget {
           CurrencyAmount(money: detail.yearly, style: text.title),
           const SizedBox(height: AppSpacing.xs),
           DataAsOfLabel(asOf: detail.asOf),
+          DataQualityNotice(complete: detail.complete),
         ],
       ),
     );
@@ -115,13 +116,14 @@ class _Sources extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(s.label, style: text.body),
-                          Text(
-                            context.percentFormatter.format(
-                              s.sharePercent,
-                              fractionDigits: 1,
+                          if (s.sharePercent != null)
+                            Text(
+                              context.percentFormatter.format(
+                                s.sharePercent!,
+                                fractionDigits: 1,
+                              ),
+                              style: muted,
                             ),
-                            style: muted,
-                          ),
                         ],
                       ),
                     ),
@@ -177,7 +179,11 @@ class _Recent extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('${p.kind} · ${p.assetName}', style: text.body),
+                          Text(
+                            '${p.transactionKind == null ? p.kind : TransactionTile.label(l10n, p.transactionKind!)}'
+                            ' · ${p.assetName}',
+                            style: text.body,
+                          ),
                           Text(
                             DateLabels.date(p.date, locale: locale),
                             style: muted,

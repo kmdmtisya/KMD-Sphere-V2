@@ -37,3 +37,9 @@ Rules kept: no figure is added, converted or derived in the app. A missing figur
 - **After a save or a correction** the ledger, holdings, summaries, chart, allocation, metrics and Home figures are re-read from the server (`refreshLedger`); nothing is adjusted on the device.
 - **Holdings** (from P09-T02) carry the asset id; screens open an investment by `detailKey` (asset id live, symbol in DEMO).
 - **Investment detail:** `LiveInvestmentRepository` shows the asset and one position per portfolio that holds it (quantity, average cost, cost basis, value as reported). Not supplied by the API, so empty rather than invented: market price, change, price history (P09-T07), fundamentals, research, per-asset income, unrealised gain or loss per position (the app does not compute value minus cost).
+
+## Goals, net worth and income (P09-T05)
+
+- **Goals:** `LiveGoalRepository` reads `/goals` and each goal's `/goals/{id}/progress`. Status, progress, gap, scenarios, estimated completion and the server's assumption notice are shown as returned; the Goals list and the Home goals card show the API's notice ("estimates ... not guaranteed"). A goal the server cannot measure (422) is shown without figures. Create and update send amounts and rates as strings; a 409 is reported as "name taken" or "too many goals" from the server's message.
+- **Net worth:** `/net-worth` totals, asset-class names and shares as given; each liability at its converted value, or at its own-currency balance when it could not be converted (the total then carries the incomplete notice).
+- **Income:** `/income/summary` monthly and yearly totals and per-portfolio yearly income (no share is shown: the server gives none and the app does not compute one). Recent payments are the latest income entries in the ledger (dividends, interest, coupons, rent, distributions), excluding reversed entries.

@@ -130,7 +130,7 @@ Dart: `mobile/wealthsphere_app/lib/shared/domain/wealth_models.dart`
 | `total` | `total` | same |  |  |
 | `items` | `items` | same |  |  |
 | `as_of` | `as_of` | same |  |  |
-| - | `notice` | api-only | Shown with goal statuses: they are estimates under stated assumptions. | P09-T05 |
+| `notice` | `notice` | same |  |  |
 
 ### GoalProgress - `GET /api/v1/goals/summary` (GoalSummaryItem)
 

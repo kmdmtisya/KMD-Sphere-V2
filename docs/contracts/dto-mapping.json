@@ -431,11 +431,9 @@
           "status": "same"
         },
         {
-          "dto": null,
+          "dto": "notice",
           "api": "notice",
-          "status": "api-only",
-          "resolution": "Shown with goal statuses: they are estimates under stated assumptions.",
-          "owner": "P09-T05"
+          "status": "same"
         }
       ]
     },

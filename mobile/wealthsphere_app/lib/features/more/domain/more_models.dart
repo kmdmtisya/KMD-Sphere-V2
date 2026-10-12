@@ -2,6 +2,7 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../core/data/json_reader.dart';
+import '../../../shared/design_system/components/transaction_tile.dart';
 import '../../../shared/design_system/formatting/money.dart';
 
 DateTime _day(DateTime utcMidnight) =>
@@ -54,6 +55,7 @@ class NetWorthDetail {
     required this.assets,
     required this.liabilities,
     required this.asOf,
+    this.complete = true,
   });
 
   factory NetWorthDetail.fromJson(JsonReader r) => NetWorthDetail(
@@ -67,6 +69,9 @@ class NetWorthDetail {
   final NetWorthSection assets;
   final NetWorthSection liabilities;
   final DateTime asOf;
+
+  /// False when some assets are unpriced or amounts could not be converted.
+  final bool complete;
 }
 
 @immutable
@@ -85,7 +90,9 @@ class IncomeSource {
 
   final String label;
   final Money yearly;
-  final Decimal sharePercent;
+
+  /// Null when the server gives no share (it is not worked out in the app).
+  final Decimal? sharePercent;
 }
 
 @immutable
@@ -95,6 +102,7 @@ class IncomePayment {
     required this.kind,
     required this.assetName,
     required this.amount,
+    this.transactionKind,
   });
 
   factory IncomePayment.fromJson(JsonReader r) => IncomePayment(
@@ -105,7 +113,10 @@ class IncomePayment {
   );
 
   final DateTime date;
+
+  /// Display text in DEMO data; empty in live data, where [transactionKind] is set instead.
   final String kind;
+  final TransactionKind? transactionKind;
   final String assetName;
   final Money amount;
 }
@@ -119,6 +130,7 @@ class IncomeDetail {
     required this.bySource,
     required this.recent,
     required this.asOf,
+    this.complete = true,
   });
 
   factory IncomeDetail.fromJson(JsonReader r) => IncomeDetail(
@@ -134,4 +146,7 @@ class IncomeDetail {
   final List<IncomeSource> bySource;
   final List<IncomePayment> recent;
   final DateTime asOf;
+
+  /// False when income in some currency could not be converted.
+  final bool complete;
 }

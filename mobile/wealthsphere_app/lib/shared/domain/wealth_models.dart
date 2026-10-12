@@ -317,6 +317,7 @@ class GoalsSummary {
     required this.total,
     required List<GoalProgress> items,
     required this.asOf,
+    this.notice,
   }) : items = List.unmodifiable(items);
 
   factory GoalsSummary.fromJson(JsonReader r) => GoalsSummary(
@@ -324,12 +325,16 @@ class GoalsSummary {
     total: r.integer('total'),
     items: r.list('items', GoalProgress.fromJson),
     asOf: r.timestamp('as_of'),
+    notice: r.stringOrNull('notice'),
   );
 
   final int onTrack;
   final int total;
   final List<GoalProgress> items;
   final DateTime asOf;
+
+  /// The server's wording that goal statuses are estimates under stated assumptions.
+  final String? notice;
 }
 
 /// Where an AI statement or figure came from. Plain text from the backend; never a link.

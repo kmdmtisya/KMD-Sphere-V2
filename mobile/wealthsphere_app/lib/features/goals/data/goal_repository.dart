@@ -2,8 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/data/demo_support.dart';
 import '../../../core/data/json_reader.dart';
+import '../../../core/network/api_client.dart';
 import '../application/goal_form.dart';
 import '../domain/goal_models.dart';
+import 'live_goal_repository.dart';
 
 /// Why a goal could not be saved.
 enum GoalRule { notFound, nameTaken, tooMany }
@@ -116,6 +118,6 @@ final goalRepositoryProvider = Provider<GoalRepository>((ref) {
         ref.read(demoBehaviorProvider.notifier).gate,
       );
     case DataSourceMode.live:
-      liveNotWired('GoalRepository');
+      return LiveGoalRepository(ref.watch(apiClientProvider));
   }
 });
