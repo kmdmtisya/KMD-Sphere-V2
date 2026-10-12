@@ -13,6 +13,8 @@ from app.core.api_responses import UNAUTHORIZED
 from app.core.cache import ResponseCache
 from app.core.money import CURRENCY_PATTERN, Money, minor_units, round_half_up
 from app.db.session import get_session
+from app.modules.fx.reporting import ReportingDep
+from app.modules.fx.schemas import ReportingOut
 from app.modules.goals.service import GoalService
 from app.modules.identity.dependencies import CurrentUserDep
 from app.modules.networth.income_service import IncomeService
@@ -47,6 +49,9 @@ class DashboardOut(BaseModel):
         description="False when assets are unpriced or amounts in a currency could not be converted"
     )
     as_of: datetime
+    reporting: ReportingOut | None = Field(
+        default=None, description="The rate snapshot every figure was converted with (P11-T06)"
+    )
 
 
 @router.get("", response_model=DashboardOut, responses=UNAUTHORIZED)
@@ -54,9 +59,13 @@ async def dashboard(
     request: Request,
     user: CurrentUserDep,
     session: SessionDep,
+    reporting: ReportingDep,
     currency: Annotated[
         str | None,
-        Query(pattern=CURRENCY_PATTERN, description="Defaults to the user's base currency"),
+        Query(
+            pattern=CURRENCY_PATTERN,
+            description="Defaults to the user's reporting-currency setting",
+        ),
     ] = None,
 ) -> DashboardOut:
     """Net worth, passive income and goals on track for the signed-in user."""
@@ -80,6 +89,7 @@ async def dashboard(
             goals=GoalsCard(on_track=goals.on_track, total=goals.total),
             complete=nw.freshness.complete and not income.unconverted,
             as_of=now,
+            reporting=reporting.out(nw.currency),
         )
 
     cache: ResponseCache = request.app.state.response_cache

@@ -15,6 +15,8 @@ from app.core.api_responses import UNAUTHORIZED, not_found
 from app.core.cache import ResponseCache
 from app.core.money import CURRENCY_PATTERN, DecimalString, Money, minor_units, round_half_up
 from app.db.session import get_session
+from app.modules.fx.reporting import ReportingDep
+from app.modules.fx.schemas import ReportingOut
 from app.modules.identity.dependencies import CurrentUserDep
 from app.modules.networth.income import Period, Totals
 from app.modules.networth.income_service import IncomeService
@@ -82,6 +84,9 @@ class IncomeSummaryOut(BaseModel):
     unconverted_currencies: list[str]
     complete: bool
     as_of: date
+    reporting: ReportingOut | None = Field(
+        default=None, description="The rate snapshot the conversions used (P11-T06)"
+    )
 
 
 def _money(currency: str) -> Callable[[Decimal], Money]:
@@ -164,9 +169,13 @@ async def income_summary(
     request: Request,
     user: CurrentUserDep,
     session: SessionDep,
+    reporting: ReportingDep,
     currency: Annotated[
         str | None,
-        Query(pattern=CURRENCY_PATTERN, description="Defaults to the user's base currency"),
+        Query(
+            pattern=CURRENCY_PATTERN,
+            description="Defaults to the user's reporting-currency setting",
+        ),
     ] = None,
 ) -> IncomeSummaryOut:
     """Passive income across all active portfolios, each converted at the latest rate."""
@@ -190,6 +199,7 @@ async def income_summary(
             unconverted_currencies=sorted(u.unconverted),
             complete=not u.unconverted,
             as_of=u.as_of,
+            reporting=reporting.out(u.currency),
         )
 
     return await _cache(request).cached(

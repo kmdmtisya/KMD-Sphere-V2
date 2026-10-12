@@ -18,6 +18,7 @@ from app.modules.market_data.fx import (
 from app.modules.market_data.fx import (
     select as select_rate,
 )
+from app.modules.market_data.fx_context import current_rates
 from app.modules.market_data.models import FxRate
 
 # Rates stored on ledger postings have 12 decimals (NUMERIC(28,12), ADR-0006).
@@ -39,6 +40,12 @@ class FxService:
         when = at or now
         if base == quote:
             return select_rate(base, quote, [], when, now=now)
+        # Inside a reporting request, the latest rate comes from the request's snapshot (P11-T06).
+        snapshot = current_rates.get() if at is None and cross else None
+        if snapshot is not None:
+            from_snapshot = snapshot.quote(base, quote)
+            if from_snapshot is not None:
+                return from_snapshot
         currencies = {base, quote} | ({self._pivot} if cross else set())
         result = await self._session.execute(
             select(FxRate).where(
@@ -60,9 +67,12 @@ class FxService:
             )
             for r in result.scalars()
         ]
-        return select_via(
+        chosen = select_via(
             base, quote, candidates, when, now=now, pivot=self._pivot if cross else None
         )
+        if snapshot is not None:
+            snapshot.note_fallback(chosen)
+        return chosen
 
     async def history(
         self, currencies: set[str], quote: str, start: datetime, end: datetime

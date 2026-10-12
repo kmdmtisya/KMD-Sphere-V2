@@ -10,6 +10,7 @@ from pydantic import AfterValidator, BaseModel, ConfigDict, Field, field_validat
 from app.core.money import DecimalString, Money, decimals_of
 from app.modules.forecasting.limits import TARGET, Limit
 from app.modules.forecasting.schemas import check_money
+from app.modules.fx.schemas import ReportingOut
 
 LiabilityType = Literal[
     "mortgage",
@@ -158,3 +159,6 @@ class NetWorthOut(BaseModel):
     fx_rates: list[FxRateUsed] = Field(description="Every conversion into the net-worth currency")
     freshness: NetWorthFreshness
     as_of: datetime
+    reporting: ReportingOut | None = Field(
+        default=None, description="The rate snapshot the figures were converted with (P11-T06)"
+    )

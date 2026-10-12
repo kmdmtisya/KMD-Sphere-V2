@@ -8,9 +8,10 @@ from decimal import Decimal
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.authz import require_found
+from app.core.config import get_settings
 from app.core.money import Money, minor_units, percentages, round_half_up
 from app.modules.assets.service import AssetService
-from app.modules.identity.service import IdentityService
+from app.modules.fx.reporting import CurrencyPreferenceService
 from app.modules.market_data.fx import FxRateUnavailable
 from app.modules.market_data.service import FxService
 from app.modules.market_data.valuation import PositionValuer
@@ -45,6 +46,17 @@ class SummaryService:
         summary = await self._compute(portfolio)
         return await self._out(user_id, [portfolio.id], summary, now)
 
+    async def portfolio_in(
+        self, user_id: uuid.UUID, portfolio_id: uuid.UUID, currency: str
+    ) -> SummaryOut:
+        """One portfolio viewed in `currency` (P11-T06): its figures converted at the latest
+        (snapshot) rate. Nothing is saved; the portfolio keeps its base currency."""
+        portfolio = require_found(await self._portfolios.get(user_id, portfolio_id), "portfolio")
+        now = datetime.now(UTC)
+        part = await self._compute(portfolio)
+        rates = await self._rates({portfolio.base_currency}, currency)
+        return await self._out(user_id, [portfolio.id], consolidate(currency, [part], rates), now)
+
     async def figures(
         self, user_id: uuid.UUID, portfolio_id: uuid.UUID, *, assume_deposits: bool = False
     ) -> Summary:
@@ -71,7 +83,7 @@ class SummaryService:
         return consolidate(currency, parts, rates)
 
     async def consolidated(self, user_id: uuid.UUID, currency: str | None) -> SummaryOut:
-        reporting = currency or (await IdentityService(self._session).me(user_id)).base_currency
+        reporting = await self.reporting_currency(user_id, currency)
         portfolios = await self._portfolios.list(user_id, include_archived=False)
         now = datetime.now(UTC)
         parts = [await self._compute(p) for p in portfolios]
@@ -105,8 +117,11 @@ class SummaryService:
         return await self._rates(currencies, target)
 
     async def reporting_currency(self, user_id: uuid.UUID, currency: str | None) -> str:
-        """`currency`, or the user's base currency when it is None."""
-        return currency or (await IdentityService(self._session).me(user_id)).base_currency
+        """`currency`, or the user's reporting currency (P11-T06) when it is None."""
+        if currency:
+            return currency
+        pivot = get_settings().fx_pivot_currency
+        return await CurrencyPreferenceService(self._session, pivot).reporting_currency(user_id)
 
     async def _rates(self, currencies: set[str], target: str) -> dict[str, Rate]:
         """Latest rates into `target`. A missing rate is left out (the figures report it)."""

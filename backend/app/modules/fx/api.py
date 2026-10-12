@@ -20,6 +20,11 @@ from app.modules.fx.board import RateBoard, invalidate
 from app.modules.fx.history import RateConcept, rate_history
 from app.modules.fx.models import Currency, FxConversionAudit
 from app.modules.fx.refresh import refresh_once_per_window
+from app.modules.fx.reporting import (
+    CurrencyPreferenceService,
+    CurrencyPreferencesOut,
+    CurrencyPreferencesUpdate,
+)
 from app.modules.fx.schemas import (
     ConvertIn,
     ConvertOut,
@@ -394,3 +399,37 @@ async def fx_history(
         ],
         missing_days=sum(p.rate_missing for p in points),
     )
+
+
+# --------------------------------------------------------------- P11-T06 reporting preference
+me_router = APIRouter(prefix="/api/v1/me", tags=["identity"])
+
+
+@me_router.get(
+    "/currency-preferences",
+    response_model=CurrencyPreferencesOut,
+    summary="Your reporting currency",
+    responses=UNAUTHORIZED,
+)
+async def get_currency_preferences(
+    request: Request, user: CurrentUserDep, session: SessionDep
+) -> CurrencyPreferencesOut:
+    """The currency every figure is shown in, on every device, and the recently used ones.
+    Until you choose, it is your profile's base currency (when supported)."""
+    pivot = request.app.state.settings.fx_pivot_currency
+    return await CurrencyPreferenceService(session, pivot).get(user.id)
+
+
+@me_router.patch(
+    "/currency-preferences",
+    response_model=CurrencyPreferencesOut,
+    summary="Change your reporting currency",
+    responses={**UNAUTHORIZED, **invalid("currency")},
+)
+async def set_currency_preferences(
+    body: CurrencyPreferencesUpdate, request: Request, user: CurrentUserDep, session: SessionDep
+) -> CurrencyPreferencesOut:
+    """Changes how figures are shown. Nothing else changes: balances, transactions, portfolio
+    base currencies, goal targets and forecast inputs stay as they are."""
+    pivot = request.app.state.settings.fx_pivot_currency
+    return await CurrencyPreferenceService(session, pivot).set(user.id, body.reporting_currency)

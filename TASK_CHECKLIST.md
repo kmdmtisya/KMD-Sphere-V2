@@ -1068,15 +1068,15 @@
   - [x] P11-T05.2 History endpoint
   - [x] P11-T05.3 Missing-rate handling
   - [x] P11-T05.4 Tests
-- [ ] **P11-T06** · FXCUR-06 Reporting currency across portfolio, analytics, net worth, income, goals and forecasts · `NOT_STARTED` ⬜
+- [x] **P11-T06** · FXCUR-06 Reporting currency across portfolio, analytics, net worth, income, goals and forecasts · `COMPLETED` ✅
   - Deps: P11-T04, P11-T05 · Wave: W5 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P11-T06.1 Reporting-currency parameter and snapshot on read APIs
-  - [ ] P11-T06.2 Preferences API and sync
-  - [ ] P11-T06.3 Goals and forecasts presentation
-  - [ ] P11-T06.4 Optional FX scenario overlay (behind DEC-29)
-  - [ ] P11-T06.5 Reconciliation and IDOR tests
+  - Started: 2026-10-12T23:43:50+04:00 · Completed: 2026-10-13T00:12:42+04:00 · Duration: 28m 52s · Blocker: —
+  - Evidence: Synced preference API; request-scoped snapshot for all latest rates in reporting responses with reporting block (currency, snapshot id, rates); default currency from the preference; totals reconcile and dashboard/summary/net worth share a snapshot (tested); originals unchanged across switches (tested); goals and forecasts presentation; IDOR for view-as; T06.4 not built per DEC-29; analytics/holdings stay in base currency (documented). Backend 2253 passed. PR #130. CI all gates pass.
+  - [x] P11-T06.1 Reporting-currency parameter and snapshot on read APIs
+  - [x] P11-T06.2 Preferences API and sync
+  - [x] P11-T06.3 Goals and forecasts presentation
+  - [x] P11-T06.4 Optional FX scenario overlay (behind DEC-29)
+  - [x] P11-T06.5 Reconciliation and IDOR tests
 - [ ] **P11-T07** · FXCUR-07 Mobile: global currency selector, converted figures and converter · `NOT_STARTED` ⬜
   - Deps: P11-T06 · Wave: W6 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

@@ -13,6 +13,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.api_responses import UNAUTHORIZED, conflict, invalid, not_found
 from app.core.cache import ResponseCache
 from app.db.session import get_session
+from app.modules.fx.reporting import CurrencyPreferenceService, ReportingDep, translate
+from app.modules.fx.snapshot import SnapshotService
 from app.modules.goals.schemas import (
     GoalCreate,
     GoalOut,
@@ -55,17 +57,29 @@ async def list_goals(user: CurrentUserDep, session: SessionDep) -> list[GoalOut]
 
 @router.get("/summary", response_model=GoalsSummaryOut, responses=UNAUTHORIZED)
 async def goals_summary(
-    request: Request, user: CurrentUserDep, session: SessionDep
+    request: Request, user: CurrentUserDep, session: SessionDep, reporting: ReportingDep
 ) -> GoalsSummaryOut:
-    """Progress and status of every goal, and how many are on track (estimates)."""
+    """Progress and status of every goal, and how many are on track (estimates). Each goal stays
+    in its own currency; its target is also shown in the reporting currency."""
+
+    async def compute() -> GoalsSummaryOut:
+        out = await GoalService(session).summary(user.id, _now())
+        currency, places = await _reporting(request, session, user.id)
+        for item in out.items:
+            item.target_in_reporting = translate(reporting, item.target, currency, places)
+        out.reporting = reporting.out(currency)
+        return out
+
     cache: ResponseCache = request.app.state.response_cache
-    return await cache.cached(
-        user.id,
-        "goals-summary",
-        {},
-        GoalsSummaryOut,
-        lambda: GoalService(session).summary(user.id, _now()),
-    )
+    return await cache.cached(user.id, "goals-summary", {}, GoalsSummaryOut, compute)
+
+
+async def _reporting(
+    request: Request, session: AsyncSession, user_id: uuid.UUID
+) -> tuple[str, int]:
+    pivot = request.app.state.settings.fx_pivot_currency
+    currency = await CurrencyPreferenceService(session, pivot).reporting_currency(user_id)
+    return currency, await SnapshotService(session, pivot).decimal_places(currency)
 
 
 @router.get("/{goal_id}", response_model=GoalOut, responses={**UNAUTHORIZED, **_NOT_FOUND})
@@ -101,8 +115,18 @@ async def delete_goal(goal_id: uuid.UUID, user: CurrentUserDep, session: Session
     responses={**UNAUTHORIZED, **_NOT_FOUND},
 )
 async def goal_progress(
-    goal_id: uuid.UUID, user: CurrentUserDep, session: SessionDep
+    request: Request,
+    goal_id: uuid.UUID,
+    user: CurrentUserDep,
+    session: SessionDep,
+    reporting: ReportingDep,
 ) -> GoalProgressOut:
     """Progress, gap, scenario projections, required contribution and estimated completion,
-    under the goal's stated assumptions (an estimate, not guaranteed)."""
-    return await GoalService(session).progress(user.id, goal_id, _now())
+    under the goal's stated assumptions (an estimate, not guaranteed). The goal stays in its own
+    currency; target and current value are also shown in the reporting currency."""
+    out = await GoalService(session).progress(user.id, goal_id, _now())
+    currency, places = await _reporting(request, session, user.id)
+    out.target_in_reporting = translate(reporting, out.target, currency, places)
+    out.current_value_in_reporting = translate(reporting, out.current_value, currency, places)
+    out.reporting = reporting.out(currency)
+    return out

@@ -7,6 +7,7 @@ from pydantic import BaseModel, Field
 
 from app.core.money import DecimalString, Money
 from app.modules.assets.schemas import AssetSummary
+from app.modules.fx.schemas import ReportingOut
 
 
 class CurrencyShare(BaseModel):
@@ -56,3 +57,6 @@ class SummaryOut(BaseModel):
         description="Open positions without a price or valuation (not in holdings_value)"
     )
     freshness: Freshness
+    reporting: ReportingOut | None = Field(
+        default=None, description="The rate snapshot the figures were converted with (P11-T06)"
+    )

@@ -11,6 +11,7 @@ from app.core.api_responses import UNAUTHORIZED, conflict, invalid, not_found
 from app.core.cache import ResponseCache
 from app.core.money import CURRENCY_PATTERN
 from app.db.session import get_session
+from app.modules.fx.reporting import ReportingDep
 from app.modules.identity.dependencies import CurrentUserDep
 from app.modules.networth.schemas import (
     LiabilityCreate,
@@ -94,18 +95,22 @@ async def get_net_worth(
     request: Request,
     user: CurrentUserDep,
     session: SessionDep,
+    reporting: ReportingDep,
     currency: Annotated[
         str | None,
-        Query(pattern=CURRENCY_PATTERN, description="Defaults to the user's base currency"),
+        Query(
+            pattern=CURRENCY_PATTERN,
+            description="Defaults to the user's reporting-currency setting",
+        ),
     ] = None,
 ) -> NetWorthOut:
     """Total assets (the user's active portfolios) minus total liabilities, in one currency,
-    with the FX rates used and how fresh and complete the figures are."""
+    with the FX rates used (all from one snapshot) and how fresh and complete the figures are."""
+
+    async def compute() -> NetWorthOut:
+        out = await NetWorthService(session).user(user.id, currency, _now())
+        out.reporting = reporting.out(out.currency)
+        return out
+
     cache: ResponseCache = request.app.state.response_cache
-    return await cache.cached(
-        user.id,
-        "net-worth",
-        {"currency": currency},
-        NetWorthOut,
-        lambda: NetWorthService(session).user(user.id, currency, _now()),
-    )
+    return await cache.cached(user.id, "net-worth", {"currency": currency}, NetWorthOut, compute)

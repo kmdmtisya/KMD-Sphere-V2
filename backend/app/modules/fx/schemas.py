@@ -148,3 +148,28 @@ class FxHistoryOut(BaseModel):
     quote: str
     points: list[FxHistoryPointOut]
     missing_days: int
+
+
+# ------------------------------------------------------------------- P11-T06 reporting
+class ReportingRateOut(BaseModel):
+    """A rate a response used: 1 `base` = `rate` `quote`."""
+
+    base: str
+    quote: str
+    rate: DecimalString
+    path: list[str] | None = None
+    rate_timestamp: datetime
+    provider: str
+    status: str
+    from_snapshot: bool
+
+
+class ReportingOut(BaseModel):
+    """Which rates the figures of this response were converted with."""
+
+    currency: str = Field(description="The reporting currency of this response")
+    snapshot_id: uuid.UUID
+    rates: list[ReportingRateOut]
+    note: str = Field(
+        default="Converted at the snapshot's rates; original amounts are unchanged.",
+    )
