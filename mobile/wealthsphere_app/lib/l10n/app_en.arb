@@ -191,6 +191,16 @@
   "@alertMarkSeen": {"description": "Mark a triggered alert as seen"},
   "moreWatchlistAlertsSub": "Prices you follow and alerts you set",
   "@moreWatchlistAlertsSub": {"description": "Subtitle of the More tile"},
+  "alertPrefsTitle": "Notification settings",
+  "@alertPrefsTitle": {"description": "Heading of the alert preferences"},
+  "alertPrefsAll": "Alerts",
+  "@alertPrefsAll": {"description": "Master switch for alerts"},
+  "alertPrefsAllHelp": "Off: none of your alerts are checked. They stay as they are.",
+  "@alertPrefsAllHelp": {"description": "Help under the master alert switch"},
+  "alertPrefsPrice": "Price alerts",
+  "@alertPrefsPrice": {"description": "Switch for price alerts"},
+  "alertPrefsAllocation": "Allocation alerts",
+  "@alertPrefsAllocation": {"description": "Switch for allocation alerts"},
   "emptyDefaultTitle": "Nothing here yet",
   "@emptyDefaultTitle": {
     "description": "Default title of the empty state"

@@ -17,6 +17,10 @@ final alertsProvider = FutureProvider<List<PriceAlert>>(
   (ref) => ref.watch(alertRepositoryProvider).alerts(),
 );
 
+final alertPreferencesProvider = FutureProvider<AlertPreferences>(
+  (ref) => ref.watch(alertRepositoryProvider).preferences(),
+);
+
 final alertEventsProvider = FutureProvider<List<AlertEvent>>(
   (ref) => ref.watch(alertRepositoryProvider).events(),
 );

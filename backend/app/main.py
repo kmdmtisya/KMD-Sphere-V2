@@ -39,6 +39,7 @@ from app.modules.identity import api as identity_api
 from app.modules.market_data import api as market_data_api
 from app.modules.networth import api as networth_api
 from app.modules.networth import income_api
+from app.modules.notifications import api as notifications_api
 from app.modules.portfolio import analytics_api, summary_api
 from app.modules.portfolio import api as portfolio_api
 from app.modules.transactions import api as transactions_api
@@ -125,6 +126,10 @@ def create_app(
             },
             {"name": "watchlist", "description": "Assets the user follows, with latest prices"},
             {
+                "name": "notifications",
+                "description": "Devices that receive alert notifications (no amounts in payloads)",
+            },
+            {
                 "name": "alerts",
                 "description": "Price and allocation alerts, their events and preferences",
             },
@@ -182,6 +187,7 @@ def create_app(
     app.include_router(alerts_api.watchlist_router)
     app.include_router(alerts_api.alerts_router)
     app.include_router(alerts_api.preferences_router)
+    app.include_router(notifications_api.router)
     app.include_router(portfolio_api.router)
     app.include_router(transactions_api.router)
     app.include_router(transactions_api.holdings_router)

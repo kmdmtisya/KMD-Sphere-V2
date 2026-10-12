@@ -9,7 +9,7 @@ import redis
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import get_settings
-from app.modules.alerts.evaluation import evaluate_alerts
+from app.modules.alerts.evaluation import EvaluationResult, evaluate_alerts
 from app.modules.market_data.ingestion import (
     IngestFailure,
     IngestResult,
@@ -22,6 +22,7 @@ from app.modules.market_data.ingestion import (
 )
 from app.modules.market_data.providers.errors import ProviderUnavailable
 from app.modules.market_data.providers.registry import build_providers
+from app.modules.notifications.push import build_push_sender
 from app.worker.celery_app import celery_app
 from app.worker.db import SessionFactory, run_async
 from app.worker.idempotency import run_once
@@ -186,7 +187,12 @@ def evaluate_alerts_job(bucket: str | None = None) -> dict[str, object]:
     key = bucket or _bucket(datetime.now(UTC), 15)
 
     async def go(sessions: SessionFactory) -> dict[str, object]:
-        outcome = await run_once(sessions, "evaluate_alerts", key, evaluate_alerts)
+        sender = build_push_sender()
+
+        async def work(session: AsyncSession) -> EvaluationResult:
+            return await evaluate_alerts(session, sender=sender)
+
+        outcome = await run_once(sessions, "evaluate_alerts", key, work)
         if outcome.skipped or outcome.value is None:
             return {"skipped": True}
         r = outcome.value

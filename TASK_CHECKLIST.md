@@ -893,14 +893,14 @@
   - [x] P09-T07.2 Watchlist
   - [x] P09-T07.3 Alerts
   - [x] P09-T07.4 Tests
-- [ ] **P09-T08** · Push notifications and deep links · `NOT_STARTED` ⬜
+- [ ] **P09-T08** · Push notifications and deep links · `IN_PROGRESS` 🔄
   - Deps: P09-T01, P04-T06 · Wave: W3 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T13:15:51+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P09-T08.1 Backend module
-  - [ ] P09-T08.2 Mobile handling
-  - [ ] P09-T08.3 Preferences
-  - [ ] P09-T08.4 Tests
+  - [x] P09-T08.1 Backend module
+  - [x] P09-T08.2 Mobile handling
+  - [x] P09-T08.3 Preferences
+  - [x] P09-T08.4 Tests
 - [ ] **P09-T09** · DEMO retirement and data-source governance · `NOT_STARTED` ⬜
   - Deps: P09-T02, P09-T03, P09-T04, P09-T05, P09-T07 · Wave: W4 · Track: MOB · Size: S · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

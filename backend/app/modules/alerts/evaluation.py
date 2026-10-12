@@ -30,6 +30,7 @@ from app.modules.analytics.allocation import Dimension
 from app.modules.assets.models import Asset, AssetClass
 from app.modules.market_data.freshness import kind_for_asset_class
 from app.modules.market_data.ingestion import latest_price
+from app.modules.notifications.push import PushSender, alert_payload, notify_user
 from app.modules.portfolio.allocation_service import AllocationService
 
 logger = logging.getLogger(__name__)
@@ -43,7 +44,14 @@ class EvaluationResult:
     skipped_no_fresh_data: int = 0
 
 
-async def evaluate_alerts(session: AsyncSession, now: datetime | None = None) -> EvaluationResult:
+async def evaluate_alerts(
+    session: AsyncSession,
+    now: datetime | None = None,
+    sender: PushSender | None = None,
+) -> EvaluationResult:
+    """Fires the alerts whose condition holds on fresh data. Each fired alert is pushed to the
+    user's devices through `sender` (identifiers and a route only, ADR-0016); without one, it is
+    only recorded for the in-app list."""
     moment = now or datetime.now(UTC)
     result = EvaluationResult()
     rows = (
@@ -66,8 +74,15 @@ async def evaluate_alerts(session: AsyncSession, now: datetime | None = None) ->
             continue
         result.evaluated += 1
         value, as_of, key = observed
-        if _crosses(alert, value) and await _fire(session, alert, key, value, as_of, moment):
-            result.triggered += 1
+        if not _crosses(alert, value):
+            continue
+        alert_id, owner = alert.id, alert.user_id
+        fired = await _fire(session, alert, key, value, as_of, moment)
+        if fired is None:
+            continue
+        result.triggered += 1
+        if sender is not None:
+            await notify_user(session, sender, owner, alert_payload(alert_id, fired))
     return result
 
 
@@ -119,7 +134,9 @@ async def _fire(
     value: Decimal,
     as_of: datetime,
     now: datetime,
-) -> bool:
+) -> uuid.UUID | None:
+    """Records the event and marks the alert triggered. The new event id, or None when another
+    run already fired it."""
     alert_id: uuid.UUID = alert.id
     user_id: uuid.UUID = alert.user_id
     # Take the alert first: only one evaluator can move it from active to triggered.
@@ -131,7 +148,7 @@ async def _fire(
     )
     if taken.first() is None:
         await session.rollback()
-        return False
+        return None
     inserted = await session.execute(
         insert(AlertEvent)
         .values(
@@ -144,9 +161,10 @@ async def _fire(
         .on_conflict_do_nothing(constraint="uq_alert_events_alert_id_trigger_key")
         .returning(AlertEvent.id)
     )
-    if inserted.first() is None:
+    event_id = inserted.scalar_one_or_none()
+    if event_id is None:
         await session.rollback()
-        return False
+        return None
     await AuditWriter(session).record(
         "alerts.alert.triggered",
         Actor.system(),
@@ -156,4 +174,4 @@ async def _fire(
     )
     await session.commit()
     logger.info("alert triggered: %s", alert.alert_type)
-    return True
+    return event_id
