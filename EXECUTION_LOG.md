@@ -1281,3 +1281,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T21:05:43+04:00 — COMPLETE P10-GATE
 - duration: 3m 16s
 - evidence: Approved by the user after review of the gate summary and docs/ai-evaluation.md; open items accepted: no real-model run, provider terms review, live routing and human review before release. · Approved by: user (mtisya@gmail.com)
+
+### 2026-10-12T21:11:59+04:00 — START P11-T01
+- FXCUR-01 Requirements, architecture and reconciliation with existing FX work
+- prerequisites verified COMPLETED

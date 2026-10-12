@@ -1023,13 +1023,13 @@
 - Exit gates: QG-21, QG-22, QG-23, QG-24, QG-25 — required by `P11-GATE` (Gates-done)
 - Release gates: P11-T11 and P11-T12 start only after QG-21..QG-25 are satisfied
 
-- [ ] **P11-T01** · FXCUR-01 Requirements, architecture and reconciliation with existing FX work · `NOT_STARTED` ⬜
+- [ ] **P11-T01** · FXCUR-01 Requirements, architecture and reconciliation with existing FX work · `IN_PROGRESS` 🔄
   - Deps: P05-GATE, P06-GATE, P08-GATE, P09-GATE, P10-GATE · Wave: W1 · Track: DOC · Size: M · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T21:11:59+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P11-T01.1 Inventory of existing FX and currency code
-  - [ ] P11-T01.2 Reuse/extension map
-  - [ ] P11-T01.3 ADR-0010
+  - [x] P11-T01.1 Inventory of existing FX and currency code
+  - [x] P11-T01.2 Reuse/extension map
+  - [x] P11-T01.3 ADR-0010
   - [ ] P11-T01.4 Decisions DEC-25..DEC-29
 - [ ] **P11-T02** · FXCUR-02 Currency data model · `NOT_STARTED` ⬜
   - Deps: P11-T01 · Wave: W2 · Track: DB · Size: M · Approval: no
