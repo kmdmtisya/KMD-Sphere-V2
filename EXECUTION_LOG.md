@@ -1167,3 +1167,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-12T16:07:28+04:00 — AWAITING_VERIFICATION P10-T01
 - evidence: Governance (12 read-only allow-listed tools, explicit non-tools, data classification, logging and retention), AI threat model (15 threats, abuse cases) and ADR-0017 written; DEC-05 choices made by the user (both providers behind one interface, key per environment, USD 50 a month, 90-day retention). No tool for SQL, shell or arbitrary URLs. Provider terms review recorded as open before real data. Awaiting the user's approval of the documents.
+
+### 2026-10-12T16:23:20+04:00 — COMPLETE P10-T01
+- duration: 27m 53s
+- evidence: AI governance (12 read-only allow-listed tools, explicit non-tools, data classification, logging and retention), AI threat model (15 threats) and ADR-0017 (DEC-05: OpenAI and Anthropic behind one interface, key per environment, USD 50 a month, 90-day retention) approved by the user on 2026-10-12. Provider terms review remains open before real data is sent. Merged in PR 108. · Approved by: user (mtisya@gmail.com)
