@@ -205,7 +205,14 @@ async def test_a_fired_alert_is_pushed_with_ids_and_a_route_only(
     assert set(payload) == {"type", "alert_id", "event_id", "route"}
     assert payload["type"] == "alert_triggered"
     assert payload["route"] == ALERTS_ROUTE
-    assert "987" not in str(payload) and "100" not in str(payload), "no amounts in a payload"
+    # Ids are random hex, so look for the amounts as written, not for digits.
+    assert "987.65" not in str(payload) and "100.00" not in str(payload), "no amounts in a payload"
+    assert set(payload.values()) == {
+        "alert_triggered",
+        payload["alert_id"],
+        payload["event_id"],
+        ALERTS_ROUTE,
+    }
     event = (await http.get("/api/v1/alerts/events", headers=h)).json()["items"][0]
     assert payload["event_id"] == event["id"]
 
