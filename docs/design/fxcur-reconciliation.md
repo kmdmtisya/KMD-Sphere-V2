@@ -1,6 +1,6 @@
 # FXCUR reconciliation with existing work (P11-T01)
 
-Status: **for your review**. ADR-0010 is already Accepted and the design in [multi-currency-design.md](multi-currency-design.md) was approved on 2026-10-10. This note is the inventory the task asks for, the extension map, and the decisions DEC-25 to DEC-29 with a recommendation each. Facts below were read from the code on 2026-10-12.
+Status: **Approved by the user 2026-10-12** (DEC-25 Option A; DEC-26 to DEC-29 as recommended below; monthly budget for the FX provider still to be confirmed). ADR-0010 is already Accepted and the design in [multi-currency-design.md](multi-currency-design.md) was approved on 2026-10-10. This note is the inventory the task asks for, the extension map, and the decisions DEC-25 to DEC-29 with a recommendation each. Facts below were read from the code on 2026-10-12.
 
 ## 1. Inventory of what exists
 

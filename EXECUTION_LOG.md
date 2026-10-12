@@ -1285,3 +1285,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T21:11:59+04:00 — START P11-T01
 - FXCUR-01 Requirements, architecture and reconciliation with existing FX work
 - prerequisites verified COMPLETED
+
+### 2026-10-12T21:33:09+04:00 — AWAITING_VERIFICATION P11-T01
+- evidence: ADR-0010 Accepted; inventory and extension map in docs/design/fxcur-reconciliation.md; DEC-25 (ExchangeRate-API) and DEC-26..DEC-29 recorded.
+
+### 2026-10-12T21:33:10+04:00 — COMPLETE P11-T01
+- duration: 21m 11s
+- evidence: Approved by the user: design, extension map, DEC-25 Option A, DEC-26..29 as proposed. Open: FX provider monthly budget and written licence confirmation before production. · Approved by: user (mtisya@gmail.com)
