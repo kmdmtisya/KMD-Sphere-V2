@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-12T20:57:39+04:00 by `scripts/track.py`._
+_Generated at 2026-10-12T21:02:30+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -17,11 +17,11 @@ _Generated at 2026-10-12T20:57:39+04:00 by `scripts/track.py`._
 | QG-04 | Android Platform | 🔄 IN_PROGRESS | 5/7 | Unassigned | — |
 | QG-05 | iOS Platform | 🔄 IN_PROGRESS | 4/6 | Unassigned | — |
 | QG-06 | Financial Accuracy and Data Integrity | 🔄 IN_PROGRESS | 7/7 | Unassigned | — |
-| QG-07 | AI Reliability and Investment Intelligence | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
+| QG-07 | AI Reliability and Investment Intelligence | 🔄 IN_PROGRESS | 6/8 | Unassigned | — |
 | QG-08 | Security and Privacy | 🔄 IN_PROGRESS | 3/8 | Unassigned | — |
 | QG-09 | Performance and Scalability | 🔄 IN_PROGRESS | 1/6 | Unassigned | — |
 | QG-10 | CI/CD and Infrastructure | 🔄 IN_PROGRESS | 2/8 | Unassigned | — |
-| QG-11 | End-to-End Integration | 🔄 IN_PROGRESS | 5/6 | Unassigned | — |
+| QG-11 | End-to-End Integration | 🔄 IN_PROGRESS | 6/6 | Unassigned | — |
 | QG-12 | Production Release Readiness | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
 | QG-13 | QG-FX-01: Market Data Integrity | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
 | QG-14 | QG-FX-02: Technical Indicator Accuracy | ⬜ NOT_STARTED | 0/3 | Unassigned | — |
@@ -38,9 +38,9 @@ _Generated at 2026-10-12T20:57:39+04:00 by `scripts/track.py`._
 | QG-25 | QG-FXCUR-05: AI Integration | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 43/146.
+Criteria satisfied overall: 50/146.
 
-Current phase **P10** exit-gate criteria outstanding: QG-07.1, QG-07.2, QG-07.3, QG-07.5, QG-07.6, QG-07.8, QG-11.3.
+Current phase **P10** exit-gate criteria outstanding: none.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -160,21 +160,21 @@ Approved By: —
 
 ### QG-07: AI Reliability and Investment Intelligence
 
-- [ ] QG-07.1 AI tools enforce user authorization · Required: P10 · By: P10-T09 · CRITICAL
-- [ ] QG-07.2 No unrestricted LLM database access · Required: P10 · By: P10-T02 · CRITICAL
-- [ ] QG-07.3 Structured AI responses pass schema validation · Required: P10 · By: P10-T08
+- [x] QG-07.1 AI tools enforce user authorization · Required: P10 · By: P10-T09 · Evidence: Every tool reads through an owner-scoped service with identity from the token; 30 cross-user cases (tool ids, smuggled user_id/owner_id, scope, conversations) denied 30/30; registry sweep of foreign ids not_found (tests/ai_eval, tests/ai/test_core_read_tools.py). · Verified: 2026-10-12T21:02:28+04:00 · CRITICAL
+- [x] QG-07.2 No unrestricted LLM database access · Required: P10 · By: P10-T02 · Evidence: Allow-list of 12 names checked against docs/ai-governance.md; no SQL, shell, URL or file tool; tool layer imports no network/process/SQL modules (architecture tests); unknown tools refused and audited (P10-T02, T06). · Verified: 2026-10-12T21:02:28+04:00 · CRITICAL
+- [x] QG-07.3 Structured AI responses pass schema validation · Required: P10 · By: P10-T08 · Evidence: Four-section JSON answer parsed strictly (extra keys, wrong types, over-length, prose rejected); invalid replies retried once then refused and never stored (tests/ai/test_answer_policy.py, test_chat.py). · Verified: 2026-10-12T21:02:29+04:00
 - [ ] QG-07.4 Investment opportunities include rationale, risks, assumptions, supporting evidence and data freshness · Required: P12 · By: P12-T06
-- [ ] QG-07.5 AI does not invent market prices or guaranteed investment returns · Required: P10 · By: P10-T08 · CRITICAL
-- [ ] QG-07.6 Prompt-injection and cross-user data-access tests pass · Required: P10 · By: P10-T09 · CRITICAL
+- [x] QG-07.5 AI does not invent market prices or guaranteed investment returns · Required: P10 · By: P10-T08 · Evidence: Number provenance 100/100 and invented market data 60/60 rejected or accepted as expected; guarantee/certainty wording 100/100; zero guarantee wording across all accepted suite outputs; meta-tests show each defence is detected when removed (docs/ai-evaluation.md). · Verified: 2026-10-12T21:02:29+04:00 · CRITICAL
+- [x] QG-07.6 Prompt-injection and cross-user data-access tests pass · Required: P10 · By: P10-T09 · Evidence: Prompt injection 50/50 resisted (user text and stored data, with and without refusal rules); cross-user 30/30 denied with no leak, via the real chat API (docs/ai-evaluation.md). · Verified: 2026-10-12T21:02:30+04:00 · CRITICAL
 - [ ] QG-07.7 Stale, missing or contradictory market data is handled safely · Required: P12 · By: P12-T08
-- [ ] QG-07.8 AI output quality is assessed using documented evaluation datasets and acceptance thresholds · Required: P10 · By: P10-T09
+- [x] QG-07.8 AI output quality is assessed using documented evaluation datasets and acceptance thresholds · Required: P10 · By: P10-T09 · Evidence: Eight versioned DEC-17 datasets at approved sizes and thresholds, all met in CI; routing measured by stand-in only and the real-model routing and human review remain pre-release steps, recorded as open in docs/ai-evaluation.md; user approved P10-T09. · Verified: 2026-10-12T21:02:30+04:00
 
-Status: NOT_STARTED  
+Status: IN_PROGRESS  
 Owner: Unassigned  
-Start Timestamp: —  
+Start Timestamp: 2026-10-12T21:02:27+04:00  
 End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Verification Timestamp: 2026-10-12T21:02:30+04:00  
+Evidence: 6/8 criteria verified; latest QG-07.8 at 2026-10-12T21:02:30+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -244,7 +244,7 @@ Approved By: —
 
 - [x] QG-11.1 Android and iOS clients successfully communicate with backend APIs · Required: P09 · By: P09-T10 · Evidence: Accepted by the user at P09-GATE (2026-10-12) on the host and CI evidence: the Flutter client (live repositories, real Dio over HTTP) communicates with the backend in six journeys in CI and locally. Not shown: a run on an Android emulator or iOS device against this backend (iOS not run, TD-09); accepted by the user as an open item. · Verified: 2026-10-12T15:48:53+04:00
 - [x] QG-11.2 Portfolio data flows correctly through transactions, holdings, analytics, dashboards and forecasts · Required: P09 · By: P09-T10 · Evidence: Portfolio data flows through transactions, holdings, summaries, dashboard and forecasts in the E2E journeys: a deposit made through the app is booked by the server (net worth up by exactly 500.00) and Home shows the server's new total; displayed values equal direct API reads; the forecast equals a direct engine call; no client-side recalculation (tests assert server figures). Caveat: all-portfolios P/L, chart and metrics are empty because the API has no consolidated performance endpoints (docs/tech-debt.md). · Verified: 2026-10-12T15:18:35+04:00
-- [ ] QG-11.3 AI Copilot accesses only authorized portfolio data · Required: P10 · By: P10-T09 · CRITICAL
+- [x] QG-11.3 AI Copilot accesses only authorized portfolio data · Required: P10 · By: P10-T09 · Evidence: Copilot end to end: the chat takes identity from the token, validates scope server-side, tools return owner-scoped data; e2e journey 7 against the real backend; cross-user suite 30/30. · Verified: 2026-10-12T21:02:30+04:00 · CRITICAL
 - [x] QG-11.4 Market-data ingestion and refresh workflows function correctly · Required: P08 · By: P08-T08 · Evidence: Ingestion and refresh workflows work end to end with the deterministic fake provider and recorded fixtures: price ingest every 15 min, FX ingest daily, alert evaluation every 15 min, idempotent per time bucket; stored prices flow into holdings and summaries (PositionValuer: price beats older manual valuation, stale prices flagged, unpriced never invented) and the dashboard; P08-T08 proves outage, stale-data, failover, circuit-breaker and cache behaviour. Caveat: the CoinGecko and Twelve Data adapters have only run against synthetic fixtures; no real provider key or licence exists (ADR-0014), so no live vendor call has been made. · Verified: 2026-10-12T04:51:43+04:00
 - [x] QG-11.5 Core user journeys pass end-to-end testing · Required: P09 · By: P09-T10 · Evidence: Core user journeys pass end to end (journeys 1-6 in e2e/e2e_journeys_test.dart, green in CI and locally). Caveat: AI journeys remain DEMO until P10; no device run. · Verified: 2026-10-12T15:18:35+04:00
 - [x] QG-11.6 Error handling, offline states and recovery scenarios are verified · Required: P09 · By: P09-T06 · Evidence: Error, offline and recovery behaviour verified by tests: offline interceptor serves the saved copy only when the server is unreachable and never masks 401/403/404/5xx (19 tests), banner with data age and retry, reconnect/sign-in/sign-out reload and wipe, per-cause error views, rate-limit/refused/offline wording on the calculator; encrypted cache has no plaintext on disk and no cross-user reads. Caveat: no airplane-mode run on a device (manual check open); P09-T06 approved by the user. · Verified: 2026-10-12T15:18:35+04:00
@@ -253,8 +253,8 @@ Status: IN_PROGRESS
 Owner: Unassigned  
 Start Timestamp: 2026-10-12T04:51:43+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-12T15:48:53+04:00  
-Evidence: 5/6 criteria verified; latest QG-11.1 at 2026-10-12T15:48:53+04:00  
+Verification Timestamp: 2026-10-12T21:02:30+04:00  
+Evidence: 6/6 criteria verified; latest QG-11.3 at 2026-10-12T21:02:30+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
