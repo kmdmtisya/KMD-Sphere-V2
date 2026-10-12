@@ -1,6 +1,7 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 
+import '../../../l10n/generated/app_localizations.dart';
 import '../formatting/formatting.dart';
 import '../theme/wealth_typography.dart';
 import '../tokens/tokens.dart';
@@ -24,16 +25,19 @@ class InvestmentRow extends StatelessWidget {
     super.key,
   });
 
-  final String symbol;
+  /// Null for custom assets without a ticker; the name stands in.
+  final String? symbol;
   final String name;
-  final Money value;
+
+  /// Null when the position is unpriced: "No value yet" is shown, never zero.
+  final Money? value;
   final Money? nativeValue;
   final Decimal? changePercent;
   final Money? changeAmount;
   final VoidCallback? onTap;
 
   String get _initials {
-    final trimmed = symbol.trim();
+    final trimmed = (symbol ?? name).trim();
     if (trimmed.isEmpty) return '?';
     return trimmed.substring(0, trimmed.length < 2 ? 1 : 2).toUpperCase();
   }
@@ -65,9 +69,9 @@ class InvestmentRow extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(symbol, style: text.title),
+                    Text(symbol ?? name, style: text.title),
                     Text(
-                      name,
+                      symbol == null ? '' : name,
                       style: text.caption.copyWith(color: colors.textMuted),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -80,11 +84,17 @@ class InvestmentRow extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    CurrencyAmount(
-                      money: value,
-                      nativeMoney: nativeValue,
-                      alignment: AlignmentDirectional.centerEnd,
-                    ),
+                    if (value == null)
+                      Text(
+                        AppLocalizations.of(context).noValueYet,
+                        style: text.caption.copyWith(color: colors.textMuted),
+                      )
+                    else
+                      CurrencyAmount(
+                        money: value!,
+                        nativeMoney: nativeValue,
+                        alignment: AlignmentDirectional.centerEnd,
+                      ),
                     if (changePercent != null || changeAmount != null)
                       ChangeIndicator(
                         percent: changePercent,

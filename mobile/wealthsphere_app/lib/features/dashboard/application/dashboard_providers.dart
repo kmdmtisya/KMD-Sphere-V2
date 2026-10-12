@@ -24,7 +24,7 @@ final dashboardGoalsProvider = FutureProvider<GoalsSummary>(
   (ref) => ref.watch(dashboardRepositoryProvider).goals(),
 );
 
-final dashboardInsightProvider = FutureProvider<InsightSummary>(
+final dashboardInsightProvider = FutureProvider<InsightSummary?>(
   (ref) => ref.watch(dashboardRepositoryProvider).insight(),
 );
 

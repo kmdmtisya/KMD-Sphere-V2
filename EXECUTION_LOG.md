@@ -1055,3 +1055,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T09:23:42+04:00 — COMPLETE P09-T01
 - duration: 18m 43s
 - evidence: LiveRepository base (typed reads/writes, strict JsonReader, idempotency key), ApiException->LoadFailure->LoadErrorView mapping (offline/session ended/refused/missing/busy/generic with support reference), WS_DATA_SOURCE demo/live switch handled by every repository provider with no screen change; unused code-gen deps removed; 40 new tests, full suite 1535 passed, analyze clean. PR #94. CI all gates pass.
+
+### 2026-10-12T09:33:37+04:00 — START P09-T02
+- Live dashboard and portfolio repositories
+- prerequisites verified COMPLETED
+
+### 2026-10-12T09:58:03+04:00 — COMPLETE P09-T02
+- duration: 24m 26s
+- evidence: Live Home and Portfolio repositories (dashboard, summary+performance, risk series, allocation, metrics, holdings) and account-synced dashboard layout; figures are the server's with no recalculation (tests assert exact values); nullable DTOs with Not available/No value yet states, data-quality notice, no invented insight; consolidated gaps documented in tech-debt. 30 new tests, flutter test 1569 passed, analyze clean. CK-I (against the real backend) is not run here: the contract is checked against recorded API-shaped payloads, and the live end-to-end journeys are P09-T10. PR 95.

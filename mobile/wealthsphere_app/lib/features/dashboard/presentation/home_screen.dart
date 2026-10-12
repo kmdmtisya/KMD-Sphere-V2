@@ -119,7 +119,9 @@ class _WealthSummarySection extends ConsumerWidget {
           money: s.value,
           style: context.wealthText.displayAmount,
         ),
-        change: ChangeIndicator(percent: s.returnPercent, amount: s.profitLoss),
+        change: s.returnPercent == null && s.profitLoss == null
+            ? null
+            : ChangeIndicator(percent: s.returnPercent, amount: s.profitLoss),
         chart: series.when(
           loading: () => PerformanceLineChart(
             series: ChartSeries(
@@ -143,7 +145,16 @@ class _WealthSummarySection extends ConsumerWidget {
           selected: period,
           onChanged: ref.read(homePeriodProvider.notifier).select,
         ),
-        footer: DataAsOfLabel(asOf: s.asOf),
+        footer: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            DataAsOfLabel(asOf: s.asOf),
+            DataQualityNotice(
+              complete: s.complete,
+              stalePriceCount: s.stalePriceCount,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -265,44 +276,52 @@ class _InsightSection extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final text = context.wealthText;
     final insight = ref.watch(dashboardInsightProvider);
-    return AsyncValueView<InsightSummary>(
+    return AsyncValueView<InsightSummary?>(
       value: insight,
       onRetry: () => ref.invalidate(dashboardInsightProvider),
-      data: (i) => WealthCard(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(
-                  Icons.auto_awesome_outlined,
-                  size: 20,
-                  color: context.wealthColors.primary,
-                ),
-                const SizedBox(width: AppSpacing.xs),
-                Expanded(child: Text(l10n.homeInsightTitle, style: text.title)),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.s),
-            Text(i.text, style: text.body),
-            const SizedBox(height: AppSpacing.s),
-            DataAsOfLabel(asOf: i.asOf),
-            Wrap(
-              spacing: AppSpacing.xs,
-              children: [
-                for (final s in i.sources)
-                  EvidenceSourceChip(source: s.toView()),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.xs),
-            FilledButton.icon(
-              onPressed: () => context.go(AppRoutes.ai),
-              icon: const Icon(Icons.auto_awesome_rounded),
-              label: Text(l10n.askWealthAi),
-            ),
-          ],
-        ),
-      ),
+      // No insight yet (live data before the AI service): nothing is shown, nothing is invented.
+      isEmpty: (i) => i == null,
+      empty: const SizedBox.shrink(),
+      data: (maybe) {
+        final i = maybe!;
+        return WealthCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(
+                    Icons.auto_awesome_outlined,
+                    size: 20,
+                    color: context.wealthColors.primary,
+                  ),
+                  const SizedBox(width: AppSpacing.xs),
+                  Expanded(
+                    child: Text(l10n.homeInsightTitle, style: text.title),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.s),
+              Text(i.text, style: text.body),
+              const SizedBox(height: AppSpacing.s),
+              DataAsOfLabel(asOf: i.asOf),
+              Wrap(
+                spacing: AppSpacing.xs,
+                children: [
+                  for (final s in i.sources)
+                    EvidenceSourceChip(source: s.toView()),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              FilledButton.icon(
+                onPressed: () => context.go(AppRoutes.ai),
+                icon: const Icon(Icons.auto_awesome_rounded),
+                label: Text(l10n.askWealthAi),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

@@ -845,14 +845,14 @@
   - [x] P09-T01.2 Error mapping
   - [x] P09-T01.3 Mode switch
   - [x] P09-T01.4 Tests
-- [ ] **P09-T02** · Live dashboard and portfolio repositories · `NOT_STARTED` ⬜
+- [x] **P09-T02** · Live dashboard and portfolio repositories · `COMPLETED` ✅
   - Deps: P09-T01, P06-T09 · Wave: W2 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P09-T02.1 Dashboard repo
-  - [ ] P09-T02.2 Portfolio repo
-  - [ ] P09-T02.3 Preferences sync
-  - [ ] P09-T02.4 Tests
+  - Started: 2026-10-12T09:33:37+04:00 · Completed: 2026-10-12T09:58:03+04:00 · Duration: 24m 26s · Blocker: —
+  - Evidence: Live Home and Portfolio repositories (dashboard, summary+performance, risk series, allocation, metrics, holdings) and account-synced dashboard layout; figures are the server's with no recalculation (tests assert exact values); nullable DTOs with Not available/No value yet states, data-quality notice, no invented insight; consolidated gaps documented in tech-debt. 30 new tests, flutter test 1569 passed, analyze clean. CK-I (against the real backend) is not run here: the contract is checked against recorded API-shaped payloads, and the live end-to-end journeys are P09-T10. PR 95.
+  - [x] P09-T02.1 Dashboard repo
+  - [x] P09-T02.2 Portfolio repo
+  - [x] P09-T02.3 Preferences sync
+  - [x] P09-T02.4 Tests
 - [ ] **P09-T03** · Live calculator and forecast repository · `NOT_STARTED` ⬜
   - Deps: P09-T01, P06-T02 · Wave: W2 · Track: MOB · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

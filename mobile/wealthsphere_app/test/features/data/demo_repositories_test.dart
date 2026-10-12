@@ -51,7 +51,7 @@ void main() {
         final s = await repo.summary(id);
         expect(
           s.value.amount - s.invested.amount,
-          s.profitLoss.amount,
+          s.profitLoss!.amount,
           reason: id,
         );
         expect(s.value.currencyCode, 'USD');
@@ -72,13 +72,13 @@ void main() {
           final holdings = await repo.holdings(id);
           final total = holdings.fold<Decimal>(
             Decimal.zero,
-            (a, h) => a + h.value.amount,
+            (a, h) => a + h.value!.amount,
           );
           expect(total, (await repo.summary(id)).value.amount, reason: id);
         }
         final natives = {
           for (final h in await repo.holdings(PortfolioRef.consolidatedId))
-            h.nativeValue.currencyCode,
+            h.nativeValue!.currencyCode,
         };
         expect(natives, containsAll(['USD', 'AED', 'KES']));
       },
@@ -170,7 +170,7 @@ void main() {
         goals.onTrack,
       );
       final insight = await repo.insight();
-      expect(insight.sources, isNotEmpty);
+      expect(insight!.sources, isNotEmpty);
     });
   });
 

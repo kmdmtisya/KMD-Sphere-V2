@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -6,6 +7,7 @@ import '../../../app/app_routes.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../shared/design_system/charts/charts.dart' as charts;
 import '../../../shared/design_system/components/components.dart';
+import '../../../shared/design_system/formatting/formatting.dart';
 import '../../../shared/design_system/theme/theme.dart';
 import '../../../shared/design_system/tokens/tokens.dart';
 import '../../../shared/domain/chart_mapping.dart';
@@ -64,6 +66,10 @@ class PortfolioOverviewScreen extends ConsumerWidget {
   }
 }
 
+/// A percentage from the backend, or "Not available" when it has none.
+String _pct(PercentFormatter percents, Decimal? value, AppLocalizations l10n) =>
+    value == null ? l10n.valueNotAvailable : percents.format(value);
+
 // ----------------------------------------------------------------------------- summary
 class _SummarySection extends ConsumerWidget {
   const _SummarySection({required this.id});
@@ -86,7 +92,9 @@ class _SummarySection extends ConsumerWidget {
           money: s.value,
           style: context.wealthText.displayAmount,
         ),
-        change: ChangeIndicator(percent: s.returnPercent, amount: s.profitLoss),
+        change: s.returnPercent == null && s.profitLoss == null
+            ? null
+            : ChangeIndicator(percent: s.returnPercent, amount: s.profitLoss),
         chart: series.when(
           loading: () => charts.PerformanceLineChart(
             series: charts.ChartSeries(
@@ -112,7 +120,16 @@ class _SummarySection extends ConsumerWidget {
           selected: period,
           onChanged: ref.read(portfolioPeriodProvider.notifier).select,
         ),
-        footer: DataAsOfLabel(asOf: s.asOf),
+        footer: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            DataAsOfLabel(asOf: s.asOf),
+            DataQualityNotice(
+              complete: s.complete,
+              stalePriceCount: s.stalePriceCount,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -199,25 +216,25 @@ class _MetricsSection extends ConsumerWidget {
             Icons.trending_up_rounded,
             l10n.metricTotalReturn,
             l10n.metricTotalReturnDef,
-            percents.format(m.totalReturnPercent),
+            _pct(percents, m.totalReturnPercent, l10n),
           ),
           card(
             Icons.timeline_rounded,
             l10n.metricCagr,
             l10n.metricCagrDef,
-            percents.format(m.cagrPercent),
+            _pct(percents, m.cagrPercent, l10n),
           ),
           card(
             Icons.payments_outlined,
             l10n.metricDividendYield,
             l10n.metricDividendYieldDef,
-            percents.format(m.dividendYieldPercent),
+            _pct(percents, m.dividendYieldPercent, l10n),
           ),
           card(
             Icons.show_chart_rounded,
             l10n.metricVolatility,
             l10n.metricVolatilityDef,
-            percents.format(m.volatilityPercent),
+            _pct(percents, m.volatilityPercent, l10n),
           ),
         ];
         return Column(

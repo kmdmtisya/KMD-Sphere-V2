@@ -80,19 +80,48 @@ List<HoldingSummary> applyQuery(
       if ((query.assetClass == null || h.assetClass == query.assetClass) &&
           (needle.isEmpty ||
               h.name.toLowerCase().contains(needle) ||
-              h.symbol.toLowerCase().contains(needle)))
+              (h.symbol ?? '').toLowerCase().contains(needle)))
         h,
   ];
   int byName(HoldingSummary a, HoldingSummary b) =>
       a.name.toLowerCase().compareTo(b.name.toLowerCase());
-  int tie(HoldingSummary a, HoldingSummary b) => a.symbol.compareTo(b.symbol);
+  int tie(HoldingSummary a, HoldingSummary b) =>
+      (a.symbol ?? a.name).compareTo(b.symbol ?? b.name);
+  // Positions without a value or change sort last in both directions.
+  int byNullable<T extends Comparable<Object>>(
+    T? a,
+    T? b, {
+    required bool desc,
+  }) {
+    if (a == null && b == null) return 0;
+    if (a == null) return 1;
+    if (b == null) return -1;
+    return desc ? b.compareTo(a) : a.compareTo(b);
+  }
+
   matching.sort((a, b) {
     final order = switch (query.sort) {
-      HoldingSort.valueDesc => b.value.amount.compareTo(a.value.amount),
-      HoldingSort.valueAsc => a.value.amount.compareTo(b.value.amount),
+      HoldingSort.valueDesc => byNullable(
+        a.value?.amount,
+        b.value?.amount,
+        desc: true,
+      ),
+      HoldingSort.valueAsc => byNullable(
+        a.value?.amount,
+        b.value?.amount,
+        desc: false,
+      ),
       HoldingSort.nameAsc => byName(a, b),
-      HoldingSort.changeDesc => b.changePercent.compareTo(a.changePercent),
-      HoldingSort.changeAsc => a.changePercent.compareTo(b.changePercent),
+      HoldingSort.changeDesc => byNullable(
+        a.changePercent,
+        b.changePercent,
+        desc: true,
+      ),
+      HoldingSort.changeAsc => byNullable(
+        a.changePercent,
+        b.changePercent,
+        desc: false,
+      ),
     };
     return order != 0 ? order : tie(a, b);
   });

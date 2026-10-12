@@ -59,6 +59,9 @@ class PortfolioSummary {
     required this.profitLoss,
     required this.returnPercent,
     required this.asOf,
+    this.complete = true,
+    this.unpricedAssetCount = 0,
+    this.stalePriceCount = 0,
   });
 
   factory PortfolioSummary.fromJson(JsonReader r) => PortfolioSummary(
@@ -77,11 +80,22 @@ class PortfolioSummary {
   final String baseCurrency;
   final Money value;
   final Money invested;
-  final Money profitLoss;
 
-  /// Percentage points as computed by the backend (14.09 means 14.09%).
-  final Decimal returnPercent;
+  /// Null when the backend has no figure (for example all portfolios combined, or no money has
+  /// moved yet). The app never works it out itself.
+  final Money? profitLoss;
+
+  /// Percentage points as computed by the backend (14.09 means 14.09%); null like [profitLoss].
+  final Decimal? returnPercent;
   final DateTime asOf;
+
+  /// False when some assets are unpriced or amounts could not be converted: the totals are then
+  /// not the whole picture and the screen says so.
+  final bool complete;
+  final int unpricedAssetCount;
+
+  /// Prices older than their freshness window that still feed [value].
+  final int stalePriceCount;
 
   Map<String, Object?> toJson() => {
     'portfolio_id': portfolioId,
@@ -89,8 +103,8 @@ class PortfolioSummary {
     'base_currency': baseCurrency,
     'value': value.toJson(),
     'invested': invested.toJson(),
-    'profit_loss': profitLoss.toJson(),
-    'return_percent': returnPercent.toString(),
+    'profit_loss': profitLoss?.toJson(),
+    'return_percent': returnPercent?.toString(),
     'as_of': timestampJson(asOf),
   };
 }
@@ -164,10 +178,12 @@ class PerformanceMetrics {
         asOf: asOf,
       );
 
-  final Decimal totalReturnPercent;
-  final Decimal cagrPercent;
-  final Decimal dividendYieldPercent;
-  final Decimal volatilityPercent;
+  /// Each is null when the backend cannot supply it (too little history, or no figure for all
+  /// portfolios combined).
+  final Decimal? totalReturnPercent;
+  final Decimal? cagrPercent;
+  final Decimal? dividendYieldPercent;
+  final Decimal? volatilityPercent;
   final DateTime asOf;
 }
 
@@ -181,6 +197,9 @@ class HoldingSummary {
     required this.nativeValue,
     required this.changePercent,
     required this.asOf,
+    this.assetId,
+    this.valueSource,
+    this.valueStale = false,
   });
 
   factory HoldingSummary.fromJson(JsonReader r) => HoldingSummary(
@@ -193,17 +212,31 @@ class HoldingSummary {
     asOf: r.timestamp('as_of'),
   );
 
-  final String symbol;
+  /// Null for user-defined assets that have no ticker.
+  final String? symbol;
   final String name;
   final String assetClass;
 
-  /// In the portfolio's base currency, converted by the backend.
-  final Money value;
+  /// In the portfolio's base currency, converted by the backend. Null when the position is
+  /// unpriced: the screen says "no value yet" rather than showing zero.
+  final Money? value;
 
   /// In the asset's own currency. Equal in currency to [value] when the asset is in base currency.
-  final Money nativeValue;
-  final Decimal changePercent;
-  final DateTime asOf;
+  final Money? nativeValue;
+
+  /// Daily change from market prices; null until the backend supplies it.
+  final Decimal? changePercent;
+  final DateTime? asOf;
+
+  /// The API id of the asset (null in DEMO data, which is keyed by symbol).
+  final String? assetId;
+
+  /// What the investment screen is opened with.
+  String get detailKey => assetId ?? symbol ?? name;
+
+  /// Where [value] came from and whether it is old (null in DEMO data).
+  final String? valueSource;
+  final bool valueStale;
 }
 
 @immutable
