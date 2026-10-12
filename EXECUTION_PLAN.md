@@ -252,7 +252,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | DEC-02 | Cloud provider (AWS / GCP / OCI), region(s) and data-residency approach (UAE/Kenya users) | P14-T01 | User | Open |
 | DEC-03 | Forecast numbers in the demo UI. Resolved by structure: canned fixtures in P03 (no maths in Dart), real engine from P06-T01 wired in P09-T03. User may pull P06-T01/T02 earlier. | P03-T04 | Plan | Resolved (override allowed) |
 | DEC-04 | Market-data and research providers, budget and licence terms | P08-T01 | User | Open |
-| DEC-05 | LLM provider, model, monthly budget and API-key custody (docs name OpenAI first) | P10-T01 | User | Open |
+| DEC-05 | LLM provider, model, monthly budget and API-key custody (docs name OpenAI first) | P10-T01 | User | Resolved: OpenAI and Anthropic adapters behind one interface, key per environment, USD 50 a month cap, 90-day chat retention (ADR-0017, 2026-10-12); model ids are configuration; provider terms to be reviewed before first real use |
 | DEC-06 | Money rounding convention (half-up vs half-even) and minor-unit handling | P01-T03 | User + Claude | Resolved: ROUND_HALF_UP (ADR-0006) |
 | DEC-07 | Backend tooling: uv + ruff + mypy + pytest (proposed) | P01-T03 | Claude proposes | Resolved: uv, ruff, mypy, pytest (ADR-0004) |
 | DEC-08 | Push-notification path (FCM + APNs) and Firebase project | P09-T08 | User | Resolved: build provider-agnostic now, FCM/APNs when the Firebase project exists (ADR-0016, 2026-10-12) |

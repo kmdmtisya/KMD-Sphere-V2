@@ -1160,3 +1160,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T15:51:51+04:00 — PHASE APPROVED P10
 - approved by user (mtisya@gmail.com)
 - AI Tool Layer & Wealth Copilot
+
+### 2026-10-12T15:55:27+04:00 — START P10-T01
+- AI governance, threat model and provider policy
+- prerequisites verified COMPLETED
+
+### 2026-10-12T16:07:28+04:00 — AWAITING_VERIFICATION P10-T01
+- evidence: Governance (12 read-only allow-listed tools, explicit non-tools, data classification, logging and retention), AI threat model (15 threats, abuse cases) and ADR-0017 written; DEC-05 choices made by the user (both providers behind one interface, key per environment, USD 50 a month, 90-day retention). No tool for SQL, shell or arbitrary URLs. Provider terms review recorded as open before real data. Awaiting the user's approval of the documents.
