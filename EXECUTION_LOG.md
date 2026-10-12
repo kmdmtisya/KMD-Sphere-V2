@@ -1337,3 +1337,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T23:43:50+04:00 — START P11-T06
 - FXCUR-06 Reporting currency across portfolio, analytics, net worth, income, goals and forecasts
 - prerequisites verified COMPLETED
+
+### 2026-10-13T00:12:42+04:00 — COMPLETE P11-T06
+- duration: 28m 52s
+- evidence: Synced preference API; request-scoped snapshot for all latest rates in reporting responses with reporting block (currency, snapshot id, rates); default currency from the preference; totals reconcile and dashboard/summary/net worth share a snapshot (tested); originals unchanged across switches (tested); goals and forecasts presentation; IDOR for view-as; T06.4 not built per DEC-29; analytics/holdings stay in base currency (documented). Backend 2253 passed. PR #130. CI all gates pass.

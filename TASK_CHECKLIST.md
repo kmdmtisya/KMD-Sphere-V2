@@ -1068,10 +1068,10 @@
   - [x] P11-T05.2 History endpoint
   - [x] P11-T05.3 Missing-rate handling
   - [x] P11-T05.4 Tests
-- [ ] **P11-T06** · FXCUR-06 Reporting currency across portfolio, analytics, net worth, income, goals and forecasts · `IN_PROGRESS` 🔄
+- [x] **P11-T06** · FXCUR-06 Reporting currency across portfolio, analytics, net worth, income, goals and forecasts · `COMPLETED` ✅
   - Deps: P11-T04, P11-T05 · Wave: W5 · Track: BE · Size: L · Approval: no
-  - Started: 2026-10-12T23:43:50+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-12T23:43:50+04:00 · Completed: 2026-10-13T00:12:42+04:00 · Duration: 28m 52s · Blocker: —
+  - Evidence: Synced preference API; request-scoped snapshot for all latest rates in reporting responses with reporting block (currency, snapshot id, rates); default currency from the preference; totals reconcile and dashboard/summary/net worth share a snapshot (tested); originals unchanged across switches (tested); goals and forecasts presentation; IDOR for view-as; T06.4 not built per DEC-29; analytics/holdings stay in base currency (documented). Backend 2253 passed. PR #130. CI all gates pass.
   - [x] P11-T06.1 Reporting-currency parameter and snapshot on read APIs
   - [x] P11-T06.2 Preferences API and sync
   - [x] P11-T06.3 Goals and forecasts presentation
