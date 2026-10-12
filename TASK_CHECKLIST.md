@@ -814,13 +814,13 @@
   - [x] P08-T08.1 Outage tests
   - [x] P08-T08.2 Stale tests
   - [x] P08-T08.3 Cache tests
-- [ ] **P08-T09** · Market data security and compliance review · `NOT_STARTED` ⬜
+- [ ] **P08-T09** · Market data security and compliance review · `IN_PROGRESS` 🔄
   - Deps: P08-T03 · Wave: W5 · Track: SEC · Size: S · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T04:29:27+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P08-T09.1 Key custody
-  - [ ] P08-T09.2 Terms check
-  - [ ] P08-T09.3 Log review
+  - [x] P08-T09.1 Key custody
+  - [x] P08-T09.2 Terms check
+  - [x] P08-T09.3 Log review
 - [ ] **P08-GATE** · Phase P08 exit gate · `NOT_STARTED` ⬜
   - Deps: P08-T01, P08-T02, P08-T03, P08-T04, P08-T05, P08-T06, P08-T07, P08-T08, P08-T09 · Wave: W6 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-06.7, QG-09.5, QG-11.4
   - Started: — · Completed: — · Duration: — · Blocker: —

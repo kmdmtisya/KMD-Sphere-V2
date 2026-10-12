@@ -140,5 +140,5 @@ DEC-25 provider(s) and licence · DEC-26 refresh cadence and staleness threshold
 Before the full FX module (P11), the core already has:
 - Conversion with explicit ROUND_HALF_UP to the target currency's minor units, and an exact variant for intermediate sums (`app/modules/market_data/fx.py`).
 - Rate selection: historical (latest rate at or before the end of the trade date, at most 7 days old), latest (stale after 1 day), the opposite pair inverted when needed, deterministic ties. The thresholds are provisional until DEC-26.
-- `GET /api/v1/fx-rates/{base}/{quote}[?on=YYYY-MM-DD]` with provider, timestamp, inversion and staleness.
+- `GET /api/v1/fx-rates/{base}/{quote}[?on=YYYY-MM-DD]` with provider, timestamps, `data_type: indicative_rate`, inversion and staleness.
 - Ledger postings in another currency keep their own currency and the rate used (the user's, or the historical rate with its provider and timestamp).

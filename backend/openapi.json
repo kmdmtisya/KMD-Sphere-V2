@@ -1419,6 +1419,13 @@
             "title": "Base Currency",
             "type": "string"
           },
+          "data_type": {
+            "const": "indicative_rate",
+            "default": "indicative_rate",
+            "description": "Reference rates for reporting-currency conversion, not tradable quotes: show them as indicative and never use them for transactions (ADR-0014)",
+            "title": "Data Type",
+            "type": "string"
+          },
           "inverted": {
             "description": "Derived as 1 / rate from the opposite pair",
             "title": "Inverted",

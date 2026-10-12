@@ -91,6 +91,7 @@ async def test_latest_and_historical_rates_with_provenance(
     assert latest.status_code == 200, latest.text
     assert latest.json()["rate"] == "1.3"
     assert latest.json()["provider"] == "ecb"
+    assert latest.json()["data_type"] == "indicative_rate"
     assert (latest.json()["rule"], latest.json()["stale"], latest.json()["inverted"]) == (
         "latest",
         False,
