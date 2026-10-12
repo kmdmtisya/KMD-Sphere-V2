@@ -1102,3 +1102,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T13:04:27+04:00 — COMPLETE P09-T07
 - duration: 34m 24s
 - evidence: Asset prices endpoint (latest with freshness, daily closes, no interpolation, IDOR-tested, licence guard updated); unrounded watchlist prices; live investment price/history with stale and missing labels; watchlist and alerts screen and price-alert dialog on live and demo repositories. Backend 1820 passed; flutter test 1633 passed, analyze clean. CK-I against the running backend is P09-T10. PR #100. CI all gates pass.
+
+### 2026-10-12T13:15:51+04:00 — START P09-T08
+- Push notifications and deep links
+- prerequisites verified COMPLETED
+
+### 2026-10-12T13:48:44+04:00 — COMPLETE P09-T08
+- duration: 32m 53s
+- evidence: Devices API with IDOR/audit tests, PushSender used by alert evaluation with payloads of type/ids/route only (asserted no amounts), failing-device isolation; mobile allow-listed deep links that open after authentication and are dropped at sign-out, device registration lifecycle, alert preference switches. Device push (FCM/APNs) is built behind an interface and not switched on: needs the Firebase project and APNs key. flutter test 1653 passed; backend notification tests 79 passed with related suites. Also hardened the URL-credential redaction regex flagged by CodeQL. PR #101, CI all gates pass.

@@ -191,7 +191,15 @@ async def alice_world(
         "SELECT id, user_id, 'sweep', 11, now() FROM alerts WHERE id = $1 RETURNING id",
         alert["id"] if isinstance(alert["id"], uuid.UUID) else uuid.UUID(alert["id"]),
     )
+    device = await ok(
+        await http.post(
+            "/api/v1/devices",
+            headers=h,
+            json={"platform": "android", "token": "alice-device-token-123"},
+        )
+    )
     return {
+        "device_id": device["id"],
         "alert_id": alert["id"],
         "event_id": str(event_id),
         "liability_id": debt["id"],
@@ -246,6 +254,7 @@ SNAPSHOT_TABLES = (
     "watchlist_items",
     "alerts",
     "alert_events",
+    "devices",
 )
 
 
@@ -271,6 +280,7 @@ async def snapshot(db: asyncpg.Connection, user_id: str) -> dict[str, str]:
         "watchlist_items": "SELECT * FROM watchlist_items WHERE user_id = $1 ORDER BY id",
         "alerts": "SELECT * FROM alerts WHERE user_id = $1 ORDER BY id",
         "alert_events": "SELECT * FROM alert_events WHERE user_id = $1 ORDER BY id",
+        "devices": "SELECT * FROM devices WHERE user_id = $1 ORDER BY id",
         "goal_scenarios": "SELECT s.* FROM goal_scenarios s JOIN goals g ON g.id = s.goal_id "
         "WHERE g.user_id = $1 ORDER BY s.id",
     }

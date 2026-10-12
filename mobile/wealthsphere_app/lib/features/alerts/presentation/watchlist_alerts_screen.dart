@@ -12,6 +12,7 @@ import '../../../shared/design_system/tokens/tokens.dart';
 import '../application/alerts_providers.dart';
 import '../data/alerts_repository.dart';
 import '../domain/alert_models.dart';
+import 'alert_preferences_card.dart';
 
 /// The investments the user follows, with their latest stored prices, and the alerts they set
 /// (and the ones that fired). Prices are stored, delayed prices with their time and provider; an
@@ -38,7 +39,8 @@ class WatchlistAlertsScreen extends ConsumerWidget {
         onRefresh: () async => ref
           ..invalidate(watchlistItemsProvider)
           ..invalidate(alertsProvider)
-          ..invalidate(alertEventsProvider),
+          ..invalidate(alertEventsProvider)
+          ..invalidate(alertPreferencesProvider),
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
           padding: const EdgeInsetsDirectional.all(AppSpacing.m),
@@ -51,6 +53,9 @@ class WatchlistAlertsScreen extends ConsumerWidget {
             const SizedBox(height: AppSpacing.l),
             _Header(l10n.alertEventsTitle),
             const _Events(),
+            const SizedBox(height: AppSpacing.l),
+            _Header(l10n.alertPrefsTitle),
+            const AlertPreferencesCard(),
             const SizedBox(height: AppSpacing.m),
             Text(
               l10n.alertsFootnote,

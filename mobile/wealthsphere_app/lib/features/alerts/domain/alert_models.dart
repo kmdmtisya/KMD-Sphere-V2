@@ -92,6 +92,42 @@ class PriceAlert {
   final String? note;
 }
 
+/// What the user wants to be told about. Turning one off stops those alerts being checked.
+@immutable
+class AlertPreferences {
+  const AlertPreferences({
+    this.alertsEnabled = true,
+    this.priceAlertsEnabled = true,
+    this.allocationAlertsEnabled = true,
+  });
+
+  final bool alertsEnabled;
+  final bool priceAlertsEnabled;
+  final bool allocationAlertsEnabled;
+
+  AlertPreferences copyWith({
+    bool? alertsEnabled,
+    bool? priceAlertsEnabled,
+    bool? allocationAlertsEnabled,
+  }) => AlertPreferences(
+    alertsEnabled: alertsEnabled ?? this.alertsEnabled,
+    priceAlertsEnabled: priceAlertsEnabled ?? this.priceAlertsEnabled,
+    allocationAlertsEnabled:
+        allocationAlertsEnabled ?? this.allocationAlertsEnabled,
+  );
+
+  @override
+  bool operator ==(Object other) =>
+      other is AlertPreferences &&
+      other.alertsEnabled == alertsEnabled &&
+      other.priceAlertsEnabled == priceAlertsEnabled &&
+      other.allocationAlertsEnabled == allocationAlertsEnabled;
+
+  @override
+  int get hashCode =>
+      Object.hash(alertsEnabled, priceAlertsEnabled, allocationAlertsEnabled);
+}
+
 /// An alert that fired: what the server observed and when.
 @immutable
 class AlertEvent {

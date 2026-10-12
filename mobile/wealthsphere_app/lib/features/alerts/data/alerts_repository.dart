@@ -27,6 +27,8 @@ abstract interface class AlertRepository {
   Future<void> delete(String id);
   Future<List<AlertEvent>> events({bool unseenOnly = false});
   Future<void> markSeen(String eventId);
+  Future<AlertPreferences> preferences();
+  Future<AlertPreferences> savePreferences(AlertPreferences preferences);
 }
 
 // --------------------------------------------------------------------------------- DEMO
@@ -143,6 +145,20 @@ class DemoAlertRepository implements AlertRepository {
 
   @override
   Future<void> markSeen(String eventId) async => _gate();
+
+  AlertPreferences _prefs = const AlertPreferences();
+
+  @override
+  Future<AlertPreferences> preferences() async {
+    await _gate();
+    return _prefs;
+  }
+
+  @override
+  Future<AlertPreferences> savePreferences(AlertPreferences preferences) async {
+    await _gate();
+    return _prefs = preferences;
+  }
 }
 
 // --------------------------------------------------------------------------------- live
@@ -253,6 +269,28 @@ class LiveAlertRepository extends LiveRepository implements AlertRepository {
   @override
   Future<void> markSeen(String eventId) =>
       send('POST', '/api/v1/alerts/events/$eventId/seen', (r) => r);
+
+  static AlertPreferences _prefs(JsonReader r) => AlertPreferences(
+    alertsEnabled: r.boolean('alerts_enabled'),
+    priceAlertsEnabled: r.boolean('price_alerts_enabled'),
+    allocationAlertsEnabled: r.boolean('allocation_alerts_enabled'),
+  );
+
+  @override
+  Future<AlertPreferences> preferences() =>
+      getObject('/api/v1/alert-preferences', _prefs);
+
+  @override
+  Future<AlertPreferences> savePreferences(AlertPreferences p) => send(
+    'PUT',
+    '/api/v1/alert-preferences',
+    _prefs,
+    body: {
+      'alerts_enabled': p.alertsEnabled,
+      'price_alerts_enabled': p.priceAlertsEnabled,
+      'allocation_alerts_enabled': p.allocationAlertsEnabled,
+    },
+  );
 }
 
 final watchlistRepositoryProvider = Provider<WatchlistRepository>((ref) {

@@ -89,7 +89,9 @@ _FIN_WORDS = "|".join(sorted((re.escape(w) for w in FINANCIAL_KEYS), key=len, re
 
 _BEARER = re.compile(r"(?i)\b(bearer|basic)\s+[A-Za-z0-9._~+/=-]{8,}")
 _JWT = re.compile(r"\beyJ[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]*")
-_URL_CREDENTIALS = re.compile(r"(?<=://)([^/\s:@]*):([^/\s@]+)@")
+# Possessive quantifiers: no backtracking, so a long run of colons or other characters with no
+# "@" cannot make the match slow (Python 3.11+).
+_URL_CREDENTIALS = re.compile(r"(?<=://)([^/\s:@]*+):([^/\s@]++)@")
 _KV_CREDENTIAL = re.compile(
     rf"""(?ix)
     (["']?\b(?:[a-z0-9]+[_-])*(?:{_CRED_WORDS})["']?\s*[:=]\s*)
