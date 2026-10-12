@@ -966,22 +966,22 @@
   - [x] P10-T05.2 OpenAI adapter
   - [x] P10-T05.3 Fake
   - [x] P10-T05.4 Tests
-- [ ] **P10-T06** · Orchestrator and /ai/chat with streaming · `IN_PROGRESS` 🔄
+- [x] **P10-T06** · Orchestrator and /ai/chat with streaming · `COMPLETED` ✅
   - Deps: P10-T03, P10-T04, P10-T05 · Wave: W4 · Track: AI · Size: L · Approval: no
-  - Started: 2026-10-12T18:34:11+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P10-T06.1 Loop
-  - [ ] P10-T06.2 Scope enforcement
-  - [ ] P10-T06.3 Streaming
-  - [ ] P10-T06.4 Tests
-- [ ] **P10-T07** · Conversation persistence and AI audit · `IN_PROGRESS` 🔄
+  - Started: 2026-10-12T18:34:11+04:00 · Completed: 2026-10-12T19:07:15+04:00 · Duration: 33m 04s · Blocker: —
+  - Evidence: POST /api/v1/ai/chat with typed SSE events plus conversation history routes; tool loop via the registry only with server-validated scope, refusals of unknown/unauthorised/smuggled tool requests, call/round/daily/input limits, reviewed-before-streamed answers, no prompt or answer logging; 20 chat tests plus IDOR/integrity/OpenAPI updates; backend 2007 passed. PR #115. CI all gates pass.
+  - [x] P10-T06.1 Loop
+  - [x] P10-T06.2 Scope enforcement
+  - [x] P10-T06.3 Streaming
+  - [x] P10-T06.4 Tests
+- [x] **P10-T07** · Conversation persistence and AI audit · `COMPLETED` ✅
   - Deps: P10-T02 · Wave: W3 · Track: DB · Size: M · Approval: no
-  - Started: 2026-10-12T18:05:53+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P10-T07.1 Schema
-  - [ ] P10-T07.2 Repositories
-  - [ ] P10-T07.3 Retention
-  - [ ] P10-T07.4 Tests
+  - Started: 2026-10-12T18:05:53+04:00 · Completed: 2026-10-12T19:07:15+04:00 · Duration: 1h 01m 22s · Blocker: —
+  - Evidence: Three user-scoped tables (migration 0014), owner-scoped repositories with cross-user denial tests, deletion of one or all conversations, retention configurable (default 90 days) with a daily purge job and boundary tests; tool-call rows hold hashes only. 11 new tests incl. the purge job; backend 1962 passed (3 local Keycloak live tests fail on this machine only: a dev Keycloak with OTP is running, CI skips them). PR #114. CI all gates pass.
+  - [x] P10-T07.1 Schema
+  - [x] P10-T07.2 Repositories
+  - [x] P10-T07.3 Retention
+  - [x] P10-T07.4 Tests
 - [ ] **P10-T08** · Response validation and safety policy · `NOT_STARTED` ⬜
   - Deps: P10-T06, P10-T07 · Wave: W5 · Track: AI · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
