@@ -1365,6 +1365,159 @@
   "@aiSourcesTitle": {
     "description": "Heading above evidence chips"
   },
+  "aiSectionNotice": "Please note",
+  "@aiSectionNotice": {
+    "description": "Heading of the notices the server adds to an answer (stale data, forecasts)"
+  },
+  "aiLiveIntro": "Ask about your portfolios, goals and net worth. Answers use your own data and show their sources.",
+  "@aiLiveIntro": {
+    "description": "Introduction on the empty live conversation"
+  },
+  "aiLiveSuggestionNetWorth": "What is my net worth?",
+  "@aiLiveSuggestionNetWorth": {
+    "description": "Suggested question"
+  },
+  "aiLiveSuggestionPerformance": "How is my portfolio performing?",
+  "@aiLiveSuggestionPerformance": {
+    "description": "Suggested question"
+  },
+  "aiLiveSuggestionGoals": "How am I doing on my goals?",
+  "@aiLiveSuggestionGoals": {
+    "description": "Suggested question"
+  },
+  "aiLiveSuggestionAllocation": "How is my portfolio split by asset class?",
+  "@aiLiveSuggestionAllocation": {
+    "description": "Suggested question"
+  },
+  "aiToolRunning": "Checking {name}…",
+  "@aiToolRunning": {
+    "description": "Progress while a tool runs",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "aiToolNameSummary": "your portfolio summary",
+  "@aiToolNameSummary": {
+    "description": "Name of a data tool in the progress line and source chip"
+  },
+  "aiToolNameAllocation": "your allocation",
+  "@aiToolNameAllocation": {
+    "description": "Name of a data tool"
+  },
+  "aiToolNamePerformance": "your performance",
+  "@aiToolNamePerformance": {
+    "description": "Name of a data tool"
+  },
+  "aiToolNameNetWorth": "your net worth",
+  "@aiToolNameNetWorth": {
+    "description": "Name of a data tool"
+  },
+  "aiToolNameGoals": "your goals",
+  "@aiToolNameGoals": {
+    "description": "Name of a data tool"
+  },
+  "aiToolNameForecast": "a projection",
+  "@aiToolNameForecast": {
+    "description": "Name of a data tool"
+  },
+  "aiToolNameGoalForecast": "a goal projection",
+  "@aiToolNameGoalForecast": {
+    "description": "Name of a data tool"
+  },
+  "aiToolNameOther": "your data",
+  "@aiToolNameOther": {
+    "description": "Name of a data tool the app does not know yet"
+  },
+  "aiSourceSummary": "Portfolio summary",
+  "@aiSourceSummary": {
+    "description": "Evidence chip label"
+  },
+  "aiSourceAllocation": "Allocation",
+  "@aiSourceAllocation": {
+    "description": "Evidence chip label"
+  },
+  "aiSourcePerformance": "Performance",
+  "@aiSourcePerformance": {
+    "description": "Evidence chip label"
+  },
+  "aiSourceNetWorth": "Net worth",
+  "@aiSourceNetWorth": {
+    "description": "Evidence chip label"
+  },
+  "aiSourceGoals": "Goals",
+  "@aiSourceGoals": {
+    "description": "Evidence chip label"
+  },
+  "aiSourceForecast": "Projection",
+  "@aiSourceForecast": {
+    "description": "Evidence chip label"
+  },
+  "aiSourceGoalForecast": "Goal projection",
+  "@aiSourceGoalForecast": {
+    "description": "Evidence chip label"
+  },
+  "aiSourceOther": "WealthSphere data",
+  "@aiSourceOther": {
+    "description": "Evidence chip label for an unknown tool"
+  },
+  "aiRateLimited": "You have reached today's limit of questions. Try again later.",
+  "@aiRateLimited": {
+    "description": "Shown when the daily question limit is reached"
+  },
+  "aiUnavailable": "The assistant is unavailable right now. Try again shortly.",
+  "@aiUnavailable": {
+    "description": "Shown when the assistant service is down"
+  },
+  "aiHistoryTitle": "Conversations",
+  "@aiHistoryTitle": {
+    "description": "Title of the saved conversations sheet and its app bar button"
+  },
+  "aiHistoryRetention": "Saved so you can continue them. Deleted after 90 days, or when you delete them.",
+  "@aiHistoryRetention": {
+    "description": "Retention note on the conversations sheet"
+  },
+  "aiHistoryEmpty": "No saved conversations yet.",
+  "@aiHistoryEmpty": {
+    "description": "Empty state of the conversations sheet"
+  },
+  "aiHistoryUntitled": "Conversation",
+  "@aiHistoryUntitled": {
+    "description": "Title of a conversation that has none"
+  },
+  "aiHistoryDelete": "Delete conversation",
+  "@aiHistoryDelete": {
+    "description": "Delete one conversation"
+  },
+  "aiHistoryDeleteAll": "Delete all",
+  "@aiHistoryDeleteAll": {
+    "description": "Delete every conversation"
+  },
+  "aiHistoryDeleteAllTitle": "Delete all conversations?",
+  "@aiHistoryDeleteAllTitle": {
+    "description": "Confirmation title"
+  },
+  "aiHistoryDeleteAllBody": "Every saved conversation and its answers will be removed. This cannot be undone.",
+  "@aiHistoryDeleteAllBody": {
+    "description": "Confirmation text"
+  },
+  "aiHistoryDeleteFailed": "The conversation could not be deleted. Try again.",
+  "@aiHistoryDeleteFailed": {
+    "description": "Shown when a delete fails"
+  },
+  "aiNewConversation": "New conversation",
+  "@aiNewConversation": {
+    "description": "Starts an empty conversation"
+  },
+  "aiHistoryOpenFailed": "The conversation could not be opened. Try again.",
+  "@aiHistoryOpenFailed": {
+    "description": "Shown when a stored conversation cannot be loaded"
+  },
+  "aiLiveScopeNote": "Only a portfolio can limit a conversation. It stays limited for the whole conversation.",
+  "@aiLiveScopeNote": {
+    "description": "Hint on the scope sheet in live mode"
+  },
   "accountTitle": "Account",
   "@accountTitle": {
     "description": "Heading of the account section in the More tab"

@@ -9,13 +9,17 @@ enum SectionKind {
   observed,
   calculated,
   assumption,
-  interpretation;
+  interpretation,
+
+  /// A qualification the server adds itself (stale or missing data, forecasts), never the model.
+  notice;
 
   static SectionKind parse(String text, String path) => switch (text) {
     'observed' => observed,
     'calculated' => calculated,
     'assumption' => assumption,
     'interpretation' => interpretation,
+    'notice' => notice,
     _ => throw FormatException('Unknown answer section kind "$text" at $path'),
   };
 }
@@ -35,7 +39,7 @@ sealed class ChatEvent {
   const ChatEvent();
 
   factory ChatEvent.fromJson(JsonReader r) => switch (r.string('type')) {
-    'tool' => ToolProgressEvent(r.string('text')),
+    'tool' => ToolProgressEvent(r.string('text'), tool: r.stringOrNull('tool')),
     'section' => SectionEvent(
       AnswerSection(
         kind: SectionKind.parse(r.string('kind'), r.path),
@@ -50,7 +54,7 @@ sealed class ChatEvent {
       ),
     ),
     'refusal' => RefusalEvent(r.string('text')),
-    'done' => const DoneEvent(),
+    'done' => DoneEvent(conversationId: r.stringOrNull('conversation_id')),
     'error' => ErrorEvent(r.string('text')),
     final other => throw FormatException(
       'Unknown chat event type "$other" at ${r.path}.type',
@@ -60,8 +64,14 @@ sealed class ChatEvent {
 
 /// "Fetching portfolio summary…" style progress while the assistant works.
 class ToolProgressEvent extends ChatEvent {
-  const ToolProgressEvent(this.text);
+  const ToolProgressEvent(this.text, {this.tool});
+
+  /// Display text from the demo scripts. Live events carry only [tool], which the screen names
+  /// in the user's language.
   final String text;
+
+  /// The id of the tool that is running (live answers only).
+  final String? tool;
 }
 
 class SectionEvent extends ChatEvent {
@@ -76,12 +86,19 @@ class SourceEvent extends ChatEvent {
 
 /// The assistant declined (for example a request for a guaranteed return).
 class RefusalEvent extends ChatEvent {
-  const RefusalEvent(this.text);
+  const RefusalEvent(this.text, {this.conversationId});
   final String text;
+
+  /// The stored conversation the refusal belongs to (live answers only). A refusal ends the turn,
+  /// so it carries the id the closing `done` would.
+  final String? conversationId;
 }
 
 class DoneEvent extends ChatEvent {
-  const DoneEvent();
+  const DoneEvent({this.conversationId});
+
+  /// The stored conversation this answer belongs to (live answers only).
+  final String? conversationId;
 }
 
 class ErrorEvent extends ChatEvent {

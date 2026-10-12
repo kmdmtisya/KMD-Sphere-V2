@@ -3,7 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/app_routes.dart';
 import '../../../core/data/demo_support.dart';
 import '../../../core/data/json_reader.dart';
+import '../../../core/network/api_client.dart';
 import '../domain/chat_models.dart';
+import '../domain/conversation_models.dart';
+import 'live_copilot_repository.dart';
 
 /// The AI Wealth Copilot. Answers are streamed as typed events.
 abstract interface class CopilotRepository {
@@ -14,8 +17,25 @@ abstract interface class CopilotRepository {
   Future<CopilotIntro> intro();
 
   /// Streams the answer to [question]. [scope] is the portfolio, forecast or goal the chat was
-  /// opened for, if any (already validated by [AiScope.tryParse]).
-  Stream<ChatEvent> ask(String question, {AiScope? scope});
+  /// opened for, if any (already validated by [AiScope.tryParse]). [conversationId] continues a
+  /// stored conversation (live only).
+  Stream<ChatEvent> ask(
+    String question, {
+    AiScope? scope,
+    String? conversationId,
+  });
+
+  /// Whether conversations are stored (they are on the server, not in demo mode).
+  bool get supportsHistory;
+
+  /// Stored conversations, most recent first.
+  Future<List<ConversationSummary>> conversations();
+
+  Future<ConversationDetail> conversation(String id);
+
+  Future<void> deleteConversation(String id);
+
+  Future<void> deleteAllConversations();
 }
 
 class CopilotIntro {
@@ -53,7 +73,27 @@ class DemoCopilotRepository implements CopilotRepository {
   }
 
   @override
-  Stream<ChatEvent> ask(String question, {AiScope? scope}) async* {
+  bool get supportsHistory => false;
+
+  @override
+  Future<List<ConversationSummary>> conversations() async => const [];
+
+  @override
+  Future<ConversationDetail> conversation(String id) =>
+      throw UnsupportedError('Demo mode stores no conversations');
+
+  @override
+  Future<void> deleteConversation(String id) async {}
+
+  @override
+  Future<void> deleteAllConversations() async {}
+
+  @override
+  Stream<ChatEvent> ask(
+    String question, {
+    AiScope? scope,
+    String? conversationId,
+  }) async* {
     // Same gate as every repository call: waits for the configured latency and honours failure
     // injection. A failure before the first event surfaces as a stream error, like a network error.
     await _gate();
@@ -89,17 +129,21 @@ class DemoCopilotRepository implements CopilotRepository {
   }
 }
 
-// The AI services arrive in P10. Until then these screens are DEMO in every data-source
-// mode, and every one of them says so (DemoBadge); nothing here is presented as live.
+/// Demo mode plays the scripted conversations (and says so); live mode talks to the API.
 final copilotRepositoryProvider = Provider<CopilotRepository>((ref) {
-  final behavior = ref.read(demoBehaviorProvider.notifier);
-  return DemoCopilotRepository(
-    ref.watch(demoAssetsProvider),
-    // A stream can outlive its provider (the app is torn down mid-answer): read the behaviour
-    // only while the provider is alive.
-    () => ref.mounted
-        ? ref.read(demoBehaviorProvider)
-        : const DemoBehavior(latency: Duration.zero),
-    behavior.gate,
-  );
+  switch (ref.watch(dataSourceModeProvider)) {
+    case DataSourceMode.demo:
+      final behavior = ref.read(demoBehaviorProvider.notifier);
+      return DemoCopilotRepository(
+        ref.watch(demoAssetsProvider),
+        // A stream can outlive its provider (the app is torn down mid-answer): read the
+        // behaviour only while the provider is alive.
+        () => ref.mounted
+            ? ref.read(demoBehaviorProvider)
+            : const DemoBehavior(latency: Duration.zero),
+        behavior.gate,
+      );
+    case DataSourceMode.live:
+      return LiveCopilotRepository(ref.watch(apiClientProvider));
+  }
 });

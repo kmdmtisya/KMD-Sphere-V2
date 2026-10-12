@@ -26,6 +26,8 @@ import uvicorn
 from alembic import command
 from alembic.config import Config
 
+from app.ai.providers.fake import FakeLlmProvider, text_reply, tool_reply
+from app.ai.providers.models import ChatRequest, ChatResponse
 from app.core.config import Settings
 from app.main import create_app
 from app.modules.alerts.evaluation import evaluate_alerts
@@ -38,6 +40,29 @@ SUBJECT = "e2e-alice"
 
 def m(amount: str, currency: str = "USD") -> dict[str, str]:
     return {"amount": amount, "currency": currency}
+
+
+def scripted_assistant() -> FakeLlmProvider:
+    """A model that reads the net worth and answers with a checked, figure-free answer. The real
+    models are never called from the end-to-end run."""
+
+    def reply(request: ChatRequest) -> ChatResponse:
+        if any(m.role == "tool" for m in request.messages):
+            return text_reply(
+                json.dumps(
+                    {
+                        "observed": [
+                            {"text": "Your net worth was retrieved.", "source": "get_net_worth"}
+                        ],
+                        "calculated": [],
+                        "assumptions": [],
+                        "interpretation": "A snapshot of your own records, not a forecast.",
+                    }
+                )
+            )
+        return tool_reply("get_net_worth")
+
+    return FakeLlmProvider([reply] * 200)
 
 
 async def seed(app: Any, db: asyncpg.Connection) -> dict[str, Any]:
@@ -153,7 +178,12 @@ async def main(port: int, out: Path, log_level: str) -> None:
     cfg.attributes["sqlalchemy_url"] = settings.sqlalchemy_url
     try:
         await asyncio.to_thread(command.upgrade, cfg, "head")
-        app = create_app(settings, readiness_checks={}, token_verifier=ah.verifier())
+        app = create_app(
+            settings,
+            readiness_checks={},
+            token_verifier=ah.verifier(),
+            llm=scripted_assistant(),
+        )
         db = await asyncpg.connect(settings.database_dsn, timeout=5)
         try:
             seeded = await seed(app, db)
