@@ -1231,3 +1231,6 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T19:37:19+04:00 — START P10-T09
 - AI security and quality suite
 - prerequisites verified COMPLETED
+
+### 2026-10-12T20:01:14+04:00 — AWAITING_VERIFICATION P10-T09
+- evidence: Eight versioned datasets at the DEC-17 sizes, all at their thresholds in CI (zero-tolerance sets at 100%); adversarial injection and cross-user scenarios through the chat API with a compromised scripted model; regression meta-tests prove each defence is detected when removed; live routing runner provided but not run (provider terms review open). Results and limits in docs/ai-evaluation.md for user review. Backend 2111 passed. PR #118. CI all gates pass.
