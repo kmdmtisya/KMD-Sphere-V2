@@ -1071,3 +1071,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T10:26:16+04:00 — COMPLETE P09-T03
 - duration: 18m 38s
 - evidence: LiveForecastRepository posts inputs to the scenario engine and maps contribution both ways so any valid input returns a real projection whose assumptions match; DEMO badge and demo-mismatch notice absent in live mode; failure wording per cause. Tests: repository body/echo/422, calculator live journey (custom years -> real projection, no DEMO), refused and offline messages. flutter test 1576 passed, analyze clean. CK-I against the running backend is covered by P09-T10. PR #96. CI all gates pass.
+
+### 2026-10-12T10:37:11+04:00 — START P09-T04
+- Live holdings, transactions and investment details
+- prerequisites verified COMPLETED
+
+### 2026-10-12T11:05:45+04:00 — COMPLETE P09-T04
+- duration: 28m 34s
+- evidence: Live ledger (paged, asset names, idempotent submit, linked reversals with rule checks), refresh of server-recomputed summaries after changes, live investment detail with per-portfolio positions and no invented price/P&L; transaction submit journey tested incl. failed-then-retried save sending one key and no client-side total. flutter test 1593 passed, analyze clean. CK-I against the running backend is P09-T10. PR #97. CI all gates pass.

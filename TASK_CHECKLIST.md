@@ -860,14 +860,14 @@
   - [x] P09-T03.1 Repository
   - [x] P09-T03.2 Remove demo-only notice
   - [x] P09-T03.3 Tests
-- [ ] **P09-T04** · Live holdings, transactions and investment details · `NOT_STARTED` ⬜
+- [x] **P09-T04** · Live holdings, transactions and investment details · `COMPLETED` ✅
   - Deps: P09-T01, P05-T08 · Wave: W2 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P09-T04.1 Holdings
-  - [ ] P09-T04.2 Transactions incl. submit
-  - [ ] P09-T04.3 Detail
-  - [ ] P09-T04.4 Tests
+  - Started: 2026-10-12T10:37:11+04:00 · Completed: 2026-10-12T11:05:45+04:00 · Duration: 28m 34s · Blocker: —
+  - Evidence: Live ledger (paged, asset names, idempotent submit, linked reversals with rule checks), refresh of server-recomputed summaries after changes, live investment detail with per-portfolio positions and no invented price/P&L; transaction submit journey tested incl. failed-then-retried save sending one key and no client-side total. flutter test 1593 passed, analyze clean. CK-I against the running backend is P09-T10. PR #97. CI all gates pass.
+  - [x] P09-T04.1 Holdings
+  - [x] P09-T04.2 Transactions incl. submit
+  - [x] P09-T04.3 Detail
+  - [x] P09-T04.4 Tests
 - [ ] **P09-T05** · Live goals, net worth and income · `NOT_STARTED` ⬜
   - Deps: P09-T01, P06-T09 · Wave: W2 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

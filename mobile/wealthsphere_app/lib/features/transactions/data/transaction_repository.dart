@@ -2,10 +2,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/data/demo_support.dart';
 import '../../../core/data/json_reader.dart';
+import '../../../core/network/api_client.dart';
+import '../../../core/network/asset_catalog.dart';
 import '../../../shared/design_system/formatting/money.dart';
 import '../../../shared/domain/wealth_models.dart';
+import '../../portfolios/data/portfolio_repository.dart';
 import '../application/transaction_draft.dart';
 import '../domain/ledger_entry.dart';
+import 'live_transaction_repository.dart';
 
 /// Why a correction was refused.
 enum LedgerRule { notFound, alreadyReversed, isReversal }
@@ -144,6 +148,11 @@ final transactionRepositoryProvider = Provider<TransactionRepository>((ref) {
         ref.read(demoBehaviorProvider.notifier).gate,
       );
     case DataSourceMode.live:
-      liveNotWired('TransactionRepository');
+      final portfolios = ref.watch(portfolioRepositoryProvider);
+      return LiveTransactionRepository(
+        ref.watch(apiClientProvider),
+        ref.watch(assetCatalogProvider),
+        () async => [for (final p in await portfolios.portfolios()) p.id],
+      );
   }
 });

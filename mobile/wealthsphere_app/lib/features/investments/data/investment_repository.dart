@@ -2,15 +2,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/data/demo_support.dart';
 import '../../../core/data/json_reader.dart';
+import '../../../core/network/api_client.dart';
+import '../../../core/network/asset_catalog.dart';
 import '../../../shared/design_system/components/period_selector.dart';
 import '../../../shared/domain/wealth_models.dart';
+import '../../portfolios/data/portfolio_repository.dart';
 import '../domain/investment_models.dart';
+import 'live_investment_repository.dart';
 
 /// Read-only data about one investment (an asset). There is no call that places an order: this
 /// app does not execute trades.
 abstract interface class InvestmentRepository {
-  Future<InvestmentDetail> detail(String symbol);
-  Future<PerformanceSeries> priceHistory(String symbol, ChartPeriod period);
+  /// [key] is the asset id (live) or the symbol (DEMO): `HoldingSummary.detailKey`.
+  Future<InvestmentDetail> detail(String key);
+  Future<PerformanceSeries> priceHistory(String key, ChartPeriod period);
 }
 
 /// Reads `assets/demo/investments.json`.
@@ -65,6 +70,10 @@ final investmentRepositoryProvider = Provider<InvestmentRepository>((ref) {
         ref.read(demoBehaviorProvider.notifier).gate,
       );
     case DataSourceMode.live:
-      liveNotWired('InvestmentRepository');
+      return LiveInvestmentRepository(
+        ref.watch(apiClientProvider),
+        ref.watch(assetCatalogProvider),
+        ref.watch(portfolioRepositoryProvider).portfolios,
+      );
   }
 });

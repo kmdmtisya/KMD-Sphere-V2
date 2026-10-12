@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/data/demo_support.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../shared/design_system/charts/charts.dart' as charts;
 import '../../../shared/design_system/components/components.dart';
@@ -63,7 +64,12 @@ class _InvestmentDetailScreenState
     final watching = ref.watch(watchlistProvider).contains(widget.symbol);
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.symbol),
+        // The id the screen was opened with is not a name: show the ticker or name once loaded.
+        title: Text(
+          detail.value == null
+              ? ''
+              : detail.requireValue.symbol ?? detail.requireValue.name,
+        ),
         actions: [
           IconButton(
             tooltip: watching ? l10n.investWatchRemove : l10n.investWatchAdd,
@@ -72,7 +78,8 @@ class _InvestmentDetailScreenState
             selectedIcon: const Icon(Icons.star_rounded),
             onPressed: () => _toggleWatch(l10n),
           ),
-          const DemoBadge(),
+          if (ref.watch(dataSourceModeProvider) == DataSourceMode.demo)
+            const DemoBadge(),
           const SizedBox(width: AppSpacing.m),
         ],
       ),
@@ -84,7 +91,7 @@ class _InvestmentDetailScreenState
           children: [
             _Header(detail: d),
             const SizedBox(height: AppSpacing.m),
-            _PriceChart(detail: d),
+            _PriceChart(detail: d, assetKey: widget.symbol),
             const SizedBox(height: AppSpacing.m),
             _SectionChips(
               labels: [
@@ -101,9 +108,9 @@ class _InvestmentDetailScreenState
             switch (_section) {
               0 => _FundamentalsTab(facts: d.fundamentals),
               1 => _IncomeTab(income: d.income),
-              2 => _PositionTab(position: d.position),
+              2 => _PositionTab(positions: d.positions),
               3 => _TransactionsTab(
-                symbol: d.symbol,
+                symbol: widget.symbol,
                 onOpen: widget.onOpenTransaction,
               ),
               _ => _ResearchTab(notes: d.research),
@@ -180,32 +187,45 @@ class _Header extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final text = context.wealthText;
     final colors = context.wealthColors;
+    final price = detail.price;
+    final source = detail.priceSource;
     return WealthCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Semantics(header: true, child: Text(detail.name, style: text.title)),
           Text(
-            '${detail.symbol} · ${detail.assetClass}',
+            [?detail.symbol, detail.assetClass].join(' · '),
             style: text.caption.copyWith(color: colors.textMuted),
           ),
           const SizedBox(height: AppSpacing.s),
-          CurrencyAmount(money: detail.price, style: text.displayAmount),
-          Text(
-            l10n.investPricePerUnit,
-            style: text.caption.copyWith(color: colors.textMuted),
-          ),
-          const SizedBox(height: AppSpacing.xs),
-          ChangeIndicator(percent: detail.changePercent),
-          const SizedBox(height: AppSpacing.xs),
-          Wrap(
-            spacing: AppSpacing.s,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              DataAsOfLabel(asOf: detail.priceSource.asOf),
-              EvidenceSourceChip(source: detail.priceSource),
-            ],
-          ),
+          if (price == null)
+            Text(
+              l10n.investNoPriceYet,
+              style: text.body.copyWith(color: colors.textMuted),
+            )
+          else ...[
+            CurrencyAmount(money: price, style: text.displayAmount),
+            Text(
+              l10n.investPricePerUnit,
+              style: text.caption.copyWith(color: colors.textMuted),
+            ),
+          ],
+          if (detail.changePercent != null) ...[
+            const SizedBox(height: AppSpacing.xs),
+            ChangeIndicator(percent: detail.changePercent),
+          ],
+          if (source != null) ...[
+            const SizedBox(height: AppSpacing.xs),
+            Wrap(
+              spacing: AppSpacing.s,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                DataAsOfLabel(asOf: source.asOf),
+                EvidenceSourceChip(source: source),
+              ],
+            ),
+          ],
         ],
       ),
     );
@@ -213,15 +233,18 @@ class _Header extends StatelessWidget {
 }
 
 class _PriceChart extends ConsumerWidget {
-  const _PriceChart({required this.detail});
+  const _PriceChart({required this.detail, required this.assetKey});
 
   final InvestmentDetail detail;
+
+  /// What the screen was opened with (the asset id live, the symbol in DEMO).
+  final String assetKey;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final period = ref.watch(investmentPeriodProvider);
-    final key = (symbol: detail.symbol, period: period);
+    final key = (symbol: assetKey, period: period);
     final series = ref.watch(investmentHistoryProvider(key));
     return WealthCard(
       child: Column(
@@ -339,12 +362,15 @@ class _Empty extends StatelessWidget {
 class _FundamentalsTab extends StatelessWidget {
   const _FundamentalsTab({required this.facts});
 
-  final SourcedFacts facts;
+  final SourcedFacts? facts;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    if (facts.items.isEmpty) return _Empty(l10n.investFundamentalsEmpty);
+    final facts = this.facts;
+    if (facts == null || facts.items.isEmpty) {
+      return _Empty(l10n.investFundamentalsEmpty);
+    }
     return WealthCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -413,7 +439,27 @@ class _IncomeTab extends StatelessWidget {
 }
 
 class _PositionTab extends StatelessWidget {
-  const _PositionTab({required this.position});
+  const _PositionTab({required this.positions});
+
+  final List<PositionInfo> positions;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    if (positions.isEmpty) return _Empty(l10n.investPositionEmpty);
+    return Column(
+      children: [
+        for (final p in positions) ...[
+          _PositionCard(position: p),
+          const SizedBox(height: AppSpacing.s),
+        ],
+      ],
+    );
+  }
+}
+
+class _PositionCard extends StatelessWidget {
+  const _PositionCard({required this.position});
 
   final PositionInfo position;
 
@@ -423,10 +469,19 @@ class _PositionTab extends StatelessWidget {
     final money = context.moneyFormatter;
     final p = position;
     final text = context.wealthText;
+    final averageCost = p.averageCost;
+    final value = p.value;
+    final native = p.nativeValue;
+    final asOf = p.asOf;
     return WealthCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          if (p.portfolioName != null)
+            Semantics(
+              header: true,
+              child: Text(p.portfolioName!, style: text.label),
+            ),
           _Rows([
             (
               l10n.investPositionQuantity,
@@ -436,28 +491,40 @@ class _PositionTab extends StatelessWidget {
               l10n.investPositionAverageCost,
               _plain(
                 context,
-                money.format(
-                  p.averageCost,
-                  fractionDigits: p.averageCost.amount.scale > 2 ? 4 : null,
-                ),
+                averageCost == null
+                    ? l10n.valueNotAvailable
+                    : money.format(
+                        averageCost,
+                        fractionDigits: averageCost.amount.scale > 2 ? 4 : null,
+                      ),
               ),
             ),
             (
               l10n.investPositionCostBasis,
               _plain(context, money.format(p.costBasis)),
             ),
-            (l10n.investPositionValue, _plain(context, money.format(p.value))),
-            if (p.nativeValue.currencyCode != p.value.currencyCode)
+            (
+              l10n.investPositionValue,
+              _plain(
+                context,
+                value == null ? l10n.noValueYet : money.format(value),
+              ),
+            ),
+            if (native != null &&
+                value != null &&
+                native.currencyCode != value.currencyCode)
               (
-                l10n.investPositionValueNative(p.nativeValue.currencyCode),
-                _plain(context, money.format(p.nativeValue)),
+                l10n.investPositionValueNative(native.currencyCode),
+                _plain(context, money.format(native)),
               ),
             (
               l10n.investPositionPl,
-              ChangeIndicator(
-                percent: p.unrealisedPlPercent,
-                amount: p.unrealisedPl,
-              ),
+              p.unrealisedPl == null && p.unrealisedPlPercent == null
+                  ? _plain(context, l10n.valueNotAvailable)
+                  : ChangeIndicator(
+                      percent: p.unrealisedPlPercent,
+                      amount: p.unrealisedPl,
+                    ),
             ),
           ]),
           const SizedBox(height: AppSpacing.xs),
@@ -465,7 +532,7 @@ class _PositionTab extends StatelessWidget {
             l10n.investPositionNote,
             style: text.caption.copyWith(color: context.wealthColors.textMuted),
           ),
-          DataAsOfLabel(asOf: p.asOf),
+          if (asOf != null) DataAsOfLabel(asOf: asOf),
         ],
       ),
     );

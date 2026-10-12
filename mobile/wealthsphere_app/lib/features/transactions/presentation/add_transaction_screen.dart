@@ -54,7 +54,15 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
 
   TransactionKind _kind = TransactionKind.buy;
   String? _portfolioId;
+  String? _assetId;
   String? _assetSymbol;
+
+  /// What the asset picker holds: the asset id (live) or the symbol (DEMO).
+  String? get _assetKey => _assetId ?? _assetSymbol;
+
+  /// Sent as `Idempotency-Key` with this entry, so retrying a failed save can never post it
+  /// twice. A new one is made each time the form is reviewed.
+  String? _saveKey;
   String? _assetName;
   DateTime? _date;
 
@@ -73,6 +81,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
     if (c != null) {
       _kind = addableKinds.contains(c.kind) ? c.kind : TransactionKind.buy;
       _portfolioId = c.portfolioId;
+      _assetId = c.assetId;
       _assetSymbol = c.assetSymbol;
       _assetName = c.assetName;
       _date = c.tradeDate;
@@ -101,6 +110,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
   TransactionDraft _draft() => TransactionDraft(
     kind: _kind,
     portfolioId: _portfolioId,
+    assetId: _assetId,
     assetSymbol: _assetSymbol,
     assetName: _assetName,
     date: _date,
@@ -140,6 +150,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
       _issues = result.issues;
       if (result.isValid) {
         _validated = result.value;
+        _saveKey = newIdempotencyKey();
         _step = _Step.review;
         _saveFailed = false;
       }
@@ -154,7 +165,9 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
       _saveFailed = false;
     });
     try {
-      final entry = await ref.read(transactionRepositoryProvider).add(value);
+      final entry = await ref
+          .read(transactionRepositoryProvider)
+          .add(value.withIdempotencyKey(_saveKey));
       refreshLedger(ref);
       if (!mounted) return;
       setState(() {
@@ -177,6 +190,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
     }
     setState(() {
       _kind = TransactionKind.buy;
+      _assetId = null;
       _assetSymbol = null;
       _assetName = null;
       _date = null;
@@ -295,6 +309,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
           ],
           onChanged: (v) => _changed(portfolios, () {
             if (v != _portfolioId) {
+              _assetId = null;
               _assetSymbol = null;
               _assetName = null;
             }
@@ -321,23 +336,22 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
         if (_kind.needsAsset) ...[
           gap,
           DropdownButtonFormField<String>(
-            key: ValueKey('asset-$_portfolioId-$_assetSymbol'),
-            initialValue: _assetSymbol,
+            key: ValueKey('asset-$_portfolioId-$_assetKey'),
+            initialValue: _assetKey,
             isExpanded: true,
             decoration: decoration(l10n.addTxAsset, TxField.asset),
             items: [
               for (final a in assets)
                 DropdownMenuItem(
-                  value: a.symbol,
+                  value: a.detailKey,
                   child: Text(a.name, overflow: TextOverflow.ellipsis),
                 ),
             ],
             onChanged: (v) => _changed(portfolios, () {
-              _assetSymbol = v;
-              _assetName = assets
-                  .where((a) => a.symbol == v)
-                  .map((a) => a.name)
-                  .firstOrNull;
+              final chosen = assets.where((a) => a.detailKey == v).firstOrNull;
+              _assetId = chosen?.assetId;
+              _assetSymbol = chosen?.symbol;
+              _assetName = chosen?.name;
             }),
           ),
         ],
