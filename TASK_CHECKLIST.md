@@ -999,10 +999,10 @@
   - [x] P10-T09.3 Hallucination
   - [x] P10-T09.4 Missing data
   - [x] P10-T09.5 Documented evaluation datasets and acceptance thresholds (DEC-17)
-- [ ] **P10-T10** · Mobile Copilot live wiring · `IN_PROGRESS` 🔄
+- [x] **P10-T10** · Mobile Copilot live wiring · `COMPLETED` ✅
   - Deps: P10-T08, P09-T01, P03-T06 · Wave: W6 · Track: MOB · Size: L · Approval: no
-  - Started: 2026-10-12T20:09:59+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-12T20:09:59+04:00 · Completed: 2026-10-12T20:42:55+04:00 · Duration: 32m 56s · Blocker: —
+  - Evidence: Live Copilot repository over SSE with mapped events, scope sent and enforced, conversation continuity and history (list/open/delete), live empty state without DEMO, failure texts (429/5xx/generic), 62 new Flutter tests plus e2e journey 7 against the real backend; Flutter 1726 passed, analyze and format clean. PR #119. CI all gates pass.
   - [x] P10-T10.1 Streaming consumer
   - [x] P10-T10.2 History
   - [x] P10-T10.3 States
