@@ -1,11 +1,12 @@
 """Response schemas for /api/v1/fx (P11-T03). Rates travel as strings (ADR-0003)."""
 
+import uuid
 from datetime import datetime
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
-from app.core.money import DecimalString
+from app.core.money import CURRENCY_PATTERN, DecimalString, Money
 
 Status = Literal["current", "cached", "stale", "unavailable"]
 RateType = Literal["mid_market", "indicative", "delayed"]
@@ -54,3 +55,61 @@ class FxRefreshOut(BaseModel):
     attempts: list[FxProviderAttemptOut]
     missing: list[str] = Field(description="Currencies no provider could supply")
     status: FxStatusOut
+
+
+# ------------------------------------------------------------------------- P11-T04 conversion
+class CurrencyOut(BaseModel):
+    code: str
+    name: str
+    symbol: str
+    decimal_places: int = Field(description="The precision converted amounts are rounded to")
+
+
+class SnapshotRateOut(BaseModel):
+    """1 `base` = `rate` `quote`, from the snapshot's stored rates."""
+
+    base: str
+    quote: str
+    rate: DecimalString
+    path: list[str] | None = Field(
+        default=None, description="Currencies a derived rate went through, e.g. AED, USD, KES"
+    )
+    status: Status
+    rate_timestamp: datetime | None = Field(
+        default=None, description="When the oldest stored rate used was published"
+    )
+    providers: list[str]
+
+
+class FxRatesOut(BaseModel):
+    snapshot_id: uuid.UUID = Field(description="Every rate here comes from this snapshot")
+    base: str
+    rates: list[SnapshotRateOut]
+    unavailable: list[str] = Field(description="Requested currencies without a rate")
+
+
+class ConvertIn(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    amount: Money
+    to: str = Field(pattern=CURRENCY_PATTERN, description="Target currency (ISO 4217)")
+    snapshot_id: uuid.UUID | None = Field(
+        default=None,
+        description="Convert with the rates of an earlier snapshot (for example a report's); "
+        "omit for the latest rates",
+    )
+
+
+class ConvertOut(BaseModel):
+    source: Money
+    converted: Money = Field(description="Rounded once, half-up, to the target's decimal places")
+    rate: DecimalString
+    path: list[str] | None = None
+    snapshot_id: uuid.UUID
+    status: Status
+    rate_timestamp: datetime | None = None
+    providers: list[str]
+    notice: str = Field(
+        default="Indicative rate for information; not a quote for a transaction.",
+        description="Shown with every conversion",
+    )

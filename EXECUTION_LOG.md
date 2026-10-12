@@ -1317,3 +1317,15 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T22:32:02+04:00 — COMPLETE P11-T03
 - duration: 24m 19s
 - evidence: ExchangeRate-API adapter from docs with synthetic fixtures (no key, no live call; QG-21.1 evidence is documentation-shaped fixtures); ordered primary/fallback with batch refresh; one refresh per window (quota math tested); status computed on read; cached board; /fx/status and rate-limited /fx/refresh reporting last good rates and age on total outage; 49 new tests; backend 2181 passed. Completed under the user's advance approval (fixture-only conditions). PR #127. CI all gates pass. · Approved by: user (mtisya@gmail.com), advance approval 2026-10-12
+
+### 2026-10-12T22:40:06+04:00 — START P11-T04
+- FXCUR-04 Conversion engine with rate snapshots and cross-rates
+- prerequisites verified COMPLETED
+
+### 2026-10-12T22:40:06+04:00 — START P11-T05
+- FXCUR-05 Historical rates
+- prerequisites verified COMPLETED
+
+### 2026-10-12T23:12:43+04:00 — COMPLETE P11-T04
+- duration: 32m 38s
+- evidence: Direction-validated lookup with inverse and pivot cross-rates (path, older-leg age, stale) in the FX service; immutable content-addressed snapshots; Decimal conversion rounded once to currency decimal places; currencies/rates/convert APIs (convert audited); reference, exact-fraction and property tests, matrix F-05; backend 2223 passed. PR #128. CI all gates pass.

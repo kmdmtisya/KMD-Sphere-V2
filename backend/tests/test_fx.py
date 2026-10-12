@@ -2,6 +2,7 @@
 
 from datetime import UTC, date, datetime, timedelta
 from decimal import Decimal
+from fractions import Fraction
 
 import pytest
 
@@ -125,3 +126,47 @@ def test_end_of_day_is_the_last_instant_in_utc() -> None:
     eod = end_of_day(date(2026, 10, 9))
     assert eod.tzinfo == UTC
     assert eod + timedelta(microseconds=1) == datetime(2026, 10, 10, tzinfo=UTC)
+
+
+# ---------------------------------------------------- cross rates through the pivot (P11-T04)
+def test_a_cross_rate_goes_through_the_pivot_with_its_path() -> None:
+    from app.modules.market_data.fx import select_via
+
+    candidates = [rate("USD", "AED", "3.6725", hours_ago=2), rate("USD", "KES", "129.15", 1)]
+    q = select_via("AED", "KES", candidates, NOW, now=NOW, pivot="USD")
+    assert q.path == ("AED", "USD", "KES")
+    assert abs(Fraction(q.rate) - Fraction("129.15") / Fraction("3.6725")) < Fraction(1, 10**40)
+    assert q.as_of == NOW - timedelta(hours=2), "as old as its older leg"
+    assert not q.inverted
+
+
+def test_a_cross_rate_is_stale_when_either_leg_is() -> None:
+    from app.modules.market_data.fx import select_via
+
+    candidates = [rate("USD", "AED", "3.6725", hours_ago=30), rate("USD", "KES", "129.15", 1)]
+    assert select_via("AED", "KES", candidates, NOW, now=NOW, pivot="USD").stale
+
+
+def test_a_stored_pair_beats_the_cross_rate() -> None:
+    from app.modules.market_data.fx import select_via
+
+    candidates = [
+        rate("USD", "AED", "3.6725", 1),
+        rate("USD", "KES", "129.15", 1),
+        rate("AED", "KES", "35", 1),
+    ]
+    q = select_via("AED", "KES", candidates, NOW, now=NOW, pivot="USD")
+    assert (q.rate, q.path) == (Decimal("35"), None)
+
+
+def test_without_a_leg_or_a_pivot_there_is_no_cross_rate() -> None:
+    from app.modules.market_data.fx import select_via
+
+    one_leg = [rate("USD", "AED", "3.6725", 1)]
+    with pytest.raises(FxRateUnavailable):
+        select_via("AED", "KES", one_leg, NOW, now=NOW, pivot="USD")
+    with pytest.raises(FxRateUnavailable):
+        select_via("AED", "KES", one_leg, NOW, now=NOW, pivot=None)
+    # A pair that involves the pivot is never crossed through itself.
+    with pytest.raises(FxRateUnavailable):
+        select_via("USD", "KES", one_leg, NOW, now=NOW, pivot="USD")

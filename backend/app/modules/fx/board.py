@@ -48,7 +48,9 @@ class RateLine:
     age_seconds: int | None = None
 
 
-async def _latest(session: AsyncSession, pivot: str, currencies: list[str]) -> list[StoredRate]:
+async def latest_against(
+    session: AsyncSession, pivot: str, currencies: list[str]
+) -> list[StoredRate]:
     rows = await session.execute(
         select(FxRate)
         .where(FxRate.base_currency == pivot, FxRate.quote_currency.in_(currencies))
@@ -131,7 +133,7 @@ class RateBoard:
             hit = await self._cache.get(key)
             if hit is not None:
                 return _decode(hit)
-        rows = await _latest(self._session, pivot, currencies)
+        rows = await latest_against(self._session, pivot, currencies)
         if key is not None and self._cache is not None:
             await self._cache.set(key, _encode(rows), self._ttl)
         return rows
