@@ -974,9 +974,9 @@
   - [ ] P10-T06.2 Scope enforcement
   - [ ] P10-T06.3 Streaming
   - [ ] P10-T06.4 Tests
-- [ ] **P10-T07** · Conversation persistence and AI audit · `NOT_STARTED` ⬜
+- [ ] **P10-T07** · Conversation persistence and AI audit · `IN_PROGRESS` 🔄
   - Deps: P10-T02 · Wave: W3 · Track: DB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T18:05:53+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P10-T07.1 Schema
   - [ ] P10-T07.2 Repositories

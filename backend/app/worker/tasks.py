@@ -8,6 +8,7 @@ from datetime import UTC, date, datetime
 import redis
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.ai.conversations.service import ConversationService
 from app.core.config import get_settings
 from app.modules.alerts.evaluation import EvaluationResult, evaluate_alerts
 from app.modules.market_data.ingestion import (
@@ -202,5 +203,27 @@ def evaluate_alerts_job(bucket: str | None = None) -> dict[str, object]:
             "skipped_by_preferences": r.skipped_by_preferences,
             "skipped_no_fresh_data": r.skipped_no_fresh_data,
         }
+
+    return run_async(go)
+
+
+# ------------------------------------------------------------------------ AI conversations
+@celery_app.task(base=JobTask, name="app.worker.tasks.purge_ai_conversations")
+def purge_ai_conversations_job(day: str | None = None) -> dict[str, object]:
+    """Deletes AI conversations past the retention period (ADR-0017: 90 days by default)."""
+    now = datetime.now(UTC)
+    key = day or now.date().isoformat()
+    retention = get_settings().ai_conversation_retention_days
+
+    async def go(sessions: SessionFactory) -> dict[str, object]:
+        async def work(session: AsyncSession) -> int:
+            removed = await ConversationService(session).purge_expired(now, retention)
+            await session.commit()
+            return removed
+
+        outcome = await run_once(sessions, "purge_ai_conversations", key, work)
+        if outcome.skipped or outcome.value is None:
+            return {"skipped": True}
+        return {"removed": outcome.value}
 
     return run_async(go)

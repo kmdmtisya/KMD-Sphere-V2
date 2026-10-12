@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Literal
 from urllib.parse import quote_plus
 
-from pydantic import SecretStr, field_validator
+from pydantic import Field, SecretStr, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 _ROOT_ENV = Path(__file__).resolve().parents[3] / ".env"
@@ -90,6 +90,8 @@ class Settings(BaseSettings):
     ai_anthropic_model: str = ""
     ai_request_timeout_seconds: float = 60.0
     ai_max_output_tokens: int = 1024
+    # Conversation history is deleted this many days after its last message (ADR-0017: 90).
+    ai_conversation_retention_days: int = Field(default=90, ge=1, le=3650)
     # Browser origins allowed to call the API. Empty (the default) disables CORS: the mobile apps
     # do not need it. A wildcard is never accepted.
     cors_allowed_origins: list[str] = []
