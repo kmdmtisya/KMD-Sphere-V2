@@ -75,8 +75,10 @@ class Book:
     async def value(
         self, pid: str, asset: str, amount: str, on: date = TODAY, hour: int = 1
     ) -> None:
+        # Never in the future: shortly after midnight UTC, 01:00 today has not happened yet.
+        as_of = min(datetime.combine(on, time(hour), tzinfo=UTC), NOW - timedelta(minutes=1))
         body = {"asset_id": asset, "value": m(amount), "source": "test",
-                "as_of": datetime.combine(on, time(hour), tzinfo=UTC).isoformat()}  # fmt: skip
+                "as_of": as_of.isoformat()}  # fmt: skip
         r = await self.http.post(f"/api/v1/portfolios/{pid}/valuations", headers=self.h, json=body)
         assert r.status_code == 201, r.text
 
