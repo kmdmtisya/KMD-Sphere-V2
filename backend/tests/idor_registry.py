@@ -124,4 +124,5 @@ IDOR_TESTS: dict[tuple[str, str], str] = {
 # reason. tests/test_idor_coverage.py checks that none of them takes a resource id (`{..._id}`).
 NOT_USER_RESOURCES: dict[tuple[str, str], str] = {
     ("GET", "/api/v1/fx-rates/{base}/{quote}"): "currency codes; FX rates are global market data",
+    ("GET", "/api/v1/fx/rates/{base}/{quote}"): "currency codes; FX rates are global market data",
 }

@@ -2,26 +2,43 @@
 (P11-T03). Reads never call a provider; a refresh calls one at most once per window, whoever
 asks, and each user may ask a few times an hour."""
 
+import uuid
 from datetime import UTC, datetime
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, Path, Query, Request
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.api_responses import UNAUTHORIZED
+from app.core.api_responses import UNAUTHORIZED, invalid, not_found
 from app.core.config import Settings
+from app.core.money import CURRENCY_PATTERN, Money, round_half_up
 from app.core.ratelimit import RateLimit, RateLimitedError
 from app.db.session import get_session
 from app.modules.fx.board import RateBoard, invalidate
+from app.modules.fx.models import Currency, FxConversionAudit
 from app.modules.fx.refresh import refresh_once_per_window
 from app.modules.fx.schemas import (
+    ConvertIn,
+    ConvertOut,
+    CurrencyOut,
     FxProviderAttemptOut,
     FxRateLineOut,
+    FxRatesOut,
     FxRefreshOut,
     FxStatusOut,
+    SnapshotRateOut,
+)
+from app.modules.fx.snapshot import (
+    ResolvedRate,
+    Snapshot,
+    SnapshotService,
+    UnsupportedCurrency,
+    convert,
 )
 from app.modules.fx.status import StatusPolicy
 from app.modules.identity.dependencies import CurrentUserDep
+from app.modules.market_data.fx import FxRateUnavailable
 from app.modules.market_data.providers.errors import ProviderUnavailable
 from app.modules.market_data.providers.registry import build_providers
 
@@ -131,4 +148,175 @@ async def fx_refresh(request: Request, user: CurrentUserDep, session: SessionDep
         attempts=attempts,
         missing=missing,
         status=await _status(request, session),
+    )
+
+
+# ------------------------------------------------------------------------- P11-T04 conversion
+currencies_router = APIRouter(prefix="/api/v1/currencies", tags=["fx"])
+CurrencyCode = Annotated[str, Path(pattern=CURRENCY_PATTERN, description="ISO 4217 code")]
+
+
+def _snapshots(request: Request, session: AsyncSession) -> SnapshotService:
+    return SnapshotService(session, request.app.state.settings.fx_pivot_currency)
+
+
+async def _snapshot(service: SnapshotService, snapshot_id: uuid.UUID | None) -> Snapshot:
+    return await (service.get(snapshot_id) if snapshot_id else service.current())
+
+
+def _rate_out(rate: ResolvedRate, policy: StatusPolicy, now: datetime) -> SnapshotRateOut:
+    return SnapshotRateOut(
+        base=rate.base,
+        quote=rate.quote,
+        rate=rate.rate,
+        path=list(rate.path) if rate.path else None,
+        status=rate.status(policy, now).value,
+        rate_timestamp=rate.rate_timestamp,
+        providers=rate.providers,
+    )
+
+
+@currencies_router.get(
+    "",
+    response_model=list[CurrencyOut],
+    summary="Supported currencies",
+    responses=UNAUTHORIZED,
+)
+async def list_currencies(user: CurrentUserDep, session: SessionDep) -> list[CurrencyOut]:
+    """The currencies amounts can be reported in, with name, symbol and precision."""
+    rows = await session.execute(
+        select(Currency).where(Currency.is_active.is_(True)).order_by(Currency.code)
+    )
+    return [
+        CurrencyOut(code=c.code, name=c.name, symbol=c.symbol, decimal_places=c.decimal_places)
+        for c in rows.scalars()
+    ]
+
+
+@router.get(
+    "/rates",
+    response_model=FxRatesOut,
+    summary="Rates of one currency against others, from one snapshot",
+    responses={**UNAUTHORIZED, **invalid("currency"), **not_found("snapshot")},
+)
+async def fx_rates(
+    request: Request,
+    user: CurrentUserDep,
+    session: SessionDep,
+    base: Annotated[
+        str | None, Query(pattern=CURRENCY_PATTERN, description="Default: the pivot currency")
+    ] = None,
+    quotes: Annotated[
+        str | None,
+        Query(
+            pattern=r"^[A-Z]{3}(,[A-Z]{3}){0,49}$",
+            description="Comma-separated codes; default: every supported currency",
+        ),
+    ] = None,
+    snapshot_id: Annotated[uuid.UUID | None, Query()] = None,
+) -> FxRatesOut:
+    """Every rate comes from the same snapshot (its id is returned), so figures converted with
+    them agree. Derived rates state their path; each rate's status is the worst of the stored
+    rates it used."""
+    settings: Settings = request.app.state.settings
+    service = _snapshots(request, session)
+    active = await service.currencies()
+    base_code = base or settings.fx_pivot_currency
+    wanted = quotes.split(",") if quotes else sorted(active)
+    for code in [base_code, *wanted]:
+        if code not in active:
+            raise UnsupportedCurrency(f"{code} is not a supported currency")
+    snapshot = await _snapshot(service, snapshot_id)
+    policy, now = StatusPolicy.from_settings(settings), datetime.now(UTC)
+    rates: list[SnapshotRateOut] = []
+    unavailable: list[str] = []
+    for quote in wanted:
+        if quote == base_code:
+            continue
+        try:
+            rates.append(_rate_out(snapshot.rate(base_code, quote), policy, now))
+        except FxRateUnavailable:
+            unavailable.append(quote)
+    return FxRatesOut(snapshot_id=snapshot.id, base=base_code, rates=rates, unavailable=unavailable)
+
+
+@router.get(
+    "/rates/{base}/{quote}",
+    response_model=SnapshotRateOut,
+    summary="One rate, direct or derived, with its path",
+    responses={
+        **UNAUTHORIZED,
+        **invalid("currency"),
+        404: {"description": "No rate for this pair (fx-rate-unavailable) or no such snapshot"},
+    },
+)
+async def fx_rate(
+    request: Request,
+    base: CurrencyCode,
+    quote: CurrencyCode,
+    user: CurrentUserDep,
+    session: SessionDep,
+    snapshot_id: Annotated[uuid.UUID | None, Query()] = None,
+) -> SnapshotRateOut:
+    """1 `base` = `rate` `quote` from the latest (or the given) snapshot: direct, inverted, or
+    derived through the pivot with its path. A pair with no rate is 404, never guessed."""
+    settings: Settings = request.app.state.settings
+    service = _snapshots(request, session)
+    active = await service.currencies()
+    for code in (base, quote):
+        if code not in active:
+            raise UnsupportedCurrency(f"{code} is not a supported currency")
+    snapshot = await _snapshot(service, snapshot_id)
+    return _rate_out(
+        snapshot.rate(base, quote), StatusPolicy.from_settings(settings), datetime.now(UTC)
+    )
+
+
+@router.post(
+    "/convert",
+    response_model=ConvertOut,
+    summary="Convert an amount",
+    responses={
+        **UNAUTHORIZED,
+        **invalid("conversion"),
+        404: {"description": "No rate for this pair (fx-rate-unavailable) or no such snapshot"},
+    },
+)
+async def fx_convert(
+    body: ConvertIn, request: Request, user: CurrentUserDep, session: SessionDep
+) -> ConvertOut:
+    """Converts with the snapshot's rate and rounds once to the target's decimal places. Nothing
+    stored is changed. Explicit converter use is recorded in the conversion audit (DEC-28)."""
+    settings: Settings = request.app.state.settings
+    service = _snapshots(request, session)
+    source_currency = body.amount.currency
+    places = await service.decimal_places(body.to)
+    await service.decimal_places(source_currency)
+    snapshot = await _snapshot(service, body.snapshot_id)
+    resolved = snapshot.rate(source_currency, body.to)
+    converted = convert(body.amount.amount, resolved.rate, places)
+    session.add(
+        FxConversionAudit(
+            user_id=user.id,
+            source_currency=source_currency,
+            target_currency=body.to,
+            source_amount=body.amount.amount,
+            converted_amount=converted,
+            rate=round_half_up(resolved.rate, 12),
+            rate_timestamp=resolved.rate_timestamp or snapshot.created_at,
+            provider=("+".join(resolved.providers) or "identity")[:32],
+            snapshot_id=snapshot.id,
+            conversion_type="converter",
+        )
+    )
+    await session.commit()
+    return ConvertOut(
+        source=body.amount,
+        converted=Money(amount=converted, currency=body.to),
+        rate=resolved.rate,
+        path=list(resolved.path) if resolved.path else None,
+        snapshot_id=snapshot.id,
+        status=resolved.status(StatusPolicy.from_settings(settings), datetime.now(UTC)).value,
+        rate_timestamp=resolved.rate_timestamp,
+        providers=resolved.providers,
     )

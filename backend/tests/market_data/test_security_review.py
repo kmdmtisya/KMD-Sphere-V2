@@ -131,6 +131,11 @@ class TestNoUnreviewedProviderDataLeavesTheApi:
         # (terms not yet confirmed) are both re-checked at P11-T12 before production use.
         "/api/v1/fx/status",
         "/api/v1/fx/refresh",
+        # P11-T04: per user, authenticated, rates and conversions from stored snapshots with
+        # provenance; the same licence re-check at P11-T12 applies.
+        "/api/v1/fx/rates",
+        "/api/v1/fx/rates/{base}/{quote}",
+        "/api/v1/fx/convert",
     }
     MARKET_WORDS: ClassVar[tuple[str, ...]] = (
         "price",

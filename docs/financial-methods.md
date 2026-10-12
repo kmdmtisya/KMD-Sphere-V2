@@ -90,6 +90,8 @@ Per asset and portfolio, in the portfolio currency, each posting at its own rate
 - **Opposite pair:** used (inverted, 1/rate) only when no direct rate exists.
 - **Ties:** newest timestamp, then newest retrieval, then provider name.
 - **No usable rate:** the amount is left out and reported (`unconverted`), never converted at 1 or at a guess.
+- **Cross rate** (P11-T04): when neither direction is stored, 1 A = (A→pivot) × (pivot→B) through the pivot (USD, DEC-27); as old as the older leg, stale if either leg is, path recorded (A→USD→B). Ledger postings never use a cross rate.
+- **Reporting conversion** (P11-T04): every figure of one view uses one immutable rate snapshot; converted = round_half_up(amount × rate, the target's decimal places from the `currencies` table), once ([fx-conversion.md](design/fx-conversion.md)).
 
 ## 6. Allocation and concentration (docs/design/allocation.md)
 

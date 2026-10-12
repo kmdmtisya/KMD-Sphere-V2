@@ -1050,19 +1050,19 @@
   - [x] P11-T03.4 Cache and batch retrieval
   - [x] P11-T03.5 Staleness and status
   - [x] P11-T03.6 Refresh endpoint with limits
-- [ ] **P11-T04** · FXCUR-04 Conversion engine with rate snapshots and cross-rates · `NOT_STARTED` ⬜
+- [ ] **P11-T04** · FXCUR-04 Conversion engine with rate snapshots and cross-rates · `IN_PROGRESS` 🔄
   - Deps: P11-T03 · Wave: W4 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T22:40:05+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P11-T04.1 Direction-validated rate lookup
-  - [ ] P11-T04.2 Cross-rate path
-  - [ ] P11-T04.3 Precision and rounding
-  - [ ] P11-T04.4 Snapshots
-  - [ ] P11-T04.5 APIs
-  - [ ] P11-T04.6 Reference and property tests
-- [ ] **P11-T05** · FXCUR-05 Historical rates · `NOT_STARTED` ⬜
+  - [x] P11-T04.1 Direction-validated rate lookup
+  - [x] P11-T04.2 Cross-rate path
+  - [x] P11-T04.3 Precision and rounding
+  - [x] P11-T04.4 Snapshots
+  - [x] P11-T04.5 APIs
+  - [x] P11-T04.6 Reference and property tests
+- [ ] **P11-T05** · FXCUR-05 Historical rates · `IN_PROGRESS` 🔄
   - Deps: P11-T03 · Wave: W4 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T22:40:05+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P11-T05.1 Rate concepts in the domain
   - [ ] P11-T05.2 History endpoint

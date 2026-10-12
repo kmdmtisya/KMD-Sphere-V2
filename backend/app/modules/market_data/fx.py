@@ -38,6 +38,8 @@ class StoredRate:
     provider: str
     rate_timestamp: datetime
     retrieved_at: datetime
+    # The currencies a provider-derived rate went through (P11-T02); None for a direct quote.
+    rate_path: tuple[str, ...] | None = None
 
 
 @dataclass(frozen=True)
@@ -51,6 +53,8 @@ class Quote:
     provider: str
     inverted: bool
     stale: bool
+    # base, [intermediate currencies,] quote when the rate was derived; None for a direct rate.
+    path: tuple[str, ...] | None = None
 
 
 class FxRateUnavailable(LookupError):
@@ -106,9 +110,16 @@ def select(
         raise FxRateUnavailable(
             f"no {base}/{quote} rate between {earliest:%Y-%m-%d} and {at:%Y-%m-%d}"
         )
+    # Direction check: the stored pair is exactly (base, quote) or exactly (quote, base).
+    stored_pair = (chosen.base_currency, chosen.quote_currency)
+    if stored_pair != ((quote, base) if inverted else (base, quote)):  # pragma: no cover
+        raise FxRateUnavailable(f"{base}/{quote}: rate direction mismatch")
     with localcontext() as ctx:
         ctx.prec = PRECISION
         rate = Decimal(1) / chosen.rate if inverted else chosen.rate
+    path = chosen.rate_path
+    if path is not None and inverted:
+        path = tuple(reversed(path))
     return Quote(
         base,
         quote,
@@ -117,4 +128,41 @@ def select(
         chosen.provider,
         inverted=inverted,
         stale=now - chosen.rate_timestamp > LATEST_FRESH_FOR,
+        path=path,
+    )
+
+
+def select_via(
+    base: str,
+    quote: str,
+    candidates: list[StoredRate],
+    at: datetime,
+    *,
+    now: datetime,
+    pivot: str | None,
+) -> Quote:
+    """`select`, and when neither direction of the pair is stored, the cross rate through
+    `pivot` (P11-T04): 1 base = (base->pivot) x (pivot->quote) pivot-legs, each chosen by the same
+    rules. The cross rate is as old as its older leg, stale when either leg is, and carries the
+    path (for example AED->USD->KES)."""
+    try:
+        return select(base, quote, candidates, at, now=now)
+    except FxRateUnavailable:
+        if pivot is None or pivot in (base, quote):
+            raise
+    first = select(base, pivot, candidates, at, now=now)
+    second = select(pivot, quote, candidates, at, now=now)
+    with localcontext() as ctx:
+        ctx.prec = PRECISION
+        rate = first.rate * second.rate
+    providers = dict.fromkeys([first.provider, second.provider])
+    return Quote(
+        base,
+        quote,
+        rate,
+        min(first.as_of, second.as_of),
+        "+".join(providers),
+        inverted=False,
+        stale=first.stale or second.stale,
+        path=(base, pivot, quote),
     )
