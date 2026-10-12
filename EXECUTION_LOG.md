@@ -1130,3 +1130,19 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T15:13:46+04:00 — COMPLETE P09-T06
 - duration: 3h 27m 43s
 - evidence: Encrypted offline snapshots (ADR-0015, DEC-12): AES-256-GCM, key in secure storage, per-user hashed folders; offline GETs served from the saved copy with a banner showing the data age; non-offline errors never masked; writes never cached; sign-out and session end wipe files and key and reload all live data. 19 tests; merged in PR 99. Device run in airplane mode not done (manual check open). · Approved by: user (mtisya@gmail.com)
+
+### 2026-10-12T15:18:35+04:00 — QG CHECK QG-03.3
+- evidence: End-to-end tests pass: six journeys (sign in, view portfolio, add transaction, forecast, goal progress, notification deep link) run in CI (workflow e2e.yml, PR 103) and locally against a real Postgres-backed backend seeded through the API, over real HTTP with the real app and live repositories. Caveat: identity-provider browser login, device lock and FCM are stood in for (docs/design/e2e.md); not run on a device or emulator.
+
+### 2026-10-12T15:18:35+04:00 — QG CHECK QG-11.2
+- evidence: Portfolio data flows through transactions, holdings, summaries, dashboard and forecasts in the E2E journeys: a deposit made through the app is booked by the server (net worth up by exactly 500.00) and Home shows the server's new total; displayed values equal direct API reads; the forecast equals a direct engine call; no client-side recalculation (tests assert server figures). Caveat: all-portfolios P/L, chart and metrics are empty because the API has no consolidated performance endpoints (docs/tech-debt.md).
+
+### 2026-10-12T15:18:35+04:00 — QG CHECK QG-11.5
+- evidence: Core user journeys pass end to end (journeys 1-6 in e2e/e2e_journeys_test.dart, green in CI and locally). Caveat: AI journeys remain DEMO until P10; no device run.
+
+### 2026-10-12T15:18:35+04:00 — QG CHECK QG-11.6
+- evidence: Error, offline and recovery behaviour verified by tests: offline interceptor serves the saved copy only when the server is unreachable and never masks 401/403/404/5xx (19 tests), banner with data age and retry, reconnect/sign-in/sign-out reload and wipe, per-cause error views, rate-limit/refused/offline wording on the calculator; encrypted cache has no plaintext on disk and no cross-user reads. Caveat: no airplane-mode run on a device (manual check open); P09-T06 approved by the user.
+
+### 2026-10-12T15:18:36+04:00 — START P09-GATE
+- UX Gate 4 review
+- prerequisites verified COMPLETED
