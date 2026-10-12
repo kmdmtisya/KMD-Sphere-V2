@@ -102,7 +102,7 @@ Dart: `mobile/wealthsphere_app/lib/features/forecast/domain/forecast_models.dart
 | `final_real` | `final_real` | same |  |  |
 | `total_contributions` | `total_contributions` | same |  |  |
 | `total_growth` | `total_growth` | same |  |  |
-| - | `contributions` | api-only | Cumulative paid-in series for the contributions-versus-growth chart. | P09-T03 |
+| - | `contributions` | api-only | Not read yet: the forecast screen shows total_contributions. The yearly series is for a contributions-versus-growth chart, which the screen does not have. | P09-T03 |
 
 Series items are {year, value} on both sides (YearValue).
 

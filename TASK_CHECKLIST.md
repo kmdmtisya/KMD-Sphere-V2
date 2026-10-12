@@ -853,13 +853,13 @@
   - [x] P09-T02.2 Portfolio repo
   - [x] P09-T02.3 Preferences sync
   - [x] P09-T02.4 Tests
-- [ ] **P09-T03** · Live calculator and forecast repository · `NOT_STARTED` ⬜
+- [ ] **P09-T03** · Live calculator and forecast repository · `IN_PROGRESS` 🔄
   - Deps: P09-T01, P06-T02 · Wave: W2 · Track: MOB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T10:07:38+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P09-T03.1 Repository
-  - [ ] P09-T03.2 Remove demo-only notice
-  - [ ] P09-T03.3 Tests
+  - [x] P09-T03.1 Repository
+  - [x] P09-T03.2 Remove demo-only notice
+  - [x] P09-T03.3 Tests
 - [ ] **P09-T04** · Live holdings, transactions and investment details · `NOT_STARTED` ⬜
   - Deps: P09-T01, P05-T08 · Wave: W2 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

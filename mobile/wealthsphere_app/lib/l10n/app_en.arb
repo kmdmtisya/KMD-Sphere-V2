@@ -981,6 +981,10 @@
   "@calcFootnote": {
     "description": "Persistent calculator footnote"
   },
+  "calcRejected": "The calculator can't use these values. Check them against the limits shown and try again.",
+  "@calcRejected": {
+    "description": "Shown when the server refuses the calculator inputs"
+  },
   "calcFailed": "We couldn't calculate this. Check your connection and try again.",
   "@calcFailed": {
     "description": "Calculation failed message"

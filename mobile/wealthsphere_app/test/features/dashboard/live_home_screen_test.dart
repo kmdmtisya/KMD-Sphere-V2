@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:wealthsphere_app/core/data/demo_support.dart';
 import 'package:wealthsphere_app/core/network/asset_class_names.dart';
 import 'package:wealthsphere_app/core/preferences/preferences_store.dart';
 import 'package:wealthsphere_app/features/dashboard/data/dashboard_repository.dart';
@@ -13,6 +12,7 @@ import 'package:wealthsphere_app/features/dashboard/presentation/home_screen.dar
 import 'package:wealthsphere_app/features/portfolios/data/live_portfolio_repository.dart';
 import 'package:wealthsphere_app/features/portfolios/data/portfolio_repository.dart';
 
+import '../../helpers/demo_overrides.dart';
 import '../../helpers/pump_app.dart';
 
 /// Answers each path with a canned JSON body, whatever the order of the requests.
@@ -91,9 +91,7 @@ void main() {
       await tester.pumpApp(
         const HomeScreen(),
         overrides: [
-          dataSourceModeProvider.overrideWith(
-            () => DataSourceModeNotifier()..state = DataSourceMode.live,
-          ),
+          liveModeOverride(),
           dashboardRepositoryProvider.overrideWithValue(
             LiveDashboardRepository(dio),
           ),

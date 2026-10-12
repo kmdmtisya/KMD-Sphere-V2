@@ -2,7 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/data/demo_support.dart';
 import '../../../core/data/json_reader.dart';
+import '../../../core/network/api_client.dart';
 import '../domain/forecast_models.dart';
+import 'live_forecast_repository.dart';
 
 /// Compound-growth forecasts, computed by the backend (the app does no projection maths).
 abstract interface class ForecastRepository {
@@ -47,6 +49,6 @@ final forecastRepositoryProvider = Provider<ForecastRepository>((ref) {
         ref.read(demoBehaviorProvider.notifier).gate,
       );
     case DataSourceMode.live:
-      liveNotWired('ForecastRepository');
+      return LiveForecastRepository(ref.watch(apiClientProvider));
   }
 });
