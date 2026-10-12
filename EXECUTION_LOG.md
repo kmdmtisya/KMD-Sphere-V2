@@ -1329,3 +1329,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T23:12:43+04:00 — COMPLETE P11-T04
 - duration: 32m 38s
 - evidence: Direction-validated lookup with inverse and pivot cross-rates (path, older-leg age, stale) in the FX service; immutable content-addressed snapshots; Decimal conversion rounded once to currency decimal places; currencies/rates/convert APIs (convert audited); reference, exact-fraction and property tests, matrix F-05; backend 2223 passed. PR #128. CI all gates pass.
+
+### 2026-10-12T23:35:38+04:00 — COMPLETE P11-T05
+- duration: 55m 33s
+- evidence: Rate concepts kept apart; /fx/history with per-day rates, missing days flagged not filled, weekend carry flagged; historical conversion via on=date; posting uses trade-date rate (tested); 14 new tests; backend 2237 passed. PR #129. CI all gates pass.
