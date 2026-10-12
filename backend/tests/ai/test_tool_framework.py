@@ -389,4 +389,4 @@ def test_the_factory_reads_the_limits_from_settings() -> None:
     from app.ai.tools.factory import build_tool_registry
 
     r = build_tool_registry(Settings(environment="test", ai_tool_calls_per_minute=7))
-    assert r.names == frozenset()  # tools are added by their own tasks
+    assert r.names >= {"get_portfolio_summary", "get_net_worth"}

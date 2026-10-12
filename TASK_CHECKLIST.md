@@ -945,13 +945,13 @@
   - [x] P10-T02.2 Schemas
   - [x] P10-T02.3 Authz and audit
   - [x] P10-T02.4 Tests
-- [ ] **P10-T03** · Core read tools · `NOT_STARTED` ⬜
+- [ ] **P10-T03** · Core read tools · `IN_PROGRESS` 🔄
   - Deps: P10-T02, P06-T09 · Wave: W3 · Track: AI · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T17:21:59+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P10-T03.1 Five tools
-  - [ ] P10-T03.2 Denial tests
-  - [ ] P10-T03.3 Schema tests
+  - [x] P10-T03.1 Five tools
+  - [x] P10-T03.2 Denial tests
+  - [x] P10-T03.3 Schema tests
 - [ ] **P10-T04** · Forecast tools · `NOT_STARTED` ⬜
   - Deps: P10-T02, P06-T02 · Wave: W3 · Track: AI · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
