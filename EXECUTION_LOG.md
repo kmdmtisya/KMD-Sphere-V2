@@ -1211,3 +1211,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T18:34:11+04:00 — START P10-T06
 - Orchestrator and /ai/chat with streaming
 - prerequisites verified COMPLETED
+
+### 2026-10-12T19:07:15+04:00 — COMPLETE P10-T07
+- duration: 1h 01m 22s
+- evidence: Three user-scoped tables (migration 0014), owner-scoped repositories with cross-user denial tests, deletion of one or all conversations, retention configurable (default 90 days) with a daily purge job and boundary tests; tool-call rows hold hashes only. 11 new tests incl. the purge job; backend 1962 passed (3 local Keycloak live tests fail on this machine only: a dev Keycloak with OTP is running, CI skips them). PR #114. CI all gates pass.
+
+### 2026-10-12T19:07:15+04:00 — COMPLETE P10-T06
+- duration: 33m 04s
+- evidence: POST /api/v1/ai/chat with typed SSE events plus conversation history routes; tool loop via the registry only with server-validated scope, refusals of unknown/unauthorised/smuggled tool requests, call/round/daily/input limits, reviewed-before-streamed answers, no prompt or answer logging; 20 chat tests plus IDOR/integrity/OpenAPI updates; backend 2007 passed. PR #115. CI all gates pass.
