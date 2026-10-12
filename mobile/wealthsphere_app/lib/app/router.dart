@@ -6,6 +6,7 @@ import '../features/ai_wealth/doctor/presentation/doctor_screen.dart';
 import '../features/ai_wealth/opportunities/presentation/compare_screen.dart';
 import '../features/ai_wealth/opportunities/presentation/opportunities_screen.dart';
 import '../features/ai_wealth/presentation/ai_wealth_screen.dart';
+import '../features/alerts/presentation/watchlist_alerts_screen.dart';
 import '../features/auth/application/auth_flow.dart';
 import '../features/auth/presentation/sign_in_screen.dart';
 import '../features/auth/presentation/welcome_screen.dart';
@@ -175,9 +176,16 @@ final Map<AppTab, RouteBase Function()> tabRoutes =
           onOpenIncome: () => context.go(AppRoutes.income),
           onOpenCalculator: () => context.go(AppRoutes.calculator),
           onOpenSettings: () => context.go(AppRoutes.settings),
+          onOpenAlerts: () => context.go(AppRoutes.alerts),
           onOpenGallery: () => context.push(AppRoutes.gallery),
         ),
         routes: [
+          GoRoute(
+            path: 'alerts',
+            builder: (context, state) => WatchlistAlertsScreen(
+              onOpenInvestment: (key) => context.go(AppRoutes.investment(key)),
+            ),
+          ),
           GoRoute(
             path: 'net-worth',
             builder: (context, state) => const NetWorthScreen(),

@@ -104,7 +104,8 @@ async def test_watchlist_add_list_remove(
     assert again.status_code == 200
     items = (await http.get("/api/v1/watchlist", headers=h)).json()
     assert [i["asset"]["id"] for i in items] == [asset]
-    assert items[0]["latest_price"]["price"] == {"amount": "123.45", "currency": "USD"}
+    assert Decimal(items[0]["latest_price"]["price"]) == Decimal("123.45")
+    assert items[0]["latest_price"]["currency"] == "USD"
     assert items[0]["latest_price"]["stale"] is False
     assert (await http.delete(f"/api/v1/watchlist/{asset}", headers=h)).status_code == 204
     assert (await http.get("/api/v1/watchlist", headers=h)).json() == []

@@ -165,6 +165,7 @@ class InvestmentDetail {
     required this.income,
     required this.positions,
     required this.research,
+    this.priceStale = false,
   });
 
   factory InvestmentDetail.fromJson(JsonReader r) {
@@ -198,6 +199,9 @@ class InvestmentDetail {
   final Money? price;
   final Decimal? changePercent;
   final EvidenceSource? priceSource;
+
+  /// The price is older than its freshness window: still shown, and labelled out of date.
+  final bool priceStale;
 
   /// Null when no provider supplies fundamentals for the asset.
   final SourcedFacts? fundamentals;

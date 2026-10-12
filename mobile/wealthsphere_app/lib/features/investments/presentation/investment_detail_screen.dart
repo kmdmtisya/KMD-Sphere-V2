@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,6 +11,8 @@ import '../../../shared/design_system/formatting/formatting.dart';
 import '../../../shared/design_system/theme/theme.dart';
 import '../../../shared/design_system/tokens/tokens.dart';
 import '../../../shared/domain/chart_mapping.dart';
+import '../../alerts/application/alerts_providers.dart';
+import '../../alerts/presentation/price_alert_dialog.dart';
 import '../../transactions/domain/ledger_entry.dart';
 import '../../transactions/presentation/ledger_entry_tile.dart';
 import '../application/investment_providers.dart';
@@ -42,26 +46,34 @@ class _InvestmentDetailScreenState
   /// 0 fundamentals, 1 income, 2 position, 3 transactions, 4 research.
   int _section = 0;
 
-  void _toggleWatch(AppLocalizations l10n) {
-    final notifier = ref.read(watchlistProvider.notifier);
-    final adding = !notifier.isWatching(widget.symbol);
-    notifier.toggle(widget.symbol);
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          content: Text(
-            adding ? l10n.investWatchAdded : l10n.investWatchRemoved,
-          ),
-        ),
-      );
+  void _say(String message) => ScaffoldMessenger.of(context)
+    ..hideCurrentSnackBar()
+    ..showSnackBar(SnackBar(content: Text(message)));
+
+  Future<void> _toggleWatch(AppLocalizations l10n) async {
+    try {
+      final added = await toggleWatch(ref, widget.symbol);
+      if (mounted) {
+        _say(added ? l10n.investWatchAdded : l10n.investWatchRemoved);
+      }
+    } on Object {
+      if (mounted) _say(l10n.watchUpdateFailed);
+    }
+  }
+
+  Future<void> _setAlert(AppLocalizations l10n, InvestmentDetail detail) async {
+    final created = await showDialog<bool>(
+      context: context,
+      builder: (_) => PriceAlertDialog(assetKey: widget.symbol, detail: detail),
+    );
+    if (created == true && mounted) _say(l10n.alertCreated);
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final detail = ref.watch(investmentDetailProvider(widget.symbol));
-    final watching = ref.watch(watchlistProvider).contains(widget.symbol);
+    final watching = ref.watch(isWatchingProvider(widget.symbol)) ?? false;
     return Scaffold(
       appBar: AppBar(
         // The id the screen was opened with is not a name: show the ticker or name once loaded.
@@ -76,7 +88,14 @@ class _InvestmentDetailScreenState
             isSelected: watching,
             icon: const Icon(Icons.star_border_rounded),
             selectedIcon: const Icon(Icons.star_rounded),
-            onPressed: () => _toggleWatch(l10n),
+            onPressed: () => unawaited(_toggleWatch(l10n)),
+          ),
+          IconButton(
+            tooltip: l10n.alertSetPrice,
+            icon: const Icon(Icons.add_alert_outlined),
+            onPressed: detail.value == null
+                ? null
+                : () => unawaited(_setAlert(l10n, detail.requireValue)),
           ),
           if (ref.watch(dataSourceModeProvider) == DataSourceMode.demo)
             const DemoBadge(),
@@ -210,6 +229,10 @@ class _Header extends StatelessWidget {
               l10n.investPricePerUnit,
               style: text.caption.copyWith(color: colors.textMuted),
             ),
+          ],
+          if (detail.priceStale) ...[
+            const SizedBox(height: AppSpacing.xs),
+            StaleChip(label: l10n.priceOutOfDate),
           ],
           if (detail.changePercent != null) ...[
             const SizedBox(height: AppSpacing.xs),

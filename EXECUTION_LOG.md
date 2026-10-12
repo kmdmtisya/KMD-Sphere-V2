@@ -1094,3 +1094,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-12T12:19:44+04:00 — AWAITING_VERIFICATION P09-T06
 - evidence: Encrypted per-response offline snapshots (ADR-0015, DEC-12 chosen by the user): AES-256-GCM, key in secure storage, per-user hashed folders and file names; offline GETs answered from the saved copy with an offline banner showing the data age and Try again; non-offline errors never masked; writes never cached; reconnect, sign-in, sign-out and session end reload all live data; sign-out and session end wipe files and key. 19 new tests (no plaintext on disk, cross-user isolation, wipe, wrong key, interceptor rules incl. refresh-network failure, banner). flutter test 1623 passed; CI green on PR 99. Not done: device run on an emulator with airplane mode (manual check pending user review).
+
+### 2026-10-12T12:30:03+04:00 — START P09-T07
+- Live market-data surfaces
+- prerequisites verified COMPLETED
+
+### 2026-10-12T13:04:27+04:00 — COMPLETE P09-T07
+- duration: 34m 24s
+- evidence: Asset prices endpoint (latest with freshness, daily closes, no interpolation, IDOR-tested, licence guard updated); unrounded watchlist prices; live investment price/history with stale and missing labels; watchlist and alerts screen and price-alert dialog on live and demo repositories. Backend 1820 passed; flutter test 1633 passed, analyze clean. CK-I against the running backend is P09-T10. PR #100. CI all gates pass.

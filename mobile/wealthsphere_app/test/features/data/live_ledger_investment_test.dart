@@ -346,6 +346,14 @@ void main() {
         ],
         clock: () => DateTime.utc(2026, 10, 12),
       );
+      for (final id in ['a1', 'a2']) {
+        api.json('GET /api/v1/assets/$id/prices', {
+          'asset_id': id,
+          'currency': 'USD',
+          'latest': null,
+          'points': <Object?>[],
+        });
+      }
       api
         ..json('GET /api/v1/portfolios/p1/holdings', [
           holding('a1'),

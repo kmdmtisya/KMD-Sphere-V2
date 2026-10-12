@@ -761,6 +761,52 @@
         "title": "AssetOut",
         "type": "object"
       },
+      "AssetPricesOut": {
+        "description": "The stored market prices of one asset. Nothing is interpolated: days without a stored close\nare missing, and an asset without a market price has `latest: null` and no points.",
+        "properties": {
+          "asset_id": {
+            "format": "uuid",
+            "title": "Asset Id",
+            "type": "string"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "data_type": {
+            "const": "delayed",
+            "default": "delayed",
+            "description": "Stored prices from a data provider, not live or executable quotes",
+            "title": "Data Type",
+            "type": "string"
+          },
+          "latest": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/UnitPriceOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "points": {
+            "items": {
+              "$ref": "#/components/schemas/PricePointOut"
+            },
+            "title": "Points",
+            "type": "array"
+          }
+        },
+        "required": [
+          "asset_id",
+          "currency",
+          "latest",
+          "points"
+        ],
+        "title": "AssetPricesOut",
+        "type": "object"
+      },
       "AssetSearchResult": {
         "properties": {
           "items": {
@@ -2488,9 +2534,18 @@
             "title": "As Of",
             "type": "string"
           },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
           "price": {
-            "$ref": "#/components/schemas/Money",
-            "description": "In the asset's own currency"
+            "description": "Per unit in the asset's own currency, unrounded (a unit price can have more decimals than the currency)",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Price",
+            "type": "string"
           },
           "provider": {
             "title": "Provider",
@@ -2504,6 +2559,7 @@
         },
         "required": [
           "price",
+          "currency",
           "as_of",
           "provider",
           "stale"
@@ -3721,6 +3777,35 @@
         "title": "PreferencesUpdate",
         "type": "object"
       },
+      "PricePointOut": {
+        "properties": {
+          "close": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Close",
+            "type": "string"
+          },
+          "on": {
+            "description": "The trading day of the close",
+            "format": "date",
+            "title": "On",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          }
+        },
+        "required": [
+          "on",
+          "close",
+          "provider"
+        ],
+        "title": "PricePointOut",
+        "type": "object"
+      },
       "ReadyStatus": {
         "properties": {
           "checks": {
@@ -4875,6 +4960,47 @@
         "title": "TypeIncomeOut",
         "type": "object"
       },
+      "UnitPriceOut": {
+        "description": "A price per unit, unrounded (a unit price can have more decimals than the currency).",
+        "properties": {
+          "as_of": {
+            "description": "When the price was valid (the provider's timestamp)",
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "price": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Price",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "stale": {
+            "description": "Older than its freshness window; shown, and labelled",
+            "title": "Stale",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "price",
+          "currency",
+          "as_of",
+          "provider",
+          "stale"
+        ],
+        "title": "UnitPriceOut",
+        "type": "object"
+      },
       "ValidationError": {
         "properties": {
           "ctx": {
@@ -5973,6 +6099,111 @@
           }
         ],
         "summary": "Get Asset",
+        "tags": [
+          "assets"
+        ]
+      }
+    },
+    "/api/v1/assets/{asset_id}/prices": {
+      "get": {
+        "description": "The latest stored price (with its freshness) and the daily closes of an asset you can see.\nStored, delayed prices: never live or executable quotes.",
+        "operationId": "get_asset_prices_api_v1_assets__asset_id__prices_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "asset_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Asset Id",
+              "type": "string"
+            }
+          },
+          {
+            "description": "First day (default: a year back)",
+            "in": "query",
+            "name": "start",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "First day (default: a year back)",
+              "title": "Start"
+            }
+          },
+          {
+            "description": "Last day (default: today)",
+            "in": "query",
+            "name": "end",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Last day (default: today)",
+              "title": "End"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetPricesOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such asset for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Asset Prices",
         "tags": [
           "assets"
         ]

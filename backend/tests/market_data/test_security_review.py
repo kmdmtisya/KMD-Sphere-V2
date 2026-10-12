@@ -122,7 +122,11 @@ class TestNoUnreviewedProviderDataLeavesTheApi:
     market data, each per signed-in user and with provenance. A new route whose path mentions
     prices, quotes or rates fails here so the licence is re-checked first (docs/security.md)."""
 
-    REVIEWED: ClassVar[set[str]] = {"/api/v1/fx-rates/{base}/{quote}"}
+    REVIEWED: ClassVar[set[str]] = {
+        "/api/v1/fx-rates/{base}/{quote}",
+        # P09-T07: per user, authenticated, stored (delayed) prices of an asset they can see.
+        "/api/v1/assets/{asset_id}/prices",
+    }
     MARKET_WORDS: ClassVar[tuple[str, ...]] = (
         "price",
         "quote",

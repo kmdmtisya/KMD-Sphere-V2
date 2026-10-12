@@ -14,6 +14,7 @@ class MoreScreen extends StatelessWidget {
     this.onOpenIncome,
     this.onOpenCalculator,
     this.onOpenSettings,
+    this.onOpenAlerts,
     this.onOpenGallery,
     super.key,
   });
@@ -22,6 +23,7 @@ class MoreScreen extends StatelessWidget {
   final VoidCallback? onOpenIncome;
   final VoidCallback? onOpenCalculator;
   final VoidCallback? onOpenSettings;
+  final VoidCallback? onOpenAlerts;
 
   /// Debug builds only.
   final VoidCallback? onOpenGallery;
@@ -59,15 +61,16 @@ class MoreScreen extends StatelessWidget {
             subtitle: l10n.moreCalculatorSub,
             onTap: onOpenCalculator,
           ),
+          _MoreTile(
+            icon: Icons.notifications_none_rounded,
+            title: l10n.watchlistAlertsTitle,
+            subtitle: l10n.moreWatchlistAlertsSub,
+            onTap: onOpenAlerts,
+          ),
           _Heading(l10n.moreSectionSoon),
           _MoreTile(
             icon: Icons.description_outlined,
             title: l10n.moreReports,
-            comingSoon: true,
-          ),
-          _MoreTile(
-            icon: Icons.notifications_none_rounded,
-            title: l10n.moreAlerts,
             comingSoon: true,
           ),
           _MoreTile(

@@ -42,6 +42,12 @@ FakeApi backend() => FakeApi()
   ..json('GET /api/v1/asset-classes', [
     {'code': 'stock', 'name': 'Stocks'},
   ])
+  ..json('GET /api/v1/assets/a1/prices', {
+    'asset_id': 'a1',
+    'currency': 'USD',
+    'latest': null,
+    'points': <Object?>[],
+  })
   ..json('GET /api/v1/assets/a1', {
     'id': 'a1',
     'symbol': 'ACM',

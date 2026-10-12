@@ -58,21 +58,3 @@ final investmentLedgerProvider =
       ];
       return [for (final month in groupByMonth(mine)) ...month.entries];
     });
-
-/// The investments the user is watching (in memory for this session in the demo).
-class WatchlistNotifier extends Notifier<Set<String>> {
-  @override
-  Set<String> build() => const {};
-
-  bool isWatching(String symbol) => state.contains(symbol);
-
-  void toggle(String symbol) {
-    state = state.contains(symbol)
-        ? ({...state}..remove(symbol))
-        : {...state, symbol};
-  }
-}
-
-final watchlistProvider = NotifierProvider<WatchlistNotifier, Set<String>>(
-  WatchlistNotifier.new,
-);
