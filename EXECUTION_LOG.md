@@ -1361,3 +1361,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-13T01:27:52+04:00 — START P11-T09
 - FXCUR-09 Integration testing
 - prerequisites verified COMPLETED
+
+### 2026-10-13T01:53:30+04:00 — COMPLETE P11-T09
+- duration: 25m 38s
+- evidence: Integration drills (consistency incl. AI, fallback, outage, stale, history, AI conversion, two sessions) all pass on the real app and DB; mobile e2e journey 8 passes against the real backend (8/8); report docs/fxcur-integration-report.md; backend 2272 passed. PR #133. CI all gates pass.

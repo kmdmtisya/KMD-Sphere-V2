@@ -1097,10 +1097,10 @@
   - [x] P11-T08.3 Snapshot consistency with the API
   - [x] P11-T08.4 Evaluation set
   - [x] P11-T08.5 Tests
-- [ ] **P11-T09** · FXCUR-09 Integration testing · `IN_PROGRESS` 🔄
+- [x] **P11-T09** · FXCUR-09 Integration testing · `COMPLETED` ✅
   - Deps: P11-T07, P11-T08 · Wave: W7 · Track: QA · Size: M · Approval: no
-  - Started: 2026-10-13T01:27:52+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-13T01:27:52+04:00 · Completed: 2026-10-13T01:53:30+04:00 · Duration: 25m 38s · Blocker: —
+  - Evidence: Integration drills (consistency incl. AI, fallback, outage, stale, history, AI conversion, two sessions) all pass on the real app and DB; mobile e2e journey 8 passes against the real backend (8/8); report docs/fxcur-integration-report.md; backend 2272 passed. PR #133. CI all gates pass.
   - [x] P11-T09.1 Cross-screen consistency
   - [x] P11-T09.2 Outage and fallback drills
   - [x] P11-T09.3 Preference sync
