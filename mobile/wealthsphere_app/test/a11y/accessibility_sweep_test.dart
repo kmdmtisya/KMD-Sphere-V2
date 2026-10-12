@@ -17,6 +17,7 @@ import 'package:wealthsphere_app/features/calculator/application/calculator_prov
 import 'package:wealthsphere_app/features/calculator/domain/forecast_input_limits.dart';
 import 'package:wealthsphere_app/features/calculator/presentation/calculator_screen.dart';
 import 'package:wealthsphere_app/features/calculator/presentation/forecast/forecast_screen.dart';
+import 'package:wealthsphere_app/features/currency/presentation/currency_converter_screen.dart';
 import 'package:wealthsphere_app/features/dashboard/presentation/home_screen.dart';
 import 'package:wealthsphere_app/features/forecast/data/forecast_repository.dart';
 import 'package:wealthsphere_app/features/goals/presentation/goal_detail_screen.dart';
@@ -210,6 +211,17 @@ final screens = <_Screen>[
       await tester.pumpAndSettle();
     },
     height: 9000,
+  ),
+  _Screen(
+    'Currency converter',
+    const CurrencyConverterScreen(),
+    prepare: (tester) async {
+      // A demo example converted, so the result card is checked too.
+      await tester.tap(find.textContaining('500000 AED'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Convert'));
+      await tester.pumpAndSettle();
+    },
   ),
   _Screen(
     'More',

@@ -1,0 +1,232 @@
+{
+  "demo": true,
+  "currencies": [
+    {
+      "code": "AED",
+      "name": "UAE dirham",
+      "symbol": "AED",
+      "decimal_places": 2
+    },
+    {
+      "code": "AUD",
+      "name": "Australian dollar",
+      "symbol": "A$",
+      "decimal_places": 2
+    },
+    {
+      "code": "CAD",
+      "name": "Canadian dollar",
+      "symbol": "CA$",
+      "decimal_places": 2
+    },
+    {
+      "code": "CHF",
+      "name": "Swiss franc",
+      "symbol": "CHF",
+      "decimal_places": 2
+    },
+    {
+      "code": "EUR",
+      "name": "Euro",
+      "symbol": "€",
+      "decimal_places": 2
+    },
+    {
+      "code": "GBP",
+      "name": "Pound sterling",
+      "symbol": "£",
+      "decimal_places": 2
+    },
+    {
+      "code": "JPY",
+      "name": "Japanese yen",
+      "symbol": "¥",
+      "decimal_places": 0
+    },
+    {
+      "code": "KES",
+      "name": "Kenyan shilling",
+      "symbol": "KSh",
+      "decimal_places": 2
+    },
+    {
+      "code": "USD",
+      "name": "US dollar",
+      "symbol": "$",
+      "decimal_places": 2
+    },
+    {
+      "code": "ZAR",
+      "name": "South African rand",
+      "symbol": "R",
+      "decimal_places": 2
+    }
+  ],
+  "preferences": {
+    "reporting_currency": "USD",
+    "recent_currencies": [],
+    "is_default": true
+  },
+  "status": {
+    "pivot_currency": "USD",
+    "checked_at": "2026-10-09T08:00:00Z",
+    "rates": [
+      {
+        "currency": "AED",
+        "status": "current",
+        "rate": "3.6725",
+        "provider": "demo",
+        "rate_type": "indicative",
+        "rate_timestamp": "2026-10-09T08:00:00Z",
+        "retrieved_at": "2026-10-09T08:00:00Z"
+      },
+      {
+        "currency": "AUD",
+        "status": "current",
+        "rate": "1.5112",
+        "provider": "demo",
+        "rate_type": "indicative",
+        "rate_timestamp": "2026-10-09T08:00:00Z",
+        "retrieved_at": "2026-10-09T08:00:00Z"
+      },
+      {
+        "currency": "CAD",
+        "status": "current",
+        "rate": "1.3705",
+        "provider": "demo",
+        "rate_type": "indicative",
+        "rate_timestamp": "2026-10-09T08:00:00Z",
+        "retrieved_at": "2026-10-09T08:00:00Z"
+      },
+      {
+        "currency": "CHF",
+        "status": "current",
+        "rate": "0.8634",
+        "provider": "demo",
+        "rate_type": "indicative",
+        "rate_timestamp": "2026-10-09T08:00:00Z",
+        "retrieved_at": "2026-10-09T08:00:00Z"
+      },
+      {
+        "currency": "EUR",
+        "status": "current",
+        "rate": "0.9216",
+        "provider": "demo",
+        "rate_type": "indicative",
+        "rate_timestamp": "2026-10-09T08:00:00Z",
+        "retrieved_at": "2026-10-09T08:00:00Z"
+      },
+      {
+        "currency": "GBP",
+        "status": "current",
+        "rate": "0.7712",
+        "provider": "demo",
+        "rate_type": "indicative",
+        "rate_timestamp": "2026-10-09T08:00:00Z",
+        "retrieved_at": "2026-10-09T08:00:00Z"
+      },
+      {
+        "currency": "JPY",
+        "status": "current",
+        "rate": "149.83",
+        "provider": "demo",
+        "rate_type": "indicative",
+        "rate_timestamp": "2026-10-09T08:00:00Z",
+        "retrieved_at": "2026-10-09T08:00:00Z"
+      },
+      {
+        "currency": "KES",
+        "status": "current",
+        "rate": "129.15",
+        "provider": "demo",
+        "rate_type": "indicative",
+        "rate_timestamp": "2026-10-09T08:00:00Z",
+        "retrieved_at": "2026-10-09T08:00:00Z"
+      },
+      {
+        "currency": "ZAR",
+        "status": "current",
+        "rate": "17.8421",
+        "provider": "demo",
+        "rate_type": "indicative",
+        "rate_timestamp": "2026-10-09T08:00:00Z",
+        "retrieved_at": "2026-10-09T08:00:00Z"
+      }
+    ]
+  },
+  "examples": [
+    {
+      "source": {
+        "amount": "500000.00",
+        "currency": "AED"
+      },
+      "converted": {
+        "amount": "136147.04",
+        "currency": "USD"
+      },
+      "rate": "0.272294077604",
+      "path": null,
+      "status": "current",
+      "rate_timestamp": "2026-10-09T08:00:00Z",
+      "providers": [
+        "demo"
+      ]
+    },
+    {
+      "source": {
+        "amount": "1000.00",
+        "currency": "USD"
+      },
+      "converted": {
+        "amount": "129150.00",
+        "currency": "KES"
+      },
+      "rate": "129.150000000000",
+      "path": null,
+      "status": "current",
+      "rate_timestamp": "2026-10-09T08:00:00Z",
+      "providers": [
+        "demo"
+      ]
+    },
+    {
+      "source": {
+        "amount": "250.00",
+        "currency": "EUR"
+      },
+      "converted": {
+        "amount": "209.20",
+        "currency": "GBP"
+      },
+      "rate": "0.836805555556",
+      "path": [
+        "EUR",
+        "USD",
+        "GBP"
+      ],
+      "status": "current",
+      "rate_timestamp": "2026-10-09T08:00:00Z",
+      "providers": [
+        "demo"
+      ]
+    },
+    {
+      "source": {
+        "amount": "100.00",
+        "currency": "USD"
+      },
+      "converted": {
+        "amount": "14983",
+        "currency": "JPY"
+      },
+      "rate": "149.830000000000",
+      "path": null,
+      "status": "current",
+      "rate_timestamp": "2026-10-09T08:00:00Z",
+      "providers": [
+        "demo"
+      ]
+    }
+  ],
+  "notice": "Demo rates, not live. The demo converts the examples only."
+}

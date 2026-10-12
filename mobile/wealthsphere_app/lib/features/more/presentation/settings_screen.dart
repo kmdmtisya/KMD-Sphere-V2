@@ -7,6 +7,7 @@ import '../../../shared/design_system/theme/theme.dart';
 import '../../../shared/design_system/tokens/tokens.dart';
 import '../../account/presentation/account_section.dart';
 import '../../account/presentation/app_lock_settings_tile.dart';
+import '../../currency/presentation/currency_widgets.dart';
 
 /// Settings: the account, appearance, app lock, and the preferences that are not available yet
 /// (listed as "Coming soon" rather than hidden).
@@ -86,7 +87,7 @@ class SettingsScreen extends ConsumerWidget {
           heading(l10n.settingsSecurity),
           const AppLockSettingsTile(),
           heading(l10n.settingsPreferences),
-          soon(l10n.settingsCurrency),
+          const ReportingCurrencyTile(),
           soon(l10n.settingsNotifications),
           heading(l10n.settingsAbout),
           Text(l10n.settingsAboutBody, style: text.body),

@@ -31,7 +31,9 @@ def money(v, cur="USD"):
 def write(name, payload):
     OUT.mkdir(parents=True, exist_ok=True)
     payload = {"demo": True, **payload}
-    (OUT / name).write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    text = json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
+    # LF on every platform, so the files are identical wherever they are generated.
+    (OUT / name).write_text(text, encoding="utf-8", newline="\n")
 
 
 # ----------------------------------------------------------------------------- portfolios
@@ -352,5 +354,63 @@ write("copilot.json", {
     "suggested": [s["question"] for s in scripts if s["kind"] == "answer"],
     "unsupported_reply": "Demo mode can answer the suggested questions only.",
     "scripts": scripts,
+})
+# --------------------------------------------------------------------- reporting currency (P11-T07)
+CURRENCIES = [
+    ("AED", "UAE dirham", "AED", 2), ("AUD", "Australian dollar", "A$", 2),
+    ("CAD", "Canadian dollar", "CA$", 2), ("CHF", "Swiss franc", "CHF", 2),
+    ("EUR", "Euro", "€", 2), ("GBP", "Pound sterling", "£", 2),
+    ("JPY", "Japanese yen", "¥", 0), ("KES", "Kenyan shilling", "KSh", 2),
+    ("USD", "US dollar", "$", 2), ("ZAR", "South African rand", "R", 2),
+]
+USD_RATES = {
+    "AED": "3.6725", "AUD": "1.5112", "CAD": "1.3705", "CHF": "0.8634", "EUR": "0.9216",
+    "GBP": "0.7712", "JPY": "149.83", "KES": "129.15", "ZAR": "17.8421",
+}
+
+
+def usd_rate(base, quote):
+    """1 base = ? quote through USD (demo data only; the live app never computes this)."""
+    to_usd = Decimal(1) if base == "USD" else 1 / Decimal(USD_RATES[base])
+    from_usd = Decimal(1) if quote == "USD" else Decimal(USD_RATES[quote])
+    return to_usd * from_usd
+
+
+def example(amount, source, target):
+    rate = usd_rate(source, target)
+    places = "1" if target == "JPY" else "0.01"
+    path = None if "USD" in (source, target) else [source, "USD", target]
+    return {
+        "source": {"amount": amount, "currency": source},
+        "converted": {"amount": q(Decimal(amount) * rate, places), "currency": target},
+        "rate": str(rate.quantize(Decimal("0.000000000001"), rounding=ROUND_HALF_UP)),
+        "path": path,
+        "status": "current",
+        "rate_timestamp": AS_OF,
+        "providers": ["demo"],
+    }
+
+
+write("currency.json", {
+    "currencies": [
+        {"code": c, "name": n, "symbol": s, "decimal_places": d} for c, n, s, d in CURRENCIES
+    ],
+    "preferences": {"reporting_currency": "USD", "recent_currencies": [], "is_default": True},
+    "status": {
+        "pivot_currency": "USD",
+        "checked_at": AS_OF,
+        "rates": [
+            {"currency": c, "status": "current", "rate": r, "provider": "demo",
+             "rate_type": "indicative", "rate_timestamp": AS_OF, "retrieved_at": AS_OF}
+            for c, r in sorted(USD_RATES.items())
+        ],
+    },
+    "examples": [
+        example("500000.00", "AED", "USD"),
+        example("1000.00", "USD", "KES"),
+        example("250.00", "EUR", "GBP"),
+        example("100.00", "USD", "JPY"),
+    ],
+    "notice": "Demo rates, not live. The demo converts the examples only.",
 })
 print("wrote", sorted(p.name for p in OUT.glob("*.json")))

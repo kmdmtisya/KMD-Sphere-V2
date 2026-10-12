@@ -33,3 +33,12 @@ Balances, transaction amounts and their rates, portfolio base currencies, goal t
 ## Not built
 
 The optional FX scenario overlay on forecasts (P11-T06.4) is not built in v1 (DEC-29).
+
+## Mobile (P11-T07)
+
+- **Setting.** `reportingCurrencyProvider` loads `GET /me/currency-preferences` and saves with `PATCH`; it is server-stored, so it persists across sessions and syncs to other devices. Demo mode keeps it on the device and says so (demo figures stay in US dollars).
+- **Entry points.** A currency chip ("USD ▾") with the FX status line under Total Wealth on Home, and a Settings row. Both open the selector sheet: search by code or name, recent currencies, every supported currency with symbol, and when the rates were last updated.
+- **App-wide.** The server converts every figure (it defaults to the setting), so switching re-requests the dashboard, portfolio summary, net worth, income and goal providers. The figures already on screen stay while the new ones load (no full-screen reload; scroll position and navigation are kept); a figure that fails shows its own error state, never a guessed value.
+- **FX status line.** Current, cached, old or unavailable, with when the rates were fetched. Cached rates are never shown as current.
+- **Currency converter** (More → Currency converter): amount, from, to, swap, convert, refresh rates, recent conversions in this session. The result shows the server's converted amount, the rate ("1 AED = 0.2723 USD"), its path, time and status, and the indicative-rate notice. The app never multiplies amounts by rates. In demo mode it converts the fixture's examples only.
+- **Tests.** Live repository and parsing, provider refresh after a switch, chip and status variants, selector (search, recents, empty, failed save), settings in live and demo mode, converter (success, validation, failure, swap, refresh, demo), and the accessibility sweep for the converter (light/dark, LTR/RTL, 1x/2x). No new golden images: they are produced on the CI Linux runner and the components reused here are already covered by the gallery goldens.

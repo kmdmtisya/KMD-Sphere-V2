@@ -1365,6 +1365,188 @@
   "@aiSourcesTitle": {
     "description": "Heading above evidence chips"
   },
+  "currencyReportingTitle": "Reporting currency",
+  "@currencyReportingTitle": {
+    "description": "Settings row and selector title"
+  },
+  "currencyReportingSubtitle": "{code} · {name}",
+  "@currencyReportingSubtitle": {
+    "description": "Settings row value",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "currencySelectorTitle": "Show figures in",
+  "@currencySelectorTitle": {
+    "description": "Title of the currency selector sheet"
+  },
+  "currencySearchHint": "Search currencies",
+  "@currencySearchHint": {
+    "description": "Search field hint in the currency selector"
+  },
+  "currencyRecent": "Recent",
+  "@currencyRecent": {
+    "description": "Heading of recently used currencies"
+  },
+  "currencyAll": "All currencies",
+  "@currencyAll": {
+    "description": "Heading of the full currency list"
+  },
+  "currencyNoMatch": "No currency matches \"{query}\".",
+  "@currencyNoMatch": {
+    "description": "Empty search result",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "currencySaveFailed": "The currency could not be changed. Try again.",
+  "@currencySaveFailed": {
+    "description": "Shown when saving the reporting currency fails"
+  },
+  "currencyChipTooltip": "Change the reporting currency",
+  "@currencyChipTooltip": {
+    "description": "Tooltip of the currency chip on Home"
+  },
+  "currencyChipSpoken": "Figures shown in {code}. Change the reporting currency",
+  "@currencyChipSpoken": {
+    "description": "Screen-reader label of the currency chip",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "currencySelectedSpoken": "{name}, selected",
+  "@currencySelectedSpoken": {
+    "description": "Screen-reader label of the selected currency",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyDemoNote": "Demo figures stay in US dollars. The setting is kept on this device only.",
+  "@currencyDemoNote": {
+    "description": "Note in demo mode"
+  },
+  "fxStatusCurrent": "FX rates current · {asOf}",
+  "@fxStatusCurrent": {
+    "description": "FX status line",
+    "placeholders": {
+      "asOf": {
+        "type": "String"
+      }
+    }
+  },
+  "fxStatusCached": "Cached FX rates · {asOf}",
+  "@fxStatusCached": {
+    "description": "FX status line when rates are cached",
+    "placeholders": {
+      "asOf": {
+        "type": "String"
+      }
+    }
+  },
+  "fxStatusStale": "Old FX rates · {asOf}",
+  "@fxStatusStale": {
+    "description": "FX status line when rates are stale",
+    "placeholders": {
+      "asOf": {
+        "type": "String"
+      }
+    }
+  },
+  "fxStatusUnavailable": "FX rates unavailable",
+  "@fxStatusUnavailable": {
+    "description": "FX status line when no rate is stored"
+  },
+  "fxRefresh": "Refresh rates",
+  "@fxRefresh": {
+    "description": "Button that asks for fresh FX rates"
+  },
+  "fxRefreshFailed": "Rates could not be refreshed. The last stored rates are shown.",
+  "@fxRefreshFailed": {
+    "description": "Shown when a refresh fails"
+  },
+  "converterTitle": "Currency converter",
+  "@converterTitle": {
+    "description": "Title of the converter screen and its More entry"
+  },
+  "converterSub": "Convert an amount at the current rate",
+  "@converterSub": {
+    "description": "Subtitle of the More entry"
+  },
+  "converterFrom": "From",
+  "@converterFrom": {
+    "description": "Source currency field"
+  },
+  "converterTo": "To",
+  "@converterTo": {
+    "description": "Target currency field"
+  },
+  "converterAmount": "Amount",
+  "@converterAmount": {
+    "description": "Amount field"
+  },
+  "converterSwap": "Swap currencies",
+  "@converterSwap": {
+    "description": "Swap button"
+  },
+  "converterConvert": "Convert",
+  "@converterConvert": {
+    "description": "Convert button"
+  },
+  "converterRate": "1 {from} = {rate} {to}",
+  "@converterRate": {
+    "description": "The rate used",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "converterVia": "Through {path}",
+  "@converterVia": {
+    "description": "Path of a derived rate",
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "converterRecent": "Recent conversions",
+  "@converterRecent": {
+    "description": "Heading of the conversions made in this session"
+  },
+  "converterInvalidAmount": "Enter an amount greater than zero.",
+  "@converterInvalidAmount": {
+    "description": "Validation message"
+  },
+  "converterSameCurrency": "Choose two different currencies.",
+  "@converterSameCurrency": {
+    "description": "Validation message"
+  },
+  "converterFailed": "The amount could not be converted. Try again.",
+  "@converterFailed": {
+    "description": "Shown when a conversion fails"
+  },
+  "converterDemoExamples": "Demo examples",
+  "@converterDemoExamples": {
+    "description": "Heading of example conversions in demo mode"
+  },
   "aiSectionNotice": "Please note",
   "@aiSectionNotice": {
     "description": "Heading of the notices the server adds to an answer (stale data, forecasts)"

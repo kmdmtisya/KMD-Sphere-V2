@@ -106,7 +106,12 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await tester.ensureVisible(find.text('Component gallery (debug)'));
+      // The More list is longer than the screen: scroll the entry into view.
+      await tester.scrollUntilVisible(
+        find.text('Component gallery (debug)'),
+        200,
+        scrollable: find.byType(Scrollable).last,
+      );
       await tester.pumpAndSettle();
       await tester.tap(find.text('Component gallery (debug)'));
       await tester.pump(const Duration(seconds: 1));
