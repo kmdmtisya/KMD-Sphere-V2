@@ -1060,14 +1060,14 @@
   - [x] P11-T04.4 Snapshots
   - [x] P11-T04.5 APIs
   - [x] P11-T04.6 Reference and property tests
-- [ ] **P11-T05** · FXCUR-05 Historical rates · `IN_PROGRESS` 🔄
+- [x] **P11-T05** · FXCUR-05 Historical rates · `COMPLETED` ✅
   - Deps: P11-T03 · Wave: W4 · Track: BE · Size: M · Approval: no
-  - Started: 2026-10-12T22:40:05+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P11-T05.1 Rate concepts in the domain
-  - [ ] P11-T05.2 History endpoint
-  - [ ] P11-T05.3 Missing-rate handling
-  - [ ] P11-T05.4 Tests
+  - Started: 2026-10-12T22:40:05+04:00 · Completed: 2026-10-12T23:35:38+04:00 · Duration: 55m 33s · Blocker: —
+  - Evidence: Rate concepts kept apart; /fx/history with per-day rates, missing days flagged not filled, weekend carry flagged; historical conversion via on=date; posting uses trade-date rate (tested); 14 new tests; backend 2237 passed. PR #129. CI all gates pass.
+  - [x] P11-T05.1 Rate concepts in the domain
+  - [x] P11-T05.2 History endpoint
+  - [x] P11-T05.3 Missing-rate handling
+  - [x] P11-T05.4 Tests
 - [ ] **P11-T06** · FXCUR-06 Reporting currency across portfolio, analytics, net worth, income, goals and forecasts · `NOT_STARTED` ⬜
   - Deps: P11-T04, P11-T05 · Wave: W5 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

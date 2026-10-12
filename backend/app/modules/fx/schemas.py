@@ -1,7 +1,7 @@
 """Response schemas for /api/v1/fx (P11-T03). Rates travel as strings (ADR-0003)."""
 
 import uuid
-from datetime import datetime
+from datetime import date, datetime
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -9,6 +9,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from app.core.money import CURRENCY_PATTERN, DecimalString, Money
 
 Status = Literal["current", "cached", "stale", "unavailable"]
+Concept = Literal["transaction", "historical_valuation", "current_reporting"]
 RateType = Literal["mid_market", "indicative", "delayed"]
 
 
@@ -82,6 +83,7 @@ class SnapshotRateOut(BaseModel):
 
 
 class FxRatesOut(BaseModel):
+    concept: Concept = "current_reporting"
     snapshot_id: uuid.UUID = Field(description="Every rate here comes from this snapshot")
     base: str
     rates: list[SnapshotRateOut]
@@ -98,6 +100,11 @@ class ConvertIn(BaseModel):
         description="Convert with the rates of an earlier snapshot (for example a report's); "
         "omit for the latest rates",
     )
+    on: date | None = Field(
+        default=None,
+        description="Convert with the historical rate of this day (P11-T05) instead of the "
+        "current reporting rate; cannot be combined with snapshot_id",
+    )
 
 
 class ConvertOut(BaseModel):
@@ -105,7 +112,13 @@ class ConvertOut(BaseModel):
     converted: Money = Field(description="Rounded once, half-up, to the target's decimal places")
     rate: DecimalString
     path: list[str] | None = None
-    snapshot_id: uuid.UUID
+    concept: Concept = Field(
+        description="current_reporting (a snapshot) or historical_valuation (a past day)"
+    )
+    snapshot_id: uuid.UUID | None = Field(
+        default=None, description="The snapshot used; none for a historical conversion"
+    )
+    on: date | None = None
     status: Status
     rate_timestamp: datetime | None = None
     providers: list[str]
@@ -113,3 +126,25 @@ class ConvertOut(BaseModel):
         default="Indicative rate for information; not a quote for a transaction.",
         description="Shown with every conversion",
     )
+
+
+# ------------------------------------------------------------------------- P11-T05 history
+class FxHistoryPointOut(BaseModel):
+    date: date
+    rate: DecimalString | None = None
+    rate_timestamp: datetime | None = None
+    provider: str | None = None
+    path: list[str] | None = None
+    rate_missing: bool = Field(description="No usable rate for this day; nothing was substituted")
+    from_earlier_day: bool = Field(
+        description="The rate was published on an earlier day within the 7-day window "
+        "(a weekend or holiday)"
+    )
+
+
+class FxHistoryOut(BaseModel):
+    concept: Concept = "historical_valuation"
+    base: str
+    quote: str
+    points: list[FxHistoryPointOut]
+    missing_days: int

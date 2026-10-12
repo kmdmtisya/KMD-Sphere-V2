@@ -136,6 +136,8 @@ class TestNoUnreviewedProviderDataLeavesTheApi:
         "/api/v1/fx/rates",
         "/api/v1/fx/rates/{base}/{quote}",
         "/api/v1/fx/convert",
+        # P11-T05: per user, authenticated, stored historical rates with provenance.
+        "/api/v1/fx/history",
     }
     MARKET_WORDS: ClassVar[tuple[str, ...]] = (
         "price",
