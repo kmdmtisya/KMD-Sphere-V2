@@ -12,6 +12,7 @@ import '../features/auth/presentation/sign_in_screen.dart';
 import '../features/auth/presentation/welcome_screen.dart';
 import '../features/calculator/presentation/calculator_screen.dart';
 import '../features/calculator/presentation/forecast/forecast_screen.dart';
+import '../features/currency/presentation/currency_converter_screen.dart';
 import '../features/dashboard/presentation/home_screen.dart';
 import '../features/goals/presentation/goal_detail_screen.dart';
 import '../features/goals/presentation/goal_form_screen.dart';
@@ -177,6 +178,7 @@ final Map<AppTab, RouteBase Function()> tabRoutes =
           onOpenCalculator: () => context.go(AppRoutes.calculator),
           onOpenSettings: () => context.go(AppRoutes.settings),
           onOpenAlerts: () => context.go(AppRoutes.alerts),
+          onOpenConverter: () => context.go(AppRoutes.converter),
           onOpenGallery: () => context.push(AppRoutes.gallery),
         ),
         routes: [
@@ -185,6 +187,10 @@ final Map<AppTab, RouteBase Function()> tabRoutes =
             builder: (context, state) => WatchlistAlertsScreen(
               onOpenInvestment: (key) => context.go(AppRoutes.investment(key)),
             ),
+          ),
+          GoRoute(
+            path: 'converter',
+            builder: (context, state) => const CurrencyConverterScreen(),
           ),
           GoRoute(
             path: 'net-worth',

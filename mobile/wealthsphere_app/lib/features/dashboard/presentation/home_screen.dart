@@ -13,6 +13,7 @@ import '../../../shared/design_system/theme/theme.dart';
 import '../../../shared/design_system/tokens/tokens.dart';
 import '../../../shared/domain/chart_mapping.dart';
 import '../../../shared/domain/wealth_models.dart';
+import '../../currency/presentation/currency_widgets.dart';
 import '../application/dashboard_providers.dart';
 import '../domain/dashboard_layout.dart';
 
@@ -149,6 +150,12 @@ class _WealthSummarySection extends ConsumerWidget {
         footer: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // The reporting currency and how fresh its rates are (P11-T07).
+            const Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: AppSpacing.s,
+              children: [ReportingCurrencyChip(), FxStatusLine()],
+            ),
             DataAsOfLabel(asOf: s.asOf),
             DataQualityNotice(
               complete: s.complete,

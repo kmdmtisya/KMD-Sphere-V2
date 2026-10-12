@@ -392,9 +392,13 @@ void main() {
       tester,
     ) async {
       await pumpScreen(tester, const SettingsScreen());
-      expect(find.text('Reporting currency'), findsOneWidget);
       expect(find.text('Notifications'), findsOneWidget);
-      expect(find.text('Coming soon'), findsNWidgets(2));
+      expect(find.text('Coming soon'), findsOneWidget);
+      // The reporting currency is available since P11-T07: a real setting, not "Coming soon".
+      expect(
+        find.byKey(const ValueKey('reporting-currency-tile')),
+        findsOneWidget,
+      );
     });
 
     testWidgets('the theme can be changed', (tester) async {

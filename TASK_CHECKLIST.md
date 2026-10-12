@@ -1077,17 +1077,17 @@
   - [x] P11-T06.3 Goals and forecasts presentation
   - [x] P11-T06.4 Optional FX scenario overlay (behind DEC-29)
   - [x] P11-T06.5 Reconciliation and IDOR tests
-- [ ] **P11-T07** · FXCUR-07 Mobile: global currency selector, converted figures and converter · `NOT_STARTED` ⬜
+- [ ] **P11-T07** · FXCUR-07 Mobile: global currency selector, converted figures and converter · `IN_PROGRESS` 🔄
   - Deps: P11-T06 · Wave: W6 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-13T00:20:23+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P11-T07.1 Reporting-currency state and sync
-  - [ ] P11-T07.2 Selector sheet
-  - [ ] P11-T07.3 Home and Settings entry points
-  - [ ] P11-T07.4 App-wide conversion through CurrencyAmount and repositories
-  - [ ] P11-T07.5 FX status chip
-  - [ ] P11-T07.6 Converter screen
-  - [ ] P11-T07.7 Tests
+  - [x] P11-T07.1 Reporting-currency state and sync
+  - [x] P11-T07.2 Selector sheet
+  - [x] P11-T07.3 Home and Settings entry points
+  - [x] P11-T07.4 App-wide conversion through CurrencyAmount and repositories
+  - [x] P11-T07.5 FX status chip
+  - [x] P11-T07.6 Converter screen
+  - [x] P11-T07.7 Tests
 - [ ] **P11-T08** · FXCUR-08 AI Copilot currency tools · `NOT_STARTED` ⬜
   - Deps: P11-T06 · Wave: W6 · Track: AI · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
