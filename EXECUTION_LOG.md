@@ -1160,3 +1160,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T15:51:51+04:00 — PHASE APPROVED P10
 - approved by user (mtisya@gmail.com)
 - AI Tool Layer & Wealth Copilot
+
+### 2026-10-12T15:55:27+04:00 — START P10-T01
+- AI governance, threat model and provider policy
+- prerequisites verified COMPLETED

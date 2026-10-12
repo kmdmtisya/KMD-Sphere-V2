@@ -20,3 +20,4 @@ Format: Context / Decision / Consequences. Status values: Proposed, Accepted, Su
 | [0014](0014-market-data-providers.md) | Market-data providers and licensing (DEC-04) | Accepted |
 | [0015](0015-offline-cache.md) | Encrypted offline snapshots (DEC-12) | Accepted |
 | [0016](0016-push-notification-path.md) | Push-notification path (DEC-08) | Accepted |
+| [0017](0017-llm-provider-and-key-custody.md) | LLM provider, key custody, budget and retention (DEC-05) | Accepted |

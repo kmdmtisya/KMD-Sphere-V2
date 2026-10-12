@@ -930,13 +930,13 @@
 - Exit gates: QG-07.1,2,3,5,6,8; QG-11.3 — required by `P10-GATE` (Gates-done)
 - Release gates: —
 
-- [ ] **P10-T01** · AI governance, threat model and provider policy · `NOT_STARTED` ⬜
+- [ ] **P10-T01** · AI governance, threat model and provider policy · `IN_PROGRESS` 🔄
   - Deps: P04-T09, P04-GATE, P05-GATE, P06-GATE · Wave: W1 · Track: DOC · Size: S · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T15:55:27+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P10-T01.1 Allow-list
-  - [ ] P10-T01.2 Threat model
-  - [ ] P10-T01.3 Provider ADR
+  - [x] P10-T01.1 Allow-list
+  - [x] P10-T01.2 Threat model
+  - [x] P10-T01.3 Provider ADR
 - [ ] **P10-T02** · Tool framework · `NOT_STARTED` ⬜
   - Deps: P10-T01, P04-T03, P04-T04 · Wave: W2 · Track: AI · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
