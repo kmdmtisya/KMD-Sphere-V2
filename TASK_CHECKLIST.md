@@ -868,10 +868,10 @@
   - [x] P09-T04.2 Transactions incl. submit
   - [x] P09-T04.3 Detail
   - [x] P09-T04.4 Tests
-- [ ] **P09-T05** · Live goals, net worth and income · `IN_PROGRESS` 🔄
+- [x] **P09-T05** · Live goals, net worth and income · `COMPLETED` ✅
   - Deps: P09-T01, P06-T09 · Wave: W2 · Track: MOB · Size: L · Approval: no
-  - Started: 2026-10-12T11:16:20+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-12T11:16:20+04:00 · Completed: 2026-10-12T11:34:39+04:00 · Duration: 18m 19s · Blocker: —
+  - Evidence: Live goals (server figures and assumption notice shown on list, detail and Home), goal create/update with server rules, live net worth and income from server totals with completeness notices and no client-side shares; dto-mapping updated. flutter test 1604 passed, analyze clean, test_dto_mapping 29 passed. CK-I against the running backend is P09-T10. PR #98. CI all gates pass.
   - [x] P09-T05.1 Goals
   - [x] P09-T05.2 Net worth
   - [x] P09-T05.3 Income

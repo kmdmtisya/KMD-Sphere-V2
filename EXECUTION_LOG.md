@@ -1083,3 +1083,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T11:16:20+04:00 — START P09-T05
 - Live goals, net worth and income
 - prerequisites verified COMPLETED
+
+### 2026-10-12T11:34:39+04:00 — COMPLETE P09-T05
+- duration: 18m 19s
+- evidence: Live goals (server figures and assumption notice shown on list, detail and Home), goal create/update with server rules, live net worth and income from server totals with completeness notices and no client-side shares; dto-mapping updated. flutter test 1604 passed, analyze clean, test_dto_mapping 29 passed. CK-I against the running backend is P09-T10. PR #98. CI all gates pass.
