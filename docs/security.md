@@ -128,3 +128,42 @@ await session.commit()                         # the change and its event commit
 - **Non-leaking errors.** Failures show one of a few fixed messages (cannot reach the sign-in service / sign-in did not complete / session ended); nothing names the account, provider error codes or tokens. Cancelling shows nothing.
 - **Biometric offer.** After the first sign-in on a device, a one-time sheet offers the app lock: turning it on needs a successful device check; "Not now" turns it off (an explicit choice right after a full sign-in). Devices without a screen lock are told that returning will require signing in again.
 - **DEMO mode.** "Explore with DEMO data" continues without an account; everything shown is labelled DEMO.
+
+## Market data: key custody, terms and logs (P08-T09)
+
+Reviewed 2026-10-12 against the code on `main` after P08-T08. Automated checks that keep these findings true: `backend/tests/market_data/test_security_review.py` and `TestKeysNeverLeak` in `test_adapters.py`. No real provider key exists yet (none was created); the checks run against stand-in values.
+
+### Key custody (P08-T09.1)
+- Keys (`COINGECKO_API_KEY`, `TWELVEDATA_API_KEY`) are `SecretStr` settings read from the environment. They are unwrapped in two places only: the adapters' header builders (`coingecko.py`, `twelvedata.py`) and `registry.py`, which merely tests whether one is set. A provider with no key is not built; one built without a key refuses to call (`ProviderAuthError`).
+- Keys travel in request headers (`x-cg-demo-api-key` or `x-cg-pro-api-key`; `Authorization: apikey ...`), never in URLs or query strings, so they cannot appear in transport errors or access logs. The transport wrapper reduces any HTTP failure to its type name.
+- Adapter `repr` shows no key; errors name the provider and the HTTP or body status code, never the response body. Tests feed responses that echo the key (401, 403, 500, error bodies, invalid JSON) and assert it appears in no exception, `repr` or captured log, for both CoinGecko and Twelve Data.
+- `.env.example` documents both variables with empty values (tested). No compose file or source file assigns them. Deployed environments must inject them from a secret manager (P14); until then they live only in an untracked `.env`.
+- Jobs take identifiers only (asset id, dates), never keys, so Celery task arguments, `job_runs` keys and `job_failures` rows hold no secret.
+- Gaps: there is no custom gitleaks rule for these two key shapes (the default rules and the empty example file are the control). Add rules once real keys exist. Key rotation is not automated; rotation means changing the secret and restarting workers.
+
+### Terms and redistribution (P08-T09.2)
+The licence position is in ADR-0014 section 4 and `docs/market-data-providers.md`. Nothing here confirms a licence.
+
+| Provider | Used for | Finding |
+|---|---|---|
+| ECB reference rates | FX conversion | Published "for information purposes only". The API now labels every rate `data_type: indicative_rate` (added in this review; previously only the docstring said so). The ECB copyright page was not read; reuse terms still need confirming. |
+| CoinGecko | Crypto prices | Demo plan is attribution-required and not a commercial licence; "Data provided by CoinGecko" with a link is required on paid plans, and the app does not show it yet. Production needs a paid plan plus that attribution (open item for P09 and P12). |
+| Twelve Data | Listed prices, FX gaps | Individual plans are personal, internal and non-commercial. **Not usable in production** without a commercial or display licence. |
+| Fake | Development and tests | Synthetic, labelled DEMO. |
+
+- Redistribution control: provider data reaches users only as per-user values with provenance (holdings and summary valuations, watchlist latest price, `GET /api/v1/fx-rates/{base}/{quote}`), all behind authentication. There is no bulk, search, history or public price endpoint, and a test fails if a route mentioning prices, quotes, rates or markets is added without updating the reviewed list, which forces a licence check first.
+- Storage: prices and rates are stored with provider, as-of and ingestion times (needed for audit and valuation). Whether storing history is allowed depends on the unsigned licences.
+- **Result:** no provider term is known to be violated in the current code because no real provider is enabled. Production use stays blocked until the licences in ADR-0014 are confirmed in writing.
+
+### Log review (P08-T09.3)
+- Our log lines in `app/modules/market_data` and `app/worker`: the warning for partially failed ingestion (counts only), job failure lines (job name, task id, exception type), and failures to record or dead-letter a failure. None prints arguments, response bodies, URLs or messages from providers.
+- Failure records (`job_failures`, `IngestFailure`) keep the error type and a truncated message of our own wording.
+- Celery's own task logs include task arguments and exception text. Redaction only removes credential-shaped values. This is acceptable only because tasks never receive secrets or personal data; keep it that way (`docs/design/jobs.md`).
+- Prometheus labels hold job names only.
+
+### Residual risks and follow-ups
+1. Licences unconfirmed for every real provider (blocks production, tracked in ADR-0014).
+2. CoinGecko attribution not yet shown in the app.
+3. ECB reuse terms not read.
+4. Custom gitleaks rules for provider keys, and secret-manager injection (P14).
+5. The synthetic CoinGecko and Twelve Data fixtures must be re-recorded against the real services once keys exist, and the key checks repeated with a real key.

@@ -1015,3 +1015,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T04:23:06+04:00 — COMPLETE P08-T08
 - duration: 24m 51s
 - evidence: 20 tests with the fake provider: outage keeps and flags the last price, never errors or invents values; stale provider data keeps its true as_of and never replaces fresher prices; failover, circuit breaker and recovery; response cache bounded by TTL, refreshed by user writes, computed live when Redis is down. PR 89.
+
+### 2026-10-12T04:29:27+04:00 — START P08-T09
+- Market data security and compliance review
+- prerequisites verified COMPLETED
+
+### 2026-10-12T04:44:38+04:00 — COMPLETE P08-T09
+- duration: 15m 11s
+- evidence: Reviewed key custody, provider terms and logs; notes in docs/security.md. Added data_type indicative_rate to the FX response, 14 security tests (key never in errors, logs, reprs or URLs for both adapters; example env empty; reviewed-routes guard). Licences remain unconfirmed and are recorded as blocking production. PR #90. CI all gates pass.
