@@ -6,7 +6,7 @@ text of the validated answer; `done` closes the turn; `error` is a fixed code an
 
 import uuid
 from datetime import datetime
-from typing import Annotated, Literal
+from typing import Annotated, Any, Literal
 
 from pydantic import BaseModel, Field
 
@@ -37,6 +37,9 @@ class DoneEvent(BaseModel):
     model: str
     provider: str
     tool_calls: int
+    # The validated answer in its four sections (or a refusal category), so a screen can render
+    # the sections instead of the streamed text.
+    structured: dict[str, Any] | None = None
 
 
 class ErrorEvent(BaseModel):

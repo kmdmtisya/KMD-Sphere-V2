@@ -98,6 +98,10 @@ class Settings(BaseSettings):
     ai_max_tool_calls_per_question: int = Field(default=20, ge=1)
     ai_max_model_rounds: int = Field(default=8, ge=2)
     ai_history_messages: int = Field(default=12, ge=0)
+    # An answer that fails the checks goes back to the model this many times, then is refused.
+    ai_max_answer_retries: int = Field(default=1, ge=0, le=3)
+    # Tool data older than this is flagged as stale in the answer.
+    ai_stale_after_hours: int = Field(default=48, ge=1)
     # Browser origins allowed to call the API. Empty (the default) disables CORS: the mobile apps
     # do not need it. A wildcard is never accepted.
     cors_allowed_origins: list[str] = []
