@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/data/data_source_badge.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../shared/design_system/components/components.dart';
 import '../../../shared/design_system/theme/theme.dart';
@@ -53,7 +54,7 @@ class _HoldingsScreenState extends ConsumerState<HoldingsScreen> {
       appBar: AppBar(
         title: Text(l10n.holdingsTitle),
         actions: const [
-          DemoBadge(),
+          DataSourceBadge(),
           SizedBox(width: AppSpacing.m),
         ],
       ),

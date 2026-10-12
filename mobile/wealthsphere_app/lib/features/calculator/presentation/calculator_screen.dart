@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/app_routes.dart';
-import '../../../core/data/demo_support.dart';
+import '../../../core/data/data_source_badge.dart';
 import '../../../core/input/decimal_input.dart';
 import '../../../core/network/api_exception.dart';
 import '../../../core/network/load_failure.dart';
@@ -254,8 +254,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
       appBar: AppBar(
         title: Text(l10n.calculatorTitle),
         actions: [
-          if (ref.watch(dataSourceModeProvider) == DataSourceMode.demo)
-            const DemoBadge(),
+          const DataSourceBadge(),
           const SizedBox(width: AppSpacing.m),
         ],
       ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/data/data_source_badge.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../shared/design_system/components/components.dart';
 import '../../../shared/design_system/formatting/formatting.dart';
@@ -222,7 +223,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
       appBar: AppBar(
         title: Text(l10n.addTxTitle),
         actions: const [
-          DemoBadge(),
+          DataSourceBadge(),
           SizedBox(width: AppSpacing.m),
         ],
       ),

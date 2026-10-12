@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/app_routes.dart';
+import '../../../../core/data/data_source_badge.dart';
 import '../../../../core/data/demo_support.dart';
 import '../../../../l10n/generated/app_localizations.dart';
 import '../../../../shared/design_system/charts/charts.dart' as charts;
@@ -49,7 +50,7 @@ class _ForecastScreenState extends ConsumerState<ForecastScreen> {
       appBar: AppBar(
         title: Text(l10n.forecastTitle),
         actions: [
-          if (demo) const DemoBadge(),
+          const DataSourceBadge(),
           const SizedBox(width: AppSpacing.m),
         ],
       ),

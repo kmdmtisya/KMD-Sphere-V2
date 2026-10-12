@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/data/data_source_badge.dart';
 import '../../../l10n/generated/app_localizations.dart';
-import '../../../shared/design_system/components/components.dart';
 import '../../../shared/design_system/theme/theme.dart';
 import '../../../shared/design_system/tokens/tokens.dart';
 import '../../account/presentation/account_section.dart';
@@ -52,7 +52,7 @@ class SettingsScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(l10n.moreSettings),
         actions: const [
-          DemoBadge(),
+          DataSourceBadge(),
           SizedBox(width: AppSpacing.m),
         ],
       ),

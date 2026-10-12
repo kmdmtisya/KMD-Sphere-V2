@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/data/data_source_badge.dart';
 import '../../../core/input/decimal_input.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../shared/design_system/components/components.dart';
@@ -36,7 +37,7 @@ class GoalFormScreen extends ConsumerWidget {
     final appBar = AppBar(
       title: Text(title),
       actions: const [
-        DemoBadge(),
+        DataSourceBadge(),
         SizedBox(width: AppSpacing.m),
       ],
     );

@@ -1110,3 +1110,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T13:48:44+04:00 — COMPLETE P09-T08
 - duration: 32m 53s
 - evidence: Devices API with IDOR/audit tests, PushSender used by alert evaluation with payloads of type/ids/route only (asserted no amounts), failing-device isolation; mobile allow-listed deep links that open after authentication and are dropped at sign-out, device registration lifecycle, alert preference switches. Device push (FCM/APNs) is built behind an interface and not switched on: needs the Firebase project and APNs key. flutter test 1653 passed; backend notification tests 79 passed with related suites. Also hardened the URL-credential redaction regex flagged by CodeQL. PR #101, CI all gates pass.
+
+### 2026-10-12T13:59:20+04:00 — START P09-T09
+- DEMO retirement and data-source governance
+- prerequisites verified COMPLETED
+
+### 2026-10-12T14:15:39+04:00 — COMPLETE P09-T09
+- duration: 16m 19s
+- evidence: Release builds refuse demo mode (config default, start-up assertion, run-time refusal); DataSourceBadge shows DEMO only on demo data; AI screens remain demo and labelled in every mode until P10; governance guard tests (badge usage, no liveNotWired, live branch present, fixture access). flutter test 1664 passed, analyze clean. PR #102. CI all gates pass.

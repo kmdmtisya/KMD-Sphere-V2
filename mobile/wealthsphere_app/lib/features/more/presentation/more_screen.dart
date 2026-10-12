@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/data/data_source_badge.dart';
 import '../../../l10n/generated/app_localizations.dart';
-import '../../../shared/design_system/components/components.dart';
 import '../../../shared/design_system/theme/theme.dart';
 import '../../../shared/design_system/tokens/tokens.dart';
 
@@ -35,7 +35,7 @@ class MoreScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(l10n.tabMore),
         actions: const [
-          DemoBadge(),
+          DataSourceBadge(),
           SizedBox(width: AppSpacing.m),
         ],
       ),

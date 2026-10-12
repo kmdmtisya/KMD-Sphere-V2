@@ -23,19 +23,36 @@ enum DataSourceMode {
   };
 }
 
-class DataSourceModeNotifier extends Notifier<DataSourceMode> {
-  @override
-  DataSourceMode build() =>
-      DataSourceMode.parse(ref.watch(appConfigProvider).dataSource);
+/// Whether this is a release build. Release builds cannot use DEMO data. Tests override it.
+final releaseBuildProvider = Provider<bool>((ref) => kReleaseMode);
 
-  /// For tests and the developer gallery.
-  void set(DataSourceMode mode) => state = mode;
+/// The data-source policy: DEMO data exists for development, tests and previews. A release build
+/// refuses it, whether it was asked for at start-up or later (docs/design/live-repositories.md).
+DataSourceMode enforceDataSourcePolicy(
+  DataSourceMode requested, {
+  required bool release,
+}) {
+  if (release && requested == DataSourceMode.demo) {
+    throw StateError(
+      'Release builds cannot use DEMO data. Build with WS_DATA_SOURCE=live.',
+    );
+  }
+  return requested;
 }
 
-/// Raised when a live repository is asked for before it has been wired to its endpoints.
-Never liveNotWired(String repository) => throw UnsupportedError(
-  'The live $repository is not wired yet; use WS_DATA_SOURCE=demo',
-);
+class DataSourceModeNotifier extends Notifier<DataSourceMode> {
+  @override
+  DataSourceMode build() => enforceDataSourcePolicy(
+    DataSourceMode.parse(ref.watch(appConfigProvider).dataSource),
+    release: ref.watch(releaseBuildProvider),
+  );
+
+  /// For tests and the developer gallery. Refused in a release build when asking for DEMO.
+  void set(DataSourceMode mode) => state = enforceDataSourcePolicy(
+    mode,
+    release: ref.read(releaseBuildProvider),
+  );
+}
 
 final dataSourceModeProvider =
     NotifierProvider<DataSourceModeNotifier, DataSourceMode>(
