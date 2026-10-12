@@ -930,10 +930,10 @@
 - Exit gates: QG-07.1,2,3,5,6,8; QG-11.3 — required by `P10-GATE` (Gates-done)
 - Release gates: —
 
-- [ ] **P10-T01** · AI governance, threat model and provider policy · `AWAITING_VERIFICATION` 🔎
+- [x] **P10-T01** · AI governance, threat model and provider policy · `COMPLETED` ✅
   - Deps: P04-T09, P04-GATE, P05-GATE, P06-GATE · Wave: W1 · Track: DOC · Size: S · Approval: yes
-  - Started: 2026-10-12T15:55:27+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: Governance (12 read-only allow-listed tools, explicit non-tools, data classification, logging and retention), AI threat model (15 threats, abuse cases) and ADR-0017 written; DEC-05 choices made by the user (both providers behind one interface, key per environment, USD 50 a month, 90-day retention). No tool for SQL, shell or arbitrary URLs. Provider terms review recorded as open before real data. Awaiting the user's approval of the documents.
+  - Started: 2026-10-12T15:55:27+04:00 · Completed: 2026-10-12T16:23:20+04:00 · Duration: 27m 53s · Blocker: —
+  - Evidence: AI governance (12 read-only allow-listed tools, explicit non-tools, data classification, logging and retention), AI threat model (15 threats) and ADR-0017 (DEC-05: OpenAI and Anthropic behind one interface, key per environment, USD 50 a month, 90-day retention) approved by the user on 2026-10-12. Provider terms review remains open before real data is sent. Merged in PR 108. · Approved by: user (mtisya@gmail.com)
   - [x] P10-T01.1 Allow-list
   - [x] P10-T01.2 Threat model
   - [x] P10-T01.3 Provider ADR
