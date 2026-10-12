@@ -12,6 +12,7 @@ class AppConfig {
   const AppConfig({
     required this.apiBaseUrl,
     required this.oidcIssuer,
+    this.dataSource = 'demo',
     this.clientId = 'wealthsphere-mobile',
     this.redirectUri = 'com.kmdmtisya.wealthsphere:/oauth2redirect',
     this.scopes = const ['openid', 'profile', 'email'],
@@ -28,6 +29,10 @@ class AppConfig {
         'WS_OIDC_ISSUER',
         defaultValue: 'http://127.0.0.1:8081/realms/wealthsphere',
       ),
+      dataSource: String.fromEnvironment(
+        'WS_DATA_SOURCE',
+        defaultValue: 'demo',
+      ),
     );
     config.assertSecureFor(debug: kDebugMode);
     return config;
@@ -37,6 +42,9 @@ class AppConfig {
 
   /// Must equal the `iss` claim of the tokens the backend accepts.
   final String oidcIssuer;
+
+  /// `demo` (bundled fixtures) or `live` (the API): the starting data-source mode.
+  final String dataSource;
   final String clientId;
   final String redirectUri;
 

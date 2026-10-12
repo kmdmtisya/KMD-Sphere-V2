@@ -38,5 +38,7 @@ final moreRepositoryProvider = Provider<MoreRepository>((ref) {
         ref.watch(demoAssetsProvider),
         ref.read(demoBehaviorProvider.notifier).gate,
       );
+    case DataSourceMode.live:
+      liveNotWired('MoreRepository');
   }
 });

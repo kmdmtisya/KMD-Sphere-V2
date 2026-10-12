@@ -75,7 +75,7 @@ A user row is created on the first valid request (`GET /api/v1/me`). `PATCH /api
 
 ## Mobile sign-in against the local stack
 
-The app signs in with Authorization Code + PKCE in the system browser (Custom Tabs / ASWebAuthenticationSession) and calls the API with the resulting access token. Defaults target the local stack; override with `--dart-define=WS_API_BASE_URL=...` and `--dart-define=WS_OIDC_ISSUER=...` (release builds require https).
+The app signs in with Authorization Code + PKCE in the system browser (Custom Tabs / ASWebAuthenticationSession) and calls the API with the resulting access token. Defaults target the local stack; override with `--dart-define=WS_API_BASE_URL=...` and `--dart-define=WS_OIDC_ISSUER=...` (release builds require https). `--dart-define=WS_DATA_SOURCE=demo|live` selects bundled DEMO data (default) or the API; see docs/design/live-repositories.md.
 
 1. Start the stack and the API (`docker compose up -d`, then `cd backend && uv run uvicorn app.main:app --port 8000`), with `OIDC_ISSUER=http://127.0.0.1:8081/realms/wealthsphere` in `.env`.
 2. Android emulator or USB device: forward the ports so `127.0.0.1` on the device is your machine and the token issuer matches the API's `OIDC_ISSUER`:

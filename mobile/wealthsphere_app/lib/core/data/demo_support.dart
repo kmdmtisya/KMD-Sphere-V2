@@ -4,13 +4,38 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Where data comes from. Only `demo` exists until the backend is wired in P09.
-enum DataSourceMode { demo }
+import '../config/app_config.dart';
+
+/// Where data comes from: bundled DEMO fixtures, or the WealthSphere API.
+///
+/// Repository providers pick their implementation from this one value, so screens never know
+/// which source they are showing. The starting mode is `WS_DATA_SOURCE` (`AppConfig.dataSource`).
+enum DataSourceMode {
+  demo,
+  live;
+
+  static DataSourceMode parse(String name) => switch (name) {
+    'demo' => demo,
+    'live' => live,
+    _ => throw StateError(
+      'WS_DATA_SOURCE must be "demo" or "live", not "$name"',
+    ),
+  };
+}
 
 class DataSourceModeNotifier extends Notifier<DataSourceMode> {
   @override
-  DataSourceMode build() => DataSourceMode.demo;
+  DataSourceMode build() =>
+      DataSourceMode.parse(ref.watch(appConfigProvider).dataSource);
+
+  /// For tests and the developer gallery.
+  void set(DataSourceMode mode) => state = mode;
 }
+
+/// Raised when a live repository is asked for before it has been wired to its endpoints.
+Never liveNotWired(String repository) => throw UnsupportedError(
+  'The live $repository is not wired yet; use WS_DATA_SOURCE=demo',
+);
 
 final dataSourceModeProvider =
     NotifierProvider<DataSourceModeNotifier, DataSourceMode>(

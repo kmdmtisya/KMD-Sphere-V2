@@ -17,6 +17,9 @@ enum ApiErrorKind {
   /// 429: wait [ApiException.retryAfter] before trying again.
   rateLimited,
   server,
+
+  /// The API answered, but the body is not the shape the app expects.
+  invalidResponse,
   unexpected,
 }
 

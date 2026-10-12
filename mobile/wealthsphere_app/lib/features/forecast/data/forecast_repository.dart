@@ -46,5 +46,7 @@ final forecastRepositoryProvider = Provider<ForecastRepository>((ref) {
         ref.watch(demoAssetsProvider),
         ref.read(demoBehaviorProvider.notifier).gate,
       );
+    case DataSourceMode.live:
+      liveNotWired('ForecastRepository');
   }
 });

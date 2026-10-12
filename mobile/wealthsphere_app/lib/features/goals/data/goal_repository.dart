@@ -115,5 +115,7 @@ final goalRepositoryProvider = Provider<GoalRepository>((ref) {
         ref.watch(demoAssetsProvider),
         ref.read(demoBehaviorProvider.notifier).gate,
       );
+    case DataSourceMode.live:
+      liveNotWired('GoalRepository');
   }
 });

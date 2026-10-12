@@ -38,5 +38,7 @@ final doctorRepositoryProvider = Provider<DoctorRepository>((ref) {
         ref.watch(demoAssetsProvider),
         ref.read(demoBehaviorProvider.notifier).gate,
       );
+    case DataSourceMode.live:
+      liveNotWired('DoctorRepository');
   }
 });
