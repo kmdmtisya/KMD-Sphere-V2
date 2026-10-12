@@ -1051,3 +1051,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T09:04:59+04:00 — START P09-T01
 - API client and live-repository framework
 - prerequisites verified COMPLETED
+
+### 2026-10-12T09:23:42+04:00 — COMPLETE P09-T01
+- duration: 18m 43s
+- evidence: LiveRepository base (typed reads/writes, strict JsonReader, idempotency key), ApiException->LoadFailure->LoadErrorView mapping (offline/session ended/refused/missing/busy/generic with support reference), WS_DATA_SOURCE demo/live switch handled by every repository provider with no screen change; unused code-gen deps removed; 40 new tests, full suite 1535 passed, analyze clean. PR #94. CI all gates pass.
