@@ -1480,3 +1480,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-13T02:13:25+04:00 — QG PASSED QG-25
 - evidence: All criteria verified with evidence in reports/quality/qg-25-ai-integration.md (P11-T10).
+
+### 2026-10-13T02:21:23+04:00 — COMPLETE P11-T10
+- duration: 17m 44s
+- evidence: QG-21..QG-25 all criteria verified with evidence and passed; reports/quality/qg-21..qg-25 written; FX test isolation fixed (session-unique codes) and re-run 3x clean. PR #134. CI all gates pass.

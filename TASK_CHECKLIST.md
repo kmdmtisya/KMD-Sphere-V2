@@ -1105,10 +1105,10 @@
   - [x] P11-T09.2 Outage and fallback drills
   - [x] P11-T09.3 Preference sync
   - [x] P11-T09.4 Report
-- [ ] **P11-T10** · FXCUR-10 FXCUR quality gates verification · `IN_PROGRESS` 🔄
+- [x] **P11-T10** · FXCUR-10 FXCUR quality gates verification · `COMPLETED` ✅
   - Deps: P11-T09 · Wave: W8 · Track: QA · Size: S · Approval: no · Gates-done: QG-21, QG-22, QG-23, QG-24, QG-25
-  - Started: 2026-10-13T02:03:39+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-13T02:03:39+04:00 · Completed: 2026-10-13T02:21:23+04:00 · Duration: 17m 44s · Blocker: —
+  - Evidence: QG-21..QG-25 all criteria verified with evidence and passed; reports/quality/qg-21..qg-25 written; FX test isolation fixed (session-unique codes) and re-run 3x clean. PR #134. CI all gates pass.
   - [x] P11-T10.1 Accuracy and consistency gates
   - [x] P11-T10.2 Reliability gate
   - [x] P11-T10.3 Mobile and AI gates
