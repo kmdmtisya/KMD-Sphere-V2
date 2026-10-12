@@ -814,10 +814,10 @@
   - [x] P08-T08.1 Outage tests
   - [x] P08-T08.2 Stale tests
   - [x] P08-T08.3 Cache tests
-- [ ] **P08-T09** · Market data security and compliance review · `IN_PROGRESS` 🔄
+- [x] **P08-T09** · Market data security and compliance review · `COMPLETED` ✅
   - Deps: P08-T03 · Wave: W5 · Track: SEC · Size: S · Approval: no
-  - Started: 2026-10-12T04:29:27+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-12T04:29:27+04:00 · Completed: 2026-10-12T04:44:38+04:00 · Duration: 15m 11s · Blocker: —
+  - Evidence: Reviewed key custody, provider terms and logs; notes in docs/security.md. Added data_type indicative_rate to the FX response, 14 security tests (key never in errors, logs, reprs or URLs for both adapters; example env empty; reviewed-routes guard). Licences remain unconfirmed and are recorded as blocking production. PR #90. CI all gates pass.
   - [x] P08-T09.1 Key custody
   - [x] P08-T09.2 Terms check
   - [x] P08-T09.3 Log review
