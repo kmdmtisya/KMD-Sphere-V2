@@ -1063,3 +1063,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T09:58:03+04:00 — COMPLETE P09-T02
 - duration: 24m 26s
 - evidence: Live Home and Portfolio repositories (dashboard, summary+performance, risk series, allocation, metrics, holdings) and account-synced dashboard layout; figures are the server's with no recalculation (tests assert exact values); nullable DTOs with Not available/No value yet states, data-quality notice, no invented insight; consolidated gaps documented in tech-debt. 30 new tests, flutter test 1569 passed, analyze clean. CK-I (against the real backend) is not run here: the contract is checked against recorded API-shaped payloads, and the live end-to-end journeys are P09-T10. PR 95.
+
+### 2026-10-12T10:07:38+04:00 — START P09-T03
+- Live calculator and forecast repository
+- prerequisites verified COMPLETED
+
+### 2026-10-12T10:26:16+04:00 — COMPLETE P09-T03
+- duration: 18m 38s
+- evidence: LiveForecastRepository posts inputs to the scenario engine and maps contribution both ways so any valid input returns a real projection whose assumptions match; DEMO badge and demo-mismatch notice absent in live mode; failure wording per cause. Tests: repository body/echo/422, calculator live journey (custom years -> real projection, no DEMO), refused and offline messages. flutter test 1576 passed, analyze clean. CK-I against the running backend is covered by P09-T10. PR #96. CI all gates pass.

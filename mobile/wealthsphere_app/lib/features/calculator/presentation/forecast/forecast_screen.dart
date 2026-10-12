@@ -48,9 +48,9 @@ class _ForecastScreenState extends ConsumerState<ForecastScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.forecastTitle),
-        actions: const [
-          DemoBadge(),
-          SizedBox(width: AppSpacing.m),
+        actions: [
+          if (demo) const DemoBadge(),
+          const SizedBox(width: AppSpacing.m),
         ],
       ),
       body: result == null

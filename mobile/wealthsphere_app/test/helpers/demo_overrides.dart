@@ -43,3 +43,12 @@ List<Override> demoOverrides({
   if (store != null) preferencesStoreProvider.overrideWithValue(store),
   ...extra,
 ];
+
+class _LiveMode extends DataSourceModeNotifier {
+  @override
+  DataSourceMode build() => DataSourceMode.live;
+}
+
+/// Puts the app in live mode (the repositories still need overriding with test doubles).
+Override liveModeOverride() =>
+    dataSourceModeProvider.overrideWith(_LiveMode.new);

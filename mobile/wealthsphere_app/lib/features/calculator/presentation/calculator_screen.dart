@@ -8,6 +8,8 @@ import 'package:go_router/go_router.dart';
 import '../../../app/app_routes.dart';
 import '../../../core/data/demo_support.dart';
 import '../../../core/input/decimal_input.dart';
+import '../../../core/network/api_exception.dart';
+import '../../../core/network/load_failure.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../shared/design_system/components/components.dart';
 import '../../../shared/design_system/formatting/currency_info.dart';
@@ -70,6 +72,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
   final _advanced = ExpansibleController();
   bool _loading = false;
   bool _failed = false;
+  Object? _failure;
   bool _showFixHint = false;
   String _locale = 'en';
   DecimalInput _input = DecimalInput('en');
@@ -172,10 +175,13 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
           .read(forecastResultProvider.notifier)
           .set(ForecastResult(request: request, response: response));
       if (mounted) unawaited(context.push(AppRoutes.forecast));
-    } on DataLoadException {
-      if (mounted) setState(() => _failed = true);
-    } on Object {
-      if (mounted) setState(() => _failed = true);
+    } on Object catch (e) {
+      if (mounted) {
+        setState(() {
+          _failed = true;
+          _failure = e;
+        });
+      }
     } finally {
       if (mounted) setState(() => _loading = false);
     }
@@ -247,9 +253,10 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.calculatorTitle),
-        actions: const [
-          DemoBadge(),
-          SizedBox(width: AppSpacing.m),
+        actions: [
+          if (ref.watch(dataSourceModeProvider) == DataSourceMode.demo)
+            const DemoBadge(),
+          const SizedBox(width: AppSpacing.m),
         ],
       ),
       body: Column(
@@ -376,7 +383,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                         child: Semantics(
                           liveRegion: true,
                           child: Text(
-                            l10n.calcFailed,
+                            _failureMessage(l10n, _failure),
                             style: text.label.copyWith(
                               color: context.wealthColors.negativeText,
                             ),
@@ -494,4 +501,17 @@ class _Footnote extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Why a calculation failed, in words the user can act on. Never the exception text.
+String _failureMessage(AppLocalizations l10n, Object? error) {
+  if (error is ApiException && error.kind == ApiErrorKind.validation) {
+    return l10n.calcRejected;
+  }
+  return switch (loadFailureOf(error)) {
+    LoadFailure.offline => l10n.errorOfflineMessage,
+    LoadFailure.signedOut => l10n.errorSessionEndedMessage,
+    LoadFailure.busy => l10n.errorBusyMessage,
+    _ => l10n.calcFailed,
+  };
 }

@@ -364,7 +364,7 @@
           "dto": null,
           "api": "contributions",
           "status": "api-only",
-          "resolution": "Cumulative paid-in series for the contributions-versus-growth chart.",
+          "resolution": "Not read yet: the forecast screen shows total_contributions. The yearly series is for a contributions-versus-growth chart, which the screen does not have.",
           "owner": "P09-T03"
         }
       ],
