@@ -63,6 +63,12 @@ IDOR_TESTS: dict[tuple[str, str], str] = {
     ("GET", "/api/v1/portfolios/{portfolio_id}/summary"): (
         "tests.test_summary_api::test_bob_cannot_read_alices_summary"
     ),
+    ("GET", "/api/v1/ai/conversations/{conversation_id}"): (
+        "tests.ai.test_chat::test_bob_cannot_use_alices_conversation"
+    ),
+    ("DELETE", "/api/v1/ai/conversations/{conversation_id}"): (
+        "tests.ai.test_chat::test_bob_cannot_use_alices_conversation"
+    ),
     ("DELETE", "/api/v1/devices/{device_id}"): (
         "tests.test_notifications_api::test_bob_cannot_remove_alices_device"
     ),
