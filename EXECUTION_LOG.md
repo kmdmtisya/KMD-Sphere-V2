@@ -1349,3 +1349,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-13T00:52:44+04:00 — COMPLETE P11-T07
 - duration: 32m 21s
 - evidence: Synced reporting-currency state, selector sheet, Home chip and Settings row, in-place refresh of all reporting figures, FX status line, converter screen; 21 new tests plus converter in the a11y sweep (8 combos); Flutter 1755 passed, analyze/format clean; no new goldens (components covered by gallery goldens). PR #131. CI all gates pass.
+
+### 2026-10-13T01:03:59+04:00 — START P11-T08
+- FXCUR-08 AI Copilot currency tools
+- prerequisites verified COMPLETED
+
+### 2026-10-13T01:21:41+04:00 — COMPLETE P11-T08
+- duration: 17m 42s
+- evidence: Five authorised currency tools on the P10 framework with snapshot-consistent results equal to the API (tested), ownership enforced, validation and not_found handling, AI conversions audited; ExactRate for full-precision rates; fx evaluation set 30/30 and 20 routing cases; backend 2266 passed. PR #132. CI all gates pass.

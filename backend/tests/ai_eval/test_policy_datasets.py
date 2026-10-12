@@ -61,6 +61,10 @@ def verdicts_invented() -> dict[str, bool]:
     return figure_verdicts("invented")
 
 
+def verdicts_fx() -> dict[str, bool]:
+    return figure_verdicts("fx")
+
+
 def verdicts_guarantee() -> dict[str, bool]:
     verdicts = {}
     for row in load("guarantee"):
@@ -139,3 +143,7 @@ def test_stale_incomplete_and_missing_data_is_qualified_by_the_server() -> None:
 
 def test_unsafe_requests_are_declined_and_legitimate_ones_answered() -> None:
     judge("refusal", verdicts_refusal())
+
+
+def test_fx_rates_and_conversions_in_answers_come_from_the_fx_tool() -> None:
+    judge("fx", verdicts_fx())

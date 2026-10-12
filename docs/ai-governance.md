@@ -34,6 +34,11 @@ The model can call **only** these tools. There is no generic "query", "fetch", "
 | `get_asset_research` | research store (P12; empty until then) | asset id | evidence items with source and as-of, or "none" |
 | `compare_assets` | catalogue and price services | 2-5 asset ids | side-by-side stored facts with as-of |
 | `run_portfolio_risk_analysis` | risk service | portfolio id | volatility, concentration, drawdown, with completeness |
+| `get_current_fx_rate` | FX snapshot service (P11-T04) | two supported currency codes | rate, path, provider, time, status, snapshot id (indicative) |
+| `get_historical_fx_rate` | FX service, historical rule (P11-T05) | two currency codes, a past day | that day's rate with provider and time, or not found |
+| `convert_currency` | conversion engine (P11-T04/T05) | amount and currency, target, optional day | converted amount, rate, time, providers; audited as `ai_answer` (DEC-28) |
+| `get_portfolio_value` | `SummaryService` under one snapshot (P11-T06) | portfolio id or all, optional currency | value, holdings, cash and every rate used |
+| `get_fx_exposure` | `AllocationService` | portfolio id | value per currency (base currency) and weights |
 
 **Every tool is read-only.** None calls an external URL on its own initiative: data comes from our database through the same services the API uses, which already enforce ownership (ADR-0011).
 

@@ -16,7 +16,14 @@ from pydantic import (
     model_validator,
 )
 
-from app.core.money import DECIMAL_PATTERN, DecimalString, Money, MoneyAmount, decimals_of
+from app.core.money import (
+    DECIMAL_PATTERN,
+    DecimalString,
+    ExactRate,
+    Money,
+    MoneyAmount,
+    decimals_of,
+)
 from app.core.money import minor_units as currency_minor_units
 from app.modules.forecasting import limits
 from app.modules.forecasting.engine import Frequency
@@ -196,7 +203,7 @@ class ForecastInReporting(BaseModel):
     forecast itself (inputs, returns, values) stays in its own currency."""
 
     currency: str
-    rate: DecimalString
+    rate: ExactRate
     rate_timestamp: datetime | None = None
     snapshot_id: str
     final_nominal: Money

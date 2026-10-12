@@ -1088,15 +1088,15 @@
   - [x] P11-T07.5 FX status chip
   - [x] P11-T07.6 Converter screen
   - [x] P11-T07.7 Tests
-- [ ] **P11-T08** · FXCUR-08 AI Copilot currency tools · `NOT_STARTED` ⬜
+- [x] **P11-T08** · FXCUR-08 AI Copilot currency tools · `COMPLETED` ✅
   - Deps: P11-T06 · Wave: W6 · Track: AI · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P11-T08.1 Tool schemas
-  - [ ] P11-T08.2 Authorisation
-  - [ ] P11-T08.3 Snapshot consistency with the API
-  - [ ] P11-T08.4 Evaluation set
-  - [ ] P11-T08.5 Tests
+  - Started: 2026-10-13T01:03:59+04:00 · Completed: 2026-10-13T01:21:41+04:00 · Duration: 17m 42s · Blocker: —
+  - Evidence: Five authorised currency tools on the P10 framework with snapshot-consistent results equal to the API (tested), ownership enforced, validation and not_found handling, AI conversions audited; ExactRate for full-precision rates; fx evaluation set 30/30 and 20 routing cases; backend 2266 passed. PR #132. CI all gates pass.
+  - [x] P11-T08.1 Tool schemas
+  - [x] P11-T08.2 Authorisation
+  - [x] P11-T08.3 Snapshot consistency with the API
+  - [x] P11-T08.4 Evaluation set
+  - [x] P11-T08.5 Tests
 - [ ] **P11-T09** · FXCUR-09 Integration testing · `NOT_STARTED` ⬜
   - Deps: P11-T07, P11-T08 · Wave: W7 · Track: QA · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

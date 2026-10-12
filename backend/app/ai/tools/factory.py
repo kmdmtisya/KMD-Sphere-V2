@@ -2,6 +2,7 @@
 tools here; nothing else registers tools."""
 
 from app.ai.tools.core_read import register_core_read_tools
+from app.ai.tools.currency import register_currency_tools
 from app.ai.tools.forecast import register_forecast_tools
 from app.ai.tools.registry import ToolRegistry
 from app.core.config import Settings
@@ -15,4 +16,5 @@ def build_tool_registry(settings: Settings) -> ToolRegistry:
     )
     register_core_read_tools(registry)
     register_forecast_tools(registry)
+    register_currency_tools(registry)
     return registry

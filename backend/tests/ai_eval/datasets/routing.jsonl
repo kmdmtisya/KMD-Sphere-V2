@@ -82,19 +82,39 @@
 {"expected_tools": ["get_goal_progress", "get_net_worth"], "id": "routing-082", "kind": "multi", "question": "Give me both my total debts and my goal gaps."}
 {"expected_tools": ["get_portfolio_allocation", "get_portfolio_summary"], "id": "routing-083", "kind": "multi", "question": "List my portfolios and their allocation."}
 {"expected_tools": ["get_goal_progress", "get_net_worth"], "id": "routing-084", "kind": "multi", "question": "Does my net worth cover my retirement goal?"}
-{"expected_tools": [], "id": "routing-085", "kind": "ambiguous", "question": "Tell me about my money."}
-{"expected_tools": [], "id": "routing-086", "kind": "ambiguous", "question": "How am I doing?"}
-{"expected_tools": [], "id": "routing-087", "kind": "ambiguous", "question": "Anything I should know?"}
-{"expected_tools": [], "id": "routing-088", "kind": "ambiguous", "question": "What about last month?"}
-{"expected_tools": [], "id": "routing-089", "kind": "ambiguous", "question": "Is it good?"}
-{"expected_tools": [], "id": "routing-090", "kind": "ambiguous", "question": "Fix it."}
-{"expected_tools": [], "id": "routing-091", "kind": "ambiguous", "question": "And the other one?"}
-{"expected_tools": [], "id": "routing-092", "kind": "ambiguous", "question": "Why?"}
-{"expected_tools": [], "id": "routing-093", "kind": "out_of_scope", "question": "What is the weather in Dubai tomorrow?"}
-{"expected_tools": [], "id": "routing-094", "kind": "out_of_scope", "question": "Write me a poem about the sea."}
-{"expected_tools": [], "id": "routing-095", "kind": "out_of_scope", "question": "Who won the football match last night?"}
-{"expected_tools": [], "id": "routing-096", "kind": "out_of_scope", "question": "How do I cook a risotto?"}
-{"expected_tools": [], "id": "routing-097", "kind": "out_of_scope", "question": "Translate good morning into French."}
-{"expected_tools": [], "id": "routing-098", "kind": "out_of_scope", "question": "What is the capital of Australia?"}
-{"expected_tools": [], "id": "routing-099", "kind": "out_of_scope", "question": "Recommend a good laptop."}
-{"expected_tools": [], "id": "routing-100", "kind": "out_of_scope", "question": "Explain how photosynthesis works."}
+{"expected_tools": ["get_current_fx_rate"], "id": "routing-085", "kind": "currency", "question": "What is the dirham to dollar rate today?"}
+{"expected_tools": ["get_current_fx_rate"], "id": "routing-086", "kind": "currency", "question": "How many Kenyan shillings is one US dollar?"}
+{"expected_tools": ["get_current_fx_rate"], "id": "routing-087", "kind": "currency", "question": "What is the current euro to pound exchange rate?"}
+{"expected_tools": ["get_current_fx_rate"], "id": "routing-088", "kind": "currency", "question": "Is the yen rate up to date?"}
+{"expected_tools": ["get_historical_fx_rate"], "id": "routing-089", "kind": "currency", "question": "What was the USD to AED rate on 1 March 2026?"}
+{"expected_tools": ["get_historical_fx_rate"], "id": "routing-090", "kind": "currency", "question": "What was the euro worth in dollars at the end of last year?"}
+{"expected_tools": ["get_historical_fx_rate"], "id": "routing-091", "kind": "currency", "question": "What was the KES rate when I bought in June?"}
+{"expected_tools": ["get_historical_fx_rate"], "id": "routing-092", "kind": "currency", "question": "Show the GBP to EUR rate on 15 August 2026."}
+{"expected_tools": ["convert_currency"], "id": "routing-093", "kind": "currency", "question": "Convert 500,000 AED to USD."}
+{"expected_tools": ["convert_currency"], "id": "routing-094", "kind": "currency", "question": "How much is 1,000 dollars in Kenyan shillings?"}
+{"expected_tools": ["convert_currency"], "id": "routing-095", "kind": "currency", "question": "What would 250 euros be in pounds?"}
+{"expected_tools": ["convert_currency"], "id": "routing-096", "kind": "currency", "question": "Convert 100 USD to yen at last Friday's rate."}
+{"expected_tools": ["get_portfolio_value"], "id": "routing-097", "kind": "currency", "question": "What is my portfolio worth in euros?"}
+{"expected_tools": ["get_portfolio_value"], "id": "routing-098", "kind": "currency", "question": "Show all my portfolios together in dirhams."}
+{"expected_tools": ["get_portfolio_value"], "id": "routing-099", "kind": "currency", "question": "How much is my Kenya portfolio in US dollars?"}
+{"expected_tools": ["get_portfolio_value"], "id": "routing-100", "kind": "currency", "question": "What is my total wealth in pounds?"}
+{"expected_tools": ["get_fx_exposure"], "id": "routing-101", "kind": "currency", "question": "How much of my portfolio is in dollars versus shillings?"}
+{"expected_tools": ["get_fx_exposure"], "id": "routing-102", "kind": "currency", "question": "What is my currency exposure?"}
+{"expected_tools": ["get_fx_exposure"], "id": "routing-103", "kind": "currency", "question": "Which currency am I most exposed to?"}
+{"expected_tools": ["get_fx_exposure"], "id": "routing-104", "kind": "currency", "question": "How much of my money is outside my base currency?"}
+{"expected_tools": [], "id": "routing-105", "kind": "ambiguous", "question": "Tell me about my money."}
+{"expected_tools": [], "id": "routing-106", "kind": "ambiguous", "question": "How am I doing?"}
+{"expected_tools": [], "id": "routing-107", "kind": "ambiguous", "question": "Anything I should know?"}
+{"expected_tools": [], "id": "routing-108", "kind": "ambiguous", "question": "What about last month?"}
+{"expected_tools": [], "id": "routing-109", "kind": "ambiguous", "question": "Is it good?"}
+{"expected_tools": [], "id": "routing-110", "kind": "ambiguous", "question": "Fix it."}
+{"expected_tools": [], "id": "routing-111", "kind": "ambiguous", "question": "And the other one?"}
+{"expected_tools": [], "id": "routing-112", "kind": "ambiguous", "question": "Why?"}
+{"expected_tools": [], "id": "routing-113", "kind": "out_of_scope", "question": "What is the weather in Dubai tomorrow?"}
+{"expected_tools": [], "id": "routing-114", "kind": "out_of_scope", "question": "Write me a poem about the sea."}
+{"expected_tools": [], "id": "routing-115", "kind": "out_of_scope", "question": "Who won the football match last night?"}
+{"expected_tools": [], "id": "routing-116", "kind": "out_of_scope", "question": "How do I cook a risotto?"}
+{"expected_tools": [], "id": "routing-117", "kind": "out_of_scope", "question": "Translate good morning into French."}
+{"expected_tools": [], "id": "routing-118", "kind": "out_of_scope", "question": "What is the capital of Australia?"}
+{"expected_tools": [], "id": "routing-119", "kind": "out_of_scope", "question": "Recommend a good laptop."}
+{"expected_tools": [], "id": "routing-120", "kind": "out_of_scope", "question": "Explain how photosynthesis works."}
