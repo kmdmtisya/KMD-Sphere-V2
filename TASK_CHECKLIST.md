@@ -958,14 +958,14 @@
   - Evidence: —
   - [ ] P10-T04.1 Two tools
   - [ ] P10-T04.2 Tests
-- [ ] **P10-T05** · LLM provider abstraction and OpenAI adapter · `NOT_STARTED` ⬜
+- [ ] **P10-T05** · LLM provider abstraction and OpenAI adapter · `IN_PROGRESS` 🔄
   - Deps: P10-T01 · Wave: W2 · Track: AI · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T16:56:39+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P10-T05.1 Interface
-  - [ ] P10-T05.2 OpenAI adapter
-  - [ ] P10-T05.3 Fake
-  - [ ] P10-T05.4 Tests
+  - [x] P10-T05.1 Interface
+  - [x] P10-T05.2 OpenAI adapter
+  - [x] P10-T05.3 Fake
+  - [x] P10-T05.4 Tests
 - [ ] **P10-T06** · Orchestrator and /ai/chat with streaming · `NOT_STARTED` ⬜
   - Deps: P10-T03, P10-T04, P10-T05 · Wave: W4 · Track: AI · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
