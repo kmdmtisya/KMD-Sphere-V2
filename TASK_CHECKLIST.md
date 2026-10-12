@@ -945,13 +945,13 @@
   - [x] P10-T02.2 Schemas
   - [x] P10-T02.3 Authz and audit
   - [x] P10-T02.4 Tests
-- [ ] **P10-T03** · Core read tools · `NOT_STARTED` ⬜
+- [x] **P10-T03** · Core read tools · `COMPLETED` ✅
   - Deps: P10-T02, P06-T09 · Wave: W3 · Track: AI · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P10-T03.1 Five tools
-  - [ ] P10-T03.2 Denial tests
-  - [ ] P10-T03.3 Schema tests
+  - Started: 2026-10-12T17:21:59+04:00 · Completed: 2026-10-12T17:36:25+04:00 · Duration: 14m 26s · Blocker: —
+  - Evidence: Five core read tools returning the API's own figures with as_of and completeness; shared analytics views; cross-user denial tests for every tool (foreign id indistinguishable from unknown, audited as denied), identity-smuggling and bad-argument tests. 19 new tests; backend 1935 passed. PR #112. CI all gates pass.
+  - [x] P10-T03.1 Five tools
+  - [x] P10-T03.2 Denial tests
+  - [x] P10-T03.3 Schema tests
 - [ ] **P10-T04** · Forecast tools · `NOT_STARTED` ⬜
   - Deps: P10-T02, P06-T02 · Wave: W3 · Track: AI · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

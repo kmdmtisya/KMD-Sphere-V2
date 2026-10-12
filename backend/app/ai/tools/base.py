@@ -11,7 +11,7 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from typing import Any
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, field_validator
 from sqlalchemy.ext.asyncio import AsyncSession
 
 # The complete allow-list (docs/ai-governance.md section 1). tests/ai/test_tool_allow_list.py
@@ -62,6 +62,13 @@ class ToolData(BaseModel):
 
     as_of: datetime
     complete: bool = True
+
+    @field_validator("as_of")
+    @classmethod
+    def _aware(cls, value: datetime) -> datetime:
+        """Always carries a time zone. A few services report a day as midnight without a zone:
+        those are UTC days, so that is what is stated."""
+        return value if value.tzinfo is not None else value.replace(tzinfo=UTC)
 
 
 Handler = Callable[[ToolContext, Any], Awaitable[ToolData]]

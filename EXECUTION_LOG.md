@@ -1187,3 +1187,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T17:15:17+04:00 — COMPLETE P10-T05
 - duration: 18m 38s
 - evidence: Provider interface with OpenAI and Anthropic adapters (complete and streaming), fake provider, retry/fallback, registry as sole vendor composition point; key custody tests (no key in repr, errors, logs, URLs; no default model); 46 new tests, backend 1917 passed. Adapters verified against documented-shape payloads only, not a live service (no key, terms review pending). Also fixed a flaky payload test (random ids can contain digits). PR #111, CI all gates pass.
+
+### 2026-10-12T17:21:59+04:00 — START P10-T03
+- Core read tools
+- prerequisites verified COMPLETED
+
+### 2026-10-12T17:36:25+04:00 — COMPLETE P10-T03
+- duration: 14m 26s
+- evidence: Five core read tools returning the API's own figures with as_of and completeness; shared analytics views; cross-user denial tests for every tool (foreign id indistinguishable from unknown, audited as denied), identity-smuggling and bad-argument tests. 19 new tests; backend 1935 passed. PR #112. CI all gates pass.
