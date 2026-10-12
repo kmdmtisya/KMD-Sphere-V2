@@ -30,6 +30,12 @@ ALLOWED_TOOLS: frozenset[str] = frozenset(
         "get_asset_research",
         "compare_assets",
         "run_portfolio_risk_analysis",
+        # Currency tools (P11-T08).
+        "get_current_fx_rate",
+        "get_historical_fx_rate",
+        "convert_currency",
+        "get_portfolio_value",
+        "get_fx_exposure",
     }
 )
 

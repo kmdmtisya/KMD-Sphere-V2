@@ -6,7 +6,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from app.core.money import CURRENCY_PATTERN, DecimalString, Money
+from app.core.money import CURRENCY_PATTERN, DecimalString, ExactRate, Money
 
 Status = Literal["current", "cached", "stale", "unavailable"]
 Concept = Literal["transaction", "historical_valuation", "current_reporting"]
@@ -71,7 +71,7 @@ class SnapshotRateOut(BaseModel):
 
     base: str
     quote: str
-    rate: DecimalString
+    rate: ExactRate
     path: list[str] | None = Field(
         default=None, description="Currencies a derived rate went through, e.g. AED, USD, KES"
     )
@@ -110,7 +110,7 @@ class ConvertIn(BaseModel):
 class ConvertOut(BaseModel):
     source: Money
     converted: Money = Field(description="Rounded once, half-up, to the target's decimal places")
-    rate: DecimalString
+    rate: ExactRate
     path: list[str] | None = None
     concept: Concept = Field(
         description="current_reporting (a snapshot) or historical_valuation (a past day)"
@@ -131,7 +131,7 @@ class ConvertOut(BaseModel):
 # ------------------------------------------------------------------------- P11-T05 history
 class FxHistoryPointOut(BaseModel):
     date: date
-    rate: DecimalString | None = None
+    rate: ExactRate | None = None
     rate_timestamp: datetime | None = None
     provider: str | None = None
     path: list[str] | None = None
@@ -156,7 +156,7 @@ class ReportingRateOut(BaseModel):
 
     base: str
     quote: str
-    rate: DecimalString
+    rate: ExactRate
     path: list[str] | None = None
     rate_timestamp: datetime
     provider: str

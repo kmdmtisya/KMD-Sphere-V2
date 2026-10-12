@@ -25,3 +25,15 @@ The analytics mapping (`performance_out`, `allocation_out`, `risk_out`) moved fr
 
 ## Forecast tools (P10-T04)
 `backend/app/ai/tools/forecast.py`: `run_compound_forecast` and `run_goal_forecast` call `app.modules.forecasting.service` (the engine behind `/api/v1/forecasts`) and nothing else; their handlers read neither the database nor the user, and a test enforces both. The assumptions are the arguments (from the user, or stated by the model as its own); the same limits as the API apply, and the result echoes the assumptions with the engine's "illustrative, never guaranteed" notice. Identical inputs give identical numbers.
+
+## Currency tools (P11-T08)
+
+| Tool | Wraps | Returns |
+|---|---|---|
+| `get_current_fx_rate` | the current rate snapshot (P11-T04) | rate (full precision), path, providers, time, status, snapshot id, indicative-rate notice |
+| `get_historical_fx_rate` | the FX service at the end of a past day (P11-T05) | that day's rate, or `not_found`; a future day is `invalid` |
+| `convert_currency` | the conversion engine | source, converted (rounded once to the target), rate and provenance; recorded in the conversion audit as `ai_answer` (DEC-28) |
+| `get_portfolio_value` | `SummaryService` under one snapshot | value, holdings and cash of one portfolio or all, in a chosen currency, with every rate used |
+| `get_fx_exposure` | allocation by currency | value per currency (base currency) and weights |
+
+The tools call the same services as the API, so for the same snapshot a tool's rate and converted amount equal the API's (tested). Unsupported currencies are `invalid`, a pair without a usable rate is `not_found`, and portfolio tools are owner-scoped (another user's portfolio is `not_found`). Rates are exact strings (`ExactRate`): a derived rate keeps its precision so a conversion can be recomputed. The answer checks (P10-T08) already reject a rate or amount that no tool returned; the `fx` evaluation set (30 cases, zero tolerance, QG-25.2) covers rates restated with rounding, inverse rates that were never returned, and invented history, and the routing set has 20 currency questions. Known limit: a returned figure restated with an invented context ("since 1997") is not detectable by the number check.

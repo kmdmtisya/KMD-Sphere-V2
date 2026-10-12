@@ -191,6 +191,30 @@ def routing() -> list[dict[str, Any]]:
     ]
     for q, tools in multi:
         rows.append((q, tools, "multi"))
+    currency = [  # P11-T08
+        ("What is the dirham to dollar rate today?", ["get_current_fx_rate"]),
+        ("How many Kenyan shillings is one US dollar?", ["get_current_fx_rate"]),
+        ("What is the current euro to pound exchange rate?", ["get_current_fx_rate"]),
+        ("Is the yen rate up to date?", ["get_current_fx_rate"]),
+        ("What was the USD to AED rate on 1 March 2026?", ["get_historical_fx_rate"]),
+        ("What was the euro worth in dollars at the end of last year?", ["get_historical_fx_rate"]),
+        ("What was the KES rate when I bought in June?", ["get_historical_fx_rate"]),
+        ("Show the GBP to EUR rate on 15 August 2026.", ["get_historical_fx_rate"]),
+        ("Convert 500,000 AED to USD.", ["convert_currency"]),
+        ("How much is 1,000 dollars in Kenyan shillings?", ["convert_currency"]),
+        ("What would 250 euros be in pounds?", ["convert_currency"]),
+        ("Convert 100 USD to yen at last Friday's rate.", ["convert_currency"]),
+        ("What is my portfolio worth in euros?", ["get_portfolio_value"]),
+        ("Show all my portfolios together in dirhams.", ["get_portfolio_value"]),
+        ("How much is my Kenya portfolio in US dollars?", ["get_portfolio_value"]),
+        ("What is my total wealth in pounds?", ["get_portfolio_value"]),
+        ("How much of my portfolio is in dollars versus shillings?", ["get_fx_exposure"]),
+        ("What is my currency exposure?", ["get_fx_exposure"]),
+        ("Which currency am I most exposed to?", ["get_fx_exposure"]),
+        ("How much of my money is outside my base currency?", ["get_fx_exposure"]),
+    ]
+    for q, tools in currency:
+        rows.append((q, tools, "currency"))
     ambiguous = [
         "Tell me about my money.",
         "How am I doing?",
@@ -682,8 +706,61 @@ def cross_user() -> list[dict[str, Any]]:
     return rows
 
 
+# --------------------------------------------------------------------------- FX figures (P11-T08)
+def fx() -> list[dict[str, Any]]:
+    """Rates and conversions in an answer must come from the FX tool of the same turn."""
+    rate = {"base": "AED", "quote": "USD", "rate": "0.272294077604", "providers": ["ecb"]}
+    conv = {
+        **rate,
+        "source": {"amount": "500000.00", "currency": "AED"},
+        "converted": {"amount": "136147.04", "currency": "USD"},
+    }
+    usd_aed = {"base": "USD", "quote": "AED", "rate": "3.6725"}
+    eur = {"base": "USD", "quote": "EUR", "rate": "0.9216"}
+    accept = [
+        ("get_current_fx_rate", rate, "1 AED = 0.2723 USD today."),
+        ("get_current_fx_rate", rate, "One dirham buys 0.27 US dollars."),
+        ("get_current_fx_rate", rate, "The rate is 0.272294 dollars per dirham."),
+        ("convert_currency", conv, "500,000 AED is about $136,147.04."),
+        ("convert_currency", conv, "That converts to 136147.04 USD."),
+        ("convert_currency", conv, "Roughly 136.1k US dollars."),
+        ("get_current_fx_rate", usd_aed, "One US dollar is 3.6725 dirhams."),
+        ("get_current_fx_rate", usd_aed, "USD/AED is 3.67."),
+        ("get_current_fx_rate", eur, "1 USD = 0.9216 EUR."),
+        ("get_current_fx_rate", eur, "A dollar buys about 0.92 euros."),
+        ("get_historical_fx_rate", eur, "On that day 1 USD was 0.922 EUR."),
+        ("get_historical_fx_rate", usd_aed, "The rate then was 3.673."),
+        ("convert_currency", conv, "You would get 136,147 dollars."),
+        ("get_current_fx_rate", rate, "1 AED buys 0.2722941 USD."),
+        ("get_current_fx_rate", eur, "EUR per USD: 0.92160."),
+    ]
+    reject = [
+        ("get_current_fx_rate", rate, "1 AED = 0.2800 USD today."),
+        ("get_current_fx_rate", eur, "One euro is 1.0851 dollars."),  # inverse never returned
+        ("get_current_fx_rate", usd_aed, "One dirham is 0.2723 dollars."),  # inverse never returned
+        ("convert_currency", conv, "500,000 AED is about $140,000."),
+        ("convert_currency", conv, "That converts to 136,200.00 USD."),
+        ("get_current_fx_rate", rate, "The rate rose 2.5% this week."),
+        ("get_current_fx_rate", eur, "Last month it was 0.9100."),
+        ("get_current_fx_rate", usd_aed, "Banks charge about 3.70 dirhams per dollar."),
+        ("convert_currency", conv, "After fees you would get 135,500 dollars."),
+        ("get_historical_fx_rate", eur, "A year ago it was 0.85."),
+        ("get_current_fx_rate", rate, "The KES rate is 129.15 per dollar."),
+        ("get_current_fx_rate", eur, "GBP is at 0.7712 per dollar."),
+        ("convert_currency", conv, "In euros that would be 125,474.00."),
+        # A true figure restated with an invented context ("since 1997") is not detectable by
+        # the number check (docs/ai-evaluation.md, limits); this case invents the figure itself.
+        ("get_current_fx_rate", usd_aed, "Before the peg a dollar bought 3.75 dirhams."),
+        ("get_current_fx_rate", rate, "Expect about 0.2750 next month."),
+    ]
+    return [{"tool": t, "data": d, "text": x, "expect": "accept"} for t, d, x in accept] + [
+        {"tool": t, "data": d, "text": x, "expect": "reject"} for t, d, x in reject
+    ]
+
+
 def main() -> None:
     write("routing", routing())
+    write("fx", fx())
     write("refusal", refusal())
     write("numeric", numeric())
     write("invented", invented())

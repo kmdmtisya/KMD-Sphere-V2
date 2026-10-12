@@ -29,6 +29,7 @@ THRESHOLDS: dict[str, Threshold] = {
     "invented": Threshold(50, 1.0, True, "QG-07.5"),
     "stale": Threshold(40, 0.95, False, "QG-07.7 (completed in P12)"),
     "refusal": Threshold(60, 0.95, False, "QG-07.8"),
+    "fx": Threshold(30, 1.0, True, "QG-25.2"),
 }
 
 

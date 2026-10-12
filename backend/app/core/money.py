@@ -75,6 +75,35 @@ DecimalString = Annotated[
 ]
 
 
+# An exchange rate derived through other rates (inverse, cross) keeps its full precision on the
+# wire, so a figure converted with it can be recomputed exactly (P11-T04). Positive, up to 60
+# decimals; used only for rates, never for money.
+EXACT_RATE_PATTERN = r"^\d{1,20}(\.\d{1,60})?$"
+_EXACT_RATE = re.compile(EXACT_RATE_PATTERN)
+
+
+def _parse_rate(value: Any) -> Decimal:
+    if isinstance(value, Decimal):
+        rate = value
+    elif isinstance(value, str) and _EXACT_RATE.fullmatch(value):
+        rate = Decimal(value)
+    else:
+        raise ValueError("must be a positive decimal rate written as a string")
+    if not rate.is_finite() or rate <= 0:
+        raise ValueError("must be a positive decimal rate")
+    return rate
+
+
+ExactRate = Annotated[
+    Decimal,
+    BeforeValidator(_parse_rate),
+    PlainSerializer(format_decimal, return_type=str),
+    WithJsonSchema(
+        {"type": "string", "pattern": EXACT_RATE_PATTERN, "examples": ["0.272294077604"]}
+    ),
+]
+
+
 MoneyAmount = Annotated[
     Decimal,
     BeforeValidator(_parse),

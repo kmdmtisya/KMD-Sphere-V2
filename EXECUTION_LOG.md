@@ -1349,3 +1349,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-13T00:52:44+04:00 — COMPLETE P11-T07
 - duration: 32m 21s
 - evidence: Synced reporting-currency state, selector sheet, Home chip and Settings row, in-place refresh of all reporting figures, FX status line, converter screen; 21 new tests plus converter in the a11y sweep (8 combos); Flutter 1755 passed, analyze/format clean; no new goldens (components covered by gallery goldens). PR #131. CI all gates pass.
+
+### 2026-10-13T01:03:59+04:00 — START P11-T08
+- FXCUR-08 AI Copilot currency tools
+- prerequisites verified COMPLETED
