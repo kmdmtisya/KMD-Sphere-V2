@@ -937,14 +937,14 @@
   - [x] P10-T01.1 Allow-list
   - [x] P10-T01.2 Threat model
   - [x] P10-T01.3 Provider ADR
-- [ ] **P10-T02** · Tool framework · `NOT_STARTED` ⬜
+- [x] **P10-T02** · Tool framework · `COMPLETED` ✅
   - Deps: P10-T01, P04-T03, P04-T04 · Wave: W2 · Track: AI · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P10-T02.1 Registry
-  - [ ] P10-T02.2 Schemas
-  - [ ] P10-T02.3 Authz and audit
-  - [ ] P10-T02.4 Tests
+  - Started: 2026-10-12T16:34:53+04:00 · Completed: 2026-10-12T16:50:13+04:00 · Duration: 15m 20s · Blocker: —
+  - Evidence: Tool framework with registry, user-context requirement, allow-list matching the governance document, argument validation (extra fields forbidden), timeouts, size limits, per-user budget and one audit event per call (args hash, correlation id, model, provider); static guard against SQL/shell/network in the tool layer; 22 tests; backend 1871 passed. PR #110. CI all gates pass.
+  - [x] P10-T02.1 Registry
+  - [x] P10-T02.2 Schemas
+  - [x] P10-T02.3 Authz and audit
+  - [x] P10-T02.4 Tests
 - [ ] **P10-T03** · Core read tools · `NOT_STARTED` ⬜
   - Deps: P10-T02, P06-T09 · Wave: W3 · Track: AI · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
