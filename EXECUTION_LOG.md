@@ -1246,3 +1246,31 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T20:57:39+04:00 — COMPLETE P10-T09
 - duration: 1h 20m 20s
 - evidence: Approved by the user after review of docs/ai-evaluation.md: eight datasets at DEC-17 sizes all at threshold in CI; known limits (no real-model run, no contradiction detector, P12 items) accepted for this phase. · Approved by: user (mtisya@gmail.com)
+
+### 2026-10-12T21:02:27+04:00 — START P10-GATE
+- Phase P10 exit gate
+- prerequisites verified COMPLETED
+
+### 2026-10-12T21:02:27+04:00 — QG START QG-07
+- AI Reliability and Investment Intelligence
+
+### 2026-10-12T21:02:28+04:00 — QG CHECK QG-07.1
+- evidence: Every tool reads through an owner-scoped service with identity from the token; 30 cross-user cases (tool ids, smuggled user_id/owner_id, scope, conversations) denied 30/30; registry sweep of foreign ids not_found (tests/ai_eval, tests/ai/test_core_read_tools.py).
+
+### 2026-10-12T21:02:28+04:00 — QG CHECK QG-07.2
+- evidence: Allow-list of 12 names checked against docs/ai-governance.md; no SQL, shell, URL or file tool; tool layer imports no network/process/SQL modules (architecture tests); unknown tools refused and audited (P10-T02, T06).
+
+### 2026-10-12T21:02:29+04:00 — QG CHECK QG-07.3
+- evidence: Four-section JSON answer parsed strictly (extra keys, wrong types, over-length, prose rejected); invalid replies retried once then refused and never stored (tests/ai/test_answer_policy.py, test_chat.py).
+
+### 2026-10-12T21:02:29+04:00 — QG CHECK QG-07.5
+- evidence: Number provenance 100/100 and invented market data 60/60 rejected or accepted as expected; guarantee/certainty wording 100/100; zero guarantee wording across all accepted suite outputs; meta-tests show each defence is detected when removed (docs/ai-evaluation.md).
+
+### 2026-10-12T21:02:30+04:00 — QG CHECK QG-07.6
+- evidence: Prompt injection 50/50 resisted (user text and stored data, with and without refusal rules); cross-user 30/30 denied with no leak, via the real chat API (docs/ai-evaluation.md).
+
+### 2026-10-12T21:02:30+04:00 — QG CHECK QG-07.8
+- evidence: Eight versioned DEC-17 datasets at approved sizes and thresholds, all met in CI; routing measured by stand-in only and the real-model routing and human review remain pre-release steps, recorded as open in docs/ai-evaluation.md; user approved P10-T09.
+
+### 2026-10-12T21:02:30+04:00 — QG CHECK QG-11.3
+- evidence: Copilot end to end: the chat takes identity from the token, validates scope server-side, tools return owner-scoped data; e2e journey 7 against the real backend; cross-user suite 30/30.
