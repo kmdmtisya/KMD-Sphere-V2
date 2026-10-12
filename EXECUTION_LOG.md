@@ -1274,3 +1274,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-12T21:02:30+04:00 — QG CHECK QG-11.3
 - evidence: Copilot end to end: the chat takes identity from the token, validates scope server-side, tools return owner-scoped data; e2e journey 7 against the real backend; cross-user suite 30/30.
+
+### 2026-10-12T21:05:43+04:00 — AWAITING_VERIFICATION P10-GATE
+- evidence: Gate criteria QG-07.1, .2, .3, .5, .6, .8 and QG-11.3 checked with evidence; T01-T10 completed.
+
+### 2026-10-12T21:05:43+04:00 — COMPLETE P10-GATE
+- duration: 3m 16s
+- evidence: Approved by the user after review of the gate summary and docs/ai-evaluation.md; open items accepted: no real-model run, provider terms review, live routing and human review before release. · Approved by: user (mtisya@gmail.com)
