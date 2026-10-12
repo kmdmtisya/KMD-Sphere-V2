@@ -11,6 +11,7 @@ import 'package:wealthsphere_app/core/data/demo_support.dart';
 import 'package:wealthsphere_app/features/ai_wealth/presentation/ai_wealth_screen.dart';
 import 'package:wealthsphere_app/features/copilot/data/copilot_repository.dart';
 import 'package:wealthsphere_app/features/copilot/domain/chat_models.dart';
+import 'package:wealthsphere_app/features/copilot/domain/conversation_models.dart';
 import 'package:wealthsphere_app/shared/design_system/components/components.dart';
 import 'package:wealthsphere_app/shared/design_system/formatting/formatting.dart';
 
@@ -27,10 +28,29 @@ class ScopeRecorder implements CopilotRepository {
   final List<AiScope?> scopes = [];
 
   @override
-  Stream<ChatEvent> ask(String question, {AiScope? scope}) {
+  Stream<ChatEvent> ask(
+    String question, {
+    AiScope? scope,
+    String? conversationId,
+  }) {
     scopes.add(scope);
-    return _inner.ask(question, scope: scope);
+    return _inner.ask(question, scope: scope, conversationId: conversationId);
   }
+
+  @override
+  bool get supportsHistory => _inner.supportsHistory;
+
+  @override
+  Future<List<ConversationSummary>> conversations() => _inner.conversations();
+
+  @override
+  Future<ConversationDetail> conversation(String id) => _inner.conversation(id);
+
+  @override
+  Future<void> deleteConversation(String id) => _inner.deleteConversation(id);
+
+  @override
+  Future<void> deleteAllConversations() => _inner.deleteAllConversations();
 
   @override
   Future<CopilotIntro> intro() => _inner.intro();

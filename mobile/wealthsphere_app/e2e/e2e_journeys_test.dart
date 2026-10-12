@@ -35,6 +35,7 @@ import 'package:wealthsphere_app/core/security/app_lock_settings.dart';
 import 'package:wealthsphere_app/features/notifications/notification_service.dart';
 import 'package:wealthsphere_app/features/transactions/application/ledger_view.dart'
     show todayProvider;
+import 'package:wealthsphere_app/shared/design_system/components/evidence_source_chip.dart';
 import 'package:wealthsphere_app/shared/design_system/components/transaction_tile.dart';
 import 'package:wealthsphere_app/shared/design_system/formatting/formatting.dart';
 
@@ -384,6 +385,31 @@ void main() {
     expect(find.text('When the price rises above \$110.00'), findsOneWidget);
     expect(find.textContaining('Price reached'), findsOneWidget);
     expect(_container!.read(pendingDeepLinkProvider), isNull);
+    await _finish(tester);
+  });
+
+  testWidgets('7. ask the assistant: a checked answer from your own data', (
+    tester,
+  ) async {
+    await _launch(tester);
+    await _until(tester, find.text('Hello, Alice'));
+    await _tapTab(tester, 'AI Wealth');
+    await _until(tester, find.text('What is my net worth?'));
+    // Live mode says so: no DEMO label, the app's own introduction.
+    expect(find.text('DEMO'), findsNothing);
+    await tester.tap(find.text('What is my net worth?'));
+    // The answer arrives in its sections, with the data it rests on and the server's notice.
+    await _until(tester, find.text('Observed data'));
+    expect(find.text('Your net worth was retrieved.'), findsOneWidget);
+    expect(find.text('AI interpretation'), findsOneWidget);
+    expect(find.byType(EvidenceSourceChip), findsOneWidget);
+    // It was stored on the server and shows in the history.
+    final stored = await tester.runAsync(
+      () => _client().get<List<dynamic>>('/api/v1/ai/conversations'),
+    );
+    expect(stored!.data, hasLength(1));
+    await tester.tap(find.byTooltip('Conversations'));
+    await _until(tester, find.text('What is my net worth?').last);
     await _finish(tester);
   });
 }

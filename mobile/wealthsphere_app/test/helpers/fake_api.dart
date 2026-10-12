@@ -26,6 +26,18 @@ class ApiCall {
   String toString() => '$method $path';
 }
 
+/// A raw response body, for example a server-sent event stream, delivered in the given chunks
+/// (a chunk can end anywhere, even inside a frame or a character).
+class RawBody {
+  RawBody(this.chunks, {this.contentType = 'text/event-stream'});
+
+  RawBody.text(String text, {String contentType = 'text/event-stream'})
+    : this([text], contentType: contentType);
+
+  final List<String> chunks;
+  final String contentType;
+}
+
 /// What a route answers: a status and a JSON body. Throw a [DioExceptionType] to simulate a
 /// dropped connection.
 typedef FakeHandler = Object Function(ApiCall call);
@@ -84,6 +96,18 @@ class FakeApi implements HttpClientAdapter {
       throw DioException(requestOptions: options, type: answer);
     }
     final (status, body) = answer as (int, Object?);
+    if (body is RawBody) {
+      return ResponseBody(
+        Stream.fromIterable([
+          for (final chunk in body.chunks)
+            Uint8List.fromList(utf8.encode(chunk)),
+        ]),
+        status,
+        headers: {
+          Headers.contentTypeHeader: [body.contentType],
+        },
+      );
+    }
     return ResponseBody.fromString(
       body == null ? '' : jsonEncode(body),
       status,

@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/app_routes.dart';
 import '../../../core/connectivity/connectivity.dart';
+import '../../../core/data/data_source_badge.dart';
+import '../../../core/data/demo_support.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../shared/design_system/components/components.dart';
 import '../../../shared/design_system/theme/theme.dart';
@@ -14,6 +16,8 @@ import '../../copilot/data/copilot_repository.dart';
 import '../../copilot/domain/chat_models.dart';
 import '../../portfolios/application/portfolio_providers.dart';
 import '../application/copilot_controller.dart';
+import 'conversation_history_sheet.dart';
+import 'copilot_labels.dart';
 
 final _copilotIntroProvider = FutureProvider<CopilotIntro>(
   (ref) => ref.watch(copilotRepositoryProvider).intro(),
@@ -29,10 +33,12 @@ String sectionHeading(AppLocalizations l10n, SectionKind kind) =>
       SectionKind.calculated => l10n.aiSectionCalculated,
       SectionKind.assumption => l10n.aiSectionAssumption,
       SectionKind.interpretation => l10n.aiSectionInterpretation,
+      SectionKind.notice => l10n.aiSectionNotice,
     };
 
 /// AI Wealth: a conversation with the Copilot. Every word of every answer comes from the
-/// repository (demo scripts now, the AI orchestrator later); nothing is advice written in Dart.
+/// repository (the demo scripts, or the server's checked answers in live mode); nothing is advice
+/// written in Dart.
 ///
 /// [scope] comes from the route (`/ai?scope=...`) and can be changed or removed by the user; it is
 /// sent with each question, and the server enforces what it may access.
@@ -99,17 +105,37 @@ class _AiWealthScreenState extends ConsumerState<AiWealthScreen> {
     final l10n = AppLocalizations.of(context);
     ref
         .read(copilotControllerProvider.notifier)
-        .ask(question, scope: _scope, failureMessage: l10n.aiFailedGeneric);
+        .ask(
+          question,
+          scope: _scope,
+          failureMessage: l10n.aiFailedGeneric,
+          rateLimitedMessage: l10n.aiRateLimited,
+          unavailableMessage: l10n.aiUnavailable,
+        );
   }
 
   void _retry(int index) {
     final l10n = AppLocalizations.of(context);
     ref
         .read(copilotControllerProvider.notifier)
-        .retry(index, scope: _scope, failureMessage: l10n.aiFailedGeneric);
+        .retry(
+          index,
+          scope: _scope,
+          failureMessage: l10n.aiFailedGeneric,
+          rateLimitedMessage: l10n.aiRateLimited,
+          unavailableMessage: l10n.aiUnavailable,
+        );
   }
 
+  Future<void> _openHistory() => showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    showDragHandle: true,
+    builder: (context) => const ConversationHistorySheet(),
+  );
+
   Future<void> _chooseScope() async {
+    final live = ref.read(dataSourceModeProvider) == DataSourceMode.live;
     final l10n = AppLocalizations.of(context);
     final portfolios = ref.read(portfolioListProvider).value ?? const [];
     final options = <(AiScope?, String)>[
@@ -137,6 +163,17 @@ class _AiWealthScreenState extends ConsumerState<AiWealthScreen> {
                   style: context.wealthText.title,
                 ),
               ),
+              if (live)
+                Padding(
+                  padding: const EdgeInsetsDirectional.symmetric(
+                    horizontal: AppSpacing.m,
+                    vertical: AppSpacing.xs,
+                  ),
+                  child: Text(
+                    l10n.aiLiveScopeNote,
+                    style: context.wealthText.caption,
+                  ),
+                ),
               for (final (scope, label) in options)
                 Semantics(
                   inMutuallyExclusiveGroup: true,
@@ -223,7 +260,21 @@ class _AiWealthScreenState extends ConsumerState<AiWealthScreen> {
               icon: const Icon(Icons.health_and_safety_outlined),
               onPressed: widget.onOpenDoctor,
             ),
-          const DemoBadge(),
+          if (ref.watch(copilotRepositoryProvider).supportsHistory)
+            IconButton(
+              tooltip: l10n.aiHistoryTitle,
+              icon: const Icon(Icons.history_rounded),
+              onPressed: _openHistory,
+            ),
+          if (state.turns.isNotEmpty)
+            IconButton(
+              tooltip: l10n.aiNewConversation,
+              icon: const Icon(Icons.add_comment_outlined),
+              onPressed: state.streaming
+                  ? null
+                  : ref.read(copilotControllerProvider.notifier).clear,
+            ),
+          const DataSourceBadge(),
           const SizedBox(width: AppSpacing.m),
         ],
       ),
@@ -311,8 +362,16 @@ class _EmptyConversation extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final text = context.wealthText;
+    final live = ref.watch(dataSourceModeProvider) == DataSourceMode.live;
     final intro = ref.watch(_copilotIntroProvider);
-    final suggestions = ref.watch(_suggestionsProvider);
+    final suggestions = live
+        ? AsyncValue.data([
+            l10n.aiLiveSuggestionNetWorth,
+            l10n.aiLiveSuggestionPerformance,
+            l10n.aiLiveSuggestionGoals,
+            l10n.aiLiveSuggestionAllocation,
+          ])
+        : ref.watch(_suggestionsProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -322,7 +381,9 @@ class _EmptyConversation extends ConsumerWidget {
           color: context.wealthColors.primary,
         ),
         const SizedBox(height: AppSpacing.s),
-        if (intro.value case final i?) ...[
+        if (live)
+          Text(l10n.aiLiveIntro, style: text.title)
+        else if (intro.value case final i?) ...[
           Text(i.intro, style: text.title),
           const SizedBox(height: AppSpacing.s),
           StatusBanner(icon: Icons.science_outlined, message: i.notice),
@@ -332,7 +393,7 @@ class _EmptyConversation extends ConsumerWidget {
         const SizedBox(height: AppSpacing.xs),
         AsyncValueView<List<String>>(
           value: suggestions,
-          onRetry: () => ref.invalidate(_suggestionsProvider),
+          onRetry: live ? null : () => ref.invalidate(_suggestionsProvider),
           data: (items) => Wrap(
             spacing: AppSpacing.xs,
             runSpacing: AppSpacing.xs,
@@ -403,7 +464,7 @@ class _TurnView extends StatelessWidget {
                   if (streaming &&
                       turn.progress.isNotEmpty &&
                       turn.sections.isEmpty)
-                    _Progress(text: turn.progress.last.text),
+                    _Progress(text: _progressText(l10n, turn.progress.last)),
                   for (final section in turn.sections) ...[
                     Text(
                       sectionHeading(l10n, section.kind),
@@ -421,7 +482,13 @@ class _TurnView extends StatelessWidget {
                       spacing: AppSpacing.xs,
                       children: [
                         for (final s in turn.sources)
-                          EvidenceSourceChip(source: s.toView()),
+                          EvidenceSourceChip(
+                            source: EvidenceSourceDto(
+                              label: sourceLabel(l10n, s.label),
+                              provider: s.provider,
+                              asOf: s.asOf,
+                            ).toView(),
+                          ),
                       ],
                     ),
                     DataAsOfLabel(
@@ -471,6 +538,12 @@ class _TurnView extends StatelessWidget {
     );
   }
 }
+
+/// "Checking your net worth…" for a live tool; the demo scripts bring their own text.
+String _progressText(AppLocalizations l10n, ToolProgressEvent event) =>
+    event.tool == null
+    ? event.text
+    : l10n.aiToolRunning(toolName(l10n, event.tool!));
 
 class _Progress extends StatelessWidget {
   const _Progress({required this.text});
