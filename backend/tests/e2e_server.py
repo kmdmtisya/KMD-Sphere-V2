@@ -65,6 +65,19 @@ def scripted_assistant() -> FakeLlmProvider:
     return FakeLlmProvider([reply] * 200)
 
 
+E2E_RATES = {
+    "AED": "3.6725",
+    "AUD": "1.5112",
+    "CAD": "1.3705",
+    "CHF": "0.8634",
+    "EUR": "0.9216",
+    "GBP": "0.7712",
+    "JPY": "149.83",
+    "KES": "129.15",
+    "ZAR": "17.8421",
+}
+
+
 async def seed(app: Any, db: asyncpg.Connection) -> dict[str, Any]:
     """Alice has a portfolio with cash and one priced stock, a goal, a device and a fired alert."""
     token = ah.token(
@@ -110,6 +123,15 @@ async def seed(app: Any, db: asyncpg.Connection) -> dict[str, Any]:
             r = await http.post(f"/api/v1/portfolios/{pid}/transactions", headers=h, json=body)
             assert r.status_code == 201, r.text
         now = datetime.now(UTC)
+        # Reporting-currency rates (P11-T09): USD against the other launch currencies.
+        for quote, rate in E2E_RATES.items():
+            await db.execute(
+                "INSERT INTO fx_rates (base_currency, quote_currency, rate, provider, "
+                "rate_timestamp, retrieved_at) VALUES ('USD', $1, $2::numeric, 'e2e', $3, $3)",
+                quote,
+                rate,
+                now - timedelta(minutes=5),
+            )
         await db.execute(
             "INSERT INTO market_prices (asset_id, price, currency, price_type, provider, as_of, "
             "retrieved_at) VALUES ($1, 120, 'USD', 'quote', 'e2e', $2, $2)",
@@ -171,6 +193,8 @@ async def main(port: int, out: Path, log_level: str) -> None:
             "oidc_issuer": "",
             "rate_limit_storage": "memory",
             "analytics_cache": "memory",
+            # FX refreshes use the offline fake provider: the run never calls a real vendor.
+            "market_data_mode": "fake",
         }
     )
     cfg = Config(str(BACKEND / "alembic.ini"))

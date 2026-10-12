@@ -1097,14 +1097,14 @@
   - [x] P11-T08.3 Snapshot consistency with the API
   - [x] P11-T08.4 Evaluation set
   - [x] P11-T08.5 Tests
-- [ ] **P11-T09** · FXCUR-09 Integration testing · `NOT_STARTED` ⬜
+- [ ] **P11-T09** · FXCUR-09 Integration testing · `IN_PROGRESS` 🔄
   - Deps: P11-T07, P11-T08 · Wave: W7 · Track: QA · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-13T01:27:52+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P11-T09.1 Cross-screen consistency
-  - [ ] P11-T09.2 Outage and fallback drills
-  - [ ] P11-T09.3 Preference sync
-  - [ ] P11-T09.4 Report
+  - [x] P11-T09.1 Cross-screen consistency
+  - [x] P11-T09.2 Outage and fallback drills
+  - [x] P11-T09.3 Preference sync
+  - [x] P11-T09.4 Report
 - [ ] **P11-T10** · FXCUR-10 FXCUR quality gates verification · `NOT_STARTED` ⬜
   - Deps: P11-T09 · Wave: W8 · Track: QA · Size: S · Approval: no · Gates-done: QG-21, QG-22, QG-23, QG-24, QG-25
   - Started: — · Completed: — · Duration: — · Blocker: —

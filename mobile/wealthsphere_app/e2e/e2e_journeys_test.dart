@@ -412,4 +412,74 @@ void main() {
     await _until(tester, find.text('What is my net worth?').last);
     await _finish(tester);
   });
+
+  testWidgets(
+    '8. reporting currency: switch, see the server figures, convert',
+    (tester) async {
+      await _launch(tester);
+      await _until(tester, find.text('Hello, Alice'));
+      // Choose euros in Settings.
+      await _tapTab(tester, 'More');
+      await tester.pump(const Duration(milliseconds: 400));
+      await tester.tap(find.text('Settings'));
+      await _until(
+        tester,
+        find.byKey(const ValueKey('reporting-currency-tile')),
+      );
+      await _until(tester, find.text('USD · US dollar'));
+      await tester.tap(find.byKey(const ValueKey('reporting-currency-tile')));
+      await _until(tester, find.byKey(const ValueKey('currency-EUR')));
+      // Let the sheet finish opening before tapping a row inside it.
+      await tester.pump(const Duration(seconds: 1));
+      await tester.ensureVisible(find.byKey(const ValueKey('currency-EUR')));
+      await tester.pump(const Duration(milliseconds: 400));
+      await tester.tap(find.byKey(const ValueKey('currency-EUR')));
+      await _until(tester, find.text('EUR · Euro'));
+      // Home now shows the server's net worth in euros (the app converts nothing itself).
+      final netWorth = await _get(tester, '/api/v1/net-worth');
+      expect((netWorth['net_worth'] as Map)['currency'], 'EUR');
+      final amount = (netWorth['net_worth'] as Map)['amount'] as String;
+      await _tapTab(tester, 'Home');
+      await _until(tester, find.textContaining(_grouped(amount)));
+      expect(
+        find.byKey(const ValueKey('reporting-currency-chip')),
+        findsOneWidget,
+      );
+      await _until(tester, find.textContaining('FX rates current'));
+      // The converter gives the server's conversion.
+      _container!.read(routerProvider).go(AppRoutes.converter);
+      await tester.pump(const Duration(milliseconds: 400));
+      await _until(tester, find.byKey(const ValueKey('converter-amount')));
+      await tester.enterText(
+        find.byKey(const ValueKey('converter-amount')),
+        '100',
+      );
+      await tester.tap(find.text('Convert'));
+      await _until(tester, find.byKey(const ValueKey('converter-result')));
+      final converted = await _post(tester, '/api/v1/fx/convert', {
+        'amount': {'amount': '100', 'currency': 'AED'},
+        'to': 'EUR',
+      });
+      final expected = (converted['converted'] as Map)['amount'] as String;
+      expect(find.textContaining(_grouped(expected)), findsWidgets);
+      // Back to dollars so the run can be repeated.
+      await tester.runAsync(
+        () => _client().patch<Map<String, dynamic>>(
+          '/api/v1/me/currency-preferences',
+          data: {'reporting_currency': 'USD'},
+        ),
+      );
+      await _finish(tester);
+    },
+  );
+}
+
+/// `9307.6` as `9,307.60`: the digits as the app groups them, whatever the currency symbol.
+String _grouped(String amount) {
+  final parts = Decimal.parse(amount).toStringAsFixed(2).split('.');
+  final whole = parts[0].replaceAllMapped(
+    RegExp(r'\B(?=(\d{3})+(?!\d))'),
+    (_) => ',',
+  );
+  return '$whole.${parts[1]}';
 }
