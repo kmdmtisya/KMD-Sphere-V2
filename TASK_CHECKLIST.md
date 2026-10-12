@@ -1077,10 +1077,10 @@
   - [x] P11-T06.3 Goals and forecasts presentation
   - [x] P11-T06.4 Optional FX scenario overlay (behind DEC-29)
   - [x] P11-T06.5 Reconciliation and IDOR tests
-- [ ] **P11-T07** · FXCUR-07 Mobile: global currency selector, converted figures and converter · `IN_PROGRESS` 🔄
+- [x] **P11-T07** · FXCUR-07 Mobile: global currency selector, converted figures and converter · `COMPLETED` ✅
   - Deps: P11-T06 · Wave: W6 · Track: MOB · Size: L · Approval: no
-  - Started: 2026-10-13T00:20:23+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-13T00:20:23+04:00 · Completed: 2026-10-13T00:52:44+04:00 · Duration: 32m 21s · Blocker: —
+  - Evidence: Synced reporting-currency state, selector sheet, Home chip and Settings row, in-place refresh of all reporting figures, FX status line, converter screen; 21 new tests plus converter in the a11y sweep (8 combos); Flutter 1755 passed, analyze/format clean; no new goldens (components covered by gallery goldens). PR #131. CI all gates pass.
   - [x] P11-T07.1 Reporting-currency state and sync
   - [x] P11-T07.2 Selector sheet
   - [x] P11-T07.3 Home and Settings entry points
