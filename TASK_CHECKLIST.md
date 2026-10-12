@@ -914,13 +914,13 @@
   - [x] P09-T10.1 Seed data
   - [x] P09-T10.2 Journeys
   - [x] P09-T10.3 CI job
-- [ ] **P09-GATE** · UX Gate 4 review · `IN_PROGRESS` 🔄
+- [x] **P09-GATE** · UX Gate 4 review · `COMPLETED` ✅
   - Deps: P09-T01, P09-T02, P09-T03, P09-T04, P09-T05, P09-T06, P09-T07, P09-T08, P09-T09, P09-T10 · Wave: W6 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-03.3, QG-11.1, QG-11.2, QG-11.5, QG-11.6
-  - Started: 2026-10-12T15:18:36+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-12T15:18:36+04:00 · Completed: 2026-10-12T15:48:54+04:00 · Duration: 30m 18s · Blocker: —
+  - Evidence: UX Gate 4 approved by the user on 2026-10-12 (message: approve P09-GATE) with the open items listed in the verification evidence, including QG-11.1 accepted on host and CI evidence without an Android or iOS device run. · Approved by: user (mtisya@gmail.com)
   - [x] P09-GATE.1 Run gates
   - [x] P09-GATE.2 Demo on device
-  - [ ] P09-GATE.3 Record approval
+  - [x] P09-GATE.3 Record approval
 
 
 ## P10 — AI Tool Layer & Wealth Copilot

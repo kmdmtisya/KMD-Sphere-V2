@@ -1146,3 +1146,13 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T15:18:36+04:00 — START P09-GATE
 - UX Gate 4 review
 - prerequisites verified COMPLETED
+
+### 2026-10-12T15:48:53+04:00 — QG CHECK QG-11.1
+- evidence: Accepted by the user at P09-GATE (2026-10-12) on the host and CI evidence: the Flutter client (live repositories, real Dio over HTTP) communicates with the backend in six journeys in CI and locally. Not shown: a run on an Android emulator or iOS device against this backend (iOS not run, TD-09); accepted by the user as an open item.
+
+### 2026-10-12T15:48:53+04:00 — AWAITING_VERIFICATION P09-GATE
+- evidence: Gate summary presented 2026-10-12. P09-T01..T10 complete and merged (PRs #94-#104); QG-03.3, QG-11.1 (accepted with caveat), QG-11.2, QG-11.5, QG-11.6 recorded. CI green on every PR incl. the new e2e workflow. Backend 1820 tests, mobile 1664 tests, 6 E2E journeys. Open items: no consolidated performance endpoints, device push not switched on (needs Firebase/APNs), identity login/device lock/FCM stood in for in E2E, no device or airplane-mode run, AI screens DEMO until P10, provider licences unconfirmed.
+
+### 2026-10-12T15:48:54+04:00 — COMPLETE P09-GATE
+- duration: 30m 18s
+- evidence: UX Gate 4 approved by the user on 2026-10-12 (message: approve P09-GATE) with the open items listed in the verification evidence, including QG-11.1 accepted on host and CI evidence without an Android or iOS device run. · Approved by: user (mtisya@gmail.com)
