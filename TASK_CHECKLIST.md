@@ -982,10 +982,10 @@
   - [x] P10-T07.2 Repositories
   - [x] P10-T07.3 Retention
   - [x] P10-T07.4 Tests
-- [ ] **P10-T08** · Response validation and safety policy · `IN_PROGRESS` 🔄
+- [x] **P10-T08** · Response validation and safety policy · `COMPLETED` ✅
   - Deps: P10-T06, P10-T07 · Wave: W5 · Track: AI · Size: L · Approval: no
-  - Started: 2026-10-12T19:09:40+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-12T19:09:40+04:00 · Completed: 2026-10-12T19:29:54+04:00 · Duration: 20m 14s · Blocker: —
+  - Evidence: Strict four-section JSON answer schema with cited sources; guards for number provenance, guarantee/certainty wording, unhedged forecasts and links; one retry with fixed-wording corrections then refusal (rejected replies never stored or shown); server-added stale/failed-tool/forecast caveats; model-free refusals for trades, guarantees, other users' data and prompt/secret requests; 66 policy tests plus 5 chat tests; backend 2078 passed. PR #117. CI all gates pass.
   - [x] P10-T08.1 Schema
   - [x] P10-T08.2 Guards
   - [x] P10-T08.3 Refusal rules
