@@ -1007,13 +1007,13 @@
   - [x] P10-T10.2 History
   - [x] P10-T10.3 States
   - [x] P10-T10.4 Tests
-- [ ] **P10-GATE** · Phase P10 exit gate · `IN_PROGRESS` 🔄
+- [x] **P10-GATE** · Phase P10 exit gate · `COMPLETED` ✅
   - Deps: P10-T01, P10-T02, P10-T03, P10-T04, P10-T05, P10-T06, P10-T07, P10-T08, P10-T09, P10-T10 · Wave: W7 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-07.1, QG-07.2, QG-07.3, QG-07.5, QG-07.6, QG-07.8, QG-11.3
-  - Started: 2026-10-12T21:02:27+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-12T21:02:27+04:00 · Completed: 2026-10-12T21:05:43+04:00 · Duration: 3m 16s · Blocker: —
+  - Evidence: Approved by the user after review of the gate summary and docs/ai-evaluation.md; open items accepted: no real-model run, provider terms review, live routing and human review before release. · Approved by: user (mtisya@gmail.com)
   - [x] P10-GATE.1 Run gates
   - [x] P10-GATE.2 Present summary
-  - [ ] P10-GATE.3 Record approval
+  - [x] P10-GATE.3 Record approval
 
 
 ## P11 — Multi-Currency Reporting & FX Management (FXCUR workstream)
