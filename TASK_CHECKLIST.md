@@ -1031,10 +1031,10 @@
   - [x] P11-T01.2 Reuse/extension map
   - [x] P11-T01.3 ADR-0010
   - [x] P11-T01.4 Decisions DEC-25..DEC-29
-- [ ] **P11-T02** · FXCUR-02 Currency data model · `IN_PROGRESS` 🔄
+- [x] **P11-T02** · FXCUR-02 Currency data model · `COMPLETED` ✅
   - Deps: P11-T01 · Wave: W2 · Track: DB · Size: M · Approval: no
-  - Started: 2026-10-12T21:45:05+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-12T21:45:05+04:00 · Completed: 2026-10-12T22:00:33+04:00 · Duration: 15m 28s · Blocker: —
+  - Evidence: Migration 0015 with currencies (seeded, data-driven), user_currency_preferences, fx_rates rate_type/rate_path, append-only fx_conversion_audit; NUMERIC only (schema test), pair/time index verified, migration round-trip and alembic check pass; 8 schema tests; backend 2119 passed. PR #126. CI all gates pass.
   - [x] P11-T02.1 currencies table and seed
   - [x] P11-T02.2 user_currency_preferences
   - [x] P11-T02.3 fx_rates extension
