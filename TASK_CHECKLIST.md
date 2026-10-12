@@ -853,10 +853,10 @@
   - [x] P09-T02.2 Portfolio repo
   - [x] P09-T02.3 Preferences sync
   - [x] P09-T02.4 Tests
-- [ ] **P09-T03** · Live calculator and forecast repository · `IN_PROGRESS` 🔄
+- [x] **P09-T03** · Live calculator and forecast repository · `COMPLETED` ✅
   - Deps: P09-T01, P06-T02 · Wave: W2 · Track: MOB · Size: M · Approval: no
-  - Started: 2026-10-12T10:07:38+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-12T10:07:38+04:00 · Completed: 2026-10-12T10:26:16+04:00 · Duration: 18m 38s · Blocker: —
+  - Evidence: LiveForecastRepository posts inputs to the scenario engine and maps contribution both ways so any valid input returns a real projection whose assumptions match; DEMO badge and demo-mismatch notice absent in live mode; failure wording per cause. Tests: repository body/echo/422, calculator live journey (custom years -> real projection, no DEMO), refused and offline messages. flutter test 1576 passed, analyze clean. CK-I against the running backend is covered by P09-T10. PR #96. CI all gates pass.
   - [x] P09-T03.1 Repository
   - [x] P09-T03.2 Remove demo-only notice
   - [x] P09-T03.3 Tests
