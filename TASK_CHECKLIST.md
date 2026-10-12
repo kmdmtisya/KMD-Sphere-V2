@@ -821,13 +821,13 @@
   - [x] P08-T09.1 Key custody
   - [x] P08-T09.2 Terms check
   - [x] P08-T09.3 Log review
-- [ ] **P08-GATE** · Phase P08 exit gate · `IN_PROGRESS` 🔄
+- [x] **P08-GATE** · Phase P08 exit gate · `COMPLETED` ✅
   - Deps: P08-T01, P08-T02, P08-T03, P08-T04, P08-T05, P08-T06, P08-T07, P08-T08, P08-T09 · Wave: W6 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-06.7, QG-09.5, QG-11.4
-  - Started: 2026-10-12T04:51:43+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-12T04:51:43+04:00 · Completed: 2026-10-12T08:59:26+04:00 · Duration: 4h 07m 43s · Blocker: —
+  - Evidence: P08 exit gate approved by the user on 2026-10-12 (message: approved) after the summary. QG-06.7, QG-09.5, QG-11.4 recorded with caveats; open items: provider licences unconfirmed, CoinGecko attribution, adapters not run against live vendors, ECB terms. · Approved by: user (mtisya@gmail.com)
   - [x] P08-GATE.1 Run gates
   - [x] P08-GATE.2 Present summary
-  - [ ] P08-GATE.3 Record approval
+  - [x] P08-GATE.3 Record approval
 
 
 ## P09 — Mobile-Backend Integration (UX Gate 4)

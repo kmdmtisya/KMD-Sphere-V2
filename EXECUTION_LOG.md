@@ -1036,3 +1036,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T04:51:43+04:00 — START P08-GATE
 - Phase P08 exit gate
 - prerequisites verified COMPLETED
+
+### 2026-10-12T08:59:25+04:00 — AWAITING_VERIFICATION P08-GATE
+- evidence: Gate summary presented 2026-10-12. P08-T01..T09 complete and merged (PRs #81-#90). QG-06.7 (critical), QG-09.5 and QG-11.4 recorded with evidence and caveats. CI gates green on every PR. Backend suite 1806 passed. Open items carried forward: no provider licence confirmed (ADR-0014 blocks production), CoinGecko attribution not yet shown, adapters never run against live vendors (no keys), ECB reuse terms unread.
+
+### 2026-10-12T08:59:26+04:00 — COMPLETE P08-GATE
+- duration: 4h 07m 43s
+- evidence: P08 exit gate approved by the user on 2026-10-12 (message: approved) after the summary. QG-06.7, QG-09.5, QG-11.4 recorded with caveats; open items: provider licences unconfirmed, CoinGecko attribution, adapters not run against live vendors, ECB terms. · Approved by: user (mtisya@gmail.com)
