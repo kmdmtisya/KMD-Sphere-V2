@@ -937,14 +937,14 @@
   - [x] P10-T01.1 Allow-list
   - [x] P10-T01.2 Threat model
   - [x] P10-T01.3 Provider ADR
-- [ ] **P10-T02** · Tool framework · `NOT_STARTED` ⬜
+- [ ] **P10-T02** · Tool framework · `IN_PROGRESS` 🔄
   - Deps: P10-T01, P04-T03, P04-T04 · Wave: W2 · Track: AI · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T16:34:53+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P10-T02.1 Registry
-  - [ ] P10-T02.2 Schemas
-  - [ ] P10-T02.3 Authz and audit
-  - [ ] P10-T02.4 Tests
+  - [x] P10-T02.1 Registry
+  - [x] P10-T02.2 Schemas
+  - [x] P10-T02.3 Authz and audit
+  - [x] P10-T02.4 Tests
 - [ ] **P10-T03** · Core read tools · `NOT_STARTED` ⬜
   - Deps: P10-T02, P06-T09 · Wave: W3 · Track: AI · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

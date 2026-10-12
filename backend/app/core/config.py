@@ -76,6 +76,10 @@ class Settings(BaseSettings):
     rate_limit_user_requests: int = 120
     rate_limit_user_window_seconds: int = 60
     max_request_body_bytes: int = 1_048_576
+    # AI tool layer (P10-T02, ADR-0017): per-user call budget, per-call timeout and result size.
+    ai_tool_calls_per_minute: int = 60
+    ai_tool_timeout_seconds: float = 10.0
+    ai_tool_max_result_bytes: int = 32_768
     # Browser origins allowed to call the API. Empty (the default) disables CORS: the mobile apps
     # do not need it. A wildcard is never accepted.
     cors_allowed_origins: list[str] = []
