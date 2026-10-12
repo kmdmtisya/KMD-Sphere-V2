@@ -1310,3 +1310,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T22:07:43+04:00 — START P11-T03
 - FXCUR-03 FX provider integration, refresh and caching
 - prerequisites verified COMPLETED
+
+### 2026-10-12T22:32:02+04:00 — AWAITING_VERIFICATION P11-T03
+- evidence: ExchangeRate-API adapter from docs with synthetic fixtures (no key, no live call; QG-21.1 evidence is documentation-shaped fixtures); ordered primary/fallback with batch refresh; one refresh per window (quota math tested); status computed on read; cached board; /fx/status and rate-limited /fx/refresh reporting last good rates and age on total outage; 49 new tests; backend 2181 passed. Completed under the user's advance approval (fixture-only conditions). PR #127. CI all gates pass.
+
+### 2026-10-12T22:32:02+04:00 — COMPLETE P11-T03
+- duration: 24m 19s
+- evidence: ExchangeRate-API adapter from docs with synthetic fixtures (no key, no live call; QG-21.1 evidence is documentation-shaped fixtures); ordered primary/fallback with batch refresh; one refresh per window (quota math tested); status computed on read; cached board; /fx/status and rate-limited /fx/refresh reporting last good rates and age on total outage; 49 new tests; backend 2181 passed. Completed under the user's advance approval (fixture-only conditions). PR #127. CI all gates pass. · Approved by: user (mtisya@gmail.com), advance approval 2026-10-12
