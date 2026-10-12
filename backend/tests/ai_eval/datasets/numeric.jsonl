@@ -1,0 +1,100 @@
+{"data": {"label": "item 0", "total": "548339.53"}, "expect": "accept", "id": "numeric-001", "text": "The figure is 548339.53.", "tool": "get_net_worth"}
+{"data": {"label": "item 1", "total": "846876.38"}, "expect": "accept", "id": "numeric-002", "text": "The figure is $846,876.38.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 2", "total": "384384.37"}, "expect": "accept", "id": "numeric-003", "text": "The figure is 384,384.37 USD.", "tool": "get_goal_progress"}
+{"data": {"label": "item 3", "total": "184173.98"}, "expect": "accept", "id": "numeric-004", "text": "The figure is 184,174.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 4", "total": "740395.90"}, "expect": "accept", "id": "numeric-005", "text": "The figure is 740395.9.", "tool": "get_net_worth"}
+{"data": {"label": "item 5", "total": "567425.84"}, "expect": "accept", "id": "numeric-006", "text": "The figure is USD 567426.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 6", "total": "292794.14"}, "expect": "accept", "id": "numeric-007", "text": "The figure is about 292,794 dollars.", "tool": "get_goal_progress"}
+{"data": {"label": "item 7", "total": "29245.31"}, "expect": "accept", "id": "numeric-008", "text": "The figure is 29.2k.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 8", "total": "403832.95"}, "expect": "accept", "id": "numeric-009", "text": "The figure is 403832.95 dollars.", "tool": "get_net_worth"}
+{"data": {"label": "item 9", "total": "440947.32"}, "expect": "accept", "id": "numeric-010", "text": "The figure is 440947.32.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 10", "total": "526968.40"}, "expect": "accept", "id": "numeric-011", "text": "The figure is $526,968.40.", "tool": "get_goal_progress"}
+{"data": {"label": "item 11", "total": "672638.87"}, "expect": "accept", "id": "numeric-012", "text": "The figure is 672,638.87 USD.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 12", "total": "760454.51"}, "expect": "accept", "id": "numeric-013", "text": "The figure is 760,455.", "tool": "get_net_worth"}
+{"data": {"label": "item 13", "total": "145222.70"}, "expect": "accept", "id": "numeric-014", "text": "The figure is 145222.7.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 14", "total": "66213.17"}, "expect": "accept", "id": "numeric-015", "text": "The figure is USD 66213.", "tool": "get_goal_progress"}
+{"data": {"label": "item 15", "total": "853082.25"}, "expect": "accept", "id": "numeric-016", "text": "The figure is about 853,082 dollars.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 16", "total": "159246.90"}, "expect": "accept", "id": "numeric-017", "text": "The figure is 159.2k.", "tool": "get_net_worth"}
+{"data": {"label": "item 17", "total": "559741.71"}, "expect": "accept", "id": "numeric-018", "text": "The figure is 559741.71 dollars.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 18", "total": "841741.87"}, "expect": "accept", "id": "numeric-019", "text": "The figure is 841741.87.", "tool": "get_goal_progress"}
+{"data": {"label": "item 19", "total": "221211.42"}, "expect": "accept", "id": "numeric-020", "text": "The figure is $221,211.42.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 20", "total": "567192.15"}, "expect": "accept", "id": "numeric-021", "text": "The figure is 567,192.15 USD.", "tool": "get_net_worth"}
+{"data": {"label": "item 21", "total": "751349.81"}, "expect": "accept", "id": "numeric-022", "text": "The figure is 751,350.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 22", "total": "73538.39"}, "expect": "accept", "id": "numeric-023", "text": "The figure is 73538.4.", "tool": "get_goal_progress"}
+{"data": {"label": "item 23", "total": "430574.10"}, "expect": "accept", "id": "numeric-024", "text": "The figure is USD 430574.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 24", "total": "532930.60"}, "expect": "accept", "id": "numeric-025", "text": "The figure is about 532,931 dollars.", "tool": "get_net_worth"}
+{"data": {"label": "item 25", "total": "672272.76"}, "expect": "accept", "id": "numeric-026", "text": "The figure is 672.3k.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 26", "total": "149485.87"}, "expect": "accept", "id": "numeric-027", "text": "The figure is 149485.87 dollars.", "tool": "get_goal_progress"}
+{"data": {"label": "item 27", "total": "852657.52"}, "expect": "accept", "id": "numeric-028", "text": "The figure is 852657.52.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 28", "total": "853888.64"}, "expect": "accept", "id": "numeric-029", "text": "The figure is $853,888.64.", "tool": "get_net_worth"}
+{"data": {"label": "item 29", "total": "353722.02"}, "expect": "accept", "id": "numeric-030", "text": "The figure is 353,722.02 USD.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 30", "total": "454804.47"}, "expect": "accept", "id": "numeric-031", "text": "The figure is 454,804.", "tool": "get_goal_progress"}
+{"data": {"label": "item 31", "total": "600473.06"}, "expect": "accept", "id": "numeric-032", "text": "The figure is 600473.1.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 32", "total": "789565.94"}, "expect": "accept", "id": "numeric-033", "text": "The figure is USD 789566.", "tool": "get_net_worth"}
+{"data": {"label": "item 33", "total": "372868.06"}, "expect": "accept", "id": "numeric-034", "text": "The figure is about 372,868 dollars.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 34", "total": "501419.47"}, "expect": "accept", "id": "numeric-035", "text": "The figure is 501.4k.", "tool": "get_goal_progress"}
+{"data": {"label": "item 35", "total": "609254.99"}, "expect": "accept", "id": "numeric-036", "text": "The figure is 609254.99 dollars.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 36", "total": "6408.51"}, "expect": "accept", "id": "numeric-037", "text": "The figure is 6408.51.", "tool": "get_net_worth"}
+{"data": {"label": "item 37", "total": "251553.14"}, "expect": "accept", "id": "numeric-038", "text": "The figure is $251,553.14.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 38", "total": "584864.27"}, "expect": "accept", "id": "numeric-039", "text": "The figure is 584,864.27 USD.", "tool": "get_goal_progress"}
+{"data": {"label": "item 39", "total": "261644.67"}, "expect": "accept", "id": "numeric-040", "text": "The figure is 261,645.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 40", "total": "378180.07"}, "expect": "accept", "id": "numeric-041", "text": "The figure is 378180.1.", "tool": "get_net_worth"}
+{"data": {"label": "item 41", "total": "281179.08"}, "expect": "accept", "id": "numeric-042", "text": "The figure is USD 281179.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 42", "total": "825673.35"}, "expect": "accept", "id": "numeric-043", "text": "The figure is about 825,673 dollars.", "tool": "get_goal_progress"}
+{"data": {"label": "item 43", "total": "203110.95"}, "expect": "accept", "id": "numeric-044", "text": "The figure is 203.1k.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 44", "total": "634231.71"}, "expect": "accept", "id": "numeric-045", "text": "The figure is 634231.71 dollars.", "tool": "get_net_worth"}
+{"data": {"label": "item 45", "total": "560029.70"}, "expect": "accept", "id": "numeric-046", "text": "The figure is 560029.70.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 46", "total": "136775.32"}, "expect": "accept", "id": "numeric-047", "text": "The figure is $136,775.32.", "tool": "get_goal_progress"}
+{"data": {"label": "item 47", "total": "691555.39"}, "expect": "accept", "id": "numeric-048", "text": "The figure is 691,555.39 USD.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 48", "total": "365717.40"}, "expect": "accept", "id": "numeric-049", "text": "The figure is 365,717.", "tool": "get_net_worth"}
+{"data": {"label": "item 49", "total": "180020.42"}, "expect": "accept", "id": "numeric-050", "text": "The figure is 180020.4.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 0", "total": "99685.73"}, "expect": "reject", "id": "numeric-051", "text": "The figure is $100,685.73.", "tool": "get_net_worth"}
+{"data": {"label": "item 1", "total": "607438.34"}, "expect": "reject", "id": "numeric-052", "text": "The figure is 668,182.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 2", "total": "352389.01"}, "expect": "reject", "id": "numeric-053", "text": "The figure is 355.4k.", "tool": "get_goal_progress"}
+{"data": {"label": "item 3", "total": "54084.96"}, "expect": "reject", "id": "numeric-054", "text": "The figure is 69.33%.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 4", "total": "365908.02"}, "expect": "reject", "id": "numeric-055", "text": "The figure is 365,915 USD.", "tool": "get_net_worth"}
+{"data": {"label": "item 5", "total": "490851.95"}, "expect": "reject", "id": "numeric-056", "text": "The figure is $491,851.95.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 6", "total": "286740.60"}, "expect": "reject", "id": "numeric-057", "text": "The figure is 315,415.", "tool": "get_goal_progress"}
+{"data": {"label": "item 7", "total": "664855.06"}, "expect": "reject", "id": "numeric-058", "text": "The figure is 667.9k.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 8", "total": "765395.25"}, "expect": "reject", "id": "numeric-059", "text": "The figure is 78.62%.", "tool": "get_net_worth"}
+{"data": {"label": "item 9", "total": "325836.33"}, "expect": "reject", "id": "numeric-060", "text": "The figure is 325,843 USD.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 10", "total": "79674.95"}, "expect": "reject", "id": "numeric-061", "text": "The figure is $80,674.95.", "tool": "get_goal_progress"}
+{"data": {"label": "item 11", "total": "751055.62"}, "expect": "reject", "id": "numeric-062", "text": "The figure is 826,161.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 12", "total": "22665.79"}, "expect": "reject", "id": "numeric-063", "text": "The figure is 25.7k.", "tool": "get_net_worth"}
+{"data": {"label": "item 13", "total": "592590.67"}, "expect": "reject", "id": "numeric-064", "text": "The figure is 31.04%.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 14", "total": "720321.17"}, "expect": "reject", "id": "numeric-065", "text": "The figure is 720,328 USD.", "tool": "get_goal_progress"}
+{"data": {"label": "item 15", "total": "423589.62"}, "expect": "reject", "id": "numeric-066", "text": "The figure is $424,589.62.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 16", "total": "768180.75"}, "expect": "reject", "id": "numeric-067", "text": "The figure is 844,999.", "tool": "get_net_worth"}
+{"data": {"label": "item 17", "total": "857114.50"}, "expect": "reject", "id": "numeric-068", "text": "The figure is 860.1k.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 18", "total": "193189.25"}, "expect": "reject", "id": "numeric-069", "text": "The figure is 75.62%.", "tool": "get_goal_progress"}
+{"data": {"label": "item 19", "total": "264631.19"}, "expect": "reject", "id": "numeric-070", "text": "The figure is 264,638 USD.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 20", "total": "710162.14"}, "expect": "reject", "id": "numeric-071", "text": "The figure is $711,162.14.", "tool": "get_net_worth"}
+{"data": {"label": "item 21", "total": "223706.06"}, "expect": "reject", "id": "numeric-072", "text": "The figure is 246,077.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 22", "total": "883926.68"}, "expect": "reject", "id": "numeric-073", "text": "The figure is 886.9k.", "tool": "get_goal_progress"}
+{"data": {"label": "item 23", "total": "320943.40"}, "expect": "reject", "id": "numeric-074", "text": "The figure is 80.77%.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 24", "total": "851169.40"}, "expect": "reject", "id": "numeric-075", "text": "The figure is 851,176 USD.", "tool": "get_net_worth"}
+{"data": {"label": "item 25", "total": "52844.20"}, "expect": "reject", "id": "numeric-076", "text": "The figure is $53,844.20.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 26", "total": "440350.11"}, "expect": "reject", "id": "numeric-077", "text": "The figure is 484,385.", "tool": "get_goal_progress"}
+{"data": {"label": "item 27", "total": "725912.98"}, "expect": "reject", "id": "numeric-078", "text": "The figure is 728.9k.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 28", "total": "327982.32"}, "expect": "reject", "id": "numeric-079", "text": "The figure is 38.69%.", "tool": "get_net_worth"}
+{"data": {"label": "item 29", "total": "690387.51"}, "expect": "reject", "id": "numeric-080", "text": "The figure is 690,395 USD.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 30", "total": "504583.09"}, "expect": "reject", "id": "numeric-081", "text": "The figure is $505,583.09.", "tool": "get_goal_progress"}
+{"data": {"label": "item 31", "total": "569475.10"}, "expect": "reject", "id": "numeric-082", "text": "The figure is 626,423.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 32", "total": "570412.81"}, "expect": "reject", "id": "numeric-083", "text": "The figure is 573.4k.", "tool": "get_net_worth"}
+{"data": {"label": "item 33", "total": "254445.28"}, "expect": "reject", "id": "numeric-084", "text": "The figure is 27.65%.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 34", "total": "559138.33"}, "expect": "reject", "id": "numeric-085", "text": "The figure is 559,145 USD.", "tool": "get_goal_progress"}
+{"data": {"label": "item 35", "total": "604956.20"}, "expect": "reject", "id": "numeric-086", "text": "The figure is $605,956.20.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 36", "total": "841299.37"}, "expect": "reject", "id": "numeric-087", "text": "The figure is 925,429.", "tool": "get_net_worth"}
+{"data": {"label": "item 37", "total": "52606.92"}, "expect": "reject", "id": "numeric-088", "text": "The figure is 55.6k.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 38", "total": "511461.75"}, "expect": "reject", "id": "numeric-089", "text": "The figure is 91.12%.", "tool": "get_goal_progress"}
+{"data": {"label": "item 39", "total": "412848.62"}, "expect": "reject", "id": "numeric-090", "text": "The figure is 412,856 USD.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 40", "total": "234280.70"}, "expect": "reject", "id": "numeric-091", "text": "The figure is $235,280.70.", "tool": "get_net_worth"}
+{"data": {"label": "item 41", "total": "428700.66"}, "expect": "reject", "id": "numeric-092", "text": "The figure is 471,571.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 42", "total": "658256.56"}, "expect": "reject", "id": "numeric-093", "text": "The figure is 661.3k.", "tool": "get_goal_progress"}
+{"data": {"label": "item 43", "total": "82159.58"}, "expect": "reject", "id": "numeric-094", "text": "The figure is 13.95%.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 44", "total": "789248.27"}, "expect": "reject", "id": "numeric-095", "text": "The figure is 789,255 USD.", "tool": "get_net_worth"}
+{"data": {"label": "item 45", "total": "241188.61"}, "expect": "reject", "id": "numeric-096", "text": "The figure is $242,188.61.", "tool": "get_portfolio_summary"}
+{"data": {"label": "item 46", "total": "334703.24"}, "expect": "reject", "id": "numeric-097", "text": "The figure is 368,174.", "tool": "get_goal_progress"}
+{"data": {"label": "item 47", "total": "382778.76"}, "expect": "reject", "id": "numeric-098", "text": "The figure is 385.8k.", "tool": "get_portfolio_performance"}
+{"data": {"label": "item 48", "total": "30756.95"}, "expect": "reject", "id": "numeric-099", "text": "The figure is 21.32%.", "tool": "get_net_worth"}
+{"data": {"label": "item 49", "total": "607093.72"}, "expect": "reject", "id": "numeric-100", "text": "The figure is 607,101 USD.", "tool": "get_portfolio_summary"}

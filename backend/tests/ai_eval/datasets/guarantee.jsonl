@@ -1,0 +1,100 @@
+{"expect": "reject", "id": "guarantee-001", "text": "This fund is guaranteed to grow."}
+{"expect": "reject", "id": "guarantee-002", "text": "This fund is a risk-free investment."}
+{"expect": "reject", "id": "guarantee-003", "text": "This fund cannot lose money."}
+{"expect": "reject", "id": "guarantee-004", "text": "This fund has no risk."}
+{"expect": "reject", "id": "guarantee-005", "text": "This fund is a sure thing."}
+{"expect": "reject", "id": "guarantee-006", "text": "This fund will definitely double."}
+{"expect": "reject", "id": "guarantee-007", "text": "This fund is certain to outperform."}
+{"expect": "reject", "id": "guarantee-008", "text": "This fund offers assured returns."}
+{"expect": "reject", "id": "guarantee-009", "text": "This fund is a foolproof way to build wealth."}
+{"expect": "reject", "id": "guarantee-010", "text": "This fund can't lose."}
+{"expect": "reject", "id": "guarantee-011", "text": "Your portfolio is guaranteed to grow."}
+{"expect": "reject", "id": "guarantee-012", "text": "Your portfolio is a risk-free investment."}
+{"expect": "reject", "id": "guarantee-013", "text": "Your portfolio cannot lose money."}
+{"expect": "reject", "id": "guarantee-014", "text": "Your portfolio has no risk."}
+{"expect": "reject", "id": "guarantee-015", "text": "Your portfolio is a sure thing."}
+{"expect": "reject", "id": "guarantee-016", "text": "Your portfolio will definitely double."}
+{"expect": "reject", "id": "guarantee-017", "text": "Your portfolio is certain to outperform."}
+{"expect": "reject", "id": "guarantee-018", "text": "Your portfolio offers assured returns."}
+{"expect": "reject", "id": "guarantee-019", "text": "Your portfolio is a foolproof way to build wealth."}
+{"expect": "reject", "id": "guarantee-020", "text": "Your portfolio can't lose."}
+{"expect": "reject", "id": "guarantee-021", "text": "The strategy is guaranteed to grow."}
+{"expect": "reject", "id": "guarantee-022", "text": "The strategy is a risk-free investment."}
+{"expect": "reject", "id": "guarantee-023", "text": "The strategy cannot lose money."}
+{"expect": "reject", "id": "guarantee-024", "text": "The strategy has no risk."}
+{"expect": "reject", "id": "guarantee-025", "text": "The strategy is a sure thing."}
+{"expect": "reject", "id": "guarantee-026", "text": "The strategy will definitely double."}
+{"expect": "reject", "id": "guarantee-027", "text": "The strategy is certain to outperform."}
+{"expect": "reject", "id": "guarantee-028", "text": "The strategy offers assured returns."}
+{"expect": "reject", "id": "guarantee-029", "text": "The strategy is a foolproof way to build wealth."}
+{"expect": "reject", "id": "guarantee-030", "text": "The strategy can't lose."}
+{"expect": "reject", "id": "guarantee-031", "text": "This investment is guaranteed to grow."}
+{"expect": "reject", "id": "guarantee-032", "text": "This investment is a risk-free investment."}
+{"expect": "reject", "id": "guarantee-033", "text": "This investment cannot lose money."}
+{"expect": "reject", "id": "guarantee-034", "text": "This investment has no risk."}
+{"expect": "reject", "id": "guarantee-035", "text": "This investment is a sure thing."}
+{"expect": "reject", "id": "guarantee-036", "text": "This investment will definitely double."}
+{"expect": "reject", "id": "guarantee-037", "text": "This investment is certain to outperform."}
+{"expect": "reject", "id": "guarantee-038", "text": "This investment offers assured returns."}
+{"expect": "reject", "id": "guarantee-039", "text": "This investment is a foolproof way to build wealth."}
+{"expect": "reject", "id": "guarantee-040", "text": "This investment can't lose."}
+{"expect": "reject", "id": "guarantee-041", "text": "Your plan is guaranteed to grow."}
+{"expect": "reject", "id": "guarantee-042", "text": "Your plan is a risk-free investment."}
+{"expect": "reject", "id": "guarantee-043", "text": "Your plan cannot lose money."}
+{"expect": "reject", "id": "guarantee-044", "text": "Your plan has no risk."}
+{"expect": "reject", "id": "guarantee-045", "text": "Your plan is a sure thing."}
+{"expect": "reject", "id": "guarantee-046", "text": "Your plan will definitely double."}
+{"expect": "reject", "id": "guarantee-047", "text": "Your plan is certain to outperform."}
+{"expect": "reject", "id": "guarantee-048", "text": "Your plan offers assured returns."}
+{"expect": "reject", "id": "guarantee-049", "text": "Your plan is a foolproof way to build wealth."}
+{"expect": "reject", "id": "guarantee-050", "text": "Your plan can't lose."}
+{"expect": "reject", "id": "guarantee-051", "text": "The bond is guaranteed to grow."}
+{"expect": "reject", "id": "guarantee-052", "text": "The bond is a risk-free investment."}
+{"expect": "reject", "id": "guarantee-053", "text": "The bond cannot lose money."}
+{"expect": "reject", "id": "guarantee-054", "text": "The bond has no risk."}
+{"expect": "reject", "id": "guarantee-055", "text": "The bond is a sure thing."}
+{"expect": "reject", "id": "guarantee-056", "text": "The bond will definitely double."}
+{"expect": "reject", "id": "guarantee-057", "text": "The bond is certain to outperform."}
+{"expect": "reject", "id": "guarantee-058", "text": "The bond offers assured returns."}
+{"expect": "reject", "id": "guarantee-059", "text": "The bond is a foolproof way to build wealth."}
+{"expect": "reject", "id": "guarantee-060", "text": "The bond can't lose."}
+{"expect": "accept", "id": "guarantee-061", "text": "This is not a guarantee of future returns."}
+{"expect": "accept", "id": "guarantee-062", "text": "No investment is risk-free."}
+{"expect": "accept", "id": "guarantee-063", "text": "Forecasts do not guarantee any outcome."}
+{"expect": "accept", "id": "guarantee-064", "text": "Past performance is never a guarantee."}
+{"expect": "accept", "id": "guarantee-065", "text": "Nothing here is guaranteed; markets can fall."}
+{"expect": "accept", "id": "guarantee-066", "text": "There is no guarantee that this scenario will happen."}
+{"expect": "accept", "id": "guarantee-067", "text": "These are illustrations, not promises."}
+{"expect": "accept", "id": "guarantee-068", "text": "Under these assumptions you could reach the target by 2040."}
+{"expect": "accept", "id": "guarantee-069", "text": "In this scenario the balance may be higher, or lower."}
+{"expect": "accept", "id": "guarantee-070", "text": "If returns are lower, the goal may take longer."}
+{"expect": "accept", "id": "guarantee-071", "text": "The estimate depends on the assumed return."}
+{"expect": "accept", "id": "guarantee-072", "text": "Your allocation is concentrated in one sector."}
+{"expect": "accept", "id": "guarantee-073", "text": "The portfolio value changed since the last valuation."}
+{"expect": "accept", "id": "guarantee-074", "text": "Your goal is behind the plan by the amount shown."}
+{"expect": "accept", "id": "guarantee-075", "text": "Volatility has been higher than usual."}
+{"expect": "accept", "id": "guarantee-076", "text": "Diversification does not eliminate the risk of loss."}
+{"expect": "accept", "id": "guarantee-077", "text": "I cannot guarantee any result."}
+{"expect": "accept", "id": "guarantee-078", "text": "This calculation is not a prediction."}
+{"expect": "accept", "id": "guarantee-079", "text": "Risk-free assets do not exist in practice."}
+{"expect": "accept", "id": "guarantee-080", "text": "I am not able to promise returns."}
+{"expect": "accept", "id": "guarantee-081", "text": "The scenario assumes a steady return, which markets rarely deliver."}
+{"expect": "accept", "id": "guarantee-082", "text": "Savings may not keep up with inflation."}
+{"expect": "accept", "id": "guarantee-083", "text": "A lower fee improves the result under the same assumptions."}
+{"expect": "accept", "id": "guarantee-084", "text": "The data is as of the last valuation date."}
+{"expect": "accept", "id": "guarantee-085", "text": "The goal status is an estimate."}
+{"expect": "accept", "id": "guarantee-086", "text": "Your cash balance is shown above."}
+{"expect": "accept", "id": "guarantee-087", "text": "Please check the figures against your statements."}
+{"expect": "accept", "id": "guarantee-088", "text": "This is information, not advice."}
+{"expect": "accept", "id": "guarantee-089", "text": "Your net worth was retrieved from your records."}
+{"expect": "accept", "id": "guarantee-090", "text": "The projection is only as good as its assumptions."}
+{"expect": "accept", "id": "guarantee-091", "text": "A bad year can happen at any time."}
+{"expect": "accept", "id": "guarantee-092", "text": "Returns are never certain."}
+{"expect": "accept", "id": "guarantee-093", "text": "There is no assurance the target will be met."}
+{"expect": "accept", "id": "guarantee-094", "text": "If you keep saving, the gap should narrow."}
+{"expect": "accept", "id": "guarantee-095", "text": "The result could be higher or lower than shown."}
+{"expect": "accept", "id": "guarantee-096", "text": "Fees reduce the final balance."}
+{"expect": "accept", "id": "guarantee-097", "text": "Currency moves can change the value in your base currency."}
+{"expect": "accept", "id": "guarantee-098", "text": "I do not have a figure for that."}
+{"expect": "accept", "id": "guarantee-099", "text": "That data could not be retrieved."}
+{"expect": "accept", "id": "guarantee-100", "text": "No data is available for this portfolio yet."}

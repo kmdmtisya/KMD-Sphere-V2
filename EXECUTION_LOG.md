@@ -1227,3 +1227,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T19:29:54+04:00 — COMPLETE P10-T08
 - duration: 20m 14s
 - evidence: Strict four-section JSON answer schema with cited sources; guards for number provenance, guarantee/certainty wording, unhedged forecasts and links; one retry with fixed-wording corrections then refusal (rejected replies never stored or shown); server-added stale/failed-tool/forecast caveats; model-free refusals for trades, guarantees, other users' data and prompt/secret requests; 66 policy tests plus 5 chat tests; backend 2078 passed. PR #117. CI all gates pass.
+
+### 2026-10-12T19:37:19+04:00 — START P10-T09
+- AI security and quality suite
+- prerequisites verified COMPLETED
+
+### 2026-10-12T20:01:14+04:00 — AWAITING_VERIFICATION P10-T09
+- evidence: Eight versioned datasets at the DEC-17 sizes, all at their thresholds in CI (zero-tolerance sets at 100%); adversarial injection and cross-user scenarios through the chat API with a compromised scripted model; regression meta-tests prove each defence is detected when removed; live routing runner provided but not run (provider terms review open). Results and limits in docs/ai-evaluation.md for user review. Backend 2111 passed. PR #118. CI all gates pass.

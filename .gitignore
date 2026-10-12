@@ -66,3 +66,4 @@ mobile/wealthsphere_app/lib/l10n/generated/
 coverage.xml
 .coverage*
 htmlcov/
+ai_eval_results.json

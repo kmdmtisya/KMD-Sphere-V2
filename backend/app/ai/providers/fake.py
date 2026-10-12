@@ -67,6 +67,11 @@ class FakeLlmProvider:
     def queue(self, *replies: Reply) -> None:
         self._replies.extend(replies)
 
+    def reset(self) -> None:
+        """Forgets the scripted replies and the recorded requests."""
+        self._replies.clear()
+        self.requests.clear()
+
     def _next(self, request: ChatRequest) -> ChatResponse:
         self.requests.append(request)
         if not self._replies:

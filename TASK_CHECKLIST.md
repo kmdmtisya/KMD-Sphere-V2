@@ -990,15 +990,15 @@
   - [x] P10-T08.2 Guards
   - [x] P10-T08.3 Refusal rules
   - [x] P10-T08.4 Tests
-- [ ] **P10-T09** · AI security and quality suite · `NOT_STARTED` ⬜
+- [ ] **P10-T09** · AI security and quality suite · `AWAITING_VERIFICATION` 🔎
   - Deps: P10-T08 · Wave: W6 · Track: QA · Size: L · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P10-T09.1 Injection
-  - [ ] P10-T09.2 Cross-user
-  - [ ] P10-T09.3 Hallucination
-  - [ ] P10-T09.4 Missing data
-  - [ ] P10-T09.5 Documented evaluation datasets and acceptance thresholds (DEC-17)
+  - Started: 2026-10-12T19:37:19+04:00 · Completed: — · Duration: — · Blocker: —
+  - Evidence: Eight versioned datasets at the DEC-17 sizes, all at their thresholds in CI (zero-tolerance sets at 100%); adversarial injection and cross-user scenarios through the chat API with a compromised scripted model; regression meta-tests prove each defence is detected when removed; live routing runner provided but not run (provider terms review open). Results and limits in docs/ai-evaluation.md for user review. Backend 2111 passed. PR #118. CI all gates pass.
+  - [x] P10-T09.1 Injection
+  - [x] P10-T09.2 Cross-user
+  - [x] P10-T09.3 Hallucination
+  - [x] P10-T09.4 Missing data
+  - [x] P10-T09.5 Documented evaluation datasets and acceptance thresholds (DEC-17)
 - [ ] **P10-T10** · Mobile Copilot live wiring · `NOT_STARTED` ⬜
   - Deps: P10-T08, P09-T01, P03-T06 · Wave: W6 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

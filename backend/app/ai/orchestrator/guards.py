@@ -109,7 +109,7 @@ def unsupported_numbers(texts: Iterable[str], evidence: set[Decimal]) -> int:
 # ------------------------------------------------------------------------ guarantee language
 _SENTENCE = re.compile(r"(?<=[.!?;])\s+|\n+")
 _NEGATION = re.compile(
-    r"\b(not|no|never|neither|nor|without|cannot|can't|isn't|aren't|doesn't|don't|won't)\b|n't",
+    r"\b(not|no|nothing|none|never|neither|nor|without|cannot|can't|isn't|aren't|doesn't|don't|won't)\b|n't",
     re.IGNORECASE,
 )
 # Wording that can appear in a denial ("this is not a guarantee"), so a negation excuses it.
