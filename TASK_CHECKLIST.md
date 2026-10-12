@@ -907,13 +907,13 @@
   - Evidence: Release builds refuse demo mode (config default, start-up assertion, run-time refusal); DataSourceBadge shows DEMO only on demo data; AI screens remain demo and labelled in every mode until P10; governance guard tests (badge usage, no liveNotWired, live branch present, fixture access). flutter test 1664 passed, analyze clean. PR #102. CI all gates pass.
   - [x] P09-T09.1 Policy
   - [x] P09-T09.2 Tests
-- [ ] **P09-T10** · End-to-end tests against the Docker stack · `NOT_STARTED` ⬜
+- [ ] **P09-T10** · End-to-end tests against the Docker stack · `IN_PROGRESS` 🔄
   - Deps: P09-T09, P09-T08 · Wave: W5 · Track: QA · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T14:26:55+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P09-T10.1 Seed data
-  - [ ] P09-T10.2 Journeys
-  - [ ] P09-T10.3 CI job
+  - [x] P09-T10.1 Seed data
+  - [x] P09-T10.2 Journeys
+  - [x] P09-T10.3 CI job
 - [ ] **P09-GATE** · UX Gate 4 review · `NOT_STARTED` ⬜
   - Deps: P09-T01, P09-T02, P09-T03, P09-T04, P09-T05, P09-T06, P09-T07, P09-T08, P09-T09, P09-T10 · Wave: W6 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-03.3, QG-11.1, QG-11.2, QG-11.5, QG-11.6
   - Started: — · Completed: — · Duration: — · Blocker: —

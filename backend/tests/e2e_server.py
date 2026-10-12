@@ -132,7 +132,7 @@ async def seed(app: Any, db: asyncpg.Connection) -> dict[str, Any]:
     }
 
 
-async def main(port: int, out: Path) -> None:
+async def main(port: int, out: Path, log_level: str) -> None:
     base = Settings(environment="test")
     name = f"ws_e2e_{uuid.uuid4().hex[:10]}"
     admin = await asyncpg.connect(base.database_dsn, timeout=5)
@@ -162,7 +162,7 @@ async def main(port: int, out: Path) -> None:
         text = json.dumps({"api_url": f"http://127.0.0.1:{port}", **seeded})
         await asyncio.to_thread(out.write_text, text, encoding="utf-8")
         server = uvicorn.Server(
-            uvicorn.Config(app, host="127.0.0.1", port=port, log_level="warning")
+            uvicorn.Config(app, host="127.0.0.1", port=port, log_level=log_level)
         )
         await server.serve()
     finally:
@@ -177,6 +177,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--out", type=Path, default=Path("e2e.json"))
+    parser.add_argument("--log-level", default="warning")
     args = parser.parse_args()
     with contextlib.suppress(KeyboardInterrupt):
-        asyncio.run(main(args.port, args.out))
+        asyncio.run(main(args.port, args.out, args.log_level))

@@ -1,0 +1,95 @@
+name: e2e
+
+# The mobile journeys against a real backend and database (P09-T10): sign in, view the portfolio,
+# add a transaction, forecast, goal progress and the notification deep link. The backend is started
+# from backend/tests/e2e_server.py with a seeded throwaway database; the Flutter journeys in
+# mobile/wealthsphere_app/e2e talk to it over real HTTP.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FLUTTER_VERSION: "3.47.5"
+
+jobs:
+  journeys:
+    name: end-to-end journeys
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env:
+          # Throwaway credentials for an ephemeral service container reachable only from this job.
+          POSTGRES_USER: ci_user
+          POSTGRES_PASSWORD: ci-only-not-a-secret
+          POSTGRES_DB: wealthsphere_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ci_user -d wealthsphere_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+
+    env:
+      ENVIRONMENT: test
+      POSTGRES_USER: ci_user
+      POSTGRES_PASSWORD: ci-only-not-a-secret
+      POSTGRES_DB: wealthsphere_ci
+      POSTGRES_HOST: 127.0.0.1
+      POSTGRES_PORT: "5432"
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+          python-version: "3.13"
+
+      - name: Install backend dependencies (locked)
+        working-directory: backend
+        run: uv sync --locked
+
+      - name: Start the backend with seeded data
+        working-directory: backend
+        run: |
+          nohup uv run python -m tests.e2e_server --port 8765 --out "$RUNNER_TEMP/e2e.json" > "$RUNNER_TEMP/e2e_server.log" 2>&1 &
+          for i in $(seq 1 60); do
+            if [ -s "$RUNNER_TEMP/e2e.json" ] && curl -sf http://127.0.0.1:8765/health/live > /dev/null; then echo "backend ready"; exit 0; fi
+            sleep 2
+          done
+          echo "backend did not start"; tail -50 "$RUNNER_TEMP/e2e_server.log"; exit 1
+
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - name: Install app dependencies
+        working-directory: mobile/wealthsphere_app
+        run: flutter pub get
+
+      - name: Journeys
+        working-directory: mobile/wealthsphere_app
+        env:
+          WS_E2E_CONFIG: ${{ runner.temp }}/e2e.json
+        run: flutter test e2e
+
+      - name: Backend log (on failure)
+        if: failure()
+        run: tail -100 "$RUNNER_TEMP/e2e_server.log" || true
