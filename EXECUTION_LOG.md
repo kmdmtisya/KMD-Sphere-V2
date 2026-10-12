@@ -1059,3 +1059,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T09:33:37+04:00 — START P09-T02
 - Live dashboard and portfolio repositories
 - prerequisites verified COMPLETED
+
+### 2026-10-12T09:58:03+04:00 — COMPLETE P09-T02
+- duration: 24m 26s
+- evidence: Live Home and Portfolio repositories (dashboard, summary+performance, risk series, allocation, metrics, holdings) and account-synced dashboard layout; figures are the server's with no recalculation (tests assert exact values); nullable DTOs with Not available/No value yet states, data-quality notice, no invented insight; consolidated gaps documented in tech-debt. 30 new tests, flutter test 1569 passed, analyze clean. CK-I (against the real backend) is not run here: the contract is checked against recorded API-shaped payloads, and the live end-to-end journeys are P09-T10. PR 95.
