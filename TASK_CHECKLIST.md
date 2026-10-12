@@ -832,7 +832,7 @@
 
 ## P09 — Mobile-Backend Integration (UX Gate 4)
 
-- Phase approval: `PENDING`
+- Phase approval: `APPROVED by user (mtisya@gmail.com) at 2026-10-12T09:02:38+04:00`
 - Entry gates: prerequisite phase gates completed (P03, P04, P05, P06, P07, P08); cumulative criteria QG-01.1,2,3,5; QG-02.1–6; QG-03.1,2,4,5,6; QG-04.1–5; QG-05.1–4; QG-06.1–7; QG-08.1,3,6; QG-09.5; QG-10.1,3; QG-11.4 — enforced as dependencies of every wave-1 task
 - Exit gates: QG-03.3; QG-11.1,2,5,6 — required by `P09-GATE` (Gates-done)
 - Release gates: —
