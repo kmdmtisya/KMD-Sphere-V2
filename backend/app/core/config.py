@@ -80,6 +80,16 @@ class Settings(BaseSettings):
     ai_tool_calls_per_minute: int = 60
     ai_tool_timeout_seconds: float = 10.0
     ai_tool_max_result_bytes: int = 32_768
+    # LLM providers (P10-T05, ADR-0017). Models are configuration; there is no default model.
+    # "fake" needs nothing; the others need their key and model id.
+    ai_provider: Literal["fake", "openai", "anthropic"] = "fake"
+    ai_fallback_provider: Literal["", "fake", "openai", "anthropic"] = ""
+    openai_api_key: SecretStr = SecretStr("")
+    anthropic_api_key: SecretStr = SecretStr("")
+    ai_openai_model: str = ""
+    ai_anthropic_model: str = ""
+    ai_request_timeout_seconds: float = 60.0
+    ai_max_output_tokens: int = 1024
     # Browser origins allowed to call the API. Empty (the default) disables CORS: the mobile apps
     # do not need it. A wildcard is never accepted.
     cors_allowed_origins: list[str] = []

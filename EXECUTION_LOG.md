@@ -1179,3 +1179,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T16:50:13+04:00 — COMPLETE P10-T02
 - duration: 15m 20s
 - evidence: Tool framework with registry, user-context requirement, allow-list matching the governance document, argument validation (extra fields forbidden), timeouts, size limits, per-user budget and one audit event per call (args hash, correlation id, model, provider); static guard against SQL/shell/network in the tool layer; 22 tests; backend 1871 passed. PR #110. CI all gates pass.
+
+### 2026-10-12T16:56:39+04:00 — START P10-T05
+- LLM provider abstraction and OpenAI adapter
+- prerequisites verified COMPLETED
+
+### 2026-10-12T17:15:17+04:00 — COMPLETE P10-T05
+- duration: 18m 38s
+- evidence: Provider interface with OpenAI and Anthropic adapters (complete and streaming), fake provider, retry/fallback, registry as sole vendor composition point; key custody tests (no key in repr, errors, logs, URLs; no default model); 46 new tests, backend 1917 passed. Adapters verified against documented-shape payloads only, not a live service (no key, terms review pending). Also fixed a flaky payload test (random ids can contain digits). PR #111, CI all gates pass.
