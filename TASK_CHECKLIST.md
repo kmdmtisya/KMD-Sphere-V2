@@ -821,12 +821,12 @@
   - [x] P08-T09.1 Key custody
   - [x] P08-T09.2 Terms check
   - [x] P08-T09.3 Log review
-- [ ] **P08-GATE** · Phase P08 exit gate · `NOT_STARTED` ⬜
+- [ ] **P08-GATE** · Phase P08 exit gate · `IN_PROGRESS` 🔄
   - Deps: P08-T01, P08-T02, P08-T03, P08-T04, P08-T05, P08-T06, P08-T07, P08-T08, P08-T09 · Wave: W6 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-06.7, QG-09.5, QG-11.4
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T04:51:43+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P08-GATE.1 Run gates
-  - [ ] P08-GATE.2 Present summary
+  - [x] P08-GATE.1 Run gates
+  - [x] P08-GATE.2 Present summary
   - [ ] P08-GATE.3 Record approval
 
 

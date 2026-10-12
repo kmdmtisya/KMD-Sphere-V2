@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-12T04:44:38+04:00 by `scripts/track.py`._
+_Generated at 2026-10-12T04:51:43+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -16,12 +16,12 @@ _Generated at 2026-10-12T04:44:38+04:00 by `scripts/track.py`._
 | QG-03 | Automated Testing | 🔄 IN_PROGRESS | 5/6 | Unassigned | — |
 | QG-04 | Android Platform | 🔄 IN_PROGRESS | 5/7 | Unassigned | — |
 | QG-05 | iOS Platform | 🔄 IN_PROGRESS | 4/6 | Unassigned | — |
-| QG-06 | Financial Accuracy and Data Integrity | 🔄 IN_PROGRESS | 6/7 | Unassigned | — |
+| QG-06 | Financial Accuracy and Data Integrity | 🔄 IN_PROGRESS | 7/7 | Unassigned | — |
 | QG-07 | AI Reliability and Investment Intelligence | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
 | QG-08 | Security and Privacy | 🔄 IN_PROGRESS | 3/8 | Unassigned | — |
-| QG-09 | Performance and Scalability | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
+| QG-09 | Performance and Scalability | 🔄 IN_PROGRESS | 1/6 | Unassigned | — |
 | QG-10 | CI/CD and Infrastructure | 🔄 IN_PROGRESS | 2/8 | Unassigned | — |
-| QG-11 | End-to-End Integration | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
+| QG-11 | End-to-End Integration | 🔄 IN_PROGRESS | 1/6 | Unassigned | — |
 | QG-12 | Production Release Readiness | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
 | QG-13 | QG-FX-01: Market Data Integrity | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
 | QG-14 | QG-FX-02: Technical Indicator Accuracy | ⬜ NOT_STARTED | 0/3 | Unassigned | — |
@@ -38,9 +38,9 @@ _Generated at 2026-10-12T04:44:38+04:00 by `scripts/track.py`._
 | QG-25 | QG-FXCUR-05: AI Integration | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 35/146.
+Criteria satisfied overall: 38/146.
 
-Current phase **P08** exit-gate criteria outstanding: QG-06.7, QG-09.5, QG-11.4.
+Current phase **P08** exit-gate criteria outstanding: none.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -146,14 +146,14 @@ Approved By: —
 - [x] QG-06.4 Portfolio valuations, realized/unrealized gains, fees, income and currency conversions reconcile correctly · Required: P06 · By: P06-T10 · Evidence: Valuations, realised/unrealised gains, fees, income and FX conversions reconcile: gain = realised + unrealised + income - expenses on a real ledger (test_a_complete_usd_portfolio_reconciles); the summary, performance, income and net-worth figures agree with each other and with the oracle on random ledgers (holdings, cash, values, P&L, net contributions, income totals, net worth rounding); FX per documented rules with provenance; allocation reconciles with the summary's currency breakdown. · Verified: 2026-10-11T18:50:53+04:00 · CRITICAL
 - [x] QG-06.5 Transaction history is auditable · Required: P05 · By: P05-T09 · Evidence: Transaction history is auditable: ledger append-only (DB triggers reject UPDATE/DELETE/TRUNCATE, no update/delete routes, 405), corrections only via linked reversal entries, Idempotency-Key replays add nothing, one audit event per posting and reversal (test_audit, test_transactions_api), per-portfolio lock; test_integrity_suite checks after every step of 12 seeded random sequences: row immutability, reversal rules, no negative quantity on any date, holdings cache equals recomputation from the ledger, exactly one audit event per entry. 11/11 injected product regressions caught. · Verified: 2026-10-11T02:04:24+04:00 · CRITICAL
 - [x] QG-06.6 No unexplained financial reconciliation differences · Required: P06 · By: P06-T10 · Evidence: No unexplained reconciliation differences: 13 oracle cross-check properties on random inputs agree to 1e-30 (exactly for rounded outputs); 16 deliberately injected engine bugs were each caught by the cross-check alone; every convention that could differ is documented and was decided by the user on 2026-10-11 (docs/financial-methods.md section 14); the integrity suite checks holdings, income events, audit events and the summary after every step of 12 random ledgers. · Verified: 2026-10-11T18:50:53+04:00 · CRITICAL
-- [ ] QG-06.7 Historical prices and FX rates retain their timestamps and provenance · Required: P08 · By: P08-T05 · CRITICAL
+- [x] QG-06.7 Historical prices and FX rates retain their timestamps and provenance · Required: P08 · By: P08-T05 · Evidence: Prices and FX rates keep their provenance: market_prices rows carry provider, as_of (provider valid time), retrieved_at and ingested_at (NOT NULL, retrieved_at >= as_of CHECK), unique per (asset, provider, type, as_of), written only with ON CONFLICT DO NOTHING and never updated in code, so a re-run or backfill adds nothing; fx_rates carries provider, rate_timestamp and retrieved_at with the same uniqueness. Tests: tests/market_data/test_ingestion.py (every stored price has provider, as-of and ingestion timestamps; rerun and backfill do not duplicate; duplicate row refused by the database), degradation tests show stale data keeps its true as_of. Caveat: unlike the ledger, immutability of market_prices is by code and unique constraint, not by DB triggers. · Verified: 2026-10-12T04:51:43+04:00 · CRITICAL
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
 Start Timestamp: 2026-10-11T02:04:23+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-11T18:50:53+04:00  
-Evidence: 6/7 criteria verified; latest QG-06.6 at 2026-10-11T18:50:53+04:00  
+Verification Timestamp: 2026-10-12T04:51:43+04:00  
+Evidence: 7/7 criteria verified; latest QG-06.7 at 2026-10-12T04:51:43+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -206,15 +206,15 @@ Approved By: —
 - [ ] QG-09.2 Database queries meet approved performance thresholds · Required: P15 · By: P15-T04
 - [ ] QG-09.3 Mobile startup and interaction latency meet agreed targets · Required: P15 · By: P15-T04
 - [ ] QG-09.4 Load and stress tests pass against representative workloads · Required: P15 · By: P15-T04
-- [ ] QG-09.5 Background jobs, retries and failure recovery operate correctly · Required: P08 · By: P08-T08
+- [x] QG-09.5 Background jobs, retries and failure recovery operate correctly · Required: P08 · By: P08-T08 · Evidence: Background jobs: Celery on RabbitMQ with retry, exponential backoff and jitter, dead-letter queue plus job_failures table, idempotent run_once on job_runs, beat schedule. Tests tests/worker (jobs, idempotency, failures visible, celery app) and an embedded-worker test against the real broker; a local worker was run against the real compose broker: jobs executed and a failing job was dead-lettered with its arguments. Ingestion fails the run when every item fails so the job is retried; partial failures are logged by count. Caveat: exercised on the local single-node broker, not under load or in a deployed environment (P14). · Verified: 2026-10-12T04:51:43+04:00
 - [ ] QG-09.6 Capacity assumptions and bottlenecks are documented · Required: P15 · By: P15-T04
 
-Status: NOT_STARTED  
+Status: IN_PROGRESS  
 Owner: Unassigned  
-Start Timestamp: —  
+Start Timestamp: 2026-10-12T04:51:43+04:00  
 End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Verification Timestamp: 2026-10-12T04:51:43+04:00  
+Evidence: 1/6 criteria verified; latest QG-09.5 at 2026-10-12T04:51:43+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -245,16 +245,16 @@ Approved By: —
 - [ ] QG-11.1 Android and iOS clients successfully communicate with backend APIs · Required: P09 · By: P09-T10
 - [ ] QG-11.2 Portfolio data flows correctly through transactions, holdings, analytics, dashboards and forecasts · Required: P09 · By: P09-T10
 - [ ] QG-11.3 AI Copilot accesses only authorized portfolio data · Required: P10 · By: P10-T09 · CRITICAL
-- [ ] QG-11.4 Market-data ingestion and refresh workflows function correctly · Required: P08 · By: P08-T08
+- [x] QG-11.4 Market-data ingestion and refresh workflows function correctly · Required: P08 · By: P08-T08 · Evidence: Ingestion and refresh workflows work end to end with the deterministic fake provider and recorded fixtures: price ingest every 15 min, FX ingest daily, alert evaluation every 15 min, idempotent per time bucket; stored prices flow into holdings and summaries (PositionValuer: price beats older manual valuation, stale prices flagged, unpriced never invented) and the dashboard; P08-T08 proves outage, stale-data, failover, circuit-breaker and cache behaviour. Caveat: the CoinGecko and Twelve Data adapters have only run against synthetic fixtures; no real provider key or licence exists (ADR-0014), so no live vendor call has been made. · Verified: 2026-10-12T04:51:43+04:00
 - [ ] QG-11.5 Core user journeys pass end-to-end testing · Required: P09 · By: P09-T10
 - [ ] QG-11.6 Error handling, offline states and recovery scenarios are verified · Required: P09 · By: P09-T06
 
-Status: NOT_STARTED  
+Status: IN_PROGRESS  
 Owner: Unassigned  
-Start Timestamp: —  
+Start Timestamp: 2026-10-12T04:51:43+04:00  
 End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Verification Timestamp: 2026-10-12T04:51:43+04:00  
+Evidence: 1/6 criteria verified; latest QG-11.4 at 2026-10-12T04:51:43+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
