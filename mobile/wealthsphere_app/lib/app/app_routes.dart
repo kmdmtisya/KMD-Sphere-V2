@@ -22,6 +22,7 @@ abstract final class AppRoutes {
   static const String income = '/more/income';
   static const String settings = '/more/settings';
   static const String calculator = '/more/calculator';
+  static const String alerts = '/more/alerts';
   static const String forecast = '/more/calculator/forecast';
 
   /// Screen 1 (first launch) and screen 2, outside the tab shell.

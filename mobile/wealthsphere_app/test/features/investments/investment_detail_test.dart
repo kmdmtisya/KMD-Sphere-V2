@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wealthsphere_app/core/data/demo_support.dart';
+import 'package:wealthsphere_app/features/alerts/data/alerts_repository.dart';
 import 'package:wealthsphere_app/features/investments/application/investment_providers.dart';
 import 'package:wealthsphere_app/features/investments/data/investment_repository.dart';
 import 'package:wealthsphere_app/features/investments/presentation/investment_detail_screen.dart';
@@ -305,7 +306,15 @@ void main() {
       await tester.tap(find.byTooltip('Add to watchlist'));
       await tester.pump();
       expect(find.text('Added to your watchlist'), findsOneWidget);
-      expect(containerOf(tester).read(watchlistProvider), {'DEMO-GEQ'});
+      expect(
+        [
+          for (final i in await containerOf(
+            tester,
+          ).read(watchlistRepositoryProvider).items())
+            i.assetKey,
+        ],
+        ['DEMO-GEQ'],
+      );
       await tester.pumpAndSettle();
       expect(find.byTooltip('Remove from watchlist'), findsOneWidget);
       await tester.tap(find.byTooltip('Remove from watchlist'));
@@ -313,7 +322,11 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 750));
       expect(find.text('Removed from your watchlist'), findsOneWidget);
-      expect(containerOf(tester).read(watchlistProvider), isEmpty);
+      await tester.pumpAndSettle();
+      expect(
+        await containerOf(tester).read(watchlistRepositoryProvider).items(),
+        isEmpty,
+      );
       handle.dispose();
     });
 

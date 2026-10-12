@@ -483,6 +483,7 @@ void main() {
     expect(shown(), Brightness.dark);
     await press(tester, find.text('System'));
     await goBack(tester);
-    expect(find.text('Your wealth'), findsOneWidget);
+    // Back on More (scrolled to where Settings is).
+    expect(find.text('Settings'), findsOneWidget);
   });
 }

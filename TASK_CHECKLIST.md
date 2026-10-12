@@ -885,14 +885,14 @@
   - [x] P09-T06.3 Banners
   - [x] P09-T06.4 Logout wipe
   - [x] P09-T06.5 Tests
-- [ ] **P09-T07** · Live market-data surfaces · `NOT_STARTED` ⬜
+- [ ] **P09-T07** · Live market-data surfaces · `IN_PROGRESS` 🔄
   - Deps: P09-T04, P08-T06, P08-T07 · Wave: W3 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T12:30:03+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P09-T07.1 Prices/charts
-  - [ ] P09-T07.2 Watchlist
-  - [ ] P09-T07.3 Alerts
-  - [ ] P09-T07.4 Tests
+  - [x] P09-T07.1 Prices/charts
+  - [x] P09-T07.2 Watchlist
+  - [x] P09-T07.3 Alerts
+  - [x] P09-T07.4 Tests
 - [ ] **P09-T08** · Push notifications and deep links · `NOT_STARTED` ⬜
   - Deps: P09-T01, P04-T06 · Wave: W3 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

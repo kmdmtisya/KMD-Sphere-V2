@@ -186,6 +186,7 @@ def create_app(
     app.include_router(transactions_api.router)
     app.include_router(transactions_api.holdings_router)
     app.include_router(market_data_api.router)
+    app.include_router(market_data_api.prices_router)
     app.include_router(valuations_api.router)
     app.include_router(forecasting_api.router)
     app.include_router(goals_api.router)

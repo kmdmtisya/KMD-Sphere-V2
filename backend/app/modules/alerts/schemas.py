@@ -23,7 +23,11 @@ class WatchlistAdd(BaseModel):
 
 
 class LatestPriceOut(BaseModel):
-    price: Money = Field(description="In the asset's own currency")
+    price: DecimalString = Field(
+        description="Per unit in the asset's own currency, unrounded (a unit price can have "
+        "more decimals than the currency)"
+    )
+    currency: str
     as_of: datetime
     provider: str
     stale: bool = Field(description="Older than its freshness window (still shown)")

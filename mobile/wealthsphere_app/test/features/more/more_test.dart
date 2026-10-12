@@ -152,8 +152,8 @@ void main() {
         'Income',
         'Compounding calculator',
         'Coming soon',
+        'Watchlist and alerts',
         'Reports',
-        'Alerts',
         'Documents',
         'App',
         'Settings',
@@ -177,9 +177,9 @@ void main() {
           onOpenSettings: () => opened++,
         ),
       );
-      // The section heading plus one label under each of the three entries.
-      expect(find.text('Coming soon'), findsNWidgets(4));
-      for (final name in ['Reports', 'Alerts', 'Documents']) {
+      // The section heading plus one label under each of the two entries.
+      expect(find.text('Coming soon'), findsNWidgets(3));
+      for (final name in ['Reports', 'Documents']) {
         await tester.tap(find.text(name));
       }
       expect(opened, 0);
@@ -199,13 +199,15 @@ void main() {
           onOpenIncome: () => opened.add('income'),
           onOpenCalculator: () => opened.add('calc'),
           onOpenSettings: () => opened.add('settings'),
+          onOpenAlerts: () => opened.add('alerts'),
         ),
       );
       await tester.tap(find.text('Net worth'));
       await tester.tap(find.text('Income'));
       await tester.tap(find.text('Compounding calculator'));
+      await tester.tap(find.text('Watchlist and alerts'));
       await tester.tap(find.text('Settings'));
-      expect(opened, ['nw', 'income', 'calc', 'settings']);
+      expect(opened, ['nw', 'income', 'calc', 'alerts', 'settings']);
     });
 
     for (final mode in [ThemeMode.light, ThemeMode.dark]) {
@@ -222,6 +224,7 @@ void main() {
                   onOpenIncome: () {},
                   onOpenCalculator: () {},
                   onOpenSettings: () {},
+                  onOpenAlerts: () {},
                 ),
                 mode: mode,
                 scale: scale,

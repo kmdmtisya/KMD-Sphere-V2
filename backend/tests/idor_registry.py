@@ -12,6 +12,9 @@ IDOR_TESTS: dict[tuple[str, str], str] = {
     ("PATCH", "/api/v1/risk-profiles/{risk_profile_id}"): (
         "tests.test_authz_risk_profiles::test_bob_cannot_change_alices_risk_profile"
     ),
+    ("GET", "/api/v1/assets/{asset_id}/prices"): (
+        "tests.test_asset_prices_api::test_bob_cannot_read_prices_of_alices_asset"
+    ),
     ("GET", "/api/v1/assets/{asset_id}"): (
         "tests.test_assets_api::test_bob_cannot_read_alices_asset"
     ),

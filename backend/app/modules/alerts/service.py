@@ -133,7 +133,8 @@ class WatchlistService:
             latest_price=None
             if price is None
             else LatestPriceOut(
-                price=_price(price.price, price.currency),
+                price=price.price,
+                currency=price.currency,
                 as_of=price.as_of,
                 provider=price.provider,
                 stale=price.stale,

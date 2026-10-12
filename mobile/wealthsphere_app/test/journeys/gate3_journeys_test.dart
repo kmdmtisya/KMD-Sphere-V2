@@ -305,6 +305,7 @@ void main() {
     await tap(tester, find.text('Light'));
     expect(shown(), Brightness.light);
     await back(tester);
-    expect(find.text('Your wealth'), findsOneWidget);
+    // Back on More (scrolled to where Settings is).
+    expect(find.text('Settings'), findsOneWidget);
   });
 }

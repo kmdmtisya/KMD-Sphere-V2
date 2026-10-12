@@ -106,6 +106,8 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
+      await tester.ensureVisible(find.text('Component gallery (debug)'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Component gallery (debug)'));
       await tester.pump(const Duration(seconds: 1));
       expect(find.text('Component gallery'), findsOneWidget);

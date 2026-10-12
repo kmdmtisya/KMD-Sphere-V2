@@ -19,6 +19,7 @@ export 'portfolio_switcher.dart';
 export 'risk_label.dart';
 export 'scenario_card.dart';
 export 'skeleton_loader.dart';
+export 'stale_chip.dart';
 export 'state_views.dart';
 export 'status_banner.dart';
 export 'transaction_tile.dart';
