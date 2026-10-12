@@ -1126,3 +1126,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T15:00:05+04:00 — COMPLETE P09-T10
 - duration: 33m 10s
 - evidence: Seeded real backend (tests/e2e_server.py) and six real-HTTP journeys covering sign in, view portfolio, add transaction, forecast, goal progress and notification deep link; CI workflow e2e.yml. Journeys passed locally against Postgres; identity-provider login, device lock and FCM are stood in for and stated in docs/design/e2e.md. CK-I satisfied for the journeys; no emulator run. PR #103. CI all gates pass.
+
+### 2026-10-12T15:13:46+04:00 — COMPLETE P09-T06
+- duration: 3h 27m 43s
+- evidence: Encrypted offline snapshots (ADR-0015, DEC-12): AES-256-GCM, key in secure storage, per-user hashed folders; offline GETs served from the saved copy with a banner showing the data age; non-offline errors never masked; writes never cached; sign-out and session end wipe files and key and reload all live data. 19 tests; merged in PR 99. Device run in airplane mode not done (manual check open). · Approved by: user (mtisya@gmail.com)

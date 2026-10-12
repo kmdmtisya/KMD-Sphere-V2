@@ -876,10 +876,10 @@
   - [x] P09-T05.2 Net worth
   - [x] P09-T05.3 Income
   - [x] P09-T05.4 Tests
-- [ ] **P09-T06** · Offline, stale-data and error handling · `AWAITING_VERIFICATION` 🔎
+- [x] **P09-T06** · Offline, stale-data and error handling · `COMPLETED` ✅
   - Deps: P09-T02, P09-T04 · Wave: W3 · Track: MOB · Size: L · Approval: yes
-  - Started: 2026-10-12T11:46:03+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: Encrypted per-response offline snapshots (ADR-0015, DEC-12 chosen by the user): AES-256-GCM, key in secure storage, per-user hashed folders and file names; offline GETs answered from the saved copy with an offline banner showing the data age and Try again; non-offline errors never masked; writes never cached; reconnect, sign-in, sign-out and session end reload all live data; sign-out and session end wipe files and key. 19 new tests (no plaintext on disk, cross-user isolation, wipe, wrong key, interceptor rules incl. refresh-network failure, banner). flutter test 1623 passed; CI green on PR 99. Not done: device run on an emulator with airplane mode (manual check pending user review).
+  - Started: 2026-10-12T11:46:03+04:00 · Completed: 2026-10-12T15:13:46+04:00 · Duration: 3h 27m 43s · Blocker: —
+  - Evidence: Encrypted offline snapshots (ADR-0015, DEC-12): AES-256-GCM, key in secure storage, per-user hashed folders; offline GETs served from the saved copy with a banner showing the data age; non-offline errors never masked; writes never cached; sign-out and session end wipe files and key and reload all live data. 19 tests; merged in PR 99. Device run in airplane mode not done (manual check open). · Approved by: user (mtisya@gmail.com)
   - [x] P09-T06.1 Cache design
   - [x] P09-T06.2 Connectivity
   - [x] P09-T06.3 Banners
