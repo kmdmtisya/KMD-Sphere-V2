@@ -6,6 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../auth/oidc_client.dart';
 import '../auth/token_manager.dart';
 import '../config/app_config.dart';
+import '../connectivity/connectivity.dart';
+import '../offline/offline_interceptor.dart';
+import '../offline/snapshot_cache.dart';
 
 /// Request option: `extra: {ApiOptions.public: true}` sends no access token.
 abstract final class ApiOptions {
@@ -24,6 +27,7 @@ Dio buildApiClient({
   required AppConfig config,
   required TokenManager tokens,
   HttpClientAdapter? adapter,
+  List<Interceptor> after = const [],
 }) {
   final dio = Dio(
     BaseOptions(
@@ -39,6 +43,7 @@ Dio buildApiClient({
   dio.interceptors.addAll([
     CorrelationIdInterceptor(),
     AuthInterceptor(tokens, dio),
+    ...after,
   ]);
   return dio;
 }
@@ -81,13 +86,14 @@ class AuthInterceptor extends Interceptor {
     try {
       final token = await _tokens.validAccessToken();
       if (token == null) {
-        handler.reject(_authError(options, AuthFailure.signedOut));
+        handler.reject(_authError(options, AuthFailure.signedOut), true);
         return;
       }
       options.headers[_header] = 'Bearer $token';
       handler.next(options);
     } on AuthException catch (e) {
-      handler.reject(_authError(options, e.failure));
+      // Following error interceptors still see it (the offline cache answers network failures).
+      handler.reject(_authError(options, e.failure), true);
     }
   }
 
@@ -144,9 +150,20 @@ class AuthInterceptor extends Interceptor {
       );
 }
 
-final apiClientProvider = Provider<Dio>(
-  (ref) => buildApiClient(
+/// Rebuilt whenever [dataEpochProvider] moves (reconnecting, or a change of user), which rebuilds
+/// every live repository and so reloads every live screen.
+final apiClientProvider = Provider<Dio>((ref) {
+  ref.watch(dataEpochProvider);
+  final online = ref.read(onlineProvider.notifier);
+  return buildApiClient(
     config: ref.watch(appConfigProvider),
     tokens: ref.watch(tokenManagerProvider),
-  ),
-);
+    after: [
+      OfflineInterceptor(
+        ref.watch(snapshotCacheProvider),
+        onOnline: online.reachedServer,
+        onOffline: online.unreachable,
+      ),
+    ],
+  );
+});

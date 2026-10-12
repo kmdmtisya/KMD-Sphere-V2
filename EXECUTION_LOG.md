@@ -1087,3 +1087,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T11:34:39+04:00 — COMPLETE P09-T05
 - duration: 18m 19s
 - evidence: Live goals (server figures and assumption notice shown on list, detail and Home), goal create/update with server rules, live net worth and income from server totals with completeness notices and no client-side shares; dto-mapping updated. flutter test 1604 passed, analyze clean, test_dto_mapping 29 passed. CK-I against the running backend is P09-T10. PR #98. CI all gates pass.
+
+### 2026-10-12T11:46:03+04:00 — START P09-T06
+- Offline, stale-data and error handling
+- prerequisites verified COMPLETED
+
+### 2026-10-12T12:19:44+04:00 — AWAITING_VERIFICATION P09-T06
+- evidence: Encrypted per-response offline snapshots (ADR-0015, DEC-12 chosen by the user): AES-256-GCM, key in secure storage, per-user hashed folders and file names; offline GETs answered from the saved copy with an offline banner showing the data age and Try again; non-offline errors never masked; writes never cached; reconnect, sign-in, sign-out and session end reload all live data; sign-out and session end wipe files and key. 19 new tests (no plaintext on disk, cross-user isolation, wipe, wrong key, interceptor rules incl. refresh-network failure, banner). flutter test 1623 passed; CI green on PR 99. Not done: device run on an emulator with airplane mode (manual check pending user review).

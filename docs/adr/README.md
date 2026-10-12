@@ -18,3 +18,5 @@ Format: Context / Decision / Consequences. Status values: Proposed, Accepted, Su
 | [0012](0012-cost-basis-method.md) | Cost-basis method for holdings (weighted average cost) | Accepted |
 | [0013](0013-api-client-dtos.md) | Mobile API client DTOs (hand-written, contract-checked) | Accepted |
 | [0014](0014-market-data-providers.md) | Market-data providers and licensing (DEC-04) | Accepted |
+| [0015](0015-offline-cache.md) | Encrypted offline snapshots (DEC-12) | Accepted |
+| [0016](0016-push-notification-path.md) | Push-notification path (DEC-08) | Accepted |

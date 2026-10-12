@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../connectivity/connectivity.dart';
+import '../offline/snapshot_cache.dart';
 import 'oidc_client.dart';
 import 'token_manager.dart';
 
@@ -58,7 +60,9 @@ class AuthController extends Notifier<AuthState> {
   AuthState build() {
     _tokens = ref.watch(tokenManagerProvider);
     _tokens.onSessionEnded = (reason) {
-      if (ref.mounted) state = SignedOut(ended: reason);
+      if (!ref.mounted) return;
+      _forgetUserData();
+      state = SignedOut(ended: reason);
     };
     unawaited(_restore());
     return const AuthRestoring();
@@ -79,7 +83,10 @@ class AuthController extends Notifier<AuthState> {
         loginHint: loginHint,
         intent: register ? SignInIntent.register : SignInIntent.signIn,
       );
-      if (ref.mounted) state = _signedIn();
+      if (!ref.mounted) return;
+      // A new session: nothing loaded for anyone else may stay on screen.
+      ref.read(dataEpochProvider.notifier).bump();
+      state = _signedIn();
     } on AuthException catch (e) {
       if (!ref.mounted) return;
       state = SignedOut(
@@ -103,7 +110,26 @@ class AuthController extends Notifier<AuthState> {
 
   Future<void> signOut() async {
     await _tokens.signOut();
-    if (ref.mounted) state = const SignedOut();
+    if (!ref.mounted) return;
+    _forgetUserData();
+    state = const SignedOut();
+  }
+
+  /// Drops everything loaded in memory at once, and deletes the encrypted saved data in the
+  /// background, so no figure of this user can be shown to the next one (ADR-0015). Signing out
+  /// never waits on the device storage.
+  void _forgetUserData() {
+    ref.read(dataEpochProvider.notifier).bump();
+    ref.read(savedDataAsOfProvider.notifier).clear();
+    unawaited(_wipeSavedData(ref.read(snapshotCacheProvider)));
+  }
+
+  static Future<void> _wipeSavedData(SnapshotCache cache) async {
+    try {
+      await cache.wipe();
+    } on Object {
+      // Best effort: the files are encrypted and their key is removed with them.
+    }
   }
 
   SignedIn _signedIn() {
