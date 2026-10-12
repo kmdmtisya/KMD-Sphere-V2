@@ -1122,3 +1122,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T14:26:55+04:00 — START P09-T10
 - End-to-end tests against the Docker stack
 - prerequisites verified COMPLETED
+
+### 2026-10-12T15:00:05+04:00 — COMPLETE P09-T10
+- duration: 33m 10s
+- evidence: Seeded real backend (tests/e2e_server.py) and six real-HTTP journeys covering sign in, view portfolio, add transaction, forecast, goal progress and notification deep link; CI workflow e2e.yml. Journeys passed locally against Postgres; identity-provider login, device lock and FCM are stood in for and stated in docs/design/e2e.md. CK-I satisfied for the journeys; no emulator run. PR #103. CI all gates pass.

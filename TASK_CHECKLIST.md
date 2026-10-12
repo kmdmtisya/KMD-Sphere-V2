@@ -907,10 +907,10 @@
   - Evidence: Release builds refuse demo mode (config default, start-up assertion, run-time refusal); DataSourceBadge shows DEMO only on demo data; AI screens remain demo and labelled in every mode until P10; governance guard tests (badge usage, no liveNotWired, live branch present, fixture access). flutter test 1664 passed, analyze clean. PR #102. CI all gates pass.
   - [x] P09-T09.1 Policy
   - [x] P09-T09.2 Tests
-- [ ] **P09-T10** · End-to-end tests against the Docker stack · `IN_PROGRESS` 🔄
+- [x] **P09-T10** · End-to-end tests against the Docker stack · `COMPLETED` ✅
   - Deps: P09-T09, P09-T08 · Wave: W5 · Track: QA · Size: L · Approval: no
-  - Started: 2026-10-12T14:26:55+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-12T14:26:55+04:00 · Completed: 2026-10-12T15:00:05+04:00 · Duration: 33m 10s · Blocker: —
+  - Evidence: Seeded real backend (tests/e2e_server.py) and six real-HTTP journeys covering sign in, view portfolio, add transaction, forecast, goal progress and notification deep link; CI workflow e2e.yml. Journeys passed locally against Postgres; identity-provider login, device lock and FCM are stood in for and stated in docs/design/e2e.md. CK-I satisfied for the journeys; no emulator run. PR #103. CI all gates pass.
   - [x] P09-T10.1 Seed data
   - [x] P09-T10.2 Journeys
   - [x] P09-T10.3 CI job
