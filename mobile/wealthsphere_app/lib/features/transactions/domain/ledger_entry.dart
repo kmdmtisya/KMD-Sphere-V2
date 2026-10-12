@@ -20,6 +20,7 @@ class LedgerEntry {
     required this.gross,
     required this.source,
     required this.createdAt,
+    this.assetId,
     this.assetSymbol,
     this.assetName,
     this.quantity,
@@ -63,6 +64,9 @@ class LedgerEntry {
   /// `manual`, `import` or `system`.
   final String source;
   final DateTime createdAt;
+
+  /// The API id of the asset (null in DEMO data, which names assets by symbol).
+  final String? assetId;
   final String? assetSymbol;
   final String? assetName;
   final Decimal? quantity;
@@ -90,6 +94,7 @@ class LedgerEntry {
     gross: gross,
     source: source,
     createdAt: createdAt,
+    assetId: assetId,
     assetSymbol: assetSymbol,
     assetName: assetName,
     quantity: quantity,

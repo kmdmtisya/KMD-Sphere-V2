@@ -860,14 +860,14 @@
   - [x] P09-T03.1 Repository
   - [x] P09-T03.2 Remove demo-only notice
   - [x] P09-T03.3 Tests
-- [ ] **P09-T04** · Live holdings, transactions and investment details · `NOT_STARTED` ⬜
+- [ ] **P09-T04** · Live holdings, transactions and investment details · `IN_PROGRESS` 🔄
   - Deps: P09-T01, P05-T08 · Wave: W2 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T10:37:11+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P09-T04.1 Holdings
-  - [ ] P09-T04.2 Transactions incl. submit
-  - [ ] P09-T04.3 Detail
-  - [ ] P09-T04.4 Tests
+  - [x] P09-T04.1 Holdings
+  - [x] P09-T04.2 Transactions incl. submit
+  - [x] P09-T04.3 Detail
+  - [x] P09-T04.4 Tests
 - [ ] **P09-T05** · Live goals, net worth and income · `NOT_STARTED` ⬜
   - Deps: P09-T01, P06-T09 · Wave: W2 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

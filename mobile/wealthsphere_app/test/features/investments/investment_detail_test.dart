@@ -83,10 +83,10 @@ void main() {
         for (final symbol in symbols) {
           final d = await repo.detail(symbol);
           expect(d.symbol, symbol);
-          expect(d.price.amount, greaterThan(Decimal.zero));
-          expect(d.price.currencyCode, d.currency);
-          expect(d.priceSource.provider, isNotEmpty);
-          expect(d.position.quantity, greaterThan(Decimal.zero));
+          expect(d.price!.amount, greaterThan(Decimal.zero));
+          expect(d.price!.currencyCode, d.currency);
+          expect(d.priceSource!.provider, isNotEmpty);
+          expect(d.positions.single.quantity, greaterThan(Decimal.zero));
         }
       },
     );
@@ -104,7 +104,7 @@ void main() {
               reason: '$symbol $period is ascending',
             );
           }
-          expect(s.points.last.value, d.price.amount, reason: symbol);
+          expect(s.points.last.value, d.price!.amount, reason: symbol);
           expect(s.currencyCode, d.currency);
         }
       }
@@ -120,7 +120,7 @@ void main() {
 
     test('income and fundamentals may be absent', () async {
       expect((await repo.detail('DEMO-TEC')).income, isNull);
-      expect((await repo.detail('DEMO-CSH')).fundamentals.items, isEmpty);
+      expect((await repo.detail('DEMO-CSH')).fundamentals!.items, isEmpty);
       expect((await repo.detail('DEMO-CSH')).research, isEmpty);
     });
   });

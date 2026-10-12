@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../shared/design_system/components/transaction_tile.dart';
+import '../../dashboard/application/dashboard_providers.dart';
+import '../../portfolios/application/portfolio_providers.dart';
 import '../data/transaction_repository.dart';
 import '../domain/ledger_entry.dart';
 
@@ -97,8 +99,19 @@ final ledgerEntryProvider = FutureProvider.family<LedgerEntry, String>(
 );
 
 /// Refreshes every ledger view after an entry was added or reversed.
+/// The figures that depend on the ledger are re-read from the server too (it recomputes them;
+/// the app never adjusts a total itself).
 void refreshLedger(WidgetRef ref) {
   ref
     ..invalidate(ledgerProvider)
-    ..invalidate(ledgerEntryProvider);
+    ..invalidate(ledgerEntryProvider)
+    ..invalidate(portfolioSummaryProvider)
+    ..invalidate(portfolioHoldingsProvider)
+    ..invalidate(portfolioSeriesProvider)
+    ..invalidate(portfolioAllocationProvider)
+    ..invalidate(portfolioMetricsProvider)
+    ..invalidate(homeSummaryProvider)
+    ..invalidate(homeSeriesProvider)
+    ..invalidate(dashboardNetWorthProvider)
+    ..invalidate(dashboardIncomeProvider);
 }

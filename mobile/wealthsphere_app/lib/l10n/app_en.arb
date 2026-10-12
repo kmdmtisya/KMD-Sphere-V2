@@ -102,6 +102,14 @@
     "description": "Shown under a total that uses prices older than their freshness window",
     "placeholders": {"count": {"type": "int"}}
   },
+  "investNoPriceYet": "No market price yet",
+  "@investNoPriceYet": {
+    "description": "Shown on an investment instead of a price when none is stored"
+  },
+  "investPositionEmpty": "You don't hold this in any portfolio.",
+  "@investPositionEmpty": {
+    "description": "Position tab when no portfolio holds the asset"
+  },
   "emptyDefaultTitle": "Nothing here yet",
   "@emptyDefaultTitle": {
     "description": "Default title of the empty state"

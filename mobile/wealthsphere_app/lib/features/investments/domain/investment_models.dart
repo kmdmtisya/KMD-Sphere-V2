@@ -97,6 +97,7 @@ class PositionInfo {
     required this.unrealisedPl,
     required this.unrealisedPlPercent,
     required this.asOf,
+    this.portfolioName,
   });
 
   factory PositionInfo.fromJson(JsonReader r) => PositionInfo(
@@ -111,15 +112,23 @@ class PositionInfo {
   );
 
   final Decimal quantity;
-  final Money averageCost;
+
+  /// Null when nothing has been bought yet.
+  final Money? averageCost;
   final Money costBasis;
 
   /// In the portfolio currency, and in the asset's own currency.
-  final Money value;
-  final Money nativeValue;
-  final Money unrealisedPl;
-  final Decimal unrealisedPlPercent;
-  final DateTime asOf;
+  /// Null when the position is unpriced (shown as "No value yet", never zero).
+  final Money? value;
+  final Money? nativeValue;
+
+  /// Null when the backend does not supply it; never worked out in the app.
+  final Money? unrealisedPl;
+  final Decimal? unrealisedPlPercent;
+  final DateTime? asOf;
+
+  /// The portfolio holding this position (live data, where one asset can sit in several).
+  final String? portfolioName;
 }
 
 @immutable
@@ -154,7 +163,7 @@ class InvestmentDetail {
     required this.priceSource,
     required this.fundamentals,
     required this.income,
-    required this.position,
+    required this.positions,
     required this.research,
   });
 
@@ -171,12 +180,13 @@ class InvestmentDetail {
       priceSource: _source(price.object('source'), priceAsOf),
       fundamentals: SourcedFacts.fromJson(r.object('fundamentals')),
       income: r.has('income') ? IncomeInfo.fromJson(r.object('income')) : null,
-      position: PositionInfo.fromJson(r.object('position')),
+      positions: [PositionInfo.fromJson(r.object('position'))],
       research: r.list('research', ResearchNote.fromJson),
     );
   }
 
-  final String symbol;
+  /// Null for user-defined assets without a ticker.
+  final String? symbol;
   final String name;
   final String assetClass;
 
@@ -184,11 +194,16 @@ class InvestmentDetail {
   final String currency;
 
   /// The latest price per unit, in [currency].
-  final Money price;
-  final Decimal changePercent;
-  final EvidenceSource priceSource;
-  final SourcedFacts fundamentals;
+  /// Null until a market price exists for the asset (never invented).
+  final Money? price;
+  final Decimal? changePercent;
+  final EvidenceSource? priceSource;
+
+  /// Null when no provider supplies fundamentals for the asset.
+  final SourcedFacts? fundamentals;
   final IncomeInfo? income;
-  final PositionInfo position;
+
+  /// One per portfolio that holds the asset; empty when none does.
+  final List<PositionInfo> positions;
   final List<ResearchNote> research;
 }

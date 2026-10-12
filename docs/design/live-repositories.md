@@ -30,3 +30,10 @@ Rules kept: no figure is added, converted or derived in the app. A missing figur
 ## Calculator and forecast (P09-T03, resolves DEC-03 in live mode)
 
 `LiveForecastRepository` posts the calculator inputs to `POST /api/v1/forecasts/scenarios` and shows the engine's three scenarios. The DTO's `monthly_contribution` is sent and read back as the API's `contribution`, so the echoed assumptions equal the request and the demo-mismatch banner never appears. In live mode the calculator and forecast screens show no DEMO badge. A refused input (422) says the values are outside the limits; offline, session-ended and busy failures use the shared wording. The calculator opens with `ForecastInputLimits.defaults`, the same limits the backend enforces.
+
+## Holdings, ledger and investment detail (P09-T04)
+
+- **Ledger:** `LiveTransactionRepository` reads `/portfolios/{id}/transactions` page by page (cursor, 100 per page), names each asset from `GET /assets/{id}` (`AssetCatalog`, cached per session), and posts new entries with an `Idempotency-Key` made once per reviewed entry, so retrying a failed save can never record it twice. A trade sends quantity and unit price only; the server derives the gross amount and the app shows the server's figure. Corrections stay append-only: a linked reversal (`/reversal`); an entry already reversed, or a reversal, is refused before calling, and a 409 from the server is reported as "already reversed".
+- **After a save or a correction** the ledger, holdings, summaries, chart, allocation, metrics and Home figures are re-read from the server (`refreshLedger`); nothing is adjusted on the device.
+- **Holdings** (from P09-T02) carry the asset id; screens open an investment by `detailKey` (asset id live, symbol in DEMO).
+- **Investment detail:** `LiveInvestmentRepository` shows the asset and one position per portfolio that holds it (quantity, average cost, cost basis, value as reported). Not supplied by the API, so empty rather than invented: market price, change, price history (P09-T07), fundamentals, research, per-asset income, unrealised gain or loss per position (the app does not compute value minus cost).

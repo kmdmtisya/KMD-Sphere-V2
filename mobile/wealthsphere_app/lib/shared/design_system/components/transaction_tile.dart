@@ -25,6 +25,24 @@ enum TransactionKind {
   transferOut,
   valuationAdjustment;
 
+  /// The API's name for this kind (`BUY`, `TRANSFER_IN`, ...).
+  String get apiName => switch (this) {
+    buy => 'BUY',
+    sell => 'SELL',
+    deposit => 'DEPOSIT',
+    withdrawal => 'WITHDRAWAL',
+    dividend => 'DIVIDEND',
+    interest => 'INTEREST',
+    coupon => 'COUPON',
+    rent => 'RENT',
+    distribution => 'DISTRIBUTION',
+    fee => 'FEE',
+    tax => 'TAX',
+    transferIn => 'TRANSFER_IN',
+    transferOut => 'TRANSFER_OUT',
+    valuationAdjustment => 'VALUATION_ADJUSTMENT',
+  };
+
   /// The API's name for the kind (`BUY`, `TRANSFER_IN`, ...).
   static TransactionKind parse(String apiName) => switch (apiName) {
     'BUY' => buy,

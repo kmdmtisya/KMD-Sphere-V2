@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:decimal/decimal.dart';
 import 'package:flutter/foundation.dart';
 
@@ -54,6 +56,7 @@ class TransactionDraft {
   const TransactionDraft({
     required this.kind,
     this.portfolioId,
+    this.assetId,
     this.assetSymbol,
     this.assetName,
     this.date,
@@ -66,6 +69,9 @@ class TransactionDraft {
 
   final TransactionKind kind;
   final String? portfolioId;
+
+  /// The API id of the asset (null in DEMO data).
+  final String? assetId;
   final String? assetSymbol;
   final String? assetName;
   final DateTime? date;
@@ -84,6 +90,7 @@ class NewTransaction {
     required this.portfolioId,
     required this.currency,
     required this.date,
+    this.assetId,
     this.assetSymbol,
     this.assetName,
     this.quantity,
@@ -91,12 +98,16 @@ class NewTransaction {
     this.amount,
     this.fee,
     this.note,
+    this.idempotencyKey,
   });
 
   final TransactionKind kind;
   final String portfolioId;
   final String currency;
   final DateTime date;
+
+  /// The API id of the asset (null in DEMO data).
+  final String? assetId;
   final String? assetSymbol;
   final String? assetName;
   final Decimal? quantity;
@@ -107,6 +118,34 @@ class NewTransaction {
   final Decimal? amount;
   final Decimal? fee;
   final String? note;
+
+  /// Sent as `Idempotency-Key`: the server records one entry per key, however often it is sent.
+  final String? idempotencyKey;
+
+  NewTransaction withIdempotencyKey(String? key) => NewTransaction(
+    kind: kind,
+    portfolioId: portfolioId,
+    currency: currency,
+    date: date,
+    assetId: assetId,
+    assetSymbol: assetSymbol,
+    assetName: assetName,
+    quantity: quantity,
+    unitPrice: unitPrice,
+    amount: amount,
+    fee: fee,
+    note: note,
+    idempotencyKey: key,
+  );
+}
+
+/// A fresh random key for `Idempotency-Key` (128 bits, hex).
+String newIdempotencyKey([Random? random]) {
+  final r = random ?? Random.secure();
+  return List.generate(
+    16,
+    (_) => r.nextInt(256).toRadixString(16).padLeft(2, '0'),
+  ).join();
 }
 
 /// The result of checking a draft: the problems by field, or the validated transaction.
@@ -225,6 +264,7 @@ DraftValidation validateDraft(
       portfolioId: draft.portfolioId!,
       currency: currency,
       date: DateTime(date!.year, date.month, date.day),
+      assetId: kind.needsAsset ? draft.assetId : null,
       assetSymbol: kind.needsAsset ? draft.assetSymbol : null,
       assetName: kind.needsAsset ? draft.assetName : null,
       quantity: quantity,

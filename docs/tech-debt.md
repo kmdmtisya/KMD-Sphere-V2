@@ -30,3 +30,4 @@ Every `noqa` / `type: ignore` carries a rule code and is limited to these justif
 
 ## Mobile live data gaps
 - **TD (P09-T02):** no consolidated performance, allocation or risk endpoints, so Home and Portfolio show no all-portfolio P/L, chart or metrics in live mode (docs/design/live-repositories.md). Needs a backend task; the app must keep not summing figures itself.
+- **TD (P09-T04):** holdings have no server-side unrealised P/L per position, and there are no per-asset price, price-history, fundamentals or income endpoints, so the investment screen shows those as not available in live mode.

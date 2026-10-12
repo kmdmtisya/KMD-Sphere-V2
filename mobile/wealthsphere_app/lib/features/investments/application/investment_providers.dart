@@ -43,7 +43,8 @@ final investmentHistoryProvider =
           .priceHistory(key.symbol, key.period),
     );
 
-/// The ledger entries that involve [symbol], across all portfolios, newest first.
+/// The ledger entries that involve the asset [symbol] names (its id live, its symbol in DEMO),
+/// across all portfolios, newest first.
 final investmentLedgerProvider =
     FutureProvider.family<List<LedgerEntry>, String>((ref, symbol) async {
       final all = await ref.watch(
@@ -51,7 +52,9 @@ final investmentLedgerProvider =
       );
       final mine = [
         for (final e in all)
-          if (e.assetSymbol == symbol) e,
+          if (e.assetId == symbol ||
+              (e.assetId == null && e.assetSymbol == symbol))
+            e,
       ];
       return [for (final month in groupByMonth(mine)) ...month.entries];
     });
