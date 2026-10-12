@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/app_routes.dart';
+import '../../../core/data/data_source_badge.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../shared/design_system/charts/charts.dart' as charts;
 import '../../../shared/design_system/components/components.dart';
@@ -30,7 +31,7 @@ class PortfolioOverviewScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const PortfolioScopeSwitcher(),
         actions: const [
-          DemoBadge(),
+          DataSourceBadge(),
           SizedBox(width: AppSpacing.m),
         ],
       ),

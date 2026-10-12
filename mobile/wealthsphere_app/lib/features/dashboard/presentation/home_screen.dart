@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/app_routes.dart';
+import '../../../core/data/data_source_badge.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../shared/design_system/charts/charts.dart';
 import '../../../shared/design_system/components/components.dart';
@@ -46,7 +47,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           name.maybeWhen(data: l10n.homeGreeting, orElse: () => l10n.appTitle),
         ),
         actions: [
-          const DemoBadge(),
+          const DataSourceBadge(),
           IconButton(
             tooltip: l10n.notificationsTooltip,
             // Inert until notifications exist (P09-T08).

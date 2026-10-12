@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/data/demo_support.dart';
+import '../../../core/data/data_source_badge.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../shared/design_system/components/components.dart';
 import '../../../shared/design_system/formatting/formatting.dart';
@@ -26,13 +26,12 @@ class WatchlistAlertsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final demo = ref.watch(dataSourceModeProvider) == DataSourceMode.demo;
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.watchlistAlertsTitle),
-        actions: [
-          if (demo) const DemoBadge(),
-          const SizedBox(width: AppSpacing.m),
+        actions: const [
+          DataSourceBadge(),
+          SizedBox(width: AppSpacing.m),
         ],
       ),
       body: RefreshIndicator(

@@ -89,20 +89,17 @@ class DemoCopilotRepository implements CopilotRepository {
   }
 }
 
+// The AI services arrive in P10. Until then these screens are DEMO in every data-source
+// mode, and every one of them says so (DemoBadge); nothing here is presented as live.
 final copilotRepositoryProvider = Provider<CopilotRepository>((ref) {
-  switch (ref.watch(dataSourceModeProvider)) {
-    case DataSourceMode.demo:
-      final behavior = ref.read(demoBehaviorProvider.notifier);
-      return DemoCopilotRepository(
-        ref.watch(demoAssetsProvider),
-        // A stream can outlive its provider (the app is torn down mid-answer): read the behaviour
-        // only while the provider is alive.
-        () => ref.mounted
-            ? ref.read(demoBehaviorProvider)
-            : const DemoBehavior(latency: Duration.zero),
-        behavior.gate,
-      );
-    case DataSourceMode.live:
-      liveNotWired('CopilotRepository');
-  }
+  final behavior = ref.read(demoBehaviorProvider.notifier);
+  return DemoCopilotRepository(
+    ref.watch(demoAssetsProvider),
+    // A stream can outlive its provider (the app is torn down mid-answer): read the behaviour
+    // only while the provider is alive.
+    () => ref.mounted
+        ? ref.read(demoBehaviorProvider)
+        : const DemoBehavior(latency: Duration.zero),
+    behavior.gate,
+  );
 });

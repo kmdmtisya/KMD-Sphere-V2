@@ -31,14 +31,11 @@ class DemoDoctorRepository implements DoctorRepository {
   }
 }
 
-final doctorRepositoryProvider = Provider<DoctorRepository>((ref) {
-  switch (ref.watch(dataSourceModeProvider)) {
-    case DataSourceMode.demo:
-      return DemoDoctorRepository(
-        ref.watch(demoAssetsProvider),
-        ref.read(demoBehaviorProvider.notifier).gate,
-      );
-    case DataSourceMode.live:
-      liveNotWired('DoctorRepository');
-  }
-});
+// The AI services arrive in P10. Until then these screens are DEMO in every data-source
+// mode, and every one of them says so (DemoBadge); nothing here is presented as live.
+final doctorRepositoryProvider = Provider<DoctorRepository>(
+  (ref) => DemoDoctorRepository(
+    ref.watch(demoAssetsProvider),
+    ref.read(demoBehaviorProvider.notifier).gate,
+  ),
+);

@@ -29,12 +29,15 @@ class AppConfig {
         'WS_OIDC_ISSUER',
         defaultValue: 'http://127.0.0.1:8081/realms/wealthsphere',
       ),
+      // A release build (dart.vm.product) defaults to the API; debug and tests to DEMO data.
       dataSource: String.fromEnvironment(
         'WS_DATA_SOURCE',
-        defaultValue: 'demo',
+        defaultValue: bool.fromEnvironment('dart.vm.product') ? 'live' : 'demo',
       ),
     );
-    config.assertSecureFor(debug: kDebugMode);
+    config
+      ..assertSecureFor(debug: kDebugMode)
+      ..assertDataSourceFor(release: kReleaseMode);
     return config;
   }
 
@@ -60,6 +63,15 @@ class AppConfig {
   /// Plain HTTP is accepted only for loopback development hosts in debug builds.
   bool get allowsInsecureConnections =>
       _isLocalHttp(apiBaseUrl) || _isLocalHttp(oidcIssuer);
+
+  /// A release build must not run on DEMO data.
+  void assertDataSourceFor({required bool release}) {
+    if (release && dataSource != 'live') {
+      throw StateError(
+        'Release builds cannot use DEMO data (WS_DATA_SOURCE=$dataSource). Use "live".',
+      );
+    }
+  }
 
   void assertSecureFor({required bool debug}) {
     for (final url in [apiBaseUrl, oidcIssuer]) {

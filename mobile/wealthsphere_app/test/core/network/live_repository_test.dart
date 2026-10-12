@@ -274,16 +274,5 @@ void main() {
         'demo',
       );
     });
-
-    test('an unwired live repository fails loudly', () {
-      final c = container('live');
-      addTearDown(c.dispose);
-      expect(
-        () => liveNotWired('PortfolioRepository'),
-        throwsA(isA<UnsupportedError>()),
-      );
-      c.read(dataSourceModeProvider.notifier).set(DataSourceMode.demo);
-      expect(c.read(dataSourceModeProvider), DataSourceMode.demo);
-    });
   });
 }

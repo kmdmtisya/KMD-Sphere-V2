@@ -26,14 +26,11 @@ class DemoOpportunityRepository implements OpportunityRepository {
   }
 }
 
-final opportunityRepositoryProvider = Provider<OpportunityRepository>((ref) {
-  switch (ref.watch(dataSourceModeProvider)) {
-    case DataSourceMode.demo:
-      return DemoOpportunityRepository(
-        ref.watch(demoAssetsProvider),
-        ref.read(demoBehaviorProvider.notifier).gate,
-      );
-    case DataSourceMode.live:
-      liveNotWired('OpportunityRepository');
-  }
-});
+// The AI services arrive in P10. Until then these screens are DEMO in every data-source
+// mode, and every one of them says so (DemoBadge); nothing here is presented as live.
+final opportunityRepositoryProvider = Provider<OpportunityRepository>(
+  (ref) => DemoOpportunityRepository(
+    ref.watch(demoAssetsProvider),
+    ref.read(demoBehaviorProvider.notifier).gate,
+  ),
+);

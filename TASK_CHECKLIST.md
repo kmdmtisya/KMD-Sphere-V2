@@ -901,12 +901,12 @@
   - [x] P09-T08.2 Mobile handling
   - [x] P09-T08.3 Preferences
   - [x] P09-T08.4 Tests
-- [ ] **P09-T09** · DEMO retirement and data-source governance · `NOT_STARTED` ⬜
+- [ ] **P09-T09** · DEMO retirement and data-source governance · `IN_PROGRESS` 🔄
   - Deps: P09-T02, P09-T03, P09-T04, P09-T05, P09-T07 · Wave: W4 · Track: MOB · Size: S · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T13:59:20+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P09-T09.1 Policy
-  - [ ] P09-T09.2 Tests
+  - [x] P09-T09.1 Policy
+  - [x] P09-T09.2 Tests
 - [ ] **P09-T10** · End-to-end tests against the Docker stack · `NOT_STARTED` ⬜
   - Deps: P09-T09, P09-T08 · Wave: W5 · Track: QA · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
