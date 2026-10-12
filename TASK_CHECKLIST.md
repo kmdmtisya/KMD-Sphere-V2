@@ -1105,14 +1105,14 @@
   - [x] P11-T09.2 Outage and fallback drills
   - [x] P11-T09.3 Preference sync
   - [x] P11-T09.4 Report
-- [ ] **P11-T10** · FXCUR-10 FXCUR quality gates verification · `NOT_STARTED` ⬜
+- [ ] **P11-T10** · FXCUR-10 FXCUR quality gates verification · `IN_PROGRESS` 🔄
   - Deps: P11-T09 · Wave: W8 · Track: QA · Size: S · Approval: no · Gates-done: QG-21, QG-22, QG-23, QG-24, QG-25
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-13T02:03:39+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P11-T10.1 Accuracy and consistency gates
-  - [ ] P11-T10.2 Reliability gate
-  - [ ] P11-T10.3 Mobile and AI gates
-  - [ ] P11-T10.4 Report
+  - [x] P11-T10.1 Accuracy and consistency gates
+  - [x] P11-T10.2 Reliability gate
+  - [x] P11-T10.3 Mobile and AI gates
+  - [x] P11-T10.4 Report
 - [ ] **P11-T11** · FXCUR-11 Integration and soak validation (local/CI stack) · `NOT_STARTED` ⬜
   - Deps: P11-T10 · Wave: W9 · Track: QA · Size: S · Approval: no · Gates-start: QG-21, QG-22, QG-23, QG-24, QG-25
   - Started: — · Completed: — · Duration: — · Blocker: —

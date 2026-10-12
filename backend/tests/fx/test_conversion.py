@@ -2,8 +2,6 @@
 per-currency precision with one half-up rounding, snapshots, and the conversion APIs. Results are
 checked against an independent computation in exact fractions."""
 
-import secrets
-import string
 import uuid
 from collections.abc import AsyncIterator
 from datetime import UTC, datetime, timedelta
@@ -27,6 +25,7 @@ from app.modules.market_data.service import FxService
 from tests import auth_helpers as ah
 from tests.authz_harness import TwoUsers, two_users  # noqa: F401
 from tests.db_fixtures import migrated_settings  # noqa: F401
+from tests.fx.codes import unique_code
 
 NOW = datetime(2026, 10, 12, 12, tzinfo=UTC)
 POLICY = StatusPolicy.from_settings(Settings())
@@ -169,7 +168,7 @@ def test_conversion_leaves_its_inputs_untouched() -> None:
 
 # ----------------------------------------------------------------------------------- database
 def code() -> str:
-    return "Q" + "".join(secrets.choice(string.ascii_uppercase) for _ in range(2))
+    return unique_code()
 
 
 @pytest.fixture

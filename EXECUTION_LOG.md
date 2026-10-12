@@ -1365,3 +1365,118 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-13T01:53:30+04:00 — COMPLETE P11-T09
 - duration: 25m 38s
 - evidence: Integration drills (consistency incl. AI, fallback, outage, stale, history, AI conversion, two sessions) all pass on the real app and DB; mobile e2e journey 8 passes against the real backend (8/8); report docs/fxcur-integration-report.md; backend 2272 passed. PR #133. CI all gates pass.
+
+### 2026-10-13T02:03:39+04:00 — START P11-T10
+- FXCUR-10 FXCUR quality gates verification
+- prerequisites verified COMPLETED
+
+### 2026-10-13T02:13:11+04:00 — QG START QG-21
+- QG-FXCUR-01: Exchange Rate Accuracy
+
+### 2026-10-13T02:13:12+04:00 — QG START QG-22
+- QG-FXCUR-02: Portfolio Consistency
+
+### 2026-10-13T02:13:12+04:00 — QG START QG-23
+- QG-FXCUR-03: Data Reliability
+
+### 2026-10-13T02:13:12+04:00 — QG START QG-24
+- QG-FXCUR-04: Android and iOS
+
+### 2026-10-13T02:13:12+04:00 — QG START QG-25
+- QG-FXCUR-05: AI Integration
+
+### 2026-10-13T02:13:13+04:00 — QG CHECK QG-21.1
+- evidence: reports/quality/qg-21-exchange-rate-accuracy.md: ExchangeRate-API adapter contract and validation tests (exact decimals, base/target/day checks, documented error types, unusable bodies refused) and recorded ECB fixtures; ExchangeRate-API fixtures are documentation-shaped synthetic (fixture-only approval), to be re-recorded at P11-T12.
+
+### 2026-10-13T02:13:13+04:00 — QG CHECK QG-21.2
+- evidence: reports/quality/qg-21: direct/inverse direction tests in tests/test_fx.py and tests/fx/test_conversion.py; snapshot and FX service check the stored direction.
+
+### 2026-10-13T02:13:13+04:00 — QG CHECK QG-21.3
+- evidence: reports/quality/qg-21: cross-rate tests (financial matrix F-05) with path, older-leg age and stale flag; property tests: cross rate equals the exact ratio to 45 digits.
+
+### 2026-10-13T02:13:14+04:00 — QG CHECK QG-21.4
+- evidence: reports/quality/qg-21: no float columns (schema test), Decimal JSON parsing, ExactRate for derived rates, exact-fraction property tests, no JSON floats in tool results.
+
+### 2026-10-13T02:13:14+04:00 — QG CHECK QG-21.5
+- evidence: reports/quality/qg-21: rounding once, half-up, to currencies.decimal_places (JPY 0); rounding error at most half a unit (property test).
+
+### 2026-10-13T02:13:15+04:00 — QG CHECK QG-22.1
+- evidence: reports/quality/qg-22: reconciliation test (converted total equals the sum of converted parts under one snapshot).
+
+### 2026-10-13T02:13:15+04:00 — QG CHECK QG-22.2
+- evidence: reports/quality/qg-22: stored transaction, portfolio and goal rows identical before and after currency switches; forecast inputs unchanged.
+
+### 2026-10-13T02:13:16+04:00 — QG CHECK QG-22.3
+- evidence: reports/quality/qg-22: multi-currency portfolios (USD+AED, AED+KES) aggregated under one snapshot, hand-computed total 10,137.60 EUR.
+
+### 2026-10-13T02:13:16+04:00 — QG CHECK QG-22.4
+- evidence: reports/quality/qg-22: tests/fx/test_history.py (each day its own rate, missing days flagged, posting uses trade-date rate) and conversion on a past day.
+
+### 2026-10-13T02:13:16+04:00 — QG CHECK QG-22.5
+- evidence: reports/quality/qg-22: integration drill: dashboard, consolidated summary, net worth and AI tool share the snapshot id and total.
+
+### 2026-10-13T02:13:16+04:00 — QG CHECK QG-23.1
+- evidence: reports/quality/qg-23: total-outage tests keep the last good rates with status and age; nothing invented; missing currencies stay missing.
+
+### 2026-10-13T02:13:17+04:00 — QG CHECK QG-23.2
+- evidence: reports/quality/qg-23: status windows per provider tested at boundaries; stale labels on board, reporting block and single rate.
+
+### 2026-10-13T02:13:17+04:00 — QG CHECK QG-23.3
+- evidence: reports/quality/qg-23: fallback for missing pairs, provider down, bad data and refused key; resilient batch retry.
+
+### 2026-10-13T02:13:18+04:00 — QG CHECK QG-23.4
+- evidence: reports/quality/qg-23: API rates carry provider, type, times, status; mobile FX status line and converter show time and status (widget tests, e2e journey 8).
+
+### 2026-10-13T02:13:18+04:00 — QG CHECK QG-23.5
+- evidence: reports/quality/qg-23: one refresh per window (second call reaches no provider), window released after failure, quota arithmetic, cache invalidated by refresh and status computed per read.
+
+### 2026-10-13T02:13:19+04:00 — QG CHECK QG-24.1
+- evidence: reports/quality/qg-24: selector widget tests (search, recents, empty, save, failed save) and e2e journey 8 on the real backend.
+
+### 2026-10-13T02:13:19+04:00 — QG CHECK QG-24.2
+- evidence: reports/quality/qg-24: figures re-requested after a switch (provider test); e2e journey 8 shows the server's EUR net worth on Home.
+
+### 2026-10-13T02:13:19+04:00 — QG CHECK QG-24.3
+- evidence: reports/quality/qg-24: server-stored setting, two-session backend test; demo keeps it on device and says so.
+
+### 2026-10-13T02:13:20+04:00 — QG CHECK QG-24.4
+- evidence: reports/quality/qg-24: converter in the accessibility sweep light/dark x LTR/RTL x 1x/2x.
+
+### 2026-10-13T02:13:20+04:00 — QG CHECK QG-24.5
+- evidence: reports/quality/qg-24: selector loading/error/empty/failed-save and converter validation/failure states tested.
+
+### 2026-10-13T02:13:20+04:00 — QG CHECK QG-24.6
+- evidence: reports/quality/qg-24: Flutter 1,755 tests pass, analyze and format clean.
+
+### 2026-10-13T02:13:20+04:00 — QG CHECK QG-24.7
+- evidence: reports/quality/qg-24: CI PR #131 android debug build pass and ios compile (no codesign) pass; device runs belong to release (P16).
+
+### 2026-10-13T02:13:21+04:00 — QG CHECK QG-25.1
+- evidence: reports/quality/qg-25: five FX tools on the allow-list and governance table (allow-list test); no user id in schemas.
+
+### 2026-10-13T02:13:21+04:00 — QG CHECK QG-25.2
+- evidence: reports/quality/qg-25: fx evaluation set 30/30 zero tolerance and chat drill refusing an invented amount; contextual restatement limit documented.
+
+### 2026-10-13T02:13:21+04:00 — QG CHECK QG-25.3
+- evidence: reports/quality/qg-25: tool rate and conversion equal /fx/rates and /fx/convert for the same snapshot id; portfolio value equals the summary API.
+
+### 2026-10-13T02:13:21+04:00 — QG CHECK QG-25.4
+- evidence: reports/quality/qg-25: FX tool results carry rate, providers, time, status and snapshot id; source events in the chat stream.
+
+### 2026-10-13T02:13:22+04:00 — QG CHECK QG-25.5
+- evidence: reports/quality/qg-25: another user's portfolio is not_found for value and exposure tools with nothing leaked; smuggled user_id refused.
+
+### 2026-10-13T02:13:22+04:00 — QG PASSED QG-21
+- evidence: All criteria verified with evidence in reports/quality/qg-21-exchange-rate-accuracy.md (P11-T10).
+
+### 2026-10-13T02:13:23+04:00 — QG PASSED QG-22
+- evidence: All criteria verified with evidence in reports/quality/qg-22-portfolio-consistency.md (P11-T10).
+
+### 2026-10-13T02:13:24+04:00 — QG PASSED QG-23
+- evidence: All criteria verified with evidence in reports/quality/qg-23-data-reliability.md (P11-T10).
+
+### 2026-10-13T02:13:24+04:00 — QG PASSED QG-24
+- evidence: All criteria verified with evidence in reports/quality/qg-24-android-ios.md (P11-T10).
+
+### 2026-10-13T02:13:25+04:00 — QG PASSED QG-25
+- evidence: All criteria verified with evidence in reports/quality/qg-25-ai-integration.md (P11-T10).

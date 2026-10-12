@@ -3,8 +3,6 @@ dashboard, summary, net worth and the AI, outage and fallback with honest labels
 historical reports, AI conversions through the chat, and the setting across two sessions."""
 
 import json
-import secrets
-import string
 import uuid
 from collections.abc import AsyncIterator
 from datetime import UTC, date, datetime, timedelta
@@ -24,6 +22,7 @@ from app.modules.market_data.providers.registry import MarketProviders
 from tests import auth_helpers as ah
 from tests.authz_harness import TwoUsers, two_users  # noqa: F401
 from tests.db_fixtures import migrated_settings  # noqa: F401
+from tests.fx.codes import unique_code
 from tests.fx.test_refresh_and_status import StubFx
 
 pytestmark = [pytest.mark.integration, pytest.mark.security]
@@ -31,7 +30,7 @@ LAUNCH = ["AED", "AUD", "CAD", "CHF", "EUR", "GBP", "JPY", "KES", "USD", "ZAR"]
 
 
 def code() -> str:
-    return "Q" + "".join(secrets.choice(string.ascii_uppercase) for _ in range(2))
+    return unique_code()
 
 
 @pytest.fixture
