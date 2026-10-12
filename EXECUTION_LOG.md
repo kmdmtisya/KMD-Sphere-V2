@@ -1023,3 +1023,16 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T04:44:38+04:00 — COMPLETE P08-T09
 - duration: 15m 11s
 - evidence: Reviewed key custody, provider terms and logs; notes in docs/security.md. Added data_type indicative_rate to the FX response, 14 security tests (key never in errors, logs, reprs or URLs for both adapters; example env empty; reviewed-routes guard). Licences remain unconfirmed and are recorded as blocking production. PR #90. CI all gates pass.
+
+### 2026-10-12T04:51:43+04:00 — QG CHECK QG-06.7
+- evidence: Prices and FX rates keep their provenance: market_prices rows carry provider, as_of (provider valid time), retrieved_at and ingested_at (NOT NULL, retrieved_at >= as_of CHECK), unique per (asset, provider, type, as_of), written only with ON CONFLICT DO NOTHING and never updated in code, so a re-run or backfill adds nothing; fx_rates carries provider, rate_timestamp and retrieved_at with the same uniqueness. Tests: tests/market_data/test_ingestion.py (every stored price has provider, as-of and ingestion timestamps; rerun and backfill do not duplicate; duplicate row refused by the database), degradation tests show stale data keeps its true as_of. Caveat: unlike the ledger, immutability of market_prices is by code and unique constraint, not by DB triggers.
+
+### 2026-10-12T04:51:43+04:00 — QG CHECK QG-09.5
+- evidence: Background jobs: Celery on RabbitMQ with retry, exponential backoff and jitter, dead-letter queue plus job_failures table, idempotent run_once on job_runs, beat schedule. Tests tests/worker (jobs, idempotency, failures visible, celery app) and an embedded-worker test against the real broker; a local worker was run against the real compose broker: jobs executed and a failing job was dead-lettered with its arguments. Ingestion fails the run when every item fails so the job is retried; partial failures are logged by count. Caveat: exercised on the local single-node broker, not under load or in a deployed environment (P14).
+
+### 2026-10-12T04:51:43+04:00 — QG CHECK QG-11.4
+- evidence: Ingestion and refresh workflows work end to end with the deterministic fake provider and recorded fixtures: price ingest every 15 min, FX ingest daily, alert evaluation every 15 min, idempotent per time bucket; stored prices flow into holdings and summaries (PositionValuer: price beats older manual valuation, stale prices flagged, unpriced never invented) and the dashboard; P08-T08 proves outage, stale-data, failover, circuit-breaker and cache behaviour. Caveat: the CoinGecko and Twelve Data adapters have only run against synthetic fixtures; no real provider key or licence exists (ADR-0014), so no live vendor call has been made.
+
+### 2026-10-12T04:51:43+04:00 — START P08-GATE
+- Phase P08 exit gate
+- prerequisites verified COMPLETED
