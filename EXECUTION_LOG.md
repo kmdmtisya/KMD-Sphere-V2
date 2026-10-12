@@ -1195,3 +1195,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T17:36:25+04:00 — COMPLETE P10-T03
 - duration: 14m 26s
 - evidence: Five core read tools returning the API's own figures with as_of and completeness; shared analytics views; cross-user denial tests for every tool (foreign id indistinguishable from unknown, audited as denied), identity-smuggling and bad-argument tests. 19 new tests; backend 1935 passed. PR #112. CI all gates pass.
+
+### 2026-10-12T17:44:12+04:00 — START P10-T04
+- Forecast tools
+- prerequisites verified COMPLETED
+
+### 2026-10-12T17:59:29+04:00 — COMPLETE P10-T04
+- duration: 15m 17s
+- evidence: Two forecast tools wrapping the deterministic engine only (static test: engine imports only, no DB or user access); results equal the engine's, deterministic, exact decimals, notice and assumptions echoed; out-of-range and extra-field inputs refused. 16 new tests; backend 1951 passed. PR #113. CI all gates pass.

@@ -2,6 +2,7 @@
 tools here; nothing else registers tools."""
 
 from app.ai.tools.core_read import register_core_read_tools
+from app.ai.tools.forecast import register_forecast_tools
 from app.ai.tools.registry import ToolRegistry
 from app.core.config import Settings
 
@@ -13,4 +14,5 @@ def build_tool_registry(settings: Settings) -> ToolRegistry:
         max_result_bytes=settings.ai_tool_max_result_bytes,
     )
     register_core_read_tools(registry)
+    register_forecast_tools(registry)
     return registry

@@ -952,12 +952,12 @@
   - [x] P10-T03.1 Five tools
   - [x] P10-T03.2 Denial tests
   - [x] P10-T03.3 Schema tests
-- [ ] **P10-T04** · Forecast tools · `NOT_STARTED` ⬜
+- [x] **P10-T04** · Forecast tools · `COMPLETED` ✅
   - Deps: P10-T02, P06-T02 · Wave: W3 · Track: AI · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P10-T04.1 Two tools
-  - [ ] P10-T04.2 Tests
+  - Started: 2026-10-12T17:44:12+04:00 · Completed: 2026-10-12T17:59:29+04:00 · Duration: 15m 17s · Blocker: —
+  - Evidence: Two forecast tools wrapping the deterministic engine only (static test: engine imports only, no DB or user access); results equal the engine's, deterministic, exact decimals, notice and assumptions echoed; out-of-range and extra-field inputs refused. 16 new tests; backend 1951 passed. PR #113. CI all gates pass.
+  - [x] P10-T04.1 Two tools
+  - [x] P10-T04.2 Tests
 - [x] **P10-T05** · LLM provider abstraction and OpenAI adapter · `COMPLETED` ✅
   - Deps: P10-T01 · Wave: W2 · Track: AI · Size: M · Approval: no
   - Started: 2026-10-12T16:56:39+04:00 · Completed: 2026-10-12T17:15:17+04:00 · Duration: 18m 38s · Blocker: —
