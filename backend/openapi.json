@@ -1048,6 +1048,17 @@
             "title": "Currency",
             "type": "string"
           },
+          "in_reporting": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ForecastInReporting"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Present when a reporting currency was asked for"
+          },
           "notice": {
             "description": "Shown with every forecast: projections are not guaranteed",
             "title": "Notice",
@@ -1480,6 +1491,61 @@
         "title": "CurrencyOut",
         "type": "object"
       },
+      "CurrencyPreferencesOut": {
+        "properties": {
+          "is_default": {
+            "description": "True until the user chooses a reporting currency",
+            "title": "Is Default",
+            "type": "boolean"
+          },
+          "recent_currencies": {
+            "description": "Most recent first, at most 5",
+            "items": {
+              "type": "string"
+            },
+            "title": "Recent Currencies",
+            "type": "array"
+          },
+          "reporting_currency": {
+            "title": "Reporting Currency",
+            "type": "string"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At"
+          }
+        },
+        "required": [
+          "reporting_currency",
+          "recent_currencies",
+          "is_default"
+        ],
+        "title": "CurrencyPreferencesOut",
+        "type": "object"
+      },
+      "CurrencyPreferencesUpdate": {
+        "additionalProperties": false,
+        "properties": {
+          "reporting_currency": {
+            "pattern": "^[A-Z]{3}$",
+            "title": "Reporting Currency",
+            "type": "string"
+          }
+        },
+        "required": [
+          "reporting_currency"
+        ],
+        "title": "CurrencyPreferencesUpdate",
+        "type": "object"
+      },
       "CurrencyShare": {
         "properties": {
           "currency": {
@@ -1583,6 +1649,17 @@
           },
           "net_worth": {
             "$ref": "#/components/schemas/NetWorthCard"
+          },
+          "reporting": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ReportingOut"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The rate snapshot every figure was converted with (P11-T06)"
           }
         },
         "required": [
@@ -1738,6 +1815,59 @@
           "recovered"
         ],
         "title": "DrawdownOut",
+        "type": "object"
+      },
+      "ForecastInReporting": {
+        "description": "The projection's end values translated into the reporting currency (P11-T06). The\nforecast itself (inputs, returns, values) stays in its own currency.",
+        "properties": {
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "final_nominal": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "final_real": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "note": {
+            "default": "Translated at today's exchange rate. Future exchange rates are not forecast, so this is not what the amount will be worth in that currency.",
+            "title": "Note",
+            "type": "string"
+          },
+          "rate": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Rate",
+            "type": "string"
+          },
+          "rate_timestamp": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rate Timestamp"
+          },
+          "snapshot_id": {
+            "title": "Snapshot Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "currency",
+          "rate",
+          "snapshot_id",
+          "final_nominal",
+          "final_real"
+        ],
+        "title": "ForecastInReporting",
         "type": "object"
       },
       "ForecastProjection": {
@@ -2607,6 +2737,17 @@
             "title": "Currency",
             "type": "string"
           },
+          "in_reporting": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ForecastInReporting"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Present when a reporting currency was asked for"
+          },
           "notice": {
             "description": "Shown with every forecast: projections are not guaranteed",
             "title": "Notice",
@@ -2728,6 +2869,17 @@
             "$ref": "#/components/schemas/Money",
             "description": "Value of the funding portfolios, in the target's currency"
           },
+          "current_value_in_reporting": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The current value in the reporting currency (snapshot rate)"
+          },
           "estimated_completion": {
             "anyOf": [
               {
@@ -2782,6 +2934,16 @@
             "title": "Reached",
             "type": "boolean"
           },
+          "reporting": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ReportingOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "required_contribution": {
             "anyOf": [
               {
@@ -2816,6 +2978,17 @@
             "format": "date",
             "title": "Target Date",
             "type": "string"
+          },
+          "target_in_reporting": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The target in the reporting currency (snapshot rate)"
           },
           "target_in_todays_money": {
             "title": "Target In Todays Money",
@@ -2948,6 +3121,17 @@
             "format": "date",
             "title": "Target Date",
             "type": "string"
+          },
+          "target_in_reporting": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The target shown in the reporting currency at the snapshot rate; the goal itself stays in its own currency"
           }
         },
         "required": [
@@ -3096,6 +3280,16 @@
           "on_track": {
             "title": "On Track",
             "type": "integer"
+          },
+          "reporting": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ReportingOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "total": {
             "title": "Total",
@@ -3319,6 +3513,17 @@
             },
             "title": "Portfolios",
             "type": "array"
+          },
+          "reporting": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ReportingOut"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The rate snapshot the conversions used (P11-T06)"
           },
           "unconverted_currencies": {
             "items": {
@@ -4093,6 +4298,17 @@
           "net_worth": {
             "$ref": "#/components/schemas/Money",
             "description": "assets - liabilities"
+          },
+          "reporting": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ReportingOut"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The rate snapshot the figures were converted with (P11-T06)"
           }
         },
         "required": [
@@ -4718,6 +4934,103 @@
         "title": "ReadyStatus",
         "type": "object"
       },
+      "ReportingOut": {
+        "description": "Which rates the figures of this response were converted with.",
+        "properties": {
+          "currency": {
+            "description": "The reporting currency of this response",
+            "title": "Currency",
+            "type": "string"
+          },
+          "note": {
+            "default": "Converted at the snapshot's rates; original amounts are unchanged.",
+            "title": "Note",
+            "type": "string"
+          },
+          "rates": {
+            "items": {
+              "$ref": "#/components/schemas/ReportingRateOut"
+            },
+            "title": "Rates",
+            "type": "array"
+          },
+          "snapshot_id": {
+            "format": "uuid",
+            "title": "Snapshot Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "currency",
+          "snapshot_id",
+          "rates"
+        ],
+        "title": "ReportingOut",
+        "type": "object"
+      },
+      "ReportingRateOut": {
+        "description": "A rate a response used: 1 `base` = `rate` `quote`.",
+        "properties": {
+          "base": {
+            "title": "Base",
+            "type": "string"
+          },
+          "from_snapshot": {
+            "title": "From Snapshot",
+            "type": "boolean"
+          },
+          "path": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Path"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "quote": {
+            "title": "Quote",
+            "type": "string"
+          },
+          "rate": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Rate",
+            "type": "string"
+          },
+          "rate_timestamp": {
+            "format": "date-time",
+            "title": "Rate Timestamp",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "base",
+          "quote",
+          "rate",
+          "rate_timestamp",
+          "provider",
+          "status",
+          "from_snapshot"
+        ],
+        "title": "ReportingRateOut",
+        "type": "object"
+      },
       "ReversalCreate": {
         "additionalProperties": false,
         "properties": {
@@ -5134,6 +5447,17 @@
             "title": "Currency",
             "type": "string"
           },
+          "in_reporting": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ForecastInReporting"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Present when a reporting currency was asked for"
+          },
           "notice": {
             "description": "Shown with every forecast: projections are not guaranteed",
             "title": "Notice",
@@ -5398,6 +5722,17 @@
           },
           "realized_pl": {
             "$ref": "#/components/schemas/Money"
+          },
+          "reporting": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ReportingOut"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The rate snapshot the figures were converted with (P11-T06)"
           },
           "total_value": {
             "$ref": "#/components/schemas/Money",
@@ -7564,7 +7899,7 @@
         "operationId": "dashboard_api_v1_dashboard_get",
         "parameters": [
           {
-            "description": "Defaults to the user's base currency",
+            "description": "Defaults to the user's reporting-currency setting",
             "in": "query",
             "name": "currency",
             "required": false,
@@ -7578,7 +7913,7 @@
                   "type": "null"
                 }
               ],
-              "description": "Defaults to the user's base currency",
+              "description": "Defaults to the user's reporting-currency setting",
               "title": "Currency"
             }
           }
@@ -7800,6 +8135,27 @@
       "post": {
         "description": "Project one set of assumptions: yearly nominal and real values, contributions and growth.\nAn illustration of the assumptions, not a prediction.",
         "operationId": "compound_forecast_api_v1_forecasts_compound_post",
+        "parameters": [
+          {
+            "description": "Also show the end values in this currency, at today's rate (P11-T06). The forecast itself stays in its own currency; future exchange rates are not forecast.",
+            "in": "query",
+            "name": "reporting_currency",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Z]{3}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Also show the end values in this currency, at today's rate (P11-T06). The forecast itself stays in its own currency; future exchange rates are not forecast.",
+              "title": "Reporting Currency"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -7833,7 +8189,7 @@
               "Retry-After": {
                 "description": "Seconds to wait before retrying",
                 "schema": {
-                  "minimum": 1.0,
+                  "minimum": 1,
                   "type": "integer"
                 }
               }
@@ -7855,6 +8211,27 @@
       "post": {
         "description": "The first-year contribution per period that reaches a target, with the resulting\nprojection.",
         "operationId": "goal_forecast_api_v1_forecasts_goal_post",
+        "parameters": [
+          {
+            "description": "Also show the end values in this currency, at today's rate (P11-T06). The forecast itself stays in its own currency; future exchange rates are not forecast.",
+            "in": "query",
+            "name": "reporting_currency",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Z]{3}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Also show the end values in this currency, at today's rate (P11-T06). The forecast itself stays in its own currency; future exchange rates are not forecast.",
+              "title": "Reporting Currency"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -7888,7 +8265,7 @@
               "Retry-After": {
                 "description": "Seconds to wait before retrying",
                 "schema": {
-                  "minimum": 1.0,
+                  "minimum": 1,
                   "type": "integer"
                 }
               }
@@ -7908,8 +8285,29 @@
     },
     "/api/v1/forecasts/scenarios": {
       "post": {
-        "description": "The same assumptions under the user's conservative, base and growth returns.",
+        "description": "The same assumptions under the user's conservative, base and growth returns. With a\nreporting currency, the base scenario's end values are also shown in it.",
         "operationId": "scenario_forecast_api_v1_forecasts_scenarios_post",
+        "parameters": [
+          {
+            "description": "Also show the end values in this currency, at today's rate (P11-T06). The forecast itself stays in its own currency; future exchange rates are not forecast.",
+            "in": "query",
+            "name": "reporting_currency",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Z]{3}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Also show the end values in this currency, at today's rate (P11-T06). The forecast itself stays in its own currency; future exchange rates are not forecast.",
+              "title": "Reporting Currency"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -7943,7 +8341,7 @@
               "Retry-After": {
                 "description": "Seconds to wait before retrying",
                 "schema": {
-                  "minimum": 1.0,
+                  "minimum": 1,
                   "type": "integer"
                 }
               }
@@ -8594,7 +8992,7 @@
     },
     "/api/v1/goals/summary": {
       "get": {
-        "description": "Progress and status of every goal, and how many are on track (estimates).",
+        "description": "Progress and status of every goal, and how many are on track (estimates). Each goal stays\nin its own currency; its target is also shown in the reporting currency.",
         "operationId": "goals_summary_api_v1_goals_summary_get",
         "responses": {
           "200": {
@@ -8832,7 +9230,7 @@
     },
     "/api/v1/goals/{goal_id}/progress": {
       "get": {
-        "description": "Progress, gap, scenario projections, required contribution and estimated completion,\nunder the goal's stated assumptions (an estimate, not guaranteed).",
+        "description": "Progress, gap, scenario projections, required contribution and estimated completion,\nunder the goal's stated assumptions (an estimate, not guaranteed). The goal stays in its own\ncurrency; target and current value are also shown in the reporting currency.",
         "operationId": "goal_progress_api_v1_goals__goal_id__progress_get",
         "parameters": [
           {
@@ -8903,7 +9301,7 @@
         "operationId": "income_summary_api_v1_income_summary_get",
         "parameters": [
           {
-            "description": "Defaults to the user's base currency",
+            "description": "Defaults to the user's reporting-currency setting",
             "in": "query",
             "name": "currency",
             "required": false,
@@ -8917,7 +9315,7 @@
                   "type": "null"
                 }
               ],
-              "description": "Defaults to the user's base currency",
+              "description": "Defaults to the user's reporting-currency setting",
               "title": "Currency"
             }
           }
@@ -9310,6 +9708,101 @@
         ]
       }
     },
+    "/api/v1/me/currency-preferences": {
+      "get": {
+        "description": "The currency every figure is shown in, on every device, and the recently used ones.\nUntil you choose, it is your profile's base currency (when supported).",
+        "operationId": "get_currency_preferences_api_v1_me_currency_preferences_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrencyPreferencesOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Your reporting currency",
+        "tags": [
+          "identity"
+        ]
+      },
+      "patch": {
+        "description": "Changes how figures are shown. Nothing else changes: balances, transactions, portfolio\nbase currencies, goal targets and forecast inputs stay as they are.",
+        "operationId": "set_currency_preferences_api_v1_me_currency_preferences_patch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CurrencyPreferencesUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrencyPreferencesOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "422": {
+            "description": "Invalid currency"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Change your reporting currency",
+        "tags": [
+          "identity"
+        ]
+      }
+    },
     "/api/v1/me/preferences": {
       "patch": {
         "description": "Updates any subset of display name, base currency, locale, time zone and UI preferences.",
@@ -9367,11 +9860,11 @@
     },
     "/api/v1/net-worth": {
       "get": {
-        "description": "Total assets (the user's active portfolios) minus total liabilities, in one currency,\nwith the FX rates used and how fresh and complete the figures are.",
+        "description": "Total assets (the user's active portfolios) minus total liabilities, in one currency,\nwith the FX rates used (all from one snapshot) and how fresh and complete the figures are.",
         "operationId": "get_net_worth_api_v1_net_worth_get",
         "parameters": [
           {
-            "description": "Defaults to the user's base currency",
+            "description": "Defaults to the user's reporting-currency setting",
             "in": "query",
             "name": "currency",
             "required": false,
@@ -9385,7 +9878,7 @@
                   "type": "null"
                 }
               ],
-              "description": "Defaults to the user's base currency",
+              "description": "Defaults to the user's reporting-currency setting",
               "title": "Currency"
             }
           }
@@ -9566,11 +10059,11 @@
     },
     "/api/v1/portfolios/consolidated/summary": {
       "get": {
-        "description": "All active portfolios together, in one currency (docs/design/portfolio-summary.md).",
+        "description": "All active portfolios together, in one currency (docs/design/portfolio-summary.md), with\nthe rate snapshot every conversion used.",
         "operationId": "consolidated_summary_api_v1_portfolios_consolidated_summary_get",
         "parameters": [
           {
-            "description": "Reporting currency; default: your base",
+            "description": "Reporting currency; default: your reporting-currency setting",
             "in": "query",
             "name": "currency",
             "required": false,
@@ -9584,7 +10077,7 @@
                   "type": "null"
                 }
               ],
-              "description": "Reporting currency; default: your base",
+              "description": "Reporting currency; default: your reporting-currency setting",
               "title": "Currency"
             }
           }
@@ -10230,7 +10723,7 @@
     },
     "/api/v1/portfolios/{portfolio_id}/summary": {
       "get": {
-        "description": "Totals for one portfolio in its base currency, with currency breakdown and freshness.",
+        "description": "Totals for one portfolio in its base currency (or viewed in `currency`), with currency\nbreakdown, freshness and the rate snapshot used.",
         "operationId": "portfolio_summary_api_v1_portfolios__portfolio_id__summary_get",
         "parameters": [
           {
@@ -10241,6 +10734,25 @@
               "format": "uuid",
               "title": "Portfolio Id",
               "type": "string"
+            }
+          },
+          {
+            "description": "View the portfolio in this currency; default: its base currency. Nothing is saved: the portfolio keeps its base currency",
+            "in": "query",
+            "name": "currency",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Z]{3}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "View the portfolio in this currency; default: its base currency. Nothing is saved: the portfolio keeps its base currency",
+              "title": "Currency"
             }
           }
         ],
@@ -10262,14 +10774,7 @@
             "description": "No such portfolio for this user"
           },
           "422": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            },
-            "description": "Validation Error"
+            "description": "Invalid currency"
           },
           "429": {
             "description": "Rate limit exceeded (docs/security.md, API protection)",

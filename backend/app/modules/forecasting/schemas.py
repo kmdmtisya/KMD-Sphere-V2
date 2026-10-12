@@ -191,10 +191,29 @@ class ForecastProjection(BaseModel):
     )
 
 
+class ForecastInReporting(BaseModel):
+    """The projection's end values translated into the reporting currency (P11-T06). The
+    forecast itself (inputs, returns, values) stays in its own currency."""
+
+    currency: str
+    rate: DecimalString
+    rate_timestamp: datetime | None = None
+    snapshot_id: str
+    final_nominal: Money
+    final_real: Money
+    note: str = (
+        "Translated at today's exchange rate. Future exchange rates are not forecast, so this is "
+        "not what the amount will be worth in that currency."
+    )
+
+
 class _Response(BaseModel):
     currency: str
     as_of: datetime = Field(description="When the forecast was computed")
     notice: str = Field(description="Shown with every forecast: projections are not guaranteed")
+    in_reporting: ForecastInReporting | None = Field(
+        default=None, description="Present when a reporting currency was asked for"
+    )
 
 
 class CompoundForecastOut(_Response):

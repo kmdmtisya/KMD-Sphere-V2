@@ -11,6 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.api_responses import UNAUTHORIZED, invalid, not_found
 from app.core.money import CURRENCY_PATTERN
 from app.db.session import get_session
+from app.modules.fx.reporting import ReportingDep
 from app.modules.identity.dependencies import CurrentUserDep
 from app.modules.portfolio.summary_schemas import SummaryOut
 from app.modules.portfolio.summary_service import SummaryService
@@ -27,22 +28,48 @@ SessionDep = Annotated[AsyncSession, Depends(get_session)]
 async def consolidated_summary(
     user: CurrentUserDep,
     session: SessionDep,
+    reporting: ReportingDep,
     currency: Annotated[
         str | None,
-        Query(pattern=CURRENCY_PATTERN, description="Reporting currency; default: your base"),
+        Query(
+            pattern=CURRENCY_PATTERN,
+            description="Reporting currency; default: your reporting-currency setting",
+        ),
     ] = None,
 ) -> SummaryOut:
-    """All active portfolios together, in one currency (docs/design/portfolio-summary.md)."""
-    return await SummaryService(session).consolidated(user.id, currency)
+    """All active portfolios together, in one currency (docs/design/portfolio-summary.md), with
+    the rate snapshot every conversion used."""
+    out = await SummaryService(session).consolidated(user.id, currency)
+    out.reporting = reporting.out(out.currency)
+    return out
 
 
 @router.get(
     "/{portfolio_id}/summary",
     response_model=SummaryOut,
-    responses={**UNAUTHORIZED, **not_found("portfolio")},
+    responses={**UNAUTHORIZED, **not_found("portfolio"), **invalid("currency")},
 )
 async def portfolio_summary(
-    portfolio_id: uuid.UUID, user: CurrentUserDep, session: SessionDep
+    portfolio_id: uuid.UUID,
+    user: CurrentUserDep,
+    session: SessionDep,
+    reporting: ReportingDep,
+    currency: Annotated[
+        str | None,
+        Query(
+            pattern=CURRENCY_PATTERN,
+            description="View the portfolio in this currency; default: its base currency. "
+            "Nothing is saved: the portfolio keeps its base currency",
+        ),
+    ] = None,
 ) -> SummaryOut:
-    """Totals for one portfolio in its base currency, with currency breakdown and freshness."""
-    return await SummaryService(session).portfolio(user.id, portfolio_id)
+    """Totals for one portfolio in its base currency (or viewed in `currency`), with currency
+    breakdown, freshness and the rate snapshot used."""
+    service = SummaryService(session)
+    out = (
+        await service.portfolio_in(user.id, portfolio_id, currency)
+        if currency
+        else await service.portfolio(user.id, portfolio_id)
+    )
+    out.reporting = reporting.out(out.currency)
+    return out

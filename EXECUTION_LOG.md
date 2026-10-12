@@ -1333,3 +1333,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T23:35:38+04:00 — COMPLETE P11-T05
 - duration: 55m 33s
 - evidence: Rate concepts kept apart; /fx/history with per-day rates, missing days flagged not filled, weekend carry flagged; historical conversion via on=date; posting uses trade-date rate (tested); 14 new tests; backend 2237 passed. PR #129. CI all gates pass.
+
+### 2026-10-12T23:43:50+04:00 — START P11-T06
+- FXCUR-06 Reporting currency across portfolio, analytics, net worth, income, goals and forecasts
+- prerequisites verified COMPLETED

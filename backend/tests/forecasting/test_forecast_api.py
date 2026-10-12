@@ -88,7 +88,8 @@ async def test_scenarios_match_the_mobile_contract(
     r = await post(http, two_users, "/api/v1/forecasts/scenarios", SCENARIOS)
     assert r.status_code == 200, r.text
     body = r.json()
-    assert set(body) == {"currency", "scenarios", "assumptions", "as_of", "notice"}
+    assert set(body) == {"currency", "scenarios", "assumptions", "as_of", "notice", "in_reporting"}
+    assert body["in_reporting"] is None  # only when a reporting currency is asked for (P11-T06)
     assert body["currency"] == "USD" and body["notice"] == NOTICE
     assert set(body["scenarios"]) == {"conservative", "base", "growth"}
     base = body["scenarios"]["base"]
@@ -160,7 +161,14 @@ async def test_compound_is_the_base_scenario(
 ) -> None:
     compound = (await post(http, two_users, "/api/v1/forecasts/compound", COMPOUND)).json()
     scenarios = (await post(http, two_users, "/api/v1/forecasts/scenarios", SCENARIOS)).json()
-    assert set(compound) == {"currency", "projection", "assumptions", "as_of", "notice"}
+    assert set(compound) == {
+        "currency",
+        "projection",
+        "assumptions",
+        "as_of",
+        "notice",
+        "in_reporting",
+    }
     assert compound["projection"] == scenarios["scenarios"]["base"]
     _no_json_numbers(compound)
 

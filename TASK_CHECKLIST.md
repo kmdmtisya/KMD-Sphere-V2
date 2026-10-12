@@ -1068,15 +1068,15 @@
   - [x] P11-T05.2 History endpoint
   - [x] P11-T05.3 Missing-rate handling
   - [x] P11-T05.4 Tests
-- [ ] **P11-T06** · FXCUR-06 Reporting currency across portfolio, analytics, net worth, income, goals and forecasts · `NOT_STARTED` ⬜
+- [ ] **P11-T06** · FXCUR-06 Reporting currency across portfolio, analytics, net worth, income, goals and forecasts · `IN_PROGRESS` 🔄
   - Deps: P11-T04, P11-T05 · Wave: W5 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T23:43:50+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P11-T06.1 Reporting-currency parameter and snapshot on read APIs
-  - [ ] P11-T06.2 Preferences API and sync
-  - [ ] P11-T06.3 Goals and forecasts presentation
-  - [ ] P11-T06.4 Optional FX scenario overlay (behind DEC-29)
-  - [ ] P11-T06.5 Reconciliation and IDOR tests
+  - [x] P11-T06.1 Reporting-currency parameter and snapshot on read APIs
+  - [x] P11-T06.2 Preferences API and sync
+  - [x] P11-T06.3 Goals and forecasts presentation
+  - [x] P11-T06.4 Optional FX scenario overlay (behind DEC-29)
+  - [x] P11-T06.5 Reconciliation and IDOR tests
 - [ ] **P11-T07** · FXCUR-07 Mobile: global currency selector, converted figures and converter · `NOT_STARTED` ⬜
   - Deps: P11-T06 · Wave: W6 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

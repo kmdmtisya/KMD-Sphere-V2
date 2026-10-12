@@ -18,6 +18,7 @@ from app.modules.forecasting.schemas import (
     ReturnPercent,
     check_money,
 )
+from app.modules.fx.schemas import ReportingOut
 
 GoalType = Literal[
     "wealth", "retirement", "education", "house_deposit", "business_capital", "custom"
@@ -184,6 +185,14 @@ class GoalProgressOut(BaseModel):
     as_of: datetime
     notice: str
 
+    target_in_reporting: Money | None = Field(
+        default=None, description="The target in the reporting currency (snapshot rate)"
+    )
+    current_value_in_reporting: Money | None = Field(
+        default=None, description="The current value in the reporting currency (snapshot rate)"
+    )
+    reporting: ReportingOut | None = None
+
 
 class GoalSummaryItem(BaseModel):
     id: uuid.UUID
@@ -193,6 +202,11 @@ class GoalSummaryItem(BaseModel):
     reached: bool
     target: Money
     target_date: date
+    target_in_reporting: Money | None = Field(
+        default=None,
+        description="The target shown in the reporting currency at the snapshot rate; the goal "
+        "itself stays in its own currency",
+    )
 
 
 class GoalsSummaryOut(BaseModel):
@@ -201,3 +215,4 @@ class GoalsSummaryOut(BaseModel):
     items: list[GoalSummaryItem]
     as_of: datetime
     notice: str
+    reporting: ReportingOut | None = None

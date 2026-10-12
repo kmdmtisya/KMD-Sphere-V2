@@ -33,20 +33,25 @@ POLICY = StatusPolicy.from_settings(Settings())
 
 
 def leg(currency: str, rate: str, *, provider: str = "exchangerate_api", age_h: float = 1) -> Leg:
+    """A stored USD -> currency rate."""
     stamp = NOW - timedelta(hours=age_h)
-    return Leg(currency, Decimal(rate), provider, "indicative", stamp, stamp)
+    return Leg("USD", currency, Decimal(rate), provider, "indicative", stamp, stamp)
+
+
+def legs(*items: Leg) -> dict[tuple[str, str], Leg]:
+    return {(x.base, x.quote): x for x in items}
 
 
 SNAP = Snapshot(
     uuid.uuid4(),
     "USD",
     NOW,
-    {
-        "AED": leg("AED", "3.6725"),
-        "KES": leg("KES", "129.15"),
-        "JPY": leg("JPY", "149.83"),
-        "EUR": leg("EUR", "0.9216", provider="ecb", age_h=50),
-    },
+    legs(
+        leg("AED", "3.6725"),
+        leg("KES", "129.15"),
+        leg("JPY", "149.83"),
+        leg("EUR", "0.9216", provider="ecb", age_h=50),
+    ),
 )
 
 
@@ -82,7 +87,7 @@ def test_identity_direct_inverse_and_cross_rates() -> None:
     cross = SNAP.rate("AED", "KES")
     assert cross.path == ("AED", "USD", "KES")
     assert abs(Fraction(cross.rate) - Fraction("129.15") / Fraction("3.6725")) < Fraction(1, 10**45)
-    assert [g.currency for g in cross.legs] == ["AED", "KES"]
+    assert [g.quote for g in cross.legs] == ["AED", "KES"]
 
 
 def test_a_derived_rate_is_as_old_and_as_fresh_as_its_weakest_leg() -> None:
@@ -121,7 +126,7 @@ def test_conversion_rounds_once_to_the_target_precision(
     assert str(result) == expected
 
     def per_pivot(c: str) -> Fraction:
-        return Fraction(1) if c == "USD" else Fraction(SNAP.legs[c].rate)
+        return Fraction(1) if c == "USD" else Fraction(SNAP.legs[("USD", c)].rate)
 
     rate_fraction = per_pivot(quote) / per_pivot(base)
     assert result == exact(amount, rate_fraction, places)
@@ -142,9 +147,7 @@ amounts = st.decimals(min_value="-1000000000", max_value="1000000000", places=2,
 def test_properties_against_exact_arithmetic(
     a: Decimal, b: Decimal, amount: Decimal, places: int
 ) -> None:
-    snap = Snapshot(
-        uuid.uuid4(), "USD", NOW, {"AAA": leg("AAA", str(a)), "BBB": leg("BBB", str(b))}
-    )
+    snap = Snapshot(uuid.uuid4(), "USD", NOW, legs(leg("AAA", str(a)), leg("BBB", str(b))))
     cross = snap.rate("AAA", "BBB")
     reference = Fraction(b) / Fraction(a)
     # The cross rate is the exact ratio to 45+ significant digits.
