@@ -958,10 +958,10 @@
   - Evidence: —
   - [ ] P10-T04.1 Two tools
   - [ ] P10-T04.2 Tests
-- [ ] **P10-T05** · LLM provider abstraction and OpenAI adapter · `IN_PROGRESS` 🔄
+- [x] **P10-T05** · LLM provider abstraction and OpenAI adapter · `COMPLETED` ✅
   - Deps: P10-T01 · Wave: W2 · Track: AI · Size: M · Approval: no
-  - Started: 2026-10-12T16:56:39+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-12T16:56:39+04:00 · Completed: 2026-10-12T17:15:17+04:00 · Duration: 18m 38s · Blocker: —
+  - Evidence: Provider interface with OpenAI and Anthropic adapters (complete and streaming), fake provider, retry/fallback, registry as sole vendor composition point; key custody tests (no key in repr, errors, logs, URLs; no default model); 46 new tests, backend 1917 passed. Adapters verified against documented-shape payloads only, not a live service (no key, terms review pending). Also fixed a flaky payload test (random ids can contain digits). PR #111, CI all gates pass.
   - [x] P10-T05.1 Interface
   - [x] P10-T05.2 OpenAI adapter
   - [x] P10-T05.3 Fake
