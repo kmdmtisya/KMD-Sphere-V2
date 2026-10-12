@@ -990,10 +990,10 @@
   - [x] P10-T08.2 Guards
   - [x] P10-T08.3 Refusal rules
   - [x] P10-T08.4 Tests
-- [ ] **P10-T09** · AI security and quality suite · `AWAITING_VERIFICATION` 🔎
+- [x] **P10-T09** · AI security and quality suite · `COMPLETED` ✅
   - Deps: P10-T08 · Wave: W6 · Track: QA · Size: L · Approval: yes
-  - Started: 2026-10-12T19:37:19+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: Eight versioned datasets at the DEC-17 sizes, all at their thresholds in CI (zero-tolerance sets at 100%); adversarial injection and cross-user scenarios through the chat API with a compromised scripted model; regression meta-tests prove each defence is detected when removed; live routing runner provided but not run (provider terms review open). Results and limits in docs/ai-evaluation.md for user review. Backend 2111 passed. PR #118. CI all gates pass.
+  - Started: 2026-10-12T19:37:19+04:00 · Completed: 2026-10-12T20:57:39+04:00 · Duration: 1h 20m 20s · Blocker: —
+  - Evidence: Approved by the user after review of docs/ai-evaluation.md: eight datasets at DEC-17 sizes all at threshold in CI; known limits (no real-model run, no contradiction detector, P12 items) accepted for this phase. · Approved by: user (mtisya@gmail.com)
   - [x] P10-T09.1 Injection
   - [x] P10-T09.2 Cross-user
   - [x] P10-T09.3 Hallucination

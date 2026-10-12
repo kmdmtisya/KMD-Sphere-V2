@@ -1242,3 +1242,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T20:42:55+04:00 — COMPLETE P10-T10
 - duration: 32m 56s
 - evidence: Live Copilot repository over SSE with mapped events, scope sent and enforced, conversation continuity and history (list/open/delete), live empty state without DEMO, failure texts (429/5xx/generic), 62 new Flutter tests plus e2e journey 7 against the real backend; Flutter 1726 passed, analyze and format clean. PR #119. CI all gates pass.
+
+### 2026-10-12T20:57:39+04:00 — COMPLETE P10-T09
+- duration: 1h 20m 20s
+- evidence: Approved by the user after review of docs/ai-evaluation.md: eight datasets at DEC-17 sizes all at threshold in CI; known limits (no real-model run, no contradiction detector, P12 items) accepted for this phase. · Approved by: user (mtisya@gmail.com)
