@@ -29,6 +29,11 @@ def build_schedule() -> dict[str, dict[str, Any]]:
             "task": "app.worker.tasks.evaluate_alerts",
             "schedule": ALERT_EVALUATION_EVERY_SECONDS,
         },
+        # Conversation history past its retention period is deleted once a day.
+        "ai-conversation-purge": {
+            "task": "app.worker.tasks.purge_ai_conversations",
+            "schedule": crontab(hour=3, minute=15),
+        },
         # The ECB publishes around 14:15 Central European Time (12:15 or 13:15 UTC).
         "fx-ingest": {
             "task": "app.worker.tasks.ingest_fx",
