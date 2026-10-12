@@ -807,13 +807,13 @@
   - [x] P08-T07.2 Endpoints
   - [x] P08-T07.3 Evaluator
   - [x] P08-T07.4 Tests
-- [ ] **P08-T08** · Failover, caching and degradation tests · `NOT_STARTED` ⬜
+- [ ] **P08-T08** · Failover, caching and degradation tests · `IN_PROGRESS` 🔄
   - Deps: P08-T05, P08-T06 · Wave: W5 · Track: QA · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T03:58:15+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P08-T08.1 Outage tests
-  - [ ] P08-T08.2 Stale tests
-  - [ ] P08-T08.3 Cache tests
+  - [x] P08-T08.1 Outage tests
+  - [x] P08-T08.2 Stale tests
+  - [x] P08-T08.3 Cache tests
 - [ ] **P08-T09** · Market data security and compliance review · `NOT_STARTED` ⬜
   - Deps: P08-T03 · Wave: W5 · Track: SEC · Size: S · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

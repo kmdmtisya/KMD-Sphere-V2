@@ -1007,3 +1007,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T03:56:24+04:00 — COMPLETE P08-T07
 - duration: 34m 30s
 - evidence: Watchlist, alerts, events and preferences API with migration 0012; evaluation job fires only on fresh data, one-shot and idempotent, honouring preferences; cross-user tests for all id routes plus the integrity sweep; 36 new tests, full backend suite green. Merged in PR 87.
+
+### 2026-10-12T03:58:15+04:00 — START P08-T08
+- Failover, caching and degradation tests
+- prerequisites verified COMPLETED
