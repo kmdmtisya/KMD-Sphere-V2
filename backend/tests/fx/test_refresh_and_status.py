@@ -246,17 +246,25 @@ async def test_one_refresh_per_window_whoever_asks(
     assert third.ran and era.requests == 2
 
 
-async def test_when_every_provider_fails_the_window_is_released_for_a_retry(
+async def test_when_every_provider_fails_the_next_attempt_waits_for_the_next_window(
     sessions: async_sessionmaker[AsyncSession],
 ) -> None:
+    # P11-T11 soak: releasing the window let every user refresh retry during an outage.
     pivot = pivot_code()
     down = StubFx("down", {}, fail=ProviderUnavailable("down"))
     now = far_window()
     with pytest.raises(ProviderUnavailable):
         await refresh_once_per_window(sessions, (down,), pivot, now, 15)
     era = commercial(pivot)
-    retry = await refresh_once_per_window(sessions, (era,), pivot, now, 15)
-    assert retry.ran and era.requests == 1
+    same_window = await refresh_once_per_window(
+        sessions, (down, era), pivot, now + timedelta(minutes=10), 15
+    )
+    assert not same_window.ran
+    assert down.requests == 1 and era.requests == 0, "no provider is asked again in the window"
+    next_window = await refresh_once_per_window(
+        sessions, (era,), pivot, now + timedelta(minutes=15), 15
+    )
+    assert next_window.ran and era.requests == 1
 
 
 # ------------------------------------------------------------------------------------- board

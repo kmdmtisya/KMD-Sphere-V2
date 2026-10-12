@@ -18,7 +18,7 @@ Every active currency in `currencies` is fetched against the pivot (`FX_PIVOT_CU
 
 ## Quota and backoff
 
-At most **one refresh per window** (`FX_REFRESH_WINDOW_MINUTES`, 15) per pivot, whoever asks: the hourly job and users share the window through the idempotent job runner, so screens never call a provider. Worst case: 4 requests an hour per provider, 2,976 in a 31-day month, inside the 30,000 of the commercial plan (a test checks the arithmetic against `FX_MONTHLY_REQUEST_BUDGET`). Inside a refresh, the resilient wrapper retries with exponential backoff and a circuit breaker; when every provider fails, the window is released and the job is retried with exponential backoff.
+At most **one refresh per window** (`FX_REFRESH_WINDOW_MINUTES`, 15) per pivot, whoever asks: the hourly job and users share the window through the idempotent job runner, so screens never call a provider. Worst case: 4 requests an hour per provider, 2,976 in a 31-day month, inside the 30,000 of the commercial plan (a test checks the arithmetic against `FX_MONTHLY_REQUEST_BUDGET`). Inside a refresh, the resilient wrapper retries with exponential backoff and a circuit breaker; when every provider fails, the window stays used and the next attempt comes in the next window, so an outage costs the same 4 attempts an hour across all processes and rates come back within one window of the provider's return. (Until P11-T11 the window was released for a retry; the soak showed that let every user refresh retry during an outage, about 360 requests an hour per provider and process; see `docs/fxcur-soak-report.md`.)
 
 ## Status (DEC-26)
 

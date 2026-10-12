@@ -235,7 +235,8 @@ def purge_ai_conversations_job(day: str | None = None) -> dict[str, object]:
 def refresh_fx_job() -> dict[str, object]:
     """Rates of every active currency against the pivot (P11-T03). Shares the refresh window with
     user-triggered refreshes, so the provider is called at most once per window. When every
-    provider fails the job raises, and the task is retried with exponential backoff."""
+    provider fails the job raises (recorded as a failure); the window stays used, so the next
+    attempt is the next window's (P11-T11)."""
     settings = get_settings()
     providers = build_providers(settings)
     if not providers.fx_sources:

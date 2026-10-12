@@ -9,7 +9,11 @@ At most one refresh runs per window (`fx_refresh_window_minutes`), whoever asks:
 and users pressing refresh share the window, so the provider is never called per screen or per
 request. With a 15-minute window that is at most 4 requests an hour per provider, about 3,000 a
 month, inside the 30,000 of the commercial plan (checked by a test). Retries with exponential
-backoff happen inside a refresh (the resilient provider) and across refreshes (the job)."""
+backoff happen inside a refresh (the resilient provider). A window whose refresh failed at every
+provider stays used: the next attempt comes in the next window. Releasing it let every user
+refresh retry during an outage, which the soak (P11-T11) measured at about 360 requests an hour
+per provider and process; keeping it bounds an outage to the same 4 attempts an hour across all
+processes, and rates come back within one window of the provider's return."""
 
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -138,16 +142,16 @@ async def refresh_once_per_window(
     now: datetime,
     window_minutes: int,
 ) -> CoalescedRefresh:
-    """Runs a refresh unless one already ran in this window. When every provider fails, the
-    window is released (so a retry may run) and `ProviderUnavailable` is raised."""
+    """Runs a refresh unless one already ran in this window. When every provider fails,
+    `ProviderUnavailable` is raised and the window stays used (no retry until the next one)."""
     # One refresh per window and pivot (a deployment has one pivot; tests use their own).
     key = f"{pivot}:{window_key(now, window_minutes)}"
 
     async def work(session: AsyncSession) -> RefreshOutcome:
-        outcome = await refresh_rates(session, sources, pivot, await active_currencies(session))
-        if outcome.every_provider_failed:
-            raise ProviderUnavailable("every FX provider failed")
-        return outcome
+        return await refresh_rates(session, sources, pivot, await active_currencies(session))
 
+    # A failed refresh is still a finished run, so the window is not claimed again.
     run = await run_once(sessions, JOB, key, work)
+    if run.value is not None and run.value.every_provider_failed:
+        raise ProviderUnavailable("every FX provider failed")
     return CoalescedRefresh(not run.skipped, key, run.value)

@@ -1113,13 +1113,13 @@
   - [x] P11-T10.2 Reliability gate
   - [x] P11-T10.3 Mobile and AI gates
   - [x] P11-T10.4 Report
-- [ ] **P11-T11** · FXCUR-11 Integration and soak validation (local/CI stack) · `NOT_STARTED` ⬜
+- [ ] **P11-T11** · FXCUR-11 Integration and soak validation (local/CI stack) · `IN_PROGRESS` 🔄
   - Deps: P11-T10 · Wave: W9 · Track: QA · Size: S · Approval: no · Gates-start: QG-21, QG-22, QG-23, QG-24, QG-25
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-13T02:29:53+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P11-T11.1 Quota and backoff soak
-  - [ ] P11-T11.2 Staleness soak
-  - [ ] P11-T11.3 Report
+  - [x] P11-T11.1 Quota and backoff soak
+  - [x] P11-T11.2 Staleness soak
+  - [x] P11-T11.3 Report
 - [ ] **P11-T12** · FXCUR-12 Release readiness sign-off · `NOT_STARTED` ⬜
   - Deps: P11-T11 · Wave: W10 · Track: REL · Size: S · Approval: yes · Gates-start: QG-21, QG-22, QG-23, QG-24, QG-25
   - Started: — · Completed: — · Duration: — · Blocker: —

@@ -4,6 +4,7 @@ container; skipped when no database credentials are configured."""
 import asyncio
 import uuid
 from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 import asyncpg
@@ -16,11 +17,9 @@ from app.core.config import Settings
 BACKEND = Path(__file__).resolve().parents[1]
 
 
-@pytest.fixture(scope="module")
-async def migrated_settings() -> AsyncIterator[Settings]:
-    base = Settings(environment="test")
-    if not base.postgres_user or not base.postgres_password.get_secret_value():
-        pytest.skip("no database credentials configured")
+@asynccontextmanager
+async def throwaway_database(base: Settings) -> AsyncIterator[Settings]:
+    """A new database migrated to head, dropped on exit; yields settings pointing at it."""
     name = f"ws_test_{uuid.uuid4().hex[:12]}"
     admin = await asyncpg.connect(base.database_dsn, timeout=5)
     try:
@@ -47,3 +46,12 @@ async def migrated_settings() -> AsyncIterator[Settings]:
             await admin.execute(f'DROP DATABASE IF EXISTS "{name}" WITH (FORCE)')
         finally:
             await admin.close()
+
+
+@pytest.fixture(scope="module")
+async def migrated_settings() -> AsyncIterator[Settings]:
+    base = Settings(environment="test")
+    if not base.postgres_user or not base.postgres_password.get_secret_value():
+        pytest.skip("no database credentials configured")
+    async with throwaway_database(base) as settings:
+        yield settings
