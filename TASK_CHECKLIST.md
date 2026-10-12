@@ -1050,10 +1050,10 @@
   - [x] P11-T03.4 Cache and batch retrieval
   - [x] P11-T03.5 Staleness and status
   - [x] P11-T03.6 Refresh endpoint with limits
-- [ ] **P11-T04** · FXCUR-04 Conversion engine with rate snapshots and cross-rates · `IN_PROGRESS` 🔄
+- [x] **P11-T04** · FXCUR-04 Conversion engine with rate snapshots and cross-rates · `COMPLETED` ✅
   - Deps: P11-T03 · Wave: W4 · Track: BE · Size: L · Approval: no
-  - Started: 2026-10-12T22:40:05+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-12T22:40:05+04:00 · Completed: 2026-10-12T23:12:43+04:00 · Duration: 32m 38s · Blocker: —
+  - Evidence: Direction-validated lookup with inverse and pivot cross-rates (path, older-leg age, stale) in the FX service; immutable content-addressed snapshots; Decimal conversion rounded once to currency decimal places; currencies/rates/convert APIs (convert audited); reference, exact-fraction and property tests, matrix F-05; backend 2223 passed. PR #128. CI all gates pass.
   - [x] P11-T04.1 Direction-validated rate lookup
   - [x] P11-T04.2 Cross-rate path
   - [x] P11-T04.3 Precision and rounding
