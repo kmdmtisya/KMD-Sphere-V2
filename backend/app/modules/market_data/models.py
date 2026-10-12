@@ -1,15 +1,19 @@
 """FX rates. Global reference data (no owner), timestamped, never rounded (ADR-0006).
 
-P11-T02 extends this table with rate type and status and adds snapshots."""
+P11-T02 adds the rate type and, for a rate a provider derived from other pairs, its path. A
+rate's status (current, cached, stale) depends on the clock, so it is computed when the rate is
+read and never stored: a stored status would turn a cached rate into a "current" one."""
 
 import uuid
 from datetime import datetime
 from decimal import Decimal
 
-from sqlalchemy import CheckConstraint, ForeignKey, Index, String, UniqueConstraint, text
+from sqlalchemy import ARRAY, CheckConstraint, ForeignKey, Index, String, UniqueConstraint, text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import RATE, Base, TimestampMixin, UUIDPrimaryKeyMixin
+
+RATE_TYPES = ("mid_market", "indicative", "delayed")
 
 
 class FxRate(UUIDPrimaryKeyMixin, TimestampMixin, Base):
@@ -21,6 +25,10 @@ class FxRate(UUIDPrimaryKeyMixin, TimestampMixin, Base):
         CheckConstraint("quote_currency ~ '^[A-Z]{3}$'", name="quote_currency"),
         CheckConstraint("base_currency <> quote_currency", name="distinct_currencies"),
         CheckConstraint("rate > 0", name="rate_positive"),
+        CheckConstraint("rate_type IN ('mid_market', 'indicative', 'delayed')", name="rate_type"),
+        CheckConstraint(
+            "rate_path IS NULL OR cardinality(rate_path) BETWEEN 3 AND 4", name="rate_path"
+        ),
         UniqueConstraint(
             "base_currency",
             "quote_currency",
@@ -40,6 +48,11 @@ class FxRate(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     # When the rate was valid (the provider's timestamp) and when we fetched it.
     rate_timestamp: Mapped[datetime] = mapped_column()
     retrieved_at: Mapped[datetime] = mapped_column()
+    # What kind of rate the provider publishes (P11-T02). The ECB reference rates are indicative.
+    rate_type: Mapped[str] = mapped_column(String(16), server_default=text("'indicative'"))
+    # For a rate the provider derived through other currencies, the currencies in order
+    # (for example ['AED', 'EUR', 'KES']); null for a direct quote.
+    rate_path: Mapped[list[str] | None] = mapped_column(ARRAY(String(3)), default=None)
 
 
 PRICE_TYPES = ("quote", "close")

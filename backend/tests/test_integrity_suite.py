@@ -269,6 +269,8 @@ SNAPSHOT_TABLES = (
     "ai_conversations",
     "ai_messages",
     "ai_tool_calls",
+    "user_currency_preferences",
+    "fx_conversion_audit",
 )
 
 
@@ -298,6 +300,8 @@ async def snapshot(db: asyncpg.Connection, user_id: str) -> dict[str, str]:
         "ai_conversations": "SELECT * FROM ai_conversations WHERE user_id = $1 ORDER BY id",
         "ai_messages": "SELECT * FROM ai_messages WHERE user_id = $1 ORDER BY id",
         "ai_tool_calls": "SELECT * FROM ai_tool_calls WHERE user_id = $1 ORDER BY id",
+        "user_currency_preferences": "SELECT * FROM user_currency_preferences WHERE user_id = $1",
+        "fx_conversion_audit": "SELECT * FROM fx_conversion_audit WHERE user_id = $1 ORDER BY id",
         "goal_scenarios": "SELECT s.* FROM goal_scenarios s JOIN goals g ON g.id = s.goal_id "
         "WHERE g.user_id = $1 ORDER BY s.id",
     }

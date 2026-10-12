@@ -1292,3 +1292,17 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T21:33:10+04:00 — COMPLETE P11-T01
 - duration: 21m 11s
 - evidence: Approved by the user: design, extension map, DEC-25 Option A, DEC-26..29 as proposed. Open: FX provider monthly budget and written licence confirmation before production. · Approved by: user (mtisya@gmail.com)
+
+### 2026-10-12T21:45:05+04:00 — START P11-T02
+- FXCUR-02 Currency data model
+- prerequisites verified COMPLETED
+
+### 2026-10-12T21:45:19+04:00 — DECISION — advance approval of P11-T02..P11-T11; T11 soak scope changed
+- User (mtisya@gmail.com) approved running P11-T02 to P11-T11 sequentially, stopping at P11-T12 (licence review and sign-off stay with the user).
+- P11-T03 (USER REVIEW REQUIRED) approved in advance under fixture-only conditions: the ExchangeRate-API adapter (DEC-25) is built from its public documentation with hand-written fixtures, no key and no live call; QG-21.1 evidence rests on documentation-shaped fixtures, not captured responses. ECB stays primary.
+- PLAN CHANGE (approved, option A): P11-T11 soaks the refresh scheduler and cache on the local stack against the fake provider with simulated outages, quotas and clock; the real-provider soak moves to P14-T11.
+- Defaults: launch currencies AED, USD, KES, EUR, GBP, JPY, CHF, CAD, AUD, ZAR; the profile base currency is the default reporting currency; P11-T06.4 (FX scenario overlay) not built per DEC-29.
+
+### 2026-10-12T22:00:33+04:00 — COMPLETE P11-T02
+- duration: 15m 28s
+- evidence: Migration 0015 with currencies (seeded, data-driven), user_currency_preferences, fx_rates rate_type/rate_path, append-only fx_conversion_audit; NUMERIC only (schema test), pair/time index verified, migration round-trip and alembic check pass; 8 schema tests; backend 2119 passed. PR #126. CI all gates pass.
