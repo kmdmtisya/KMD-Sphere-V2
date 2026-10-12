@@ -982,14 +982,14 @@
   - [x] P10-T07.2 Repositories
   - [x] P10-T07.3 Retention
   - [x] P10-T07.4 Tests
-- [ ] **P10-T08** · Response validation and safety policy · `NOT_STARTED` ⬜
+- [ ] **P10-T08** · Response validation and safety policy · `IN_PROGRESS` 🔄
   - Deps: P10-T06, P10-T07 · Wave: W5 · Track: AI · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T19:09:40+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P10-T08.1 Schema
-  - [ ] P10-T08.2 Guards
-  - [ ] P10-T08.3 Refusal rules
-  - [ ] P10-T08.4 Tests
+  - [x] P10-T08.1 Schema
+  - [x] P10-T08.2 Guards
+  - [x] P10-T08.3 Refusal rules
+  - [x] P10-T08.4 Tests
 - [ ] **P10-T09** · AI security and quality suite · `NOT_STARTED` ⬜
   - Deps: P10-T08 · Wave: W6 · Track: QA · Size: L · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —

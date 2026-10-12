@@ -4,6 +4,7 @@ data access goes through an allow-listed tool (docs/ai-governance.md)."""
 
 import uuid
 from collections.abc import AsyncIterator
+from datetime import timedelta
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Query, Request, Response
@@ -13,7 +14,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.ai.conversations.service import ConversationService
 from app.ai.orchestrator.events import EVENT_TYPES, to_sse
 from app.ai.orchestrator.orchestrator import Orchestrator
-from app.ai.orchestrator.policy import MinimalPolicy
+from app.ai.orchestrator.policy import SafetyPolicy
 from app.ai.providers.base import LlmProvider
 from app.ai.providers.errors import LlmNotConfigured
 from app.ai.providers.registry import build_llm
@@ -61,7 +62,12 @@ def _runtime(request: Request) -> Orchestrator | None:
             llm = build_llm(settings)
         except LlmNotConfigured:
             return None
-    orchestrator = Orchestrator(llm, build_tool_registry(settings), settings, MinimalPolicy())
+    orchestrator = Orchestrator(
+        llm,
+        build_tool_registry(settings),
+        settings,
+        SafetyPolicy(timedelta(hours=settings.ai_stale_after_hours)),
+    )
     state.ai_orchestrator = orchestrator
     return orchestrator
 

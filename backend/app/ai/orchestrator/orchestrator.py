@@ -13,6 +13,7 @@ import uuid
 from collections.abc import AsyncIterator
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
+from typing import Any
 
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
@@ -27,8 +28,9 @@ from app.ai.orchestrator.events import (
     TokenEvent,
     ToolEvent,
 )
-from app.ai.orchestrator.policy import AnswerPolicy, Draft
+from app.ai.orchestrator.policy import AnswerPolicy, Draft, correction_message
 from app.ai.orchestrator.prompt import system_prompt
+from app.ai.orchestrator.refusal import Refusal, check_question
 from app.ai.orchestrator.scope import OutOfScopeError, Scope, apply_scope
 from app.ai.providers.base import LlmProvider
 from app.ai.providers.errors import LlmError
@@ -44,6 +46,8 @@ from app.modules.portfolio.service import PortfolioService
 logger = logging.getLogger(__name__)
 
 AUDIT_ACTION = "ai.chat.answer"
+REFUSED_ACTION = "ai.chat.refused"
+REJECTED_ACTION = "ai.chat.rejected"
 CHUNK_CHARS = 48
 DAY = timedelta(hours=24)
 TITLE_CHARS = 60
@@ -63,11 +67,13 @@ class Turn:
     conversation_id: uuid.UUID
     scope: Scope
     correlation_id: str | None
+    refusal: Refusal | None = None
 
 
 @dataclass
 class _Ran:
     name: str
+    arguments: dict[str, Any]
     arguments_hash: str
     outcome: ToolOutcome
     duration_ms: int
@@ -134,7 +140,9 @@ class Orchestrator:
             conversation_id = created.id
         await conversations.append(user_id, conversation_id, "user", question)
         await session.commit()
-        return Turn(user_id, conversation_id, Scope(scope_id), correlation_id)
+        return Turn(
+            user_id, conversation_id, Scope(scope_id), correlation_id, check_question(question)
+        )
 
     async def _check_daily_limit(self, session: AsyncSession, user_id: uuid.UUID) -> None:
         since = datetime.now(UTC) - DAY
@@ -162,15 +170,18 @@ class Orchestrator:
     async def _answer(self, session: AsyncSession, turn: Turn) -> AsyncIterator[STREAM_EVENT]:
         settings = self._settings
         conversations = ConversationService(session)
+        if turn.refusal is not None:
+            async for event in self._refuse(session, conversations, turn, turn.refusal):
+                yield event
+            return
         history = await conversations.messages(
             turn.user_id, turn.conversation_id, limit=max(settings.ai_history_messages, 1)
         )
         messages: list[Message] = [
             Message("system", system_prompt(datetime.now(UTC).date(), turn.scope.portfolio_id))
         ]
-        messages += [
-            Message("user" if m.role == "user" else "assistant", m.content) for m in history
-        ]
+        messages += [self._as_message(m) for m in history]
+        user_texts = tuple(m.content for m in history if m.role == "user")
         context = ToolContext(
             turn.user_id, session, turn.correlation_id, self._llm.model, self._llm.name
         )
@@ -209,10 +220,42 @@ class Orchestrator:
             yield self._error("invalid_answer")
             return
 
-        verdict = self._policy.review(Draft(final, tuple(r.outcome for r in ran)))
-        if verdict.text is None:
-            yield self._error("invalid_answer")
-            return
+        retries = 0
+        while True:
+            verdict = self._policy.review(
+                Draft(
+                    final,
+                    tuple(r.outcome for r in ran),
+                    tuple(r.arguments for r in ran),
+                    user_texts,
+                )
+            )
+            if verdict.text is not None:
+                break
+            if retries >= settings.ai_max_answer_retries:
+                await self._audit_rejected(
+                    session, turn, verdict.problems, retries, model, provider
+                )
+                yield self._error("invalid_answer")
+                return
+            retries += 1
+            messages += [
+                Message("assistant", final),
+                Message("user", correction_message(verdict.problems)),
+            ]
+            try:
+                response = await self._llm.complete(
+                    ChatRequest(tuple(messages), (), settings.ai_max_output_tokens)
+                )
+            except LlmError as error:
+                logger.warning("llm failed: %s", type(error).__name__)
+                yield self._error("ai_unavailable")
+                return
+            usage = Usage(
+                usage.input_tokens + response.usage.input_tokens,
+                usage.output_tokens + response.usage.output_tokens,
+            )
+            final = response.content
 
         for tool in dict.fromkeys(r.name for r in ran if r.outcome.ok):
             data = next(r.outcome.data for r in ran if r.name == tool and r.outcome.ok)
@@ -258,6 +301,7 @@ class Orchestrator:
                 "model": model,
                 "provider": provider,
                 "tool_calls": len(ran),
+                "retries": retries,
                 "input_tokens": usage.input_tokens,
                 "output_tokens": usage.output_tokens,
                 "correlation_id": turn.correlation_id,
@@ -270,6 +314,7 @@ class Orchestrator:
             model=model,
             provider=provider,
             tool_calls=len(ran),
+            structured=verdict.structured,
         )
 
     async def _run_tool(
@@ -297,6 +342,7 @@ class Orchestrator:
         ran.append(
             _Ran(
                 call.name[:64],
+                arguments,
                 hash_arguments(arguments),
                 outcome,
                 round((time.monotonic() - started) * 1000),
@@ -310,6 +356,77 @@ class Orchestrator:
             status="ok" if outcome.ok else "error",
             error_code=outcome.error_code,
         )
+
+    @staticmethod
+    def _as_message(stored: StoredMessage) -> Message:
+        """Earlier turns as the model should see them: its own answers in the JSON shape it was
+        asked for (without the server's caveats), not the rendered text."""
+        if stored.role == "user":
+            return Message("user", stored.content)
+        if stored.structured and "refusal" not in stored.structured:
+            shown = {k: v for k, v in stored.structured.items() if k != "caveats"}
+            return Message("assistant", json.dumps(shown))
+        return Message("assistant", stored.content)
+
+    async def _refuse(
+        self,
+        session: AsyncSession,
+        conversations: ConversationService,
+        turn: Turn,
+        refusal: Refusal,
+    ) -> AsyncIterator[STREAM_EVENT]:
+        """Answers a request the product declines without asking the model."""
+        for piece in chunks(refusal.message):
+            yield TokenEvent(text=piece)
+        stored = await conversations.append(
+            turn.user_id,
+            turn.conversation_id,
+            "assistant",
+            refusal.message,
+            structured={"refusal": refusal.category},
+        )
+        await AuditWriter(session).record(
+            REFUSED_ACTION,
+            Actor.ai(turn.user_id),
+            resource_type="ai_conversation",
+            resource_id=turn.conversation_id,
+            outcome=Outcome.DENIED,
+            details={"category": refusal.category, "correlation_id": turn.correlation_id},
+        )
+        await session.commit()
+        yield DoneEvent(
+            conversation_id=turn.conversation_id,
+            message_id=stored.id,
+            model=self._llm.model,
+            provider=self._llm.name,
+            tool_calls=0,
+            structured=stored.structured,
+        )
+
+    @staticmethod
+    async def _audit_rejected(
+        session: AsyncSession,
+        turn: Turn,
+        problems: tuple[str, ...],
+        retries: int,
+        model: str,
+        provider: str,
+    ) -> None:
+        await AuditWriter(session).record(
+            REJECTED_ACTION,
+            Actor.ai(turn.user_id),
+            resource_type="ai_conversation",
+            resource_id=turn.conversation_id,
+            outcome=Outcome.FAILURE,
+            details={
+                "problems": list(problems),
+                "retries": retries,
+                "model": model,
+                "provider": provider,
+                "correlation_id": turn.correlation_id,
+            },
+        )
+        await session.commit()
 
     @staticmethod
     def _error(code: str) -> ErrorEvent:
