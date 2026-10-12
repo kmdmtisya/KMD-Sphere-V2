@@ -57,7 +57,7 @@ class _FlakyDashboard implements DashboardRepository {
   }
 
   @override
-  Future<InsightSummary> insight() {
+  Future<InsightSummary?> insight() {
     insightCalls++;
     return _inner.insight();
   }

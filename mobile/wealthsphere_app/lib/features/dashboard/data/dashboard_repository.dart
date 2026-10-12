@@ -2,9 +2,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/data/demo_support.dart';
 import '../../../core/data/json_reader.dart';
+import '../../../core/network/api_client.dart';
 import '../../../core/preferences/preferences_store.dart';
 import '../../../shared/domain/wealth_models.dart';
 import '../domain/dashboard_layout.dart';
+import 'live_dashboard_repository.dart';
 
 /// Home dashboard data. Each section loads on its own so one failure does not blank the page.
 abstract interface class DashboardRepository {
@@ -12,7 +14,9 @@ abstract interface class DashboardRepository {
   Future<NetWorthSummary> netWorth();
   Future<IncomeSummary> income();
   Future<GoalsSummary> goals();
-  Future<InsightSummary> insight();
+
+  /// Null when there is no insight (live data before the AI service exists).
+  Future<InsightSummary?> insight();
 }
 
 /// Reads `assets/demo/dashboard.json`.
@@ -56,7 +60,7 @@ final dashboardRepositoryProvider = Provider<DashboardRepository>((ref) {
         ref.read(demoBehaviorProvider.notifier).gate,
       );
     case DataSourceMode.live:
-      liveNotWired('DashboardRepository');
+      return LiveDashboardRepository(ref.watch(apiClientProvider));
   }
 });
 
@@ -66,8 +70,8 @@ abstract interface class DashboardLayoutRepository {
   Future<void> save(DashboardLayout layout);
 }
 
-/// Stores the layout in on-device UI preferences. (At gate 4 this also syncs to
-/// `PATCH /me/preferences`.) It holds no financial data.
+/// Stores the layout in on-device UI preferences. In live mode `SyncedDashboardLayoutRepository`
+/// wraps this and also syncs to `PATCH /me/preferences`. It holds no financial data.
 class LocalDashboardLayoutRepository implements DashboardLayoutRepository {
   const LocalDashboardLayoutRepository(this._store);
 
@@ -84,6 +88,17 @@ class LocalDashboardLayoutRepository implements DashboardLayoutRepository {
       _store.setString(key, layout.toJsonString());
 }
 
-final dashboardLayoutRepositoryProvider = Provider<DashboardLayoutRepository>(
-  (ref) => LocalDashboardLayoutRepository(ref.watch(preferencesStoreProvider)),
-);
+final dashboardLayoutRepositoryProvider = Provider<DashboardLayoutRepository>((
+  ref,
+) {
+  final local = LocalDashboardLayoutRepository(
+    ref.watch(preferencesStoreProvider),
+  );
+  return switch (ref.watch(dataSourceModeProvider)) {
+    DataSourceMode.demo => local,
+    DataSourceMode.live => SyncedDashboardLayoutRepository(
+      ref.watch(apiClientProvider),
+      local,
+    ),
+  };
+});

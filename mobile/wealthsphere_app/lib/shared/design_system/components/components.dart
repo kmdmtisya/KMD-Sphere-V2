@@ -5,6 +5,7 @@ export 'change_indicator.dart';
 export 'context_locale.dart';
 export 'currency_amount.dart';
 export 'data_as_of_label.dart';
+export 'data_quality_notice.dart';
 export 'demo_badge.dart';
 export 'disclosure_panel.dart';
 export 'evidence_source_chip.dart';

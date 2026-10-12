@@ -122,7 +122,7 @@ class _HoldingsScreenState extends ConsumerState<HoldingsScreen> {
                       name: h.name,
                       value: h.value,
                       nativeValue:
-                          h.nativeValue.currencyCode == h.value.currencyCode
+                          h.nativeValue?.currencyCode == h.value?.currencyCode
                           ? null
                           : h.nativeValue,
                       changePercent: h.changePercent,

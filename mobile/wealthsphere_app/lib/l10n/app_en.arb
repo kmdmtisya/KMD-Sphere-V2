@@ -85,6 +85,23 @@
     "description": "Support reference shown under an error",
     "placeholders": {"id": {"type": "String"}}
   },
+  "noValueYet": "No value yet",
+  "@noValueYet": {
+    "description": "Shown instead of an amount when a position has no price or valuation"
+  },
+  "valueNotAvailable": "Not available",
+  "@valueNotAvailable": {
+    "description": "Shown instead of a figure the backend has not supplied"
+  },
+  "incompleteTotalsNotice": "Some assets have no price or could not be converted, so this total may be incomplete.",
+  "@incompleteTotalsNotice": {
+    "description": "Shown under a total that does not cover every asset"
+  },
+  "stalePricesNotice": "{count, plural, =1{1 price is} other{{count} prices are}} out of date; those assets use their last known price.",
+  "@stalePricesNotice": {
+    "description": "Shown under a total that uses prices older than their freshness window",
+    "placeholders": {"count": {"type": "int"}}
+  },
   "emptyDefaultTitle": "Nothing here yet",
   "@emptyDefaultTitle": {
     "description": "Default title of the empty state"

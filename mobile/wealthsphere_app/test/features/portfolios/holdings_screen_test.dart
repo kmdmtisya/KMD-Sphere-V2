@@ -33,7 +33,7 @@ HoldingSummary holding(
   asOf: DateTime.utc(2026, 10, 9),
 );
 
-List<String> symbolsShown(WidgetTester tester) => [
+List<String?> symbolsShown(WidgetTester tester) => [
   for (final row in tester.widgetList<InvestmentRow>(
     find.byType(InvestmentRow),
   ))
@@ -62,7 +62,7 @@ void main() {
       holding('A', 'Alpha Equity', 'Equities', '300.00', '2.0'),
       holding('C', 'charlie equity', 'Equities', '100.00', '-1.0'),
     ];
-    List<String> run(HoldingsQuery q) => [
+    List<String?> run(HoldingsQuery q) => [
       for (final h in applyQuery(all, q)) h.symbol,
     ];
 
@@ -128,7 +128,7 @@ void main() {
         final emr = tester.widget<InvestmentRow>(
           find.widgetWithText(InvestmentRow, 'DEMO-EMR'),
         );
-        expect(emr.value.currencyCode, 'USD');
+        expect(emr.value?.currencyCode, 'USD');
         expect(emr.nativeValue?.currencyCode, 'AED');
         // A USD holding in a USD portfolio shows no second line.
         final geq = tester.widget<InvestmentRow>(
@@ -303,7 +303,7 @@ void main() {
     testWidgets('rows open when a handler is given', (tester) async {
       final opened = <String>[];
       await tester.pumpApp(
-        HoldingsScreen(onOpen: (h) => opened.add(h.symbol)),
+        HoldingsScreen(onOpen: (h) => opened.add(h.detailKey)),
         surfaceSize: const Size(400, 1800),
       );
       await tester.tap(find.widgetWithText(InvestmentRow, 'DEMO-BND'));

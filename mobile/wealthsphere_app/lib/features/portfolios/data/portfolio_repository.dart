@@ -2,8 +2,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/data/demo_support.dart';
 import '../../../core/data/json_reader.dart';
+import '../../../core/network/api_client.dart';
+import '../../../core/network/asset_class_names.dart';
 import '../../../shared/design_system/components/period_selector.dart';
 import '../../../shared/domain/wealth_models.dart';
+import 'live_portfolio_repository.dart';
 
 /// Portfolio data. A `portfolioId` of [PortfolioRef.consolidatedId] means all portfolios combined.
 abstract interface class PortfolioRepository {
@@ -100,6 +103,9 @@ final portfolioRepositoryProvider = Provider<PortfolioRepository>((ref) {
         ref.read(demoBehaviorProvider.notifier).gate,
       );
     case DataSourceMode.live:
-      liveNotWired('PortfolioRepository');
+      return LivePortfolioRepository(
+        ref.watch(apiClientProvider),
+        ref.watch(assetClassNamesProvider),
+      );
   }
 });

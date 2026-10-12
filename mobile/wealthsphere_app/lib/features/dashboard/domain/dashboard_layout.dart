@@ -25,22 +25,32 @@ class DashboardLayout {
     try {
       final decoded = jsonDecode(text);
       if (decoded is! Map<String, dynamic>) return DashboardLayout.initial();
-      final byName = {for (final s in DashboardSection.values) s.name: s};
-      final order = <DashboardSection>[
-        for (final name in (decoded['order'] as List? ?? const []))
-          ?byName[name],
-      ];
-      for (final s in DashboardSection.values) {
-        if (!order.contains(s)) order.add(s);
-      }
-      final hidden = <DashboardSection>{
-        for (final name in (decoded['hidden'] as List? ?? const []))
-          ?byName[name],
-      };
-      return DashboardLayout(order: order.toSet().toList(), hidden: hidden);
+      return DashboardLayout.fromNames(
+        order: [for (final n in (decoded['order'] as List? ?? const [])) '$n'],
+        hidden: [
+          for (final n in (decoded['hidden'] as List? ?? const [])) '$n',
+        ],
+      );
     } on Object {
       return DashboardLayout.initial();
     }
+  }
+
+  /// Builds a layout from section names (as stored on the device and in the account): unknown
+  /// names are dropped and missing sections are appended.
+  factory DashboardLayout.fromNames({
+    required List<String> order,
+    required List<String> hidden,
+  }) {
+    final byName = {for (final s in DashboardSection.values) s.name: s};
+    final sections = <DashboardSection>[for (final n in order) ?byName[n]];
+    for (final s in DashboardSection.values) {
+      if (!sections.contains(s)) sections.add(s);
+    }
+    return DashboardLayout(
+      order: sections.toSet().toList(),
+      hidden: {for (final n in hidden) ?byName[n]},
+    );
   }
 
   final List<DashboardSection> order;

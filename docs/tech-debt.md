@@ -27,3 +27,6 @@ Every `noqa` / `type: ignore` carries a rule code and is limited to these justif
 | `PLC0415` | `scripts/export_openapi.py` | Imports are deferred until `sys.path` points at `backend/` |
 | `E731` | `scripts/track.py` | Small local lambdas |
 | `fmt: skip` | `tests/test_redaction.py` | Keeps a parameter table readable |
+
+## Mobile live data gaps
+- **TD (P09-T02):** no consolidated performance, allocation or risk endpoints, so Home and Portfolio show no all-portfolio P/L, chart or metrics in live mode (docs/design/live-repositories.md). Needs a backend task; the app must keep not summing figures itself.

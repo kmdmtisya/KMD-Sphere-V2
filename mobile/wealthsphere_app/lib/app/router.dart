@@ -52,7 +52,7 @@ final Map<AppTab, RouteBase Function()> tabRoutes =
             path: 'holdings',
             builder: (context, state) => HoldingsScreen(
               onOpen: (holding) =>
-                  context.go(AppRoutes.investment(holding.symbol)),
+                  context.go(AppRoutes.investment(holding.detailKey)),
             ),
             routes: [
               GoRoute(
