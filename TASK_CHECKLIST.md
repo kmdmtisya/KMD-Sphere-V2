@@ -1113,10 +1113,10 @@
   - [x] P11-T10.2 Reliability gate
   - [x] P11-T10.3 Mobile and AI gates
   - [x] P11-T10.4 Report
-- [ ] **P11-T11** · FXCUR-11 Integration and soak validation (local/CI stack) · `IN_PROGRESS` 🔄
+- [x] **P11-T11** · FXCUR-11 Integration and soak validation (local/CI stack) · `COMPLETED` ✅
   - Deps: P11-T10 · Wave: W9 · Track: QA · Size: S · Approval: no · Gates-start: QG-21, QG-22, QG-23, QG-24, QG-25
-  - Started: 2026-10-13T02:29:53+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-13T02:29:53+04:00 · Completed: 2026-10-13T03:06:35+04:00 · Duration: 36m 42s · Blocker: —
+  - Evidence: Soak option A on local stack (simulated clock, scripted sources with production retry/breaker, 96h): <=1 request per source per healthy window, normal month 2,976 <= 30,000, 0 stale-labelled-current, 0 invented, recovery within one window after 3 outages. Finding fixed: failed refresh keeps its window (outage retries bounded to 4/h across processes). Report docs/fxcur-soak-report.md, reports/fx-soak/fx-soak-96h.json; CI 12h soak test. PR #135. CI all gates pass.
   - [x] P11-T11.1 Quota and backoff soak
   - [x] P11-T11.2 Staleness soak
   - [x] P11-T11.3 Report
