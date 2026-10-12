@@ -10,6 +10,7 @@ export 'disclosure_panel.dart';
 export 'evidence_source_chip.dart';
 export 'goal_progress_card.dart';
 export 'investment_row.dart';
+export 'load_error_view.dart';
 export 'opportunity_card.dart';
 export 'period_selector.dart';
 export 'portfolio_health_card.dart';

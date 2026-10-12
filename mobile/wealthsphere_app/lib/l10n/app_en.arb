@@ -44,6 +44,47 @@
   "@errorGenericMessage": {
     "description": "Body of the generic error state"
   },
+  "errorOfflineTitle": "You're offline",
+  "@errorOfflineTitle": {
+    "description": "Title of the error state when the device cannot reach the service"
+  },
+  "errorOfflineMessage": "We can't reach WealthSphere. Check your connection and try again.",
+  "@errorOfflineMessage": {
+    "description": "Body of the offline error state"
+  },
+  "errorSessionEndedTitle": "Your session has ended",
+  "@errorSessionEndedTitle": {
+    "description": "Title of the error state when the user must sign in again"
+  },
+  "errorSessionEndedMessage": "Sign in again to continue.",
+  "@errorSessionEndedMessage": {
+    "description": "Body of the session-ended error state"
+  },
+  "errorForbiddenTitle": "Not available to you",
+  "@errorForbiddenTitle": {
+    "description": "Title of the error state for a refused request"
+  },
+  "errorForbiddenMessage": "Your account can't open this. If you think it should, contact support.",
+  "@errorForbiddenMessage": {
+    "description": "Body of the forbidden error state"
+  },
+  "errorNotFoundTitle": "We couldn't find that",
+  "@errorNotFoundTitle": {
+    "description": "Title of the error state for a missing item"
+  },
+  "errorNotFoundMessage": "It may have been removed. Go back and try again.",
+  "@errorNotFoundMessage": {
+    "description": "Body of the not-found error state"
+  },
+  "errorBusyMessage": "WealthSphere is busy right now. Try again in a moment.",
+  "@errorBusyMessage": {
+    "description": "Body of the error state when requests are rate limited or the server fails"
+  },
+  "errorSupportReference": "Reference: {id}",
+  "@errorSupportReference": {
+    "description": "Support reference shown under an error",
+    "placeholders": {"id": {"type": "String"}}
+  },
   "emptyDefaultTitle": "Nothing here yet",
   "@emptyDefaultTitle": {
     "description": "Default title of the empty state"

@@ -33,5 +33,7 @@ final opportunityRepositoryProvider = Provider<OpportunityRepository>((ref) {
         ref.watch(demoAssetsProvider),
         ref.read(demoBehaviorProvider.notifier).gate,
       );
+    case DataSourceMode.live:
+      liveNotWired('OpportunityRepository');
   }
 });

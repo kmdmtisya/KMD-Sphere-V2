@@ -143,5 +143,7 @@ final transactionRepositoryProvider = Provider<TransactionRepository>((ref) {
         ref.watch(demoAssetsProvider),
         ref.read(demoBehaviorProvider.notifier).gate,
       );
+    case DataSourceMode.live:
+      liveNotWired('TransactionRepository');
   }
 });

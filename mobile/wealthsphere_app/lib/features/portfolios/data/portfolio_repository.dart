@@ -99,5 +99,7 @@ final portfolioRepositoryProvider = Provider<PortfolioRepository>((ref) {
         ref.watch(demoAssetsProvider),
         ref.read(demoBehaviorProvider.notifier).gate,
       );
+    case DataSourceMode.live:
+      liveNotWired('PortfolioRepository');
   }
 });

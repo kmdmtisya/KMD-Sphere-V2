@@ -837,14 +837,14 @@
 - Exit gates: QG-03.3; QG-11.1,2,5,6 — required by `P09-GATE` (Gates-done)
 - Release gates: —
 
-- [ ] **P09-T01** · API client and live-repository framework · `NOT_STARTED` ⬜
+- [ ] **P09-T01** · API client and live-repository framework · `IN_PROGRESS` 🔄
   - Deps: P04-T06, P05-T10, P03-GATE, P04-GATE, P05-GATE, P06-GATE, P07-GATE, P08-GATE · Wave: W1 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T09:04:59+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P09-T01.1 Client
-  - [ ] P09-T01.2 Error mapping
-  - [ ] P09-T01.3 Mode switch
-  - [ ] P09-T01.4 Tests
+  - [x] P09-T01.1 Client
+  - [x] P09-T01.2 Error mapping
+  - [x] P09-T01.3 Mode switch
+  - [x] P09-T01.4 Tests
 - [ ] **P09-T02** · Live dashboard and portfolio repositories · `NOT_STARTED` ⬜
   - Deps: P09-T01, P06-T09 · Wave: W2 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

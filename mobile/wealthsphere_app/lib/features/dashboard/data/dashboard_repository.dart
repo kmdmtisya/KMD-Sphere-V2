@@ -55,6 +55,8 @@ final dashboardRepositoryProvider = Provider<DashboardRepository>((ref) {
         ref.watch(demoAssetsProvider),
         ref.read(demoBehaviorProvider.notifier).gate,
       );
+    case DataSourceMode.live:
+      liveNotWired('DashboardRepository');
   }
 });
 

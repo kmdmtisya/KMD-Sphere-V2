@@ -102,5 +102,7 @@ final copilotRepositoryProvider = Provider<CopilotRepository>((ref) {
             : const DemoBehavior(latency: Duration.zero),
         behavior.gate,
       );
+    case DataSourceMode.live:
+      liveNotWired('CopilotRepository');
   }
 });

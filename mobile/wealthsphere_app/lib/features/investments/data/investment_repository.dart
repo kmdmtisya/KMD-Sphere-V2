@@ -64,5 +64,7 @@ final investmentRepositoryProvider = Provider<InvestmentRepository>((ref) {
         ref.watch(demoAssetsProvider),
         ref.read(demoBehaviorProvider.notifier).gate,
       );
+    case DataSourceMode.live:
+      liveNotWired('InvestmentRepository');
   }
 });

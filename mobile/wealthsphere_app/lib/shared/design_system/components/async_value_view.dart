@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'load_error_view.dart';
 import 'skeleton_loader.dart';
 import 'state_views.dart';
 
@@ -8,7 +9,8 @@ import 'state_views.dart';
 ///
 /// Rules:
 /// - **No value yet and loading** -> skeleton.
-/// - **No value and failed** -> [ErrorState] (generic message; the exception is never shown).
+/// - **No value and failed** -> [LoadErrorView] (worded for the cause; the exception is
+///   never shown).
 /// - **Has a value**, even while refreshing or after a failed refresh -> the data, so users keep
 ///   seeing the last good figures. Show a `StaleDataBanner` above it when a refresh failed.
 /// - A value that [isEmpty] -> [empty].
@@ -45,7 +47,7 @@ class AsyncValueView<T> extends StatelessWidget {
             current.error!,
             current.stackTrace ?? StackTrace.empty,
           ) ??
-          ErrorState(onRetry: onRetry);
+          LoadErrorView(error: current.error, onRetry: onRetry);
     }
     return loading ?? SkeletonLoader.card();
   }
