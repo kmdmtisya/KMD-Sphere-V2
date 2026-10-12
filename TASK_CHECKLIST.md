@@ -952,12 +952,12 @@
   - [x] P10-T03.1 Five tools
   - [x] P10-T03.2 Denial tests
   - [x] P10-T03.3 Schema tests
-- [ ] **P10-T04** · Forecast tools · `NOT_STARTED` ⬜
+- [ ] **P10-T04** · Forecast tools · `IN_PROGRESS` 🔄
   - Deps: P10-T02, P06-T02 · Wave: W3 · Track: AI · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T17:44:12+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P10-T04.1 Two tools
-  - [ ] P10-T04.2 Tests
+  - [x] P10-T04.1 Two tools
+  - [x] P10-T04.2 Tests
 - [x] **P10-T05** · LLM provider abstraction and OpenAI adapter · `COMPLETED` ✅
   - Deps: P10-T01 · Wave: W2 · Track: AI · Size: M · Approval: no
   - Started: 2026-10-12T16:56:39+04:00 · Completed: 2026-10-12T17:15:17+04:00 · Duration: 18m 38s · Blocker: —

@@ -22,3 +22,6 @@ Code: `backend/app/ai/tools/` (`base.py`, `registry.py`, `factory.py`). Policy: 
 | `get_goal_progress` | optional `goal_id` | all goals with status, or one goal's detail; carries the "estimates, not guarantees" notice |
 
 The analytics mapping (`performance_out`, `allocation_out`, `risk_out`) moved from the API handlers to `portfolio/analytics_views.py` so both use one implementation. Results always carry a time-zone-aware `as_of` (services that report a UTC day as midnight are stamped UTC) and `complete`. A foreign or unknown id answers `not_found`, identical for both; the id is never echoed.
+
+## Forecast tools (P10-T04)
+`backend/app/ai/tools/forecast.py`: `run_compound_forecast` and `run_goal_forecast` call `app.modules.forecasting.service` (the engine behind `/api/v1/forecasts`) and nothing else; their handlers read neither the database nor the user, and a test enforces both. The assumptions are the arguments (from the user, or stated by the model as its own); the same limits as the API apply, and the result echoes the assumptions with the engine's "illustrative, never guaranteed" notice. Identical inputs give identical numbers.

@@ -319,4 +319,6 @@ def test_the_five_tools_are_registered_and_none_takes_a_user() -> None:
     }
     for spec in registry.specs():
         assert not any("user" in name.lower() for name in spec.parameters.get("properties", {}))
-        assert "guarantee" not in spec.description.lower().replace("not guarantees", "")
+        for sentence in spec.description.lower().split(". "):
+            if "guarantee" in sentence:
+                assert " not " in f" {sentence} " or " never " in f" {sentence} ", spec.name
