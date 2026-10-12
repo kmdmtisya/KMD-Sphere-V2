@@ -893,10 +893,10 @@
   - [x] P09-T07.2 Watchlist
   - [x] P09-T07.3 Alerts
   - [x] P09-T07.4 Tests
-- [ ] **P09-T08** · Push notifications and deep links · `IN_PROGRESS` 🔄
+- [x] **P09-T08** · Push notifications and deep links · `COMPLETED` ✅
   - Deps: P09-T01, P04-T06 · Wave: W3 · Track: MOB · Size: L · Approval: no
-  - Started: 2026-10-12T13:15:51+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-12T13:15:51+04:00 · Completed: 2026-10-12T13:48:44+04:00 · Duration: 32m 53s · Blocker: —
+  - Evidence: Devices API with IDOR/audit tests, PushSender used by alert evaluation with payloads of type/ids/route only (asserted no amounts), failing-device isolation; mobile allow-listed deep links that open after authentication and are dropped at sign-out, device registration lifecycle, alert preference switches. Device push (FCM/APNs) is built behind an interface and not switched on: needs the Firebase project and APNs key. flutter test 1653 passed; backend notification tests 79 passed with related suites. Also hardened the URL-credential redaction regex flagged by CodeQL. PR #101, CI all gates pass.
   - [x] P09-T08.1 Backend module
   - [x] P09-T08.2 Mobile handling
   - [x] P09-T08.3 Preferences
