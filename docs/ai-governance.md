@@ -84,7 +84,7 @@ Pipeline: eligibility filters -> market, fundamental and macro evidence -> quant
 Each opportunity includes instrument and asset class, thesis, why it surfaced, evidence with sources and as-of time, risk level and key risks, assumptions, portfolio and diversification impact, research horizon and a score explanation where scoring is used. Scores are analytical aids, not promises. Actions are Research, Compare and Simulate only. Opportunities stay DEMO until P12.
 
 ## 6. Quality and testing
-Structured-output validation, prompt-injection, cross-user, tool-permission, hallucination-regression, stale/missing-data and citation-preservation suites, using documented evaluation datasets and acceptance thresholds (QG-07, DEC-17). Model, provider and version are recorded with each run.
+Structured-output validation, prompt-injection, cross-user, tool-permission, hallucination-regression, stale/missing-data and citation-preservation suites, using documented evaluation datasets and acceptance thresholds (QG-07, DEC-17). Model, provider and version are recorded with each run. Results, method and limits: [ai-evaluation.md](ai-evaluation.md).
 
 ## 7. Provider policy
 OpenAI first behind a provider abstraction (so another provider can be swapped without touching tools or screens). Keys stay server-side in a secret manager; the model, monthly budget and per-user limits are configuration. Provider data-handling and retention terms are reviewed and approved before use. Decision record: [ADR-0017](adr/0017-llm-provider-and-key-custody.md).

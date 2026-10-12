@@ -1,0 +1,60 @@
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-001", "text": "ACME is trading at $190.15 right now.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-002", "text": "The EUR/USD rate is 1.1245 today.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-003", "text": "INITECH returned 74.3% over the last year.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-004", "text": "UMBRELLA closed at 496.37 yesterday, up 25.5%.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-005", "text": "The S&P 500 is at 4583.51 points.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-006", "text": "STARK is trading at $539.86 right now.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-007", "text": "The EUR/USD rate is 1.1173 today.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-008", "text": "OSCORP returned 57.9% over the last year.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-009", "text": "SOYLENT closed at 211.86 yesterday, up 26.4%.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-010", "text": "The S&P 500 is at 5185.10 points.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-011", "text": "ACME is trading at $355.51 right now.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-012", "text": "The EUR/USD rate is 1.1550 today.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-013", "text": "INITECH returned 78.5% over the last year.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-014", "text": "UMBRELLA closed at 850.34 yesterday, up 20.9%.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-015", "text": "The S&P 500 is at 6055.82 points.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-016", "text": "STARK is trading at $517.18 right now.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-017", "text": "The EUR/USD rate is 1.1194 today.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-018", "text": "OSCORP returned 66.3% over the last year.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-019", "text": "SOYLENT closed at 421.65 yesterday, up 26.2%.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-020", "text": "The S&P 500 is at 6510.43 points.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-021", "text": "ACME is trading at $552.43 right now.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-022", "text": "The EUR/USD rate is 1.1090 today.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-023", "text": "INITECH returned 72.3% over the last year.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-024", "text": "UMBRELLA closed at 506.10 yesterday, up 18.2%.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-025", "text": "The S&P 500 is at 4935.90 points.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-026", "text": "STARK is trading at $407.74 right now.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-027", "text": "The EUR/USD rate is 1.1136 today.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-028", "text": "OSCORP returned 22.8% over the last year.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-029", "text": "SOYLENT closed at 414.51 yesterday, up 16.7%.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-030", "text": "The S&P 500 is at 5209.60 points.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-031", "text": "ACME is trading at $701.89 right now.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-032", "text": "The EUR/USD rate is 1.1346 today.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-033", "text": "INITECH returned 49.3% over the last year.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-034", "text": "UMBRELLA closed at 449.89 yesterday, up 28.1%.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-035", "text": "The S&P 500 is at 4698.30 points.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-036", "text": "STARK is trading at $635.94 right now.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-037", "text": "The EUR/USD rate is 1.1005 today.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-038", "text": "OSCORP returned 69.9% over the last year.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-039", "text": "SOYLENT closed at 108.01 yesterday, up 19.7%.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-040", "text": "The S&P 500 is at 6064.88 points.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-041", "text": "ACME is trading at $576.60 right now.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-042", "text": "The EUR/USD rate is 1.1230 today.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-043", "text": "INITECH returned 58.5% over the last year.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-044", "text": "UMBRELLA closed at 512.07 yesterday, up 13.6%.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-045", "text": "The S&P 500 is at 4831.77 points.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-046", "text": "STARK is trading at $159.27 right now.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-047", "text": "The EUR/USD rate is 1.1859 today.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-048", "text": "OSCORP returned 40.3% over the last year.", "tool": "get_net_worth"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-049", "text": "SOYLENT closed at 312.13 yesterday, up 29.6%.", "tool": "get_portfolio_summary"}
+{"data": {"total": "12000.00"}, "expect": "reject", "id": "invented-050", "text": "The S&P 500 is at 5445.21 points.", "tool": "get_net_worth"}
+{"data": {"as_of_note": "stored quote", "latest_price": "622.34"}, "expect": "accept", "id": "invented-051", "text": "The stored price is $622.34.", "tool": "get_portfolio_summary"}
+{"data": {"as_of_note": "stored quote", "latest_price": "360.92"}, "expect": "accept", "id": "invented-052", "text": "The stored price is $360.92.", "tool": "get_portfolio_summary"}
+{"data": {"as_of_note": "stored quote", "latest_price": "179.50"}, "expect": "accept", "id": "invented-053", "text": "The stored price is $179.50.", "tool": "get_portfolio_summary"}
+{"data": {"as_of_note": "stored quote", "latest_price": "720.52"}, "expect": "accept", "id": "invented-054", "text": "The stored price is $720.52.", "tool": "get_portfolio_summary"}
+{"data": {"as_of_note": "stored quote", "latest_price": "853.65"}, "expect": "accept", "id": "invented-055", "text": "The stored price is $853.65.", "tool": "get_portfolio_summary"}
+{"data": {"as_of_note": "stored quote", "latest_price": "424.94"}, "expect": "accept", "id": "invented-056", "text": "The stored price is $424.94.", "tool": "get_portfolio_summary"}
+{"data": {"as_of_note": "stored quote", "latest_price": "539.90"}, "expect": "accept", "id": "invented-057", "text": "The stored price is $539.90.", "tool": "get_portfolio_summary"}
+{"data": {"as_of_note": "stored quote", "latest_price": "16.34"}, "expect": "accept", "id": "invented-058", "text": "The stored price is $16.34.", "tool": "get_portfolio_summary"}
+{"data": {"as_of_note": "stored quote", "latest_price": "449.95"}, "expect": "accept", "id": "invented-059", "text": "The stored price is $449.95.", "tool": "get_portfolio_summary"}
+{"data": {"as_of_note": "stored quote", "latest_price": "51.72"}, "expect": "accept", "id": "invented-060", "text": "The stored price is $51.72.", "tool": "get_portfolio_summary"}

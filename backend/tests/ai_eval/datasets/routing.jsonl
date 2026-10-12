@@ -1,0 +1,100 @@
+{"expected_tools": ["get_portfolio_summary"], "id": "routing-001", "kind": "portfolio", "question": "What is my portfolio worth?"}
+{"expected_tools": ["get_portfolio_summary"], "id": "routing-002", "kind": "portfolio", "question": "How much cash do I have in my portfolio?"}
+{"expected_tools": ["get_portfolio_summary"], "id": "routing-003", "kind": "portfolio", "question": "Give me an overview of my investments."}
+{"expected_tools": ["get_portfolio_summary"], "id": "routing-004", "kind": "portfolio", "question": "What are my total gains so far?"}
+{"expected_tools": ["get_portfolio_summary"], "id": "routing-005", "kind": "portfolio", "question": "How much dividend and interest income have I received?"}
+{"expected_tools": ["get_portfolio_summary"], "id": "routing-006", "kind": "portfolio", "question": "Which of my portfolios is the biggest?"}
+{"expected_tools": ["get_portfolio_summary"], "id": "routing-007", "kind": "portfolio", "question": "Is any of my portfolio data stale?"}
+{"expected_tools": ["get_portfolio_summary"], "id": "routing-008", "kind": "portfolio", "question": "What is the cost basis of my holdings?"}
+{"expected_tools": ["get_portfolio_summary"], "id": "routing-009", "kind": "portfolio", "question": "What is the current value of all my holdings?"}
+{"expected_tools": ["get_portfolio_summary"], "id": "routing-010", "kind": "portfolio", "question": "How much have I invested in total?"}
+{"expected_tools": ["get_portfolio_summary"], "id": "routing-011", "kind": "portfolio", "question": "What is my unrealised profit?"}
+{"expected_tools": ["get_portfolio_summary"], "id": "routing-012", "kind": "portfolio", "question": "When was my portfolio last valued?"}
+{"expected_tools": ["get_portfolio_summary"], "id": "routing-013", "kind": "portfolio", "question": "List my portfolios."}
+{"expected_tools": ["get_portfolio_summary"], "id": "routing-014", "kind": "portfolio", "question": "Do I have any assets without a price?"}
+{"expected_tools": ["get_portfolio_allocation", "get_portfolio_summary"], "id": "routing-015", "kind": "allocation", "question": "How is my portfolio split between asset classes?"}
+{"expected_tools": ["get_portfolio_allocation", "get_portfolio_summary"], "id": "routing-016", "kind": "allocation", "question": "What share of my portfolio is in each currency?"}
+{"expected_tools": ["get_portfolio_allocation", "get_portfolio_summary"], "id": "routing-017", "kind": "allocation", "question": "Which country am I most exposed to?"}
+{"expected_tools": ["get_portfolio_allocation", "get_portfolio_summary"], "id": "routing-018", "kind": "allocation", "question": "Am I too concentrated in one sector?"}
+{"expected_tools": ["get_portfolio_allocation", "get_portfolio_summary"], "id": "routing-019", "kind": "allocation", "question": "Show my allocation by sector."}
+{"expected_tools": ["get_portfolio_allocation", "get_portfolio_summary"], "id": "routing-020", "kind": "allocation", "question": "What percentage of my money is in bonds?"}
+{"expected_tools": ["get_portfolio_allocation", "get_portfolio_summary"], "id": "routing-021", "kind": "allocation", "question": "How diversified am I across countries?"}
+{"expected_tools": ["get_portfolio_allocation", "get_portfolio_summary"], "id": "routing-022", "kind": "allocation", "question": "What is my biggest single position as a share of the portfolio?"}
+{"expected_tools": ["get_portfolio_allocation", "get_portfolio_summary"], "id": "routing-023", "kind": "allocation", "question": "Break down my portfolio by currency exposure."}
+{"expected_tools": ["get_portfolio_performance", "get_portfolio_summary"], "id": "routing-024", "kind": "performance", "question": "How has my portfolio performed since I started?"}
+{"expected_tools": ["get_portfolio_performance", "get_portfolio_summary"], "id": "routing-025", "kind": "performance", "question": "What is my money-weighted return?"}
+{"expected_tools": ["get_portfolio_performance", "get_portfolio_summary"], "id": "routing-026", "kind": "performance", "question": "How volatile is my portfolio?"}
+{"expected_tools": ["get_portfolio_performance", "get_portfolio_summary"], "id": "routing-027", "kind": "performance", "question": "What was my worst drawdown?"}
+{"expected_tools": ["get_portfolio_performance", "get_portfolio_summary"], "id": "routing-028", "kind": "performance", "question": "Is my portfolio return good compared with its risk?"}
+{"expected_tools": ["get_portfolio_performance", "get_portfolio_summary"], "id": "routing-029", "kind": "performance", "question": "What is my annualised return?"}
+{"expected_tools": ["get_portfolio_performance", "get_portfolio_summary"], "id": "routing-030", "kind": "performance", "question": "How much did my portfolio lose in its worst period?"}
+{"expected_tools": ["get_portfolio_performance", "get_portfolio_summary"], "id": "routing-031", "kind": "performance", "question": "Is my portfolio more volatile than it should be?"}
+{"expected_tools": ["get_portfolio_performance", "get_portfolio_summary"], "id": "routing-032", "kind": "performance", "question": "What is my time-weighted return?"}
+{"expected_tools": ["get_net_worth"], "id": "routing-033", "kind": "net_worth", "question": "What is my net worth?"}
+{"expected_tools": ["get_net_worth"], "id": "routing-034", "kind": "net_worth", "question": "How much do I owe in total?"}
+{"expected_tools": ["get_net_worth"], "id": "routing-035", "kind": "net_worth", "question": "What are my assets minus my liabilities?"}
+{"expected_tools": ["get_net_worth"], "id": "routing-036", "kind": "net_worth", "question": "Which exchange rates were used for my net worth?"}
+{"expected_tools": ["get_net_worth"], "id": "routing-037", "kind": "net_worth", "question": "Is my net worth figure complete?"}
+{"expected_tools": ["get_net_worth"], "id": "routing-038", "kind": "net_worth", "question": "How much of my net worth is real estate?"}
+{"expected_tools": ["get_net_worth"], "id": "routing-039", "kind": "net_worth", "question": "What debts reduce my net worth the most?"}
+{"expected_tools": ["get_net_worth"], "id": "routing-040", "kind": "net_worth", "question": "Convert my net worth to EUR."}
+{"expected_tools": ["get_net_worth"], "id": "routing-041", "kind": "net_worth", "question": "How much are my liabilities?"}
+{"expected_tools": ["get_net_worth"], "id": "routing-042", "kind": "net_worth", "question": "What is the value of everything I own minus what I owe?"}
+{"expected_tools": ["get_net_worth"], "id": "routing-043", "kind": "net_worth", "question": "Is any of my net worth based on an old valuation?"}
+{"expected_tools": ["get_net_worth"], "id": "routing-044", "kind": "net_worth", "question": "How big is my mortgage compared with my assets?"}
+{"expected_tools": ["get_goal_progress"], "id": "routing-045", "kind": "goal", "question": "How am I doing on my goals?"}
+{"expected_tools": ["get_goal_progress"], "id": "routing-046", "kind": "goal", "question": "Am I on track for my house deposit?"}
+{"expected_tools": ["get_goal_progress"], "id": "routing-047", "kind": "goal", "question": "How much am I still short of my retirement goal?"}
+{"expected_tools": ["get_goal_progress"], "id": "routing-048", "kind": "goal", "question": "Which of my goals is behind?"}
+{"expected_tools": ["get_goal_progress"], "id": "routing-049", "kind": "goal", "question": "What is the status of my emergency fund goal?"}
+{"expected_tools": ["get_goal_progress"], "id": "routing-050", "kind": "goal", "question": "How much do I need to save each month for my goals?"}
+{"expected_tools": ["get_goal_progress"], "id": "routing-051", "kind": "goal", "question": "Will I reach my education fund goal?"}
+{"expected_tools": ["get_goal_progress"], "id": "routing-052", "kind": "goal", "question": "How far along is my house goal?"}
+{"expected_tools": ["get_goal_progress"], "id": "routing-053", "kind": "goal", "question": "Which goals are completed?"}
+{"expected_tools": ["get_goal_progress"], "id": "routing-054", "kind": "goal", "question": "What is the gap on my retirement goal?"}
+{"expected_tools": ["run_compound_forecast"], "id": "routing-055", "kind": "forecast", "question": "If I invest 500 a month for 20 years at 7%, how much would I have?"}
+{"expected_tools": ["run_compound_forecast"], "id": "routing-056", "kind": "forecast", "question": "What would 10,000 grow to in 15 years at 5% a year?"}
+{"expected_tools": ["run_compound_forecast"], "id": "routing-057", "kind": "forecast", "question": "Project 2,000 monthly contributions over 30 years at 6%."}
+{"expected_tools": ["run_compound_forecast"], "id": "routing-058", "kind": "forecast", "question": "How would adding 200 a month change a 10-year plan at 4%?"}
+{"expected_tools": ["run_compound_forecast"], "id": "routing-059", "kind": "forecast", "question": "Show a compound growth scenario with 0.5% fees and 2% inflation."}
+{"expected_tools": ["run_compound_forecast"], "id": "routing-060", "kind": "forecast", "question": "Run a projection: start 5,000, add 300 monthly, 8% for 25 years."}
+{"expected_tools": ["run_compound_forecast"], "id": "routing-061", "kind": "forecast", "question": "What if my return is only 3% for 12 years with 1,000 a month?"}
+{"expected_tools": ["run_compound_forecast"], "id": "routing-062", "kind": "forecast", "question": "How much would 50,000 be worth in 10 years at 6% with no contributions?"}
+{"expected_tools": ["run_compound_forecast"], "id": "routing-063", "kind": "forecast", "question": "Simulate saving 750 a month for 18 years at 5.5%."}
+{"expected_tools": ["run_compound_forecast"], "id": "routing-064", "kind": "forecast", "question": "Illustrate growth of a 25,000 lump sum over 40 years at 7%."}
+{"expected_tools": ["run_goal_forecast"], "id": "routing-065", "kind": "forecast", "question": "How much must I save monthly to reach 500,000 in 20 years at 6%?"}
+{"expected_tools": ["run_goal_forecast"], "id": "routing-066", "kind": "forecast", "question": "What contribution gets me 100,000 in 8 years from 20,000 at 5%?"}
+{"expected_tools": ["run_goal_forecast"], "id": "routing-067", "kind": "forecast", "question": "To reach 1,000,000 in 30 years at 7%, what do I need to put in each month?"}
+{"expected_tools": ["run_goal_forecast"], "id": "routing-068", "kind": "forecast", "question": "I want 60,000 in 5 years starting from 10,000 at 4%. What monthly amount?"}
+{"expected_tools": ["run_goal_forecast"], "id": "routing-069", "kind": "forecast", "question": "Required yearly contribution for 250,000 in 15 years at 6%?"}
+{"expected_tools": ["run_goal_forecast"], "id": "routing-070", "kind": "forecast", "question": "How much per month for a 40,000 car fund in 4 years at 3%?"}
+{"expected_tools": ["run_goal_forecast"], "id": "routing-071", "kind": "forecast", "question": "What do I need to save for a 150,000 deposit in 10 years at 5%?"}
+{"expected_tools": ["run_goal_forecast"], "id": "routing-072", "kind": "forecast", "question": "Contribution needed for 80,000 in 6 years from 5,000 at 4.5%?"}
+{"expected_tools": ["run_goal_forecast"], "id": "routing-073", "kind": "forecast", "question": "To retire with 2 million in 25 years at 6.5%, what is the monthly saving?"}
+{"expected_tools": ["run_goal_forecast"], "id": "routing-074", "kind": "forecast", "question": "Monthly amount to hit 30,000 in 3 years from nothing at 2%?"}
+{"expected_tools": ["get_goal_progress", "get_net_worth"], "id": "routing-075", "kind": "multi", "question": "Compare my net worth with my goal progress."}
+{"expected_tools": ["get_net_worth", "get_portfolio_summary"], "id": "routing-076", "kind": "multi", "question": "Give me my net worth and my portfolio value."}
+{"expected_tools": ["get_goal_progress", "get_portfolio_summary"], "id": "routing-077", "kind": "multi", "question": "How is my portfolio doing and am I on track for my goals?"}
+{"expected_tools": ["get_net_worth", "get_portfolio_allocation", "get_portfolio_summary"], "id": "routing-078", "kind": "multi", "question": "What is my net worth and how is it allocated?"}
+{"expected_tools": ["get_goal_progress", "get_net_worth", "get_portfolio_summary"], "id": "routing-079", "kind": "multi", "question": "Summarise my wealth: portfolios, net worth and goals."}
+{"expected_tools": ["get_goal_progress", "get_portfolio_performance", "get_portfolio_summary"], "id": "routing-080", "kind": "multi", "question": "Show my performance and what my goals need from it."}
+{"expected_tools": ["get_portfolio_allocation", "get_portfolio_performance", "get_portfolio_summary"], "id": "routing-081", "kind": "multi", "question": "Is my allocation risky and how has it performed?"}
+{"expected_tools": ["get_goal_progress", "get_net_worth"], "id": "routing-082", "kind": "multi", "question": "Give me both my total debts and my goal gaps."}
+{"expected_tools": ["get_portfolio_allocation", "get_portfolio_summary"], "id": "routing-083", "kind": "multi", "question": "List my portfolios and their allocation."}
+{"expected_tools": ["get_goal_progress", "get_net_worth"], "id": "routing-084", "kind": "multi", "question": "Does my net worth cover my retirement goal?"}
+{"expected_tools": [], "id": "routing-085", "kind": "ambiguous", "question": "Tell me about my money."}
+{"expected_tools": [], "id": "routing-086", "kind": "ambiguous", "question": "How am I doing?"}
+{"expected_tools": [], "id": "routing-087", "kind": "ambiguous", "question": "Anything I should know?"}
+{"expected_tools": [], "id": "routing-088", "kind": "ambiguous", "question": "What about last month?"}
+{"expected_tools": [], "id": "routing-089", "kind": "ambiguous", "question": "Is it good?"}
+{"expected_tools": [], "id": "routing-090", "kind": "ambiguous", "question": "Fix it."}
+{"expected_tools": [], "id": "routing-091", "kind": "ambiguous", "question": "And the other one?"}
+{"expected_tools": [], "id": "routing-092", "kind": "ambiguous", "question": "Why?"}
+{"expected_tools": [], "id": "routing-093", "kind": "out_of_scope", "question": "What is the weather in Dubai tomorrow?"}
+{"expected_tools": [], "id": "routing-094", "kind": "out_of_scope", "question": "Write me a poem about the sea."}
+{"expected_tools": [], "id": "routing-095", "kind": "out_of_scope", "question": "Who won the football match last night?"}
+{"expected_tools": [], "id": "routing-096", "kind": "out_of_scope", "question": "How do I cook a risotto?"}
+{"expected_tools": [], "id": "routing-097", "kind": "out_of_scope", "question": "Translate good morning into French."}
+{"expected_tools": [], "id": "routing-098", "kind": "out_of_scope", "question": "What is the capital of Australia?"}
+{"expected_tools": [], "id": "routing-099", "kind": "out_of_scope", "question": "Recommend a good laptop."}
+{"expected_tools": [], "id": "routing-100", "kind": "out_of_scope", "question": "Explain how photosynthesis works."}

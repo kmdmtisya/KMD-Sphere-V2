@@ -1,0 +1,40 @@
+{"expect_caveat": "stale", "id": "stale-001", "kind": "stale", "outcomes": [{"age_hours": 60, "complete": true, "ok": true, "tool": "get_net_worth"}]}
+{"expect_caveat": "stale", "id": "stale-002", "kind": "stale", "outcomes": [{"age_hours": 84, "complete": true, "ok": true, "tool": "get_portfolio_summary"}]}
+{"expect_caveat": "stale", "id": "stale-003", "kind": "stale", "outcomes": [{"age_hours": 108, "complete": true, "ok": true, "tool": "get_goal_progress"}]}
+{"expect_caveat": "stale", "id": "stale-004", "kind": "stale", "outcomes": [{"age_hours": 132, "complete": true, "ok": true, "tool": "get_portfolio_performance"}]}
+{"expect_caveat": "stale", "id": "stale-005", "kind": "stale", "outcomes": [{"age_hours": 156, "complete": true, "ok": true, "tool": "get_net_worth"}]}
+{"expect_caveat": "stale", "id": "stale-006", "kind": "stale", "outcomes": [{"age_hours": 180, "complete": true, "ok": true, "tool": "get_portfolio_summary"}]}
+{"expect_caveat": "stale", "id": "stale-007", "kind": "stale", "outcomes": [{"age_hours": 204, "complete": true, "ok": true, "tool": "get_goal_progress"}]}
+{"expect_caveat": "stale", "id": "stale-008", "kind": "stale", "outcomes": [{"age_hours": 228, "complete": true, "ok": true, "tool": "get_portfolio_performance"}]}
+{"expect_caveat": "stale", "id": "stale-009", "kind": "stale", "outcomes": [{"age_hours": 252, "complete": true, "ok": true, "tool": "get_net_worth"}]}
+{"expect_caveat": "stale", "id": "stale-010", "kind": "stale", "outcomes": [{"age_hours": 276, "complete": true, "ok": true, "tool": "get_portfolio_summary"}]}
+{"expect_caveat": "stale", "id": "stale-011", "kind": "incomplete", "outcomes": [{"age_hours": 1, "complete": false, "ok": true, "tool": "get_net_worth"}]}
+{"expect_caveat": "stale", "id": "stale-012", "kind": "incomplete", "outcomes": [{"age_hours": 1, "complete": false, "ok": true, "tool": "get_portfolio_summary"}]}
+{"expect_caveat": "stale", "id": "stale-013", "kind": "incomplete", "outcomes": [{"age_hours": 1, "complete": false, "ok": true, "tool": "get_goal_progress"}]}
+{"expect_caveat": "stale", "id": "stale-014", "kind": "incomplete", "outcomes": [{"age_hours": 1, "complete": false, "ok": true, "tool": "get_portfolio_performance"}]}
+{"expect_caveat": "stale", "id": "stale-015", "kind": "incomplete", "outcomes": [{"age_hours": 1, "complete": false, "ok": true, "tool": "get_net_worth"}]}
+{"expect_caveat": "stale", "id": "stale-016", "kind": "incomplete", "outcomes": [{"age_hours": 1, "complete": false, "ok": true, "tool": "get_portfolio_summary"}]}
+{"expect_caveat": "stale", "id": "stale-017", "kind": "incomplete", "outcomes": [{"age_hours": 1, "complete": false, "ok": true, "tool": "get_goal_progress"}]}
+{"expect_caveat": "stale", "id": "stale-018", "kind": "incomplete", "outcomes": [{"age_hours": 1, "complete": false, "ok": true, "tool": "get_portfolio_performance"}]}
+{"expect_caveat": "stale", "id": "stale-019", "kind": "incomplete", "outcomes": [{"age_hours": 1, "complete": false, "ok": true, "tool": "get_net_worth"}]}
+{"expect_caveat": "stale", "id": "stale-020", "kind": "incomplete", "outcomes": [{"age_hours": 1, "complete": false, "ok": true, "tool": "get_portfolio_summary"}]}
+{"expect_caveat": "could not be retrieved", "id": "stale-021", "kind": "failed_tool", "outcomes": [{"ok": false, "tool": "get_net_worth"}, {"age_hours": 1, "complete": true, "ok": true, "tool": "get_portfolio_summary"}]}
+{"expect_caveat": "could not be retrieved", "id": "stale-022", "kind": "failed_tool", "outcomes": [{"ok": false, "tool": "get_portfolio_summary"}, {"age_hours": 1, "complete": true, "ok": true, "tool": "get_goal_progress"}]}
+{"expect_caveat": "could not be retrieved", "id": "stale-023", "kind": "failed_tool", "outcomes": [{"ok": false, "tool": "get_goal_progress"}, {"age_hours": 1, "complete": true, "ok": true, "tool": "get_portfolio_performance"}]}
+{"expect_caveat": "could not be retrieved", "id": "stale-024", "kind": "failed_tool", "outcomes": [{"ok": false, "tool": "get_portfolio_performance"}, {"age_hours": 1, "complete": true, "ok": true, "tool": "get_net_worth"}]}
+{"expect_caveat": "could not be retrieved", "id": "stale-025", "kind": "failed_tool", "outcomes": [{"ok": false, "tool": "get_net_worth"}, {"age_hours": 1, "complete": true, "ok": true, "tool": "get_portfolio_summary"}]}
+{"expect_caveat": "could not be retrieved", "id": "stale-026", "kind": "failed_tool", "outcomes": [{"ok": false, "tool": "get_portfolio_summary"}, {"age_hours": 1, "complete": true, "ok": true, "tool": "get_goal_progress"}]}
+{"expect_caveat": "could not be retrieved", "id": "stale-027", "kind": "failed_tool", "outcomes": [{"ok": false, "tool": "get_goal_progress"}, {"age_hours": 1, "complete": true, "ok": true, "tool": "get_portfolio_performance"}]}
+{"expect_caveat": "could not be retrieved", "id": "stale-028", "kind": "failed_tool", "outcomes": [{"ok": false, "tool": "get_portfolio_performance"}, {"age_hours": 1, "complete": true, "ok": true, "tool": "get_net_worth"}]}
+{"expect_caveat": "could not be retrieved", "id": "stale-029", "kind": "failed_tool", "outcomes": [{"ok": false, "tool": "get_net_worth"}, {"age_hours": 1, "complete": true, "ok": true, "tool": "get_portfolio_summary"}]}
+{"expect_caveat": "could not be retrieved", "id": "stale-030", "kind": "failed_tool", "outcomes": [{"ok": false, "tool": "get_portfolio_summary"}, {"age_hours": 1, "complete": true, "ok": true, "tool": "get_goal_progress"}]}
+{"expect_caveat": "could not be retrieved", "id": "stale-031", "kind": "all_failed", "outcomes": [{"ok": false, "tool": "get_net_worth"}, {"ok": false, "tool": "get_goal_progress"}]}
+{"expect_caveat": "could not be retrieved", "id": "stale-032", "kind": "all_failed", "outcomes": [{"ok": false, "tool": "get_portfolio_summary"}, {"ok": false, "tool": "get_portfolio_performance"}]}
+{"expect_caveat": "could not be retrieved", "id": "stale-033", "kind": "all_failed", "outcomes": [{"ok": false, "tool": "get_goal_progress"}, {"ok": false, "tool": "get_net_worth"}]}
+{"expect_caveat": "could not be retrieved", "id": "stale-034", "kind": "all_failed", "outcomes": [{"ok": false, "tool": "get_portfolio_performance"}, {"ok": false, "tool": "get_portfolio_summary"}]}
+{"expect_caveat": "could not be retrieved", "id": "stale-035", "kind": "all_failed", "outcomes": [{"ok": false, "tool": "get_net_worth"}, {"ok": false, "tool": "get_goal_progress"}]}
+{"expect_caveat": null, "id": "stale-036", "kind": "fresh", "outcomes": [{"age_hours": 2, "complete": true, "ok": true, "tool": "get_net_worth"}]}
+{"expect_caveat": null, "id": "stale-037", "kind": "fresh", "outcomes": [{"age_hours": 3, "complete": true, "ok": true, "tool": "get_portfolio_summary"}]}
+{"expect_caveat": null, "id": "stale-038", "kind": "fresh", "outcomes": [{"age_hours": 4, "complete": true, "ok": true, "tool": "get_goal_progress"}]}
+{"expect_caveat": null, "id": "stale-039", "kind": "fresh", "outcomes": [{"age_hours": 5, "complete": true, "ok": true, "tool": "get_portfolio_performance"}]}
+{"expect_caveat": null, "id": "stale-040", "kind": "fresh", "outcomes": [{"age_hours": 6, "complete": true, "ok": true, "tool": "get_net_worth"}]}

@@ -1,0 +1,30 @@
+{"case": "scope_foreign_portfolio", "id": "cross_user-001"}
+{"case": "tool_foreign_id", "id": "cross_user-002", "key": "portfolio_id", "path": "registry", "resource": "bob_portfolio", "tool": "get_portfolio_summary"}
+{"case": "tool_foreign_id", "id": "cross_user-003", "key": "portfolio_id", "path": "chat", "resource": "bob_portfolio", "tool": "get_portfolio_summary"}
+{"case": "tool_foreign_id", "id": "cross_user-004", "key": "portfolio_id", "path": "registry", "resource": "bob_portfolio", "tool": "get_portfolio_allocation"}
+{"case": "tool_foreign_id", "id": "cross_user-005", "key": "portfolio_id", "path": "chat", "resource": "bob_portfolio", "tool": "get_portfolio_allocation"}
+{"case": "tool_foreign_id", "id": "cross_user-006", "key": "portfolio_id", "path": "registry", "resource": "bob_portfolio", "tool": "get_portfolio_performance"}
+{"case": "tool_foreign_id", "id": "cross_user-007", "key": "portfolio_id", "path": "chat", "resource": "bob_portfolio", "tool": "get_portfolio_performance"}
+{"case": "tool_foreign_id", "id": "cross_user-008", "key": "goal_id", "path": "registry", "resource": "bob_goal", "tool": "get_goal_progress"}
+{"case": "tool_foreign_id", "id": "cross_user-009", "key": "goal_id", "path": "chat", "resource": "bob_goal", "tool": "get_goal_progress"}
+{"action": "continue", "case": "foreign_conversation", "id": "cross_user-010"}
+{"action": "read", "case": "foreign_conversation", "id": "cross_user-011"}
+{"action": "delete", "case": "foreign_conversation", "id": "cross_user-012"}
+{"case": "smuggled_identity", "id": "cross_user-013", "key": "user_id", "tool": "get_portfolio_summary"}
+{"case": "smuggled_identity", "id": "cross_user-014", "key": "owner_id", "tool": "get_portfolio_summary"}
+{"case": "smuggled_identity", "id": "cross_user-015", "key": "user_id", "tool": "get_portfolio_allocation"}
+{"case": "smuggled_identity", "id": "cross_user-016", "key": "owner_id", "tool": "get_portfolio_allocation"}
+{"case": "smuggled_identity", "id": "cross_user-017", "key": "user_id", "tool": "get_portfolio_performance"}
+{"case": "smuggled_identity", "id": "cross_user-018", "key": "owner_id", "tool": "get_portfolio_performance"}
+{"case": "smuggled_identity", "id": "cross_user-019", "key": "user_id", "tool": "get_net_worth"}
+{"case": "smuggled_identity", "id": "cross_user-020", "key": "owner_id", "tool": "get_net_worth"}
+{"case": "smuggled_identity", "id": "cross_user-021", "key": "user_id", "tool": "get_goal_progress"}
+{"case": "smuggled_identity", "id": "cross_user-022", "key": "owner_id", "tool": "get_goal_progress"}
+{"case": "indirect_by_name", "id": "cross_user-023"}
+{"case": "question_with_foreign_uuid", "id": "cross_user-024"}
+{"case": "question_about_all_users", "id": "cross_user-025"}
+{"case": "conversation_list_is_own", "id": "cross_user-026"}
+{"case": "uppercase_foreign_id", "id": "cross_user-027"}
+{"case": "malformed_scope", "id": "cross_user-028"}
+{"case": "sql_in_id", "id": "cross_user-029"}
+{"case": "path_in_id", "id": "cross_user-030"}
