@@ -73,3 +73,14 @@ Money is `NUMERIC(28,8)`, quantities `NUMERIC(28,12)`, rates `NUMERIC(28,12)` (A
 ## 4. Not in this migration
 
 Market prices (P09), income events, liabilities, goals, AI tables and notifications arrive with their own phases. Account deletion, retention and erasure: P15-T05.
+
+## 5. Reporting currency and FX additions (P11-T02, migration 0015)
+
+| Table | Holds | Rules |
+|---|---|---|
+| `currencies` | ISO 4217 code (key), name, symbol, `decimal_places` (0-4), `is_active` | Reference data: a new currency is a row, not a code change. Seeded with AED, AUD, CAD, CHF, EUR, GBP, JPY, KES, USD, ZAR; `decimal_places` equals ISO minor units (JPY 0) |
+| `user_currency_preferences` | one row per user: `reporting_currency` (FK to `currencies`), up to 5 `recent_currencies` | Cascades with the account; a currency in use cannot be deleted |
+| `fx_rates` (extended) | adds `rate_type` (`mid_market`, `indicative`, `delayed`; existing rows `indicative`) and `rate_path` for a provider-derived rate (3-4 currencies) | Status (current, cached, stale) depends on the clock, so it is computed on read and never stored. Lookups by (base, quote, rate_timestamp) use the existing index |
+| `fx_conversion_audit` | user, source and target currency, amounts (NUMERIC), rate, rate time, provider, snapshot id, `conversion_type` (`ai_answer`, `report`, `converter`) | DEC-28: only conversions that become records; display switches are not audited. Append-only (database triggers refuse UPDATE, DELETE, TRUNCATE); no FK to the user, like `audit_events` |
+
+All amounts and rates are NUMERIC; a schema test fails on any floating-point column in these tables. Rate snapshots (`fx_snapshots`) arrive with the conversion engine (P11-T04).

@@ -1031,15 +1031,15 @@
   - [x] P11-T01.2 Reuse/extension map
   - [x] P11-T01.3 ADR-0010
   - [x] P11-T01.4 Decisions DEC-25..DEC-29
-- [ ] **P11-T02** · FXCUR-02 Currency data model · `NOT_STARTED` ⬜
+- [ ] **P11-T02** · FXCUR-02 Currency data model · `IN_PROGRESS` 🔄
   - Deps: P11-T01 · Wave: W2 · Track: DB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T21:45:05+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P11-T02.1 currencies table and seed
-  - [ ] P11-T02.2 user_currency_preferences
-  - [ ] P11-T02.3 fx_rates extension
-  - [ ] P11-T02.4 fx_conversion_audit
-  - [ ] P11-T02.5 Indexes and migration tests
+  - [x] P11-T02.1 currencies table and seed
+  - [x] P11-T02.2 user_currency_preferences
+  - [x] P11-T02.3 fx_rates extension
+  - [x] P11-T02.4 fx_conversion_audit
+  - [x] P11-T02.5 Indexes and migration tests
 - [ ] **P11-T03** · FXCUR-03 FX provider integration, refresh and caching · `NOT_STARTED` ⬜
   - Deps: P11-T02 · Wave: W3 · Track: BE · Size: L · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —

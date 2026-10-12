@@ -21,6 +21,7 @@ import app.ai.conversations.models  # noqa: E402
 import app.core.audit  # noqa: E402
 import app.modules.alerts.models  # noqa: E402
 import app.modules.assets.models  # noqa: E402
+import app.modules.fx.models  # noqa: E402
 import app.modules.goals.models  # noqa: E402
 import app.modules.identity.models  # noqa: E402
 import app.modules.market_data.models  # noqa: E402
