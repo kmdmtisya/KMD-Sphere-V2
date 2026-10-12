@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-12T15:18:36+04:00 by `scripts/track.py`._
+_Generated at 2026-10-12T15:48:54+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -21,7 +21,7 @@ _Generated at 2026-10-12T15:18:36+04:00 by `scripts/track.py`._
 | QG-08 | Security and Privacy | 🔄 IN_PROGRESS | 3/8 | Unassigned | — |
 | QG-09 | Performance and Scalability | 🔄 IN_PROGRESS | 1/6 | Unassigned | — |
 | QG-10 | CI/CD and Infrastructure | 🔄 IN_PROGRESS | 2/8 | Unassigned | — |
-| QG-11 | End-to-End Integration | 🔄 IN_PROGRESS | 4/6 | Unassigned | — |
+| QG-11 | End-to-End Integration | 🔄 IN_PROGRESS | 5/6 | Unassigned | — |
 | QG-12 | Production Release Readiness | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
 | QG-13 | QG-FX-01: Market Data Integrity | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
 | QG-14 | QG-FX-02: Technical Indicator Accuracy | ⬜ NOT_STARTED | 0/3 | Unassigned | — |
@@ -38,9 +38,9 @@ _Generated at 2026-10-12T15:18:36+04:00 by `scripts/track.py`._
 | QG-25 | QG-FXCUR-05: AI Integration | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 42/146.
+Criteria satisfied overall: 43/146.
 
-Current phase **P09** exit-gate criteria outstanding: QG-11.1.
+Current phase **P11** exit-gate criteria outstanding: QG-21.1, QG-21.2, QG-21.3, QG-21.4, QG-21.5, QG-22.1, QG-22.2, QG-22.3, QG-22.4, QG-22.5, QG-23.1, QG-23.2, QG-23.3, QG-23.4, QG-23.5, QG-24.1, QG-24.2, QG-24.3, QG-24.4, QG-24.5, QG-24.6, QG-24.7, QG-25.1, QG-25.2, QG-25.3, QG-25.4, QG-25.5.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -242,7 +242,7 @@ Approved By: —
 
 ### QG-11: End-to-End Integration
 
-- [ ] QG-11.1 Android and iOS clients successfully communicate with backend APIs · Required: P09 · By: P09-T10
+- [x] QG-11.1 Android and iOS clients successfully communicate with backend APIs · Required: P09 · By: P09-T10 · Evidence: Accepted by the user at P09-GATE (2026-10-12) on the host and CI evidence: the Flutter client (live repositories, real Dio over HTTP) communicates with the backend in six journeys in CI and locally. Not shown: a run on an Android emulator or iOS device against this backend (iOS not run, TD-09); accepted by the user as an open item. · Verified: 2026-10-12T15:48:53+04:00
 - [x] QG-11.2 Portfolio data flows correctly through transactions, holdings, analytics, dashboards and forecasts · Required: P09 · By: P09-T10 · Evidence: Portfolio data flows through transactions, holdings, summaries, dashboard and forecasts in the E2E journeys: a deposit made through the app is booked by the server (net worth up by exactly 500.00) and Home shows the server's new total; displayed values equal direct API reads; the forecast equals a direct engine call; no client-side recalculation (tests assert server figures). Caveat: all-portfolios P/L, chart and metrics are empty because the API has no consolidated performance endpoints (docs/tech-debt.md). · Verified: 2026-10-12T15:18:35+04:00
 - [ ] QG-11.3 AI Copilot accesses only authorized portfolio data · Required: P10 · By: P10-T09 · CRITICAL
 - [x] QG-11.4 Market-data ingestion and refresh workflows function correctly · Required: P08 · By: P08-T08 · Evidence: Ingestion and refresh workflows work end to end with the deterministic fake provider and recorded fixtures: price ingest every 15 min, FX ingest daily, alert evaluation every 15 min, idempotent per time bucket; stored prices flow into holdings and summaries (PositionValuer: price beats older manual valuation, stale prices flagged, unpriced never invented) and the dashboard; P08-T08 proves outage, stale-data, failover, circuit-breaker and cache behaviour. Caveat: the CoinGecko and Twelve Data adapters have only run against synthetic fixtures; no real provider key or licence exists (ADR-0014), so no live vendor call has been made. · Verified: 2026-10-12T04:51:43+04:00
@@ -253,8 +253,8 @@ Status: IN_PROGRESS
 Owner: Unassigned  
 Start Timestamp: 2026-10-12T04:51:43+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-12T15:18:35+04:00  
-Evidence: 4/6 criteria verified; latest QG-11.6 at 2026-10-12T15:18:35+04:00  
+Verification Timestamp: 2026-10-12T15:48:53+04:00  
+Evidence: 5/6 criteria verified; latest QG-11.1 at 2026-10-12T15:48:53+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
