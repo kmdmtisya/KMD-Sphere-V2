@@ -1011,3 +1011,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T03:58:15+04:00 — START P08-T08
 - Failover, caching and degradation tests
 - prerequisites verified COMPLETED
+
+### 2026-10-12T04:23:06+04:00 — COMPLETE P08-T08
+- duration: 24m 51s
+- evidence: 20 tests with the fake provider: outage keeps and flags the last price, never errors or invents values; stale provider data keeps its true as_of and never replaces fresher prices; failover, circuit breaker and recovery; response cache bounded by TTL, refreshed by user writes, computed live when Redis is down. PR 89.
