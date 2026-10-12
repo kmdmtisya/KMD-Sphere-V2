@@ -1,0 +1,79 @@
+{
+  "hours": 96,
+  "started_at": "2031-06-05T00:00:00+00:00",
+  "ticks": 11520,
+  "board_reads": 5760,
+  "refreshes_run": 359,
+  "requests": {
+    "ecb": 434,
+    "soak-commercial": 486
+  },
+  "failed_requests": {
+    "ecb": 75,
+    "soak-commercial": 153
+  },
+  "max_requests_in_a_healthy_window": {
+    "ecb": 1,
+    "soak-commercial": 1
+  },
+  "max_requests_in_an_hour": {
+    "ecb": 12,
+    "soak-commercial": 12
+  },
+  "budget_per_month": 30000,
+  "budget_prorated_to_run": 3870,
+  "normal_month_extrapolated": {
+    "ecb": 2976,
+    "soak-commercial": 2976
+  },
+  "unscripted_quota_refusals": 0,
+  "current_but_too_old": 0,
+  "invented_values": 0,
+  "status_counts": {
+    "current": 41863,
+    "cached": 9977
+  },
+  "weekend_status_counts": {
+    "current": 11347,
+    "cached": 8813
+  },
+  "outages": [
+    {
+      "provider": "soak-commercial",
+      "mode": "down",
+      "start_minute": 600,
+      "end_minute": 787,
+      "degraded_during": true,
+      "requests_during": {
+        "ecb": 13,
+        "soak-commercial": 39
+      },
+      "recovered_after_minutes": 8
+    },
+    {
+      "provider": "soak-commercial",
+      "mode": "quota",
+      "start_minute": 1080,
+      "end_minute": 1267,
+      "degraded_during": true,
+      "requests_during": {
+        "ecb": 13,
+        "soak-commercial": 39
+      },
+      "recovered_after_minutes": 8
+    },
+    {
+      "provider": "all",
+      "mode": "down",
+      "start_minute": 1800,
+      "end_minute": 2167,
+      "degraded_during": true,
+      "requests_during": {
+        "ecb": 75,
+        "soak-commercial": 75
+      },
+      "recovered_after_minutes": 8
+    }
+  ],
+  "failures": []
+}

@@ -1484,3 +1484,16 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-13T02:21:23+04:00 — COMPLETE P11-T10
 - duration: 17m 44s
 - evidence: QG-21..QG-25 all criteria verified with evidence and passed; reports/quality/qg-21..qg-25 written; FX test isolation fixed (session-unique codes) and re-run 3x clean. PR #134. CI all gates pass.
+
+### 2026-10-13T02:29:53+04:00 — START P11-T11
+- FXCUR-11 Integration and soak validation (local/CI stack)
+- prerequisites verified COMPLETED
+
+### 2026-10-13T02:54:45+04:00 — DECISION — P11-T11 soak finding: a failed FX refresh keeps its window
+- The soak (simulated clock, scripted sources, production retry and breaker) failed the quota check. When every source failed, the refresh window was released, so during a total outage every user refresh retried: about 366 requests an hour per source and API process, and 1,086 per source over a 3-hour outage (more than twice the prorated budget).
+- Change: a refresh that fails at every source still uses its window (`app/modules/fx/refresh.py`). The next attempt comes in the next window: at most 4 attempts an hour across all processes, and recovery within 15 minutes of the source returning. The test asserting the old release now asserts the new bound. QG-23.5 evidence note updated; gate result unchanged.
+- Open for the user (P11-T12 / P11-GATE): with `ecb` first in `fx_provider_order`, the 7 ECB currencies show `cached` from Sunday 03:00 to Monday 15:00, and they would show `stale` over a TARGET holiday weekend. Option: put `exchangerate_api` first. See docs/fxcur-soak-report.md.
+
+### 2026-10-13T03:06:35+04:00 — COMPLETE P11-T11
+- duration: 36m 42s
+- evidence: Soak option A on local stack (simulated clock, scripted sources with production retry/breaker, 96h): <=1 request per source per healthy window, normal month 2,976 <= 30,000, 0 stale-labelled-current, 0 invented, recovery within one window after 3 outages. Finding fixed: failed refresh keeps its window (outage retries bounded to 4/h across processes). Report docs/fxcur-soak-report.md, reports/fx-soak/fx-soak-96h.json; CI 12h soak test. PR #135. CI all gates pass.

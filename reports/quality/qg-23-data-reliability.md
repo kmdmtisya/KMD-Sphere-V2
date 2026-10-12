@@ -9,3 +9,5 @@
 | 23.5 Cache behaviour is verified | One refresh per window whoever asks (a second call does not reach the provider); the window is released after a total failure; quota arithmetic (2,976 ≤ 30,000); the board cache is invalidated by a refresh and never shows a cached row as current | Pass |
 
 Runs: `cd backend && uv run pytest tests/fx -q`; `cd mobile/wealthsphere_app && flutter test test/features/currency` (both passed).
+
+**Update (P11-T11, 2026-10-13):** the soak found that releasing the window after a total failure let every user refresh retry during an outage (about 366 requests an hour per source and process). A failed refresh now keeps its window and the next attempt comes in the next window. This tightens 23.5: an outage is bounded to 4 attempts an hour across all processes, and recovery happens within one window. See docs/fxcur-soak-report.md. The gate result is unchanged.
