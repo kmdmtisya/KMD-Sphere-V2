@@ -876,15 +876,15 @@
   - [x] P09-T05.2 Net worth
   - [x] P09-T05.3 Income
   - [x] P09-T05.4 Tests
-- [ ] **P09-T06** · Offline, stale-data and error handling · `NOT_STARTED` ⬜
+- [ ] **P09-T06** · Offline, stale-data and error handling · `IN_PROGRESS` 🔄
   - Deps: P09-T02, P09-T04 · Wave: W3 · Track: MOB · Size: L · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T11:46:03+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P09-T06.1 Cache design
-  - [ ] P09-T06.2 Connectivity
-  - [ ] P09-T06.3 Banners
-  - [ ] P09-T06.4 Logout wipe
-  - [ ] P09-T06.5 Tests
+  - [x] P09-T06.1 Cache design
+  - [x] P09-T06.2 Connectivity
+  - [x] P09-T06.3 Banners
+  - [x] P09-T06.4 Logout wipe
+  - [x] P09-T06.5 Tests
 - [ ] **P09-T07** · Live market-data surfaces · `NOT_STARTED` ⬜
   - Deps: P09-T04, P08-T06, P08-T07 · Wave: W3 · Track: MOB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

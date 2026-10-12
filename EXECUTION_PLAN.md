@@ -255,11 +255,11 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | DEC-05 | LLM provider, model, monthly budget and API-key custody (docs name OpenAI first) | P10-T01 | User | Open |
 | DEC-06 | Money rounding convention (half-up vs half-even) and minor-unit handling | P01-T03 | User + Claude | Resolved: ROUND_HALF_UP (ADR-0006) |
 | DEC-07 | Backend tooling: uv + ruff + mypy + pytest (proposed) | P01-T03 | Claude proposes | Resolved: uv, ruff, mypy, pytest (ADR-0004) |
-| DEC-08 | Push-notification path (FCM + APNs) and Firebase project | P09-T08 | User | Open |
+| DEC-08 | Push-notification path (FCM + APNs) and Firebase project | P09-T08 | User | Resolved: build provider-agnostic now, FCM/APNs when the Firebase project exists (ADR-0016, 2026-10-12) |
 | DEC-09 | Apple Developer and Google Play accounts / legal entity (long lead time: start during P09) | P16-T01 | User | Open |
 | DEC-10 | Jurisdictions, regulatory classification and disclaimer wording (legal review) | P12-T10 / P15-T05 | User + legal | Open |
 | DEC-11 | Penetration-test provider (external vs internal) | P15-T03 | User | Open |
-| DEC-12 | Offline cache storage (encrypted Drift vs alternatives) | P09-T06 | Claude proposes, user approves | Open |
+| DEC-12 | Offline cache storage (encrypted Drift vs alternatives) | P09-T06 | Claude proposes, user approves | Resolved: encrypted per-response snapshots, AES-256-GCM, key in secure storage (ADR-0015, 2026-10-12) |
 | DEC-13 | Charts library: fl_chart (open-source, proposed) vs Syncfusion (licence) | P02-T06 | User | Resolved: fl_chart (confirmed 2026-10-09) |
 | DEC-15 | Supported Android versions (minimum API level) and iOS versions/devices | P01-T16 | User | Resolved: Android 8.0 (API 26), iOS 16.0 |
 | DEC-16 | Measurable performance targets: app start-up, memory, crash rate, API p95/p99 SLOs, database query thresholds | P01-T16 | User | Resolved: targets approved (design workload to be revisited at P06 baseline) |

@@ -110,6 +110,15 @@
   "@investPositionEmpty": {
     "description": "Position tab when no portfolio holds the asset"
   },
+  "offlineBannerWithAge": "You're offline. Showing saved data: {age}.",
+  "@offlineBannerWithAge": {
+    "description": "Offline banner when saved data is on screen; age is like 'As of 2 hours ago'",
+    "placeholders": {"age": {"type": "String"}}
+  },
+  "offlineBannerNoSavedData": "You're offline. Some screens have no saved data to show.",
+  "@offlineBannerNoSavedData": {
+    "description": "Offline banner when nothing saved could be shown"
+  },
   "emptyDefaultTitle": "Nothing here yet",
   "@emptyDefaultTitle": {
     "description": "Default title of the empty state"

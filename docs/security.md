@@ -167,3 +167,8 @@ The licence position is in ADR-0014 section 4 and `docs/market-data-providers.md
 3. ECB reuse terms not read.
 4. Custom gitleaks rules for provider keys, and secret-manager injection (P14).
 5. The synthetic CoinGecko and Twelve Data fixtures must be re-recorded against the real services once keys exist, and the key checks repeated with a real key.
+
+## Offline cache (P09-T06, ADR-0015)
+- Saved API answers are encrypted at rest (AES-256-GCM, random 256-bit key in Keychain / Android Keystore via `flutter_secure_storage`), stored per user under hashed folder and file names, and never hold tokens.
+- Sign-out and session end wipe every saved file and the key; in-memory data is dropped at once (data epoch). Tests: `test/core/offline/offline_cache_test.dart` (no plaintext amounts, ids or paths on disk; one user cannot read another's; wipe removes files and key; a different key cannot decrypt).
+- Saved data is served only when the device cannot reach the server; authorization and server errors are never masked.
