@@ -1064,10 +1064,10 @@
   - Deps: P11-T03 · Wave: W4 · Track: BE · Size: M · Approval: no
   - Started: 2026-10-12T22:40:05+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P11-T05.1 Rate concepts in the domain
-  - [ ] P11-T05.2 History endpoint
-  - [ ] P11-T05.3 Missing-rate handling
-  - [ ] P11-T05.4 Tests
+  - [x] P11-T05.1 Rate concepts in the domain
+  - [x] P11-T05.2 History endpoint
+  - [x] P11-T05.3 Missing-rate handling
+  - [x] P11-T05.4 Tests
 - [ ] **P11-T06** · FXCUR-06 Reporting currency across portfolio, analytics, net worth, income, goals and forecasts · `NOT_STARTED` ⬜
   - Deps: P11-T04, P11-T05 · Wave: W5 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

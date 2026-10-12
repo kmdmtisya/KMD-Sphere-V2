@@ -1298,6 +1298,19 @@
           "amount": {
             "$ref": "#/components/schemas/Money"
           },
+          "on": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Convert with the historical rate of this day (P11-T05) instead of the current reporting rate; cannot be combined with snapshot_id",
+            "title": "On"
+          },
           "snapshot_id": {
             "anyOf": [
               {
@@ -1327,6 +1340,16 @@
       },
       "ConvertOut": {
         "properties": {
+          "concept": {
+            "description": "current_reporting (a snapshot) or historical_valuation (a past day)",
+            "enum": [
+              "transaction",
+              "historical_valuation",
+              "current_reporting"
+            ],
+            "title": "Concept",
+            "type": "string"
+          },
           "converted": {
             "$ref": "#/components/schemas/Money",
             "description": "Rounded once, half-up, to the target's decimal places"
@@ -1336,6 +1359,18 @@
             "description": "Shown with every conversion",
             "title": "Notice",
             "type": "string"
+          },
+          "on": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "On"
           },
           "path": {
             "anyOf": [
@@ -1379,9 +1414,17 @@
             "title": "Rate Timestamp"
           },
           "snapshot_id": {
-            "format": "uuid",
-            "title": "Snapshot Id",
-            "type": "string"
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The snapshot used; none for a historical conversion",
+            "title": "Snapshot Id"
           },
           "source": {
             "$ref": "#/components/schemas/Money"
@@ -1401,7 +1444,7 @@
           "source",
           "converted",
           "rate",
-          "snapshot_id",
+          "concept",
           "status",
           "providers"
         ],
@@ -1844,6 +1887,125 @@
         "title": "Freshness",
         "type": "object"
       },
+      "FxHistoryOut": {
+        "properties": {
+          "base": {
+            "title": "Base",
+            "type": "string"
+          },
+          "concept": {
+            "default": "historical_valuation",
+            "enum": [
+              "transaction",
+              "historical_valuation",
+              "current_reporting"
+            ],
+            "title": "Concept",
+            "type": "string"
+          },
+          "missing_days": {
+            "title": "Missing Days",
+            "type": "integer"
+          },
+          "points": {
+            "items": {
+              "$ref": "#/components/schemas/FxHistoryPointOut"
+            },
+            "title": "Points",
+            "type": "array"
+          },
+          "quote": {
+            "title": "Quote",
+            "type": "string"
+          }
+        },
+        "required": [
+          "base",
+          "quote",
+          "points",
+          "missing_days"
+        ],
+        "title": "FxHistoryOut",
+        "type": "object"
+      },
+      "FxHistoryPointOut": {
+        "properties": {
+          "date": {
+            "format": "date",
+            "title": "Date",
+            "type": "string"
+          },
+          "from_earlier_day": {
+            "description": "The rate was published on an earlier day within the 7-day window (a weekend or holiday)",
+            "title": "From Earlier Day",
+            "type": "boolean"
+          },
+          "path": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Path"
+          },
+          "provider": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Provider"
+          },
+          "rate": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rate"
+          },
+          "rate_missing": {
+            "description": "No usable rate for this day; nothing was substituted",
+            "title": "Rate Missing",
+            "type": "boolean"
+          },
+          "rate_timestamp": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rate Timestamp"
+          }
+        },
+        "required": [
+          "date",
+          "rate_missing",
+          "from_earlier_day"
+        ],
+        "title": "FxHistoryPointOut",
+        "type": "object"
+      },
       "FxProviderAttemptOut": {
         "properties": {
           "failed": {
@@ -2117,6 +2279,16 @@
         "properties": {
           "base": {
             "title": "Base",
+            "type": "string"
+          },
+          "concept": {
+            "default": "current_reporting",
+            "enum": [
+              "transaction",
+              "historical_valuation",
+              "current_reporting"
+            ],
+            "title": "Concept",
             "type": "string"
           },
           "rates": {
@@ -7891,7 +8063,7 @@
     },
     "/api/v1/fx/convert": {
       "post": {
-        "description": "Converts with the snapshot's rate and rounds once to the target's decimal places. Nothing\nstored is changed. Explicit converter use is recorded in the conversion audit (DEC-28).",
+        "description": "Converts with the snapshot's rate (or, with `on`, the historical rate of that day) and\nrounds once to the target's decimal places. Nothing stored is changed. A past day is never\nconverted with today's rate, and a missing historical rate is 404, never substituted.\nExplicit converter use is recorded in the conversion audit (DEC-28).",
         "operationId": "fx_convert_api_v1_fx_convert_post",
         "requestBody": {
           "content": {
@@ -7942,6 +8114,97 @@
           }
         ],
         "summary": "Convert an amount",
+        "tags": [
+          "fx"
+        ]
+      }
+    },
+    "/api/v1/fx/history": {
+      "get": {
+        "description": "One point per day: the rate valid at the end of that day (UTC) under the historical rule,\nfor converting past values. Days without a usable rate are flagged `rate_missing`, never\nfilled; a rate carried from an earlier day inside the 7-day window is flagged.",
+        "operationId": "fx_history_api_v1_fx_history_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "base",
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Z]{3}$",
+              "title": "Base",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "quote",
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Z]{3}$",
+              "title": "Quote",
+              "type": "string"
+            }
+          },
+          {
+            "description": "First day",
+            "in": "query",
+            "name": "start",
+            "required": true,
+            "schema": {
+              "description": "First day",
+              "format": "date",
+              "title": "Start",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Last day (at most 366 days after start)",
+            "in": "query",
+            "name": "end",
+            "required": true,
+            "schema": {
+              "description": "Last day (at most 366 days after start)",
+              "format": "date",
+              "title": "End",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FxHistoryOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "422": {
+            "description": "Invalid currency or date range"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Daily historical rates of a pair",
         "tags": [
           "fx"
         ]

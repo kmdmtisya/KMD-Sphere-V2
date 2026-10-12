@@ -3,7 +3,7 @@
 asks, and each user may ask a few times an hour."""
 
 import uuid
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Path, Query, Request
@@ -12,16 +12,20 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.api_responses import UNAUTHORIZED, invalid, not_found
 from app.core.config import Settings
+from app.core.errors import InvalidValueError
 from app.core.money import CURRENCY_PATTERN, Money, round_half_up
 from app.core.ratelimit import RateLimit, RateLimitedError
 from app.db.session import get_session
 from app.modules.fx.board import RateBoard, invalidate
+from app.modules.fx.history import RateConcept, rate_history
 from app.modules.fx.models import Currency, FxConversionAudit
 from app.modules.fx.refresh import refresh_once_per_window
 from app.modules.fx.schemas import (
     ConvertIn,
     ConvertOut,
     CurrencyOut,
+    FxHistoryOut,
+    FxHistoryPointOut,
     FxProviderAttemptOut,
     FxRateLineOut,
     FxRatesOut,
@@ -38,9 +42,10 @@ from app.modules.fx.snapshot import (
 )
 from app.modules.fx.status import StatusPolicy
 from app.modules.identity.dependencies import CurrentUserDep
-from app.modules.market_data.fx import FxRateUnavailable
+from app.modules.market_data.fx import FxRateUnavailable, end_of_day
 from app.modules.market_data.providers.errors import ProviderUnavailable
 from app.modules.market_data.providers.registry import build_providers
+from app.modules.market_data.service import FxService
 
 router = APIRouter(prefix="/api/v1/fx", tags=["fx"])
 SessionDep = Annotated[AsyncSession, Depends(get_session)]
@@ -285,16 +290,39 @@ async def fx_rate(
 async def fx_convert(
     body: ConvertIn, request: Request, user: CurrentUserDep, session: SessionDep
 ) -> ConvertOut:
-    """Converts with the snapshot's rate and rounds once to the target's decimal places. Nothing
-    stored is changed. Explicit converter use is recorded in the conversion audit (DEC-28)."""
+    """Converts with the snapshot's rate (or, with `on`, the historical rate of that day) and
+    rounds once to the target's decimal places. Nothing stored is changed. A past day is never
+    converted with today's rate, and a missing historical rate is 404, never substituted.
+    Explicit converter use is recorded in the conversion audit (DEC-28)."""
     settings: Settings = request.app.state.settings
+    if body.on is not None and body.snapshot_id is not None:
+        raise InvalidValueError("Use either a snapshot or a date, not both.")
     service = _snapshots(request, session)
     source_currency = body.amount.currency
     places = await service.decimal_places(body.to)
     await service.decimal_places(source_currency)
-    snapshot = await _snapshot(service, body.snapshot_id)
-    resolved = snapshot.rate(source_currency, body.to)
-    converted = convert(body.amount.amount, resolved.rate, places)
+    now = datetime.now(UTC)
+    snapshot_id: uuid.UUID | None = None
+    if body.on is None:
+        snapshot = await _snapshot(service, body.snapshot_id)
+        resolved = snapshot.rate(source_currency, body.to)
+        snapshot_id = snapshot.id
+        rate, path, providers = resolved.rate, resolved.path, resolved.providers
+        rate_timestamp = resolved.rate_timestamp
+        status = resolved.status(StatusPolicy.from_settings(settings), now).value
+        concept = RateConcept.CURRENT_REPORTING
+        stamp_for_audit = rate_timestamp or snapshot.created_at
+    else:
+        q = await FxService(session, settings.fx_pivot_currency).quote(
+            source_currency, body.to, end_of_day(body.on)
+        )
+        rate, path = q.rate, q.path
+        providers = [] if q.provider == "identity" else q.provider.split("+")
+        rate_timestamp = None if q.provider == "identity" else q.as_of
+        status = "stale" if q.stale else "current"
+        concept = RateConcept.HISTORICAL_VALUATION
+        stamp_for_audit = q.as_of
+    converted = convert(body.amount.amount, rate, places)
     session.add(
         FxConversionAudit(
             user_id=user.id,
@@ -302,10 +330,10 @@ async def fx_convert(
             target_currency=body.to,
             source_amount=body.amount.amount,
             converted_amount=converted,
-            rate=round_half_up(resolved.rate, 12),
-            rate_timestamp=resolved.rate_timestamp or snapshot.created_at,
-            provider=("+".join(resolved.providers) or "identity")[:32],
-            snapshot_id=snapshot.id,
+            rate=round_half_up(rate, 12),
+            rate_timestamp=stamp_for_audit,
+            provider=("+".join(providers) or "identity")[:32],
+            snapshot_id=snapshot_id,
             conversion_type="converter",
         )
     )
@@ -313,10 +341,56 @@ async def fx_convert(
     return ConvertOut(
         source=body.amount,
         converted=Money(amount=converted, currency=body.to),
-        rate=resolved.rate,
-        path=list(resolved.path) if resolved.path else None,
-        snapshot_id=snapshot.id,
-        status=resolved.status(StatusPolicy.from_settings(settings), datetime.now(UTC)).value,
-        rate_timestamp=resolved.rate_timestamp,
-        providers=resolved.providers,
+        rate=rate,
+        path=list(path) if path else None,
+        concept=concept.value,
+        snapshot_id=snapshot_id,
+        on=body.on,
+        status=status,
+        rate_timestamp=rate_timestamp,
+        providers=providers,
+    )
+
+
+@router.get(
+    "/history",
+    response_model=FxHistoryOut,
+    summary="Daily historical rates of a pair",
+    responses={**UNAUTHORIZED, **invalid("currency or date range")},
+)
+async def fx_history(
+    request: Request,
+    user: CurrentUserDep,
+    session: SessionDep,
+    base: Annotated[str, Query(pattern=CURRENCY_PATTERN)],
+    quote: Annotated[str, Query(pattern=CURRENCY_PATTERN)],
+    start: Annotated[date, Query(description="First day")],
+    end: Annotated[date, Query(description="Last day (at most 366 days after start)")],
+) -> FxHistoryOut:
+    """One point per day: the rate valid at the end of that day (UTC) under the historical rule,
+    for converting past values. Days without a usable rate are flagged `rate_missing`, never
+    filled; a rate carried from an earlier day inside the 7-day window is flagged."""
+    settings: Settings = request.app.state.settings
+    service = _snapshots(request, session)
+    active = await service.currencies()
+    for code in (base, quote):
+        if code not in active:
+            raise UnsupportedCurrency(f"{code} is not a supported currency")
+    points = await rate_history(session, base, quote, start, end, settings.fx_pivot_currency)
+    return FxHistoryOut(
+        base=base,
+        quote=quote,
+        points=[
+            FxHistoryPointOut(
+                date=p.day,
+                rate=p.rate,
+                rate_timestamp=p.rate_timestamp,
+                provider=p.provider,
+                path=list(p.path) if p.path else None,
+                rate_missing=p.rate_missing,
+                from_earlier_day=p.from_earlier_day,
+            )
+            for p in points
+        ],
+        missing_days=sum(p.rate_missing for p in points),
     )

@@ -33,3 +33,16 @@ Unknown or inactive currencies are 422 (`unsupported currency`). Amounts and rat
 ## Tests
 
 Reference cases (AED 500,000 → USD = 136,147.04; JPY with no decimals; half-up at the midpoint; liabilities), an independent computation in exact fractions, and property tests (cross rate equals the exact ratio to 45 digits, there-and-back is the identity, rounding error at most half a unit).
+
+## Historical rates (P11-T05)
+
+Three rate concepts are kept apart (`RateConcept`):
+
+| Concept | Used for | Source |
+|---|---|---|
+| `transaction` | the rate recorded on a ledger posting | chosen once at posting (trade date, the pair's own rate); never recomputed |
+| `historical_valuation` | past valuations and income, value series, conversion `on` a past day | the rate valid at the end of that day (UTC), at most 7 × 24 hours old, possibly through the pivot |
+| `current_reporting` | today's figures in the reporting currency | the latest snapshot |
+
+- `GET /api/v1/fx/history?base=&quote=&start=&end=` (up to 366 days): one point per day with rate, provider, timestamp and path; a day without a usable rate is `rate_missing` and has no rate (nothing is substituted); a rate carried from an earlier day inside the window (weekend, holiday) is `from_earlier_day`.
+- `POST /api/v1/fx/convert` with `on`: the historical rate of that day (`concept: historical_valuation`, no snapshot); 404 when that day has no usable rate. A past figure is never converted with today's rate.
