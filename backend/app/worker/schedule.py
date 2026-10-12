@@ -34,6 +34,12 @@ def build_schedule() -> dict[str, dict[str, Any]]:
             "task": "app.worker.tasks.purge_ai_conversations",
             "schedule": crontab(hour=3, minute=15),
         },
+        # Reporting-currency rates (P11-T03): hourly, inside the commercial plan's quota; the
+        # refresh window makes a second call in the same window a no-op.
+        "fx-refresh": {
+            "task": "app.worker.tasks.refresh_fx",
+            "schedule": crontab(minute=5),
+        },
         # The ECB publishes around 14:15 Central European Time (12:15 or 13:15 UTC).
         "fx-ingest": {
             "task": "app.worker.tasks.ingest_fx",

@@ -126,6 +126,11 @@ class TestNoUnreviewedProviderDataLeavesTheApi:
         "/api/v1/fx-rates/{base}/{quote}",
         # P09-T07: per user, authenticated, stored (delayed) prices of an asset they can see.
         "/api/v1/assets/{asset_id}/prices",
+        # P11-T03: per user, authenticated, stored reporting-currency rates with provider, type
+        # and age. Display rights: ECB (copyright page not yet verified) and ExchangeRate-API
+        # (terms not yet confirmed) are both re-checked at P11-T12 before production use.
+        "/api/v1/fx/status",
+        "/api/v1/fx/refresh",
     }
     MARKET_WORDS: ClassVar[tuple[str, ...]] = (
         "price",

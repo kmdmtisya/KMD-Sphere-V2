@@ -102,6 +102,9 @@ class PricePoint:
         _currency(self.currency)
 
 
+FX_RATE_TYPES = ("mid_market", "indicative", "delayed")
+
+
 @dataclass(frozen=True)
 class FxQuote:
     """1 unit of `base` = `rate` units of `quote`."""
@@ -110,6 +113,11 @@ class FxQuote:
     quote: str
     rate: Decimal
     provenance: Provenance
+    # What the provider publishes: `mid_market`, `indicative` (the default) or `delayed`.
+    rate_type: str = "indicative"
+    # For a rate the provider derived through other currencies, the currencies in order
+    # (base first, quote last); None for a direct quote.
+    path: tuple[str, ...] | None = None
 
     def __post_init__(self) -> None:
         _currency(self.base)
@@ -117,3 +125,18 @@ class FxQuote:
         if self.base == self.quote:
             raise ProviderDataError("an FX rate needs two different currencies")
         _positive(self.rate, "rate")
+        if self.rate_type not in FX_RATE_TYPES:
+            raise ProviderDataError(f"unknown FX rate type {self.rate_type!r}")
+        if self.path is not None and (
+            not 3 <= len(self.path) <= 4 or self.path[0] != self.base or self.path[-1] != self.quote
+        ):
+            raise ProviderDataError("an FX rate path runs from the base to the quote")
+
+
+@dataclass(frozen=True)
+class FxBatch:
+    """The rates of one base against several quotes from one request. `unsupported` lists the
+    quotes this provider does not publish (another provider may)."""
+
+    rates: list[FxQuote]
+    unsupported: list[str]

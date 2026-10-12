@@ -1040,16 +1040,16 @@
   - [x] P11-T02.3 fx_rates extension
   - [x] P11-T02.4 fx_conversion_audit
   - [x] P11-T02.5 Indexes and migration tests
-- [ ] **P11-T03** · FXCUR-03 FX provider integration, refresh and caching · `NOT_STARTED` ⬜
+- [x] **P11-T03** · FXCUR-03 FX provider integration, refresh and caching · `COMPLETED` ✅
   - Deps: P11-T02 · Wave: W3 · Track: BE · Size: L · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P11-T03.1 Adapters and contract tests
-  - [ ] P11-T03.2 Primary and fallback selection
-  - [ ] P11-T03.3 Refresh scheduler and backoff
-  - [ ] P11-T03.4 Cache and batch retrieval
-  - [ ] P11-T03.5 Staleness and status
-  - [ ] P11-T03.6 Refresh endpoint with limits
+  - Started: 2026-10-12T22:07:43+04:00 · Completed: 2026-10-12T22:32:02+04:00 · Duration: 24m 19s · Blocker: —
+  - Evidence: ExchangeRate-API adapter from docs with synthetic fixtures (no key, no live call; QG-21.1 evidence is documentation-shaped fixtures); ordered primary/fallback with batch refresh; one refresh per window (quota math tested); status computed on read; cached board; /fx/status and rate-limited /fx/refresh reporting last good rates and age on total outage; 49 new tests; backend 2181 passed. Completed under the user's advance approval (fixture-only conditions). PR #127. CI all gates pass. · Approved by: user (mtisya@gmail.com), advance approval 2026-10-12
+  - [x] P11-T03.1 Adapters and contract tests
+  - [x] P11-T03.2 Primary and fallback selection
+  - [x] P11-T03.3 Refresh scheduler and backoff
+  - [x] P11-T03.4 Cache and batch retrieval
+  - [x] P11-T03.5 Staleness and status
+  - [x] P11-T03.6 Refresh endpoint with limits
 - [ ] **P11-T04** · FXCUR-04 Conversion engine with rate snapshots and cross-rates · `NOT_STARTED` ⬜
   - Deps: P11-T03 · Wave: W4 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

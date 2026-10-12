@@ -37,6 +37,27 @@ class Settings(BaseSettings):
     market_data_mode: Literal["real", "fake"] = "real"
     coingecko_api_key: SecretStr = SecretStr("")
     twelvedata_api_key: SecretStr = SecretStr("")
+    exchangerate_api_key: SecretStr = SecretStr("")
+    # FX for the reporting currency (P11-T03, DEC-25..27). Providers are asked in this order; one
+    # without a key is left out. The ECB needs no key.
+    fx_provider_order: list[Literal["ecb", "exchangerate_api", "twelvedata"]] = [
+        "ecb",
+        "exchangerate_api",
+        "twelvedata",
+    ]
+    fx_pivot_currency: str = Field(default="USD", pattern=r"^[A-Z]{3}$")
+    # Rate status (DEC-26): a rate is current for the first hours, then cached, then stale.
+    # Daily publishers (the ECB) and hourly ones (the commercial API) have their own windows.
+    fx_daily_current_hours: int = Field(default=36, ge=1)
+    fx_daily_cached_hours: int = Field(default=72, ge=1)
+    fx_hourly_current_hours: int = Field(default=2, ge=1)
+    fx_hourly_cached_hours: int = Field(default=24, ge=1)
+    # At most one provider refresh per window, whoever asks (schedule or users).
+    fx_refresh_window_minutes: int = Field(default=15, ge=1)
+    fx_refresh_per_user_per_hour: int = Field(default=5, ge=1)
+    fx_status_cache_seconds: int = Field(default=60, ge=0)
+    # The commercial plan's monthly request quota (ExchangeRate-API Pro: 30,000).
+    fx_monthly_request_budget: int = Field(default=30_000, ge=1)
 
     # Message broker for the background workers (P08-T04). Credentials come from the environment.
     rabbitmq_user: str = ""

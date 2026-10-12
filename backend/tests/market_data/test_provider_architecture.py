@@ -12,7 +12,8 @@ APP = Path(__file__).resolve().parents[2] / "app"
 PACKAGE = APP / "modules" / "market_data" / "providers"
 ROOT = "app.modules.market_data.providers"
 # `registry` is the one place that names vendors; consumers ask it for MarketProviders.
-CONSUMER_SAFE = {"base", "models", "errors", "resilience", "registry"}
+# `batch` is the vendor-free helper that asks a provider for several FX quotes at once.
+CONSUMER_SAFE = {"base", "models", "errors", "resilience", "registry", "batch"}
 # Modules that are allowed to import concrete providers (composition points).
 COMPOSITION = {PACKAGE / "registry.py"}
 
