@@ -885,10 +885,10 @@
   - [x] P09-T06.3 Banners
   - [x] P09-T06.4 Logout wipe
   - [x] P09-T06.5 Tests
-- [ ] **P09-T07** · Live market-data surfaces · `IN_PROGRESS` 🔄
+- [x] **P09-T07** · Live market-data surfaces · `COMPLETED` ✅
   - Deps: P09-T04, P08-T06, P08-T07 · Wave: W3 · Track: MOB · Size: L · Approval: no
-  - Started: 2026-10-12T12:30:03+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-12T12:30:03+04:00 · Completed: 2026-10-12T13:04:27+04:00 · Duration: 34m 24s · Blocker: —
+  - Evidence: Asset prices endpoint (latest with freshness, daily closes, no interpolation, IDOR-tested, licence guard updated); unrounded watchlist prices; live investment price/history with stale and missing labels; watchlist and alerts screen and price-alert dialog on live and demo repositories. Backend 1820 passed; flutter test 1633 passed, analyze clean. CK-I against the running backend is P09-T10. PR #100. CI all gates pass.
   - [x] P09-T07.1 Prices/charts
   - [x] P09-T07.2 Watchlist
   - [x] P09-T07.3 Alerts

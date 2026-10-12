@@ -1098,3 +1098,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T12:30:03+04:00 — START P09-T07
 - Live market-data surfaces
 - prerequisites verified COMPLETED
+
+### 2026-10-12T13:04:27+04:00 — COMPLETE P09-T07
+- duration: 34m 24s
+- evidence: Asset prices endpoint (latest with freshness, daily closes, no interpolation, IDOR-tested, licence guard updated); unrounded watchlist prices; live investment price/history with stale and missing labels; watchlist and alerts screen and price-alert dialog on live and demo repositories. Backend 1820 passed; flutter test 1633 passed, analyze clean. CK-I against the running backend is P09-T10. PR #100. CI all gates pass.
