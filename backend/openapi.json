@@ -1699,6 +1699,40 @@
         "title": "Freshness",
         "type": "object"
       },
+      "FxProviderAttemptOut": {
+        "properties": {
+          "failed": {
+            "title": "Failed",
+            "type": "boolean"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "supplied": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Supplied",
+            "type": "array"
+          },
+          "unsupported": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Unsupported",
+            "type": "array"
+          }
+        },
+        "required": [
+          "provider",
+          "supplied",
+          "unsupported",
+          "failed"
+        ],
+        "title": "FxProviderAttemptOut",
+        "type": "object"
+      },
       "FxQuoteOut": {
         "properties": {
           "as_of": {
@@ -1768,6 +1802,126 @@
         "title": "FxQuoteOut",
         "type": "object"
       },
+      "FxRateLineOut": {
+        "description": "One currency against the pivot: 1 pivot = `rate` currency.",
+        "properties": {
+          "age_seconds": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age Seconds"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "path": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The currencies a derived rate went through, in order",
+            "title": "Path"
+          },
+          "provider": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Provider"
+          },
+          "rate": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rate"
+          },
+          "rate_timestamp": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "When the provider published the rate",
+            "title": "Rate Timestamp"
+          },
+          "rate_type": {
+            "anyOf": [
+              {
+                "enum": [
+                  "mid_market",
+                  "indicative",
+                  "delayed"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rate Type"
+          },
+          "retrieved_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "When WealthSphere fetched it",
+            "title": "Retrieved At"
+          },
+          "status": {
+            "description": "current: within the provider's update window; cached: older, from the last successful refresh; stale: older still, shown with its age; unavailable: no rate stored",
+            "enum": [
+              "current",
+              "cached",
+              "stale",
+              "unavailable"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "currency",
+          "status"
+        ],
+        "title": "FxRateLineOut",
+        "type": "object"
+      },
       "FxRateUsed": {
         "properties": {
           "as_of": {
@@ -1812,6 +1966,73 @@
           "inverted"
         ],
         "title": "FxRateUsed",
+        "type": "object"
+      },
+      "FxRefreshOut": {
+        "properties": {
+          "attempts": {
+            "items": {
+              "$ref": "#/components/schemas/FxProviderAttemptOut"
+            },
+            "title": "Attempts",
+            "type": "array"
+          },
+          "missing": {
+            "description": "Currencies no provider could supply",
+            "items": {
+              "type": "string"
+            },
+            "title": "Missing",
+            "type": "array"
+          },
+          "refreshed": {
+            "description": "False when a refresh already ran in this window: the stored rates are returned and no provider is called",
+            "title": "Refreshed",
+            "type": "boolean"
+          },
+          "status": {
+            "$ref": "#/components/schemas/FxStatusOut"
+          },
+          "window": {
+            "title": "Window",
+            "type": "string"
+          }
+        },
+        "required": [
+          "refreshed",
+          "window",
+          "attempts",
+          "missing",
+          "status"
+        ],
+        "title": "FxRefreshOut",
+        "type": "object"
+      },
+      "FxStatusOut": {
+        "properties": {
+          "checked_at": {
+            "format": "date-time",
+            "title": "Checked At",
+            "type": "string"
+          },
+          "pivot_currency": {
+            "title": "Pivot Currency",
+            "type": "string"
+          },
+          "rates": {
+            "items": {
+              "$ref": "#/components/schemas/FxRateLineOut"
+            },
+            "title": "Rates",
+            "type": "array"
+          }
+        },
+        "required": [
+          "pivot_currency",
+          "checked_at",
+          "rates"
+        ],
+        "title": "FxStatusOut",
         "type": "object"
       },
       "GoalAssumptions": {
@@ -7360,6 +7581,90 @@
           }
         ],
         "summary": "Get Fx Rate",
+        "tags": [
+          "fx"
+        ]
+      }
+    },
+    "/api/v1/fx/refresh": {
+      "post": {
+        "description": "Fetches new rates unless a refresh already ran in the current window (then the stored\nrates are returned and no provider is called). Each user may ask a few times an hour. When\nevery provider fails, the last stored rates are returned with their status and age; no rate\nis ever invented.",
+        "operationId": "fx_refresh_api_v1_fx_refresh_post",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FxRefreshOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Ask for fresh rates",
+        "tags": [
+          "fx"
+        ]
+      }
+    },
+    "/api/v1/fx/status": {
+      "get": {
+        "description": "The latest stored rate of every supported currency against the pivot currency, with the\nprovider, the kind of rate, when it was published and fetched, and its status. Cached rates\nare never labelled current; a currency without any rate is `unavailable`.",
+        "operationId": "fx_status_api_v1_fx_status_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FxStatusOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Reporting-currency rates and their freshness",
         "tags": [
           "fx"
         ]

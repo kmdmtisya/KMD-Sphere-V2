@@ -22,6 +22,7 @@ from datetime import UTC, date, datetime, timedelta
 from enum import StrEnum
 
 from app.modules.market_data.providers.base import MarketDataProvider
+from app.modules.market_data.providers.batch import fetch_fx_batch
 from app.modules.market_data.providers.errors import (
     AllProvidersFailed,
     CircuitOpen,
@@ -31,7 +32,13 @@ from app.modules.market_data.providers.errors import (
     RateLimited,
     UnsupportedKind,
 )
-from app.modules.market_data.providers.models import AssetKind, FxQuote, PricePoint, PriceQuote
+from app.modules.market_data.providers.models import (
+    AssetKind,
+    FxBatch,
+    FxQuote,
+    PricePoint,
+    PriceQuote,
+)
 
 Clock = Callable[[], datetime]
 Sleep = Callable[[float], Awaitable[None]]
@@ -177,6 +184,10 @@ class ResilientProvider:
 
     async def get_fx_history(self, base: str, quote: str, start: date, end: date) -> list[FxQuote]:
         return await self._call(lambda: self._inner.get_fx_history(base, quote, start, end))
+
+    async def get_fx_rates(self, base: str, quotes: list[str]) -> FxBatch:
+        """The inner provider's batch (or one-by-one) answer, with the same retry and breaker."""
+        return await self._call(lambda: fetch_fx_batch(self._inner, base, quotes))
 
 
 class FallbackChain:

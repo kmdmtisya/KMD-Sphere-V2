@@ -36,6 +36,7 @@ from app.db.session import Database
 from app.modules.alerts import api as alerts_api
 from app.modules.assets import api as assets_api
 from app.modules.forecasting import api as forecasting_api
+from app.modules.fx import api as fx_api
 from app.modules.goals import api as goals_api
 from app.modules.identity import api as identity_api
 from app.modules.market_data import api as market_data_api
@@ -168,6 +169,7 @@ def create_app(
     app.state.rate_limiter = limiter if settings.rate_limit_enabled else None
     app.state.rate_limit_policies = policies
     app.state.response_cache = response_cache
+    app.state.cache_store = cache_store  # short-lived shared caches (FX rate board, P11-T03)
     # Added innermost first: headers wrap everything, so 413 and 429 answers carry them too.
     app.add_middleware(BodySizeLimitMiddleware, max_bytes=settings.max_request_body_bytes)
     if settings.rate_limit_enabled:
@@ -202,6 +204,7 @@ def create_app(
     app.include_router(transactions_api.router)
     app.include_router(transactions_api.holdings_router)
     app.include_router(market_data_api.router)
+    app.include_router(fx_api.router)
     app.include_router(market_data_api.prices_router)
     app.include_router(valuations_api.router)
     app.include_router(forecasting_api.router)

@@ -75,3 +75,19 @@ def test_the_purge_is_scheduled_daily() -> None:
     entry = build_schedule()["ai-conversation-purge"]
     assert entry["task"] == "app.worker.tasks.purge_ai_conversations"
     assert entry["task"] in celery_app.tasks
+
+
+async def test_the_fx_refresh_job_fetches_the_pivot_rates_once_per_window(
+    migrated_settings: Settings,  # noqa: F811
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """P11-T03: the hourly job, on the fake provider (which knows USD/AED and USD/KES only)."""
+    settings = migrated_settings.model_copy(update={"market_data_mode": "fake"})
+    monkeypatch.setattr(tasks, "get_settings", lambda: settings)
+    monkeypatch.setattr(tasks, "run_async", lambda work: run_async(work, migrated_settings))
+    first = (await asyncio.to_thread(tasks.refresh_fx_job.apply)).get()
+    assert set(first["missing"]) >= {"GBP", "JPY"}
+    assert "AED" not in first["missing"] and "KES" not in first["missing"]
+    again = (await asyncio.to_thread(tasks.refresh_fx_job.apply)).get()
+    assert again["skipped"] is True
+    assert build_schedule()["fx-refresh"]["task"] == "app.worker.tasks.refresh_fx"

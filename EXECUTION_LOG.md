@@ -1306,3 +1306,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-12T22:00:33+04:00 — COMPLETE P11-T02
 - duration: 15m 28s
 - evidence: Migration 0015 with currencies (seeded, data-driven), user_currency_preferences, fx_rates rate_type/rate_path, append-only fx_conversion_audit; NUMERIC only (schema test), pair/time index verified, migration round-trip and alembic check pass; 8 schema tests; backend 2119 passed. PR #126. CI all gates pass.
+
+### 2026-10-12T22:07:43+04:00 — START P11-T03
+- FXCUR-03 FX provider integration, refresh and caching
+- prerequisites verified COMPLETED

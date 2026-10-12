@@ -221,6 +221,8 @@ async def ingest_fx(
                         "provider": rate.provenance.provider,
                         "rate_timestamp": rate.provenance.as_of,
                         "retrieved_at": rate.provenance.retrieved_at,
+                        "rate_type": rate.rate_type,
+                        "rate_path": list(rate.path) if rate.path else None,
                     }
                 ],
             )
@@ -250,6 +252,8 @@ async def backfill_fx(
                 "provider": r.provenance.provider,
                 "rate_timestamp": r.provenance.as_of,
                 "retrieved_at": r.provenance.retrieved_at,
+                "rate_type": r.rate_type,
+                "rate_path": list(r.path) if r.path else None,
             }
             for r in rates
         ],

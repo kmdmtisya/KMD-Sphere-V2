@@ -22,6 +22,7 @@ from app.modules.market_data.providers.errors import (
 from app.modules.market_data.providers.http import HttpClient, HttpxClient, check_status
 from app.modules.market_data.providers.models import (
     AssetKind,
+    FxBatch,
     FxQuote,
     PricePoint,
     PriceQuote,
@@ -117,7 +118,25 @@ class EcbProvider:
             raise UnsupportedKind(f"{base}/{quote} (not published by the ECB)")
         as_of = _published(day)
         retrieved = max(self._now(), as_of)
-        return FxQuote(base, quote, rate, Provenance(self.name, as_of, retrieved))
+        path = None if "EUR" in (base, quote) else (base, "EUR", quote)
+        return FxQuote(
+            base, quote, rate, Provenance(self.name, as_of, retrieved), "indicative", path
+        )
+
+    async def get_fx_rates(self, base: str, quotes: list[str]) -> FxBatch:
+        """Every quote against `base` from one daily file (one request for all pairs)."""
+        rates = await self._fetch(DAILY_URL)
+        day = max(rates)
+        found: list[FxQuote] = []
+        unsupported: list[str] = []
+        for quote in quotes:
+            if quote == base:
+                continue
+            try:
+                found.append(self._quote(day, rates[day], base, quote))
+            except UnsupportedKind:
+                unsupported.append(quote)
+        return FxBatch(found, unsupported)
 
     async def get_fx_rate(self, base: str, quote: str) -> FxQuote:
         rates = await self._fetch(DAILY_URL)

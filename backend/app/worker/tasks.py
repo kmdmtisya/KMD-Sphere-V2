@@ -11,6 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.ai.conversations.service import ConversationService
 from app.core.config import get_settings
 from app.modules.alerts.evaluation import EvaluationResult, evaluate_alerts
+from app.modules.fx.refresh import refresh_once_per_window
 from app.modules.market_data.ingestion import (
     IngestFailure,
     IngestResult,
@@ -225,5 +226,36 @@ def purge_ai_conversations_job(day: str | None = None) -> dict[str, object]:
         if outcome.skipped or outcome.value is None:
             return {"skipped": True}
         return {"removed": outcome.value}
+
+    return run_async(go)
+
+
+# ------------------------------------------------------------------------- reporting-currency FX
+@celery_app.task(base=JobTask, name="app.worker.tasks.refresh_fx")
+def refresh_fx_job() -> dict[str, object]:
+    """Rates of every active currency against the pivot (P11-T03). Shares the refresh window with
+    user-triggered refreshes, so the provider is called at most once per window. When every
+    provider fails the job raises, and the task is retried with exponential backoff."""
+    settings = get_settings()
+    providers = build_providers(settings)
+    if not providers.fx_sources:
+        return {"skipped": "no FX provider configured"}
+
+    async def go(sessions: SessionFactory) -> dict[str, object]:
+        run = await refresh_once_per_window(
+            sessions,
+            providers.fx_sources,
+            settings.fx_pivot_currency,
+            datetime.now(UTC),
+            settings.fx_refresh_window_minutes,
+        )
+        if not run.ran or run.outcome is None:
+            return {"skipped": True, "window": run.window}
+        return {
+            "window": run.window,
+            "stored": run.outcome.stored,
+            "missing": run.outcome.missing,
+            "failed": [a.provider for a in run.outcome.attempts if a.error],
+        }
 
     return run_async(go)

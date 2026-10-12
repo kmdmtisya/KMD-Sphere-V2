@@ -1,0 +1,11 @@
+{
+  "result": "success",
+  "documentation": "https://www.exchangerate-api.com/docs",
+  "terms_of_use": "https://www.exchangerate-api.com/terms",
+  "time_last_update_unix": 1791763201,
+  "time_last_update_utc": "Mon, 12 Oct 2026 00:00:01 +0000",
+  "time_next_update_unix": 1791766801,
+  "time_next_update_utc": "Mon, 12 Oct 2026 01:00:01 +0000",
+  "base_code": "USD",
+  "conversion_rates": {"USD": 1, "AED": 3.6725, "AUD": 1.5112, "CAD": 1.3705, "CHF": 0.8634, "EUR": 0.9216, "GBP": 0.7712, "JPY": 149.83, "KES": 129.15, "ZAR": 17.8421}
+}
