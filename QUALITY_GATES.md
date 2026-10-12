@@ -7,13 +7,13 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-12T15:13:46+04:00 by `scripts/track.py`._
+_Generated at 2026-10-12T15:18:36+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
 | QG-01 | Architecture and Design | 🔄 IN_PROGRESS | 4/5 | Unassigned | — |
 | QG-02 | Code Quality | ✅ PASSED | 6/6 | Unassigned | — |
-| QG-03 | Automated Testing | 🔄 IN_PROGRESS | 5/6 | Unassigned | — |
+| QG-03 | Automated Testing | 🔄 IN_PROGRESS | 6/6 | Unassigned | — |
 | QG-04 | Android Platform | 🔄 IN_PROGRESS | 5/7 | Unassigned | — |
 | QG-05 | iOS Platform | 🔄 IN_PROGRESS | 4/6 | Unassigned | — |
 | QG-06 | Financial Accuracy and Data Integrity | 🔄 IN_PROGRESS | 7/7 | Unassigned | — |
@@ -21,7 +21,7 @@ _Generated at 2026-10-12T15:13:46+04:00 by `scripts/track.py`._
 | QG-08 | Security and Privacy | 🔄 IN_PROGRESS | 3/8 | Unassigned | — |
 | QG-09 | Performance and Scalability | 🔄 IN_PROGRESS | 1/6 | Unassigned | — |
 | QG-10 | CI/CD and Infrastructure | 🔄 IN_PROGRESS | 2/8 | Unassigned | — |
-| QG-11 | End-to-End Integration | 🔄 IN_PROGRESS | 1/6 | Unassigned | — |
+| QG-11 | End-to-End Integration | 🔄 IN_PROGRESS | 4/6 | Unassigned | — |
 | QG-12 | Production Release Readiness | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
 | QG-13 | QG-FX-01: Market Data Integrity | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
 | QG-14 | QG-FX-02: Technical Indicator Accuracy | ⬜ NOT_STARTED | 0/3 | Unassigned | — |
@@ -38,9 +38,9 @@ _Generated at 2026-10-12T15:13:46+04:00 by `scripts/track.py`._
 | QG-25 | QG-FXCUR-05: AI Integration | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 38/146.
+Criteria satisfied overall: 42/146.
 
-Current phase **P09** exit-gate criteria outstanding: QG-03.3, QG-11.1, QG-11.2, QG-11.5, QG-11.6.
+Current phase **P09** exit-gate criteria outstanding: QG-11.1.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -84,7 +84,7 @@ Approved By: —
 
 - [x] QG-03.1 All required unit tests pass · Required: P01 · By: P01-T09,P01-T10 · Evidence: Required unit tests pass: backend pytest 109 passed (0 skipped in CI; coverage 96.6%, per-module report in job summary) and mobile flutter test passed, in PR #4 CI and on main after merge (runs 37944172314 backend, 37944172316 mobile) · Verified: 2026-10-09T18:33:57+04:00
 - [x] QG-03.2 All required integration tests pass · Required: P05 · By: P05-T09 · Evidence: Integration tests pass: backend pytest 783 passed locally (coverage 90%) and in CI on PR #54 (real PostgreSQL, migrations up/down/up), covering schema, assets, portfolios, ledger, holdings, FX, valuations, summary, and the P05-T09 authorisation sweep plus 12x30 randomised ledger sequences; -m security 477 passed. · Verified: 2026-10-11T02:04:24+04:00
-- [ ] QG-03.3 Relevant end-to-end tests pass · Required: P09 · By: P09-T10
+- [x] QG-03.3 Relevant end-to-end tests pass · Required: P09 · By: P09-T10 · Evidence: End-to-end tests pass: six journeys (sign in, view portfolio, add transaction, forecast, goal progress, notification deep link) run in CI (workflow e2e.yml, PR 103) and locally against a real Postgres-backed backend seeded through the API, over real HTTP with the real app and live repositories. Caveat: identity-provider browser login, device lock and FCM are stood in for (docs/design/e2e.md); not run on a device or emulator. · Verified: 2026-10-12T15:18:35+04:00
 - [x] QG-03.4 Critical financial calculations achieve 100% requirement/edge-case coverage through documented test cases · Required: P06 · By: P06-T10 · Evidence: Every financial method and edge case maps to named tests: docs/financial-test-matrix.md (generated from docs/contracts/financial-test-matrix.json), 52 requirements over sections 1-13 and 15 of docs/financial-methods.md. backend/tests/test_financial_matrix.py (CI) fails if a listed test or file is missing, a formula section 1-12 has no requirement, or any public function of the 13 financial modules is covered by no requirement (so 100% is mechanical); 10/10 deliberate breaks of the matrix were caught. Edge cases are tested per method (zero/negative rates, 50-year horizon, ties, leap days, empty/undefined periods, unconvertible currencies, negative cash, closed positions, reversals). PR #68. · Verified: 2026-10-11T18:50:51+04:00 · CRITICAL
 - [x] QG-03.5 At least 85% automated line coverage for business-critical backend modules, without using coverage as a substitute for meaningful tests · Required: P06 · By: P06-T10 · Evidence: Per-module line coverage policy passes (coverage-policy.toml, threshold 85%): analytics 100%, forecasting 100%, portfolio 96.6%, assets 93.5%, networth 91.8%, goals 91.1%, transactions 88.0%, identity 87.2%; whole backend 92%; 1425 tests pass. Meaningful tests, not coverage padding: golden vectors, properties, an independent oracle and mutation checks for every P06 task. modules/fx and modules/ai do not exist yet and are checked once they do. · Verified: 2026-10-11T18:50:52+04:00
 - [x] QG-03.6 No unresolved critical test failures · Required: P01 · By: P01-T15 · Evidence: No unresolved critical test failures: backend 109 passed (96.6% coverage, 0 skipped in CI incl. integration against service containers), mobile flutter test passed, all four required checks green on PR #4 (backend gate, mobile gate, security gate, tracker validate); a deliberately failing check on throwaway PR #5 made 'backend gate' fail and the merge was refused by the base-branch policy · Verified: 2026-10-09T18:14:49+04:00
@@ -93,8 +93,8 @@ Status: IN_PROGRESS
 Owner: Unassigned  
 Start Timestamp: 2026-10-09T18:14:49+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-11T18:50:52+04:00  
-Evidence: 5/6 criteria verified; latest QG-03.5 at 2026-10-11T18:50:52+04:00  
+Verification Timestamp: 2026-10-12T15:18:35+04:00  
+Evidence: 6/6 criteria verified; latest QG-03.3 at 2026-10-12T15:18:35+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -243,18 +243,18 @@ Approved By: —
 ### QG-11: End-to-End Integration
 
 - [ ] QG-11.1 Android and iOS clients successfully communicate with backend APIs · Required: P09 · By: P09-T10
-- [ ] QG-11.2 Portfolio data flows correctly through transactions, holdings, analytics, dashboards and forecasts · Required: P09 · By: P09-T10
+- [x] QG-11.2 Portfolio data flows correctly through transactions, holdings, analytics, dashboards and forecasts · Required: P09 · By: P09-T10 · Evidence: Portfolio data flows through transactions, holdings, summaries, dashboard and forecasts in the E2E journeys: a deposit made through the app is booked by the server (net worth up by exactly 500.00) and Home shows the server's new total; displayed values equal direct API reads; the forecast equals a direct engine call; no client-side recalculation (tests assert server figures). Caveat: all-portfolios P/L, chart and metrics are empty because the API has no consolidated performance endpoints (docs/tech-debt.md). · Verified: 2026-10-12T15:18:35+04:00
 - [ ] QG-11.3 AI Copilot accesses only authorized portfolio data · Required: P10 · By: P10-T09 · CRITICAL
 - [x] QG-11.4 Market-data ingestion and refresh workflows function correctly · Required: P08 · By: P08-T08 · Evidence: Ingestion and refresh workflows work end to end with the deterministic fake provider and recorded fixtures: price ingest every 15 min, FX ingest daily, alert evaluation every 15 min, idempotent per time bucket; stored prices flow into holdings and summaries (PositionValuer: price beats older manual valuation, stale prices flagged, unpriced never invented) and the dashboard; P08-T08 proves outage, stale-data, failover, circuit-breaker and cache behaviour. Caveat: the CoinGecko and Twelve Data adapters have only run against synthetic fixtures; no real provider key or licence exists (ADR-0014), so no live vendor call has been made. · Verified: 2026-10-12T04:51:43+04:00
-- [ ] QG-11.5 Core user journeys pass end-to-end testing · Required: P09 · By: P09-T10
-- [ ] QG-11.6 Error handling, offline states and recovery scenarios are verified · Required: P09 · By: P09-T06
+- [x] QG-11.5 Core user journeys pass end-to-end testing · Required: P09 · By: P09-T10 · Evidence: Core user journeys pass end to end (journeys 1-6 in e2e/e2e_journeys_test.dart, green in CI and locally). Caveat: AI journeys remain DEMO until P10; no device run. · Verified: 2026-10-12T15:18:35+04:00
+- [x] QG-11.6 Error handling, offline states and recovery scenarios are verified · Required: P09 · By: P09-T06 · Evidence: Error, offline and recovery behaviour verified by tests: offline interceptor serves the saved copy only when the server is unreachable and never masks 401/403/404/5xx (19 tests), banner with data age and retry, reconnect/sign-in/sign-out reload and wipe, per-cause error views, rate-limit/refused/offline wording on the calculator; encrypted cache has no plaintext on disk and no cross-user reads. Caveat: no airplane-mode run on a device (manual check open); P09-T06 approved by the user. · Verified: 2026-10-12T15:18:35+04:00
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
 Start Timestamp: 2026-10-12T04:51:43+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-12T04:51:43+04:00  
-Evidence: 1/6 criteria verified; latest QG-11.4 at 2026-10-12T04:51:43+04:00  
+Verification Timestamp: 2026-10-12T15:18:35+04:00  
+Evidence: 4/6 criteria verified; latest QG-11.6 at 2026-10-12T15:18:35+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —

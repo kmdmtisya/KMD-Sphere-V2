@@ -914,12 +914,12 @@
   - [x] P09-T10.1 Seed data
   - [x] P09-T10.2 Journeys
   - [x] P09-T10.3 CI job
-- [ ] **P09-GATE** · UX Gate 4 review · `NOT_STARTED` ⬜
+- [ ] **P09-GATE** · UX Gate 4 review · `IN_PROGRESS` 🔄
   - Deps: P09-T01, P09-T02, P09-T03, P09-T04, P09-T05, P09-T06, P09-T07, P09-T08, P09-T09, P09-T10 · Wave: W6 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-03.3, QG-11.1, QG-11.2, QG-11.5, QG-11.6
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T15:18:36+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P09-GATE.1 Run gates
-  - [ ] P09-GATE.2 Demo on device
+  - [x] P09-GATE.1 Run gates
+  - [x] P09-GATE.2 Demo on device
   - [ ] P09-GATE.3 Record approval
 
 
