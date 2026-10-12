@@ -92,6 +92,12 @@ class Settings(BaseSettings):
     ai_max_output_tokens: int = 1024
     # Conversation history is deleted this many days after its last message (ADR-0017: 90).
     ai_conversation_retention_days: int = Field(default=90, ge=1, le=3650)
+    # The assistant's limits (P10-T06): questions per user per rolling 24 hours, tool calls and
+    # model rounds per question, earlier messages sent as context.
+    ai_questions_per_day: int = Field(default=30, ge=1)
+    ai_max_tool_calls_per_question: int = Field(default=20, ge=1)
+    ai_max_model_rounds: int = Field(default=8, ge=2)
+    ai_history_messages: int = Field(default=12, ge=0)
     # Browser origins allowed to call the API. Empty (the default) disables CORS: the mobile apps
     # do not need it. A wildcard is never accepted.
     cors_allowed_origins: list[str] = []

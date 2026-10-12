@@ -191,6 +191,16 @@ async def alice_world(
         "SELECT id, user_id, 'sweep', 11, now() FROM alerts WHERE id = $1 RETURNING id",
         alert["id"] if isinstance(alert["id"], uuid.UUID) else uuid.UUID(alert["id"]),
     )
+    conversation_id = await db.fetchval(
+        "INSERT INTO ai_conversations (user_id, title) "
+        "SELECT user_id, 'Alice chat' FROM alerts WHERE id = $1 RETURNING id",
+        alert["id"] if isinstance(alert["id"], uuid.UUID) else uuid.UUID(alert["id"]),
+    )
+    await db.execute(
+        "INSERT INTO ai_messages (conversation_id, user_id, position, role, content) "
+        "SELECT id, user_id, 1, 'user', 'private question' FROM ai_conversations WHERE id = $1",
+        conversation_id,
+    )
     device = await ok(
         await http.post(
             "/api/v1/devices",
@@ -199,6 +209,7 @@ async def alice_world(
         )
     )
     return {
+        "conversation_id": str(conversation_id),
         "device_id": device["id"],
         "alert_id": alert["id"],
         "event_id": str(event_id),
@@ -255,6 +266,9 @@ SNAPSHOT_TABLES = (
     "alerts",
     "alert_events",
     "devices",
+    "ai_conversations",
+    "ai_messages",
+    "ai_tool_calls",
 )
 
 
@@ -281,6 +295,9 @@ async def snapshot(db: asyncpg.Connection, user_id: str) -> dict[str, str]:
         "alerts": "SELECT * FROM alerts WHERE user_id = $1 ORDER BY id",
         "alert_events": "SELECT * FROM alert_events WHERE user_id = $1 ORDER BY id",
         "devices": "SELECT * FROM devices WHERE user_id = $1 ORDER BY id",
+        "ai_conversations": "SELECT * FROM ai_conversations WHERE user_id = $1 ORDER BY id",
+        "ai_messages": "SELECT * FROM ai_messages WHERE user_id = $1 ORDER BY id",
+        "ai_tool_calls": "SELECT * FROM ai_tool_calls WHERE user_id = $1 ORDER BY id",
         "goal_scenarios": "SELECT s.* FROM goal_scenarios s JOIN goals g ON g.id = s.goal_id "
         "WHERE g.user_id = $1 ORDER BY s.id",
     }

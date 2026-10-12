@@ -966,9 +966,9 @@
   - [x] P10-T05.2 OpenAI adapter
   - [x] P10-T05.3 Fake
   - [x] P10-T05.4 Tests
-- [ ] **P10-T06** · Orchestrator and /ai/chat with streaming · `NOT_STARTED` ⬜
+- [ ] **P10-T06** · Orchestrator and /ai/chat with streaming · `IN_PROGRESS` 🔄
   - Deps: P10-T03, P10-T04, P10-T05 · Wave: W4 · Track: AI · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-12T18:34:11+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P10-T06.1 Loop
   - [ ] P10-T06.2 Scope enforcement

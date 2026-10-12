@@ -6,6 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from opentelemetry.sdk.trace import SpanProcessor
 from redis.asyncio import Redis
 
+from app.ai import api as ai_api
+from app.ai.providers.base import LlmProvider
 from app.api import dashboard, health, metrics
 from app.core.auth import JwksKeySource, TokenVerifier
 from app.core.cache import (
@@ -52,6 +54,7 @@ def create_app(
     span_processors: Sequence[SpanProcessor] = (),
     token_verifier: TokenVerifier | None = None,
     rate_limit_store: CounterStore | None = None,
+    llm: LlmProvider | None = None,
 ) -> FastAPI:
     settings = settings or get_settings()
     configure_logging(settings.log_level)
@@ -126,6 +129,11 @@ def create_app(
             },
             {"name": "watchlist", "description": "Assets the user follows, with latest prices"},
             {
+                "name": "ai",
+                "description": "The assistant: streamed chat over your own data and your stored "
+                "conversations",
+            },
+            {
                 "name": "notifications",
                 "description": "Devices that receive alert notifications (no amounts in payloads)",
             },
@@ -154,6 +162,7 @@ def create_app(
         readiness_checks if readiness_checks is not None else health.default_checks(settings)
     )
     app.state.token_verifier = token_verifier or _default_verifier(settings)
+    app.state.llm = llm  # None: built from settings on first use (P10-T06)
     policies = Policies.from_settings(settings)
     limiter = RateLimiter(rate_limit_store)
     app.state.rate_limiter = limiter if settings.rate_limit_enabled else None
@@ -188,6 +197,7 @@ def create_app(
     app.include_router(alerts_api.alerts_router)
     app.include_router(alerts_api.preferences_router)
     app.include_router(notifications_api.router)
+    app.include_router(ai_api.router)
     app.include_router(portfolio_api.router)
     app.include_router(transactions_api.router)
     app.include_router(transactions_api.holdings_router)

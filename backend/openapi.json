@@ -897,6 +897,66 @@
         "title": "AssetSummary",
         "type": "object"
       },
+      "ChatRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "conversation_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Continue this conversation. Omit to start a new one.",
+            "title": "Conversation Id"
+          },
+          "message": {
+            "description": "Your question, in plain text.",
+            "maxLength": 4000,
+            "minLength": 1,
+            "title": "Message",
+            "type": "string"
+          },
+          "scope": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ChatScope"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "message"
+        ],
+        "title": "ChatRequest",
+        "type": "object"
+      },
+      "ChatScope": {
+        "additionalProperties": false,
+        "properties": {
+          "portfolio_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Limit the chat to one of your portfolios. Checked on the server; fixed for the life of a conversation.",
+            "title": "Portfolio Id"
+          }
+        },
+        "title": "ChatScope",
+        "type": "object"
+      },
       "CompoundForecastIn": {
         "additionalProperties": false,
         "properties": {
@@ -1112,6 +1172,124 @@
           "largest"
         ],
         "title": "ConcentrationOut",
+        "type": "object"
+      },
+      "ConversationDetailOut": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "messages": {
+            "items": {
+              "$ref": "#/components/schemas/MessageOut"
+            },
+            "title": "Messages",
+            "type": "array"
+          },
+          "portfolio_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Portfolio Id"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "tool_calls": {
+            "items": {
+              "$ref": "#/components/schemas/ToolCallOut"
+            },
+            "title": "Tool Calls",
+            "type": "array"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "portfolio_id",
+          "created_at",
+          "updated_at",
+          "messages",
+          "tool_calls"
+        ],
+        "title": "ConversationDetailOut",
+        "type": "object"
+      },
+      "ConversationOut": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "portfolio_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Portfolio Id"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "portfolio_id",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "ConversationOut",
         "type": "object"
       },
       "CurrencyShare": {
@@ -3049,6 +3227,68 @@
         "title": "MeResponse",
         "type": "object"
       },
+      "MessageOut": {
+        "properties": {
+          "content": {
+            "title": "Content",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model"
+          },
+          "position": {
+            "title": "Position",
+            "type": "integer"
+          },
+          "role": {
+            "enum": [
+              "user",
+              "assistant"
+            ],
+            "title": "Role",
+            "type": "string"
+          },
+          "structured": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Structured"
+          }
+        },
+        "required": [
+          "id",
+          "position",
+          "role",
+          "content",
+          "created_at"
+        ],
+        "title": "MessageOut",
+        "type": "object"
+      },
       "MetadataField": {
         "properties": {
           "required": {
@@ -4549,6 +4789,51 @@
         "title": "SummaryOut",
         "type": "object"
       },
+      "ToolCallOut": {
+        "properties": {
+          "error_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Code"
+          },
+          "message_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message Id"
+          },
+          "status": {
+            "enum": [
+              "ok",
+              "error"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "tool_name": {
+            "title": "Tool Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "tool_name",
+          "status"
+        ],
+        "title": "ToolCallOut",
+        "type": "object"
+      },
       "TotalsOut": {
         "properties": {
           "fees": {
@@ -5383,6 +5668,306 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/api/v1/ai/chat": {
+      "post": {
+        "description": "Ask the assistant about your own portfolio, goals and net worth. The answer streams as server-sent events of these types: token, tool, source, done, error. `tool` shows which tool ran (name and status only), `source` names the data the answer rests on with its as-of time, `token` carries the answer text (the answer is checked before any of it is sent), `done` closes the turn and `error` ends it with a fixed code. Figures come from WealthSphere's tools, never from the model. Limits: 30 questions per user per 24 hours, 20 tool calls per question.",
+        "operationId": "chat_api_v1_ai_chat_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "A stream of server-sent events"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such conversation or portfolio for this user"
+          },
+          "422": {
+            "description": "Invalid question"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "No assistant is configured"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Ask the assistant",
+        "tags": [
+          "ai"
+        ]
+      }
+    },
+    "/api/v1/ai/conversations": {
+      "delete": {
+        "description": "Deletes every conversation you have, with its messages and tool-call records.",
+        "operationId": "delete_all_conversations_api_v1_ai_conversations_delete",
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Delete all your conversations",
+        "tags": [
+          "ai"
+        ]
+      },
+      "get": {
+        "description": "Your stored conversations, most recent first. Conversations are deleted after the\nretention period (90 days by default) or when you delete them.",
+        "operationId": "list_conversations_api_v1_ai_conversations_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ConversationOut"
+                  },
+                  "title": "Response List Conversations Api V1 Ai Conversations Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Your conversations",
+        "tags": [
+          "ai"
+        ]
+      }
+    },
+    "/api/v1/ai/conversations/{conversation_id}": {
+      "delete": {
+        "description": "Deletes the conversation with its messages and tool-call records.",
+        "operationId": "delete_conversation_api_v1_ai_conversations__conversation_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "conversation_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Conversation Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such conversation for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Delete one conversation",
+        "tags": [
+          "ai"
+        ]
+      },
+      "get": {
+        "description": "The conversation with its messages in order and the tools that ran (name and status).",
+        "operationId": "get_conversation_api_v1_ai_conversations__conversation_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "conversation_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Conversation Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConversationDetailOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such conversation for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "One conversation with its messages",
+        "tags": [
+          "ai"
+        ]
+      }
+    },
     "/api/v1/alert-preferences": {
       "get": {
         "description": "What you want to hear about. With nothing saved, everything is on.",
@@ -10076,6 +10661,10 @@
     {
       "description": "Assets the user follows, with latest prices",
       "name": "watchlist"
+    },
+    {
+      "description": "The assistant: streamed chat over your own data and your stored conversations",
+      "name": "ai"
     },
     {
       "description": "Devices that receive alert notifications (no amounts in payloads)",
