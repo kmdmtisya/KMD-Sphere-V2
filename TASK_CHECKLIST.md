@@ -1197,12 +1197,12 @@
   - [x] P12-T07.1 Compare
   - [x] P12-T07.2 Simulate
   - [x] P12-T07.3 Tests
-- [ ] **P12-T08** · Safety and quality suite · `IN_PROGRESS` 🔄
+- [x] **P12-T08** · Safety and quality suite · `COMPLETED` ✅
   - Deps: P12-T06, P12-T07 · Wave: W4 · Track: QA · Size: L · Approval: yes
-  - Started: 2026-10-13T20:07:22+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-13T20:07:22+04:00 · Completed: 2026-10-13T21:22:46+04:00 · Duration: 1h 15m 24s · Blocker: —
+  - Evidence: Results reviewed and approved by the user (docs/ai-evaluation.md P12 section); scoring weights and Doctor thresholds accepted as proposed. PR #148, CI all gates pass. · Approved by: user (mtisya@gmail.com)
   - [x] P12-T08.1 Suite
-  - [ ] P12-T08.2 Review
+  - [x] P12-T08.2 Review
 - [x] **P12-T09** · Mobile wiring: Doctor, Opportunities, Compare, Simulate · `COMPLETED` ✅
   - Deps: P12-T06, P12-T07, P07-T06, P07-T07 · Wave: W4 · Track: MOB · Size: L · Approval: no
   - Started: 2026-10-13T19:05:41+04:00 · Completed: 2026-10-13T19:55:40+04:00 · Duration: 49m 59s · Blocker: —

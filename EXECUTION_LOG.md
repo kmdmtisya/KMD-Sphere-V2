@@ -1609,3 +1609,17 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-13T20:07:22+04:00 — START P12-T08
 - Safety and quality suite
 - prerequisites verified COMPLETED
+
+### 2026-10-13T21:22:44+04:00 — DECISION — P12-T08 results reviewed and approved; scoring weights and Doctor thresholds accepted
+- The user reviewed the P12 safety and quality suite (docs/ai-evaluation.md, P12 section) and approved P12-T08.
+- Results: opportunity 113/113, opportunity_injection 50/50, market_data 41/41, p12_cross_user 30/30; the stated limits were accepted (scripted model only; pattern-based detection).
+- No changes were requested, so these are accepted as proposed:
+  - the instrument score weights: stability 25, resilience 20, momentum 15, cost 10, liquidity 15, risk class 15 (docs/design/scoring.md);
+  - the Portfolio Doctor thresholds (docs/design/portfolio-doctor.md section 3).
+
+### 2026-10-13T21:22:45+04:00 — AWAITING_VERIFICATION P12-T08
+- evidence: P12 safety and quality suite in CI (PR #148): opportunity 113/113, opportunity_injection 50/50, market_data 41/41, p12_cross_user 30/30, zero tolerance, with meta-tests; fixes for injected research figures, guarantee/forecast wording, trade instructions, personal data, prompt leak.
+
+### 2026-10-13T21:22:46+04:00 — COMPLETE P12-T08
+- duration: 1h 15m 24s
+- evidence: Results reviewed and approved by the user (docs/ai-evaluation.md P12 section); scoring weights and Doctor thresholds accepted as proposed. PR #148, CI all gates pass. · Approved by: user (mtisya@gmail.com)
