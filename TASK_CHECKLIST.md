@@ -1150,14 +1150,14 @@
   - [x] P12-T01.2 Severity model
   - [x] P12-T01.3 Endpoint
   - [x] P12-T01.4 Tests
-- [ ] **P12-T02** · Investment universe and eligibility filters · `NOT_STARTED` ⬜
+- [ ] **P12-T02** · Investment universe and eligibility filters · `IN_PROGRESS` 🔄
   - Deps: P08-T06, P08-GATE, P10-GATE, P11-GATE · Wave: W1 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-13T13:42:43+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P12-T02.1 Schema
-  - [ ] P12-T02.2 Ingestion
-  - [ ] P12-T02.3 Filters
-  - [ ] P12-T02.4 Tests
+  - [x] P12-T02.1 Schema
+  - [x] P12-T02.2 Ingestion
+  - [x] P12-T02.3 Filters
+  - [x] P12-T02.4 Tests
 - [ ] **P12-T03** · Quantitative features and explainable scoring · `NOT_STARTED` ⬜
   - Deps: P12-T02, P08-T06 · Wave: W2 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

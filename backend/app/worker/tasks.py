@@ -3,6 +3,7 @@
 import logging
 import uuid
 from collections.abc import Awaitable, Callable
+from dataclasses import asdict
 from datetime import UTC, date, datetime
 
 import redis
@@ -25,6 +26,14 @@ from app.modules.market_data.ingestion import (
 from app.modules.market_data.providers.errors import ProviderUnavailable
 from app.modules.market_data.providers.registry import build_providers
 from app.modules.notifications.push import build_push_sender
+from app.modules.universe.ingestion import (
+    DEMO_SOURCE,
+    DemoUniverseSource,
+    deactivate_source,
+)
+from app.modules.universe.ingestion import (
+    ingest as ingest_universe,
+)
 from app.worker.celery_app import celery_app
 from app.worker.db import SessionFactory, run_async
 from app.worker.idempotency import run_once
@@ -258,5 +267,30 @@ def refresh_fx_job() -> dict[str, object]:
             "missing": run.outcome.missing,
             "failed": [a.provider for a in run.outcome.attempts if a.error],
         }
+
+    return run_async(go)
+
+
+# -------------------------------------------------------------------------- investment universe
+@celery_app.task(base=JobTask, name="app.worker.tasks.ingest_universe")
+def ingest_universe_job(day: str | None = None) -> dict[str, object]:
+    """Loads the investment universe once a day (P12-T02.2). Only the synthetic DEMO universe
+    exists; it is loaded only with fake market data, so fictional symbols never reach a real
+    provider. With real market data any DEMO instruments are deactivated instead."""
+    settings = get_settings()
+    key = day or datetime.now(UTC).date().isoformat()
+
+    async def go(sessions: SessionFactory) -> dict[str, object]:
+        async def work(session: AsyncSession) -> dict[str, object]:
+            if settings.market_data_mode != "fake":
+                removed = await deactivate_source(session, DEMO_SOURCE)
+                return {"demo_universe": "disabled", "deactivated": removed}
+            report = await ingest_universe(session, DemoUniverseSource())
+            return asdict(report)
+
+        outcome = await run_once(sessions, "ingest_universe", key, work)
+        if outcome.skipped or outcome.value is None:
+            return {"skipped": True}
+        return outcome.value
 
     return run_async(go)

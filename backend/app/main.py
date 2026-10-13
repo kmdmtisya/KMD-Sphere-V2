@@ -48,6 +48,7 @@ from app.modules.portfolio import analytics_api, summary_api
 from app.modules.portfolio import api as portfolio_api
 from app.modules.transactions import api as transactions_api
 from app.modules.transactions import valuations_api
+from app.modules.universe import api as universe_api
 
 
 def create_app(
@@ -202,6 +203,7 @@ def create_app(
     app.include_router(notifications_api.router)
     app.include_router(ai_api.router)
     app.include_router(doctor_api.router)
+    app.include_router(universe_api.router)
     app.include_router(portfolio_api.router)
     app.include_router(transactions_api.router)
     app.include_router(transactions_api.holdings_router)

@@ -1925,6 +1925,28 @@
         "title": "DrawdownOut",
         "type": "object"
       },
+      "EligibilityOut": {
+        "properties": {
+          "eligible": {
+            "description": "True only when every rule passes",
+            "title": "Eligible",
+            "type": "boolean"
+          },
+          "rules": {
+            "items": {
+              "$ref": "#/components/schemas/RuleOutcomeOut"
+            },
+            "title": "Rules",
+            "type": "array"
+          }
+        },
+        "required": [
+          "eligible",
+          "rules"
+        ],
+        "title": "EligibilityOut",
+        "type": "object"
+      },
       "FindingOut": {
         "properties": {
           "assumptions": {
@@ -3768,6 +3790,170 @@
         "title": "IncomeSummaryOut",
         "type": "object"
       },
+      "InstrumentOut": {
+        "properties": {
+          "asset_class": {
+            "title": "Asset Class",
+            "type": "string"
+          },
+          "asset_id": {
+            "format": "uuid",
+            "title": "Asset Id",
+            "type": "string"
+          },
+          "country": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Country"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "data_as_of": {
+            "format": "date-time",
+            "title": "Data As Of",
+            "type": "string"
+          },
+          "eligibility": {
+            "$ref": "#/components/schemas/EligibilityOut"
+          },
+          "is_demo": {
+            "description": "Fictional instrument for demo and development",
+            "title": "Is Demo",
+            "type": "boolean"
+          },
+          "jurisdictions": {
+            "description": "Where the source says it is offered",
+            "items": {
+              "type": "string"
+            },
+            "title": "Jurisdictions",
+            "type": "array"
+          },
+          "licence_status": {
+            "enum": [
+              "demo",
+              "unconfirmed",
+              "licensed"
+            ],
+            "title": "Licence Status",
+            "type": "string"
+          },
+          "liquidity": {
+            "description": "Assumed from the asset class",
+            "enum": [
+              "immediate",
+              "market",
+              "term",
+              "illiquid",
+              "unknown"
+            ],
+            "title": "Liquidity",
+            "type": "string"
+          },
+          "minimum_investment": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "risk_level": {
+            "description": "The source's classification, 1 lowest",
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Risk Level",
+            "type": "integer"
+          },
+          "symbol": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Symbol"
+          }
+        },
+        "required": [
+          "asset_id",
+          "symbol",
+          "name",
+          "asset_class",
+          "currency",
+          "country",
+          "risk_level",
+          "liquidity",
+          "jurisdictions",
+          "minimum_investment",
+          "is_demo",
+          "licence_status",
+          "data_as_of",
+          "eligibility"
+        ],
+        "title": "InstrumentOut",
+        "type": "object"
+      },
+      "InvestorOut": {
+        "properties": {
+          "horizon_years": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Horizon Years"
+          },
+          "residence_country": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Residence Country"
+          },
+          "risk_tolerance": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Risk Tolerance"
+          }
+        },
+        "required": [
+          "residence_country",
+          "risk_tolerance",
+          "horizon_years"
+        ],
+        "title": "InvestorOut",
+        "type": "object"
+      },
       "LatestPriceOut": {
         "properties": {
           "as_of": {
@@ -4202,6 +4388,17 @@
           },
           "preferences": {
             "$ref": "#/components/schemas/Preferences"
+          },
+          "residence_country": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Residence Country"
           },
           "timezone": {
             "title": "Timezone",
@@ -5059,6 +5256,19 @@
             ],
             "title": "Locale"
           },
+          "residence_country": {
+            "anyOf": [
+              {
+                "pattern": "^[A-Z]{2}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Country of residence (ISO 3166-1 alpha-2); decides which investments are eligible. Null clears it.",
+            "title": "Residence Country"
+          },
           "theme_mode": {
             "anyOf": [
               {
@@ -5548,6 +5758,50 @@
           }
         },
         "title": "RiskProfileUpdate",
+        "type": "object"
+      },
+      "Rule": {
+        "enum": [
+          "jurisdiction",
+          "risk",
+          "liquidity",
+          "active"
+        ],
+        "title": "Rule",
+        "type": "string"
+      },
+      "RuleOutcomeOut": {
+        "properties": {
+          "legally_reviewed": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Jurisdiction rules only: false until the P12-T10 review",
+            "title": "Legally Reviewed"
+          },
+          "passed": {
+            "title": "Passed",
+            "type": "boolean"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "rule": {
+            "$ref": "#/components/schemas/Rule"
+          }
+        },
+        "required": [
+          "rule",
+          "passed",
+          "reason"
+        ],
+        "title": "RuleOutcomeOut",
         "type": "object"
       },
       "ScenarioForecastIn": {
@@ -6703,6 +6957,47 @@
           "stale"
         ],
         "title": "UnitPriceOut",
+        "type": "object"
+      },
+      "UniverseOut": {
+        "properties": {
+          "eligible": {
+            "title": "Eligible",
+            "type": "integer"
+          },
+          "investor": {
+            "$ref": "#/components/schemas/InvestorOut",
+            "description": "The facts eligibility used"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/InstrumentOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "jurisdiction_notice": {
+            "default": "Jurisdiction rules have not been legally reviewed yet; availability comes from the instrument source.",
+            "title": "Jurisdiction Notice",
+            "type": "string"
+          },
+          "notice": {
+            "default": "Eligibility only filters what analysis may consider; an eligible instrument is not a recommendation. DEMO instruments are fictional.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "investor",
+          "total",
+          "eligible",
+          "items"
+        ],
+        "title": "UniverseOut",
         "type": "object"
       },
       "ValidationError": {
@@ -12434,6 +12729,84 @@
         "summary": "Update Risk Profile",
         "tags": [
           "identity"
+        ]
+      }
+    },
+    "/api/v1/universe": {
+      "get": {
+        "description": "Every active instrument with the outcome of each eligibility rule (jurisdiction, risk,\nliquidity, active) for the signed-in user, and the facts used. Eligibility filters what\nanalysis may consider; it is not a recommendation. Jurisdiction rules are not legally\nreviewed yet (P12-T10).",
+        "operationId": "list_universe_api_v1_universe_get",
+        "parameters": [
+          {
+            "description": "An asset class code",
+            "in": "query",
+            "name": "asset_class",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[a-z][a-z0-9_]{1,39}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "An asset class code",
+              "title": "Asset Class"
+            }
+          },
+          {
+            "description": "Only instruments that pass every rule",
+            "in": "query",
+            "name": "eligible_only",
+            "required": false,
+            "schema": {
+              "default": false,
+              "description": "Only instruments that pass every rule",
+              "title": "Eligible Only",
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UniverseOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "422": {
+            "description": "Invalid query"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Investment universe and eligibility",
+        "tags": [
+          "universe"
         ]
       }
     },

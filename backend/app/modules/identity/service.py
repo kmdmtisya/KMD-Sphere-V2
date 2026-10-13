@@ -22,7 +22,7 @@ from app.modules.identity.schemas import (
 
 # Refresh last_seen_at at most this often, so ordinary reads do not write on every request.
 _TOUCH_INTERVAL = timedelta(hours=1)
-_PROFILE_FIELDS = ("display_name", "base_currency", "locale", "timezone")
+_PROFILE_FIELDS = ("display_name", "base_currency", "locale", "timezone", "residence_country")
 _REQUIRED_PROFILE_FIELDS = ("base_currency", "locale", "timezone")
 _UI_FIELDS = ("theme_mode", "dashboard_layout")
 
@@ -85,6 +85,7 @@ class IdentityService:
             base_currency=profile.base_currency,
             locale=profile.locale,
             timezone=profile.timezone,
+            residence_country=profile.residence_country,
             preferences=Preferences.model_validate(profile.preferences or {}),
             created_at=user.created_at,
         )

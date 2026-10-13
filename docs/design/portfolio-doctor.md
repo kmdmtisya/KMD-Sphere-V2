@@ -70,7 +70,7 @@ Shares are of the portfolio's total value in its base currency. A measure at or 
   | Illiquid | real estate, private business, private equity |
   | Unknown | custom assets |
 
-  A test fails if an asset class has no stated liquidity.
+  A test fails if an asset class has no stated liquidity. The table lives in `app/modules/assets/liquidity.py`, shared with the investment universe (P12-T02).
 - Volatility and drawdown describe the past of the portfolio's own data, not a forecast. Goal status is an estimate under each goal's assumptions (goals.md). Both say so in `assumptions`.
 - A portfolio with no value, or with a negative balance, is not assessed: shares of its total would mean nothing.
 - The findings are the same whatever the input order. Equal holdings resolve by id.
