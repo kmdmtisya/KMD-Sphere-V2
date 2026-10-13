@@ -215,6 +215,34 @@ async def test_an_explicit_currency_overrides_the_preference_for_that_request_on
     assert income["currency"] == "EUR" and income["reporting"]["currency"] == "EUR"
 
 
+async def test_switching_and_viewing_in_a_currency_is_not_audited_but_the_converter_is(
+    http: httpx.AsyncClient,
+    raw: asyncpg.Connection,
+    rates: dict[str, Decimal],
+    two_users: TwoUsers,  # noqa: F811
+) -> None:
+    # DEC-28 (checked at P11-T12): display switches are cosmetic, not financial records.
+    h = two_users.alice.headers
+    await portfolio(http, h, "USD", "100.00")
+    for code in ("EUR", "AED", "USD"):
+        await http.patch(
+            "/api/v1/me/currency-preferences", headers=h, json={"reporting_currency": code}
+        )
+        for path in ("/api/v1/dashboard", "/api/v1/net-worth", "/api/v1/income/summary"):
+            assert (await http.get(path, headers=h)).status_code == 200
+    await http.get("/api/v1/net-worth", headers=h, params={"currency": "AED"})
+    count = "SELECT count(*) FROM fx_conversion_audit WHERE user_id = $1"
+    assert await raw.fetchval(count, uuid.UUID(two_users.alice.id)) == 0
+
+    converted = await http.post(
+        "/api/v1/fx/convert",
+        headers=h,
+        json={"amount": m("100.00"), "to": "EUR"},
+    )
+    assert converted.status_code == 200
+    assert await raw.fetchval(count, uuid.UUID(two_users.alice.id)) == 1
+
+
 # ----------------------------------------------------------------------------- goals, forecasts
 async def test_goals_keep_their_currency_and_show_the_reporting_one_beside_it(
     http: httpx.AsyncClient,

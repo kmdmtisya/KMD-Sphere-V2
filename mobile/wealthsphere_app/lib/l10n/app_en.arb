@@ -1467,6 +1467,27 @@
   "@fxStatusUnavailable": {
     "description": "FX status line when no rate is stored"
   },
+  "fxSource": "Rates: {sources}",
+  "@fxSource": {
+    "description": "Who published the FX rates shown (the ECB requires citing it as the source)",
+    "placeholders": {
+      "sources": {
+        "type": "String"
+      }
+    }
+  },
+  "fxSourceEcb": "European Central Bank",
+  "@fxSourceEcb": {
+    "description": "Rate source name: the ECB euro reference rates"
+  },
+  "fxSourceDemo": "demo data",
+  "@fxSourceDemo": {
+    "description": "Rate source in demo mode"
+  },
+  "converterInformationOnly": "Exchange rates are for information only, not for transactions.",
+  "@converterInformationOnly": {
+    "description": "Always shown on the converter (provider licence terms, P11-T12)"
+  },
   "fxRefresh": "Refresh rates",
   "@fxRefresh": {
     "description": "Button that asks for fresh FX rates"
