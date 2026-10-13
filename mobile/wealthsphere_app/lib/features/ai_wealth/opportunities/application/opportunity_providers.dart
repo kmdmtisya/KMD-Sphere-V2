@@ -73,7 +73,25 @@ bool simulateInCalculator(
   String locale,
 ) {
   final a = candidate.simulation;
-  if (a == null) return false;
+  if (a == null) {
+    if (!candidate.ownReturns) return false;
+    // No example returns: the return fields are left empty for the user's own assumptions.
+    final base = CalculatorInputs.defaults(locale);
+    ref
+        .read(calculatorInputsProvider.notifier)
+        .replace(
+          base.copyWith(
+            texts: {
+              ...base.texts,
+              CalculatorField.annualReturn: '',
+              CalculatorField.conservativeReturn: '',
+              CalculatorField.growthReturn: '',
+            },
+          ),
+        );
+    ref.read(calculatorPrefillProvider.notifier).clear();
+    return true;
+  }
   final input = DecimalInput(locale);
   String t(Decimal v) => input.format(v);
   final base = CalculatorInputs.defaults(locale);
@@ -115,3 +133,11 @@ bool simulateInCalculator(
       );
   return true;
 }
+
+/// The side-by-side facts of the chosen ideas, by idea id (P12-T09: live from the server).
+final comparisonProvider =
+    FutureProvider.family<Map<String, List<OpportunityAttribute>>, String>(
+      (ref, ids) => ref
+          .watch(opportunityRepositoryProvider)
+          .compare(ids.split(',').where((id) => id.isNotEmpty).toList()),
+    );

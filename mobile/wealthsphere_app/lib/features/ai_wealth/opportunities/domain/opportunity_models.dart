@@ -116,6 +116,7 @@ class OpportunityCandidate {
     this.score,
     this.scoreFactors = const [],
     this.simulation,
+    this.ownReturns = false,
   });
 
   factory OpportunityCandidate.fromJson(JsonReader r) {
@@ -174,6 +175,10 @@ class OpportunityCandidate {
 
   /// Example assumptions for the calculator; null when the idea has no evidence to base them on.
   final SimulationAssumptions? simulation;
+
+  /// Live ideas (P12-T09) have no example returns: Simulate opens the calculator with the return
+  /// fields empty, for the user's own assumptions. WealthSphere never suggests a return.
+  final bool ownReturns;
 
   String? attribute(String label) =>
       attributes.where((a) => a.label == label).map((a) => a.value).firstOrNull;

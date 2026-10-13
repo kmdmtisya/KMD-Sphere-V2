@@ -13,6 +13,8 @@ enum HealthFindingKind {
   liquidity,
   volatility,
   income,
+  goals,
+  data,
 }
 
 /// One observation about a portfolio: what kind it is, how serious, and why. The explanation is
@@ -61,6 +63,8 @@ class PortfolioHealthCard extends StatelessWidget {
     HealthFindingKind.liquidity => Icons.water_drop_outlined,
     HealthFindingKind.volatility => Icons.show_chart_rounded,
     HealthFindingKind.income => Icons.payments_outlined,
+    HealthFindingKind.goals => Icons.flag_outlined,
+    HealthFindingKind.data => Icons.dataset_outlined,
   };
 
   static String kindLabel(AppLocalizations l10n, HealthFindingKind kind) =>
@@ -70,6 +74,8 @@ class PortfolioHealthCard extends StatelessWidget {
         HealthFindingKind.liquidity => l10n.healthKindLiquidity,
         HealthFindingKind.volatility => l10n.healthKindVolatility,
         HealthFindingKind.income => l10n.healthKindIncome,
+        HealthFindingKind.goals => l10n.healthKindGoals,
+        HealthFindingKind.data => l10n.healthKindData,
       };
 
   static String _severity(AppLocalizations l10n, RiskLevel level) =>

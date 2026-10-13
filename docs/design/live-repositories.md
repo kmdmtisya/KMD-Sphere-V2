@@ -56,3 +56,23 @@ Rules kept: no figure is added, converted or derived in the app. A missing figur
 - **Release builds refuse DEMO data.** `WS_DATA_SOURCE` defaults to `live` in a release build (`dart.vm.product`) and `demo` otherwise. `AppConfig.fromEnvironment` throws at start if a release build asks for anything but `live`, and `DataSourceModeNotifier` refuses `demo` (at start and in `set`) when `releaseBuildProvider` is true (tests override it). Tests: `test/guards/data_source_governance_test.dart`.
 - **DEMO labelling follows the data.** Screens whose data comes from the repositories use `DataSourceBadge`, which shows DEMO only while the mode is demo. The AI Wealth Copilot follows the data source too (P10-T10, [copilot-live.md](copilot-live.md)). Portfolio Doctor and Opportunities (and its comparison) stay demo in every mode until their services exist (P12): their repositories are the demo ones, and they show the unconditional `DemoBadge`. A guard test fails if any other screen shows `DemoBadge`/`DemoBanner` directly, if `liveNotWired` is used again, or if demo fixtures are read outside `demo_support.dart`.
 - **The Home insight** shows nothing in live mode (no AI yet) rather than a demo sentence.
+
+## AI Investment Intelligence (P12-T09)
+
+The Doctor, Opportunities, Compare and Simulate screens follow the data-source mode like every other feature: demo mode reads the demo files, live mode the services of P12-T01 to P12-T07. Nothing is computed, ranked or suggested on the device.
+
+| Screen | Live source | Notes |
+|---|---|---|
+| Portfolio Doctor | `POST /api/v1/ai/portfolio-doctor` (`LiveDoctorRepository`) | Only flagged findings are listed, with the measured figure and the threshold reached; `info` is shown as low. The goals and data finding types are new. The checks run per portfolio, so with all portfolios selected the screen asks for one. Findings come from the user's own data, so the badge follows the data-source mode |
+| Opportunities | `GET/POST /api/v1/ai/opportunities` (`LiveOpportunityRepository`) | A run from the last 24 hours is shown again, because runs are limited per day; otherwise a new run is made. The ideas are still the fictional DEMO universe, so the DEMO badge stays |
+| Compare | `POST /api/v1/ai/compare` | The server's side-by-side facts; past figures are labelled past, and income yield is "Not available" |
+| Simulate | the calculator, through the forecast engine | Live ideas have **no example returns**. Simulate opens the calculator with the return fields empty for the user's own assumptions, and a note says WealthSphere does not predict the investment's returns |
+
+**Labels:**
+- Fixed labels come from the app's strings, through `l10nProvider` (repositories have no widget context).
+- Asset class names come from `GET /api/v1/asset-classes`.
+- All text about an idea or a finding is the server's.
+
+**Tests:**
+- `test/features/ai_wealth/live_ai_intelligence_test.dart`.
+- e2e journey 9, against the real backend: the Doctor asks for a portfolio, shows the server's findings with no Buy or Sell, and Opportunities runs the pipeline.

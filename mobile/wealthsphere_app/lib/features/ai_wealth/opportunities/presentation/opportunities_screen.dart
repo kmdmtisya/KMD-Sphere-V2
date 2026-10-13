@@ -217,11 +217,18 @@ class _Candidate extends ConsumerWidget {
                 );
             }
           },
-          onSimulate: c.simulation == null
+          onSimulate: c.simulation == null && !c.ownReturns
               ? null
               : () {
                   final locale = Localizations.localeOf(context).toString();
                   if (simulateInCalculator(ref, c, locale)) {
+                    if (c.simulation == null) {
+                      ScaffoldMessenger.of(context)
+                        ..hideCurrentSnackBar()
+                        ..showSnackBar(
+                          SnackBar(content: Text(l10n.oppSimulateOwnReturns)),
+                        );
+                    }
                     onSimulated?.call();
                   }
                 },

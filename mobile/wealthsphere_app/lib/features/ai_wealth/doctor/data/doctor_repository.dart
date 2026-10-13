@@ -2,7 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/data/demo_support.dart';
 import '../../../../core/data/json_reader.dart';
+import '../../../../core/l10n/l10n_provider.dart';
+import '../../../../core/network/api_client.dart';
 import '../domain/doctor_models.dart';
+import 'live_doctor_repository.dart';
 
 /// The Portfolio Doctor's report for a portfolio (or `consolidated` for all of them).
 ///
@@ -31,11 +34,18 @@ class DemoDoctorRepository implements DoctorRepository {
   }
 }
 
-// The AI services arrive in P10. Until then these screens are DEMO in every data-source
-// mode, and every one of them says so (DemoBadge); nothing here is presented as live.
-final doctorRepositoryProvider = Provider<DoctorRepository>(
-  (ref) => DemoDoctorRepository(
-    ref.watch(demoAssetsProvider),
-    ref.read(demoBehaviorProvider.notifier).gate,
-  ),
-);
+/// Demo mode reads the demo file; live mode asks the server's deterministic checks (P12-T09).
+final doctorRepositoryProvider = Provider<DoctorRepository>((ref) {
+  switch (ref.watch(dataSourceModeProvider)) {
+    case DataSourceMode.demo:
+      return DemoDoctorRepository(
+        ref.watch(demoAssetsProvider),
+        ref.read(demoBehaviorProvider.notifier).gate,
+      );
+    case DataSourceMode.live:
+      return LiveDoctorRepository(
+        ref.watch(apiClientProvider),
+        ref.watch(l10nProvider),
+      );
+  }
+});

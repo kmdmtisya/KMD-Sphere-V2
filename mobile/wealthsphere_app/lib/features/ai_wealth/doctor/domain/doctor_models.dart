@@ -87,7 +87,15 @@ class DoctorReport {
     required this.asOf,
     required this.findings,
     required this.scenarios,
+    this.portfolioRequired = false,
   });
+
+  /// The checks run on one portfolio at a time: with all portfolios selected (live mode) there is
+  /// no report, and the screen asks for a portfolio.
+  const DoctorReport.portfolioRequired(this.asOf)
+    : findings = const [],
+      scenarios = const [],
+      portfolioRequired = true;
 
   factory DoctorReport.fromJson(JsonReader r) => DoctorReport(
     asOf: r.timestamp('as_of'),
@@ -98,6 +106,7 @@ class DoctorReport {
   final DateTime asOf;
   final List<DoctorFinding> findings;
   final List<DoctorScenario> scenarios;
+  final bool portfolioRequired;
 
   DoctorScenario? scenario(String id) =>
       scenarios.where((s) => s.id == id).firstOrNull;

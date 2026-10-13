@@ -2134,6 +2134,22 @@
   "@healthKindVolatility": {
     "description": "Kind of a portfolio finding"
   },
+  "healthKindGoals": "Goals",
+  "@healthKindGoals": {
+    "description": "Portfolio Doctor finding type: goals linked to the portfolio"
+  },
+  "healthKindData": "Data",
+  "@healthKindData": {
+    "description": "Portfolio Doctor finding type: holdings without a value or rate"
+  },
+  "doctorChoosePortfolio": "Choose one portfolio to check its health.",
+  "@doctorChoosePortfolio": {
+    "description": "Doctor screen with all portfolios selected in live mode: the checks run per portfolio"
+  },
+  "oppSimulateOwnReturns": "Enter your own return assumptions. WealthSphere does not predict this investment's returns.",
+  "@oppSimulateOwnReturns": {
+    "description": "Shown when Simulate opens the calculator without example returns"
+  },
   "healthKindIncome": "Income",
   "@healthKindIncome": {
     "description": "Kind of a portfolio finding"
@@ -3576,5 +3592,193 @@
   "settingsDemoBuild": "Demo build: figures are examples, not your accounts.",
   "@settingsDemoBuild": {
     "description": "About text"
+  },
+  "doctorFactMeasured": "Measured",
+  "@doctorFactMeasured": {
+    "description": "Doctor finding: the measured figure"
+  },
+  "doctorFactThreshold": "Threshold reached",
+  "@doctorFactThreshold": {
+    "description": "Doctor finding: the threshold the figure reached"
+  },
+  "oppAttrRiskLevel": "Risk level",
+  "@oppAttrRiskLevel": {
+    "description": "Idea attribute label"
+  },
+  "oppAttrLiquidity": "Liquidity",
+  "@oppAttrLiquidity": {
+    "description": "Idea attribute label"
+  },
+  "oppAttrCurrency": "Currency",
+  "@oppAttrCurrency": {
+    "description": "Idea attribute label"
+  },
+  "oppAttrConfidence": "Score confidence",
+  "@oppAttrConfidence": {
+    "description": "Idea attribute label"
+  },
+  "oppAttrHorizon": "Research horizon",
+  "@oppAttrHorizon": {
+    "description": "Idea attribute label: a stated assumption"
+  },
+  "oppAttrFit": "Portfolio fit",
+  "@oppAttrFit": {
+    "description": "Idea attribute label: the compatibility verdict"
+  },
+  "oppFitFits": "Fits",
+  "@oppFitFits": {
+    "description": "Portfolio fit verdict"
+  },
+  "oppFitCaution": "Caution",
+  "@oppFitCaution": {
+    "description": "Portfolio fit verdict"
+  },
+  "oppFitNotSuitable": "Not suitable",
+  "@oppFitNotSuitable": {
+    "description": "Portfolio fit verdict"
+  },
+  "oppResearchWhy": "Why it surfaced",
+  "@oppResearchWhy": {
+    "description": "Idea research section heading"
+  },
+  "oppResearchAssumptions": "Assumptions",
+  "@oppResearchAssumptions": {
+    "description": "Idea research section heading"
+  },
+  "oppFactorStability": "Stability",
+  "@oppFactorStability": {
+    "description": "Score factor: low volatility"
+  },
+  "oppFactorResilience": "Resilience",
+  "@oppFactorResilience": {
+    "description": "Score factor: small past falls"
+  },
+  "oppFactorMomentum": "Past momentum",
+  "@oppFactorMomentum": {
+    "description": "Score factor: past price change"
+  },
+  "oppFactorCost": "Cost",
+  "@oppFactorCost": {
+    "description": "Score factor: fees"
+  },
+  "oppFactorLiquidity": "Liquidity",
+  "@oppFactorLiquidity": {
+    "description": "Score factor"
+  },
+  "oppFactorRiskClass": "Risk class",
+  "@oppFactorRiskClass": {
+    "description": "Score factor: the source's risk level"
+  },
+  "liquidityImmediate": "Immediate",
+  "@liquidityImmediate": {
+    "description": "Liquidity: same or next day"
+  },
+  "liquidityMarket": "Within days",
+  "@liquidityMarket": {
+    "description": "Liquidity: listed assets"
+  },
+  "liquidityTerm": "Locked until maturity",
+  "@liquidityTerm": {
+    "description": "Liquidity: deposits, SACCO, pension"
+  },
+  "liquidityIlliquid": "Illiquid",
+  "@liquidityIlliquid": {
+    "description": "Liquidity: property, private holdings"
+  },
+  "liquidityUnknown": "Unknown",
+  "@liquidityUnknown": {
+    "description": "Liquidity unknown"
+  },
+  "confidenceHigh": "High",
+  "@confidenceHigh": {
+    "description": "Score confidence"
+  },
+  "confidenceMedium": "Medium",
+  "@confidenceMedium": {
+    "description": "Score confidence"
+  },
+  "confidenceLow": "Low",
+  "@confidenceLow": {
+    "description": "Score confidence"
+  },
+  "confidenceNone": "Not enough data",
+  "@confidenceNone": {
+    "description": "Score confidence: no score"
+  },
+  "cmpAssetClass": "Asset class",
+  "@cmpAssetClass": {
+    "description": "Compare row"
+  },
+  "cmpMinimum": "Minimum investment",
+  "@cmpMinimum": {
+    "description": "Compare row"
+  },
+  "cmpMinimumNone": "None stated",
+  "@cmpMinimumNone": {
+    "description": "Compare value: no minimum"
+  },
+  "cmpExpense": "Expense ratio",
+  "@cmpExpense": {
+    "description": "Compare row: fund fees"
+  },
+  "cmpNotApplicable": "Not applicable",
+  "@cmpNotApplicable": {
+    "description": "Compare value"
+  },
+  "cmpIncomeYield": "Income yield",
+  "@cmpIncomeYield": {
+    "description": "Compare row"
+  },
+  "cmpNotAvailable": "Not available",
+  "@cmpNotAvailable": {
+    "description": "Compare value: no data yet"
+  },
+  "cmpPastChange": "Price change, last year (past)",
+  "@cmpPastChange": {
+    "description": "Compare row: past figure"
+  },
+  "cmpPastVolatility": "Volatility, last year (past)",
+  "@cmpPastVolatility": {
+    "description": "Compare row: past figure"
+  },
+  "cmpPastFall": "Largest fall, last year (past)",
+  "@cmpPastFall": {
+    "description": "Compare row: past figure"
+  },
+  "cmpNotMeasured": "Not measured",
+  "@cmpNotMeasured": {
+    "description": "Compare value: not enough prices"
+  },
+  "cmpEligible": "Eligible for you",
+  "@cmpEligible": {
+    "description": "Compare row"
+  },
+  "cmpYes": "Yes",
+  "@cmpYes": {
+    "description": "Compare value"
+  },
+  "cmpNo": "No",
+  "@cmpNo": {
+    "description": "Compare value"
+  },
+  "oppAttrRiskLevelValue": "{level} of 5",
+  "@oppAttrRiskLevelValue": {
+    "description": "Risk level out of 5",
+    "placeholders": {"level": {"type": "String"}}
+  },
+  "oppAttrHorizonValue": "At least {years} years (assumed)",
+  "@oppAttrHorizonValue": {
+    "description": "Research horizon value, a stated assumption",
+    "placeholders": {"years": {"type": "String"}}
+  },
+  "cmpExpenseValue": "{percent}% a year",
+  "@cmpExpenseValue": {
+    "description": "Expense ratio value",
+    "placeholders": {"percent": {"type": "String"}}
+  },
+  "cmpPercent": "{percent}%",
+  "@cmpPercent": {
+    "description": "A percentage value",
+    "placeholders": {"percent": {"type": "String"}}
   }
 }
