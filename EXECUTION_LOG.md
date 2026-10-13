@@ -1668,3 +1668,19 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-13T21:53:47+04:00 — PHASE APPROVED P13
 - approved by user (mtisya@gmail.com)
 - Forex Trading Intelligence (FX workstream)
+
+### 2026-10-13T22:02:12+04:00 — START P13-T01
+- FX-01 Requirements, architecture and regulatory scoping
+- prerequisites verified COMPLETED
+
+### 2026-10-13T22:02:51+04:00 — DECISION — advance approval of P13-T01 to P13-GATE; P13-T01 decisions
+- The user approved P13-T01 with the proposals as written, approved the approval-gated tasks P13-T02, T05, T07, T13, T14 and the P13 gate in advance, and asked for P13-T01 to P13-GATE to run sequentially.
+- DEC-19 fixture-only (no key, no live call, licence open); DEC-20 scheduled for P13-T14 (Kenya and UAE, information and paper trading only until a reviewer answers); DEC-21 PostgreSQL partitioning; DEC-22 baselines and boosting in v1, deep models research-only; DEC-23 after v1 behind a flag; DEC-24 reviewed, versioned contract-spec table. See docs/design/forex-reconciliation.md.
+- Limits of the advance approval: it does not turn open legal or licence questions into answered ones. DEC-19 (licence) and DEC-20 (regulation) stay open items; T13 runs as a simulated-feed soak on the local stack as in P11; T14 prepares the regulatory-readiness pack and records what remains open. Nothing is marked reviewed that has not been.
+
+### 2026-10-13T22:02:52+04:00 — AWAITING_VERIFICATION P13-T01
+- evidence: docs/design/forex-reconciliation.md: platform reconciliation, DEC-19..24 resolved or scheduled, hard rules, impact assessment; ADR-0009 already Accepted.
+
+### 2026-10-13T22:02:52+04:00 — COMPLETE P13-T01
+- duration: 0m 40s
+- evidence: Approved by the user with the proposals as written (2026-10-13): fixture-only provider (licence open), PostgreSQL partitioning, baselines and boosting with research-only deep models, after-v1 flagged release, reviewed contract-spec table; regulation (DEC-20) scheduled for P13-T14. · Approved by: user (mtisya@gmail.com)

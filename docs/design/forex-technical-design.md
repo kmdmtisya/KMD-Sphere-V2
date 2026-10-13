@@ -244,4 +244,4 @@ Live order execution, broker account linking for trading, automated or copy trad
 
 ## 19. Open decisions
 
-DEC-19 provider and licence · DEC-20 launch markets and regulation · DEC-21 time-series storage · DEC-22 model scope · DEC-23 release strategy · DEC-24 contract-spec source. Recommendations: after-v1 release behind a feature flag (DEC-23); PostgreSQL partitioning first (DEC-21); boosting + statistical baselines in v1 with deep models research-only (DEC-22); a reviewed, versioned contract-spec table with provider verification (DEC-24).
+**Resolved or scheduled in P13-T01 on 2026-10-13: see [forex-reconciliation.md](forex-reconciliation.md) section 2.** Originally: DEC-19 provider and licence · DEC-20 launch markets and regulation · DEC-21 time-series storage · DEC-22 model scope · DEC-23 release strategy · DEC-24 contract-spec source. Recommendations: after-v1 release behind a feature flag (DEC-23); PostgreSQL partitioning first (DEC-21); boosting + statistical baselines in v1 with deep models research-only (DEC-22); a reviewed, versioned contract-spec table with provider verification (DEC-24).
