@@ -28,6 +28,7 @@ import app.modules.identity.models  # noqa: E402
 import app.modules.market_data.models  # noqa: E402
 import app.modules.networth.models  # noqa: E402
 import app.modules.notifications.models  # noqa: E402
+import app.modules.opportunities.models  # noqa: E402
 import app.modules.portfolio.models  # noqa: E402
 import app.modules.research.models  # noqa: E402
 import app.modules.transactions.models  # noqa: E402

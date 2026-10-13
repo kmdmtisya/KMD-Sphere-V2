@@ -2214,6 +2214,50 @@
         "title": "EvidenceOut",
         "type": "object"
       },
+      "ExplanationOut": {
+        "properties": {
+          "assumptions": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Assumptions",
+            "type": "array"
+          },
+          "evidence_ids": {
+            "description": "Ids of evidence items in `facts`",
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "title": "Evidence Ids",
+            "type": "array"
+          },
+          "key_risks": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Key Risks",
+            "type": "array"
+          },
+          "thesis": {
+            "title": "Thesis",
+            "type": "string"
+          },
+          "why_surfaced": {
+            "title": "Why Surfaced",
+            "type": "string"
+          }
+        },
+        "required": [
+          "thesis",
+          "why_surfaced",
+          "key_risks",
+          "assumptions",
+          "evidence_ids"
+        ],
+        "title": "ExplanationOut",
+        "type": "object"
+      },
       "Factor": {
         "enum": [
           "stability",
@@ -5207,6 +5251,146 @@
         "title": "NetWorthOut",
         "type": "object"
       },
+      "OpportunitiesRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "amount": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Hypothetical amount for the fit check, in the portfolio's base currency; default 5% of the portfolio's value. Needs portfolio_id"
+          },
+          "asset_class": {
+            "anyOf": [
+              {
+                "pattern": "^[a-z][a-z0-9_]{1,39}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Asset Class"
+          },
+          "limit": {
+            "default": 3,
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "portfolio_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Check each candidate's fit against this portfolio",
+            "title": "Portfolio Id"
+          }
+        },
+        "title": "OpportunitiesRequest",
+        "type": "object"
+      },
+      "OpportunityOut": {
+        "properties": {
+          "actions": {
+            "items": {
+              "enum": [
+                "research",
+                "compare",
+                "simulate"
+              ],
+              "type": "string"
+            },
+            "title": "Actions",
+            "type": "array"
+          },
+          "asset_class": {
+            "title": "Asset Class",
+            "type": "string"
+          },
+          "asset_id": {
+            "format": "uuid",
+            "title": "Asset Id",
+            "type": "string"
+          },
+          "explanation": {
+            "$ref": "#/components/schemas/ExplanationOut"
+          },
+          "explanation_source": {
+            "description": "model: written by the model from the facts and validated; template: fixed wording from the facts (no model, or no reply passed validation)",
+            "enum": [
+              "model",
+              "template"
+            ],
+            "title": "Explanation Source",
+            "type": "string"
+          },
+          "facts": {
+            "additionalProperties": true,
+            "description": "The deterministic facts: score with factors, compatibility, evidence (with source, licence status and dates), prices_as_of and universe_as_of",
+            "title": "Facts",
+            "type": "object"
+          },
+          "is_demo": {
+            "title": "Is Demo",
+            "type": "boolean"
+          },
+          "is_trade": {
+            "const": false,
+            "default": false,
+            "title": "Is Trade",
+            "type": "boolean"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "rank": {
+            "title": "Rank",
+            "type": "integer"
+          },
+          "risk_level": {
+            "title": "Risk Level",
+            "type": "integer"
+          },
+          "symbol": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Symbol"
+          }
+        },
+        "required": [
+          "rank",
+          "asset_id",
+          "symbol",
+          "name",
+          "asset_class",
+          "is_demo",
+          "risk_level",
+          "facts",
+          "explanation",
+          "explanation_source"
+        ],
+        "title": "OpportunityOut",
+        "type": "object"
+      },
       "PerformanceOut": {
         "properties": {
           "as_of": {
@@ -6310,6 +6494,187 @@
           "reason"
         ],
         "title": "RuleOutcomeOut",
+        "type": "object"
+      },
+      "RunOut": {
+        "properties": {
+          "amount": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "asset_class": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Asset Class"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "excluded": {
+            "description": "Eligible candidates left out because they did not suit the portfolio, why",
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Excluded",
+            "type": "array"
+          },
+          "explanation_source": {
+            "enum": [
+              "model",
+              "template"
+            ],
+            "title": "Explanation Source",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "investor": {
+            "additionalProperties": true,
+            "description": "The facts eligibility used",
+            "title": "Investor",
+            "type": "object"
+          },
+          "model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model"
+          },
+          "notice": {
+            "default": "Research candidates selected by deterministic rules from your eligibility, measured characteristics, portfolio fit and retrieved evidence. Not advice and not a recommendation to buy or sell; no return is expected or promised. DEMO instruments are fictional. Actions: Research, Compare, Simulate.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "opportunities": {
+            "items": {
+              "$ref": "#/components/schemas/OpportunityOut"
+            },
+            "title": "Opportunities",
+            "type": "array"
+          },
+          "portfolio_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Portfolio Id"
+          },
+          "provider": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Provider"
+          },
+          "weights": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Weights",
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "portfolio_id",
+          "asset_class",
+          "explanation_source",
+          "amount",
+          "provider",
+          "model",
+          "weights",
+          "investor",
+          "excluded",
+          "opportunities"
+        ],
+        "title": "RunOut",
+        "type": "object"
+      },
+      "RunSummaryOut": {
+        "properties": {
+          "asset_class": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Asset Class"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "explanation_source": {
+            "enum": [
+              "model",
+              "template"
+            ],
+            "title": "Explanation Source",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "portfolio_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Portfolio Id"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "portfolio_id",
+          "asset_class",
+          "explanation_source"
+        ],
+        "title": "RunSummaryOut",
         "type": "object"
       },
       "ScenarioForecastIn": {
@@ -8289,6 +8654,192 @@
           }
         ],
         "summary": "One conversation with its messages",
+        "tags": [
+          "ai"
+        ]
+      }
+    },
+    "/api/v1/ai/opportunities": {
+      "post": {
+        "description": "Runs the pipeline for you: the investment universe filtered by your eligibility, scored on\nmeasured characteristics, checked against your portfolio when given, with retrieved research;\nthe model explains each candidate from those facts only, and an explanation that adds a fact,\na figure or a forecast is replaced by fixed wording. The run is stored unchanged and\naudited. Limit: 10 runs per 24 hours. Not advice; nothing is bought.",
+        "operationId": "run_opportunities_api_v1_ai_opportunities_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OpportunitiesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such portfolio for this user"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Too many runs in 24 hours"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Find research opportunities",
+        "tags": [
+          "ai"
+        ]
+      }
+    },
+    "/api/v1/ai/opportunities/runs": {
+      "get": {
+        "description": "Your runs, newest first.",
+        "operationId": "list_runs_api_v1_ai_opportunities_runs_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/RunSummaryOut"
+                  },
+                  "title": "Response List Runs Api V1 Ai Opportunities Runs Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Your opportunity runs",
+        "tags": [
+          "ai"
+        ]
+      }
+    },
+    "/api/v1/ai/opportunities/runs/{run_id}": {
+      "get": {
+        "description": "A run exactly as it was produced. Another user's run is not found.",
+        "operationId": "get_run_api_v1_ai_opportunities_runs__run_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Run Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such opportunity run for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "One of your opportunity runs",
         "tags": [
           "ai"
         ]

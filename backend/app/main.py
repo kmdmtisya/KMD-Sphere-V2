@@ -45,6 +45,7 @@ from app.modules.market_data import api as market_data_api
 from app.modules.networth import api as networth_api
 from app.modules.networth import income_api
 from app.modules.notifications import api as notifications_api
+from app.modules.opportunities import api as opportunities_api
 from app.modules.portfolio import analytics_api, summary_api
 from app.modules.portfolio import api as portfolio_api
 from app.modules.research import api as research_api
@@ -216,6 +217,7 @@ def create_app(
     app.include_router(notifications_api.router)
     app.include_router(ai_api.router)
     app.include_router(doctor_api.router)
+    app.include_router(opportunities_api.router)
     app.include_router(scoring_api.router)  # /universe/scores before any /universe/{id}
     app.include_router(universe_api.router)
     app.include_router(compatibility_api.router)

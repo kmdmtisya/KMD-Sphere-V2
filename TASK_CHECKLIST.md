@@ -1181,15 +1181,15 @@
   - [x] P12-T05.2 Ingestion
   - [x] P12-T05.3 Retrieval
   - [x] P12-T05.4 Tests
-- [ ] **P12-T06** · Opportunity pipeline and schema · `NOT_STARTED` ⬜
+- [ ] **P12-T06** · Opportunity pipeline and schema · `IN_PROGRESS` 🔄
   - Deps: P12-T03, P12-T04, P12-T05 · Wave: W3 · Track: AI · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-13T17:11:00+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P12-T06.1 Schema
-  - [ ] P12-T06.2 Pipeline
-  - [ ] P12-T06.3 LLM explanation and validation
-  - [ ] P12-T06.4 Persistence
-  - [ ] P12-T06.5 Tests
+  - [x] P12-T06.1 Schema
+  - [x] P12-T06.2 Pipeline
+  - [x] P12-T06.3 LLM explanation and validation
+  - [x] P12-T06.4 Persistence
+  - [x] P12-T06.5 Tests
 - [ ] **P12-T07** · Compare and Simulate APIs · `NOT_STARTED` ⬜
   - Deps: P12-T03, P12-T04, P06-T02 · Wave: W3 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
