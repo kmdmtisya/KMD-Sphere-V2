@@ -2,7 +2,7 @@
 
 Feature: multi-currency reporting and FX management (phase P11, tasks P11-T01 to P11-T11). It ships with the core release (P16).
 
-**Status: awaiting the user's sign-off (P11-T12.3).**
+**Status: signed off by the user on 2026-10-13 (P11-T12.3).**
 
 ## Acceptance criteria
 
@@ -38,4 +38,4 @@ Feature: multi-currency reporting and FX management (phase P11, tasks P11-T01 to
 
 | Role | Name | Date | Decision |
 |---|---|---|---|
-| Product owner | user (mtisya@gmail.com) | — | pending |
+| Product owner | user (mtisya@gmail.com) | 2026-10-13 | Signed off: ready to ship with the core release (P16), subject to the conditions before production above |
