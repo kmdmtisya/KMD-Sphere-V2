@@ -1632,3 +1632,35 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 - The user named Kelvin Mutisya David as the P12-T10 reviewer (DEC-10) and approved the P12 gate.
 - The gate depends on P12-T10, whose acceptance is the reviewer's sign-off on the wording and jurisdictional disclosures. That sign-off has not been given: the review pack (docs/compliance-review-p12.md) is prepared and awaiting the reviewer's decisions.
 - Consequence: the gate is approved but not closed. It is completed when P12-T10 is signed off, with no further approval needed.
+
+### 2026-10-13T21:48:04+04:00 — DECISION — P12-T10 wording signed off as drafted; jurisdiction questions stay open
+- The user signed off the 22 P12 disclosure statements as drafted (docs/compliance-review-p12.md), as reviewer Kelvin Mutisya David. No wording changed.
+- Not decided: the eight observations (carried as follow-ups for the first release with real instruments) and the seven jurisdiction questions (unanswered). No legal review has taken place, so jurisdiction outcomes stay `legally_reviewed: false` and the jurisdiction notice stays on every response.
+- Open before real instruments or live data are introduced, and before launch (P15-T05): the jurisdiction questions, a not-a-licensed-adviser statement, a loss-of-money line, a data-delay sentence and translations.
+
+### 2026-10-13T21:48:04+04:00 — AWAITING_VERIFICATION P12-T10
+- evidence: Review pack docs/compliance-review-p12.md: 22 statements, 8 observations, 7 jurisdiction questions.
+
+### 2026-10-13T21:48:04+04:00 — COMPLETE P12-T10
+- duration: 6m 43s
+- evidence: Wording signed off as drafted by the user as reviewer Kelvin Mutisya David on 2026-10-13; no wording changed. Open and tracked: the jurisdiction questions (no legal review; legally_reviewed stays false), the eight observations, translations. · Approved by: user (mtisya@gmail.com), reviewer Kelvin Mutisya David
+
+### 2026-10-13T21:48:14+04:00 — QG CHECK QG-07.4
+- evidence: Each opportunity carries thesis, why it surfaced, key risks, assumptions, evidence with source/licence/date, prices_as_of, universe_as_of and a stated research horizon (P12-T06; tests/opportunities, opportunity set 113/113); the model may not add facts, figures or forecasts (docs/design/opportunities.md).
+
+### 2026-10-13T21:48:14+04:00 — QG CHECK QG-07.7
+- evidence: Stale, missing and contradictory market data handled by deterministic features, scores and close selection: market_data 41/41 zero tolerance, no high confidence on stale prices, missing data reported with its reason, most recently retrieved close wins, future closes ignored; meta-test shows the rule is load-bearing (docs/ai-evaluation.md P12 section).
+
+### 2026-10-13T21:48:14+04:00 — START P12-GATE
+- Phase P12 exit gate
+- prerequisites verified COMPLETED
+
+### 2026-10-13T21:48:15+04:00 — AWAITING_VERIFICATION P12-GATE
+- evidence: T01-T10 completed; QG-07.4 and QG-07.7 verified. Backend 2,502 tests, mobile 1,763 tests and 9 end-to-end journeys green in CI. Safety sets: opportunity 113/113, injection 50/50, market data 41/41, cross-user 30/30.
+
+### 2026-10-13T21:48:15+04:00 — COMPLETE P12-GATE
+- duration: 0m 01s
+- evidence: Approved by the user on 2026-10-13 after the P12-T08 results and the P12-T10 sign-off. Accepted open items: jurisdiction questions unanswered (legally_reviewed false), copy follow-ups, DEMO instruments and research only (licensed data DEC-04), scripted-model evaluation only, ExchangeRate/real-provider items from P11. · Approved by: user (mtisya@gmail.com)
+
+### 2026-10-13T21:48:44+04:00 — QG PASSED QG-07
+- evidence: All 8 criteria verified (P10 and P12); see docs/ai-evaluation.md. Limits: scripted model only, real-model routing and human review pre-release.
