@@ -1684,3 +1684,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-13T22:02:52+04:00 — COMPLETE P13-T01
 - duration: 0m 40s
 - evidence: Approved by the user with the proposals as written (2026-10-13): fixture-only provider (licence open), PostgreSQL partitioning, baselines and boosting with research-only deep models, after-v1 flagged release, reviewed contract-spec table; regulation (DEC-20) scheduled for P13-T14. · Approved by: user (mtisya@gmail.com)
+
+### 2026-10-13T22:12:13+04:00 — START P13-T02
+- FX-02 Market data provider abstraction, ingestion and streaming
+- prerequisites verified COMPLETED

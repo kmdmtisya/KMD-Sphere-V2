@@ -124,6 +124,35 @@ class CircuitBreaker:
         self._trial_in_flight = False
 
 
+async def call_guarded[T](
+    op: Callable[[], Awaitable[T]], retry: RetryPolicy, breaker: CircuitBreaker, sleep: Sleep
+) -> T:
+    """One call under the retry policy and circuit breaker described above. Shared by every
+    provider family (market data here, forex quotes and candles in P13)."""
+    breaker.before_call()
+    attempt = 1
+    while True:
+        try:
+            result = await op()
+        except ProviderAuthError:
+            # Retrying with the same credentials cannot help.
+            breaker.record_failure()
+            raise
+        except ProviderUnavailable as error:
+            if attempt >= retry.max_attempts:
+                breaker.record_failure()
+                raise
+            await sleep(retry.delay_for(attempt, error).total_seconds())
+            attempt += 1
+        except ProviderError:
+            # About the request or the data, not the provider's health.
+            breaker.release()
+            raise
+        else:
+            breaker.record_success()
+            return result
+
+
 class ResilientProvider:
     """Wraps a provider with retry and a circuit breaker. Implements `MarketDataProvider`."""
 
@@ -148,28 +177,7 @@ class ResilientProvider:
         return self._inner.supported_kinds
 
     async def _call[T](self, op: Callable[[], Awaitable[T]]) -> T:
-        self.breaker.before_call()
-        attempt = 1
-        while True:
-            try:
-                result = await op()
-            except ProviderAuthError:
-                # Retrying with the same credentials cannot help.
-                self.breaker.record_failure()
-                raise
-            except ProviderUnavailable as error:
-                if attempt >= self._retry.max_attempts:
-                    self.breaker.record_failure()
-                    raise
-                await self._sleep(self._retry.delay_for(attempt, error).total_seconds())
-                attempt += 1
-            except ProviderError:
-                # About the request or the data, not the provider's health.
-                self.breaker.release()
-                raise
-            else:
-                self.breaker.record_success()
-                return result
+        return await call_guarded(op, self._retry, self.breaker, self._sleep)
 
     async def get_quote(self, symbol: str, kind: AssetKind) -> PriceQuote:
         return await self._call(lambda: self._inner.get_quote(symbol, kind))

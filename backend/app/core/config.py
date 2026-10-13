@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Literal
 from urllib.parse import quote_plus
 
-from pydantic import Field, SecretStr, field_validator
+from pydantic import Field, SecretStr, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 _ROOT_ENV = Path(__file__).resolve().parents[3] / ".env"
@@ -146,6 +146,27 @@ class Settings(BaseSettings):
     # do not need it. A wildcard is never accepted.
     cors_allowed_origins: list[str] = []
 
+    # Forex Intelligence (P13). Off by default (DEC-23) and refused outside local and test
+    # environments until the regulatory review (DEC-20) and the data licence (DEC-19) allow it.
+    forex_enabled: bool = False
+    # Runs the simulated feed inside the API process (development and the soak, P13-T13).
+    forex_feed_enabled: bool = False
+    # DEC-19: fixture-only. The simulated provider is the only one that can be configured.
+    forex_provider: Literal["fake"] = "fake"
+    # Active pairs from the registry file; empty means all of them.
+    forex_universe: list[str] = []
+    forex_heartbeat_degraded_seconds: float = Field(default=10.0, gt=0)
+    forex_heartbeat_disconnected_seconds: float = Field(default=30.0, gt=0)
+    forex_quote_stale_seconds: float = Field(default=60.0, gt=0)
+    # How far back the latest quote is looked for (covers a weekend); older means unavailable.
+    forex_quote_lookback_days: int = Field(default=7, ge=1, le=31)
+    forex_stream_max_connections_per_user: int = Field(default=3, ge=1)
+    forex_stream_max_instruments: int = Field(default=20, ge=1)
+    forex_stream_auth_timeout_seconds: float = Field(default=5.0, gt=0)
+    # Client messages per socket per minute (subscribe, unsubscribe, ping) before it is closed.
+    forex_stream_messages_per_minute: int = Field(default=60, ge=1)
+    forex_candles_max: int = Field(default=2000, ge=1, le=5000)
+
     db_pool_size: int = 5
     db_max_overflow: int = 5
     db_connect_timeout_seconds: float = 5.0
@@ -207,6 +228,17 @@ class Settings(BaseSettings):
 
         validate_weights(weights)
         return weights
+
+    @model_validator(mode="after")
+    def _forex_only_in_development(self) -> "Settings":
+        if self.forex_enabled and self.environment not in ("local", "test"):
+            raise ValueError(
+                "forex_enabled is refused outside local and test environments until the "
+                "regulatory review (DEC-20) and the market-data licence (DEC-19) allow it"
+            )
+        if self.forex_heartbeat_degraded_seconds >= self.forex_heartbeat_disconnected_seconds:
+            raise ValueError("the forex degraded window must be shorter than the disconnected one")
+        return self
 
     @field_validator("cors_allowed_origins")
     @classmethod

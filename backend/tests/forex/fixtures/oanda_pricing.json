@@ -1,0 +1,33 @@
+{
+  "_fixture": "Synthetic. Shaped after the vendor's public v20 pricing documentation; not a recorded market price (DEC-19).",
+  "time": "2026-10-14T10:00:00.123456789Z",
+  "prices": [
+    {
+      "type": "PRICE",
+      "instrument": "EUR_USD",
+      "time": "2026-10-14T09:59:59.987654321Z",
+      "status": "tradeable",
+      "tradeable": true,
+      "bids": [{"price": "1.08501", "liquidity": 1000000}, {"price": "1.08500", "liquidity": 5000000}],
+      "asks": [{"price": "1.08513", "liquidity": 1000000}, {"price": "1.08514", "liquidity": 5000000}],
+      "closeoutBid": "1.08498",
+      "closeoutAsk": "1.08516"
+    },
+    {
+      "type": "PRICE",
+      "instrument": "USD_KES",
+      "time": "2026-10-14T09:58:00.000000000Z",
+      "tradeable": false,
+      "bids": [{"price": "128.950", "liquidity": 100000}],
+      "asks": [{"price": "129.350", "liquidity": 100000}]
+    },
+    {
+      "type": "PRICE",
+      "instrument": "USD_ZAR",
+      "time": "2026-10-14T09:59:00.000000000Z",
+      "tradeable": false,
+      "bids": [],
+      "asks": []
+    }
+  ]
+}

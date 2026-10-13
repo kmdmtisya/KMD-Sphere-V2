@@ -1244,17 +1244,17 @@
   - [x] P13-T01.3 Technical design review
   - [x] P13-T01.4 ADR-0009
   - [x] P13-T01.5 Decision register update
-- [ ] **P13-T02** · FX-02 Market data provider abstraction, ingestion and streaming · `NOT_STARTED` ⬜
+- [ ] **P13-T02** · FX-02 Market data provider abstraction, ingestion and streaming · `IN_PROGRESS` 🔄
   - Deps: P13-T01, P08-GATE · Wave: W2 · Track: BE · Size: L · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-13T22:12:13+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P13-T02.1 Quote and candle interfaces
-  - [ ] P13-T02.2 Instrument registry and configurable universe
-  - [ ] P13-T02.3 Time-series schema and migration
-  - [ ] P13-T02.4 Streaming client with heartbeat and reconnect
-  - [ ] P13-T02.5 Stale-data and outage handling
-  - [ ] P13-T02.6 Fake provider and recorded fixtures
-  - [ ] P13-T02.7 Tests
+  - [x] P13-T02.1 Quote and candle interfaces
+  - [x] P13-T02.2 Instrument registry and configurable universe
+  - [x] P13-T02.3 Time-series schema and migration
+  - [x] P13-T02.4 Streaming client with heartbeat and reconnect
+  - [x] P13-T02.5 Stale-data and outage handling
+  - [x] P13-T02.6 Fake provider and recorded fixtures
+  - [x] P13-T02.7 Tests
 - [ ] **P13-T03** · FX-03 Technical analysis engine · `NOT_STARTED` ⬜
   - Deps: P13-T02 · Wave: W3 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

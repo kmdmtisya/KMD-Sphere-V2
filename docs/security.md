@@ -96,6 +96,14 @@ await session.commit()                         # the change and its event commit
 - The client IP is the direct peer. Behind a proxy or load balancer, run uvicorn with `--proxy-headers --forwarded-allow-ips=<proxy>` (P14); `X-Forwarded-For` is never trusted directly.
 - Every response carries `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: no-referrer`, `Cross-Origin-Resource-Policy: same-origin`, `Permissions-Policy`, `Cache-Control: no-store` and a deny-all `Content-Security-Policy` (except Swagger UI, which is disabled in production). Staging and production add `Strict-Transport-Security`.
 
+### Forex stream WebSocket (P13-T02)
+
+The REST budgets above do not apply to WebSockets. `/api/v1/forex/stream` has its own controls (details in `docs/design/forex-market-data.md` section 5):
+
+- **Authentication.** The first frame must authenticate, within 5 s, using the same OIDC access token as REST. The token is never accepted in the URL. A disabled account is refused. When the token expires, the socket is closed with code 4401.
+- **Limits per verified subject.** At most 3 sockets, 20 pairs per socket and 60 client messages a minute. Frames are capped at 4 KiB.
+- **Cross-site risk.** The stream carries only public reference prices, and no cookie authenticates it, so a cross-site page cannot ride a session.
+
 ## Analytics cache (P06-T09)
 
 - Analytics answers are cached in Redis under keys that contain the requesting user's id, and only after the route has authorised the request. A cached answer is never read back for another user, and refused requests store nothing (tests: `tests/test_analytics_api.py`, `tests/test_cache.py`).
@@ -153,6 +161,7 @@ The licence position is in ADR-0014 section 4 and `docs/market-data-providers.md
 
 - Redistribution control: provider data reaches users only as per-user values with provenance (holdings and summary valuations, watchlist latest price, `GET /api/v1/fx-rates/{base}/{quote}`), all behind authentication. There is no bulk, search, history or public price endpoint, and a test fails if a route mentioning prices, quotes, rates or markets is added without updating the reviewed list, which forces a licence check first.
 - Storage: prices and rates are stored with provider, as-of and ingestion times (needed for audit and valuation). Whether storing history is allowed depends on the unsigned licences.
+- Forex (P13-T02): `GET /api/v1/forex/quotes`, `GET /api/v1/forex/candles` and the stream were reviewed and added to the list. They serve only the in-house simulated feed (DEC-19, fixture-only), so no third-party data is shown. A real forex feed is blocked by QG-20.1 until its streaming, display and redistribution licence is reviewed.
 - **Result:** no provider term is known to be violated in the current code because no real provider is enabled. Production use stays blocked until the licences in ADR-0014 are confirmed in writing.
 
 ### Log review (P08-T09.3)

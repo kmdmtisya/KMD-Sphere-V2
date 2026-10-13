@@ -51,6 +51,8 @@ Dependency rule: `ai_tools` and `api` call services; `signals` consumes `analysi
 
 ## 4. Market data
 
+As built in P13-T02: [forex-market-data.md](forex-market-data.md).
+
 ### 4.1 Provider interface (extends P08)
 
 ```text

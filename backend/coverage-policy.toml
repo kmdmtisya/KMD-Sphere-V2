@@ -19,4 +19,5 @@ critical = [
   "modules/networth",
   "modules/identity",
   "modules/ai",
+  "modules/forex",
 ]

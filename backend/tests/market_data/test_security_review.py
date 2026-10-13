@@ -138,6 +138,12 @@ class TestNoUnreviewedProviderDataLeavesTheApi:
         "/api/v1/fx/convert",
         # P11-T05: per user, authenticated, stored historical rates with provenance.
         "/api/v1/fx/history",
+        # P13-T02: per user, authenticated, behind the forex flag. Fixture-only (DEC-19): the
+        # only configurable provider is the in-house simulated feed, so no third-party data is
+        # served and no licence applies yet. Wiring any real feed is blocked by QG-20.1 until the
+        # vendor's streaming, display and redistribution licence is reviewed.
+        "/api/v1/forex/quotes",
+        "/api/v1/forex/candles",
     }
     MARKET_WORDS: ClassVar[tuple[str, ...]] = (
         "price",

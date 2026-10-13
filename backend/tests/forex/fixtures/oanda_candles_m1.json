@@ -1,0 +1,10 @@
+{
+  "_fixture": "Synthetic. Shaped after the vendor's public v20 candles documentation; not recorded market data (DEC-19).",
+  "instrument": "EUR_USD",
+  "granularity": "M1",
+  "candles": [
+    {"complete": true, "volume": 42, "time": "2026-10-14T09:57:00.000000000Z", "mid": {"o": "1.08490", "h": "1.08502", "l": "1.08488", "c": "1.08500"}},
+    {"complete": true, "volume": 37, "time": "2026-10-14T09:59:00.000000000Z", "mid": {"o": "1.08500", "h": "1.08511", "l": "1.08497", "c": "1.08507"}},
+    {"complete": false, "volume": 3, "time": "2026-10-14T10:00:00.000000000Z", "mid": {"o": "1.08507", "h": "1.08509", "l": "1.08505", "c": "1.08506"}}
+  ]
+}
