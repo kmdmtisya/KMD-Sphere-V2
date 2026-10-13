@@ -1166,13 +1166,13 @@
   - [x] P12-T03.2 Scoring
   - [x] P12-T03.3 Explanations
   - [x] P12-T03.4 Tests
-- [ ] **P12-T04** · Portfolio compatibility and suitability · `NOT_STARTED` ⬜
+- [x] **P12-T04** · Portfolio compatibility and suitability · `COMPLETED` ✅
   - Deps: P12-T02, P12-T01 · Wave: W2 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P12-T04.1 Impact calc
-  - [ ] P12-T04.2 Suitability rules
-  - [ ] P12-T04.3 Tests
+  - Started: 2026-10-13T15:06:43+04:00 · Completed: 2026-10-13T15:46:36+04:00 · Duration: 39m 53s · Blocker: —
+  - Evidence: Compatibility: hypothetical amount added as new money, portfolio re-measured with the same analytics and Doctor rules before/after (instrument share, largest holding, effective positions, class, FX, accessible; Doctor severity changes); verdict not_suitable (ineligible, below minimum via stored rate) / caution (minimum unchecked, check worsens to medium+, >20% holding) / fits; POST /api/v1/universe/compatibility owner-scoped, is_trade false. Matrix U-01..U-03; docs/design/compatibility.md. Backend 2,429 passed, coverage 97.30%. PR #143. CI all gates pass.
+  - [x] P12-T04.1 Impact calc
+  - [x] P12-T04.2 Suitability rules
+  - [x] P12-T04.3 Tests
 - [ ] **P12-T05** · Research evidence ingestion and retrieval · `NOT_STARTED` ⬜
   - Deps: P12-T02, P08-T09 · Wave: W2 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

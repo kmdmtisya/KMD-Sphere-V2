@@ -1565,3 +1565,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-13T14:57:54+04:00 — COMPLETE P12-T03
 - duration: 36m 17s
 - evidence: Explainable scoring: features from stored closes (trailing return, volatility, drawdown via analytics risk maths; expense ratio, liquidity, risk level) with reasons for missing ones; six-factor 0-100 transforms, score = sum of contributions exactly, missing data lowers coverage/confidence (no score below 50%), configurable validated weights; GET /api/v1/universe/scores. Matrix Q-01..Q-06; docs/design/scoring.md. Backend 2,410 passed, coverage 97.29%. PR #142. CI all gates pass.
+
+### 2026-10-13T15:06:43+04:00 — START P12-T04
+- Portfolio compatibility and suitability
+- prerequisites verified COMPLETED
+
+### 2026-10-13T15:46:36+04:00 — COMPLETE P12-T04
+- duration: 39m 53s
+- evidence: Compatibility: hypothetical amount added as new money, portfolio re-measured with the same analytics and Doctor rules before/after (instrument share, largest holding, effective positions, class, FX, accessible; Doctor severity changes); verdict not_suitable (ineligible, below minimum via stored rate) / caution (minimum unchecked, check worsens to medium+, >20% holding) / fits; POST /api/v1/universe/compatibility owner-scoped, is_trade false. Matrix U-01..U-03; docs/design/compatibility.md. Backend 2,429 passed, coverage 97.30%. PR #143. CI all gates pass.
