@@ -1127,13 +1127,13 @@
   - [x] P11-T12.1 Licence review
   - [x] P11-T12.2 Retention policy check
   - [x] P11-T12.3 Sign-off
-- [ ] **P11-GATE** · Phase P11 exit gate · `NOT_STARTED` ⬜
+- [x] **P11-GATE** · Phase P11 exit gate · `COMPLETED` ✅
   - Deps: P11-T01, P11-T02, P11-T03, P11-T04, P11-T05, P11-T06, P11-T07, P11-T08, P11-T09, P11-T10, P11-T11, P11-T12 · Wave: W11 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-21, QG-22, QG-23, QG-24, QG-25
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P11-GATE.1 Run gates
-  - [ ] P11-GATE.2 Present summary
-  - [ ] P11-GATE.3 Record approval
+  - Started: 2026-10-13T12:27:54+04:00 · Completed: 2026-10-13T12:27:54+04:00 · Duration: 0m 00s · Blocker: —
+  - Evidence: Approved by the user after the P11-T12 sign-off and the phase summary. Open before production (accepted, tracked in docs/fxcur-release-signoff.md): buy the ExchangeRate-API Pro plan, get its written licence confirmation, run the real-provider soak (P14-T11), re-check the terms at P16. · Approved by: user (mtisya@gmail.com)
+  - [x] P11-GATE.1 Run gates
+  - [x] P11-GATE.2 Present summary
+  - [x] P11-GATE.3 Record approval
 
 ## P12 — AI Investment Intelligence & Portfolio Doctor
 
