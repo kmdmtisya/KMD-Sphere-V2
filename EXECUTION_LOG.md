@@ -1561,3 +1561,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-13T14:21:37+04:00 — START P12-T03
 - Quantitative features and explainable scoring
 - prerequisites verified COMPLETED
+
+### 2026-10-13T14:57:54+04:00 — COMPLETE P12-T03
+- duration: 36m 17s
+- evidence: Explainable scoring: features from stored closes (trailing return, volatility, drawdown via analytics risk maths; expense ratio, liquidity, risk level) with reasons for missing ones; six-factor 0-100 transforms, score = sum of contributions exactly, missing data lowers coverage/confidence (no score below 50%), configurable validated weights; GET /api/v1/universe/scores. Matrix Q-01..Q-06; docs/design/scoring.md. Backend 2,410 passed, coverage 97.29%. PR #142. CI all gates pass.
