@@ -31,7 +31,7 @@ The model can call **only** these tools. There is no generic "query", "fetch", "
 | `run_goal_forecast` | forecasting engine | goal id, assumptions | required contribution, completion estimate |
 | `get_market_snapshot` | `AssetPriceService`, FX service | asset ids (visible to the user), currency pairs | stored price, provider, as-of, stale flag |
 | `search_investment_universe` | asset catalogue search | text, asset class filters | matching catalogue assets (id, symbol, name, class) |
-| `get_asset_research` | research store (P12; empty until then) | asset id | evidence items with source and as-of, or "none" |
+| `get_asset_research` | `ResearchService` (P12-T05): public research only | asset id (visible to the user) | evidence items with source, licence status, published and retrieved times, or "none"; source URLs are provenance and never fetched |
 | `compare_assets` | catalogue and price services | 2-5 asset ids | side-by-side stored facts with as-of |
 | `run_portfolio_risk_analysis` | risk service | portfolio id | volatility, concentration, drawdown, with completeness |
 | `get_current_fx_rate` | FX snapshot service (P11-T04) | two supported currency codes | rate, path, provider, time, status, snapshot id (indicative) |

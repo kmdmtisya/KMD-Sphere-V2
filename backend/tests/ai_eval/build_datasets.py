@@ -227,6 +227,16 @@ def routing() -> list[dict[str, Any]]:
     ]
     for q in doctor:
         rows.append((q, ["get_portfolio_diagnosis"], "doctor"))
+    research = [
+        "What research do you have on the global equity ETF?",
+        "Show me the latest notes about my bank shares.",
+        "Is there any evidence about the risks of this bond?",
+        "What does the research say about that REIT?",
+        "Find research on the gold tracker I hold.",
+        "Any filings or notes about this stock?",
+    ]
+    for q in research:
+        rows.append((q, ["get_asset_research"], "research"))
     ambiguous = [
         "Tell me about my money.",
         "How am I doing?",

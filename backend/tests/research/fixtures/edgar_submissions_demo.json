@@ -1,0 +1,17 @@
+{
+  "about": "Synthetic fixture in the shape of SEC EDGAR's submissions document (data.sec.gov/submissions/CIK##########.json). The company, CIK and filings are fictional (P12-T05, fixture-only).",
+  "cik": "0000000042",
+  "entityType": "operating",
+  "name": "Demo Holdings Inc",
+  "tickers": ["DMOH"],
+  "exchanges": ["DEMO"],
+  "filings": {
+    "recent": {
+      "accessionNumber": ["0000000042-26-000010", "0000000042-26-000009", "0000000042-26-000008", "0000000042-26-000007"],
+      "filingDate": ["2026-08-05", "2026-07-30", "2026-05-06", "2026-03-01"],
+      "form": ["10-Q", "4", "10-Q", "10-K"],
+      "primaryDocument": ["dmoh-20260630.htm", "xslF345X05/form4.xml", "dmoh-20260331.htm", "dmoh-20251231.htm"],
+      "primaryDocDescription": ["Quarterly report", "", "Quarterly report", "Annual report"]
+    }
+  }
+}

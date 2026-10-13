@@ -26,6 +26,9 @@ from app.modules.market_data.ingestion import (
 from app.modules.market_data.providers.errors import ProviderUnavailable
 from app.modules.market_data.providers.registry import build_providers
 from app.modules.notifications.push import build_push_sender
+from app.modules.research.embedding import build_embedder
+from app.modules.research.service import ingest_research
+from app.modules.research.sources import DemoResearchSource
 from app.modules.universe.ingestion import (
     DEMO_SOURCE,
     DemoUniverseSource,
@@ -289,6 +292,32 @@ def ingest_universe_job(day: str | None = None) -> dict[str, object]:
             return asdict(report)
 
         outcome = await run_once(sessions, "ingest_universe", key, work)
+        if outcome.skipped or outcome.value is None:
+            return {"skipped": True}
+        return outcome.value
+
+    return run_async(go)
+
+
+# ---------------------------------------------------------------------------- research evidence
+@celery_app.task(base=JobTask, name="app.worker.tasks.ingest_research")
+def ingest_research_job(day: str | None = None) -> dict[str, object]:
+    """Loads research evidence once a day (P12-T05.2). Only the synthetic DEMO notes exist; like
+    the DEMO universe they are loaded only with fake market data. Nothing is fetched from the
+    network (the EDGAR adapter is fixture-only until a live source is approved)."""
+    settings = get_settings()
+    key = day or datetime.now(UTC).date().isoformat()
+    if settings.market_data_mode != "fake":
+        return {"demo_research": "disabled"}
+
+    async def go(sessions: SessionFactory) -> dict[str, object]:
+        async def work(session: AsyncSession) -> dict[str, object]:
+            report = await ingest_research(
+                session, DemoResearchSource(), build_embedder(settings.research_embedder)
+            )
+            return asdict(report)
+
+        outcome = await run_once(sessions, "ingest_research", key, work)
         if outcome.skipped or outcome.value is None:
             return {"skipped": True}
         return outcome.value

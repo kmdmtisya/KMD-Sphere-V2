@@ -47,6 +47,7 @@ from app.modules.networth import income_api
 from app.modules.notifications import api as notifications_api
 from app.modules.portfolio import analytics_api, summary_api
 from app.modules.portfolio import api as portfolio_api
+from app.modules.research import api as research_api
 from app.modules.scoring import api as scoring_api
 from app.modules.transactions import api as transactions_api
 from app.modules.transactions import valuations_api
@@ -139,6 +140,11 @@ def create_app(
                 "conversations, and the Portfolio Doctor's deterministic findings",
             },
             {
+                "name": "research",
+                "description": "Public research evidence with source, licence status and dates "
+                "(information, not advice)",
+            },
+            {
                 "name": "universe",
                 "description": "The investment universe and each instrument's eligibility for you "
                 "(a filter for analysis, not a recommendation)",
@@ -213,6 +219,7 @@ def create_app(
     app.include_router(scoring_api.router)  # /universe/scores before any /universe/{id}
     app.include_router(universe_api.router)
     app.include_router(compatibility_api.router)
+    app.include_router(research_api.router)
     app.include_router(portfolio_api.router)
     app.include_router(transactions_api.router)
     app.include_router(transactions_api.holdings_router)

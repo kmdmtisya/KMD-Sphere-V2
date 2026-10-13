@@ -60,6 +60,9 @@ class Settings(BaseSettings):
     fx_status_cache_seconds: int = Field(default=60, ge=0)
     # The commercial plan's monthly request quota (ExchangeRate-API Pro: 30,000).
     fx_monthly_request_budget: int = Field(default=30_000, ge=1)
+    # Research retrieval embeddings (P12-T05): only the deterministic hash model for now; the
+    # production model is chosen before launch (docs/design/research.md).
+    research_embedder: Literal["hash"] = "hash"
     # Factor weights of the instrument score (P12-T03, docs/design/scoring.md): every factor,
     # none negative, adding up to exactly 1. Reviewed with the P12-T08 results.
     opportunity_score_weights: dict[str, Decimal] = Field(
