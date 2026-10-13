@@ -1212,11 +1212,11 @@
   - [x] P12-T09.3 Compare
   - [x] P12-T09.4 Simulate
   - [x] P12-T09.5 Tests
-- [ ] **P12-T10** · Disclosure and compliance content review · `NOT_STARTED` ⬜
+- [ ] **P12-T10** · Disclosure and compliance content review · `IN_PROGRESS` 🔄
   - Deps: P12-T08, P12-T09 · Wave: W5 · Track: DOC · Size: S · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-13T21:41:21+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P12-T10.1 Copy inventory
+  - [x] P12-T10.1 Copy inventory
   - [ ] P12-T10.2 Review
   - [ ] P12-T10.3 Apply changes
 - [ ] **P12-GATE** · Phase P12 exit gate · `NOT_STARTED` ⬜
