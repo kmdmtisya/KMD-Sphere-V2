@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-13T21:48:15+04:00 by `scripts/track.py`._
+_Generated at 2026-10-13T21:48:44+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -17,7 +17,7 @@ _Generated at 2026-10-13T21:48:15+04:00 by `scripts/track.py`._
 | QG-04 | Android Platform | 🔄 IN_PROGRESS | 5/7 | Unassigned | — |
 | QG-05 | iOS Platform | 🔄 IN_PROGRESS | 4/6 | Unassigned | — |
 | QG-06 | Financial Accuracy and Data Integrity | 🔄 IN_PROGRESS | 7/7 | Unassigned | — |
-| QG-07 | AI Reliability and Investment Intelligence | 🔄 IN_PROGRESS | 8/8 | Unassigned | — |
+| QG-07 | AI Reliability and Investment Intelligence | ✅ PASSED | 8/8 | Unassigned | — |
 | QG-08 | Security and Privacy | 🔄 IN_PROGRESS | 3/8 | Unassigned | — |
 | QG-09 | Performance and Scalability | 🔄 IN_PROGRESS | 1/6 | Unassigned | — |
 | QG-10 | CI/CD and Infrastructure | 🔄 IN_PROGRESS | 2/8 | Unassigned | — |
@@ -169,12 +169,12 @@ Approved By: —
 - [x] QG-07.7 Stale, missing or contradictory market data is handled safely · Required: P12 · By: P12-T08 · Evidence: Stale, missing and contradictory market data handled by deterministic features, scores and close selection: market_data 41/41 zero tolerance, no high confidence on stale prices, missing data reported with its reason, most recently retrieved close wins, future closes ignored; meta-test shows the rule is load-bearing (docs/ai-evaluation.md P12 section). · Verified: 2026-10-13T21:48:14+04:00
 - [x] QG-07.8 AI output quality is assessed using documented evaluation datasets and acceptance thresholds · Required: P10 · By: P10-T09 · Evidence: Eight versioned DEC-17 datasets at approved sizes and thresholds, all met in CI; routing measured by stand-in only and the real-model routing and human review remain pre-release steps, recorded as open in docs/ai-evaluation.md; user approved P10-T09. · Verified: 2026-10-12T21:02:30+04:00
 
-Status: IN_PROGRESS  
+Status: PASSED  
 Owner: Unassigned  
 Start Timestamp: 2026-10-12T21:02:27+04:00  
-End Timestamp: —  
-Verification Timestamp: 2026-10-13T21:48:14+04:00  
-Evidence: 8/8 criteria verified; latest QG-07.7 at 2026-10-13T21:48:14+04:00  
+End Timestamp: 2026-10-13T21:48:44+04:00  
+Verification Timestamp: 2026-10-13T21:48:44+04:00  
+Evidence: All 8 criteria verified (P10 and P12); see docs/ai-evaluation.md. Limits: scripted model only, real-model routing and human review pre-release.  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —

@@ -1661,3 +1661,6 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-13T21:48:15+04:00 — COMPLETE P12-GATE
 - duration: 0m 01s
 - evidence: Approved by the user on 2026-10-13 after the P12-T08 results and the P12-T10 sign-off. Accepted open items: jurisdiction questions unanswered (legally_reviewed false), copy follow-ups, DEMO instruments and research only (licensed data DEC-04), scripted-model evaluation only, ExchangeRate/real-provider items from P11. · Approved by: user (mtisya@gmail.com)
+
+### 2026-10-13T21:48:44+04:00 — QG PASSED QG-07
+- evidence: All 8 criteria verified (P10 and P12); see docs/ai-evaluation.md. Limits: scripted model only, real-model routing and human review pre-release.
