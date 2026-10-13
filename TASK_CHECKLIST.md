@@ -1142,14 +1142,14 @@
 - Exit gates: QG-07.4,7 — required by `P12-GATE` (Gates-done)
 - Release gates: —
 
-- [ ] **P12-T01** · Portfolio Doctor service and API · `NOT_STARTED` ⬜
+- [ ] **P12-T01** · Portfolio Doctor service and API · `IN_PROGRESS` 🔄
   - Deps: P06-T09, P10-T08, P08-GATE, P10-GATE, P11-GATE · Wave: W1 · Track: AI · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-13T13:04:53+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P12-T01.1 Rules
-  - [ ] P12-T01.2 Severity model
-  - [ ] P12-T01.3 Endpoint
-  - [ ] P12-T01.4 Tests
+  - [x] P12-T01.1 Rules
+  - [x] P12-T01.2 Severity model
+  - [x] P12-T01.3 Endpoint
+  - [x] P12-T01.4 Tests
 - [ ] **P12-T02** · Investment universe and eligibility filters · `NOT_STARTED` ⬜
   - Deps: P08-T06, P08-GATE, P10-GATE, P11-GATE · Wave: W1 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

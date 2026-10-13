@@ -1534,3 +1534,14 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-13T12:31:29+04:00 — PHASE APPROVED P12
 - approved by user (mtisya@gmail.com)
 - AI Investment Intelligence & Portfolio Doctor
+
+### 2026-10-13T13:04:53+04:00 — START P12-T01
+- Portfolio Doctor service and API
+- prerequisites verified COMPLETED
+
+### 2026-10-13T13:04:53+04:00 — DECISION — advance approval of P12-T01..T07 and T09; T08 run then stop; P12 inputs
+- The user approved running P12-T01 to P12-T07 and P12-T09 sequentially, then running P12-T08 and stopping for the user's review of its results. P12-T10 (legal/compliance review, DEC-10) and P12-GATE wait for the user.
+- Research evidence (T05): the evidence store and search use synthetic fixtures, labelled DEMO. One adapter for a licence-clear public source (SEC EDGAR filings) is built fixture-only, with no live calls. Paid news and research feeds wait for confirmed licences, and the app keeps stating that the research is demo.
+- Retrieval (T05): a replaceable embedding interface, with a deterministic test embedder in development and CI, and PostgreSQL text search as a backstop. The production embedding model is chosen before launch. No new external service.
+- Universe and eligibility (T02): instruments from the existing providers (Twelve Data equities and ETFs, CoinGecko crypto) on the fake provider and fixtures. Launch jurisdictions are Kenya and the UAE. Eligibility rules are settings, and every jurisdiction rule is marked "not legally reviewed" until T10.
+- Scoring (T03): documented default weights, adjustable in settings. Every score is decomposable into factor contributions, and missing data lowers confidence. The user reviews the weights with the T08 results.
