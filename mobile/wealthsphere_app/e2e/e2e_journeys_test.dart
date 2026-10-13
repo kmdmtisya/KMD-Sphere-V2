@@ -509,10 +509,10 @@ void main() {
     await tester.pump(const Duration(milliseconds: 400));
     // The first run takes a moment: wait until the server has stored it.
     var runs = const <dynamic>[];
-    final end = DateTime.now().add(const Duration(seconds: 20));
-    while (runs.isEmpty && DateTime.now().isBefore(end)) {
+    // Every 2 s, at most 15 times: well inside the API's per-user rate limit.
+    for (var i = 0; i < 15 && runs.isEmpty; i++) {
       await tester.runAsync(
-        () => Future<void>.delayed(const Duration(milliseconds: 300)),
+        () => Future<void>.delayed(const Duration(seconds: 2)),
       );
       await tester.pump(const Duration(milliseconds: 100));
       final r = await tester.runAsync(
