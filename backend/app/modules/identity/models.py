@@ -29,7 +29,13 @@ class User(UUIDPrimaryKeyMixin, TimestampMixin, Base):
 
 class UserProfile(TimestampMixin, Base):
     __tablename__ = "user_profiles"
-    __table_args__ = (CheckConstraint("base_currency ~ '^[A-Z]{3}$'", name="base_currency"),)
+    __table_args__ = (
+        CheckConstraint("base_currency ~ '^[A-Z]{3}$'", name="base_currency"),
+        CheckConstraint(
+            "residence_country IS NULL OR residence_country ~ '^[A-Z]{2}$'",
+            name="residence_country",
+        ),
+    )
 
     user_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("users.id", ondelete="CASCADE"), primary_key=True
@@ -38,6 +44,8 @@ class UserProfile(TimestampMixin, Base):
     base_currency: Mapped[str] = mapped_column(String(3), server_default=text("'USD'"))
     locale: Mapped[str] = mapped_column(String(35), server_default=text("'en'"))
     timezone: Mapped[str] = mapped_column(String(64), server_default=text("'UTC'"))
+    # ISO 3166-1 alpha-2; decides which investments are eligible (P12-T02). Unset: none are.
+    residence_country: Mapped[str | None] = mapped_column(String(2))
     # UI preferences only (theme, dashboard layout); validated by schemas.Preferences.
     preferences: Mapped[dict[str, Any]] = mapped_column(JSONB, server_default=text("'{}'::jsonb"))
 

@@ -1,0 +1,21 @@
+{
+  "about": "Synthetic investment universe for development, tests and demo mode (P12-T02). Every instrument is fictional and labelled DEMO; none is a real security, and nothing here is a recommendation. Risk levels, jurisdictions and minimums are illustrative. Listed instruments are priced only by the fake market-data provider.",
+  "data_as_of": "2026-10-13T00:00:00Z",
+  "instruments": [
+    {"symbol": "DEMO-KEN", "name": "Demo Kenya Telecom (DEMO)", "asset_class": "stock", "currency": "KES", "country": "KE", "sector": "Telecommunications", "risk_level": 4, "jurisdictions": ["KE"], "minimum_investment": null},
+    {"symbol": "DEMO-KBK", "name": "Demo Kenya Bank (DEMO)", "asset_class": "stock", "currency": "KES", "country": "KE", "sector": "Banks", "risk_level": 4, "jurisdictions": ["KE"], "minimum_investment": null},
+    {"symbol": "DEMO-KRT", "name": "Demo Nairobi Income REIT (DEMO)", "asset_class": "reit", "currency": "KES", "country": "KE", "sector": "Real Estate", "risk_level": 3, "jurisdictions": ["KE"], "minimum_investment": null},
+    {"symbol": "DEMO-KTB", "name": "Demo Kenya Treasury Bond 2030 (DEMO)", "asset_class": "bond", "currency": "KES", "country": "KE", "sector": "Government", "risk_level": 2, "jurisdictions": ["KE"], "minimum_investment": "50000"},
+    {"symbol": "DEMO-KMM", "name": "Demo Shilling Money Market Fund (DEMO)", "asset_class": "money_market_fund", "currency": "KES", "country": "KE", "sector": null, "risk_level": 1, "jurisdictions": ["KE"], "minimum_investment": "1000"},
+    {"symbol": "DEMO-KFD", "name": "Demo Shilling 12-Month Fixed Deposit (DEMO)", "asset_class": "fixed_deposit", "currency": "KES", "country": "KE", "sector": null, "risk_level": 1, "jurisdictions": ["KE"], "minimum_investment": "100000"},
+    {"symbol": "DEMO-UAE", "name": "Demo Gulf Developer (DEMO)", "asset_class": "stock", "currency": "AED", "country": "AE", "sector": "Real Estate", "risk_level": 4, "jurisdictions": ["AE"], "minimum_investment": null},
+    {"symbol": "DEMO-ASK", "name": "Demo Dirham Sukuk 2029 (DEMO)", "asset_class": "bond", "currency": "AED", "country": "AE", "sector": "Government", "risk_level": 2, "jurisdictions": ["AE"], "minimum_investment": "10000"},
+    {"symbol": "DEMO-AMM", "name": "Demo Dirham Money Market Fund (DEMO)", "asset_class": "money_market_fund", "currency": "AED", "country": "AE", "sector": null, "risk_level": 1, "jurisdictions": ["AE"], "minimum_investment": "500"},
+    {"symbol": "DEMO-APF", "name": "Demo Dubai Rental Property Share (DEMO)", "asset_class": "real_estate", "currency": "AED", "country": "AE", "sector": "Real Estate", "risk_level": 3, "jurisdictions": ["AE"], "minimum_investment": "50000"},
+    {"symbol": "DEMO-GEQ", "name": "Demo Global Equity ETF (DEMO)", "asset_class": "etf", "currency": "USD", "country": null, "sector": "Diversified", "risk_level": 4, "jurisdictions": ["KE", "AE"], "minimum_investment": null},
+    {"symbol": "DEMO-TEC", "name": "Demo Technology ETF (DEMO)", "asset_class": "etf", "currency": "USD", "country": "US", "sector": "Technology", "risk_level": 5, "jurisdictions": ["KE", "AE"], "minimum_investment": null},
+    {"symbol": "DEMO-GBD", "name": "Demo Global Bond ETF (DEMO)", "asset_class": "etf", "currency": "USD", "country": null, "sector": "Fixed Income", "risk_level": 2, "jurisdictions": ["KE", "AE"], "minimum_investment": null},
+    {"symbol": "DEMO-GLD", "name": "Demo Gold Tracker ETF (DEMO)", "asset_class": "etf", "currency": "USD", "country": null, "sector": "Commodities", "risk_level": 3, "jurisdictions": ["KE", "AE"], "minimum_investment": null},
+    {"symbol": "DEMO-BTC", "name": "Demo Bitcoin (DEMO)", "asset_class": "cryptocurrency", "currency": "USD", "country": null, "sector": null, "risk_level": 5, "jurisdictions": ["KE", "AE"], "minimum_investment": null}
+  ]
+}

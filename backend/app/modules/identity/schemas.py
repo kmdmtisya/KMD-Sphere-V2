@@ -45,6 +45,12 @@ class PreferencesUpdate(BaseModel):
     base_currency: str | None = Field(default=None, pattern=r"^[A-Z]{3}$")
     locale: str | None = Field(default=None, pattern=r"^[a-z]{2,3}([_-][A-Za-z0-9]{2,8})*$")
     timezone: str | None = Field(default=None, max_length=64)
+    residence_country: str | None = Field(
+        default=None,
+        pattern=r"^[A-Z]{2}$",
+        description="Country of residence (ISO 3166-1 alpha-2); decides which investments are "
+        "eligible. Null clears it.",
+    )
 
     @field_validator("timezone")
     @classmethod
@@ -62,6 +68,7 @@ class MeResponse(BaseModel):
     base_currency: str
     locale: str
     timezone: str
+    residence_country: str | None = None
     preferences: Preferences
     created_at: datetime
 

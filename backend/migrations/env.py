@@ -30,6 +30,7 @@ import app.modules.networth.models  # noqa: E402
 import app.modules.notifications.models  # noqa: E402
 import app.modules.portfolio.models  # noqa: E402
 import app.modules.transactions.models  # noqa: E402
+import app.modules.universe.models  # noqa: E402
 import app.worker.models  # noqa: E402, F401
 
 target_metadata = Base.metadata

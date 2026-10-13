@@ -48,6 +48,7 @@ from app.modules.portfolio import analytics_api, summary_api
 from app.modules.portfolio import api as portfolio_api
 from app.modules.transactions import api as transactions_api
 from app.modules.transactions import valuations_api
+from app.modules.universe import api as universe_api
 
 
 def create_app(
@@ -132,8 +133,13 @@ def create_app(
             {"name": "watchlist", "description": "Assets the user follows, with latest prices"},
             {
                 "name": "ai",
-                "description": "The assistant: streamed chat over your own data and your stored "
-                "conversations",
+                "description": "The assistant: streamed chat over your own data, your stored "
+                "conversations, and the Portfolio Doctor's deterministic findings",
+            },
+            {
+                "name": "universe",
+                "description": "The investment universe and each instrument's eligibility for you "
+                "(a filter for analysis, not a recommendation)",
             },
             {
                 "name": "notifications",
@@ -202,6 +208,7 @@ def create_app(
     app.include_router(notifications_api.router)
     app.include_router(ai_api.router)
     app.include_router(doctor_api.router)
+    app.include_router(universe_api.router)
     app.include_router(portfolio_api.router)
     app.include_router(transactions_api.router)
     app.include_router(transactions_api.holdings_router)

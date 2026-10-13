@@ -9,9 +9,8 @@ from typing import Any
 import pytest
 
 from app.modules.assets.catalogue import INITIAL_CLASSES
+from app.modules.assets.liquidity import LIQUIDITY_ASSUMPTION, LIQUIDITY_BY_CLASS
 from app.modules.doctor.rules import (
-    LIQUIDITY_ASSUMPTION,
-    LIQUIDITY_BY_CLASS,
     Check,
     CheckStatus,
     Diagnosis,

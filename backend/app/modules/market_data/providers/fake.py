@@ -29,6 +29,12 @@ DEFAULT_INSTRUMENTS: dict[str, tuple[AssetKind, str, Decimal]] = {
     "DEMO-TEC": (AssetKind.ETF, "USD", Decimal("187.40")),
     "DEMO-KEN": (AssetKind.EQUITY, "KES", Decimal("12.45")),
     "DEMO-BTC": (AssetKind.CRYPTO, "USD", Decimal("64800.00")),
+    # The listed instruments of the DEMO investment universe (P12-T02).
+    "DEMO-KBK": (AssetKind.EQUITY, "KES", Decimal("38.60")),
+    "DEMO-KRT": (AssetKind.EQUITY, "KES", Decimal("21.15")),
+    "DEMO-UAE": (AssetKind.EQUITY, "AED", Decimal("6.42")),
+    "DEMO-GBD": (AssetKind.ETF, "USD", Decimal("48.90")),
+    "DEMO-GLD": (AssetKind.ETF, "USD", Decimal("226.30")),
 }
 
 # 1 base = rate quote, for the pairs listed; the opposite direction is derived.

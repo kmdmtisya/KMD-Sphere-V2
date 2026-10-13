@@ -45,4 +45,9 @@ def build_schedule() -> dict[str, dict[str, Any]]:
             "task": "app.worker.tasks.ingest_fx",
             "schedule": crontab(hour=16, minute=30),
         },
+        # The investment universe (P12-T02): once a day, before markets open in Nairobi and Dubai.
+        "universe-ingest": {
+            "task": "app.worker.tasks.ingest_universe",
+            "schedule": crontab(hour=2, minute=45),
+        },
     }
