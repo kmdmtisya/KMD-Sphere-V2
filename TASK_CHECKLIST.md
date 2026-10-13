@@ -1244,10 +1244,10 @@
   - [x] P13-T01.3 Technical design review
   - [x] P13-T01.4 ADR-0009
   - [x] P13-T01.5 Decision register update
-- [ ] **P13-T02** · FX-02 Market data provider abstraction, ingestion and streaming · `IN_PROGRESS` 🔄
+- [x] **P13-T02** · FX-02 Market data provider abstraction, ingestion and streaming · `COMPLETED` ✅
   - Deps: P13-T01, P08-GATE · Wave: W2 · Track: BE · Size: L · Approval: yes
-  - Started: 2026-10-13T22:12:13+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-13T22:12:13+04:00 · Completed: 2026-10-13T23:12:28+04:00 · Duration: 1h 00m 15s · Blocker: —
+  - Evidence: Every stored quote carries provider, pair, bid, ask, DB-derived mid, UTC provider and receipt time, data type, quality and feed status. Unavailable or stale is reported, never invented. Stale data, heartbeat loss and reconnect tested on an injected clock. Fixture-only (DEC-19), behind a flag off by default and refused outside dev (DEC-20, DEC-23). Migration 0020 adds monthly partitions with BRIN (DEC-21). Tests: 99 forex tests, 97% coverage; full backend suite 2617 passed locally; Spectral clean. PR #154. CI all gates pass. · Approved by: user (mtisya@gmail.com), advance approval 2026-10-13 (P13 sequence)
   - [x] P13-T02.1 Quote and candle interfaces
   - [x] P13-T02.2 Instrument registry and configurable universe
   - [x] P13-T02.3 Time-series schema and migration
