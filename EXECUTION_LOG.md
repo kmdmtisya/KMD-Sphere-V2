@@ -1589,3 +1589,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-13T17:36:00+04:00 — COMPLETE P12-T06
 - duration: 25m 00s
 - evidence: Opportunity pipeline: eligible + scored universe, optional compatibility (not_suitable excluded with reasons), retrieved evidence, model explanation from facts only with deterministic validation (unsupported figures, return forecasts, guarantees, links, unknown evidence, missing risks refused; one correction then template), research horizon stated as assumption; runs persisted unchanged (update trigger), owner-scoped GET runs, audited, 10/day limit. 12 tests + integrity sweep; docs/design/opportunities.md. Backend 2,474 passed + sweep, coverage 97.30%. PR #145. CI all gates pass.
+
+### 2026-10-13T18:33:21+04:00 — START P12-T07
+- Compare and Simulate APIs
+- prerequisites verified COMPLETED
+
+### 2026-10-13T18:58:09+04:00 — COMPLETE P12-T07
+- duration: 24m 48s
+- evidence: Compare (2-5 instruments: recorded facts, fees, past figures labelled past, score, eligibility, horizon, optional diversification impact; income yield explicitly n/a; no future-return field) and Simulate (forecast engine under the user's own conservative/base/growth returns, no default, equal to /forecasts/scenarios; notes on fee and currency; optional fit). Deterministic, owner-scoped. 6 tests; docs/design/compare-simulate.md. Backend 2,491 passed, coverage 97.39%. PR #146. CI all gates pass.

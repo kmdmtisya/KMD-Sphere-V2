@@ -1190,13 +1190,13 @@
   - [x] P12-T06.3 LLM explanation and validation
   - [x] P12-T06.4 Persistence
   - [x] P12-T06.5 Tests
-- [ ] **P12-T07** · Compare and Simulate APIs · `NOT_STARTED` ⬜
+- [x] **P12-T07** · Compare and Simulate APIs · `COMPLETED` ✅
   - Deps: P12-T03, P12-T04, P06-T02 · Wave: W3 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P12-T07.1 Compare
-  - [ ] P12-T07.2 Simulate
-  - [ ] P12-T07.3 Tests
+  - Started: 2026-10-13T18:33:21+04:00 · Completed: 2026-10-13T18:58:09+04:00 · Duration: 24m 48s · Blocker: —
+  - Evidence: Compare (2-5 instruments: recorded facts, fees, past figures labelled past, score, eligibility, horizon, optional diversification impact; income yield explicitly n/a; no future-return field) and Simulate (forecast engine under the user's own conservative/base/growth returns, no default, equal to /forecasts/scenarios; notes on fee and currency; optional fit). Deterministic, owner-scoped. 6 tests; docs/design/compare-simulate.md. Backend 2,491 passed, coverage 97.39%. PR #146. CI all gates pass.
+  - [x] P12-T07.1 Compare
+  - [x] P12-T07.2 Simulate
+  - [x] P12-T07.3 Tests
 - [ ] **P12-T08** · Safety and quality suite · `NOT_STARTED` ⬜
   - Deps: P12-T06, P12-T07 · Wave: W4 · Track: QA · Size: L · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —

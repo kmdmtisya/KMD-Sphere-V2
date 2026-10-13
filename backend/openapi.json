@@ -1003,6 +1003,210 @@
         "title": "CheckStatus",
         "type": "string"
       },
+      "CompareOut": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ComparedOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "notice": {
+            "default": "Past figures describe what happened, not what will happen. No future return is shown. Not advice; DEMO instruments are fictional.",
+            "title": "Notice",
+            "type": "string"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "CompareOut",
+        "type": "object"
+      },
+      "CompareRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "amount": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Hypothetical amount for the impact, in the portfolio's base currency; needed with portfolio_id"
+          },
+          "asset_ids": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "maxItems": 5,
+            "minItems": 2,
+            "title": "Asset Ids",
+            "type": "array"
+          },
+          "portfolio_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Show each instrument's diversification impact on it",
+            "title": "Portfolio Id"
+          }
+        },
+        "required": [
+          "asset_ids"
+        ],
+        "title": "CompareRequest",
+        "type": "object"
+      },
+      "ComparedOut": {
+        "properties": {
+          "asset_class": {
+            "title": "Asset Class",
+            "type": "string"
+          },
+          "asset_id": {
+            "format": "uuid",
+            "title": "Asset Id",
+            "type": "string"
+          },
+          "country": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Country"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "diversification": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CompatibilityOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "eligibility_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Eligibility Reasons",
+            "type": "array"
+          },
+          "eligible": {
+            "title": "Eligible",
+            "type": "boolean"
+          },
+          "expense_ratio_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Funds only",
+            "title": "Expense Ratio Percent"
+          },
+          "income_yield": {
+            "description": "Not available: no distribution data is stored yet",
+            "title": "Income Yield",
+            "type": "null"
+          },
+          "is_demo": {
+            "title": "Is Demo",
+            "type": "boolean"
+          },
+          "liquidity": {
+            "title": "Liquidity",
+            "type": "string"
+          },
+          "minimum_investment": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "past": {
+            "$ref": "#/components/schemas/PastFigures"
+          },
+          "research_horizon": {
+            "additionalProperties": true,
+            "title": "Research Horizon",
+            "type": "object"
+          },
+          "risk_level": {
+            "title": "Risk Level",
+            "type": "integer"
+          },
+          "score": {
+            "$ref": "#/components/schemas/ScoreOut"
+          },
+          "symbol": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Symbol"
+          }
+        },
+        "required": [
+          "asset_id",
+          "symbol",
+          "name",
+          "asset_class",
+          "country",
+          "currency",
+          "is_demo",
+          "risk_level",
+          "liquidity",
+          "minimum_investment",
+          "expense_ratio_percent",
+          "past",
+          "score",
+          "eligible",
+          "eligibility_reasons",
+          "research_horizon",
+          "diversification"
+        ],
+        "title": "ComparedOut",
+        "type": "object"
+      },
       "CompatibilityOut": {
         "properties": {
           "after": {
@@ -5391,6 +5595,80 @@
         "title": "OpportunityOut",
         "type": "object"
       },
+      "PastFigures": {
+        "description": "Measured over the last year from stored prices; past, never a forecast.",
+        "properties": {
+          "last_close": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Close"
+          },
+          "max_drawdown_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Drawdown Percent"
+          },
+          "price_change_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Price Change Percent"
+          },
+          "volatility_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Volatility Percent"
+          },
+          "weeks_of_prices": {
+            "title": "Weeks Of Prices",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "price_change_percent",
+          "volatility_percent",
+          "max_drawdown_percent",
+          "last_close",
+          "weeks_of_prices"
+        ],
+        "title": "PastFigures",
+        "type": "object"
+      },
       "PerformanceOut": {
         "properties": {
           "as_of": {
@@ -7207,6 +7485,110 @@
         "title": "ShareChangeOut",
         "type": "object"
       },
+      "SimulateOut": {
+        "properties": {
+          "asset_id": {
+            "format": "uuid",
+            "title": "Asset Id",
+            "type": "string"
+          },
+          "fit": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CompatibilityOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "is_demo": {
+            "title": "Is Demo",
+            "type": "boolean"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "notes": {
+            "description": "How your assumptions differ from what is recorded",
+            "items": {
+              "type": "string"
+            },
+            "title": "Notes",
+            "type": "array"
+          },
+          "notice": {
+            "default": "An illustration under the return assumptions you entered, not a forecast of this instrument. Real returns vary and can be negative; nothing is guaranteed.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "returns_source": {
+            "const": "your_assumptions",
+            "default": "your_assumptions",
+            "title": "Returns Source",
+            "type": "string"
+          },
+          "simulation": {
+            "$ref": "#/components/schemas/ScenarioForecastOut"
+          },
+          "symbol": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Symbol"
+          }
+        },
+        "required": [
+          "asset_id",
+          "symbol",
+          "name",
+          "is_demo",
+          "simulation",
+          "notes",
+          "fit"
+        ],
+        "title": "SimulateOut",
+        "type": "object"
+      },
+      "SimulateRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "asset_id": {
+            "format": "uuid",
+            "title": "Asset Id",
+            "type": "string"
+          },
+          "assumptions": {
+            "$ref": "#/components/schemas/ScenarioForecastIn",
+            "description": "Your conservative, base and growth returns, contributions, years and fees"
+          },
+          "portfolio_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Also check how the initial investment fits this portfolio",
+            "title": "Portfolio Id"
+          }
+        },
+        "required": [
+          "asset_id",
+          "assumptions"
+        ],
+        "title": "SimulateRequest",
+        "type": "object"
+      },
       "SliceOut": {
         "properties": {
           "key": {
@@ -8420,6 +8802,64 @@
         ]
       }
     },
+    "/api/v1/ai/compare": {
+      "post": {
+        "description": "2 to 5 universe instruments side by side: class, geography, currency, risk level,\nliquidity, minimum, fees, past figures over the last year (labelled past), the explainable\nscore, your eligibility, a stated research horizon and, with a portfolio and an amount, the\ndiversification impact. Income yield is not available yet. No future return is shown.",
+        "operationId": "compare_api_v1_ai_compare_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompareRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompareOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such instrument or portfolio for this user"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Compare instruments side by side",
+        "tags": [
+          "ai"
+        ]
+      }
+    },
     "/api/v1/ai/conversations": {
       "delete": {
         "description": "Deletes every conversation you have, with its messages and tool-call records.",
@@ -8898,6 +9338,64 @@
           }
         ],
         "summary": "Check a portfolio's health",
+        "tags": [
+          "ai"
+        ]
+      }
+    },
+    "/api/v1/ai/simulate": {
+      "post": {
+        "description": "Runs the deterministic forecast engine for one universe instrument under the\nconservative, base and growth returns you enter (there is no default return). Notes say where\nyour assumptions differ from what is recorded, for example the instrument's expense ratio.\nWith a portfolio, the initial investment's fit is checked. An illustration, never a forecast\nof the instrument.",
+        "operationId": "simulate_api_v1_ai_simulate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimulateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimulateOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such instrument or portfolio for this user"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Simulate an instrument under your assumptions",
         "tags": [
           "ai"
         ]

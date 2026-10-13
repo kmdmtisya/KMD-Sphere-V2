@@ -35,6 +35,7 @@ from app.core.telemetry import Telemetry
 from app.db.session import Database
 from app.modules.alerts import api as alerts_api
 from app.modules.assets import api as assets_api
+from app.modules.compare import api as compare_api
 from app.modules.compatibility import api as compatibility_api
 from app.modules.doctor import api as doctor_api
 from app.modules.forecasting import api as forecasting_api
@@ -218,6 +219,7 @@ def create_app(
     app.include_router(ai_api.router)
     app.include_router(doctor_api.router)
     app.include_router(opportunities_api.router)
+    app.include_router(compare_api.router)
     app.include_router(scoring_api.router)  # /universe/scores before any /universe/{id}
     app.include_router(universe_api.router)
     app.include_router(compatibility_api.router)
