@@ -1137,7 +1137,7 @@
 
 ## P12 — AI Investment Intelligence & Portfolio Doctor
 
-- Phase approval: `PENDING`
+- Phase approval: `APPROVED by user (mtisya@gmail.com) at 2026-10-13T12:31:29+04:00`
 - Entry gates: prerequisite phase gates completed (P08, P10, P11); cumulative criteria QG-01.1–3; QG-02.1–6; QG-03.1,2,4,5,6; QG-04.1,2,3,5; QG-05.1,2,4; QG-06.1–7; QG-07.1,2,3,5,6,8; QG-08.1,3,6; QG-09.5; QG-10.1,3; QG-11.3–4 — enforced as dependencies of every wave-1 task
 - Exit gates: QG-07.4,7 — required by `P12-GATE` (Gates-done)
 - Release gates: —

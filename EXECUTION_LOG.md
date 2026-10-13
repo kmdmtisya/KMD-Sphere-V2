@@ -1530,3 +1530,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-13T12:27:54+04:00 — COMPLETE P11-GATE
 - duration: 0m 00s
 - evidence: Approved by the user after the P11-T12 sign-off and the phase summary. Open before production (accepted, tracked in docs/fxcur-release-signoff.md): buy the ExchangeRate-API Pro plan, get its written licence confirmation, run the real-provider soak (P14-T11), re-check the terms at P16. · Approved by: user (mtisya@gmail.com)
+
+### 2026-10-13T12:31:29+04:00 — PHASE APPROVED P12
+- approved by user (mtisya@gmail.com)
+- AI Investment Intelligence & Portfolio Doctor
