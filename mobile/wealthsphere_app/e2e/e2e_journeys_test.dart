@@ -33,6 +33,7 @@ import 'package:wealthsphere_app/core/offline/offline_interceptor.dart';
 import 'package:wealthsphere_app/core/offline/snapshot_cache.dart';
 import 'package:wealthsphere_app/core/security/app_lock_settings.dart';
 import 'package:wealthsphere_app/features/notifications/notification_service.dart';
+import 'package:wealthsphere_app/features/portfolios/application/portfolio_providers.dart';
 import 'package:wealthsphere_app/features/transactions/application/ledger_view.dart'
     show todayProvider;
 import 'package:wealthsphere_app/shared/design_system/components/evidence_source_chip.dart';
@@ -472,6 +473,57 @@ void main() {
       await _finish(tester);
     },
   );
+
+  testWidgets('9. Portfolio Doctor and opportunities from the live services', (
+    tester,
+  ) async {
+    await _launch(tester);
+    await _until(tester, find.text('Hello, Alice'));
+    // All portfolios together: the checks run per portfolio, so the screen asks for one.
+    _container!.read(routerProvider).go(AppRoutes.doctor);
+    await tester.pump(const Duration(milliseconds: 400));
+    await _until(
+      tester,
+      find.text('Choose one portfolio to check its health.'),
+    );
+    final portfolios = await tester.runAsync(
+      () => _client().get<List<dynamic>>('/api/v1/portfolios'),
+    );
+    final pid = (portfolios!.data!.first as Map)['id'] as String;
+    _container!.read(selectedPortfolioIdProvider.notifier).select(pid);
+    // The server's findings, shown as the server wrote them.
+    final report = await _post(tester, '/api/v1/ai/portfolio-doctor', {
+      'portfolio_id': pid,
+    });
+    final flagged = [
+      for (final f in report['findings'] as List)
+        if ((f as Map)['status'] == 'flagged') f['message'] as String,
+    ];
+    expect(flagged, isNotEmpty, reason: 'one stock and cash is concentrated');
+    await _until(tester, find.text(flagged.first));
+    expect(find.text('Buy'), findsNothing);
+    expect(find.text('Sell'), findsNothing);
+    // Opportunities: a run of the server's pipeline (no eligible instruments for Alice here,
+    // so it is empty), never an error and never a trade button.
+    _container!.read(routerProvider).go(AppRoutes.opportunities);
+    await tester.pump(const Duration(milliseconds: 400));
+    // The first run takes a moment: wait until the server has stored it.
+    var runs = const <dynamic>[];
+    final end = DateTime.now().add(const Duration(seconds: 20));
+    while (runs.isEmpty && DateTime.now().isBefore(end)) {
+      await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 300)),
+      );
+      await tester.pump(const Duration(milliseconds: 100));
+      final r = await tester.runAsync(
+        () => _client().get<List<dynamic>>('/api/v1/ai/opportunities/runs'),
+      );
+      runs = r!.data!;
+    }
+    expect(runs, isNotEmpty, reason: 'the screen asked the pipeline');
+    expect(find.text('Buy'), findsNothing);
+    await _finish(tester);
+  });
 }
 
 /// `9307.6` as `9,307.60`: the digits as the app groups them, whatever the currency symbol.

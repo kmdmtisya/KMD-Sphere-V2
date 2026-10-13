@@ -1203,15 +1203,15 @@
   - Evidence: —
   - [ ] P12-T08.1 Suite
   - [ ] P12-T08.2 Review
-- [ ] **P12-T09** · Mobile wiring: Doctor, Opportunities, Compare, Simulate · `NOT_STARTED` ⬜
+- [x] **P12-T09** · Mobile wiring: Doctor, Opportunities, Compare, Simulate · `COMPLETED` ✅
   - Deps: P12-T06, P12-T07, P07-T06, P07-T07 · Wave: W4 · Track: MOB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P12-T09.1 Doctor
-  - [ ] P12-T09.2 Opportunities
-  - [ ] P12-T09.3 Compare
-  - [ ] P12-T09.4 Simulate
-  - [ ] P12-T09.5 Tests
+  - Started: 2026-10-13T19:05:41+04:00 · Completed: 2026-10-13T19:55:40+04:00 · Duration: 49m 59s · Blocker: —
+  - Evidence: Doctor, Opportunities, Compare and Simulate wired to the live P12 services by data-source mode (demo unchanged): server findings with figures/thresholds and scenarios, portfolio required for the per-portfolio checks; opportunity runs reused within 24h; server compare facts with past figures labelled past; Simulate with empty return fields (no suggested return); labels via l10n; no trade buttons. 7 widget/unit tests + e2e journey 9 against the real backend (9/9 pass). Flutter 1,763 passed. PR #147. CI all gates pass.
+  - [x] P12-T09.1 Doctor
+  - [x] P12-T09.2 Opportunities
+  - [x] P12-T09.3 Compare
+  - [x] P12-T09.4 Simulate
+  - [x] P12-T09.5 Tests
 - [ ] **P12-T10** · Disclosure and compliance content review · `NOT_STARTED` ⬜
   - Deps: P12-T08, P12-T09 · Wave: W5 · Track: DOC · Size: S · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —

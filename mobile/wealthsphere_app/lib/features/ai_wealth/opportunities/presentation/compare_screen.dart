@@ -42,7 +42,14 @@ class CompareScreen extends ConsumerWidget {
               onAction: onBack,
             );
           }
-          return _Table(candidates: chosen);
+          final facts = ref.watch(
+            comparisonProvider([for (final c in chosen) c.id].join(',')),
+          );
+          return AsyncValueView<Map<String, List<OpportunityAttribute>>>(
+            value: facts,
+            onRetry: () => ref.invalidate(comparisonProvider),
+            data: (byId) => _Table(candidates: chosen, attributes: byId),
+          );
         },
       ),
     );
@@ -50,9 +57,17 @@ class CompareScreen extends ConsumerWidget {
 }
 
 class _Table extends StatelessWidget {
-  const _Table({required this.candidates});
+  const _Table({required this.candidates, required this.attributes});
 
   final List<OpportunityCandidate> candidates;
+
+  /// The facts on file for each idea, by id (from the server in live mode).
+  final Map<String, List<OpportunityAttribute>> attributes;
+
+  String? _value(OpportunityCandidate c, String label) => attributes[c.id]
+      ?.where((a) => a.label == label)
+      .map((a) => a.value)
+      .firstOrNull;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +78,7 @@ class _Table extends StatelessWidget {
     // The attribute labels in the order of the first idea, then any others.
     final labels = <String>[];
     for (final c in candidates) {
-      for (final a in c.attributes) {
+      for (final a in attributes[c.id] ?? const <OpportunityAttribute>[]) {
         if (!labels.contains(a.label)) labels.add(a.label);
       }
     }
@@ -126,7 +141,7 @@ class _Table extends StatelessWidget {
         for (final label in labels) ...[
           const SizedBox(height: AppSpacing.s),
           section(label, [
-            for (final c in candidates) line(c, c.attribute(label) ?? '-'),
+            for (final c in candidates) line(c, _value(c, label) ?? '-'),
           ]),
         ],
         const SizedBox(height: AppSpacing.s),
