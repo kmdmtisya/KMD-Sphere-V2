@@ -1623,3 +1623,12 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-13T21:22:46+04:00 — COMPLETE P12-T08
 - duration: 1h 15m 24s
 - evidence: Results reviewed and approved by the user (docs/ai-evaluation.md P12 section); scoring weights and Doctor thresholds accepted as proposed. PR #148, CI all gates pass. · Approved by: user (mtisya@gmail.com)
+
+### 2026-10-13T21:41:21+04:00 — START P12-T10
+- Disclosure and compliance content review
+- prerequisites verified COMPLETED
+
+### 2026-10-13T21:42:42+04:00 — DECISION — P12-T10 reviewer named; P12-GATE approval given in advance
+- The user named Kelvin Mutisya David as the P12-T10 reviewer (DEC-10) and approved the P12 gate.
+- The gate depends on P12-T10, whose acceptance is the reviewer's sign-off on the wording and jurisdictional disclosures. That sign-off has not been given: the review pack (docs/compliance-review-p12.md) is prepared and awaiting the reviewer's decisions.
+- Consequence: the gate is approved but not closed. It is completed when P12-T10 is signed off, with no further approval needed.
