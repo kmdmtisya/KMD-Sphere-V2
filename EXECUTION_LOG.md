@@ -1545,3 +1545,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 - Retrieval (T05): a replaceable embedding interface, with a deterministic test embedder in development and CI, and PostgreSQL text search as a backstop. The production embedding model is chosen before launch. No new external service.
 - Universe and eligibility (T02): instruments from the existing providers (Twelve Data equities and ETFs, CoinGecko crypto) on the fake provider and fixtures. Launch jurisdictions are Kenya and the UAE. Eligibility rules are settings, and every jurisdiction rule is marked "not legally reviewed" until T10.
 - Scoring (T03): documented default weights, adjustable in settings. Every score is decomposable into factor contributions, and missing data lowers confidence. The user reviews the weights with the T08 results.
+
+### 2026-10-13T13:33:54+04:00 — COMPLETE P12-T01
+- duration: 29m 01s
+- evidence: Portfolio Doctor: 11 deterministic checks with stated thresholds and severities (rules.py, pure Decimal), hypothetical cap scenarios (is_trade false), POST /api/v1/ai/portfolio-doctor (owner-scoped, cached), allow-listed get_portfolio_diagnosis tool equal to the API (LLM only explains). Tests: 29 rule + 7 API/tool; financial matrix D-01..D-09; docs/design/portfolio-doctor.md. Backend 2,328 passed, coverage 97.16%. PR #140. CI all gates pass.
