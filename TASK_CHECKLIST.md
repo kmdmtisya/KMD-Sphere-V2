@@ -1230,7 +1230,7 @@
 
 ## P13 — Forex Trading Intelligence (FX workstream)
 
-- Phase approval: `APPROVED by user (mtisya@gmail.com) at 2026-10-09T23:34:22+04:00`
+- Phase approval: `APPROVED by user (mtisya@gmail.com) at 2026-10-13T21:53:47+04:00`
 - Entry gates: prerequisite phase gates completed (P08, P09, P10, P11, P12); cumulative criteria QG-06.1–7; QG-07.1–8; QG-08.1,3,6; QG-11.3–4 — enforced as dependencies of every wave-1 task
 - Exit gates: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19, QG-20 — required by `P13-GATE` (Gates-done)
 - Release gates: P13-T13 and P13-T14 start only after QG-13..QG-19 are satisfied
