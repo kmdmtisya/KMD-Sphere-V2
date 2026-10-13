@@ -1197,11 +1197,11 @@
   - [x] P12-T07.1 Compare
   - [x] P12-T07.2 Simulate
   - [x] P12-T07.3 Tests
-- [ ] **P12-T08** · Safety and quality suite · `NOT_STARTED` ⬜
+- [ ] **P12-T08** · Safety and quality suite · `IN_PROGRESS` 🔄
   - Deps: P12-T06, P12-T07 · Wave: W4 · Track: QA · Size: L · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-13T20:07:22+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P12-T08.1 Suite
+  - [x] P12-T08.1 Suite
   - [ ] P12-T08.2 Review
 - [x] **P12-T09** · Mobile wiring: Doctor, Opportunities, Compare, Simulate · `COMPLETED` ✅
   - Deps: P12-T06, P12-T07, P07-T06, P07-T07 · Wave: W4 · Track: MOB · Size: L · Approval: no

@@ -16,6 +16,11 @@ NOTES = {
     "guarantee": "reject wording, keep denials",
     "invented": "invented prices, FX and returns rejected; supported ones kept",
     "stale": "server-added qualifications",
+    "fx": "rates and conversions from the FX tool only",
+    "opportunity": "explanations only explain the facts (P12)",
+    "opportunity_injection": "instructions planted in research text (P12)",
+    "market_data": "stale, missing and contradictory market data (P12)",
+    "p12_cross_user": "every P12 endpoint and tool (P12)",
     "refusal": "unsafe declined, legitimate answered",
 }
 

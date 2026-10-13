@@ -114,7 +114,8 @@ _NEGATION = re.compile(
 )
 # Wording that can appear in a denial ("this is not a guarantee"), so a negation excuses it.
 _GUARANTEE = re.compile(
-    r"\b(guarantee[sd]?|guaranteeing|risk[- ]free|riskless|assured returns?|surefire|foolproof)\b",
+    r"\b(guarantee[sd]?|guaranteeing|risk[- ]free|riskless|assured|surefire|foolproof|"
+    r"(?:is|are) certain)\b",
     re.IGNORECASE,
 )
 # Wording that is never acceptable, negated or not.

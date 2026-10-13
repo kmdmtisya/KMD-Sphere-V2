@@ -50,6 +50,11 @@ The prompt asks for a JSON object per candidate and forbids new facts, figures, 
 | `guarantee_language`, `certainty_language`, `link_in_answer` | the P10 guards |
 | `return_forecast` | "expected return", "will rise", "target price" and similar |
 | `missing_risks` | a candidate with no key risk |
+| `trade_instruction` | "buy it", "move all your savings", "definitely buy" (P12-T08) |
+| `personal_data` | an e-mail address: the model was never given any personal data (P12-T08) |
+| `prompt_leak` | repeating the system prompt, a sign an injected instruction was followed (P12-T08) |
+
+**Figures come only from WealthSphere's own facts.** Numbers inside research text are not accepted as support (P12-T08): a research note is untrusted input that may carry an injected figure, so it is cited by id and never restated.
 
 **On failure:**
 - A failing reply gets one correction, which contains fixed wording for the problem codes and never repeats the reply.

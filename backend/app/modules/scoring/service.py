@@ -3,6 +3,7 @@ score, for every active instrument, with its eligibility for the signed-in user.
 does not depend on the user; eligibility does."""
 
 import uuid
+from collections.abc import Iterable
 from dataclasses import dataclass
 from datetime import UTC, date, datetime, time, timedelta
 from decimal import Decimal
@@ -50,11 +51,34 @@ async def closes_for(
             .order_by(MarketPrice.asset_id, MarketPrice.as_of, MarketPrice.retrieved_at.desc())
         )
     ).scalars()
-    by_day: dict[uuid.UUID, dict[date, Decimal]] = {}
-    for p in rows:
-        by_day.setdefault(p.asset_id, {}).setdefault(p.as_of.astimezone(UTC).date(), p.price)
+    return pick_closes(
+        [StoredClose(p.asset_id, p.as_of, p.retrieved_at, p.price) for p in rows], today
+    )
+
+
+@dataclass(frozen=True)
+class StoredClose:
+    asset_id: uuid.UUID
+    as_of: datetime
+    retrieved_at: datetime
+    price: Decimal
+
+
+def pick_closes(rows: Iterable[StoredClose], today: date) -> dict[uuid.UUID, list[Close]]:
+    """Pure: one close per asset and UTC day. When providers disagree, the most recently
+    retrieved close is kept; on an exact tie the lower price, so the result never depends on row
+    order. Closes dated after `today` are ignored."""
+    by_day: dict[uuid.UUID, dict[date, StoredClose]] = {}
+    for r in rows:
+        day = r.as_of.astimezone(UTC).date()
+        if day > today:
+            continue
+        days = by_day.setdefault(r.asset_id, {})
+        kept = days.get(day)
+        if kept is None or (r.retrieved_at, -r.price) > (kept.retrieved_at, -kept.price):
+            days[day] = r
     return {
-        asset: [Close(on, price) for on, price in sorted(days.items())]
+        asset: [Close(on, r.price) for on, r in sorted(days.items())]
         for asset, days in by_day.items()
     }
 
