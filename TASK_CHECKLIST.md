@@ -1190,13 +1190,13 @@
   - [x] P12-T06.3 LLM explanation and validation
   - [x] P12-T06.4 Persistence
   - [x] P12-T06.5 Tests
-- [ ] **P12-T07** · Compare and Simulate APIs · `NOT_STARTED` ⬜
+- [ ] **P12-T07** · Compare and Simulate APIs · `IN_PROGRESS` 🔄
   - Deps: P12-T03, P12-T04, P06-T02 · Wave: W3 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-13T18:33:21+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P12-T07.1 Compare
-  - [ ] P12-T07.2 Simulate
-  - [ ] P12-T07.3 Tests
+  - [x] P12-T07.1 Compare
+  - [x] P12-T07.2 Simulate
+  - [x] P12-T07.3 Tests
 - [ ] **P12-T08** · Safety and quality suite · `NOT_STARTED` ⬜
   - Deps: P12-T06, P12-T07 · Wave: W4 · Track: QA · Size: L · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —
