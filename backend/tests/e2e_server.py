@@ -192,6 +192,10 @@ async def main(port: int, out: Path, log_level: str) -> None:
             "postgres_db": name,
             "oidc_issuer": "",
             "rate_limit_storage": "memory",
+            # All nine journeys run as one seeded user, so a whole UI run exceeds the production
+            # per-account budget (120 a minute) and journey 9 met 429s. Limiting stays on; the
+            # budgets themselves are tested in tests/test_api_protection.py.
+            "rate_limit_user_requests": 600,
             "analytics_cache": "memory",
             # FX refreshes use the offline fake provider: the run never calls a real vendor.
             "market_data_mode": "fake",
