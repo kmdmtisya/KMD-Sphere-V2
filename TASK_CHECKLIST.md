@@ -1235,15 +1235,15 @@
 - Exit gates: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19, QG-20 — required by `P13-GATE` (Gates-done)
 - Release gates: P13-T13 and P13-T14 start only after QG-13..QG-19 are satisfied
 
-- [ ] **P13-T01** · FX-01 Requirements, architecture and regulatory scoping · `NOT_STARTED` ⬜
+- [x] **P13-T01** · FX-01 Requirements, architecture and regulatory scoping · `COMPLETED` ✅
   - Deps: P08-GATE, P10-GATE, P11-GATE · Wave: W1 · Track: DOC · Size: M · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P13-T01.1 Impact assessment on architecture and security
-  - [ ] P13-T01.2 Amend intent documents
-  - [ ] P13-T01.3 Technical design review
-  - [ ] P13-T01.4 ADR-0009
-  - [ ] P13-T01.5 Decision register update
+  - Started: 2026-10-13T22:02:12+04:00 · Completed: 2026-10-13T22:02:52+04:00 · Duration: 0m 40s · Blocker: —
+  - Evidence: Approved by the user with the proposals as written (2026-10-13): fixture-only provider (licence open), PostgreSQL partitioning, baselines and boosting with research-only deep models, after-v1 flagged release, reviewed contract-spec table; regulation (DEC-20) scheduled for P13-T14. · Approved by: user (mtisya@gmail.com)
+  - [x] P13-T01.1 Impact assessment on architecture and security
+  - [x] P13-T01.2 Amend intent documents
+  - [x] P13-T01.3 Technical design review
+  - [x] P13-T01.4 ADR-0009
+  - [x] P13-T01.5 Decision register update
 - [ ] **P13-T02** · FX-02 Market data provider abstraction, ingestion and streaming · `NOT_STARTED` ⬜
   - Deps: P13-T01, P08-GATE · Wave: W2 · Track: BE · Size: L · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —
