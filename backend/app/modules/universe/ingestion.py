@@ -20,14 +20,14 @@ from typing import Protocol
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.modules.assets.catalogue import INITIAL_CLASSES
+from app.modules.assets.catalogue import INITIAL_CLASSES, validate_metadata
 from app.modules.assets.liquidity import LIQUIDITY_BY_CLASS, Liquidity
 from app.modules.assets.models import Asset, AssetClass, AssetMetadata
 from app.modules.universe.models import UniverseInstrument
 
 DEMO_FILE = Path(__file__).with_name("demo_universe.json")
 DEMO_SOURCE = "demo"
-_SECTOR_CLASSES = frozenset(c.code for c in INITIAL_CLASSES if "sector" in c.fields)
+_CLASSES = {c.code: c for c in INITIAL_CLASSES}
 
 
 @dataclass(frozen=True)
@@ -41,6 +41,9 @@ class UniverseEntry:
     country: str | None = None
     sector: str | None = None
     minimum_investment: Decimal | None = None
+    # Class metadata (for example a fund's expense_ratio as a decimal string); keys the class
+    # does not define are dropped.
+    metadata: tuple[tuple[str, str], ...] = ()
 
 
 class UniverseSource(Protocol):
@@ -78,6 +81,7 @@ class DemoUniverseSource:
                 minimum_investment=(
                     Decimal(i["minimum_investment"]) if i.get("minimum_investment") else None
                 ),
+                metadata=tuple(sorted((i.get("metadata") or {}).items())),
             )
             for i in raw["instruments"]
         ]
@@ -110,6 +114,34 @@ def _universe_values(
     }
 
 
+async def _store_metadata(
+    session: AsyncSession, asset: Asset, entry: UniverseEntry, source: str
+) -> bool:
+    """Writes the entry's metadata the asset class defines; True when anything changed."""
+    schema = _CLASSES[entry.asset_class].metadata_schema
+    # A listing has no holding-specific fields (a deposit's maturity date): none is required here,
+    # but every value given is checked like any other metadata.
+    relaxed = {"fields": {k: f | {"required": False} for k, f in schema["fields"].items()}}
+    wanted = dict(entry.metadata) | ({"sector": entry.sector} if entry.sector else {})
+    values = validate_metadata(relaxed, {k: v for k, v in wanted.items() if k in relaxed["fields"]})
+    stored = {
+        m.key: m
+        for m in (
+            await session.execute(select(AssetMetadata).where(AssetMetadata.asset_id == asset.id))
+        ).scalars()
+    }
+    changed = False
+    for key, value in values.items():
+        row = stored.get(key)
+        if row is None:
+            session.add(AssetMetadata(asset_id=asset.id, key=key, value=value, source=source))
+            changed = True
+        elif row.value != value:
+            row.value = value
+            changed = True
+    return changed
+
+
 async def ingest(session: AsyncSession, source: UniverseSource) -> IngestReport:
     as_of, entries = source.load()
     report = IngestReport(source.name)
@@ -126,7 +158,11 @@ async def ingest(session: AsyncSession, source: UniverseSource) -> IngestReport:
     }
     listed: set[str] = set()
     for entry in entries:
-        if entry.asset_class not in classes or not 1 <= entry.risk_level <= 5:
+        if (
+            entry.asset_class not in _CLASSES
+            or entry.asset_class not in classes
+            or not (1 <= entry.risk_level <= 5)
+        ):
             report.skipped.append(f"{entry.symbol}: unknown class or risk level")
             continue
         listed.add(entry.symbol)
@@ -145,16 +181,10 @@ async def ingest(session: AsyncSession, source: UniverseSource) -> IngestReport:
             )
             session.add(asset)
             await session.flush()
-            if entry.sector and entry.asset_class in _SECTOR_CLASSES:
-                session.add(
-                    AssetMetadata(
-                        asset_id=asset.id, key="sector", value=entry.sector, source=source.name
-                    )
-                )
         elif asset.currency != entry.currency:
             report.skipped.append(f"{entry.symbol}: currency changed, not updated")
             continue
-        changed = False
+        changed = await _store_metadata(session, asset, entry, source.name)
         for attr, value in (("name", entry.name), ("country", entry.country), ("is_active", True)):
             if getattr(asset, attr) != value:
                 setattr(asset, attr, value)

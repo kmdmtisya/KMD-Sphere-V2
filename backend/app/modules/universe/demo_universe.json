@@ -12,10 +12,10 @@
     {"symbol": "DEMO-ASK", "name": "Demo Dirham Sukuk 2029 (DEMO)", "asset_class": "bond", "currency": "AED", "country": "AE", "sector": "Government", "risk_level": 2, "jurisdictions": ["AE"], "minimum_investment": "10000"},
     {"symbol": "DEMO-AMM", "name": "Demo Dirham Money Market Fund (DEMO)", "asset_class": "money_market_fund", "currency": "AED", "country": "AE", "sector": null, "risk_level": 1, "jurisdictions": ["AE"], "minimum_investment": "500"},
     {"symbol": "DEMO-APF", "name": "Demo Dubai Rental Property Share (DEMO)", "asset_class": "real_estate", "currency": "AED", "country": "AE", "sector": "Real Estate", "risk_level": 3, "jurisdictions": ["AE"], "minimum_investment": "50000"},
-    {"symbol": "DEMO-GEQ", "name": "Demo Global Equity ETF (DEMO)", "asset_class": "etf", "currency": "USD", "country": null, "sector": "Diversified", "risk_level": 4, "jurisdictions": ["KE", "AE"], "minimum_investment": null},
-    {"symbol": "DEMO-TEC", "name": "Demo Technology ETF (DEMO)", "asset_class": "etf", "currency": "USD", "country": "US", "sector": "Technology", "risk_level": 5, "jurisdictions": ["KE", "AE"], "minimum_investment": null},
-    {"symbol": "DEMO-GBD", "name": "Demo Global Bond ETF (DEMO)", "asset_class": "etf", "currency": "USD", "country": null, "sector": "Fixed Income", "risk_level": 2, "jurisdictions": ["KE", "AE"], "minimum_investment": null},
-    {"symbol": "DEMO-GLD", "name": "Demo Gold Tracker ETF (DEMO)", "asset_class": "etf", "currency": "USD", "country": null, "sector": "Commodities", "risk_level": 3, "jurisdictions": ["KE", "AE"], "minimum_investment": null},
+    {"symbol": "DEMO-GEQ", "name": "Demo Global Equity ETF (DEMO)", "asset_class": "etf", "currency": "USD", "country": null, "sector": "Diversified", "risk_level": 4, "jurisdictions": ["KE", "AE"], "minimum_investment": null, "metadata": {"expense_ratio": "0.0020"}},
+    {"symbol": "DEMO-TEC", "name": "Demo Technology ETF (DEMO)", "asset_class": "etf", "currency": "USD", "country": "US", "sector": "Technology", "risk_level": 5, "jurisdictions": ["KE", "AE"], "minimum_investment": null, "metadata": {"expense_ratio": "0.0035"}},
+    {"symbol": "DEMO-GBD", "name": "Demo Global Bond ETF (DEMO)", "asset_class": "etf", "currency": "USD", "country": null, "sector": "Fixed Income", "risk_level": 2, "jurisdictions": ["KE", "AE"], "minimum_investment": null, "metadata": {"expense_ratio": "0.0015"}},
+    {"symbol": "DEMO-GLD", "name": "Demo Gold Tracker ETF (DEMO)", "asset_class": "etf", "currency": "USD", "country": null, "sector": "Commodities", "risk_level": 3, "jurisdictions": ["KE", "AE"], "minimum_investment": null, "metadata": {"expense_ratio": "0.0040"}},
     {"symbol": "DEMO-BTC", "name": "Demo Bitcoin (DEMO)", "asset_class": "cryptocurrency", "currency": "USD", "country": null, "sector": null, "risk_level": 5, "jurisdictions": ["KE", "AE"], "minimum_investment": null}
   ]
 }

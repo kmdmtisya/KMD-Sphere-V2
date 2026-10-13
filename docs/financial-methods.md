@@ -245,3 +245,36 @@ Interpretation of the figures above against stated thresholds (P12-T01). No new 
 | Scenario cap | the subject's share s becomes the cap c, every other share x becomes x × (1 − c) / (1 − s); shares still add up to 1 |
 
 Severity: a measure at or above a threshold takes that threshold's level (low, medium, high); liquidity is graded the other way round (below 25% medium, below 10% high). Ties between equal holdings resolve by id. Shares and thresholds are published as percent, 2 decimals, half-up (section 13).
+
+## 17. Instrument features and scores (docs/design/scoring.md)
+
+Features of a universe instrument come from stored daily closes over the trailing 365 days, sampled to the last close of each ISO week (P12-T03). They reuse section 12's maths and describe the past, never a forecast.
+
+| Feature | Definition | Missing when |
+|---|---|---|
+| Trailing return | last close / first close in the window − 1 | the closes span less than 300 days |
+| Volatility | sample standard deviation of weekly returns × √52 | fewer than 26 weekly returns |
+| Largest fall | the deepest fall of the weekly closes from a running peak, as a positive share | fewer than 26 weekly returns |
+| Expense ratio | the fund's recorded expense ratio (funds only) | not recorded |
+| Liquidity, risk level | the class's assumed liquidity; the source's risk level 1–5 | liquidity unknown |
+
+Each factor scores 0–100, clamped:
+
+| Factor | Points |
+|---|---|
+| Stability | 100 × (1 − volatility / 60%) |
+| Resilience | 100 × (1 − largest fall / 60%) |
+| Momentum | 50 + 50 × trailing return / 50% |
+| Cost | 100 × (1 − expense ratio / 2%) |
+| Liquidity | immediate 100, market 80, term 40, illiquid 10 |
+| Risk class | (5 − level) / 4 × 100 |
+
+**Score = Σ wᵢ pᵢ / Σ wᵢ** over the measured factors, so the contributions wᵢ pᵢ / Σ wᵢ add up to the score exactly. Cost applies to funds only; for other instruments it is left out without penalty.
+
+**Coverage** = measured weight / applicable weight. Confidence:
+- high: coverage at least 85% and fresh prices;
+- medium: at least 60%;
+- low: below 60%;
+- none: below 50%, and then no score is given.
+
+The default weights are stability 25%, resilience 20%, momentum 15%, cost 10%, liquidity 15% and risk class 15%. They are configurable, and must add up to 100%.

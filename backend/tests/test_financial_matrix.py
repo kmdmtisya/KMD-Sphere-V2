@@ -33,6 +33,8 @@ FINANCIAL_MODULES = [
     "modules.transactions.holdings",
     "modules.market_data.fx",
     "modules.doctor.rules",
+    "modules.scoring.features",
+    "modules.scoring.scoring",
 ]
 # Sections of financial-methods.md that state formulas (1 to 12): each needs a requirement.
 FORMULA_SECTIONS = range(1, 13)
