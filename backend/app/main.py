@@ -133,8 +133,13 @@ def create_app(
             {"name": "watchlist", "description": "Assets the user follows, with latest prices"},
             {
                 "name": "ai",
-                "description": "The assistant: streamed chat over your own data and your stored "
-                "conversations",
+                "description": "The assistant: streamed chat over your own data, your stored "
+                "conversations, and the Portfolio Doctor's deterministic findings",
+            },
+            {
+                "name": "universe",
+                "description": "The investment universe and each instrument's eligibility for you "
+                "(a filter for analysis, not a recommendation)",
             },
             {
                 "name": "notifications",
