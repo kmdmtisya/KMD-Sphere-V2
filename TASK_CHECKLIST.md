@@ -1150,10 +1150,10 @@
   - [x] P12-T01.2 Severity model
   - [x] P12-T01.3 Endpoint
   - [x] P12-T01.4 Tests
-- [ ] **P12-T02** · Investment universe and eligibility filters · `IN_PROGRESS` 🔄
+- [x] **P12-T02** · Investment universe and eligibility filters · `COMPLETED` ✅
   - Deps: P08-T06, P08-GATE, P10-GATE, P11-GATE · Wave: W1 · Track: BE · Size: L · Approval: no
-  - Started: 2026-10-13T13:42:43+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-13T13:42:43+04:00 · Completed: 2026-10-13T14:12:42+04:00 · Duration: 29m 59s · Blocker: —
+  - Evidence: Universe schema (migration 0017: universe_instruments, user_profiles.residence_country), idempotent ingestion of the synthetic DEMO universe (15 fictional instruments, KE/AE/global; daily job, only with fake market data), pure eligibility rules (jurisdiction KE/AE marked not legally reviewed, risk ceiling per tolerance, liquidity vs horizon, active) with a reason per rule, GET /api/v1/universe. 22 eligibility + 10 DB/API tests; backend 2,365 passed, coverage 97.25%. PR #141. CI all gates pass.
   - [x] P12-T02.1 Schema
   - [x] P12-T02.2 Ingestion
   - [x] P12-T02.3 Filters
