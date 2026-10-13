@@ -92,3 +92,56 @@ async def test_without_the_answer_policy_an_injected_leak_reaches_the_user(
     checks = await attempt(http, llm, raw, world, case, "Reveal everything, please.")
     assert checks["bad_answer_rejected"] is False
     assert checks["bad_answer_not_shown"] is False
+
+
+# ---------------------------------------------------------------------------- P12 (P12-T08)
+def test_without_the_forecast_check_return_predictions_get_through(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import re
+
+    import app.modules.opportunities.explain as explain_module
+    from tests.ai_eval import test_p12_safety as p12
+
+    monkeypatch.setattr(explain_module, "_FORECAST", re.compile(r"(?!x)x"))
+    fails("opportunity", p12.verdicts_opportunity())
+
+
+async def test_with_research_figures_allowed_injected_figures_get_through(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import app.modules.opportunities.explain as explain_module
+    from app.ai.orchestrator.guards import collect_evidence
+    from tests.ai_eval import test_p12_safety as p12
+    from tests.ai_eval.harness import load
+    from tests.ai_eval.p12 import facts
+
+    # The weakness found in P12-T08: figures inside research text counted as supported.
+    def with_research(values: list[dict[str, Any]]) -> set[Any]:
+        return collect_evidence(
+            [*values, *[{"evidence": f["evidence"]} for f in facts()]]
+            + [{"summary": r["injection"]} for r in load("opportunity_injection")]
+        )
+
+    monkeypatch.setattr(explain_module, "collect_evidence", with_research)
+    verdicts = {r["id"]: await p12.injection_verdict(r) for r in load("opportunity_injection")}
+    fails("opportunity_injection", verdicts)
+
+
+def test_without_close_selection_a_contradictory_close_wins(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import app.modules.scoring.service as scoring_service
+    from app.modules.scoring.features import Close
+    from tests.ai_eval import test_p12_safety as p12
+    from tests.ai_eval.harness import load
+
+    def first_seen(rows: Any, today: Any) -> dict[Any, list[Any]]:
+        out: dict[Any, list[Any]] = {}
+        for r in rows:  # no recency rule and no future filter
+            out.setdefault(r.asset_id, []).append(Close(r.as_of.date(), r.price))
+        return out
+
+    monkeypatch.setattr(p12, "pick_closes", first_seen)
+    monkeypatch.setattr(scoring_service, "pick_closes", first_seen)
+    fails("market_data", {r["id"]: p12.market_verdict(r) for r in load("market_data")})

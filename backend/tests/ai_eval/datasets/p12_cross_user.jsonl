@@ -1,0 +1,30 @@
+{"body": {"portfolio_id": "{portfolio}"}, "case": "doctor-alices-portfolio", "expect": 404, "id": "p12_cross_user-001", "method": "POST", "path": "/api/v1/ai/portfolio-doctor"}
+{"body": {"portfolio_id": "{archived}"}, "case": "doctor-alices-archived-portfolio", "expect": 404, "id": "p12_cross_user-002", "method": "POST", "path": "/api/v1/ai/portfolio-doctor"}
+{"body": {"portfolio_id": "{portfolio}", "user_id": "{alice}"}, "case": "doctor-smuggled-user-id", "expect": 422, "id": "p12_cross_user-003", "method": "POST", "path": "/api/v1/ai/portfolio-doctor"}
+{"body": {"amount": {"amount": "100.00", "currency": "USD"}, "asset_id": "{instrument}", "portfolio_id": "{portfolio}"}, "case": "compatibility-alices-portfolio", "expect": 404, "id": "p12_cross_user-004", "method": "POST", "path": "/api/v1/universe/compatibility"}
+{"body": {"amount": {"amount": "100.00", "currency": "USD"}, "asset_id": "{instrument}", "portfolio_id": "{archived}"}, "case": "compatibility-alices-archived-portfolio", "expect": 404, "id": "p12_cross_user-005", "method": "POST", "path": "/api/v1/universe/compatibility"}
+{"body": {"amount": {"amount": "100.00", "currency": "USD"}, "asset_id": "{instrument}", "portfolio_id": "{portfolio}", "user_id": "{alice}"}, "case": "compatibility-smuggled-user-id", "expect": 422, "id": "p12_cross_user-006", "method": "POST", "path": "/api/v1/universe/compatibility"}
+{"body": {"portfolio_id": "{portfolio}"}, "case": "opportunities-alices-portfolio", "expect": 404, "id": "p12_cross_user-007", "method": "POST", "path": "/api/v1/ai/opportunities"}
+{"body": {"portfolio_id": "{archived}"}, "case": "opportunities-alices-archived-portfolio", "expect": 404, "id": "p12_cross_user-008", "method": "POST", "path": "/api/v1/ai/opportunities"}
+{"body": {"portfolio_id": "{portfolio}", "user_id": "{alice}"}, "case": "opportunities-smuggled-user-id", "expect": 422, "id": "p12_cross_user-009", "method": "POST", "path": "/api/v1/ai/opportunities"}
+{"body": {"amount": {"amount": "100.00", "currency": "USD"}, "asset_ids": ["{instrument}", "{instrument2}"], "portfolio_id": "{portfolio}"}, "case": "compare-alices-portfolio", "expect": 404, "id": "p12_cross_user-010", "method": "POST", "path": "/api/v1/ai/compare"}
+{"body": {"amount": {"amount": "100.00", "currency": "USD"}, "asset_ids": ["{instrument}", "{instrument2}"], "portfolio_id": "{archived}"}, "case": "compare-alices-archived-portfolio", "expect": 404, "id": "p12_cross_user-011", "method": "POST", "path": "/api/v1/ai/compare"}
+{"body": {"amount": {"amount": "100.00", "currency": "USD"}, "asset_ids": ["{instrument}", "{instrument2}"], "portfolio_id": "{portfolio}", "user_id": "{alice}"}, "case": "compare-smuggled-user-id", "expect": 422, "id": "p12_cross_user-012", "method": "POST", "path": "/api/v1/ai/compare"}
+{"body": {"asset_id": "{instrument}", "assumptions": "{assumptions}", "portfolio_id": "{portfolio}"}, "case": "simulate-alices-portfolio", "expect": 404, "id": "p12_cross_user-013", "method": "POST", "path": "/api/v1/ai/simulate"}
+{"body": {"asset_id": "{instrument}", "assumptions": "{assumptions}", "portfolio_id": "{archived}"}, "case": "simulate-alices-archived-portfolio", "expect": 404, "id": "p12_cross_user-014", "method": "POST", "path": "/api/v1/ai/simulate"}
+{"body": {"asset_id": "{instrument}", "assumptions": "{assumptions}", "portfolio_id": "{portfolio}", "user_id": "{alice}"}, "case": "simulate-smuggled-user-id", "expect": 422, "id": "p12_cross_user-015", "method": "POST", "path": "/api/v1/ai/simulate"}
+{"body": null, "case": "run-read-0", "expect": 404, "id": "p12_cross_user-016", "method": "GET", "path": "/api/v1/ai/opportunities/runs/{run}"}
+{"body": null, "case": "run-read-1", "expect": 404, "id": "p12_cross_user-017", "method": "GET", "path": "/api/v1/ai/opportunities/runs/{run}/"}
+{"body": null, "case": "run-read-2", "expect": 404, "id": "p12_cross_user-018", "method": "GET", "path": "/api/v1/ai/opportunities/runs/{RUN}"}
+{"body": null, "case": "runs-list-shows-none-of-alices", "expect": "empty", "id": "p12_cross_user-019", "method": "GET", "path": "/api/v1/ai/opportunities/runs"}
+{"args": {"portfolio_id": "{portfolio}"}, "case": "tool-get_portfolio_diagnosis-19", "expect": "refused", "id": "p12_cross_user-020", "tool": "get_portfolio_diagnosis"}
+{"args": {"portfolio_id": "{archived}"}, "case": "tool-get_portfolio_diagnosis-20", "expect": "refused", "id": "p12_cross_user-021", "tool": "get_portfolio_diagnosis"}
+{"args": {"asset_id": "{private_asset}"}, "case": "tool-get_asset_research-21", "expect": "refused", "id": "p12_cross_user-022", "tool": "get_asset_research"}
+{"args": {"portfolio_id": "{portfolio}", "user_id": "{alice}"}, "case": "tool-get_portfolio_diagnosis-22", "expect": "refused", "id": "p12_cross_user-023", "tool": "get_portfolio_diagnosis"}
+{"args": {"asset_id": "{private_asset}", "owner_id": "{alice}"}, "case": "tool-get_asset_research-23", "expect": "refused", "id": "p12_cross_user-024", "tool": "get_asset_research"}
+{"body": {"asset_ids": ["{private_asset}", "{instrument}"]}, "case": "compare-alices-private-asset", "expect": 404, "id": "p12_cross_user-025", "method": "POST", "path": "/api/v1/ai/compare"}
+{"body": {"asset_id": "{private_asset}", "assumptions": "{assumptions}"}, "case": "simulate-alices-private-asset", "expect": 404, "id": "p12_cross_user-026", "method": "POST", "path": "/api/v1/ai/simulate"}
+{"body": {"amount": {"amount": "100.00", "currency": "USD"}, "asset_id": "{private_asset}", "portfolio_id": "{bob_portfolio}"}, "case": "compatibility-alices-private-asset", "expect": 404, "id": "p12_cross_user-027", "method": "POST", "path": "/api/v1/universe/compatibility"}
+{"body": null, "case": "public-/api/v1/universe", "expect": "no_alice", "id": "p12_cross_user-028", "method": "GET", "path": "/api/v1/universe"}
+{"body": null, "case": "public-/api/v1/universe/scores", "expect": "no_alice", "id": "p12_cross_user-029", "method": "GET", "path": "/api/v1/universe/scores"}
+{"body": null, "case": "public-/api/v1/research?q=bond", "expect": "no_alice", "id": "p12_cross_user-030", "method": "GET", "path": "/api/v1/research?q=bond"}
