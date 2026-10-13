@@ -1601,3 +1601,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-13T19:05:41+04:00 — START P12-T09
 - Mobile wiring: Doctor, Opportunities, Compare, Simulate
 - prerequisites verified COMPLETED
+
+### 2026-10-13T19:55:40+04:00 — COMPLETE P12-T09
+- duration: 49m 59s
+- evidence: Doctor, Opportunities, Compare and Simulate wired to the live P12 services by data-source mode (demo unchanged): server findings with figures/thresholds and scenarios, portfolio required for the per-portfolio checks; opportunity runs reused within 24h; server compare facts with past figures labelled past; Simulate with empty return fields (no suggested return); labels via l10n; no trade buttons. 7 widget/unit tests + e2e journey 9 against the real backend (9/9 pass). Flutter 1,763 passed. PR #147. CI all gates pass.
