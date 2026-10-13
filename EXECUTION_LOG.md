@@ -1512,3 +1512,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-13T09:14:10+04:00 — PLAN CHANGE — P15-T05 names the FX conversion audit; DEC-25..DEC-29 marked resolved
 - P15-T05 acceptance gains: retention and deletion cover `fx_conversion_audit` and reporting-currency preferences (DEC-28).
 - The decision register now records DEC-25..DEC-29 as resolved, as approved at P11-T01 and P11-T12. The register still showed them as Open.
+
+### 2026-10-13T12:22:36+04:00 — AWAITING_VERIFICATION P11-T12
+- evidence: Licence review docs/fxcur-licence-review.md; retention check (display switches not audited, converter audited; P15-T05 names fx_conversion_audit); source attribution and info-only note in the app; exchangerate_api first with ECB fallback (96h soak re-run passes). PR #136, CI all gates pass.
+
+### 2026-10-13T12:22:37+04:00 — COMPLETE P11-T12
+- duration: 3h 25m 02s
+- evidence: User signed off release readiness on 2026-10-13 (docs/fxcur-release-signoff.md). Production conditions: buy the Pro plan, get ExchangeRate-API's written licence confirmation, run the real-provider soak (P14-T11), re-check terms at P16. PR #136. · Approved by: user (mtisya@gmail.com)
