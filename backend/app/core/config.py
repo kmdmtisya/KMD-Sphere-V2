@@ -133,6 +133,8 @@ class Settings(BaseSettings):
     # The assistant's limits (P10-T06): questions per user per rolling 24 hours, tool calls and
     # model rounds per question, earlier messages sent as context.
     ai_questions_per_day: int = Field(default=30, ge=1)
+    # Opportunity pipeline runs per user per rolling 24 hours (P12-T06): each may call the model.
+    ai_opportunity_runs_per_day: int = Field(default=10, ge=1)
     ai_max_tool_calls_per_question: int = Field(default=20, ge=1)
     ai_max_model_rounds: int = Field(default=8, ge=2)
     ai_history_messages: int = Field(default=12, ge=0)

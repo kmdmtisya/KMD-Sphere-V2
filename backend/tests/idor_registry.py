@@ -6,6 +6,9 @@ Format: (METHOD, path template) -> "tests.module::test_function".
 """
 
 IDOR_TESTS: dict[tuple[str, str], str] = {
+    ("GET", "/api/v1/ai/opportunities/runs/{run_id}"): (
+        "tests.opportunities.test_opportunities_api::test_bob_cannot_read_alices_opportunity_run"
+    ),
     ("GET", "/api/v1/risk-profiles/{risk_profile_id}"): (
         "tests.test_authz_risk_profiles::test_bob_cannot_read_alices_risk_profile"
     ),

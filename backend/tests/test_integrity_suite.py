@@ -201,6 +201,12 @@ async def alice_world(
         "SELECT id, user_id, 1, 'user', 'private question' FROM ai_conversations WHERE id = $1",
         conversation_id,
     )
+    run_id = await db.fetchval(
+        "INSERT INTO opportunity_runs (user_id, created_at, explanation_source, problems, "
+        "weights, investor, excluded) SELECT user_id, now(), 'template', '[]', '{}', '{}', '[]' "
+        "FROM ai_conversations WHERE id = $1 RETURNING id",
+        conversation_id,
+    )
     device = await ok(
         await http.post(
             "/api/v1/devices",
@@ -210,6 +216,7 @@ async def alice_world(
     )
     return {
         "conversation_id": str(conversation_id),
+        "run_id": str(run_id),
         "device_id": device["id"],
         "alert_id": alert["id"],
         "event_id": str(event_id),
@@ -271,6 +278,8 @@ SNAPSHOT_TABLES = (
     "ai_tool_calls",
     "user_currency_preferences",
     "fx_conversion_audit",
+    "opportunity_runs",
+    "opportunities",
 )
 
 
@@ -304,6 +313,9 @@ async def snapshot(db: asyncpg.Connection, user_id: str) -> dict[str, str]:
         "fx_conversion_audit": "SELECT * FROM fx_conversion_audit WHERE user_id = $1 ORDER BY id",
         "goal_scenarios": "SELECT s.* FROM goal_scenarios s JOIN goals g ON g.id = s.goal_id "
         "WHERE g.user_id = $1 ORDER BY s.id",
+        "opportunity_runs": "SELECT * FROM opportunity_runs WHERE user_id = $1 ORDER BY id",
+        "opportunities": "SELECT o.* FROM opportunities o "
+        "JOIN opportunity_runs r ON r.id = o.run_id WHERE r.user_id = $1 ORDER BY o.id",
     }
     assert set(queries) == set(SNAPSHOT_TABLES)
     out = {}

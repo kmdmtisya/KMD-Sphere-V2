@@ -1581,3 +1581,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-13T17:01:04+04:00 — COMPLETE P12-T05
 - duration: 1h 04m 48s
 - evidence: Research evidence: research_items (migration 0018) with source, licence status, published/retrieved times, provenance URL never fetched, pgvector embedding + full-text; idempotent ingestion of synthetic DEMO notes (daily, fake market data only) and fixture-only SEC EDGAR adapter; replaceable embedder (deterministic hash model); user-agnostic GET /api/v1/research (hybrid ranking); get_asset_research tool registered. 14 tests; docs/design/research.md. Backend 2,448 passed, coverage 97.35%. PR #144. CI all gates pass.
+
+### 2026-10-13T17:11:00+04:00 — START P12-T06
+- Opportunity pipeline and schema
+- prerequisites verified COMPLETED
+
+### 2026-10-13T17:36:00+04:00 — COMPLETE P12-T06
+- duration: 25m 00s
+- evidence: Opportunity pipeline: eligible + scored universe, optional compatibility (not_suitable excluded with reasons), retrieved evidence, model explanation from facts only with deterministic validation (unsupported figures, return forecasts, guarantees, links, unknown evidence, missing risks refused; one correction then template), research horizon stated as assumption; runs persisted unchanged (update trigger), owner-scoped GET runs, audited, 10/day limit. 12 tests + integrity sweep; docs/design/opportunities.md. Backend 2,474 passed + sweep, coverage 97.30%. PR #145. CI all gates pass.
