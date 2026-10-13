@@ -1573,3 +1573,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-13T15:46:36+04:00 — COMPLETE P12-T04
 - duration: 39m 53s
 - evidence: Compatibility: hypothetical amount added as new money, portfolio re-measured with the same analytics and Doctor rules before/after (instrument share, largest holding, effective positions, class, FX, accessible; Doctor severity changes); verdict not_suitable (ineligible, below minimum via stored rate) / caution (minimum unchecked, check worsens to medium+, >20% holding) / fits; POST /api/v1/universe/compatibility owner-scoped, is_trade false. Matrix U-01..U-03; docs/design/compatibility.md. Backend 2,429 passed, coverage 97.30%. PR #143. CI all gates pass.
+
+### 2026-10-13T15:56:16+04:00 — START P12-T05
+- Research evidence ingestion and retrieval
+- prerequisites verified COMPLETED
+
+### 2026-10-13T17:01:04+04:00 — COMPLETE P12-T05
+- duration: 1h 04m 48s
+- evidence: Research evidence: research_items (migration 0018) with source, licence status, published/retrieved times, provenance URL never fetched, pgvector embedding + full-text; idempotent ingestion of synthetic DEMO notes (daily, fake market data only) and fixture-only SEC EDGAR adapter; replaceable embedder (deterministic hash model); user-agnostic GET /api/v1/research (hybrid ranking); get_asset_research tool registered. 14 tests; docs/design/research.md. Backend 2,448 passed, coverage 97.35%. PR #144. CI all gates pass.

@@ -2095,6 +2095,125 @@
         "title": "EligibilityOut",
         "type": "object"
       },
+      "EvidenceOut": {
+        "properties": {
+          "asset_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Asset Id"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "is_demo": {
+            "title": "Is Demo",
+            "type": "boolean"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "licence_status": {
+            "enum": [
+              "demo",
+              "public_domain",
+              "unconfirmed",
+              "licensed"
+            ],
+            "title": "Licence Status",
+            "type": "string"
+          },
+          "published_at": {
+            "description": "The source's time (as-of)",
+            "format": "date-time",
+            "title": "Published At",
+            "type": "string"
+          },
+          "relevance": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "0 to 1 for a search: the mean of embedding similarity and text rank",
+            "title": "Relevance"
+          },
+          "retrieved_at": {
+            "description": "When WealthSphere obtained it",
+            "format": "date-time",
+            "title": "Retrieved At",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "source_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Where the source publishes it (provenance)",
+            "title": "Source Url"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "symbol": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Symbol"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "summary",
+          "kind",
+          "source",
+          "source_url",
+          "licence_status",
+          "is_demo",
+          "published_at",
+          "retrieved_at",
+          "asset_id",
+          "symbol",
+          "relevance"
+        ],
+        "title": "EvidenceOut",
+        "type": "object"
+      },
       "Factor": {
         "enum": [
           "stability",
@@ -5822,6 +5941,27 @@
           "from_snapshot"
         ],
         "title": "ReportingRateOut",
+        "type": "object"
+      },
+      "ResearchOut": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "notice": {
+            "default": "Research is information, not advice. DEMO items are fictional. Check each item's source, licence status and date.",
+            "title": "Notice",
+            "type": "string"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "ResearchOut",
         "type": "object"
       },
       "ReversalCreate": {
@@ -13024,6 +13164,104 @@
         ]
       }
     },
+    "/api/v1/research": {
+      "get": {
+        "description": "With `q`: the most relevant items (embedding similarity and full-text rank), optionally for\none instrument. Without `q`: an instrument's research, newest first (`asset_id` required).\nEvery item carries its source, licence status and times.",
+        "operationId": "research_api_v1_research_get",
+        "parameters": [
+          {
+            "description": "Search text",
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 200,
+                  "minLength": 2,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Search text",
+              "title": "Q"
+            }
+          },
+          {
+            "description": "Only research about this instrument",
+            "in": "query",
+            "name": "asset_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Only research about this instrument",
+              "title": "Asset Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 10,
+              "maximum": 20,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "422": {
+            "description": "Invalid query"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Search research evidence",
+        "tags": [
+          "research"
+        ]
+      }
+    },
     "/api/v1/risk-profiles": {
       "get": {
         "description": "The signed-in user's risk assessments, newest first.",
@@ -13768,6 +14006,10 @@
     {
       "description": "The assistant: streamed chat over your own data, your stored conversations, and the Portfolio Doctor's deterministic findings",
       "name": "ai"
+    },
+    {
+      "description": "Public research evidence with source, licence status and dates (information, not advice)",
+      "name": "research"
     },
     {
       "description": "The investment universe and each instrument's eligibility for you (a filter for analysis, not a recommendation)",

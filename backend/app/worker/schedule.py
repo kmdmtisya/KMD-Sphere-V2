@@ -50,4 +50,9 @@ def build_schedule() -> dict[str, dict[str, Any]]:
             "task": "app.worker.tasks.ingest_universe",
             "schedule": crontab(hour=2, minute=45),
         },
+        # Research evidence (P12-T05), after the universe so notes link to its instruments.
+        "research-ingest": {
+            "task": "app.worker.tasks.ingest_research",
+            "schedule": crontab(hour=3, minute=0),
+        },
     }
