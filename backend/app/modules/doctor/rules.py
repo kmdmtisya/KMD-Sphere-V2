@@ -205,7 +205,8 @@ def _pct(share: Decimal) -> str:
     return f"{format_decimal(round_half_up(share * 100, 2))}%"
 
 
-def _parts(inputs: Inputs) -> list[Part]:
+def parts(inputs: Inputs) -> list[Part]:
+    """The allocation parts of the inputs: each holding, and each cash balance."""
     return [
         Part(str(h.asset_id), h.value, h.asset_class, h.currency, h.country, h.sector)
         for h in inputs.holdings
@@ -258,7 +259,7 @@ def _largest_slice(
     inputs: Inputs, dimension: Dimension, *, known_only: bool
 ) -> tuple[str | None, Decimal, Decimal]:
     """(key, share of the total, unknown share of holdings) for one allocation dimension."""
-    allocation = allocate(_parts(inputs), dimension)
+    allocation = allocate(parts(inputs), dimension)
     slices = [s for s in allocation.slices if not known_only or s.key is not None]
     unknown = sum((s.value for s in allocation.slices if s.key is None), ZERO)
     holdings_value = sum((h.value for h in inputs.holdings), ZERO)
@@ -316,7 +317,7 @@ def _known_concentration(
 
 
 def currency_exposure(inputs: Inputs, t: Thresholds) -> Finding:
-    allocation = allocate(_parts(inputs), Dimension.CURRENCY)
+    allocation = allocate(parts(inputs), Dimension.CURRENCY)
     foreign = sum((s.value for s in allocation.slices if s.key != inputs.currency), ZERO)
     share = foreign / inputs.total
     return _graded(
@@ -527,8 +528,7 @@ def capped(shares: dict[str, Decimal], subject: str, cap: Decimal) -> dict[str, 
 def _scenario_for_positions(inputs: Inputs, t: Thresholds, finding: Finding) -> Scenario | None:
     if finding.status is not CheckStatus.FLAGGED or finding.subject is None:
         return None
-    parts = _parts(inputs)
-    shares = {p.key: p.value / inputs.total for p in parts}
+    shares = {p.key: p.value / inputs.total for p in parts(inputs)}
     after = capped(shares, finding.subject, t.position_cap)
     if after == shares:
         return None
@@ -547,7 +547,7 @@ def _scenario_for_positions(inputs: Inputs, t: Thresholds, finding: Finding) -> 
 def _scenario_for_classes(inputs: Inputs, t: Thresholds, finding: Finding) -> Scenario | None:
     if finding.status is not CheckStatus.FLAGGED or finding.subject is None:
         return None
-    allocation = allocate(_parts(inputs), Dimension.ASSET_CLASS)
+    allocation = allocate(parts(inputs), Dimension.ASSET_CLASS)
     shares = {str(s.key): s.value / inputs.total for s in allocation.slices}
     after = capped(shares, finding.subject, t.asset_class_cap)
     if after == shares:

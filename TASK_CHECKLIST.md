@@ -1166,13 +1166,13 @@
   - [x] P12-T03.2 Scoring
   - [x] P12-T03.3 Explanations
   - [x] P12-T03.4 Tests
-- [ ] **P12-T04** · Portfolio compatibility and suitability · `NOT_STARTED` ⬜
+- [ ] **P12-T04** · Portfolio compatibility and suitability · `IN_PROGRESS` 🔄
   - Deps: P12-T02, P12-T01 · Wave: W2 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-13T15:06:43+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P12-T04.1 Impact calc
-  - [ ] P12-T04.2 Suitability rules
-  - [ ] P12-T04.3 Tests
+  - [x] P12-T04.1 Impact calc
+  - [x] P12-T04.2 Suitability rules
+  - [x] P12-T04.3 Tests
 - [ ] **P12-T05** · Research evidence ingestion and retrieval · `NOT_STARTED` ⬜
   - Deps: P12-T02, P08-T09 · Wave: W2 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

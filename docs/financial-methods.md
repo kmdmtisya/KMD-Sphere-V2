@@ -278,3 +278,21 @@ Each factor scores 0–100, clamped:
 - none: below 50%, and then no score is given.
 
 The default weights are stability 25%, resilience 20%, momentum 15%, cost 10%, liquidity 15% and risk class 15%. They are configurable, and must add up to 100%.
+
+## 18. Portfolio compatibility (docs/design/compatibility.md)
+
+A hypothetical amount A (in the portfolio's base currency) of a universe instrument is added as **new money**: the instrument's holding grows by A, or becomes a new holding of A, and the total becomes T + A. Nothing is sold. The portfolio is then re-measured with sections 6 and 16, before and after:
+- the instrument's share (holding / total);
+- the largest holding;
+- the effective positions (1 / HHI);
+- the share of the instrument's asset class;
+- the foreign-currency share;
+- the accessible share.
+
+The minimum investment is compared with A converted to the instrument's currency at the latest stored rate (section 5). With no rate, the minimum is reported as unchecked.
+
+| Verdict | When |
+|---|---|
+| Not suitable | any eligibility rule fails (investment-universe.md), or the converted amount is below the minimum |
+| Caution | the minimum is unchecked; a Doctor check worsens and ends at medium or high; or the instrument's share after exceeds the Doctor's medium holding threshold (20%) |
+| Fits | otherwise |

@@ -974,6 +974,26 @@
         "title": "Check",
         "type": "string"
       },
+      "CheckChangeOut": {
+        "properties": {
+          "after": {
+            "$ref": "#/components/schemas/Severity"
+          },
+          "before": {
+            "$ref": "#/components/schemas/Severity"
+          },
+          "check": {
+            "$ref": "#/components/schemas/Check"
+          }
+        },
+        "required": [
+          "check",
+          "before",
+          "after"
+        ],
+        "title": "CheckChangeOut",
+        "type": "object"
+      },
       "CheckStatus": {
         "enum": [
           "ok",
@@ -982,6 +1002,124 @@
         ],
         "title": "CheckStatus",
         "type": "string"
+      },
+      "CompatibilityOut": {
+        "properties": {
+          "after": {
+            "$ref": "#/components/schemas/MeasuresOut"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "asset_id": {
+            "format": "uuid",
+            "title": "Asset Id",
+            "type": "string"
+          },
+          "assumptions": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Assumptions",
+            "type": "array"
+          },
+          "before": {
+            "$ref": "#/components/schemas/MeasuresOut"
+          },
+          "doctor_changes": {
+            "description": "Portfolio Doctor checks whose severity would change",
+            "items": {
+              "$ref": "#/components/schemas/CheckChangeOut"
+            },
+            "title": "Doctor Changes",
+            "type": "array"
+          },
+          "is_demo": {
+            "title": "Is Demo",
+            "type": "boolean"
+          },
+          "is_trade": {
+            "const": false,
+            "default": false,
+            "description": "Always false: never an order",
+            "title": "Is Trade",
+            "type": "boolean"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "portfolio_id": {
+            "format": "uuid",
+            "title": "Portfolio Id",
+            "type": "string"
+          },
+          "reasons": {
+            "items": {
+              "$ref": "#/components/schemas/ReasonOut"
+            },
+            "title": "Reasons",
+            "type": "array"
+          },
+          "symbol": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Symbol"
+          },
+          "verdict": {
+            "$ref": "#/components/schemas/Verdict",
+            "description": "fits; caution (the reasons say what gets worse); not_suitable (not eligible, or below the minimum investment)"
+          }
+        },
+        "required": [
+          "portfolio_id",
+          "asset_id",
+          "symbol",
+          "name",
+          "is_demo",
+          "amount",
+          "verdict",
+          "reasons",
+          "before",
+          "after",
+          "doctor_changes"
+        ],
+        "title": "CompatibilityOut",
+        "type": "object"
+      },
+      "CompatibilityRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "amount": {
+            "$ref": "#/components/schemas/Money",
+            "description": "A hypothetical amount, in the portfolio's base currency"
+          },
+          "asset_id": {
+            "description": "An instrument of the investment universe",
+            "format": "uuid",
+            "title": "Asset Id",
+            "type": "string"
+          },
+          "portfolio_id": {
+            "description": "One of the user's portfolios",
+            "format": "uuid",
+            "title": "Portfolio Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "portfolio_id",
+          "asset_id",
+          "amount"
+        ],
+        "title": "CompatibilityRequest",
+        "type": "object"
       },
       "CompoundForecastIn": {
         "additionalProperties": false,
@@ -4549,6 +4687,88 @@
         "title": "MeResponse",
         "type": "object"
       },
+      "MeasuresOut": {
+        "properties": {
+          "accessible_percent": {
+            "description": "Cash and assets that can usually be sold within days",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Accessible Percent",
+            "type": "string"
+          },
+          "asset_class_percent": {
+            "description": "The instrument's asset class",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Asset Class Percent",
+            "type": "string"
+          },
+          "effective_positions": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effective Positions"
+          },
+          "foreign_currency_percent": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Foreign Currency Percent",
+            "type": "string"
+          },
+          "instrument_share_percent": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Instrument Share Percent",
+            "type": "string"
+          },
+          "largest_holding_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Largest Holding Percent"
+          },
+          "total_value": {
+            "$ref": "#/components/schemas/Money"
+          }
+        },
+        "required": [
+          "total_value",
+          "instrument_share_percent",
+          "largest_holding_percent",
+          "effective_positions",
+          "asset_class_percent",
+          "foreign_currency_percent",
+          "accessible_percent"
+        ],
+        "title": "MeasuresOut",
+        "type": "object"
+      },
       "MessageOut": {
         "properties": {
           "content": {
@@ -5487,6 +5707,24 @@
           "checks"
         ],
         "title": "ReadyStatus",
+        "type": "object"
+      },
+      "ReasonOut": {
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "ReasonOut",
         "type": "object"
       },
       "ReportingOut": {
@@ -7516,6 +7754,15 @@
         },
         "title": "ValuationUpdate",
         "type": "object"
+      },
+      "Verdict": {
+        "enum": [
+          "fits",
+          "caution",
+          "not_suitable"
+        ],
+        "title": "Verdict",
+        "type": "string"
       },
       "WatchlistAdd": {
         "additionalProperties": false,
@@ -13098,6 +13345,64 @@
           }
         ],
         "summary": "Investment universe and eligibility",
+        "tags": [
+          "universe"
+        ]
+      }
+    },
+    "/api/v1/universe/compatibility": {
+      "post": {
+        "description": "Adds the amount (in the portfolio's base currency) to the portfolio as new money and\nre-measures it with the Portfolio Doctor's rules: concentration, asset class, currency and\nliquidity before and after, and the checks that would change. The verdict is not_suitable\nwhen the instrument is not eligible for you or the amount is below its minimum, caution when\nsomething gets materially worse, and fits otherwise. Hypothetical, never an order; another\nuser's portfolio is not found.",
+        "operationId": "compatibility_api_v1_universe_compatibility_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompatibilityRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompatibilityOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such portfolio or instrument for this user"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Check how an instrument fits a portfolio",
         "tags": [
           "universe"
         ]
