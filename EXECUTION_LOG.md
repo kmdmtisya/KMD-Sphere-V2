@@ -1519,3 +1519,14 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-13T12:22:37+04:00 — COMPLETE P11-T12
 - duration: 3h 25m 02s
 - evidence: User signed off release readiness on 2026-10-13 (docs/fxcur-release-signoff.md). Production conditions: buy the Pro plan, get ExchangeRate-API's written licence confirmation, run the real-provider soak (P14-T11), re-check terms at P16. PR #136. · Approved by: user (mtisya@gmail.com)
+
+### 2026-10-13T12:27:54+04:00 — START P11-GATE
+- Phase P11 exit gate
+- prerequisites verified COMPLETED
+
+### 2026-10-13T12:27:54+04:00 — AWAITING_VERIFICATION P11-GATE
+- evidence: QG-21..QG-25 all PASSED (reports/quality/qg-21..qg-25, P11-T10). P11-T01..T12 completed. CK-B/CK-M/CK-I/CK-S: backend, mobile (incl. goldens, Android and iOS builds), end-to-end journeys and security gates green on PR #136 (last code change) and #137. Summary: integration report, soak report (96h, all checks pass), licence review and release sign-off.
+
+### 2026-10-13T12:27:54+04:00 — COMPLETE P11-GATE
+- duration: 0m 00s
+- evidence: Approved by the user after the P11-T12 sign-off and the phase summary. Open before production (accepted, tracked in docs/fxcur-release-signoff.md): buy the ExchangeRate-API Pro plan, get its written licence confirmation, run the real-provider soak (P14-T11), re-check the terms at P16. · Approved by: user (mtisya@gmail.com)
