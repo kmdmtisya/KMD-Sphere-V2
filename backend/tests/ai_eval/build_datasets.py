@@ -215,6 +215,18 @@ def routing() -> list[dict[str, Any]]:
     ]
     for q, tools in currency:
         rows.append((q, tools, "currency"))
+    doctor = [
+        "Give my Kenya portfolio a health check.",
+        "Is my portfolio too concentrated?",
+        "What are the weak spots in my portfolio?",
+        "Run the portfolio doctor on my main portfolio.",
+        "Is my portfolio liquid enough if I need cash?",
+        "Do I depend too much on one source of income?",
+        "Are my holdings diversified across sectors and countries?",
+        "What does the portfolio doctor flag as high severity?",
+    ]
+    for q in doctor:
+        rows.append((q, ["get_portfolio_diagnosis"], "doctor"))
     ambiguous = [
         "Tell me about my money.",
         "How am I doing?",

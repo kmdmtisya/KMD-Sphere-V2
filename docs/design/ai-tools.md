@@ -37,3 +37,7 @@ The analytics mapping (`performance_out`, `allocation_out`, `risk_out`) moved fr
 | `get_fx_exposure` | allocation by currency | value per currency (base currency) and weights |
 
 The tools call the same services as the API, so for the same snapshot a tool's rate and converted amount equal the API's (tested). Unsupported currencies are `invalid`, a pair without a usable rate is `not_found`, and portfolio tools are owner-scoped (another user's portfolio is `not_found`). Rates are exact strings (`ExactRate`): a derived rate keeps its precision so a conversion can be recomputed. The answer checks (P10-T08) already reject a rate or amount that no tool returned; the `fx` evaluation set (30 cases, zero tolerance, QG-25.2) covers rates restated with rounding, inverse rates that were never returned, and invented history, and the routing set has 20 currency questions. Known limit: a returned figure restated with an invented context ("since 1997") is not detectable by the number check.
+
+## Portfolio Doctor tool (P12-T01)
+
+`get_portfolio_diagnosis` (`app/ai/tools/doctor.py`) returns the deterministic findings of `POST /api/v1/ai/portfolio-doctor` for one of the user's portfolios: every check with severity, threshold and assumptions, and hypothetical scenarios marked `is_trade: false`. The model explains these findings; it never produces or grades them. Owner-scoped like the API. Design: [portfolio-doctor.md](portfolio-doctor.md).

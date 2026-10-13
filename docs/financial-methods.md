@@ -228,3 +228,20 @@ Each value below was computed by the independent oracle (exact arithmetic) and i
 | 6 | Variance of +10%, -10%, +10%, -10% | 1/75 exactly; × 12 = 0.16, so 40.00% annualised |
 | 7 | XIRR: Excel's example (-10,000; 2,750; 4,250; 3,250; 2,750) | 0.3733625335 (Excel: 0.373362535 within its 1e-8 tolerance) |
 | 8 | Lump sum and annuity tables | 16,288.95; 16,387.93 |
+
+## 16. Portfolio Doctor measures (docs/design/portfolio-doctor.md)
+
+Interpretation of the figures above against stated thresholds (P12-T01). No new valuation: every measure is a share of the summary's total value (section 4), of the allocation (section 6), of trailing income (section 8), or a risk figure (section 12).
+
+| Measure | Definition |
+|---|---|
+| Largest holding | largest valued position / total value (cash balances are not holdings) |
+| Largest asset class, sector, country | largest slice of the allocation / total value; sector and country count only known values, and cash is never an unknown country or sector |
+| Unknown share | holdings with no sector (country) / value of all holdings |
+| Foreign currency | value not in the base currency / total value |
+| Accessible share | (cash + holdings whose class is immediate or market liquidity) / total value; liquidity is assumed from the class |
+| Volatility, drawdown | section 12 on the monthly series; a drawdown is the fall as a positive share |
+| Income dependence | largest payer's trailing 12-month gross income / all trailing gross income (cash interest is one payer) |
+| Scenario cap | the subject's share s becomes the cap c, every other share x becomes x × (1 − c) / (1 − s); shares still add up to 1 |
+
+Severity: a measure at or above a threshold takes that threshold's level (low, medium, high); liquidity is graded the other way round (below 25% medium, below 10% high). Ties between equal holdings resolve by id. Shares and thresholds are published as percent, 2 decimals, half-up (section 13).

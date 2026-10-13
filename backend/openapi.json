@@ -957,6 +957,32 @@
         "title": "ChatScope",
         "type": "object"
       },
+      "Check": {
+        "enum": [
+          "position_concentration",
+          "asset_class_concentration",
+          "sector_concentration",
+          "geographic_concentration",
+          "currency_exposure",
+          "liquidity",
+          "volatility",
+          "drawdown",
+          "income_dependence",
+          "goal_alignment",
+          "data_completeness"
+        ],
+        "title": "Check",
+        "type": "string"
+      },
+      "CheckStatus": {
+        "enum": [
+          "ok",
+          "flagged",
+          "not_assessed"
+        ],
+        "title": "CheckStatus",
+        "type": "string"
+      },
       "CompoundForecastIn": {
         "additionalProperties": false,
         "properties": {
@@ -1774,6 +1800,88 @@
         "title": "DimensionOut",
         "type": "object"
       },
+      "DoctorOut": {
+        "properties": {
+          "as_of": {
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "complete": {
+            "description": "False when some holdings have no value or rate",
+            "title": "Complete",
+            "type": "boolean"
+          },
+          "counts": {
+            "$ref": "#/components/schemas/SeverityCounts",
+            "description": "Flagged findings by severity"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "findings": {
+            "items": {
+              "$ref": "#/components/schemas/FindingOut"
+            },
+            "title": "Findings",
+            "type": "array"
+          },
+          "notice": {
+            "default": "Observations from your own data against stated thresholds. Not investment advice. Scenarios are hypothetical: nothing is bought or sold.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "overall": {
+            "$ref": "#/components/schemas/Severity",
+            "description": "The highest severity among flagged findings"
+          },
+          "portfolio_id": {
+            "format": "uuid",
+            "title": "Portfolio Id",
+            "type": "string"
+          },
+          "scenarios": {
+            "items": {
+              "$ref": "#/components/schemas/ScenarioOut"
+            },
+            "title": "Scenarios",
+            "type": "array"
+          },
+          "total_value": {
+            "$ref": "#/components/schemas/Money"
+          }
+        },
+        "required": [
+          "portfolio_id",
+          "as_of",
+          "currency",
+          "total_value",
+          "overall",
+          "counts",
+          "complete",
+          "findings",
+          "scenarios"
+        ],
+        "title": "DoctorOut",
+        "type": "object"
+      },
+      "DoctorRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "portfolio_id": {
+            "description": "One of the user's portfolios",
+            "format": "uuid",
+            "title": "Portfolio Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "portfolio_id"
+        ],
+        "title": "DoctorRequest",
+        "type": "object"
+      },
       "DrawdownOut": {
         "properties": {
           "depth_percent": {
@@ -1815,6 +1923,113 @@
           "recovered"
         ],
         "title": "DrawdownOut",
+        "type": "object"
+      },
+      "FindingOut": {
+        "properties": {
+          "assumptions": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Assumptions",
+            "type": "array"
+          },
+          "check": {
+            "$ref": "#/components/schemas/Check"
+          },
+          "message": {
+            "description": "What was found, in plain words; never advice",
+            "title": "Message",
+            "type": "string"
+          },
+          "metric": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Metric"
+          },
+          "severity": {
+            "$ref": "#/components/schemas/Severity",
+            "description": "ok < info < low < medium < high"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CheckStatus",
+            "description": "ok: within the thresholds; flagged: a threshold is reached; not_assessed: not enough data (the message says why)"
+          },
+          "subject": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "What the measure is about: an asset id, an asset class, a sector, a country, goal ids, or cash_interest",
+            "title": "Subject"
+          },
+          "threshold": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The threshold the measure reached, when flagged",
+            "title": "Threshold"
+          },
+          "unit": {
+            "anyOf": [
+              {
+                "enum": [
+                  "percent",
+                  "count"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "percent: of the portfolio's value (of its income for income dependence)",
+            "title": "Unit"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The measure; percentages to 2 decimals, half-up",
+            "title": "Value"
+          }
+        },
+        "required": [
+          "check",
+          "status",
+          "severity",
+          "message",
+          "assumptions"
+        ],
+        "title": "FindingOut",
         "type": "object"
       },
       "ForecastInReporting": {
@@ -5477,6 +5692,84 @@
         "title": "ScenarioForecastOut",
         "type": "object"
       },
+      "ScenarioOut": {
+        "properties": {
+          "after": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "After"
+          },
+          "assumptions": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Assumptions",
+            "type": "array"
+          },
+          "before": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Before"
+          },
+          "changes": {
+            "items": {
+              "$ref": "#/components/schemas/ShareChangeOut"
+            },
+            "title": "Changes",
+            "type": "array"
+          },
+          "check": {
+            "$ref": "#/components/schemas/Check"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "is_trade": {
+            "const": false,
+            "default": false,
+            "description": "Always false: a scenario is never an order",
+            "title": "Is Trade",
+            "type": "boolean"
+          },
+          "measure": {
+            "description": "What `before` and `after` describe: effective_positions (2 decimals) or asset_class_hhi (4 decimals)",
+            "title": "Measure",
+            "type": "string"
+          }
+        },
+        "required": [
+          "check",
+          "description",
+          "changes",
+          "measure",
+          "before",
+          "after",
+          "assumptions"
+        ],
+        "title": "ScenarioOut",
+        "type": "object"
+      },
       "ScenarioOutcomeOut": {
         "properties": {
           "annual_return_percent": {
@@ -5549,6 +5842,79 @@
           "complete"
         ],
         "title": "SeriesPointOut",
+        "type": "object"
+      },
+      "Severity": {
+        "description": "Ordered: ok < info < low < medium < high.",
+        "enum": [
+          "ok",
+          "info",
+          "low",
+          "medium",
+          "high"
+        ],
+        "title": "Severity",
+        "type": "string"
+      },
+      "SeverityCounts": {
+        "properties": {
+          "high": {
+            "title": "High",
+            "type": "integer"
+          },
+          "info": {
+            "title": "Info",
+            "type": "integer"
+          },
+          "low": {
+            "title": "Low",
+            "type": "integer"
+          },
+          "medium": {
+            "title": "Medium",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "high",
+          "medium",
+          "low",
+          "info"
+        ],
+        "title": "SeverityCounts",
+        "type": "object"
+      },
+      "ShareChangeOut": {
+        "properties": {
+          "after": {
+            "description": "Share in the scenario (percent)",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "After",
+            "type": "string"
+          },
+          "before": {
+            "description": "Share of the portfolio now (percent)",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Before",
+            "type": "string"
+          },
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          }
+        },
+        "required": [
+          "subject",
+          "before",
+          "after"
+        ],
+        "title": "ShareChangeOut",
         "type": "object"
       },
       "SliceOut": {
@@ -6948,6 +7314,64 @@
           }
         ],
         "summary": "One conversation with its messages",
+        "tags": [
+          "ai"
+        ]
+      }
+    },
+    "/api/v1/ai/portfolio-doctor": {
+      "post": {
+        "description": "Concentration (holding, asset class, sector, country), currency exposure, liquidity,\nvolatility, drawdown, income dependence, goal alignment and data completeness, each with a\nseverity against stated thresholds (docs/design/portfolio-doctor.md). Scenarios show what\nthe measures would be with a capped holding or asset class; they are hypothetical, never\norders. Another user's portfolio is not found.",
+        "operationId": "portfolio_doctor_api_v1_ai_portfolio_doctor_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DoctorRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DoctorOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such portfolio for this user"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Check a portfolio's health",
         "tags": [
           "ai"
         ]

@@ -35,6 +35,7 @@ from app.core.telemetry import Telemetry
 from app.db.session import Database
 from app.modules.alerts import api as alerts_api
 from app.modules.assets import api as assets_api
+from app.modules.doctor import api as doctor_api
 from app.modules.forecasting import api as forecasting_api
 from app.modules.fx import api as fx_api
 from app.modules.goals import api as goals_api
@@ -200,6 +201,7 @@ def create_app(
     app.include_router(alerts_api.preferences_router)
     app.include_router(notifications_api.router)
     app.include_router(ai_api.router)
+    app.include_router(doctor_api.router)
     app.include_router(portfolio_api.router)
     app.include_router(transactions_api.router)
     app.include_router(transactions_api.holdings_router)

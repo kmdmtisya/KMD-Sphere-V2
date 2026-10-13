@@ -102,19 +102,27 @@
 {"expected_tools": ["get_fx_exposure"], "id": "routing-102", "kind": "currency", "question": "What is my currency exposure?"}
 {"expected_tools": ["get_fx_exposure"], "id": "routing-103", "kind": "currency", "question": "Which currency am I most exposed to?"}
 {"expected_tools": ["get_fx_exposure"], "id": "routing-104", "kind": "currency", "question": "How much of my money is outside my base currency?"}
-{"expected_tools": [], "id": "routing-105", "kind": "ambiguous", "question": "Tell me about my money."}
-{"expected_tools": [], "id": "routing-106", "kind": "ambiguous", "question": "How am I doing?"}
-{"expected_tools": [], "id": "routing-107", "kind": "ambiguous", "question": "Anything I should know?"}
-{"expected_tools": [], "id": "routing-108", "kind": "ambiguous", "question": "What about last month?"}
-{"expected_tools": [], "id": "routing-109", "kind": "ambiguous", "question": "Is it good?"}
-{"expected_tools": [], "id": "routing-110", "kind": "ambiguous", "question": "Fix it."}
-{"expected_tools": [], "id": "routing-111", "kind": "ambiguous", "question": "And the other one?"}
-{"expected_tools": [], "id": "routing-112", "kind": "ambiguous", "question": "Why?"}
-{"expected_tools": [], "id": "routing-113", "kind": "out_of_scope", "question": "What is the weather in Dubai tomorrow?"}
-{"expected_tools": [], "id": "routing-114", "kind": "out_of_scope", "question": "Write me a poem about the sea."}
-{"expected_tools": [], "id": "routing-115", "kind": "out_of_scope", "question": "Who won the football match last night?"}
-{"expected_tools": [], "id": "routing-116", "kind": "out_of_scope", "question": "How do I cook a risotto?"}
-{"expected_tools": [], "id": "routing-117", "kind": "out_of_scope", "question": "Translate good morning into French."}
-{"expected_tools": [], "id": "routing-118", "kind": "out_of_scope", "question": "What is the capital of Australia?"}
-{"expected_tools": [], "id": "routing-119", "kind": "out_of_scope", "question": "Recommend a good laptop."}
-{"expected_tools": [], "id": "routing-120", "kind": "out_of_scope", "question": "Explain how photosynthesis works."}
+{"expected_tools": ["get_portfolio_diagnosis"], "id": "routing-105", "kind": "doctor", "question": "Give my Kenya portfolio a health check."}
+{"expected_tools": ["get_portfolio_diagnosis"], "id": "routing-106", "kind": "doctor", "question": "Is my portfolio too concentrated?"}
+{"expected_tools": ["get_portfolio_diagnosis"], "id": "routing-107", "kind": "doctor", "question": "What are the weak spots in my portfolio?"}
+{"expected_tools": ["get_portfolio_diagnosis"], "id": "routing-108", "kind": "doctor", "question": "Run the portfolio doctor on my main portfolio."}
+{"expected_tools": ["get_portfolio_diagnosis"], "id": "routing-109", "kind": "doctor", "question": "Is my portfolio liquid enough if I need cash?"}
+{"expected_tools": ["get_portfolio_diagnosis"], "id": "routing-110", "kind": "doctor", "question": "Do I depend too much on one source of income?"}
+{"expected_tools": ["get_portfolio_diagnosis"], "id": "routing-111", "kind": "doctor", "question": "Are my holdings diversified across sectors and countries?"}
+{"expected_tools": ["get_portfolio_diagnosis"], "id": "routing-112", "kind": "doctor", "question": "What does the portfolio doctor flag as high severity?"}
+{"expected_tools": [], "id": "routing-113", "kind": "ambiguous", "question": "Tell me about my money."}
+{"expected_tools": [], "id": "routing-114", "kind": "ambiguous", "question": "How am I doing?"}
+{"expected_tools": [], "id": "routing-115", "kind": "ambiguous", "question": "Anything I should know?"}
+{"expected_tools": [], "id": "routing-116", "kind": "ambiguous", "question": "What about last month?"}
+{"expected_tools": [], "id": "routing-117", "kind": "ambiguous", "question": "Is it good?"}
+{"expected_tools": [], "id": "routing-118", "kind": "ambiguous", "question": "Fix it."}
+{"expected_tools": [], "id": "routing-119", "kind": "ambiguous", "question": "And the other one?"}
+{"expected_tools": [], "id": "routing-120", "kind": "ambiguous", "question": "Why?"}
+{"expected_tools": [], "id": "routing-121", "kind": "out_of_scope", "question": "What is the weather in Dubai tomorrow?"}
+{"expected_tools": [], "id": "routing-122", "kind": "out_of_scope", "question": "Write me a poem about the sea."}
+{"expected_tools": [], "id": "routing-123", "kind": "out_of_scope", "question": "Who won the football match last night?"}
+{"expected_tools": [], "id": "routing-124", "kind": "out_of_scope", "question": "How do I cook a risotto?"}
+{"expected_tools": [], "id": "routing-125", "kind": "out_of_scope", "question": "Translate good morning into French."}
+{"expected_tools": [], "id": "routing-126", "kind": "out_of_scope", "question": "What is the capital of Australia?"}
+{"expected_tools": [], "id": "routing-127", "kind": "out_of_scope", "question": "Recommend a good laptop."}
+{"expected_tools": [], "id": "routing-128", "kind": "out_of_scope", "question": "Explain how photosynthesis works."}

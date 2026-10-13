@@ -1142,14 +1142,14 @@
 - Exit gates: QG-07.4,7 — required by `P12-GATE` (Gates-done)
 - Release gates: —
 
-- [ ] **P12-T01** · Portfolio Doctor service and API · `NOT_STARTED` ⬜
+- [x] **P12-T01** · Portfolio Doctor service and API · `COMPLETED` ✅
   - Deps: P06-T09, P10-T08, P08-GATE, P10-GATE, P11-GATE · Wave: W1 · Track: AI · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P12-T01.1 Rules
-  - [ ] P12-T01.2 Severity model
-  - [ ] P12-T01.3 Endpoint
-  - [ ] P12-T01.4 Tests
+  - Started: 2026-10-13T13:04:53+04:00 · Completed: 2026-10-13T13:33:54+04:00 · Duration: 29m 01s · Blocker: —
+  - Evidence: Portfolio Doctor: 11 deterministic checks with stated thresholds and severities (rules.py, pure Decimal), hypothetical cap scenarios (is_trade false), POST /api/v1/ai/portfolio-doctor (owner-scoped, cached), allow-listed get_portfolio_diagnosis tool equal to the API (LLM only explains). Tests: 29 rule + 7 API/tool; financial matrix D-01..D-09; docs/design/portfolio-doctor.md. Backend 2,328 passed, coverage 97.16%. PR #140. CI all gates pass.
+  - [x] P12-T01.1 Rules
+  - [x] P12-T01.2 Severity model
+  - [x] P12-T01.3 Endpoint
+  - [x] P12-T01.4 Tests
 - [ ] **P12-T02** · Investment universe and eligibility filters · `NOT_STARTED` ⬜
   - Deps: P08-T06, P08-GATE, P10-GATE, P11-GATE · Wave: W1 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

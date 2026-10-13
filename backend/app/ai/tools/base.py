@@ -36,6 +36,8 @@ ALLOWED_TOOLS: frozenset[str] = frozenset(
         "convert_currency",
         "get_portfolio_value",
         "get_fx_exposure",
+        # Portfolio Doctor (P12-T01).
+        "get_portfolio_diagnosis",
     }
 )
 
