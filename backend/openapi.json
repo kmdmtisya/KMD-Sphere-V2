@@ -1211,6 +1211,16 @@
         "title": "ConcentrationOut",
         "type": "object"
       },
+      "Confidence": {
+        "enum": [
+          "high",
+          "medium",
+          "low",
+          "none"
+        ],
+        "title": "Confidence",
+        "type": "string"
+      },
       "ConversationDetailOut": {
         "properties": {
           "created_at": {
@@ -1946,6 +1956,126 @@
         ],
         "title": "EligibilityOut",
         "type": "object"
+      },
+      "Factor": {
+        "enum": [
+          "stability",
+          "resilience",
+          "momentum",
+          "cost",
+          "liquidity",
+          "risk_class"
+        ],
+        "title": "Factor",
+        "type": "string"
+      },
+      "FactorOut": {
+        "properties": {
+          "contribution": {
+            "description": "Points x effective weight",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Contribution",
+            "type": "string"
+          },
+          "effective_weight_percent": {
+            "description": "Share of the measured weight",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Effective Weight Percent",
+            "type": "string"
+          },
+          "explanation": {
+            "title": "Explanation",
+            "type": "string"
+          },
+          "factor": {
+            "$ref": "#/components/schemas/Factor"
+          },
+          "measure": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The feature's value (percent, or the risk level)",
+            "title": "Measure"
+          },
+          "points": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "0 to 100",
+            "title": "Points"
+          },
+          "status": {
+            "$ref": "#/components/schemas/FactorStatus",
+            "description": "used; missing (applies but could not be measured: lowers coverage and confidence); not_applicable (no penalty)"
+          },
+          "unit": {
+            "anyOf": [
+              {
+                "enum": [
+                  "percent",
+                  "level"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unit"
+          },
+          "weight_percent": {
+            "description": "The configured weight",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Weight Percent",
+            "type": "string"
+          }
+        },
+        "required": [
+          "factor",
+          "status",
+          "weight_percent",
+          "effective_weight_percent",
+          "contribution",
+          "explanation"
+        ],
+        "title": "FactorOut",
+        "type": "object"
+      },
+      "FactorStatus": {
+        "enum": [
+          "used",
+          "missing",
+          "not_applicable"
+        ],
+        "title": "FactorStatus",
+        "type": "string"
       },
       "FindingOut": {
         "properties": {
@@ -6064,6 +6194,169 @@
           "reaches_target"
         ],
         "title": "ScenarioOutcomeOut",
+        "type": "object"
+      },
+      "ScoreOut": {
+        "properties": {
+          "confidence": {
+            "$ref": "#/components/schemas/Confidence"
+          },
+          "coverage_percent": {
+            "description": "Measured share of the applicable weight",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Coverage Percent",
+            "type": "string"
+          },
+          "factors": {
+            "items": {
+              "$ref": "#/components/schemas/FactorOut"
+            },
+            "title": "Factors",
+            "type": "array"
+          },
+          "reasons": {
+            "description": "Why confidence is not high",
+            "items": {
+              "type": "string"
+            },
+            "title": "Reasons",
+            "type": "array"
+          },
+          "score": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "0 to 100: the sum of the contributions; null when coverage is too low",
+            "title": "Score"
+          }
+        },
+        "required": [
+          "score",
+          "coverage_percent",
+          "confidence",
+          "factors",
+          "reasons"
+        ],
+        "title": "ScoreOut",
+        "type": "object"
+      },
+      "ScoredInstrumentOut": {
+        "properties": {
+          "asset_class": {
+            "title": "Asset Class",
+            "type": "string"
+          },
+          "asset_id": {
+            "format": "uuid",
+            "title": "Asset Id",
+            "type": "string"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "eligible": {
+            "description": "Passes every eligibility rule for you (P12-T02)",
+            "title": "Eligible",
+            "type": "boolean"
+          },
+          "is_demo": {
+            "title": "Is Demo",
+            "type": "boolean"
+          },
+          "last_close": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The newest close the price features use",
+            "title": "Last Close"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "score": {
+            "$ref": "#/components/schemas/ScoreOut"
+          },
+          "symbol": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Symbol"
+          }
+        },
+        "required": [
+          "asset_id",
+          "symbol",
+          "name",
+          "asset_class",
+          "currency",
+          "is_demo",
+          "eligible",
+          "last_close",
+          "score"
+        ],
+        "title": "ScoredInstrumentOut",
+        "type": "object"
+      },
+      "ScoresOut": {
+        "properties": {
+          "items": {
+            "description": "Highest score first; unscored last",
+            "items": {
+              "$ref": "#/components/schemas/ScoredInstrumentOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "notice": {
+            "default": "Scores describe measured characteristics: past prices, costs, liquidity and risk class. They are not forecasts or expected returns, and not recommendations.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "weights_percent": {
+            "additionalProperties": {
+              "examples": [
+                "1234.50"
+              ],
+              "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+              "type": "string"
+            },
+            "propertyNames": {
+              "$ref": "#/components/schemas/Factor"
+            },
+            "title": "Weights Percent",
+            "type": "object"
+          }
+        },
+        "required": [
+          "weights_percent",
+          "items"
+        ],
+        "title": "ScoresOut",
         "type": "object"
       },
       "SeriesFrequency": {
@@ -12805,6 +13098,84 @@
           }
         ],
         "summary": "Investment universe and eligibility",
+        "tags": [
+          "universe"
+        ]
+      }
+    },
+    "/api/v1/universe/scores": {
+      "get": {
+        "description": "Every active instrument's score from 0 to 100, decomposed into factor contributions\n(stability, resilience, past momentum, cost, liquidity, risk class) with the configured\nweights. Factors that could not be measured are listed and lower the coverage and confidence;\nwith too little data there is no score. Scores describe measured characteristics: they are\nnot forecasts, expected returns or recommendations.",
+        "operationId": "universe_scores_api_v1_universe_scores_get",
+        "parameters": [
+          {
+            "description": "An asset class code",
+            "in": "query",
+            "name": "asset_class",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[a-z][a-z0-9_]{1,39}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "An asset class code",
+              "title": "Asset Class"
+            }
+          },
+          {
+            "description": "Only instruments eligible for you",
+            "in": "query",
+            "name": "eligible_only",
+            "required": false,
+            "schema": {
+              "default": false,
+              "description": "Only instruments eligible for you",
+              "title": "Eligible Only",
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScoresOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "422": {
+            "description": "Invalid query"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Explainable instrument scores",
         "tags": [
           "universe"
         ]

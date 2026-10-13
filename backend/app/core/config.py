@@ -4,6 +4,7 @@ There are deliberately no default values for secrets: an unset password stays em
 readiness probe reports the dependency as failed rather than silently using a guessable value.
 """
 
+from decimal import Decimal
 from functools import lru_cache
 from pathlib import Path
 from typing import Literal
@@ -59,6 +60,18 @@ class Settings(BaseSettings):
     fx_status_cache_seconds: int = Field(default=60, ge=0)
     # The commercial plan's monthly request quota (ExchangeRate-API Pro: 30,000).
     fx_monthly_request_budget: int = Field(default=30_000, ge=1)
+    # Factor weights of the instrument score (P12-T03, docs/design/scoring.md): every factor,
+    # none negative, adding up to exactly 1. Reviewed with the P12-T08 results.
+    opportunity_score_weights: dict[str, Decimal] = Field(
+        default_factory=lambda: {
+            "stability": Decimal("0.25"),
+            "resilience": Decimal("0.20"),
+            "momentum": Decimal("0.15"),
+            "cost": Decimal("0.10"),
+            "liquidity": Decimal("0.15"),
+            "risk_class": Decimal("0.15"),
+        }
+    )
 
     # Message broker for the background workers (P08-T04). Credentials come from the environment.
     rabbitmq_user: str = ""
@@ -181,6 +194,14 @@ class Settings(BaseSettings):
     def hsts_enabled(self) -> bool:
         """Deployed environments are served over TLS only."""
         return self.environment in ("staging", "production")
+
+    @field_validator("opportunity_score_weights")
+    @classmethod
+    def _valid_weights(cls, weights: dict[str, Decimal]) -> dict[str, Decimal]:
+        from app.modules.scoring.scoring import validate_weights
+
+        validate_weights(weights)
+        return weights
 
     @field_validator("cors_allowed_origins")
     @classmethod

@@ -38,7 +38,7 @@ The universe is reference data: no row belongs to a user.
 - **Idempotent:** an instrument is one asset per (source, symbol), created once and updated in place. A second run reports every instrument as unchanged.
 - **Deactivation, never deletion:** an instrument the source no longer lists is deactivated, and it comes back if listed again.
 - **Skipped entries:** an entry with an unknown asset class or risk level, or whose currency changed, is skipped and reported.
-- **Sector:** stored only for classes that have a sector field (stocks and REITs).
+- **Metadata:** an entry's metadata is stored only where the asset class defines the field (sector for stocks and REITs; expense ratio for ETFs and mutual funds, P12-T03). Values are validated like any other metadata. Holding-specific fields, such as a deposit's maturity date, are not required for a listing.
 
 **Fictional symbols never reach a real provider.** The daily job loads the DEMO universe only when `MARKET_DATA_MODE=fake`. With real market data it deactivates any DEMO instruments instead, which also takes them out of price ingestion.
 

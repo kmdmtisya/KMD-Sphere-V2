@@ -1158,14 +1158,14 @@
   - [x] P12-T02.2 Ingestion
   - [x] P12-T02.3 Filters
   - [x] P12-T02.4 Tests
-- [ ] **P12-T03** · Quantitative features and explainable scoring · `NOT_STARTED` ⬜
+- [x] **P12-T03** · Quantitative features and explainable scoring · `COMPLETED` ✅
   - Deps: P12-T02, P08-T06 · Wave: W2 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P12-T03.1 Features
-  - [ ] P12-T03.2 Scoring
-  - [ ] P12-T03.3 Explanations
-  - [ ] P12-T03.4 Tests
+  - Started: 2026-10-13T14:21:37+04:00 · Completed: 2026-10-13T14:57:54+04:00 · Duration: 36m 17s · Blocker: —
+  - Evidence: Explainable scoring: features from stored closes (trailing return, volatility, drawdown via analytics risk maths; expense ratio, liquidity, risk level) with reasons for missing ones; six-factor 0-100 transforms, score = sum of contributions exactly, missing data lowers coverage/confidence (no score below 50%), configurable validated weights; GET /api/v1/universe/scores. Matrix Q-01..Q-06; docs/design/scoring.md. Backend 2,410 passed, coverage 97.29%. PR #142. CI all gates pass.
+  - [x] P12-T03.1 Features
+  - [x] P12-T03.2 Scoring
+  - [x] P12-T03.3 Explanations
+  - [x] P12-T03.4 Tests
 - [ ] **P12-T04** · Portfolio compatibility and suitability · `NOT_STARTED` ⬜
   - Deps: P12-T02, P12-T01 · Wave: W2 · Track: BE · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
