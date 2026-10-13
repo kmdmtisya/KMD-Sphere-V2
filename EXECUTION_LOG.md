@@ -1593,3 +1593,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-13T18:33:21+04:00 — START P12-T07
 - Compare and Simulate APIs
 - prerequisites verified COMPLETED
+
+### 2026-10-13T18:58:09+04:00 — COMPLETE P12-T07
+- duration: 24m 48s
+- evidence: Compare (2-5 instruments: recorded facts, fees, past figures labelled past, score, eligibility, horizon, optional diversification impact; income yield explicitly n/a; no future-return field) and Simulate (forecast engine under the user's own conservative/base/growth returns, no default, equal to /forecasts/scenarios; notes on fee and currency; optional fit). Deterministic, owner-scoped. 6 tests; docs/design/compare-simulate.md. Backend 2,491 passed, coverage 97.39%. PR #146. CI all gates pass.
