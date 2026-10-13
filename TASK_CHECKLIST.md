@@ -1181,10 +1181,10 @@
   - [x] P12-T05.2 Ingestion
   - [x] P12-T05.3 Retrieval
   - [x] P12-T05.4 Tests
-- [ ] **P12-T06** · Opportunity pipeline and schema · `IN_PROGRESS` 🔄
+- [x] **P12-T06** · Opportunity pipeline and schema · `COMPLETED` ✅
   - Deps: P12-T03, P12-T04, P12-T05 · Wave: W3 · Track: AI · Size: L · Approval: no
-  - Started: 2026-10-13T17:11:00+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-13T17:11:00+04:00 · Completed: 2026-10-13T17:36:00+04:00 · Duration: 25m 00s · Blocker: —
+  - Evidence: Opportunity pipeline: eligible + scored universe, optional compatibility (not_suitable excluded with reasons), retrieved evidence, model explanation from facts only with deterministic validation (unsupported figures, return forecasts, guarantees, links, unknown evidence, missing risks refused; one correction then template), research horizon stated as assumption; runs persisted unchanged (update trigger), owner-scoped GET runs, audited, 10/day limit. 12 tests + integrity sweep; docs/design/opportunities.md. Backend 2,474 passed + sweep, coverage 97.30%. PR #145. CI all gates pass.
   - [x] P12-T06.1 Schema
   - [x] P12-T06.2 Pipeline
   - [x] P12-T06.3 LLM explanation and validation
