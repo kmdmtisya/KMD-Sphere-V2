@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-13T21:41:21+04:00 by `scripts/track.py`._
+_Generated at 2026-10-13T21:48:15+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -17,7 +17,7 @@ _Generated at 2026-10-13T21:41:21+04:00 by `scripts/track.py`._
 | QG-04 | Android Platform | 🔄 IN_PROGRESS | 5/7 | Unassigned | — |
 | QG-05 | iOS Platform | 🔄 IN_PROGRESS | 4/6 | Unassigned | — |
 | QG-06 | Financial Accuracy and Data Integrity | 🔄 IN_PROGRESS | 7/7 | Unassigned | — |
-| QG-07 | AI Reliability and Investment Intelligence | 🔄 IN_PROGRESS | 6/8 | Unassigned | — |
+| QG-07 | AI Reliability and Investment Intelligence | 🔄 IN_PROGRESS | 8/8 | Unassigned | — |
 | QG-08 | Security and Privacy | 🔄 IN_PROGRESS | 3/8 | Unassigned | — |
 | QG-09 | Performance and Scalability | 🔄 IN_PROGRESS | 1/6 | Unassigned | — |
 | QG-10 | CI/CD and Infrastructure | 🔄 IN_PROGRESS | 2/8 | Unassigned | — |
@@ -38,9 +38,9 @@ _Generated at 2026-10-13T21:41:21+04:00 by `scripts/track.py`._
 | QG-25 | QG-FXCUR-05: AI Integration | ✅ PASSED | 5/5 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 77/146.
+Criteria satisfied overall: 79/146.
 
-Current phase **P12** exit-gate criteria outstanding: QG-07.4, QG-07.7.
+Current phase **P13** exit-gate criteria outstanding: QG-13.1, QG-13.2, QG-13.3, QG-13.4, QG-13.5, QG-14.1, QG-14.2, QG-14.3, QG-15.1, QG-15.2, QG-15.3, QG-15.4, QG-15.5, QG-15.6, QG-16.1, QG-16.2, QG-16.3, QG-16.4, QG-16.5, QG-17.1, QG-17.2, QG-17.3, QG-17.4, QG-18.1, QG-18.2, QG-18.3, QG-18.4, QG-18.5, QG-19.1, QG-19.2, QG-19.3, QG-19.4, QG-19.5, QG-20.1, QG-20.2, QG-20.3, QG-20.4, QG-20.5.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -163,18 +163,18 @@ Approved By: —
 - [x] QG-07.1 AI tools enforce user authorization · Required: P10 · By: P10-T09 · Evidence: Every tool reads through an owner-scoped service with identity from the token; 30 cross-user cases (tool ids, smuggled user_id/owner_id, scope, conversations) denied 30/30; registry sweep of foreign ids not_found (tests/ai_eval, tests/ai/test_core_read_tools.py). · Verified: 2026-10-12T21:02:28+04:00 · CRITICAL
 - [x] QG-07.2 No unrestricted LLM database access · Required: P10 · By: P10-T02 · Evidence: Allow-list of 12 names checked against docs/ai-governance.md; no SQL, shell, URL or file tool; tool layer imports no network/process/SQL modules (architecture tests); unknown tools refused and audited (P10-T02, T06). · Verified: 2026-10-12T21:02:28+04:00 · CRITICAL
 - [x] QG-07.3 Structured AI responses pass schema validation · Required: P10 · By: P10-T08 · Evidence: Four-section JSON answer parsed strictly (extra keys, wrong types, over-length, prose rejected); invalid replies retried once then refused and never stored (tests/ai/test_answer_policy.py, test_chat.py). · Verified: 2026-10-12T21:02:29+04:00
-- [ ] QG-07.4 Investment opportunities include rationale, risks, assumptions, supporting evidence and data freshness · Required: P12 · By: P12-T06
+- [x] QG-07.4 Investment opportunities include rationale, risks, assumptions, supporting evidence and data freshness · Required: P12 · By: P12-T06 · Evidence: Each opportunity carries thesis, why it surfaced, key risks, assumptions, evidence with source/licence/date, prices_as_of, universe_as_of and a stated research horizon (P12-T06; tests/opportunities, opportunity set 113/113); the model may not add facts, figures or forecasts (docs/design/opportunities.md). · Verified: 2026-10-13T21:48:14+04:00
 - [x] QG-07.5 AI does not invent market prices or guaranteed investment returns · Required: P10 · By: P10-T08 · Evidence: Number provenance 100/100 and invented market data 60/60 rejected or accepted as expected; guarantee/certainty wording 100/100; zero guarantee wording across all accepted suite outputs; meta-tests show each defence is detected when removed (docs/ai-evaluation.md). · Verified: 2026-10-12T21:02:29+04:00 · CRITICAL
 - [x] QG-07.6 Prompt-injection and cross-user data-access tests pass · Required: P10 · By: P10-T09 · Evidence: Prompt injection 50/50 resisted (user text and stored data, with and without refusal rules); cross-user 30/30 denied with no leak, via the real chat API (docs/ai-evaluation.md). · Verified: 2026-10-12T21:02:30+04:00 · CRITICAL
-- [ ] QG-07.7 Stale, missing or contradictory market data is handled safely · Required: P12 · By: P12-T08
+- [x] QG-07.7 Stale, missing or contradictory market data is handled safely · Required: P12 · By: P12-T08 · Evidence: Stale, missing and contradictory market data handled by deterministic features, scores and close selection: market_data 41/41 zero tolerance, no high confidence on stale prices, missing data reported with its reason, most recently retrieved close wins, future closes ignored; meta-test shows the rule is load-bearing (docs/ai-evaluation.md P12 section). · Verified: 2026-10-13T21:48:14+04:00
 - [x] QG-07.8 AI output quality is assessed using documented evaluation datasets and acceptance thresholds · Required: P10 · By: P10-T09 · Evidence: Eight versioned DEC-17 datasets at approved sizes and thresholds, all met in CI; routing measured by stand-in only and the real-model routing and human review remain pre-release steps, recorded as open in docs/ai-evaluation.md; user approved P10-T09. · Verified: 2026-10-12T21:02:30+04:00
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
 Start Timestamp: 2026-10-12T21:02:27+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-12T21:02:30+04:00  
-Evidence: 6/8 criteria verified; latest QG-07.8 at 2026-10-12T21:02:30+04:00  
+Verification Timestamp: 2026-10-13T21:48:14+04:00  
+Evidence: 8/8 criteria verified; latest QG-07.7 at 2026-10-13T21:48:14+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —

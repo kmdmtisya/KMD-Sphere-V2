@@ -1212,20 +1212,20 @@
   - [x] P12-T09.3 Compare
   - [x] P12-T09.4 Simulate
   - [x] P12-T09.5 Tests
-- [ ] **P12-T10** · Disclosure and compliance content review · `IN_PROGRESS` 🔄
+- [x] **P12-T10** · Disclosure and compliance content review · `COMPLETED` ✅
   - Deps: P12-T08, P12-T09 · Wave: W5 · Track: DOC · Size: S · Approval: yes
-  - Started: 2026-10-13T21:41:21+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-13T21:41:21+04:00 · Completed: 2026-10-13T21:48:04+04:00 · Duration: 6m 43s · Blocker: —
+  - Evidence: Wording signed off as drafted by the user as reviewer Kelvin Mutisya David on 2026-10-13; no wording changed. Open and tracked: the jurisdiction questions (no legal review; legally_reviewed stays false), the eight observations, translations. · Approved by: user (mtisya@gmail.com), reviewer Kelvin Mutisya David
   - [x] P12-T10.1 Copy inventory
-  - [ ] P12-T10.2 Review
-  - [ ] P12-T10.3 Apply changes
-- [ ] **P12-GATE** · Phase P12 exit gate · `NOT_STARTED` ⬜
+  - [x] P12-T10.2 Review
+  - [x] P12-T10.3 Apply changes
+- [x] **P12-GATE** · Phase P12 exit gate · `COMPLETED` ✅
   - Deps: P12-T01, P12-T02, P12-T03, P12-T04, P12-T05, P12-T06, P12-T07, P12-T08, P12-T09, P12-T10 · Wave: W6 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-07.4, QG-07.7
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P12-GATE.1 Run gates
-  - [ ] P12-GATE.2 Present summary
-  - [ ] P12-GATE.3 Record approval
+  - Started: 2026-10-13T21:48:14+04:00 · Completed: 2026-10-13T21:48:15+04:00 · Duration: 0m 01s · Blocker: —
+  - Evidence: Approved by the user on 2026-10-13 after the P12-T08 results and the P12-T10 sign-off. Accepted open items: jurisdiction questions unanswered (legally_reviewed false), copy follow-ups, DEMO instruments and research only (licensed data DEC-04), scripted-model evaluation only, ExchangeRate/real-provider items from P11. · Approved by: user (mtisya@gmail.com)
+  - [x] P12-GATE.1 Run gates
+  - [x] P12-GATE.2 Present summary
+  - [x] P12-GATE.3 Record approval
 
 
 ## P13 — Forex Trading Intelligence (FX workstream)

@@ -1,6 +1,6 @@
 # P12 disclosure and compliance review pack (P12-T10, DEC-10)
 
-**Reviewer:** Kelvin Mutisya David. **Prepared by:** Claude (engineering draft, 2026-10-13). **Status: awaiting the reviewer's decisions. Nothing here is legal advice, and no wording below has been approved.**
+**Reviewer:** Kelvin Mutisya David. **Prepared by:** Claude (engineering draft, 2026-10-13). **Status: wording signed off as drafted on 2026-10-13. Nothing here is legal advice, and the jurisdiction questions remain open (section 4).**
 
 **What you are asked to do:**
 1. Mark each statement in section 1 as *approve*, *change* (with replacement wording) or *remove*.
@@ -75,21 +75,21 @@ Launch jurisdictions were set by the user for P12. The jurisdiction rules in cod
 
 | Item | Decision (approve / change / remove) | Replacement wording or note |
 |---|---|---|
-| 1 to 22 | | |
-| Observations 2.1 to 2.8 | | |
-| Questions 3.1 to 3.7 | | |
+| 1 to 22 | **Approve, unchanged** | Signed off as drafted. |
+| Observations 2.1 to 2.8 | **No change to the wording** | Carried as open follow-ups for the first release with real instruments (the copy is reviewed again then, see item 7 of section 2): a statement that WealthSphere is not a licensed adviser or broker, a general loss-of-money line on the opportunity screen, a data-delay sentence, a note that Doctor severity is not a rating, and Swahili and Arabic translations. |
+| Questions 3.1 to 3.7 | **Not answered; open** | No legal review has been done, so no jurisdiction is marked as reviewed. They must be answered before real instruments or live data are introduced, and before launch (P15-T05). |
 
 ## 5. Sign-off (acceptance: the reviewer signs off wording and jurisdictional disclosures)
 
 | Role | Name | Date | Decision |
 |---|---|---|---|
-| Reviewer | Kelvin Mutisya David | | **pending** |
+| Reviewer | Kelvin Mutisya David | 2026-10-13 | **Wording approved as drafted** (recorded on the user's instruction in the session) |
 
-Until this is signed: the jurisdiction notice (item 7) stays on every response, and jurisdiction outcomes stay marked `legally_reviewed: false`.
+As signed: the jurisdiction notice (item 7) stays on every response, and jurisdiction outcomes stay marked `legally_reviewed: false`, because the jurisdiction questions are unanswered. Only DEMO instruments exist, so no real security is shown under this copy.
 
 ## 6. What changes when you sign (P12-T10.3)
 
-- Statements you change are updated in the backend and `app_en.arb`. The tests that pin the wording are updated with them.
+- (Nothing needed changing: the wording was approved as drafted.) Had any been changed, statements would be updated in the backend and `app_en.arb`. The tests that pin the wording are updated with them.
 - Any new excluded asset classes or per-country disclosures you specify are added as settings.
 - `legally_reviewed` becomes true for a country only if you say its rules have been reviewed.
 - This file is updated with the final approved copy and becomes the checklist for future copy changes.
