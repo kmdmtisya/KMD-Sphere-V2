@@ -128,6 +128,10 @@ class FxStatus {
     return known.isEmpty ? FxRateStatus.unavailable : FxRateStatus.worst(known);
   }
 
+  /// Who published the rates shown, each once, in name order.
+  List<String> get providers =>
+      {for (final r in rates) ?r.provider}.toList()..sort();
+
   /// When the newest rate was fetched.
   DateTime? get lastUpdated {
     final times = [

@@ -33,8 +33,9 @@ async def test_providers_are_asked_once_per_window_and_a_normal_month_fits_the_b
     report: SoakReport,
 ) -> None:
     assert report.max_requests_in_a_healthy_window == {"ecb": 1, "soak-commercial": 1}
-    # The ECB never supplies AED and KES, so the commercial source is asked every window.
-    assert report.normal_month_extrapolated == {"ecb": 2976, "soak-commercial": 2976}
+    # The commercial source comes first (P11-T12) and supplies every currency, so the ECB is
+    # asked only when it fails.
+    assert report.normal_month_extrapolated == {"ecb": 0, "soak-commercial": 2976}
     assert report.unscripted_quota_refusals == 0
 
 

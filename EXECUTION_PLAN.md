@@ -272,11 +272,11 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | DEC-22 | Forecasting stack and v1 model scope: statsmodels, scikit-learn, LightGBM/XGBoost baselines (proposed); LSTM/GRU/Transformer research-only behind a separate gate | P13-T05 | Claude proposes, user approves | Open |
 | DEC-23 | Forex release strategy: ship with v1 or after v1 behind a feature flag (proposed: after v1, flagged) | P13-T01 | User | Open |
 | DEC-24 | Source of instrument contract specifications (lot size, pip location, margin rules): provider API vs maintained, reviewed table | P13-T07 | Claude proposes, user approves | Open |
-| DEC-25 | FX rate provider(s) for reporting conversion: primary and fallback (candidates: Open Exchange Rates, ExchangeRate-API, Currencylayer, OANDA, or the P08/DEC-04 provider), licence for in-app display and caching, quota | P11-T01 / P11-T03 | User | Open |
-| DEC-26 | Rate refresh cadence and staleness thresholds (current / cached / stale) per provider tier | P11-T03 | Claude proposes, user approves | Open |
-| DEC-27 | Cross-rate pivot currency (proposed USD) and per-currency display precision | P11-T04 | Claude proposes, user approves | Open |
-| DEC-28 | Conversion-audit scope and retention: which conversions are financial records (proposed: AI and report conversions, not cosmetic UI switches) | P11-T02 / P11-T12 | User | Open |
-| DEC-29 | Optional FX scenario overlay on forecasts in v1, or later (proposed: later) | P11-T06 | User | Open |
+| DEC-25 | FX rate provider(s) for reporting conversion: primary and fallback (candidates: Open Exchange Rates, ExchangeRate-API, Currencylayer, OANDA, or the P08/DEC-04 provider), licence for in-app display and caching, quota | P11-T01 / P11-T03 | User | Resolved: ExchangeRate-API Pro (about USD 10 a month, budget approved 2026-10-13) first, ECB as fallback (order set at P11-T12); written licence confirmation from ExchangeRate-API outstanding before production |
+| DEC-26 | Rate refresh cadence and staleness thresholds (current / cached / stale) per provider tier | P11-T03 | Claude proposes, user approves | Resolved (P11-T01): daily ECB current ≤36h, cached ≤72h; hourly providers current ≤2h, cached ≤24h; 15-minute refresh window |
+| DEC-27 | Cross-rate pivot currency (proposed USD) and per-currency display precision | P11-T04 | Claude proposes, user approves | Resolved (P11-T01): USD pivot; precision from each currency's minor units |
+| DEC-28 | Conversion-audit scope and retention: which conversions are financial records (proposed: AI and report conversions, not cosmetic UI switches) | P11-T02 / P11-T12 | User | Resolved: AI answers, reports and converter use are audited, display switches are not (P11-T01, checked at P11-T12); retention follows the audit policy, set in P15-T05 |
+| DEC-29 | Optional FX scenario overlay on forecasts in v1, or later (proposed: later) | P11-T06 | User | Resolved (P11-T01): later, not in v1 |
 
 ## 9. Key risks
 
@@ -3174,6 +3174,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Deliverables:** Endpoints, jobs, policies.
 - **Acceptance criteria:**
   - Deletion removes or anonymises user data per policy and is audited.
+  - Retention and deletion cover the FX conversion audit (`fx_conversion_audit`, append-only, kept indefinitely until this task) and reporting-currency preferences (DEC-28, recorded at P11-T12).
 - **Verification:** CK-B
 - **Subtasks:** `P15-T05.1` Export · `P15-T05.2` Deletion · `P15-T05.3` Retention · `P15-T05.4` Policies
 

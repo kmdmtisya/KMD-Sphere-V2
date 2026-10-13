@@ -39,10 +39,11 @@ class Settings(BaseSettings):
     twelvedata_api_key: SecretStr = SecretStr("")
     exchangerate_api_key: SecretStr = SecretStr("")
     # FX for the reporting currency (P11-T03, DEC-25..27). Providers are asked in this order; one
-    # without a key is left out. The ECB needs no key.
+    # without a key is left out. The ECB needs no key. ExchangeRate-API first (P11-T12): it covers
+    # every launch currency hourly, so the ECB's weekend gap never shows; the ECB is the fallback.
     fx_provider_order: list[Literal["ecb", "exchangerate_api", "twelvedata"]] = [
-        "ecb",
         "exchangerate_api",
+        "ecb",
         "twelvedata",
     ]
     fx_pivot_currency: str = Field(default="USD", pattern=r"^[A-Z]{3}$")

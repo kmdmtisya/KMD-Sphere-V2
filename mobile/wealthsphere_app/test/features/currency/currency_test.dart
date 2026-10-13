@@ -259,6 +259,28 @@ void main() {
       });
     }
 
+    testWidgets('the rates name every source once (licence review, P11-T12)', (
+      tester,
+    ) async {
+      final status = statusJson();
+      final rates = status['rates']! as List<Object?>;
+      status['rates'] = [
+        ...rates,
+        {...rates.first! as Map<String, Object?>, 'currency': 'EUR'},
+        {
+          ...rates.first! as Map<String, Object?>,
+          'currency': 'KES',
+          'provider': 'exchangerate_api',
+        },
+      ];
+      final api = api0()..json('GET /api/v1/fx/status', status);
+      await pumpChip(tester, api);
+      expect(
+        find.text('Rates: European Central Bank, ExchangeRate-API'),
+        findsOneWidget,
+      );
+    });
+
     testWidgets('no rates at all says so', (tester) async {
       final api = api0()
         ..json('GET /api/v1/fx/status', {
@@ -268,6 +290,7 @@ void main() {
         });
       await pumpChip(tester, api);
       expect(find.text('FX rates unavailable'), findsOneWidget);
+      expect(find.byKey(const ValueKey('fx-source')), findsNothing);
     });
 
     testWidgets('the selector searches, shows recents and saves the choice', (
@@ -378,6 +401,13 @@ void main() {
     ) async {
       final api = api0()..json('POST /api/v1/fx/convert', conversionJson());
       await pumpConverter(tester, api);
+      expect(
+        find.text(
+          'Exchange rates are for information only, not for transactions.',
+        ),
+        findsOneWidget,
+        reason: 'shown before any conversion (provider licence terms)',
+      );
       await tester.enterText(
         find.byKey(const ValueKey('converter-amount')),
         '500000.00',
@@ -387,6 +417,12 @@ void main() {
       expect(find.byKey(const ValueKey('converter-result')), findsOneWidget);
       expect(find.text('1 AED = 0.272294077604 USD'), findsOneWidget);
       expect(find.textContaining('Indicative rate'), findsOneWidget);
+      expect(
+        tester
+            .widget<Text>(find.byKey(const ValueKey('converter-source')))
+            .data,
+        'Rates: European Central Bank',
+      );
       final body =
           api.callsTo('POST', '/api/v1/fx/convert').single.body! as Map;
       expect(body['to'], 'USD');

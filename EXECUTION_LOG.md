@@ -1497,3 +1497,18 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-13T03:06:35+04:00 — COMPLETE P11-T11
 - duration: 36m 42s
 - evidence: Soak option A on local stack (simulated clock, scripted sources with production retry/breaker, 96h): <=1 request per source per healthy window, normal month 2,976 <= 30,000, 0 stale-labelled-current, 0 invented, recovery within one window after 3 outages. Finding fixed: failed refresh keeps its window (outage retries bounded to 4/h across processes). Report docs/fxcur-soak-report.md, reports/fx-soak/fx-soak-96h.json; CI 12h soak test. PR #135. CI all gates pass.
+
+### 2026-10-13T08:57:35+04:00 — START P11-T12
+- FXCUR-12 Release readiness sign-off
+- prerequisites verified COMPLETED
+
+### 2026-10-13T09:14:10+04:00 — DECISION — P11-T12 release-readiness proposals approved by the user
+- Budget: ExchangeRate-API Pro (about USD 10 a month) approved (DEC-25).
+- Licence: ExchangeRate-API's written confirmation to be obtained before production; the draft email is in docs/fxcur-licence-review.md.
+- Display: the rate source is named wherever rates appear (the ECB requires citation), and the converter always shows an information-only note. Both done in P11-T12.
+- Provider order: `exchangerate_api` first, ECB as fallback (`fx_provider_order` default). Soak re-run: ECB 0 requests in normal operation, no weekend gap.
+- Audit retention (DEC-28): follows the audit policy set in P15-T05.
+
+### 2026-10-13T09:14:10+04:00 — PLAN CHANGE — P15-T05 names the FX conversion audit; DEC-25..DEC-29 marked resolved
+- P15-T05 acceptance gains: retention and deletion cover `fx_conversion_audit` and reporting-currency preferences (DEC-28).
+- The decision register now records DEC-25..DEC-29 as resolved, as approved at P11-T01 and P11-T12. The register still showed them as Open.

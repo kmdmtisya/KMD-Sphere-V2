@@ -143,6 +143,14 @@ class _CurrencyConverterScreenState
             padding: const EdgeInsetsDirectional.all(AppSpacing.m),
             children: [
               const FxStatusLine(),
+              const SizedBox(height: AppSpacing.xxs),
+              Text(
+                l10n.converterInformationOnly,
+                key: const ValueKey('converter-information-only'),
+                style: context.wealthText.caption.copyWith(
+                  color: context.wealthColors.textMuted,
+                ),
+              ),
               const SizedBox(height: AppSpacing.m),
               TextField(
                 key: const ValueKey('converter-amount'),
@@ -290,6 +298,12 @@ class _ResultCard extends StatelessWidget {
           if (result.path case final path?)
             Text(l10n.converterVia(path.join(' → ')), style: text.caption),
           if (result.rateTimestamp case final at?) DataAsOfLabel(asOf: at),
+          if (result.providers.isNotEmpty)
+            Text(
+              fxSourceText(l10n, result.providers),
+              key: const ValueKey('converter-source'),
+              style: text.caption,
+            ),
           if (result.status != FxRateStatus.current)
             Text(
               switch (result.status) {

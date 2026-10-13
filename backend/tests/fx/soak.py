@@ -1,13 +1,13 @@
 """FX refresh soak on the local stack (P11-T11, approved option A: no real vendor).
 
 Days of operation are simulated against a freshly migrated database with a simulated clock. The
-two sources mirror the default provider order (`fx_provider_order`): a daily ECB-like source that
-publishes at 15:00 UTC on weekdays and lacks AED and KES, then an hourly commercial source with
-a monthly quota. Both are wrapped in the production `ResilientProvider` (retry and circuit
-breaker on the simulated clock), so the request counts are what a deployment would send. Every
-30 simulated seconds users press refresh (worst case: someone always does), and the hourly job
-runs at :05, all through `refresh_once_per_window`. Outages and a "quota reached" spell are
-scripted. Every simulated minute the rate board is read and checked.
+two sources are asked in the configured provider order (`fx_provider_order`): an hourly
+commercial source with a monthly quota, and a daily ECB-like source that publishes at 15:00 UTC
+on weekdays and lacks AED and KES. Both are wrapped in the production `ResilientProvider`
+(retry and circuit breaker on the simulated clock), so the request counts are what a deployment
+would send. Every 30 simulated seconds users press refresh (worst case: someone always does),
+and the hourly job runs at :05, all through `refresh_once_per_window`. Outages and a "quota
+reached" spell are scripted. Every simulated minute the rate board is read and checked.
 
 Checks:
 - **Quota:** in a window where a source answers, it is asked at most once; the whole run stays
@@ -267,7 +267,8 @@ async def soak(
     commercial = SoakSource(
         COMMERCIAL, clock, daily=False, monthly_quota=settings.fx_monthly_request_budget
     )
-    raw = (ecb, commercial)
+    by_setting = {"ecb": ecb, "exchangerate_api": commercial}
+    raw = tuple(by_setting[n] for n in settings.fx_provider_order if n in by_setting)
     for s in raw:
         s.start, s.window_minutes = start, window
     sources = tuple(

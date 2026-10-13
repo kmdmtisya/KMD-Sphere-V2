@@ -6,11 +6,11 @@ Decisions: [ADR-0010](../adr/0010-global-reporting-currency.md), [fxcur-reconcil
 
 | Order | Provider | Covers | Rate type | Request |
 |---|---|---|---|---|
-| 1 | ECB euro reference rates | about 30 currencies, crossed through EUR (path recorded, e.g. USD→EUR→GBP); no AED or KES | indicative | one daily file for every currency |
-| 2 | ExchangeRate-API (DEC-25) | the launch currencies including AED and KES | indicative ("indicative mid-rate" in its documentation) | `latest/{pivot}` returns every currency in one request |
+| 1 | ExchangeRate-API (DEC-25) | the launch currencies including AED and KES, updated hourly | indicative ("indicative mid-rate" in its documentation) | `latest/{pivot}` returns every currency in one request |
+| 2 | ECB euro reference rates | about 30 currencies, crossed through EUR (path recorded, e.g. USD→EUR→GBP); no AED or KES; weekdays only | indicative | one daily file for every currency |
 | 3 | Twelve Data (if its key is set) | further fallback | indicative | one request per pair |
 
-`FX_PROVIDER_ORDER` sets the order; a provider without a key is left out. **ExchangeRate-API is built from its public documentation with synthetic fixtures only: no key exists and no live call has been made** (fixture-only approval of P11-T03). Production use of both the ECB and ExchangeRate-API waits for the licence review at P11-T12.
+`FX_PROVIDER_ORDER` sets the order; a provider without a key is left out, so without an ExchangeRate-API key (development, CI) the ECB comes first. ExchangeRate-API was moved first at P11-T12: it covers every launch currency hourly, so the ECB's weekend gap (its rates would show as cached from Sunday 03:00 to Monday 15:00, and stale over a holiday weekend; see [fxcur-soak-report.md](../fxcur-soak-report.md)) never shows, at the same 2,976 requests a month. **ExchangeRate-API is built from its public documentation with synthetic fixtures only: no key exists and no live call has been made** (fixture-only approval of P11-T03). Licence terms: [fxcur-licence-review.md](../fxcur-licence-review.md); every screen showing rates names their source, as the ECB requires.
 
 ## One refresh
 

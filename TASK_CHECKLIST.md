@@ -1120,12 +1120,12 @@
   - [x] P11-T11.1 Quota and backoff soak
   - [x] P11-T11.2 Staleness soak
   - [x] P11-T11.3 Report
-- [ ] **P11-T12** · FXCUR-12 Release readiness sign-off · `NOT_STARTED` ⬜
+- [ ] **P11-T12** · FXCUR-12 Release readiness sign-off · `IN_PROGRESS` 🔄
   - Deps: P11-T11 · Wave: W10 · Track: REL · Size: S · Approval: yes · Gates-start: QG-21, QG-22, QG-23, QG-24, QG-25
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-13T08:57:35+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P11-T12.1 Licence review
-  - [ ] P11-T12.2 Retention policy check
+  - [x] P11-T12.1 Licence review
+  - [x] P11-T12.2 Retention policy check
   - [ ] P11-T12.3 Sign-off
 - [ ] **P11-GATE** · Phase P11 exit gate · `NOT_STARTED` ⬜
   - Deps: P11-T01, P11-T02, P11-T03, P11-T04, P11-T05, P11-T06, P11-T07, P11-T08, P11-T09, P11-T10, P11-T11, P11-T12 · Wave: W11 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-21, QG-22, QG-23, QG-24, QG-25

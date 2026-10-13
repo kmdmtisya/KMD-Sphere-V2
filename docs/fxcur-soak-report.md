@@ -6,9 +6,9 @@ Harness: [`backend/tests/fx/soak.py`](../backend/tests/fx/soak.py). Machine-read
 
 ## Set-up
 
-- **Sources, in the default `fx_provider_order`:**
-  - a daily ECB-like source that publishes at 15:00 UTC on weekdays and lacks AED and KES;
-  - an hourly commercial source with the 30,000 monthly quota (`FX_MONTHLY_REQUEST_BUDGET`).
+- **Sources, in the configured `fx_provider_order`** (since P11-T12: commercial first, ECB as fallback):
+  - an hourly commercial source with the 30,000 monthly quota (`FX_MONTHLY_REQUEST_BUDGET`);
+  - a daily ECB-like source that publishes at 15:00 UTC on weekdays and lacks AED and KES.
 - **Production code paths throughout:**
   - each source is wrapped in the production `ResilientProvider`, which retries 3 times and has a circuit breaker, both on the simulated clock;
   - refreshes go through `refresh_once_per_window`, and the rate board through `RateBoard.lines`.
@@ -49,14 +49,16 @@ Changed files:
 - the test that asserted the old release, now `test_when_every_provider_fails_the_next_attempt_waits_for_the_next_window`;
 - [`docs/design/fx-refresh.md`](design/fx-refresh.md).
 
-## Results (96 hours, after the fix)
+## Results (96 hours, after the fix, commercial source first)
+
+Re-run at P11-T12 with the new provider order. The first T11 run (ECB first) is summarised under "Observations".
 
 | Check | Result |
 |---|---|
 | Requests per source in a window where it answered | at most 1 (both sources) |
 | Busiest hour, per source (including outages) | 12 requests (4 windows × 3 retry attempts) |
-| Requests over the run | ECB 434, commercial 486; prorated budget 3,870 |
-| Normal operation extrapolated to a 31-day month | 2,976 per source; budget 30,000 |
+| Requests over the run | commercial 486, ECB 101 (only while the commercial source failed); prorated budget 3,870 |
+| Normal operation extrapolated to a 31-day month | commercial 2,976, ECB 0; budget 30,000 |
 | Simulated quota hit without being scripted | 0 times |
 | Rates labelled current although older than their current window | 0 |
 | Rates shown that no source published, or dated in the future | 0 |
@@ -69,7 +71,7 @@ Outages:
 | Commercial "quota reached", 3h07 | 13 / 39 | yes | 8 minutes |
 | Everything down, 6h07 | 75 / 75 | yes | 8 minutes |
 
-Status seen over the run: 41,863 `current` and 9,977 `cached` readings; nothing `stale` or `unavailable`.
+Status seen over the run: 46,602 `current` and 5,238 `cached` readings, all of the cached ones during the scripted outages; nothing `stale` or `unavailable`. No ECB rate was on show at the weekend.
 
 Acceptance for P11-T11:
 
@@ -77,16 +79,14 @@ Acceptance for P11-T11:
 - **No stale rate labelled current:** met.
 - **Automatic recovery after an outage:** met, within one refresh window and with no manual action.
 
-## Observations for the release decision (not changed here)
+## Observations
 
-1. **Weekend rates show as cached.**
+1. **Weekend rates showed as cached with the ECB first (fixed at P11-T12).** In the first T11 run:
    - Because `ecb` is first in `fx_provider_order`, the 7 currencies it publishes come from the ECB even when the commercial source has newer rates.
    - From Sunday 03:00 (36 hours after Friday's publication) until Monday's 15:00 publication, those 7 currencies show as `cached`. In the run, 8,813 of 20,160 weekend readings of ECB rates were `cached`.
    - This is honest and within DEC-26, but it is about 36 hours a week.
    - Over a TARGET holiday weekend (for example Good Friday to Easter Monday), the gap reaches 96 hours, past the 72-hour cached window, so those rates would show as `stale`. That case is computed from the windows, not simulated.
-   - Options:
-     - put `exchangerate_api` first: it supplies every currency, uses the same 2,976 requests a month, and the ECB becomes the fallback;
-     - or ask the next source for currencies whose stored rate is no longer current.
+   - **Decision (user, 2026-10-13):** `exchangerate_api` first, ECB as fallback. It supplies every currency for the same 2,976 requests a month. The re-run above shows no weekend gap. Without an ExchangeRate-API key (development, CI) the ECB still comes first.
 2. **Total-outage cost is now bounded by time, not by users.**
    - Each source costs at most 12 requests an hour (4 windows × 3 retry attempts).
    - A whole month of total outage would cost 8,928 requests, still inside 30,000.

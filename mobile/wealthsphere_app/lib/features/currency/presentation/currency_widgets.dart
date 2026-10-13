@@ -9,6 +9,22 @@ import '../../../shared/design_system/tokens/tokens.dart';
 import '../application/currency_providers.dart';
 import '../domain/currency_models.dart';
 
+/// "Rates: European Central Bank, ExchangeRate-API": who published the rates shown. The ECB's
+/// reuse terms require citing it as the source (licence review, P11-T12).
+String fxSourceText(AppLocalizations l10n, Iterable<String> providers) {
+  final names = {
+    for (final p in providers)
+      switch (p) {
+        'ecb' => l10n.fxSourceEcb,
+        'exchangerate_api' => 'ExchangeRate-API',
+        'twelvedata' => 'Twelve Data',
+        'demo' => l10n.fxSourceDemo,
+        _ => p,
+      },
+  };
+  return l10n.fxSource(names.join(', '));
+}
+
 /// Opens the reporting-currency selector: search, recent currencies, every supported currency,
 /// and when the rates were last updated. Choosing one saves it and refreshes every figure.
 Future<void> showCurrencySelector(BuildContext context) =>
@@ -267,12 +283,26 @@ class FxStatusLine extends ConsumerWidget {
             colors.negativeText,
           ),
         };
-        return Row(
-          key: ValueKey('fx-status-${s.overall.name}'),
+        final sources = s.providers;
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(icon, size: 16, color: color),
-            const SizedBox(width: AppSpacing.xxs),
-            Flexible(child: Text(label, style: style)),
+            Row(
+              key: ValueKey('fx-status-${s.overall.name}'),
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(icon, size: 16, color: color),
+                const SizedBox(width: AppSpacing.xxs),
+                Flexible(child: Text(label, style: style)),
+              ],
+            ),
+            if (sources.isNotEmpty)
+              Text(
+                fxSourceText(l10n, sources),
+                key: const ValueKey('fx-source'),
+                style: style,
+              ),
           ],
         );
       },
