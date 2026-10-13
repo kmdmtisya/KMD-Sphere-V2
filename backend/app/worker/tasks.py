@@ -12,6 +12,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.ai.conversations.service import ConversationService
 from app.core.config import get_settings
 from app.modules.alerts.evaluation import EvaluationResult, evaluate_alerts
+from app.modules.forex.instruments.registry import load_registry as load_forex_registry
+from app.modules.forex.instruments.registry import sync as sync_forex_instruments
+from app.modules.forex.marketdata.feed import MONTHS_AHEAD as FOREX_MONTHS_AHEAD
+from app.modules.forex.marketdata.partitions import PARTITIONED as FOREX_PARTITIONED
+from app.modules.forex.marketdata.partitions import ensure_months as ensure_forex_months
 from app.modules.fx.refresh import refresh_once_per_window
 from app.modules.market_data.ingestion import (
     IngestFailure,
@@ -318,6 +323,35 @@ def ingest_research_job(day: str | None = None) -> dict[str, object]:
             return asdict(report)
 
         outcome = await run_once(sessions, "ingest_research", key, work)
+        if outcome.skipped or outcome.value is None:
+            return {"skipped": True}
+        return outcome.value
+
+    return run_async(go)
+
+
+# ------------------------------------------------------------------------------ forex (P13)
+@celery_app.task(base=JobTask, name="app.worker.tasks.forex_maintenance")
+def forex_maintenance_job(day: str | None = None) -> dict[str, object]:
+    """Keeps the forex registry in step with its file and creates the time-series partitions
+    three months ahead (P13-T02.3, DEC-21). Runs whether or not forex is switched on: it only
+    prepares reference data and tables, and fetches nothing."""
+    settings = get_settings()
+    key = day or datetime.now(UTC).date().isoformat()
+
+    async def go(sessions: SessionFactory) -> dict[str, object]:
+        async def work(session: AsyncSession) -> dict[str, object]:
+            report = await sync_forex_instruments(
+                session, load_forex_registry(), settings.forex_universe
+            )
+            created: list[str] = []
+            for table in FOREX_PARTITIONED:
+                created += await ensure_forex_months(
+                    session, table, date.fromisoformat(key), FOREX_MONTHS_AHEAD
+                )
+            return {**asdict(report), "partitions_created": created}
+
+        outcome = await run_once(sessions, "forex_maintenance", key, work)
         if outcome.skipped or outcome.value is None:
             return {"skipped": True}
         return outcome.value

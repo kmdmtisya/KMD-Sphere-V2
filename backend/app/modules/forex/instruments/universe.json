@@ -1,0 +1,18 @@
+{
+  "spec_version": 1,
+  "note": "The forex instrument registry (P13-T02.2). Quoting conventions only: pip location and display precision. Contract specifications (lot size, margin) are a separate reviewed table (DEC-24, P13-T07). Which of these are active is configuration (FOREX_UNIVERSE).",
+  "instruments": [
+    {"code": "EUR_USD", "pip_location": -4, "display_precision": 5, "liquidity_tier": "major"},
+    {"code": "GBP_USD", "pip_location": -4, "display_precision": 5, "liquidity_tier": "major"},
+    {"code": "USD_JPY", "pip_location": -2, "display_precision": 3, "liquidity_tier": "major"},
+    {"code": "USD_CHF", "pip_location": -4, "display_precision": 5, "liquidity_tier": "major"},
+    {"code": "AUD_USD", "pip_location": -4, "display_precision": 5, "liquidity_tier": "major"},
+    {"code": "USD_CAD", "pip_location": -4, "display_precision": 5, "liquidity_tier": "major"},
+    {"code": "NZD_USD", "pip_location": -4, "display_precision": 5, "liquidity_tier": "major"},
+    {"code": "EUR_GBP", "pip_location": -4, "display_precision": 5, "liquidity_tier": "minor"},
+    {"code": "EUR_JPY", "pip_location": -2, "display_precision": 3, "liquidity_tier": "minor"},
+    {"code": "GBP_JPY", "pip_location": -2, "display_precision": 3, "liquidity_tier": "minor"},
+    {"code": "USD_ZAR", "pip_location": -4, "display_precision": 5, "liquidity_tier": "exotic"},
+    {"code": "USD_KES", "pip_location": -2, "display_precision": 3, "liquidity_tier": "exotic"}
+  ]
+}

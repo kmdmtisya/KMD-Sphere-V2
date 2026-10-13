@@ -1,0 +1,5 @@
+{"type":"HEARTBEAT","time":"2026-10-14T10:00:00.000000000Z"}
+{"type":"PRICE","instrument":"EUR_USD","time":"2026-10-14T10:00:01.250000000Z","tradeable":true,"bids":[{"price":"1.08501","liquidity":1000000}],"asks":[{"price":"1.08513","liquidity":1000000}]}
+
+{"type":"PRICE","instrument":"USD_KES","time":"2026-10-14T10:00:02.000000000Z","tradeable":false,"bids":[{"price":"128.950","liquidity":100000}],"asks":[{"price":"129.350","liquidity":100000}]}
+{"type":"HEARTBEAT","time":"2026-10-14T10:00:05.000000000Z"}

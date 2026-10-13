@@ -1,3 +1,4 @@
+import asyncio
 from collections.abc import AsyncIterator, Sequence
 from contextlib import asynccontextmanager
 
@@ -39,6 +40,10 @@ from app.modules.compare import api as compare_api
 from app.modules.compatibility import api as compatibility_api
 from app.modules.doctor import api as doctor_api
 from app.modules.forecasting import api as forecasting_api
+from app.modules.forex import api as forex_api
+from app.modules.forex import stream_api as forex_stream_api
+from app.modules.forex.marketdata.feed import run_feed
+from app.modules.forex.marketdata.gateway import QuoteHub
 from app.modules.fx import api as fx_api
 from app.modules.goals import api as goals_api
 from app.modules.identity import api as identity_api
@@ -90,9 +95,22 @@ def create_app(
         cache_store = RedisCacheStore(redis)
     response_cache = ResponseCache(cache_store, settings.analytics_cache_seconds)
 
+    forex_hub = QuoteHub(
+        settings.forex_stream_max_connections_per_user, settings.forex_stream_max_instruments
+    )
+
     @asynccontextmanager
     async def lifespan(_: FastAPI) -> AsyncIterator[None]:
+        # The simulated forex feed runs in this process only when asked (development, P13).
+        stop = asyncio.Event()
+        feed: asyncio.Task[None] | None = None
+        if settings.forex_enabled and settings.forex_feed_enabled:
+            feed = asyncio.create_task(run_feed(settings, db.session_factory, forex_hub, stop))
         yield
+        stop.set()
+        if feed is not None:
+            feed.cancel()
+            await asyncio.gather(feed, return_exceptions=True)
         await db.dispose()
         if redis is not None:
             await redis.aclose()
@@ -164,6 +182,12 @@ def create_app(
                 "description": "Goals and their progress under stated assumptions (estimates)",
             },
             {
+                "name": "forex",
+                "description": "Forex Intelligence (P13): currency pairs, quotes with their type "
+                "and age, and candles. Information only; behind a feature flag. The live stream is "
+                "the WebSocket /api/v1/forex/stream",
+            },
+            {
                 "name": "forecasts",
                 "description": "Compound, scenario and goal projections (illustrative, never "
                 "guaranteed)",
@@ -187,6 +211,8 @@ def create_app(
     app.state.rate_limit_policies = policies
     app.state.response_cache = response_cache
     app.state.cache_store = cache_store  # short-lived shared caches (FX rate board, P11-T03)
+    app.state.forex_hub = forex_hub  # the forex stream's fan-out (P13-T02)
+    app.state.forex_stream_heartbeat_seconds = forex_stream_api.HEARTBEAT_SECONDS
     # Added innermost first: headers wrap everything, so 413 and 429 answers carry them too.
     app.add_middleware(BodySizeLimitMiddleware, max_bytes=settings.max_request_body_bytes)
     if settings.rate_limit_enabled:
@@ -240,6 +266,8 @@ def create_app(
     app.include_router(income_api.router)
     app.include_router(analytics_api.router)
     app.include_router(dashboard.router)
+    app.include_router(forex_api.router)
+    app.include_router(forex_stream_api.router)
     telemetry.instrument(app)
     return app
 

@@ -897,6 +897,156 @@
         "title": "AssetSummary",
         "type": "object"
       },
+      "CandleOut": {
+        "properties": {
+          "close": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Close",
+            "type": "string"
+          },
+          "data_type": {
+            "enum": [
+              "tradable_quote",
+              "indicative_rate",
+              "delayed",
+              "simulated"
+            ],
+            "title": "Data Type",
+            "type": "string"
+          },
+          "high": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "High",
+            "type": "string"
+          },
+          "low": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Low",
+            "type": "string"
+          },
+          "open": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Open",
+            "type": "string"
+          },
+          "ts": {
+            "description": "The period's start (UTC)",
+            "format": "date-time",
+            "title": "Ts",
+            "type": "string"
+          },
+          "volume": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Tick volume, when the provider has it",
+            "title": "Volume"
+          }
+        },
+        "required": [
+          "ts",
+          "open",
+          "high",
+          "low",
+          "close",
+          "volume",
+          "data_type"
+        ],
+        "title": "CandleOut",
+        "type": "object"
+      },
+      "CandlesOut": {
+        "properties": {
+          "end": {
+            "format": "date-time",
+            "title": "End",
+            "type": "string"
+          },
+          "instrument": {
+            "title": "Instrument",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/CandleOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "notice": {
+            "default": "Candles as the provider published them. A period with no candle is absent, never filled in. Forming candles are not stored.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "price_basis": {
+            "enum": [
+              "mid",
+              "bid",
+              "ask"
+            ],
+            "title": "Price Basis",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "start": {
+            "format": "date-time",
+            "title": "Start",
+            "type": "string"
+          },
+          "timeframe": {
+            "enum": [
+              "1m",
+              "5m",
+              "15m",
+              "30m",
+              "1H",
+              "4H",
+              "1D",
+              "1W",
+              "1M"
+            ],
+            "title": "Timeframe",
+            "type": "string"
+          },
+          "truncated": {
+            "description": "True when more candles exist than were returned",
+            "title": "Truncated",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "instrument",
+          "timeframe",
+          "price_basis",
+          "provider",
+          "start",
+          "end",
+          "items",
+          "truncated"
+        ],
+        "title": "CandlesOut",
+        "type": "object"
+      },
       "ChatRequest": {
         "additionalProperties": false,
         "properties": {
@@ -4425,124 +4575,25 @@
         "title": "IncomeSummaryOut",
         "type": "object"
       },
-      "InstrumentOut": {
+      "InstrumentsOut": {
         "properties": {
-          "asset_class": {
-            "title": "Asset Class",
-            "type": "string"
-          },
-          "asset_id": {
-            "format": "uuid",
-            "title": "Asset Id",
-            "type": "string"
-          },
-          "country": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Country"
-          },
-          "currency": {
-            "title": "Currency",
-            "type": "string"
-          },
-          "data_as_of": {
-            "format": "date-time",
-            "title": "Data As Of",
-            "type": "string"
-          },
-          "eligibility": {
-            "$ref": "#/components/schemas/EligibilityOut"
-          },
-          "is_demo": {
-            "description": "Fictional instrument for demo and development",
-            "title": "Is Demo",
-            "type": "boolean"
-          },
-          "jurisdictions": {
-            "description": "Where the source says it is offered",
+          "items": {
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/app__modules__forex__marketdata__schemas__InstrumentOut"
             },
-            "title": "Jurisdictions",
+            "title": "Items",
             "type": "array"
           },
-          "licence_status": {
-            "enum": [
-              "demo",
-              "unconfirmed",
-              "licensed"
-            ],
-            "title": "Licence Status",
+          "notice": {
+            "default": "Forex information only, not advice. WealthSphere is not a broker and places no trades. Each price shows its type (tradable, indicative, delayed or simulated) and its age; a stale price is never shown as current, and a missing one is never filled in.",
+            "title": "Notice",
             "type": "string"
-          },
-          "liquidity": {
-            "description": "Assumed from the asset class",
-            "enum": [
-              "immediate",
-              "market",
-              "term",
-              "illiquid",
-              "unknown"
-            ],
-            "title": "Liquidity",
-            "type": "string"
-          },
-          "minimum_investment": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/Money"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "name": {
-            "title": "Name",
-            "type": "string"
-          },
-          "risk_level": {
-            "description": "The source's classification, 1 lowest",
-            "maximum": 5.0,
-            "minimum": 1.0,
-            "title": "Risk Level",
-            "type": "integer"
-          },
-          "symbol": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Symbol"
           }
         },
         "required": [
-          "asset_id",
-          "symbol",
-          "name",
-          "asset_class",
-          "currency",
-          "country",
-          "risk_level",
-          "liquidity",
-          "jurisdictions",
-          "minimum_investment",
-          "is_demo",
-          "licence_status",
-          "data_as_of",
-          "eligibility"
+          "items"
         ],
-        "title": "InstrumentOut",
+        "title": "InstrumentsOut",
         "type": "object"
       },
       "InvestorOut": {
@@ -6259,6 +6310,224 @@
           "provider"
         ],
         "title": "PricePointOut",
+        "type": "object"
+      },
+      "QuoteOut": {
+        "properties": {
+          "age_seconds": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The price's true age when this was sent",
+            "title": "Age Seconds"
+          },
+          "ask": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ask"
+          },
+          "bid": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bid"
+          },
+          "data_type": {
+            "anyOf": [
+              {
+                "enum": [
+                  "tradable_quote",
+                  "indicative_rate",
+                  "delayed",
+                  "simulated"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data Type"
+          },
+          "feed_status": {
+            "enum": [
+              "connected",
+              "degraded",
+              "disconnected"
+            ],
+            "title": "Feed Status",
+            "type": "string"
+          },
+          "freshness": {
+            "description": "unavailable: no usable price, and none is shown",
+            "enum": [
+              "fresh",
+              "stale",
+              "unavailable"
+            ],
+            "title": "Freshness",
+            "type": "string"
+          },
+          "instrument": {
+            "pattern": "^[A-Z]{3}_[A-Z]{3}$",
+            "title": "Instrument",
+            "type": "string"
+          },
+          "mid": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Derived: (bid + ask) / 2",
+            "title": "Mid"
+          },
+          "mid_derived": {
+            "default": true,
+            "title": "Mid Derived",
+            "type": "boolean"
+          },
+          "provider": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Provider"
+          },
+          "quality": {
+            "anyOf": [
+              {
+                "enum": [
+                  "ok",
+                  "stale"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Quality"
+          },
+          "ts_provider": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The provider's time of the price (UTC)",
+            "title": "Ts Provider"
+          },
+          "ts_received": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "When WealthSphere received it (UTC)",
+            "title": "Ts Received"
+          }
+        },
+        "required": [
+          "instrument",
+          "provider",
+          "bid",
+          "ask",
+          "mid",
+          "ts_provider",
+          "ts_received",
+          "age_seconds",
+          "data_type",
+          "quality",
+          "freshness",
+          "feed_status"
+        ],
+        "title": "QuoteOut",
+        "type": "object"
+      },
+      "QuotesOut": {
+        "properties": {
+          "as_of": {
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "feed_status": {
+            "enum": [
+              "connected",
+              "degraded",
+              "disconnected"
+            ],
+            "title": "Feed Status",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/QuoteOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "notice": {
+            "default": "Forex information only, not advice. WealthSphere is not a broker and places no trades. Each price shows its type (tradable, indicative, delayed or simulated) and its age; a stale price is never shown as current, and a missing one is never filled in.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          }
+        },
+        "required": [
+          "as_of",
+          "provider",
+          "feed_status",
+          "items"
+        ],
+        "title": "QuotesOut",
         "type": "object"
       },
       "ReadyStatus": {
@@ -8389,7 +8658,7 @@
           },
           "items": {
             "items": {
-              "$ref": "#/components/schemas/InstrumentOut"
+              "$ref": "#/components/schemas/app__modules__universe__schemas__InstrumentOut"
             },
             "title": "Items",
             "type": "array"
@@ -8718,6 +8987,190 @@
           "value"
         ],
         "title": "YearValue",
+        "type": "object"
+      },
+      "app__modules__forex__marketdata__schemas__InstrumentOut": {
+        "properties": {
+          "base": {
+            "title": "Base",
+            "type": "string"
+          },
+          "code": {
+            "examples": [
+              "EUR_USD"
+            ],
+            "pattern": "^[A-Z]{3}_[A-Z]{3}$",
+            "title": "Code",
+            "type": "string"
+          },
+          "default_data_type": {
+            "description": "What a licensed provider's price for this pair is by default; the development feed labels every price simulated",
+            "enum": [
+              "tradable_quote",
+              "indicative_rate"
+            ],
+            "title": "Default Data Type",
+            "type": "string"
+          },
+          "display_precision": {
+            "description": "Decimals a price is shown with",
+            "title": "Display Precision",
+            "type": "integer"
+          },
+          "liquidity_tier": {
+            "enum": [
+              "major",
+              "minor",
+              "exotic"
+            ],
+            "title": "Liquidity Tier",
+            "type": "string"
+          },
+          "pip_location": {
+            "description": "A pip is 10 to this power of the quote currency",
+            "title": "Pip Location",
+            "type": "integer"
+          },
+          "quote": {
+            "title": "Quote",
+            "type": "string"
+          },
+          "spec_version": {
+            "title": "Spec Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "code",
+          "base",
+          "quote",
+          "pip_location",
+          "display_precision",
+          "liquidity_tier",
+          "default_data_type",
+          "spec_version"
+        ],
+        "title": "InstrumentOut",
+        "type": "object"
+      },
+      "app__modules__universe__schemas__InstrumentOut": {
+        "properties": {
+          "asset_class": {
+            "title": "Asset Class",
+            "type": "string"
+          },
+          "asset_id": {
+            "format": "uuid",
+            "title": "Asset Id",
+            "type": "string"
+          },
+          "country": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Country"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "data_as_of": {
+            "format": "date-time",
+            "title": "Data As Of",
+            "type": "string"
+          },
+          "eligibility": {
+            "$ref": "#/components/schemas/EligibilityOut"
+          },
+          "is_demo": {
+            "description": "Fictional instrument for demo and development",
+            "title": "Is Demo",
+            "type": "boolean"
+          },
+          "jurisdictions": {
+            "description": "Where the source says it is offered",
+            "items": {
+              "type": "string"
+            },
+            "title": "Jurisdictions",
+            "type": "array"
+          },
+          "licence_status": {
+            "enum": [
+              "demo",
+              "unconfirmed",
+              "licensed"
+            ],
+            "title": "Licence Status",
+            "type": "string"
+          },
+          "liquidity": {
+            "description": "Assumed from the asset class",
+            "enum": [
+              "immediate",
+              "market",
+              "term",
+              "illiquid",
+              "unknown"
+            ],
+            "title": "Liquidity",
+            "type": "string"
+          },
+          "minimum_investment": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "risk_level": {
+            "description": "The source's classification, 1 lowest",
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Risk Level",
+            "type": "integer"
+          },
+          "symbol": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Symbol"
+          }
+        },
+        "required": [
+          "asset_id",
+          "symbol",
+          "name",
+          "asset_class",
+          "currency",
+          "country",
+          "risk_level",
+          "liquidity",
+          "jurisdictions",
+          "minimum_investment",
+          "is_demo",
+          "licence_status",
+          "data_as_of",
+          "eligibility"
+        ],
+        "title": "InstrumentOut",
         "type": "object"
       }
     },
@@ -10804,6 +11257,240 @@
         "summary": "Scenario Forecast",
         "tags": [
           "forecasts"
+        ]
+      }
+    },
+    "/api/v1/forex/candles": {
+      "get": {
+        "description": "Complete candles in [start, end), at most `forex_candles_max` of them (`truncated` says when more exist). A period without a candle is absent, never filled in; a forming candle is not stored. Times are UTC and must carry a time zone.",
+        "operationId": "candles_api_v1_forex_candles_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "instrument",
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Z]{3}_[A-Z]{3}$",
+              "title": "Instrument",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "start",
+            "required": true,
+            "schema": {
+              "format": "date-time",
+              "title": "Start",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "end",
+            "required": true,
+            "schema": {
+              "format": "date-time",
+              "title": "End",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "timeframe",
+            "required": false,
+            "schema": {
+              "default": "1m",
+              "enum": [
+                "1m",
+                "5m",
+                "15m",
+                "30m",
+                "1H",
+                "4H",
+                "1D",
+                "1W",
+                "1M"
+              ],
+              "title": "Timeframe",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "price_basis",
+            "required": false,
+            "schema": {
+              "default": "mid",
+              "enum": [
+                "mid",
+                "bid",
+                "ask"
+              ],
+              "title": "Price Basis",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CandlesOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such instrument, or the forex module is switched off for this user"
+          },
+          "422": {
+            "description": "Invalid range"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Stored candles of a pair, oldest first",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/instruments": {
+      "get": {
+        "description": "Reference data from the instrument registry: pip location, display precision, liquidity tier and the default price type a licensed provider would give. The universe is configuration; inactive pairs are left out.",
+        "operationId": "instruments_api_v1_forex_instruments_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InstrumentsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such forex module (switched off) for this user"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "The active currency pairs and how each is quoted",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/quotes": {
+      "get": {
+        "description": "A pair without a usable quote is `unavailable` and carries no price. A quote older than the staleness threshold is `stale`, with its true age. Nothing is interpolated.",
+        "operationId": "quotes_api_v1_forex_quotes_get",
+        "parameters": [
+          {
+            "description": "Pairs to show; all active pairs when omitted",
+            "in": "query",
+            "name": "instrument",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "items": {
+                    "pattern": "^[A-Z]{3}_[A-Z]{3}$",
+                    "type": "string"
+                  },
+                  "maxItems": 50,
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Pairs to show; all active pairs when omitted",
+              "title": "Instrument"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuotesOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such forex module for this user"
+          },
+          "422": {
+            "description": "Invalid instrument"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "The latest quote of each pair, with its type, true age and the feed's status",
+        "tags": [
+          "forex"
         ]
       }
     },
@@ -15075,6 +15762,10 @@
     {
       "description": "Goals and their progress under stated assumptions (estimates)",
       "name": "goals"
+    },
+    {
+      "description": "Forex Intelligence (P13): currency pairs, quotes with their type and age, and candles. Information only; behind a feature flag. The live stream is the WebSocket /api/v1/forex/stream",
+      "name": "forex"
     },
     {
       "description": "Compound, scenario and goal projections (illustrative, never guaranteed)",

@@ -16,6 +16,15 @@ ROOT = "app.modules.market_data.providers"
 CONSUMER_SAFE = {"base", "models", "errors", "resilience", "registry", "batch"}
 # Modules that are allowed to import concrete providers (composition points).
 COMPOSITION = {PACKAGE / "registry.py"}
+# Vendor adapters that live outside the package (P13 forex) may also use the shared transport
+# helpers, and nothing more: never another vendor or the fake.
+ADAPTERS = {APP / "modules" / "forex" / "marketdata" / "oanda.py"}
+TRANSPORT = {"http", "throttle"}
+FOREX = APP / "modules" / "forex"
+FOREX_ROOT = "app.modules.forex.marketdata"
+# Only the forex factory names the simulated provider or a vendor adapter (DEC-19).
+FOREX_CONCRETE = {"fake", "oanda"}
+FOREX_COMPOSITION = {FOREX / "marketdata" / "factory.py"}
 
 
 def _imports(path: Path) -> list[str]:
@@ -24,8 +33,8 @@ def _imports(path: Path) -> list[str]:
     for node in ast.walk(tree):
         if isinstance(node, ast.ImportFrom) and node.module:
             found.append(node.module)
-            if node.module == ROOT:
-                found.extend(f"{ROOT}.{alias.name}" for alias in node.names)
+            if node.module in (ROOT, "app.modules.forex.marketdata"):
+                found.extend(f"{node.module}.{alias.name}" for alias in node.names)
         elif isinstance(node, ast.Import):
             found.extend(alias.name for alias in node.names)
     return found
@@ -39,7 +48,21 @@ def test_consumers_import_only_the_interface_modules() -> None:
         for module in _imports(path):
             if module.startswith(ROOT + "."):
                 leaf = module.removeprefix(ROOT + ".").split(".")[0]
-                if leaf not in CONSUMER_SAFE:
+                allowed = CONSUMER_SAFE | (TRANSPORT if path in ADAPTERS else set())
+                if leaf not in allowed:
+                    offenders.append(f"{path.relative_to(APP)} imports {module}")
+    assert offenders == []
+
+
+def test_only_the_forex_factory_names_a_concrete_forex_provider() -> None:
+    offenders: list[str] = []
+    for path in FOREX.rglob("*.py"):
+        if path in FOREX_COMPOSITION or path.stem in FOREX_CONCRETE:
+            continue
+        for module in _imports(path):
+            if module.startswith(FOREX_ROOT + "."):
+                leaf = module.removeprefix(FOREX_ROOT + ".").split(".")[0]
+                if leaf in FOREX_CONCRETE:
                     offenders.append(f"{path.relative_to(APP)} imports {module}")
     assert offenders == []
 
@@ -49,6 +72,8 @@ def test_the_guard_sees_a_bad_import(tmp_path: Path) -> None:
     bad.write_text(f"from {ROOT}.fake import FakeProvider\nfrom {ROOT} import fake\n")
     seen = _imports(bad)
     assert f"{ROOT}.fake" in seen
+    bad.write_text("from app.modules.forex.marketdata import fake\n")
+    assert "app.modules.forex.marketdata.fake" in _imports(bad)
 
 
 def test_the_interface_modules_have_no_vendor_imports() -> None:

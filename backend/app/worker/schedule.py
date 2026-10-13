@@ -55,4 +55,9 @@ def build_schedule() -> dict[str, dict[str, Any]]:
             "task": "app.worker.tasks.ingest_research",
             "schedule": crontab(hour=3, minute=0),
         },
+        # Forex registry and monthly partitions three months ahead (P13-T02.3), once a day.
+        "forex-maintenance": {
+            "task": "app.worker.tasks.forex_maintenance",
+            "schedule": crontab(hour=1, minute=15),
+        },
     }
