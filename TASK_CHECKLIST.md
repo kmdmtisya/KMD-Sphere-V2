@@ -1173,10 +1173,10 @@
   - [x] P12-T04.1 Impact calc
   - [x] P12-T04.2 Suitability rules
   - [x] P12-T04.3 Tests
-- [ ] **P12-T05** · Research evidence ingestion and retrieval · `IN_PROGRESS` 🔄
+- [x] **P12-T05** · Research evidence ingestion and retrieval · `COMPLETED` ✅
   - Deps: P12-T02, P08-T09 · Wave: W2 · Track: BE · Size: L · Approval: no
-  - Started: 2026-10-13T15:56:16+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-13T15:56:16+04:00 · Completed: 2026-10-13T17:01:04+04:00 · Duration: 1h 04m 48s · Blocker: —
+  - Evidence: Research evidence: research_items (migration 0018) with source, licence status, published/retrieved times, provenance URL never fetched, pgvector embedding + full-text; idempotent ingestion of synthetic DEMO notes (daily, fake market data only) and fixture-only SEC EDGAR adapter; replaceable embedder (deterministic hash model); user-agnostic GET /api/v1/research (hybrid ranking); get_asset_research tool registered. 14 tests; docs/design/research.md. Backend 2,448 passed, coverage 97.35%. PR #144. CI all gates pass.
   - [x] P12-T05.1 Schema
   - [x] P12-T05.2 Ingestion
   - [x] P12-T05.3 Retrieval
