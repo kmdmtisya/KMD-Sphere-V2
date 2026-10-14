@@ -57,7 +57,7 @@ Each option is scored for this repository: ++ strong, + adequate, − weak.
 - **Copy and disclosures:** the server's notices (not advice, DEMO, simulated, stale) are shown as sent, never rewritten. The web's own strings sit in one message catalogue with a key-parity check against `app_en.arb`.
 - **Parity:** `docs/web/CROSS_PLATFORM_FEATURE_PARITY_MATRIX.md` and an automated check that every mobile route has a web route or a recorded exception.
 
-### Stack (to confirm in P15-T02)
+### Stack (to confirm in P14-T02)
 
 | Area | Choice |
 |---|---|
@@ -69,7 +69,7 @@ Each option is scored for this repository: ++ strong, + adequate, − weak.
 | Decimal display | `decimal.js` for formatting decimal strings only, never for calculating |
 | Tests | Vitest, Testing Library, Playwright, axe-core, Lighthouse CI |
 
-Exact versions are pinned in P15-T04 after a licence and dependency audit (the `security gate` covers `npm audit`, licences and secret scanning).
+Exact versions are pinned in P14-T04 after a licence and dependency audit (the `security gate` covers `npm audit`, licences and secret scanning).
 
 ### Session model (DEC-31): Backend-for-Frontend
 
@@ -78,7 +78,7 @@ Exact versions are pinned in P15-T04 after a licence and dependency audit (the `
 - **API calls.** The BFF forwards `/api/*` to FastAPI with the bearer token. The API stays the only authority: it verifies the token, its audience and the authorised party (`wealthsphere-web` is added to `OIDC_AUTHORIZED_PARTIES`), and enforces ownership on every call. The BFF holds no business rules.
 - **CSRF and headers.** Every state-changing request needs a CSRF token header (double submit) on top of SameSite. CSP uses nonces, plus the existing security headers.
 - **Session lifetime.** Idle and absolute session timeouts follow the realm. Logout ends the Keycloak session (RP-initiated logout). MFA is enforced by Keycloak as for mobile.
-- **Streaming.** The chat stream (server-sent events) is proxied as a stream. The forex WebSocket gets a short-lived, single-use ticket minted by the BFF (P15-T13), because the browser cannot send the bearer token and the token must not go in a URL.
+- **Streaming.** The chat stream (server-sent events) is proxied as a stream. The forex WebSocket gets a short-lived, single-use ticket minted by the BFF (P14-T13), because the browser cannot send the bearer token and the token must not go in a URL.
 
 ## Consequences
 

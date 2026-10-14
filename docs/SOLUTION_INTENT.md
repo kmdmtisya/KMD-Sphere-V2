@@ -281,7 +281,7 @@ The objective is not for AI to make financial decisions on behalf of the user. T
 
 
 ## 34. Forex Market Intelligence Module (approved extension, ADR-0009)
-_Status: approved by the user 2026-10-09 (ADR-0009, phase P13). Not part of the core release path (P00-P12 and P14-P17); it is planned as phase P13, between the AI phases and cloud infrastructure._
+_Status: approved by the user 2026-10-09 (ADR-0009, phase P13). Not part of the core release path (P00-P12 and P15-P17); it is planned as phase P13, between the AI phases and cloud infrastructure._
 
 **Intent.** Help users study the foreign-exchange market with timestamped market data, deterministic technical analysis, probabilistic forecasts with honest validation, a transparent opportunity ranking, trade risk management, backtesting and paper trading, explained by the AI Copilot through allow-listed tools.
 
@@ -299,7 +299,7 @@ _Status: approved by the user 2026-10-09 (ADR-0009, phase P13). Not part of the 
 
 
 ## 35. Enterprise Web Portal (proposed extension, ADR-0018)
-_Status: proposed 2026-10-14; phase P15 (WEB workstream) and ADR-0018 await the user's approval. Details: docs/web/WEB_PORTAL_ARCHITECTURE.md, WEB_UI_UX_SPECIFICATION.md, CROSS_PLATFORM_FEATURE_PARITY_MATRIX.md and WEB_DEPLOYMENT_PLAN.md._
+_Status: proposed 2026-10-14; phase P14 (WEB workstream) and ADR-0018 await the user's approval. Details: docs/web/WEB_PORTAL_ARCHITECTURE.md, WEB_UI_UX_SPECIFICATION.md, CROSS_PLATFORM_FEATURE_PARITY_MATRIX.md and WEB_DEPLOYMENT_PLAN.md._
 
 1. **Vision and purpose.** A wealth-management workspace for desktop and laptop browsers. It is not a marketing site or a read-only report, and not an enlarged phone screen. A user moves between phone and desktop without losing data, preferences or capability.
 2. **Functional parity.** Every capability of the apps is available on the web, subject to the user's permissions. The parity matrix records each one, with its API, tests and gate evidence. Capabilities no channel has yet are planned dependencies, never claimed parity.

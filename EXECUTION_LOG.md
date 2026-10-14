@@ -1711,3 +1711,9 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 - the user's instruction of 2026-10-13 (run P13-T01 to P13-GATE sequentially) is paused at a clean boundary: P13-T01 and P13-T02 are complete and merged; P13-T03 is not started
 - reason: the user's priority of 2026-10-14 puts the web foundation, dashboard, portfolio and Copilot before the advanced Forex workspace; the proposed order (DEC-38) resumes P13 after P15 waves 1 to 8
 - the advance approvals recorded for P13-T05, T07, T13, T14 and P13-GATE are unchanged
+
+### 2026-10-14T09:46:03+04:00 — PLAN CHANGE (proposed) — web portal moved to phase P14, directly after Forex P13; Cloud Infrastructure becomes P15
+- requested by the user 2026-10-14: "move phase P15 to be after phase P13"
+- the proposed phases P14 and P15 swapped numbers: Enterprise Web Portal P15 -> P14; Cloud Infrastructure P14 -> P15 (task ids, gates, decisions, documents and the phase tables updated; earlier entries in this log, including the previous PLAN CHANGE entry, keep the old ids)
+- Hardening P16 and Release P17 are unchanged; no task, dependency or criterion changed other than its phase number
+- DEC-38 (execution order: web core before the rest of P13) is unchanged, so execution order still differs from numeric order; P14 phase approval remains PENDING and ADR-0018 Proposed

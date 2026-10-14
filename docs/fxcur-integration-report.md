@@ -1,6 +1,6 @@
 # FXCUR integration report (P11-T09)
 
-Date: 2026-10-13. Scope: the reporting-currency feature end to end (P11-T02 to P11-T08) on the local stack (PostgreSQL, Redis, the API, the Flutter app). Providers are stubs or the fake provider: **no real FX vendor was called** (the T03 fixture-only approval; the real-provider soak is moved to P14-T11).
+Date: 2026-10-13. Scope: the reporting-currency feature end to end (P11-T02 to P11-T08) on the local stack (PostgreSQL, Redis, the API, the Flutter app). Providers are stubs or the fake provider: **no real FX vendor was called** (the T03 fixture-only approval; the real-provider soak is moved to P15-T11).
 
 ## Backend drills (`backend/tests/fx/test_fxcur_integration.py`, real app and database)
 
@@ -31,5 +31,5 @@ cd mobile/wealthsphere_app && WS_E2E_CONFIG=../../e2e.json flutter test e2e
 
 ## Not covered here
 
-- A real FX provider (key, quota, live outages): P11-T11 soaks the scheduler against the fake provider; the real-provider soak is P14-T11.
+- A real FX provider (key, quota, live outages): P11-T11 soaks the scheduler against the fake provider; the real-provider soak is P15-T11.
 - Device runs on Android and iOS hardware: CI builds both platforms; device testing is part of release (P17).

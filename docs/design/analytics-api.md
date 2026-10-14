@@ -56,4 +56,4 @@ Reads after the response always miss and recompute. A failed write, a read, a fo
 
 **Redis down.** Requests are computed without the cache (logged). A failed invalidation is logged at error level, and entries still expire within the TTL.
 
-**What Redis holds.** Cached answers contain the user's financial figures. Redis is internal to the deployment (no public access, password-protected; TLS in deployed environments, P14), and entries expire after 5 minutes. Nothing is cached for a request that was not authorised.
+**What Redis holds.** Cached answers contain the user's financial figures. Redis is internal to the deployment (no public access, password-protected; TLS in deployed environments, P15), and entries expire after 5 minutes. Nothing is cached for a request that was not authorised.

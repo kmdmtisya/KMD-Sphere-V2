@@ -1,6 +1,6 @@
 # FXCUR soak report (P11-T11)
 
-Date: 2026-10-13. Scope: the reporting-currency rate refresh, cache and status under sustained use, run on the local stack (PostgreSQL with every migration) with a **simulated clock and scripted providers**. This is option A of the advance approval: **no real FX vendor was called**. The soak against the real provider moves to P14-T11.
+Date: 2026-10-13. Scope: the reporting-currency rate refresh, cache and status under sustained use, run on the local stack (PostgreSQL with every migration) with a **simulated clock and scripted providers**. This is option A of the advance approval: **no real FX vendor was called**. The soak against the real provider moves to P15-T11.
 
 Harness: [`backend/tests/fx/soak.py`](../backend/tests/fx/soak.py). Machine-readable result: [`reports/fx-soak/fx-soak-96h.json`](../reports/fx-soak/fx-soak-96h.json). A 12-hour run is part of the test suite ([`backend/tests/fx/test_soak.py`](../backend/tests/fx/test_soak.py)), so CI repeats it on every change.
 
@@ -94,7 +94,7 @@ Acceptance for P11-T11:
    - Simulated clock and scripted sources.
    - One API process, with the breaker in memory. Window coordination happens in the database and is shared across processes; the breaker is not.
    - Concurrency comes from back-to-back calls, not parallel requests.
-   - Real vendor behaviour (latency, how a "quota reached" answer is counted, publication times) is for P14-T11 against the real provider.
+   - Real vendor behaviour (latency, how a "quota reached" answer is counted, publication times) is for P15-T11 against the real provider.
 
 ## How to run
 

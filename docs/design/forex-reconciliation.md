@@ -24,7 +24,7 @@ The design predates P08 to P12. These are the facts of the platform now that the
 | DEC-20 | **Launch markets: Kenya and the UAE, as for P12. Regulatory classification is open and goes to legal review in P13-T14.** Until a reviewer answers, the module is information and paper trading only, every screen carries the not-advice and not-a-broker wording, and the module cannot be enabled outside development. The same reviewer (Kelvin Mutisya David, DEC-10) is asked to cover Forex in the same way as P12 |
 | DEC-21 | **PostgreSQL native monthly range partitioning with BRIN indexes** for quotes and candles. TimescaleDB only if measured volume (P13-T13) justifies it |
 | DEC-22 | **v1 model scope:** random-walk, no-change and drift baselines, ARIMA/SARIMA (statsmodels), gradient boosting (LightGBM, XGBoost) and Random Forest (scikit-learn), and volatility models. **LSTM, GRU and Transformer models are research-only**, behind a flag and a separate gate, never the default. New libraries are added with a licence check and pass the dependency audit in CI |
-| DEC-23 | **Ship after v1, behind a feature flag**, off by default. Turning it on in production needs core hardening (P16), the staging smoke tests (P14-T11), DEC-19 and DEC-20 |
+| DEC-23 | **Ship after v1, behind a feature flag**, off by default. Turning it on in production needs core hardening (P16), the staging smoke tests (P15-T11), DEC-19 and DEC-20 |
 | DEC-24 | **A reviewed, versioned contract-specification table** (pip location, lot size, margin rules) per instrument, with a check against the provider's data when one exists. A mismatch is reported, never silently corrected |
 
 ## 3. Hard rules written into the design (acceptance criteria)

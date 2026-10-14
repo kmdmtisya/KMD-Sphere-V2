@@ -31,7 +31,7 @@ Feature: multi-currency reporting and FX management (phase P11, tasks P11-T01 to
 
 1. Buy the ExchangeRate-API Pro plan and store its key as a secret (`EXCHANGERATE_API_KEY`), never in source.
 2. Receive ExchangeRate-API's written confirmation of the use described in the licence review.
-3. Run the real-provider soak (P14-T11): quota counting, latency and publication times against the live service.
+3. Run the real-provider soak (P15-T11): quota counting, latency and publication times against the live service.
 4. Re-check both providers' terms before release (P17); their terms can change.
 
 ## Sign-off

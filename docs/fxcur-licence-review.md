@@ -42,7 +42,7 @@ Date: 2026-10-13. Reviewer: Claude (engineering review of the published terms, *
    >
    > Thank you.
 
-3. The real-provider soak (P14-T11) checks quota counting and publication times against the live service.
+3. The real-provider soak (P15-T11) checks quota counting and publication times against the live service.
 
 ## ECB euro reference rates (fallback)
 

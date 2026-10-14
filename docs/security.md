@@ -17,11 +17,11 @@ Derived from CLAUDE.md (Security Rules), `SOLUTION_INTENT.md` section 23 and the
 | Authorization | Ownership checks on every resource; IDOR tests per endpoint | P04-T03, P05-T09 |
 | API protection | Rate limiting, brute-force controls, input limits, security headers (see "API protection" below) | P04-T05 |
 | Audit | Append-only audit events for financial changes and AI/tool activity (see "Audit events" below) | P04-T04 |
-| Secrets | Never in source control; `.env` is git-ignored; secret manager in cloud; CI uses OIDC, not long-lived keys | P01-T05, P14-T06 |
-| Transport / storage | TLS 1.2+ (prefer 1.3); encryption at rest | P14 |
+| Secrets | Never in source control; `.env` is git-ignored; secret manager in cloud; CI uses OIDC, not long-lived keys | P01-T05, P15-T06 |
+| Transport / storage | TLS 1.2+ (prefer 1.3); encryption at rest | P15 |
 | Logging | No secrets or unnecessary financial payloads in logs; redaction filter with tests | P01-T12 |
 | Supply chain | Secret scanning, dependency and container scanning, SAST, SBOM | P01-T11 |
-| Backups | Encrypted backups, restore tests, documented RPO/RTO | P14-T10 |
+| Backups | Encrypted backups, restore tests, documented RPO/RTO | P15-T10 |
 | Privacy | Consent, retention, export and account deletion | P16-T05 |
 | Reviews | OWASP API Security Top 10, OWASP MASVS, penetration test | P16 |
 
@@ -93,7 +93,7 @@ await session.commit()                         # the change and its event commit
 
 - Exceeding a budget returns **429** problem+json (`type .../rate-limited`) with `Retry-After` in whole seconds; mobile clients wait at least that long before retrying.
 - Counters are fixed windows in Redis (`ws:rl:<budget>:<sha256>`; raw IPs and user ids are not stored). If Redis is unavailable, each process keeps its own counters and the outage is logged: limits stay on, they are never skipped.
-- The client IP is the direct peer. Behind a proxy or load balancer, run uvicorn with `--proxy-headers --forwarded-allow-ips=<proxy>` (P14); `X-Forwarded-For` is never trusted directly.
+- The client IP is the direct peer. Behind a proxy or load balancer, run uvicorn with `--proxy-headers --forwarded-allow-ips=<proxy>` (P15); `X-Forwarded-For` is never trusted directly.
 - Every response carries `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: no-referrer`, `Cross-Origin-Resource-Policy: same-origin`, `Permissions-Policy`, `Cache-Control: no-store` and a deny-all `Content-Security-Policy` (except Swagger UI, which is disabled in production). Staging and production add `Strict-Transport-Security`.
 
 ### Forex stream WebSocket (P13-T02)
@@ -108,7 +108,7 @@ The REST budgets above do not apply to WebSockets. `/api/v1/forex/stream` has it
 
 - Analytics answers are cached in Redis under keys that contain the requesting user's id, and only after the route has authorised the request. A cached answer is never read back for another user, and refused requests store nothing (tests: `tests/test_analytics_api.py`, `tests/test_cache.py`).
 - Any successful write by a user invalidates their cached answers before the response is sent (a per-user generation counter). Entries also expire after `analytics_cache_seconds` (300).
-- Cached answers hold financial figures, so Redis must stay internal and password-protected, with TLS in deployed environments (P14). If Redis is down, answers are computed without it.
+- Cached answers hold financial figures, so Redis must stay internal and password-protected, with TLS in deployed environments (P15). If Redis is down, answers are computed without it.
 - Design: docs/design/analytics-api.md.
 
 ## Mobile session tokens (P04-T06)
@@ -145,7 +145,7 @@ Reviewed 2026-10-12 against the code on `main` after P08-T08. Automated checks t
 - Keys (`COINGECKO_API_KEY`, `TWELVEDATA_API_KEY`) are `SecretStr` settings read from the environment. They are unwrapped in two places only: the adapters' header builders (`coingecko.py`, `twelvedata.py`) and `registry.py`, which merely tests whether one is set. A provider with no key is not built; one built without a key refuses to call (`ProviderAuthError`).
 - Keys travel in request headers (`x-cg-demo-api-key` or `x-cg-pro-api-key`; `Authorization: apikey ...`), never in URLs or query strings, so they cannot appear in transport errors or access logs. The transport wrapper reduces any HTTP failure to its type name.
 - Adapter `repr` shows no key; errors name the provider and the HTTP or body status code, never the response body. Tests feed responses that echo the key (401, 403, 500, error bodies, invalid JSON) and assert it appears in no exception, `repr` or captured log, for both CoinGecko and Twelve Data.
-- `.env.example` documents both variables with empty values (tested). No compose file or source file assigns them. Deployed environments must inject them from a secret manager (P14); until then they live only in an untracked `.env`.
+- `.env.example` documents both variables with empty values (tested). No compose file or source file assigns them. Deployed environments must inject them from a secret manager (P15); until then they live only in an untracked `.env`.
 - Jobs take identifiers only (asset id, dates), never keys, so Celery task arguments, `job_runs` keys and `job_failures` rows hold no secret.
 - Gaps: there is no custom gitleaks rule for these two key shapes (the default rules and the empty example file are the control). Add rules once real keys exist. Key rotation is not automated; rotation means changing the secret and restarting workers.
 
@@ -174,7 +174,7 @@ The licence position is in ADR-0014 section 4 and `docs/market-data-providers.md
 1. Licences unconfirmed for every real provider (blocks production, tracked in ADR-0014).
 2. CoinGecko attribution not yet shown in the app.
 3. ECB reuse terms not read.
-4. Custom gitleaks rules for provider keys, and secret-manager injection (P14).
+4. Custom gitleaks rules for provider keys, and secret-manager injection (P15).
 5. The synthetic CoinGecko and Twelve Data fixtures must be re-recorded against the real services once keys exist, and the key checks repeated with a real key.
 
 ## Offline cache (P09-T06, ADR-0015)

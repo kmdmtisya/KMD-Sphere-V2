@@ -20,7 +20,7 @@ Before changing code, read:
 `docs/SOLUTION_INTENT.md` defines the product direction. Do not implement features that conflict with it without explicitly documenting the conflict.
 
 ## Mission
-Build a secure, scalable personal wealth intelligence platform for Android, iOS and the web (web: proposed, phase P15) using the architecture and engineering constraints defined by the project documents.
+Build a secure, scalable personal wealth intelligence platform for Android, iOS and the web (web: proposed, phase P14) using the architecture and engineering constraints defined by the project documents.
 
 ## Non-Negotiable Rules
 - Do not bypass authentication or authorization.

@@ -1,6 +1,6 @@
 # WealthSphere Web Portal: architecture
 
-**Status:** Proposed (2026-10-14), pending the user's approval of [ADR-0018](../adr/0018-web-portal-architecture.md) and phase P15. Related documents:
+**Status:** Proposed (2026-10-14), pending the user's approval of [ADR-0018](../adr/0018-web-portal-architecture.md) and phase P14. Related documents:
 - UX: [WEB_UI_UX_SPECIFICATION.md](WEB_UI_UX_SPECIFICATION.md)
 - Parity: [CROSS_PLATFORM_FEATURE_PARITY_MATRIX.md](CROSS_PLATFORM_FEATURE_PARITY_MATRIX.md)
 - Deployment: [WEB_DEPLOYMENT_PLAN.md](WEB_DEPLOYMENT_PLAN.md)
@@ -28,7 +28,7 @@
 ## 2. Repository layout (proposed)
 
 ```text
-web/                         Next.js app (new, P15-T04)
+web/                         Next.js app (new, P14-T04)
   app/                       routes (App Router): (auth), (portal)/home, portfolios, …
   app/api/                   BFF route handlers: auth/*, proxy/[...path], stream/*, ws-ticket
   src/client/                generated OpenAPI types + thin typed fetcher (no business logic)
@@ -36,7 +36,7 @@ web/                         Next.js app (new, P15-T04)
   src/features/<module>/     screens per module, mirroring mobile/lib/features
   src/tokens/                generated CSS variables (from design/tokens)
   tests/                     unit and component tests (Vitest), e2e (Playwright)
-design/tokens/               wealthsphere.tokens.json, the single token source (P15-T03)
+design/tokens/               wealthsphere.tokens.json, the single token source (P14-T03)
 backend/                     unchanged; small additions only where the matrix says so
 mobile/                      unchanged, apart from consuming the generated Dart palette
 ```
@@ -56,7 +56,7 @@ mobile/                      unchanged, apart from consuming the generated Dart 
 | Authorisation | Unchanged and server-side: ownership is checked on every resource (ADR-0011, 404 for another user's resource), and a role is checked for operator views (DEC-34). Hidden UI is never the control |
 | Rate limits | The API's per-IP and per-account budgets apply as for mobile. The BFF also limits sign-in attempts per IP |
 | Audit | Existing audit events (material financial changes, AI tool use) are written by the API and carry a `channel=web` attribute so channels can be told apart. Sign-in and logout are audited by Keycloak |
-| Streams | AI chat (server-sent events) is proxied as a stream with backpressure. The forex WebSocket uses a single-use ticket valid for 30 s, minted by the BFF; the API exchanges it for a session (P15-T13) |
+| Streams | AI chat (server-sent events) is proxied as a stream with backpressure. The forex WebSocket uses a single-use ticket valid for 30 s, minted by the BFF; the API exchanges it for a session (P14-T13) |
 
 ## 4. Data, caching and cross-platform consistency
 
@@ -68,8 +68,8 @@ mobile/                      unchanged, apart from consuming the generated Dart 
   - Data is refetched on focus and reconnect.
   - Dashboards poll gently while visible (default 60 s; quotes faster where licensed).
   - No polling runs while the tab is hidden.
-- **Concurrent edits.** Today the API is last-write-wins on PATCH (portfolios, goals, liabilities, valuations). Ledger transactions are append-only with reversals, so they cannot conflict. P15-T18 adds optimistic concurrency: `ETag`/`If-Match`, or a `version` field with 409 on conflict, for editable records used by both channels. The web shows a reload-and-compare prompt on 409. This is a backend change, listed in the matrix.
-- **Preferences.** The reporting currency, theme and notification preferences are already server-side (`/me/preferences`, `/me/currency-preferences`) and shared across channels. Web-only layout preferences (sidebar, table views, dashboard layout) would need a small preferences extension (P15-T07, DEC-35). Until then they are kept per browser as conveniences.
+- **Concurrent edits.** Today the API is last-write-wins on PATCH (portfolios, goals, liabilities, valuations). Ledger transactions are append-only with reversals, so they cannot conflict. P14-T18 adds optimistic concurrency: `ETag`/`If-Match`, or a `version` field with 409 on conflict, for editable records used by both channels. The web shows a reload-and-compare prompt on 409. This is a backend change, listed in the matrix.
+- **Preferences.** The reporting currency, theme and notification preferences are already server-side (`/me/preferences`, `/me/currency-preferences`) and shared across channels. Web-only layout preferences (sidebar, table views, dashboard layout) would need a small preferences extension (P14-T07, DEC-35). Until then they are kept per browser as conveniences.
 - **Timestamps.** Every figure shows its as-of time from the API, rendered in the user's locale and time zone. Nothing is re-timestamped by the client.
 - **Offline.** In v1 the web has no offline cache: financial data is not stored at rest in the browser. When offline, the portal shows an offline state and keeps nothing on disk. (Mobile keeps its encrypted snapshots, ADR-0015.)
 
@@ -85,7 +85,7 @@ mobile/                      unchanged, apart from consuming the generated Dart 
 
 - **Front-end errors.** These go to the backend's telemetry through a BFF endpoint, with no personal data, no amounts and no tokens. The OpenTelemetry trace context runs from the browser to the BFF to the API, keeping the existing correlation ID.
 - **BFF metrics.** Sign-in successes and failures, refreshes, proxy latency, upstream error rate and session count.
-- **Real-user monitoring.** Web vitals are sampled in production and sent to the same metrics stack (P14).
+- **Real-user monitoring.** Web vitals are sampled in production and sent to the same metrics stack (P15).
 
 ## 7. Backend changes this workstream needs
 
@@ -93,11 +93,11 @@ Each change is small, and tested and documented like any other API change.
 
 | Change | Task | Why |
 |---|---|---|
-| Keycloak client `wealthsphere-web` (confidential, PKCE, redirect URIs) and `OIDC_AUTHORIZED_PARTIES` adding `wealthsphere-web` | P15-T05 | Web sign-in |
-| `channel` attribute on audit events (from a BFF header, validated) | P15-T05 | Telling channels apart in the audit trail |
-| Optimistic concurrency on editable records (`ETag`/`If-Match` or `version`) | P15-T18 | Safe cross-channel edits |
-| Report and export endpoints (PDF, CSV, XLSX) generated by the backend from the same engines | P15-T15 (DEC-33) | Exports must reconcile with the screens; none exist today on any channel |
-| Net-worth history endpoint | P15-T11 | The web dashboard asks for a history series; today only the current net worth exists |
-| Search endpoint across the user's own portfolios, assets, transactions and goals (owner-scoped) | P15-T07 | Global search; today only catalogue asset search exists |
-| Operator endpoints behind the `support` role (read-only operational status) | P15-T17 (DEC-34) | No admin functions exist today; scope to be decided |
-| Web-ticket exchange for the forex WebSocket | P15-T13 | Browser streaming without a token in the URL |
+| Keycloak client `wealthsphere-web` (confidential, PKCE, redirect URIs) and `OIDC_AUTHORIZED_PARTIES` adding `wealthsphere-web` | P14-T05 | Web sign-in |
+| `channel` attribute on audit events (from a BFF header, validated) | P14-T05 | Telling channels apart in the audit trail |
+| Optimistic concurrency on editable records (`ETag`/`If-Match` or `version`) | P14-T18 | Safe cross-channel edits |
+| Report and export endpoints (PDF, CSV, XLSX) generated by the backend from the same engines | P14-T15 (DEC-33) | Exports must reconcile with the screens; none exist today on any channel |
+| Net-worth history endpoint | P14-T11 | The web dashboard asks for a history series; today only the current net worth exists |
+| Search endpoint across the user's own portfolios, assets, transactions and goals (owner-scoped) | P14-T07 | Global search; today only catalogue asset search exists |
+| Operator endpoints behind the `support` role (read-only operational status) | P14-T17 (DEC-34) | No admin functions exist today; scope to be decided |
+| Web-ticket exchange for the forex WebSocket | P14-T13 | Browser streaming without a token in the URL |

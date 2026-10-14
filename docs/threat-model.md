@@ -1,6 +1,6 @@
 # WealthSphere Threat Model (v1, P04-T09)
 
-Status: Approved by the user 2026-10-10 (P04-T09) (P04-T09, 2026-10-10). Scope: everything built through P04, plus the planned AI surface (P12) so its controls are designed in, not added later. Reviewed again at P10 (AI tool layer), P14 (cloud) and P16 (hardening, OWASP API Top 10 / MASVS review, penetration test).
+Status: Approved by the user 2026-10-10 (P04-T09) (P04-T09, 2026-10-10). Scope: everything built through P04, plus the planned AI surface (P12) so its controls are designed in, not added later. Reviewed again at P10 (AI tool layer), P15 (cloud) and P16 (hardening, OWASP API Top 10 / MASVS review, penetration test).
 
 Method: STRIDE per surface. Each threat lists the control, where it is tested, and its status: **In place** (implemented and tested), **Partial** (implemented, a gap is known), **Planned** (owned by a later task). Findings found while building P04 are in [security-findings.md](security-findings.md).
 
@@ -62,8 +62,8 @@ Trust boundaries:
 | I2 | S | Stolen password alone is enough | TOTP MFA available; set up from More > Account | smoke (TOTP enrolment, wrong code refused) | **Partial**: MFA is optional (user decision 2026-10-10, SF-10; revisited at P16) |
 | I3 | S/E | Authorization code interception (custom scheme hijack) | Public client with PKCE S256 required; exact redirect URI; implicit and password grants off | realm tests; smoke (no-PKCE refused, implicit and password grants refused) | In place |
 | I4 | I | Long-lived tokens leak | Access 5 min; refresh rotation with reuse detection (`revokeRefreshToken`, max reuse 0); SSO idle 30 min, max 10 h; no `offline_access` scope requested | realm tests; mobile `keycloak_oidc_client_test` | In place |
-| I5 | T | Realm misconfiguration drifts | Realm as code (`infra/keycloak/realm-export.json`), tests over the export; `sync-realm` | `test_keycloak_realm.py` | In place (dev); production realm hardening (HTTPS only, admin access, SMTP) is P14 |
-| I6 | R | Account takeover via password reset | Reset only on Keycloak's page with email verification; app builds the reset link from configuration only | `auth_screens_test` (URL) | In place; email delivery is configured with SMTP in P14 |
+| I5 | T | Realm misconfiguration drifts | Realm as code (`infra/keycloak/realm-export.json`), tests over the export; `sync-realm` | `test_keycloak_realm.py` | In place (dev); production realm hardening (HTTPS only, admin access, SMTP) is P15 |
+| I6 | R | Account takeover via password reset | Reset only on Keycloak's page with email verification; app builds the reset link from configuration only | `auth_screens_test` (URL) | In place; email delivery is configured with SMTP in P15 |
 
 ### 3.2 API (FastAPI)
 
@@ -72,7 +72,7 @@ Trust boundaries:
 | A1 | S | Forged, tampered, expired or replayed-for-another-audience tokens | RS256 only; `exp`, `iat`, `iss`, `sub`, `aud` required; issuer, audience, `azp` and expiry checked (`nbf` when present); JWKS cached with one refetch for unknown `kid`; 30 s leeway; fail closed when unconfigured; one uniform 401 | `test_auth_tokens.py` (31 cases), `test_auth_coverage.py` | In place |
 | A2 | S/E | A new endpoint ships without authentication | Protected by default (`current_user`); every route not on the public allow-list must answer 401 to no/garbage/expired/foreign-key/wrong-scheme tokens | `test_auth_coverage.py` | In place |
 | A3 | I/E | IDOR: reading or changing another user's resource | Ownership in the query (`owned_by`); updates repeat `user_id`; 404 indistinguishable from missing (ADR-0011); owner never taken from the body | `test_authz_risk_profiles.py`; `test_idor_coverage.py` fails CI for any id route without a registered cross-user test | In place |
-| A4 | D | Request floods, token guessing against the API | Redis rate limits: auth routes 10/60 s per IP, failed authentications 10/300 s per IP (then 429 for all requests), 600/60 s per IP, 120/60 s per account; per-process fallback if Redis is down | `test_api_protection.py` | In place; per-IP is only as good as client-IP attribution behind the load balancer (P14, `--proxy-headers`) |
+| A4 | D | Request floods, token guessing against the API | Redis rate limits: auth routes 10/60 s per IP, failed authentications 10/300 s per IP (then 429 for all requests), 600/60 s per IP, 120/60 s per account; per-process fallback if Redis is down | `test_api_protection.py` | In place; per-IP is only as good as client-IP attribution behind the load balancer (P15, `--proxy-headers`) |
 | A5 | D | Oversized bodies | 1 MiB limit by Content-Length and while streaming | `test_api_protection.py` | In place |
 | A6 | T/I | Browser-based attacks on API responses | `nosniff`, `X-Frame-Options: DENY`, deny-all CSP, `no-referrer`, CORP, `Cache-Control: no-store`, HSTS in deployed environments; CORS off (explicit https origins only, no credentials) | `test_api_protection.py` | In place |
 | A7 | I | Error responses or logs leak secrets or financial data | RFC 7807 errors without internals; validation errors never echo values; log redaction for credentials, tokens and amounts | `test_redaction.py`, `test_identity_api.py`, `test_auth_coverage.py` | In place |
@@ -99,9 +99,9 @@ Trust boundaries:
 | # | STRIDE | Threat | Control | Status |
 |---|---|---|---|---|
 | D1 | I | Secrets in source control | `.env` git-ignored; gitleaks in CI (full history) and pre-commit; no defaults for secrets | In place (QG-08.3) |
-| D2 | I | Database or Redis exposed | Local stack binds to loopback; managed services, network policy and TLS in P14 | Planned (P14) |
-| D3 | I | Data at rest | Encryption at rest and backups (P14-T05, P14-T10) | Planned |
-| D4 | T | Supply chain (dependencies, actions) | Pinned action SHAs, pip-audit/OSV, Trivy, CodeQL, SBOM in CI | In place (scanning); dependency policy at P14-T04 |
+| D2 | I | Database or Redis exposed | Local stack binds to loopback; managed services, network policy and TLS in P15 | Planned (P15) |
+| D3 | I | Data at rest | Encryption at rest and backups (P15-T05, P15-T10) | Planned |
+| D4 | T | Supply chain (dependencies, actions) | Pinned action SHAs, pip-audit/OSV, Trivy, CodeQL, SBOM in CI | In place (scanning); dependency policy at P15-T04 |
 
 ### 3.5 AI surface (planned, P10 and P12)
 
@@ -123,10 +123,10 @@ Designed-in controls; each becomes a tested control in its task.
 |---|---|---|
 | MFA optional | A stolen password is enough for accounts without TOTP | Accepted by the user on 2026-10-10 (optional for now); revisit at P16 |
 | iOS not exercised on a device | Keychain options and Face ID behaviour are unit-tested, and CI compiles iOS, but they have not been run on an iPhone | Run on a device or simulator before P04-GATE closes QG-05.4, or defer with approval |
-| Client IP attribution behind a proxy | Per-IP limits could be bypassed or shared wrongly | P14 (load balancer, `--proxy-headers`) |
+| Client IP attribution behind a proxy | Per-IP limits could be bypassed or shared wrongly | P15 (load balancer, `--proxy-headers`) |
 | App DB role owns `audit_events` | The owner could disable the triggers | P16 (separate least-privilege role) |
 | No certificate pinning, root/jailbreak detection | Higher risk on compromised devices | P16 MASVS review |
-| Dev stack uses HTTP for Keycloak and API | Dev only; release builds refuse HTTP | P14 (TLS everywhere) |
+| Dev stack uses HTTP for Keycloak and API | Dev only; release builds refuse HTTP | P15 (TLS everywhere) |
 
 ## 5. Security test suite
 

@@ -50,7 +50,7 @@ Measured server-side at the API boundary under the design workload in section 4.
 
 | Objective | Target | Measured by |
 |---|---|---|
-| Availability (production, monthly) | >= 99.9% | Uptime monitoring / SLO dashboard (P14-T09) |
+| Availability (production, monthly) | >= 99.9% | Uptime monitoring / SLO dashboard (P15-T09) |
 | Server error rate (5xx) | < 0.1% of requests | Metrics |
 | Read endpoints, latency | p95 <= 300 ms, p99 <= 800 ms | k6 load test + metrics |
 | Write endpoints (ledger posting etc.) | p95 <= 500 ms, p99 <= 1.2 s | Same |
@@ -61,7 +61,7 @@ Measured server-side at the API boundary under the design workload in section 4.
 | Authentication endpoints | p95 <= 500 ms (excluding deliberate rate-limit delays) | Same |
 | Market-data freshness | Delayed quotes refreshed at least every 15 min during market hours; every displayed price carries `as_of` | Ingestion metrics |
 | Background jobs | Refresh of up to 500 instruments completes within 60 s; failed jobs retry with exponential backoff (max 5) then land in a dead-letter queue with an alert | Worker metrics, fault-injection test |
-| Recovery | RPO <= 15 min (point-in-time recovery), RTO <= 4 h | Restore drill (P14-T10, P16-T09) |
+| Recovery | RPO <= 15 min (point-in-time recovery), RTO <= 4 h | Restore drill (P15-T10, P16-T09) |
 
 ## 4. Design workload and capacity assumptions (to confirm)
 

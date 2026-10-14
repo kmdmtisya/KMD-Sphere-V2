@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-14T08:58:32+04:00 by `scripts/track.py`._
+_Generated at 2026-10-14T09:46:05+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -193,10 +193,10 @@ Approved By: —
 - [x] QG-08.1 Authentication and authorization tests pass · Required: P04 · By: P04-T09 · Evidence: Authentication and authorization tests pass: backend security suite (pytest -m security, 208 tests) and mobile security suite (flutter test --tags security, 128 tests) run as their own CI steps and pass on PR #39 (and main, PR #40). Covers token tamper/expiry/audience/issuer/algorithm (31 cases), route-authentication coverage (every non-public route x 5 bad-token cases), cross-user/IDOR tests with a registry guard, identity provisioning, rate/body limits, headers, CORS, audit and redaction; 19 live Keycloak smoke checks (PKCE, rejected grants, TOTP, brute-force lockout). Guards fail the build if a module loses its marker or a route ships unauthenticated (mutant-checked). · Verified: 2026-10-10T19:30:26+04:00 · CRITICAL
 - [ ] QG-08.2 No known unresolved critical or high-severity exploitable vulnerabilities at release · Required: P16 · By: P16-T03 · CRITICAL
 - [x] QG-08.3 Secrets scanning passes · Required: P01 · By: P01-T11 · Evidence: Secrets scanning passes: gitleaks job in security.yml (full history) green on PR #4, #6, #7 and main (run 37944172283); seeded-secret test (run 37931671715) proved the scan fails when a secret is present; local pre-commit gitleaks hook also active · Verified: 2026-10-09T18:33:58+04:00 · CRITICAL
-- [ ] QG-08.4 Dependency and container vulnerability scanning passes · Required: P14 · By: P14-T04
-- [ ] QG-08.5 Encryption in transit and at rest is verified · Required: P14 · By: P14-T03,P14-T05 · CRITICAL
+- [ ] QG-08.4 Dependency and container vulnerability scanning passes · Required: P15 · By: P15-T04
+- [ ] QG-08.5 Encryption in transit and at rest is verified · Required: P15 · By: P15-T03,P15-T05 · CRITICAL
 - [x] QG-08.6 Sensitive financial data is excluded from inappropriate logs · Required: P01 · By: P01-T12 · Evidence: Sensitive data excluded from logs: app/core/redaction.py applied to every log record (messages, extra fields, exception text); tests/test_redaction.py covers 15 leak cases (bearer, JWT, URL/DSN credentials incl. redis://:pw@host, password/secret/api_key/token pairs, financial amount/balance/price/net_worth), 5 clean-text cases, key detection, recursion, depth cap and an end-to-end log line; live server log showed no password; found and fixed the empty-username URL gap. Baseline mechanism; re-verified on the release candidate at P16-T11 · Verified: 2026-10-09T18:33:59+04:00 · CRITICAL
-- [ ] QG-08.7 Backup and restore procedures are tested · Required: P14 · By: P14-T10
+- [ ] QG-08.7 Backup and restore procedures are tested · Required: P15 · By: P15-T10
 - [ ] QG-08.8 Privacy, retention, consent and account-deletion requirements are verified · Required: P16 · By: P16-T05 · CRITICAL
 
 Status: IN_PROGRESS  
@@ -215,7 +215,7 @@ Approved By: —
 - [ ] QG-09.2 Database queries meet approved performance thresholds · Required: P16 · By: P16-T04
 - [ ] QG-09.3 Mobile startup and interaction latency meet agreed targets · Required: P16 · By: P16-T04
 - [ ] QG-09.4 Load and stress tests pass against representative workloads · Required: P16 · By: P16-T04
-- [x] QG-09.5 Background jobs, retries and failure recovery operate correctly · Required: P08 · By: P08-T08 · Evidence: Background jobs: Celery on RabbitMQ with retry, exponential backoff and jitter, dead-letter queue plus job_failures table, idempotent run_once on job_runs, beat schedule. Tests tests/worker (jobs, idempotency, failures visible, celery app) and an embedded-worker test against the real broker; a local worker was run against the real compose broker: jobs executed and a failing job was dead-lettered with its arguments. Ingestion fails the run when every item fails so the job is retried; partial failures are logged by count. Caveat: exercised on the local single-node broker, not under load or in a deployed environment (P14). · Verified: 2026-10-12T04:51:43+04:00
+- [x] QG-09.5 Background jobs, retries and failure recovery operate correctly · Required: P08 · By: P08-T08 · Evidence: Background jobs: Celery on RabbitMQ with retry, exponential backoff and jitter, dead-letter queue plus job_failures table, idempotent run_once on job_runs, beat schedule. Tests tests/worker (jobs, idempotency, failures visible, celery app) and an embedded-worker test against the real broker; a local worker was run against the real compose broker: jobs executed and a failing job was dead-lettered with its arguments. Ingestion fails the run when every item fails so the job is retried; partial failures are logged by count. Caveat: exercised on the local single-node broker, not under load or in a deployed environment (P15). · Verified: 2026-10-12T04:51:43+04:00
 - [ ] QG-09.6 Capacity assumptions and bottlenecks are documented · Required: P16 · By: P16-T04
 
 Status: IN_PROGRESS  
@@ -231,13 +231,13 @@ Approved By: —
 ### QG-10: CI/CD and Infrastructure
 
 - [x] QG-10.1 CI pipelines pass · Required: P01 · By: P01-T09,P01-T10 · Evidence: CI pipelines pass: workflows backend, mobile, security, tracker all success on main after the last merge (runs 37944172314, 37944172316, 37944172283, 37944172361 on f525b80) and all four required gate checks green on PRs #4, #6, #7; ruleset blocks merges otherwise (PR #5 demonstration) · Verified: 2026-10-09T18:33:59+04:00
-- [ ] QG-10.2 Build artifacts are reproducible and versioned · Required: P14 · By: P14-T04
+- [ ] QG-10.2 Build artifacts are reproducible and versioned · Required: P15 · By: P15-T04
 - [x] QG-10.3 Database migrations are validated · Required: P01 · By: P01-T08 · Evidence: Database migrations validated: baseline revision 0001 (pgcrypto, vector); CI step 'Migrations' runs alembic upgrade head, check ('No new upgrade operations detected'), downgrade base, upgrade head and asserts a single head; pytest round-trip on a throwaway database, single-head and no-credentials-in-migrations tests; local CLI cycle on a scratch database · Verified: 2026-10-09T18:33:59+04:00
-- [ ] QG-10.4 Infrastructure changes are reviewed · Required: P14 · By: P14-T02
-- [ ] QG-10.5 Deployment health checks pass · Required: P14 · By: P14-T11
-- [ ] QG-10.6 Monitoring, logs, metrics and alerts are operational · Required: P14 · By: P14-T09
-- [ ] QG-10.7 Rollback procedures are tested · Required: P14 · By: P14-T08
-- [ ] QG-10.8 Staging and production configurations are appropriately isolated · Required: P14 · By: P14-T02
+- [ ] QG-10.4 Infrastructure changes are reviewed · Required: P15 · By: P15-T02
+- [ ] QG-10.5 Deployment health checks pass · Required: P15 · By: P15-T11
+- [ ] QG-10.6 Monitoring, logs, metrics and alerts are operational · Required: P15 · By: P15-T09
+- [ ] QG-10.7 Rollback procedures are tested · Required: P15 · By: P15-T08
+- [ ] QG-10.8 Staging and production configurations are appropriately isolated · Required: P15 · By: P15-T02
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
@@ -527,11 +527,11 @@ Approved By: —
 
 ### QG-26: QG-WEB-01: Architecture and Integration
 
-- [ ] QG-26.1 Approved web architecture documented · Required: P15 · By: P15-T02
-- [ ] QG-26.2 Shared backend API integration verified (no web-only backend, no second data store) · Required: P15 · By: P15-T18 · CRITICAL
-- [ ] QG-26.3 No duplicated financial business logic (lint guard and review: no money arithmetic in web/) · Required: P15 · By: P15-T04 · CRITICAL
-- [ ] QG-26.4 Cross-platform data consistency verified · Required: P15 · By: P15-T18 · CRITICAL
-- [ ] QG-26.5 Architecture Decision Record completed (ADR-0018 accepted) · Required: P15 · By: P15-T02
+- [ ] QG-26.1 Approved web architecture documented · Required: P14 · By: P14-T02
+- [ ] QG-26.2 Shared backend API integration verified (no web-only backend, no second data store) · Required: P14 · By: P14-T18 · CRITICAL
+- [ ] QG-26.3 No duplicated financial business logic (lint guard and review: no money arithmetic in web/) · Required: P14 · By: P14-T04 · CRITICAL
+- [ ] QG-26.4 Cross-platform data consistency verified · Required: P14 · By: P14-T18 · CRITICAL
+- [ ] QG-26.5 Architecture Decision Record completed (ADR-0018 accepted) · Required: P14 · By: P14-T02
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -545,12 +545,12 @@ Approved By: —
 
 ### QG-27: QG-WEB-02: UI/UX and Design System
 
-- [ ] QG-27.1 WealthSphere design tokens implemented from the shared token source · Required: P15 · By: P15-T03
-- [ ] QG-27.2 Desktop dashboard layout verified (1280 px and wider) · Required: P15 · By: P15-T20
-- [ ] QG-27.3 Tablet and laptop layout verified (768 to 1279 px) · Required: P15 · By: P15-T20
-- [ ] QG-27.4 Mobile browser layout verified (under 768 px) · Required: P15 · By: P15-T20
-- [ ] QG-27.5 Dark and light themes verified · Required: P15 · By: P15-T03
-- [ ] QG-27.6 Accessibility checks completed (WCAG 2.2 AA: automated and manual) · Required: P15 · By: P15-T19
+- [ ] QG-27.1 WealthSphere design tokens implemented from the shared token source · Required: P14 · By: P14-T03
+- [ ] QG-27.2 Desktop dashboard layout verified (1280 px and wider) · Required: P14 · By: P14-T20
+- [ ] QG-27.3 Tablet and laptop layout verified (768 to 1279 px) · Required: P14 · By: P14-T20
+- [ ] QG-27.4 Mobile browser layout verified (under 768 px) · Required: P14 · By: P14-T20
+- [ ] QG-27.5 Dark and light themes verified · Required: P14 · By: P14-T03
+- [ ] QG-27.6 Accessibility checks completed (WCAG 2.2 AA: automated and manual) · Required: P14 · By: P14-T19
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -564,14 +564,14 @@ Approved By: —
 
 ### QG-28: QG-WEB-03: Functional Parity
 
-- [ ] QG-28.1 All implemented mobile modules mapped in the parity matrix · Required: P15 · By: P15-T18
-- [ ] QG-28.2 All applicable mobile capabilities available on the web (exceptions recorded with reasons) · Required: P15 · By: P15-T18
-- [ ] QG-28.3 Create, read, update and delete workflows verified · Required: P15 · By: P15-T08
-- [ ] QG-28.4 Financial analytics verified · Required: P15 · By: P15-T09
-- [ ] QG-28.5 AI modules verified · Required: P15 · By: P15-T12
-- [ ] QG-28.6 Forex entry verified: hidden when the flag is off; live markets labelled when on (advanced workspace: QG-19.6) · Required: P15 · By: P15-T13
-- [ ] QG-28.7 Currency conversion verified · Required: P15 · By: P15-T14
-- [ ] QG-28.8 Reports and exports verified · Required: P15 · By: P15-T15
+- [ ] QG-28.1 All implemented mobile modules mapped in the parity matrix · Required: P14 · By: P14-T18
+- [ ] QG-28.2 All applicable mobile capabilities available on the web (exceptions recorded with reasons) · Required: P14 · By: P14-T18
+- [ ] QG-28.3 Create, read, update and delete workflows verified · Required: P14 · By: P14-T08
+- [ ] QG-28.4 Financial analytics verified · Required: P14 · By: P14-T09
+- [ ] QG-28.5 AI modules verified · Required: P14 · By: P14-T12
+- [ ] QG-28.6 Forex entry verified: hidden when the flag is off; live markets labelled when on (advanced workspace: QG-19.6) · Required: P14 · By: P14-T13
+- [ ] QG-28.7 Currency conversion verified · Required: P14 · By: P14-T14
+- [ ] QG-28.8 Reports and exports verified · Required: P14 · By: P14-T15
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -585,14 +585,14 @@ Approved By: —
 
 ### QG-29: QG-WEB-04: Authentication and Security
 
-- [ ] QG-29.1 OIDC login verified (Authorization Code with PKCE through the BFF) · Required: P15 · By: P15-T05 · CRITICAL
-- [ ] QG-29.2 Logout and session expiry verified · Required: P15 · By: P15-T05
-- [ ] QG-29.3 MFA integration verified · Required: P15 · By: P15-T05
-- [ ] QG-29.4 Role and resource authorisation verified (server-side; hidden UI is never the control) · Required: P15 · By: P15-T17 · CRITICAL
-- [ ] QG-29.5 CSRF and XSS protections tested · Required: P15 · By: P15-T19 · CRITICAL
-- [ ] QG-29.6 Secure session storage verified (no token in browser storage or script-readable cookies) · Required: P15 · By: P15-T05 · CRITICAL
-- [ ] QG-29.7 Cross-user data isolation tested through the web · Required: P15 · By: P15-T19 · CRITICAL
-- [ ] QG-29.8 Dependency and secret scans passed · Required: P15 · By: P15-T19
+- [ ] QG-29.1 OIDC login verified (Authorization Code with PKCE through the BFF) · Required: P14 · By: P14-T05 · CRITICAL
+- [ ] QG-29.2 Logout and session expiry verified · Required: P14 · By: P14-T05
+- [ ] QG-29.3 MFA integration verified · Required: P14 · By: P14-T05
+- [ ] QG-29.4 Role and resource authorisation verified (server-side; hidden UI is never the control) · Required: P14 · By: P14-T17 · CRITICAL
+- [ ] QG-29.5 CSRF and XSS protections tested · Required: P14 · By: P14-T19 · CRITICAL
+- [ ] QG-29.6 Secure session storage verified (no token in browser storage or script-readable cookies) · Required: P14 · By: P14-T05 · CRITICAL
+- [ ] QG-29.7 Cross-user data isolation tested through the web · Required: P14 · By: P14-T19 · CRITICAL
+- [ ] QG-29.8 Dependency and secret scans passed · Required: P14 · By: P14-T19
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -606,12 +606,12 @@ Approved By: —
 
 ### QG-30: QG-WEB-05: Financial Accuracy
 
-- [ ] QG-30.1 Web and mobile portfolio totals reconcile (both equal the API for the same request) · Required: P15 · By: P15-T08 · CRITICAL
-- [ ] QG-30.2 FX conversion matches backend calculations for the same snapshot · Required: P15 · By: P15-T14 · CRITICAL
-- [ ] QG-30.3 Historical valuation rules match · Required: P15 · By: P15-T08
-- [ ] QG-30.4 Compound-growth outputs match · Required: P15 · By: P15-T10
-- [ ] QG-30.5 Reporting figures reconcile (screens, reports and exports) · Required: P15 · By: P15-T15 · CRITICAL
-- [ ] QG-30.6 Decimal precision and rounding verified (decimal strings only; ADR-0003, ADR-0006) · Required: P15 · By: P15-T14 · CRITICAL
+- [ ] QG-30.1 Web and mobile portfolio totals reconcile (both equal the API for the same request) · Required: P14 · By: P14-T08 · CRITICAL
+- [ ] QG-30.2 FX conversion matches backend calculations for the same snapshot · Required: P14 · By: P14-T14 · CRITICAL
+- [ ] QG-30.3 Historical valuation rules match · Required: P14 · By: P14-T08
+- [ ] QG-30.4 Compound-growth outputs match · Required: P14 · By: P14-T10
+- [ ] QG-30.5 Reporting figures reconcile (screens, reports and exports) · Required: P14 · By: P14-T15 · CRITICAL
+- [ ] QG-30.6 Decimal precision and rounding verified (decimal strings only; ADR-0003, ADR-0006) · Required: P14 · By: P14-T14 · CRITICAL
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -625,12 +625,12 @@ Approved By: —
 
 ### QG-31: QG-WEB-06: Performance
 
-- [ ] QG-31.1 Lighthouse tests completed against the approved budgets · Required: P15 · By: P15-T20
-- [ ] QG-31.2 Core Web Vitals assessed (LCP, INP, CLS) · Required: P15 · By: P15-T20
-- [ ] QG-31.3 Large portfolio data tested · Required: P15 · By: P15-T20
-- [ ] QG-31.4 Chart performance tested · Required: P15 · By: P15-T20
-- [ ] QG-31.5 API latency measured for the dashboard workloads · Required: P15 · By: P15-T20
-- [ ] QG-31.6 Resource usage reviewed (bundle size, memory) · Required: P15 · By: P15-T20
+- [ ] QG-31.1 Lighthouse tests completed against the approved budgets · Required: P14 · By: P14-T20
+- [ ] QG-31.2 Core Web Vitals assessed (LCP, INP, CLS) · Required: P14 · By: P14-T20
+- [ ] QG-31.3 Large portfolio data tested · Required: P14 · By: P14-T20
+- [ ] QG-31.4 Chart performance tested · Required: P14 · By: P14-T20
+- [ ] QG-31.5 API latency measured for the dashboard workloads · Required: P14 · By: P14-T20
+- [ ] QG-31.6 Resource usage reviewed (bundle size, memory) · Required: P14 · By: P14-T20
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -644,12 +644,12 @@ Approved By: —
 
 ### QG-32: QG-WEB-07: Browser Compatibility
 
-- [ ] QG-32.1 Chrome tested · Required: P15 · By: P15-T20
-- [ ] QG-32.2 Edge tested · Required: P15 · By: P15-T20
-- [ ] QG-32.3 Firefox tested · Required: P15 · By: P15-T20
-- [ ] QG-32.4 Safari tested · Required: P15 · By: P15-T20
-- [ ] QG-32.5 Responsive layouts verified · Required: P15 · By: P15-T20
-- [ ] QG-32.6 Browser-specific defects resolved and supported versions documented · Required: P15 · By: P15-T20
+- [ ] QG-32.1 Chrome tested · Required: P14 · By: P14-T20
+- [ ] QG-32.2 Edge tested · Required: P14 · By: P14-T20
+- [ ] QG-32.3 Firefox tested · Required: P14 · By: P14-T20
+- [ ] QG-32.4 Safari tested · Required: P14 · By: P14-T20
+- [ ] QG-32.5 Responsive layouts verified · Required: P14 · By: P14-T20
+- [ ] QG-32.6 Browser-specific defects resolved and supported versions documented · Required: P14 · By: P14-T20
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -663,14 +663,14 @@ Approved By: —
 
 ### QG-33: QG-WEB-08: End-to-End Testing
 
-- [ ] QG-33.1 Login-to-dashboard journey passes · Required: P15 · By: P15-T22
-- [ ] QG-33.2 Portfolio creation and editing passes · Required: P15 · By: P15-T22
-- [ ] QG-33.3 Investment transaction workflows pass · Required: P15 · By: P15-T22
-- [ ] QG-33.4 Currency switching passes · Required: P15 · By: P15-T22
-- [ ] QG-33.5 AI Copilot interaction passes · Required: P15 · By: P15-T22
-- [ ] QG-33.6 Forex journeys pass where implemented (live markets here; paper trading: QG-19.7) · Required: P15 · By: P15-T13
-- [ ] QG-33.7 Cross-platform synchronisation passes · Required: P15 · By: P15-T18 · CRITICAL
-- [ ] QG-33.8 Export and reporting journeys pass · Required: P15 · By: P15-T22
+- [ ] QG-33.1 Login-to-dashboard journey passes · Required: P14 · By: P14-T22
+- [ ] QG-33.2 Portfolio creation and editing passes · Required: P14 · By: P14-T22
+- [ ] QG-33.3 Investment transaction workflows pass · Required: P14 · By: P14-T22
+- [ ] QG-33.4 Currency switching passes · Required: P14 · By: P14-T22
+- [ ] QG-33.5 AI Copilot interaction passes · Required: P14 · By: P14-T22
+- [ ] QG-33.6 Forex journeys pass where implemented (live markets here; paper trading: QG-19.7) · Required: P14 · By: P14-T13
+- [ ] QG-33.7 Cross-platform synchronisation passes · Required: P14 · By: P14-T18 · CRITICAL
+- [ ] QG-33.8 Export and reporting journeys pass · Required: P14 · By: P14-T22
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -684,14 +684,14 @@ Approved By: —
 
 ### QG-34: QG-WEB-09: Production Readiness
 
-- [ ] QG-34.1 Production build passes · Required: P15 · By: P15-T21
-- [ ] QG-34.2 Environment configuration validated · Required: P15 · By: P15-T21
-- [ ] QG-34.3 HTTPS and security headers verified · Required: P15 · By: P15-T22 · CRITICAL
-- [ ] QG-34.4 Monitoring configured · Required: P15 · By: P15-T22
-- [ ] QG-34.5 Error reporting configured · Required: P15 · By: P15-T22
-- [ ] QG-34.6 Deployment and rollback tested · Required: P15 · By: P15-T22
-- [ ] QG-34.7 Backup and recovery dependencies verified · Required: P15 · By: P15-T22
-- [ ] QG-34.8 Required release approvals recorded · Required: P15 · By: P15-T23 · CRITICAL
+- [ ] QG-34.1 Production build passes · Required: P14 · By: P14-T21
+- [ ] QG-34.2 Environment configuration validated · Required: P14 · By: P14-T21
+- [ ] QG-34.3 HTTPS and security headers verified · Required: P14 · By: P14-T22 · CRITICAL
+- [ ] QG-34.4 Monitoring configured · Required: P14 · By: P14-T22
+- [ ] QG-34.5 Error reporting configured · Required: P14 · By: P14-T22
+- [ ] QG-34.6 Deployment and rollback tested · Required: P14 · By: P14-T22
+- [ ] QG-34.7 Backup and recovery dependencies verified · Required: P14 · By: P14-T22
+- [ ] QG-34.8 Required release approvals recorded · Required: P14 · By: P14-T23 · CRITICAL
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -718,6 +718,6 @@ Changes to when a criterion is required are decisions, recorded here and in EXEC
 
 | Date | Criterion | Change | Reason | Approved by |
 |---|---|---|---|---|
-| 2026-10-09 | QG-08.4 | Required phase P01 → P14; evidence task P01-T11 → P14-T04 | The criterion covers dependency **and container** scanning. Dependency scanning is already running in CI (P01-T11); no container images exist until P14-T04, so the container half cannot be satisfied earlier. Not a waiver: the full criterion still applies, at the phase where it can be met. | user (option b) |
+| 2026-10-09 | QG-08.4 | Required phase P01 → P15; evidence task P01-T11 → P15-T04 | The criterion covers dependency **and container** scanning. Dependency scanning is already running in CI (P01-T11); no container images exist until P15-T04, so the container half cannot be satisfied earlier. Not a waiver: the full criterion still applies, at the phase where it can be met. | user (option b) |
 | 2026-10-09 | QG-13…QG-20 | Eight Forex gates (QG-FX-01…08, 38 criteria, all required at P13) added to the register | Forex Trading Intelligence module requested as workstream P13; mapping QG-FX-nn = QG-(12+nn). Additive: no existing criterion changed. Approved with phase P13. | user |
 | 2026-10-10 | QG-21…QG-25 | Five multi-currency gates (QG-FXCUR-01…05, 27 criteria, required at P11) added; QG-12.1 now covers every core gate (all except QG-12 and the optional Forex gates QG-13…QG-20) | Multi-Currency Reporting & FX Management requested as workstream P11 (ADR-0010). Additive; existing criteria unchanged apart from the QG-12.1 wording. Approved with phase P11. | user |

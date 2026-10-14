@@ -1230,7 +1230,7 @@ Read SOLUTION_INTENT.md, CLAUDE.md, and the UI/UX Design Specification in this g
 ```
 
 ## Forex Trading Intelligence Module (approved extension, 2026-10-09)
-An optional workstream (plan phase P13, ADR-0009) adds AI-assisted forex market intelligence to WealthSphere as **decision support and paper trading only**: timestamped live quotes with feed status, technical analysis, probabilistic forecasts validated against baselines, an Opportunity Ranking Dashboard, a deterministic trade-risk calculator, backtesting, paper trading with a journal, and an AI Forex Copilot that uses allow-listed tools. It does not execute trades, does not promise returns, and keeps paper balances separate from real wealth. It starts only after the core platform phases P08-P14 and is gated by quality gates QG-13…QG-20. See SOLUTION_INTENT section 34 and docs/design/forex-technical-design.md.
+An optional workstream (plan phase P13, ADR-0009) adds AI-assisted forex market intelligence to WealthSphere as **decision support and paper trading only**: timestamped live quotes with feed status, technical analysis, probabilistic forecasts validated against baselines, an Opportunity Ranking Dashboard, a deterministic trade-risk calculator, backtesting, paper trading with a journal, and an AI Forex Copilot that uses allow-listed tools. It does not execute trades, does not promise returns, and keeps paper balances separate from real wealth. It starts only after the core platform phases P08-P15 and is gated by quality gates QG-13…QG-20. See SOLUTION_INTENT section 34 and docs/design/forex-technical-design.md.
 
 **Implementation rules for Claude Code:** read docs/design/forex-technical-design.md first; never add an order-placement code path; keep indicators, forecasts, pip values and position sizes in deterministic Decimal code with reference tests; report forecasts against random-walk and no-change baselines; never show indicative or delayed prices as live quotes; execute the P13 tasks only after the user approves the phase.
 
@@ -1240,7 +1240,7 @@ Plan phase P11 (FXCUR, ADR-0010) makes the reporting currency a global user sett
 **Implementation rules for Claude Code:** read docs/design/multi-currency-design.md first; extend the P05 FX service and P08 provider layer instead of adding parallel ones; never mutate stored amounts or rates when converting; convert on the backend in Decimal with one snapshot per response; never show a cached rate as current or invent a rate when providers fail.
 
 ## Enterprise Web Portal (proposed extension, 2026-10-14)
-Rules for web work (phase P15, ADR-0018), in addition to every rule above:
+Rules for web work (phase P14, ADR-0018), in addition to every rule above:
 
 - **One backend.** The web calls the same `/api/v1` APIs through its BFF.
   - No business logic, financial calculation or authorisation decision in `web/`.

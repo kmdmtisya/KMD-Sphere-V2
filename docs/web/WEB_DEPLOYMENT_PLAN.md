@@ -1,10 +1,10 @@
 # WealthSphere Web Portal: CI/CD and deployment plan
 
 **Status:** Proposed (2026-10-14).
-- **Nothing is provisioned.** Hosting follows the cloud decision (DEC-02, P14-T01), and no paid infrastructure is created without approval.
-- **Deployment work is planned, not built yet.** It lands in P15-T21 and P15-T22, on the P14 pipeline.
+- **Nothing is provisioned.** Hosting follows the cloud decision (DEC-02, P15-T01), and no paid infrastructure is created without approval.
+- **Deployment work is planned, not built yet.** It lands in P14-T21 and P14-T22, on the P15 pipeline.
 
-## 1. Build and test pipeline (P15-T21, GitHub Actions)
+## 1. Build and test pipeline (P14-T21, GitHub Actions)
 
 A new workflow, `.github/workflows/web.yml`, runs on every pull request that touches `web/`, `design/tokens/` or `backend/openapi.json`. It ends in one required check, **`web gate`**, like the existing `backend gate` and `mobile gate`.
 
@@ -21,7 +21,7 @@ A new workflow, `.github/workflows/web.yml`, runs on every pull request that tou
 | Security | `npm audit` (high or above), licence allow-list, gitleaks (already in the `security gate`), CSP check | any finding |
 | Build | `next build` in standalone mode and a container image (distroless or slim Node) | build error |
 
-**Adding `web gate` to the `main` ruleset** needs repository-admin rights. The user does this when P15-T21 is reached (the same as for the existing required checks); until then the workflow runs but does not block merging.
+**Adding `web gate` to the `main` ruleset** needs repository-admin rights. The user does this when P14-T21 is reached (the same as for the existing required checks); until then the workflow runs but does not block merging.
 
 ## 2. Runtime topology
 
@@ -61,7 +61,7 @@ Configuration is validated at start (missing or insecure values stop the contain
 ## 4. Release flow
 
 1. Merge to `main` (all required checks green), then the image is built and tagged with the commit SHA (immutable) and an SBOM is produced.
-2. Deploy to staging automatically. Then run the smoke tests (the P14-T11 suite gains web journeys):
+2. Deploy to staging automatically. Then run the smoke tests (the P15-T11 suite gains web journeys):
    - sign in with the staging test user and MFA;
    - dashboard figures equal the API's;
    - a currency switch;
@@ -83,7 +83,7 @@ Configuration is validated at start (missing or insecure values stop the contain
 - **Metrics.** Requests, latency, upstream errors, sign-in outcomes and the session count.
 - **Real-user monitoring.** Web vitals are sampled from real users.
 - **Alerts.** On the BFF 5xx rate, sign-in failure spikes, the upstream API error rate, and an LCP p75 regression.
-- **Front-end errors.** Sent to the same telemetry stack (P14) through a BFF endpoint, scrubbed of personal data.
+- **Front-end errors.** Sent to the same telemetry stack (P15) through a BFF endpoint, scrubbed of personal data.
 
 ## 7. Hosting cost assumptions (to confirm with DEC-02)
 
@@ -96,4 +96,4 @@ These are list-price orders of magnitude for planning, not quotes:
 | Redis (sessions) | The existing managed Redis, with a separate database or keyspace; no new instance unless sizing says so |
 | Load balancer and TLS | Shared with the API |
 
-The budget is set and approved with DEC-02 and P14-T01, and nothing is bought before that approval.
+The budget is set and approved with DEC-02 and P15-T01, and nothing is bought before that approval.
