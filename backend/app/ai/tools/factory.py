@@ -5,6 +5,7 @@ from app.ai.tools.core_read import register_core_read_tools
 from app.ai.tools.currency import register_currency_tools
 from app.ai.tools.doctor import register_doctor_tools
 from app.ai.tools.forecast import register_forecast_tools
+from app.ai.tools.forex import register_forex_tools
 from app.ai.tools.registry import ToolRegistry
 from app.ai.tools.research import register_research_tools
 from app.core.config import Settings
@@ -21,4 +22,6 @@ def build_tool_registry(settings: Settings) -> ToolRegistry:
     register_currency_tools(registry)
     register_doctor_tools(registry)
     register_research_tools(registry)
+    if settings.forex_enabled:  # DEC-23: no forex tool while the module is off
+        register_forex_tools(registry, settings)
     return registry

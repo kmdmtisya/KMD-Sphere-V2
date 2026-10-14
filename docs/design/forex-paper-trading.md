@@ -86,7 +86,7 @@ Every route needs sign-in and the forex flag; when the flag is off it answers 40
 **Tables.** The paper tables have no foreign key into portfolios, holdings, transactions or net-worth tables, and none points at them. Every row carries its owner.
 
 **Isolation tests:**
-- No module outside the paper package imports it or names its tables. The only exceptions are the app and worker wiring.
+- No module outside the paper package imports it or names its tables. The only exceptions are the app and worker wiring, and the Copilot's `get_paper_performance` tool (P13-T10), which reads the caller's own paper series, labelled PAPER TRADING.
 - A user's net worth is unchanged by paper trading.
 - Paper account creation, order placement and cancellation, closes and level changes are written to the audit log as `forex.paper.*` events, without amounts.
 

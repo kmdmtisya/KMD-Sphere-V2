@@ -13,11 +13,14 @@ from typing import Any, Protocol
 from app.ai.orchestrator.answer import NotAnAnswer, StructuredAnswer, parse_answer, render
 from app.ai.orchestrator.guards import (
     FORECAST_TOOLS,
+    FOREX_TOOLS,
+    advice_problems,
     caveats_for,
     collect_evidence,
     guarantee_problems,
     link_problems,
     source_problems,
+    sources_for,
     unsupported_numbers,
 )
 from app.ai.tools.base import ToolOutcome
@@ -74,6 +77,7 @@ class SafetyPolicy:
             *source_problems(answer, ok_tools),
             *link_problems(texts),
             *guarantee_problems(texts, forecast_used=bool(ok_tools & FORECAST_TOOLS)),
+            *(advice_problems(texts) if ok_tools & FOREX_TOOLS else []),
         ]
         if unsupported_numbers(texts, evidence):
             problems.append("unsupported_figure")
@@ -81,8 +85,9 @@ class SafetyPolicy:
             return Verdict(None, problems=tuple(sorted(set(problems))))
 
         final = StructuredAnswer(
-            **answer.model_dump(exclude={"caveats"}),
+            **answer.model_dump(exclude={"caveats", "sources"}),
             caveats=caveats_for(draft.outcomes, self._clock(), self._stale_after),
+            sources=sources_for(draft.outcomes),
         )
         return Verdict(render(final), structured=final.model_dump(mode="json"))
 
@@ -94,6 +99,8 @@ CORRECTIONS = {
     "guarantee_language": "do not describe any outcome as guaranteed",
     "certainty_language": "do not describe any outcome as certain or free of risk",
     "unhedged_forecast": "describe forecasts as illustrations under the stated assumptions",
+    "personal_advice": "describe what the data and scenarios show; do not tell the user to buy, "
+    "sell or open or close a trade",
     "unsupported_figure": "state only figures that a tool returned in this turn or that the user "
     "gave; remove or replace any other figure",
 }

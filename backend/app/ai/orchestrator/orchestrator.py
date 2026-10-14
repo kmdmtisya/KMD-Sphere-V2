@@ -28,6 +28,7 @@ from app.ai.orchestrator.events import (
     TokenEvent,
     ToolEvent,
 )
+from app.ai.orchestrator.guards import FOREX_TOOLS
 from app.ai.orchestrator.policy import AnswerPolicy, Draft, correction_message
 from app.ai.orchestrator.prompt import system_prompt
 from app.ai.orchestrator.refusal import Refusal, check_question
@@ -178,7 +179,14 @@ class Orchestrator:
             turn.user_id, turn.conversation_id, limit=max(settings.ai_history_messages, 1)
         )
         messages: list[Message] = [
-            Message("system", system_prompt(datetime.now(UTC).date(), turn.scope.portfolio_id))
+            Message(
+                "system",
+                system_prompt(
+                    datetime.now(UTC).date(),
+                    turn.scope.portfolio_id,
+                    forex=bool(self._registry.names & FOREX_TOOLS),
+                ),
+            )
         ]
         messages += [self._as_message(m) for m in history]
         user_texts = tuple(m.content for m in history if m.role == "user")
@@ -364,7 +372,7 @@ class Orchestrator:
         if stored.role == "user":
             return Message("user", stored.content)
         if stored.structured and "refusal" not in stored.structured:
-            shown = {k: v for k, v in stored.structured.items() if k != "caveats"}
+            shown = {k: v for k, v in stored.structured.items() if k not in ("caveats", "sources")}
             return Message("assistant", json.dumps(shown))
         return Message("assistant", stored.content)
 
