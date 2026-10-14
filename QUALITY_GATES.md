@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-14T23:02:22+04:00 by `scripts/track.py`._
+_Generated at 2026-10-15T00:03:39+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -30,7 +30,7 @@ _Generated at 2026-10-14T23:02:22+04:00 by `scripts/track.py`._
 | QG-17 | QG-FX-05: Backtesting Integrity | ✅ PASSED | 4/4 | Unassigned | — |
 | QG-18 | QG-FX-06: AI Trading Intelligence | ✅ PASSED | 5/5 | Unassigned | — |
 | QG-19 | QG-FX-07: Mobile Experience | ✅ PASSED | 5/5 | Unassigned | — |
-| QG-20 | QG-FX-08: Release and Regulatory Readiness | ⛔ BLOCKED | 2/5 | Unassigned | QG-20.1 to QG-20.3 await user decisions deferred on 2026-10-14: DEC-19 market-data licence (no provider chosen) and DEC-20 regulatory review for Kenya and the UAE plus disclosure approval; review pack docs/forex-release-readiness.md |
+| QG-20 | QG-FX-08: Release and Regulatory Readiness | 🔄 IN_PROGRESS | 3/5 | Unassigned | — |
 | QG-21 | QG-FXCUR-01: Exchange Rate Accuracy | ✅ PASSED | 5/5 | Unassigned | — |
 | QG-22 | QG-FXCUR-02: Portfolio Consistency | ✅ PASSED | 5/5 | Unassigned | — |
 | QG-23 | QG-FXCUR-03: Data Reliability | ✅ PASSED | 5/5 | Unassigned | — |
@@ -47,9 +47,9 @@ _Generated at 2026-10-14T23:02:22+04:00 by `scripts/track.py`._
 | QG-34 | QG-WEB-09: Production Readiness | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 114/209.
+Criteria satisfied overall: 115/209.
 
-Current phase **P13** exit-gate criteria outstanding: QG-20.1, QG-20.2, QG-20.3.
+Current phase **P13** exit-gate criteria outstanding: none.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -415,20 +415,20 @@ Approved By: —
 
 ### QG-20: QG-FX-08: Release and Regulatory Readiness
 
-- [ ] QG-20.1 Market-data licensing is reviewed · Required: P13 · By: P13-T14 · CRITICAL
-- [ ] QG-20.2 Launch-market financial-advice and trading regulations are reviewed · Required: P13 · By: P13-T14 · CRITICAL
-- [ ] QG-20.3 Risk disclosures are reviewed · Required: P13 · By: P13-T14
+- [ ] QG-20.1 Market-data licensing is reviewed · Required: P17 · By: P17-T09 · CRITICAL
+- [ ] QG-20.2 Launch-market financial-advice and trading regulations are reviewed · Required: P17 · By: P17-T09 · CRITICAL
+- [x] QG-20.3 Risk disclosures are reviewed · Required: P13 · By: P13-T14 · Evidence: The user (mtisya@gmail.com) approved the 29 forex disclosure statements in docs/forex-release-readiness.md section 4 as drafted on 2026-10-14 (sign-off table section 7); 7 engineering observations carried as follow-ups; the named reviewer's legal review of the wording for real data is part of P17-T09.3; reports/quality/qg-20-forex-release-readiness.md · Verified: 2026-10-14T23:43:59+04:00
 - [x] QG-20.4 Paper trading remains separate from real holdings · Required: P13 · By: P13-T09 · Evidence: reports/quality/qg-20-forex-release-readiness.md: test_paper_money_never_reaches_net_worth and test_no_real_money_module_reads_paper_tables (tests/forex/test_paper_api.py) pass; paper tables are in the integrity suite IDOR sweep and snapshot; every paper response carries the PAPER TRADING notice and X-Trading-Mode header; 39 passed locally 2026-10-14, same tests in the required backend gate · Verified: 2026-10-14T23:02:14+04:00 · CRITICAL
 - [x] QG-20.5 No live execution is enabled without explicit approval · Required: P13 · By: P13-T14 · Evidence: reports/quality/qg-20-forex-release-readiness.md and docs/forex-release-readiness.md section 5: tests/forex/test_hard_rules.py (no route places orders, no forex source outside paper names an order endpoint or call, only the simulated provider is configurable, forex off by default and refused outside local and test), 11 read-only allow-listed Copilot forex tools, Copilot refuses trade instructions (test_forex_chat.py, forex_safety set zero tolerance); 39 passed locally 2026-10-14, same tests in the required backend gate · Verified: 2026-10-14T23:02:14+04:00 · CRITICAL
 
-Status: BLOCKED  
+Status: IN_PROGRESS  
 Owner: Unassigned  
 Start Timestamp: 2026-10-14T23:02:13+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-14T23:02:14+04:00  
-Evidence: 2/5 criteria verified; latest QG-20.5 at 2026-10-14T23:02:14+04:00  
-Blocking Issues: QG-20.1 to QG-20.3 await user decisions deferred on 2026-10-14: DEC-19 market-data licence (no provider chosen) and DEC-20 regulatory review for Kenya and the UAE plus disclosure approval; review pack docs/forex-release-readiness.md  
-Blocks: P13-T14,P13-GATE  
+Verification Timestamp: 2026-10-14T23:43:59+04:00  
+Evidence: 3/5 criteria verified; latest QG-20.3 at 2026-10-14T23:43:59+04:00  
+Blocking Issues: —  
+Blocks: —  
 Approved By: —
 
 ### QG-21: QG-FXCUR-01: Exchange Rate Accuracy
@@ -721,3 +721,4 @@ Changes to when a criterion is required are decisions, recorded here and in EXEC
 | 2026-10-09 | QG-08.4 | Required phase P01 → P15; evidence task P01-T11 → P15-T04 | The criterion covers dependency **and container** scanning. Dependency scanning is already running in CI (P01-T11); no container images exist until P15-T04, so the container half cannot be satisfied earlier. Not a waiver: the full criterion still applies, at the phase where it can be met. | user (option b) |
 | 2026-10-09 | QG-13…QG-20 | Eight Forex gates (QG-FX-01…08, 38 criteria, all required at P13) added to the register | Forex Trading Intelligence module requested as workstream P13; mapping QG-FX-nn = QG-(12+nn). Additive: no existing criterion changed. Approved with phase P13. | user |
 | 2026-10-10 | QG-21…QG-25 | Five multi-currency gates (QG-FXCUR-01…05, 27 criteria, required at P11) added; QG-12.1 now covers every core gate (all except QG-12 and the optional Forex gates QG-13…QG-20) | Multi-Currency Reporting & FX Management requested as workstream P11 (ADR-0010). Additive; existing criteria unchanged apart from the QG-12.1 wording. Approved with phase P11. | user |
+| 2026-10-14 | QG-20.1, QG-20.2 | Required phase P13 → P17; evidence task P13-T14 → P17-T09 (Forex production enablement, conditional) | No market-data provider is chosen (DEC-19) and no regulatory review for Kenya or the UAE has been done (DEC-20). Both are CRITICAL and cannot be waived. The module is built but **not released**: it is refused outside local and test, so no user can reach it. Not a waiver: both criteria still apply in full, and P17-T09 must pass before forex is switched on outside development. P13-T14 and P13-GATE now require QG-20.3 to QG-20.5. Optional Forex gates never block the core release (QG-all excludes QG-13..QG-20) | user, 2026-10-14 (option: move to a release task) |

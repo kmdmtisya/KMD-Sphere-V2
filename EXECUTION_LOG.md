@@ -1989,3 +1989,29 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-14T23:02:22+04:00 — BLOCKED P13-T14
 - reason: Awaiting DEC-19 licence review and DEC-20 legal review (Kenya, UAE) and disclosure approval, deferred by the user on 2026-10-14. Readiness pack prepared (docs/forex-release-readiness.md); QG-20.4 and QG-20.5 verified; QG-20.1 to QG-20.3 open; release decision: not released, forex refused outside local and test
+
+### 2026-10-14T23:43:00+04:00 — PLAN CHANGE — QG-20.1 and QG-20.2 moved from P13 to P17-T09 (Forex production enablement); P13-T14 approved
+- User decision (2026-10-14, option "move to a release task"): no market-data provider is chosen (DEC-19) and no regulatory review for Kenya or the UAE exists (DEC-20). Both criteria are CRITICAL and cannot be waived, so they move to a new conditional task P17-T09, which must pass before forex is switched on outside development. Not a waiver: both still apply in full.
+- P13-T14 now delivers the licence checklist and regulatory questions (subtasks renamed), the disclosure approval, the execution-disabled verification and the release decision (not released). P13-T14 and P13-GATE require QG-20.3 to QG-20.5.
+- New task P17-T09 (Wave W6, deps P17-T03 and P13-T14, Gates-done QG-20.1, QG-20.2). It is not a dependency of P17-GATE: the Forex gates are optional and never block the core release.
+- The user approved the 29 forex disclosure statements as drafted (docs/forex-release-readiness.md section 4); the named reviewer's legal review of them moves to P17-T09.3.
+- Recorded in QUALITY_GATES.md 'Scope changes', EXECUTION_PLAN.md (P13 and P17 sections, phase table, decision register, traceability) and TASK_CHECKLIST.md.
+
+### 2026-10-14T23:43:59+04:00 — UNBLOCKED P13-T14
+- resolved: Awaiting DEC-19 licence review and DEC-20 legal review (Kenya, UAE) and disclosure approval, deferred by the user on 2026-10-14. Readiness pack prepared (docs/forex-release-readiness.md); QG-20.4 and QG-20.5 verified; QG-20.1 to QG-20.3 open; release decision: not released, forex refused outside local and test
+- status now IN_PROGRESS
+
+### 2026-10-14T23:43:59+04:00 — QG RESOLVED QG-20
+- was: QG-20.1 to QG-20.3 await user decisions deferred on 2026-10-14: DEC-19 market-data licence (no provider chosen) and DEC-20 regulatory review for Kenya and the UAE plus disclosure approval; review pack docs/forex-release-readiness.md
+- note: User plan change 2026-10-14: QG-20.1 and QG-20.2 moved to P17-T09 (Forex production enablement, conditional), not waived; QG-20.3 approved by the user
+- failed checks must be re-run: use `qg check` with fresh evidence
+
+### 2026-10-14T23:43:59+04:00 — QG CHECK QG-20.3
+- evidence: The user (mtisya@gmail.com) approved the 29 forex disclosure statements in docs/forex-release-readiness.md section 4 as drafted on 2026-10-14 (sign-off table section 7); 7 engineering observations carried as follow-ups; the named reviewer's legal review of the wording for real data is part of P17-T09.3; reports/quality/qg-20-forex-release-readiness.md
+
+### 2026-10-15T00:03:39+04:00 — AWAITING_VERIFICATION P13-T14
+- evidence: Plan change by user decision 2026-10-14: QG-20.1 and QG-20.2 (CRITICAL, not waived) moved to new conditional task P17-T09 Forex production enablement; P13-T14 delivers the licence checklist and regulatory questions (docs/forex-release-readiness.md sections 2, 3), disclosures approved by the user as drafted (QG-20.3), execution-disabled verification (QG-20.4, QG-20.5, 39 tests pass), release decision: not released (forex refused outside local and test). reports/quality/qg-20-forex-release-readiness.md. PR #168. CI all gates pass.
+
+### 2026-10-15T00:03:39+04:00 — COMPLETE P13-T14
+- duration: 1h 01m 37s
+- evidence: Plan change by user decision 2026-10-14: QG-20.1 and QG-20.2 (CRITICAL, not waived) moved to new conditional task P17-T09 Forex production enablement; P13-T14 delivers the licence checklist and regulatory questions (docs/forex-release-readiness.md sections 2, 3), disclosures approved by the user as drafted (QG-20.3), execution-disabled verification (QG-20.4, QG-20.5, 39 tests pass), release decision: not released (forex refused outside local and test). reports/quality/qg-20-forex-release-readiness.md. PR #168. CI all gates pass. · Approved by: user (mtisya@gmail.com), 2026-10-14

@@ -45,7 +45,7 @@ These are stated in the design (sections 1, 9, 11, 15) and are now **tested rule
 | `docs/SOLUTION_INTENT.md` section 34 and the implementation guide | Already present (2026-10-09). Confirmed; no change |
 | ADR-0009 | Accepted; unchanged. Decisions above are recorded here and in the register |
 | `forex-technical-design.md` section 19 | Open decisions updated to point here |
-| `EXECUTION_PLAN.md` decision register | DEC-21, DEC-22, DEC-23, DEC-24 resolved; DEC-19 resolved as fixture-only with the licence still open; DEC-20 scheduled for P13-T14 |
+| `EXECUTION_PLAN.md` decision register | DEC-21, DEC-22, DEC-23, DEC-24 resolved; DEC-19 resolved as fixture-only with the licence still open; DEC-20 scheduled for P13-T14 (on 2026-10-14 the licence and regulatory reviews moved to P17-T09, Forex production enablement) |
 | `reports/quality` | QG-13 to QG-20 evidence is written by P13-T12 and later |
 
 ## 5. Impact assessment (P13-T01.1)

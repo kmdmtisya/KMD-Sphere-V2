@@ -185,7 +185,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | QG-17 (QG-FX-05) | Forex Backtesting Integrity | 4 | 1 | P13 |
 | QG-18 (QG-FX-06) | Forex AI Trading Intelligence | 5 | 2 | P13 |
 | QG-19 (QG-FX-07) | Forex Mobile Experience | 5 | 0 | P13 |
-| QG-20 (QG-FX-08) | Forex Release and Regulatory Readiness | 5 | 4 | P13 |
+| QG-20 (QG-FX-08) | Forex Release and Regulatory Readiness | 5 | 4 | P13; QG-20.1, 20.2 at P17 (P17-T09) |
 | QG-21 (QG-FXCUR-01) | Exchange Rate Accuracy | 5 | 5 | P11 |
 | QG-22 (QG-FXCUR-02) | Portfolio Consistency | 5 | 5 | P11 |
 | QG-23 (QG-FXCUR-03) | FX Data Reliability | 5 | 0 | P11 |
@@ -242,7 +242,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | P10 | P04, P05, P06 | QG-07.1,2,3,5,6,8; QG-11.3 | — |
 | P11 | P05, P06, P08, P09, P10 | QG-21 … QG-25 (every criterion) | P11-T11, P11-T12 (QG-21..QG-25 satisfied before start) |
 | P12 | P08, P10, P11 | QG-07.4,7 | — |
-| P13 | P08, P09, P10, P11, P12 | QG-13 … QG-20 (every criterion) | P13-T13, P13-T14 (QG-13..QG-19 satisfied before start) |
+| P13 | P08, P09, P10, P11, P12 | QG-13 … QG-19 (every criterion); QG-20.3, 20.4, 20.5 (QG-20.1, 20.2 moved to P17-T09) | P13-T13, P13-T14 (QG-13..QG-19 satisfied before start) |
 | P14 | P09, P10, P11, P12 | QG-26 … QG-34 (every criterion) | P14-T23 (QG-26..QG-33 satisfied before start) |
 | P15 | P01 | QG-08.4,5,7; QG-10.2,4,5,6,7,8 | P15-T11 |
 | P16 | P09, P10, P11, P12, P14, P15 | QG-01.4; QG-04.6; QG-05.5; QG-08.2,8; QG-09.1,2,3,4,6; QG-12.1,3,4,7 | — |
@@ -272,7 +272,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | DEC-18 | Quality-gate owners and risk owners for waivers (default Unassigned) | P01-T15 | User | Open |
 | DEC-14 | Concept-board tab labels differ from the written spec: follow the spec (ADR-0002) | P01-T03 | Plan | Resolved |
 | DEC-19 | Forex market-data provider(s): streaming licence, redistribution and display rights, cost, instrument coverage (candidates to evaluate: OANDA, Interactive Brokers, other licensed vendors); tradable vs indicative quotes | P13-T01 / P13-T02 | User | Resolved as fixture-only (P13-T01, 2026-10-13): provider abstraction, an adapter from public documentation and a fake provider with synthetic fixtures; no key, no live call; the vendor and its streaming, display and redistribution licence stay open and block any real feed (QG-20.1) |
-| DEC-20 | Forex launch markets, regulatory classification (information vs advice), disclosure wording and legal review | P13-T01 / P13-T14 | User + legal | Scheduled (P13-T01): launch markets Kenya and the UAE; regulatory classification goes to the named reviewer in P13-T14; information and paper trading only until answered |
+| DEC-20 | Forex launch markets, regulatory classification (information vs advice), disclosure wording and legal review | P13-T01 / P13-T14 / P17-T09 | User + legal | Scheduled (P13-T01): launch markets Kenya and the UAE; regulatory classification goes to the named reviewer in P13-T14; information and paper trading only until answered |
 | DEC-21 | Time-series storage: PostgreSQL native partitioning (proposed) vs TimescaleDB extension | P13-T02 | Claude proposes, user approves | Resolved (P13-T01): PostgreSQL monthly range partitioning with BRIN indexes; TimescaleDB only if measured volume justifies it |
 | DEC-22 | Forecasting stack and v1 model scope: statsmodels, scikit-learn, LightGBM/XGBoost baselines (proposed); LSTM/GRU/Transformer research-only behind a separate gate | P13-T05 | Claude proposes, user approves | Resolved (P13-T01): baselines, ARIMA/SARIMA, gradient boosting, Random Forest and volatility models in v1; LSTM, GRU and Transformer research-only behind a flag and a separate gate |
 | DEC-23 | Forex release strategy: ship with v1 or after v1 behind a feature flag (proposed: after v1, flagged) | P13-T01 | User | Resolved (P13-T01): ship after v1 behind a feature flag, off by default |
@@ -305,7 +305,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | Store review delays for a finance app | Accounts and declarations started early (DEC-09, P17-T05); no advice/guarantee wording. |
 | Gates become paperwork (criteria ticked without real evidence) | Tracker requires an evidence statement and timestamp per criterion, `validate` checks them, critical criteria cannot be waived, and P16-T11 re-verifies everything on the release candidate. |
 | Scope creep into trading/robo-advice | Explicit non-goal; no execution affordances (D6). The Forex module (P13) is bounded to decision support and paper trading; live execution needs a separate approved phase (ADR-0009). |
-| Forex data licence or redistribution limits (display, storage, streaming) | DEC-19 and the licence review (P13-T14) before any provider is wired to users; fake provider keeps development unblocked; indicative rates are labelled and never shown as executable quotes. |
+| Forex data licence or redistribution limits (display, storage, streaming) | DEC-19 and the licence review (checklist in P13-T14; review in P17-T09) before any provider is wired to users; fake provider keeps development unblocked; indicative rates are labelled and never shown as executable quotes. |
 | Forex regulatory classification (advice or arrangement of dealing) in a launch market | DEC-20 legal review before release; information-only wording, risk disclosures, no personalised recommendations or execution. |
 | Overfitted or leaky forecasts create false confidence | Time-series-aware splits, walk-forward evaluation, leakage tests, baseline comparison reported even when the baseline wins, calibration labelling (QG-15, QG-17). |
 | Leverage and stop-loss misunderstandings harm users | Risk engine returns margin and leverage warnings and states that stops can gap or slip; paper trading first; disclosures reviewed (QG-16, QG-20). |
@@ -2644,12 +2644,12 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 
 - **Goal:** AI-assisted forex market intelligence, probabilistic forecasts, transparent opportunity ranking, deterministic trade-risk calculation, backtesting and paper trading, integrated into WealthSphere as a **decision-support and paper-trading** module. No live trade execution (see ADR-0009 and docs/design/forex-technical-design.md).
 - **Entry criteria:** P08-GATE, P09-GATE, P10-GATE and P12-GATE complete; user approves the phase and ADR-0009 (P13-T01).
-- **Exit criteria:** QG-13..QG-20 (QG-FX-01..08) satisfied; paper trading separate from real holdings; no live execution in the build; market-data licence and regulatory reviews recorded.
+- **Exit criteria:** QG-13..QG-19 and QG-20.3 to QG-20.5 satisfied; paper trading separate from real holdings; no live execution in the build; licence and regulatory review questions recorded and the release decision taken (not released). The licence and regulatory reviews themselves (QG-20.1, QG-20.2) move to P17-T09 (plan change 2026-10-14) and must pass before the module is switched on outside development.
 - **Prerequisite phases:** P08, P09, P10, P11, P12 · **Lane:** FX (sits between the AI phases and the cloud infrastructure phase P15; it needs no cloud environment, so it is validated on the local/CI stack and joins staging in P15-T11)
 - **Task alias:** the FX-nn names are the same tasks as P13-Tnn (FX-01 = P13-T01 … FX-14 = P13-T14); the tracker tracks the P13-Tnn IDs. QG-FX-nn are the gates QG-(12+nn).
 - **Entry gates:** prerequisite phase gates completed (P08, P09, P10, P11, P12); cumulative quality criteria QG-06.1–7; QG-07.1–8; QG-08.1,3,6; QG-11.3–4; user approval of the phase.
 - **Task-level gates:** each task's CK suites and acceptance criteria.
-- **Exit gates:** QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19, QG-20 (every criterion) required by `P13-GATE` plus user review.
+- **Exit gates:** QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19 (every criterion) and QG-20.3, QG-20.4, QG-20.5 required by `P13-GATE` plus user review.
 - **Release gates:** `Gates-start` on P13-T13 and P13-T14: QG-13..QG-19 satisfied.
 
 | Wave | Tasks | Mode | Entry condition | Conflict notes |
@@ -2878,19 +2878,19 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 
 `REL` · Size M · Wave P13.W12 · Approval: **USER REVIEW REQUIRED**
 
-- **Objective:** Complete market-data licence review, launch-market regulatory review, risk disclosures and the final decision on release, with live execution still disabled.
+- **Objective:** Prepare the market-data licence checklist and the launch-market regulatory questions, review the risk disclosures, verify that execution is disabled and take the release decision. The licence and regulatory reviews themselves move to P17-T09 (plan change 2026-10-14).
 - **Depends on:** P13-T13
 - **Parallel with:** — (sequential)
 - **Unblocks:** P13-GATE
 - **Deliverables:** Licence and regulatory review records, disclosure text, release decision.
 - **Acceptance criteria:**
-  - Market-data licence permits the in-app display, storage and any redistribution.
-  - Regulatory review is complete for each launch market (DEC-20); disclosures are approved.
+  - The licence checklist (DEC-19) and the regulatory questions for each launch market (DEC-20) are recorded; the reviews are carried by P17-T09 (QG-20.1, QG-20.2).
+  - Disclosures are approved (QG-20.3).
   - No live execution capability exists in the build; enabling one needs a separate approved phase.
   - The release decision covers the module's readiness only. Enabling the Forex feature flag in production additionally requires the core hardening gate (P16-GATE) and the staging smoke tests in P15-T11.
 - **Verification:** User approval; legal review records.
 - **Quality gates required before start:** QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19
-- **Subtasks:** `P13-T14.1` Licence review · `P13-T14.2` Regulatory review · `P13-T14.3` Risk disclosures · `P13-T14.4` Execution-disabled verification · `P13-T14.5` Release decision
+- **Subtasks:** `P13-T14.1` Licence review checklist · `P13-T14.2` Regulatory review questions · `P13-T14.3` Risk disclosures · `P13-T14.4` Execution-disabled verification · `P13-T14.5` Release decision
 
 #### P13-GATE — Phase P13 exit gate
 
@@ -2904,7 +2904,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Acceptance criteria:**
   - User approval recorded.
 - **Verification:** CK-B, CK-M, CK-S.
-- **Quality gates required before completion:** QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19, QG-20
+- **Quality gates required before completion:** QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19, QG-20.3, QG-20.4, QG-20.5
 - **Subtasks:** `P13-GATE.1` Run gates · `P13-GATE.2` Present summary · `P13-GATE.3` Record approval
 
 ---
@@ -3737,7 +3737,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | P17.W3 | P17-T04, P17-T05 | Parallel-safe | All dependencies from earlier waves of P17 complete | — |
 | P17.W4 | P17-T06 | Single task | All dependencies from earlier waves of P17 complete | — |
 | P17.W5 | P17-T07 | Single task | All dependencies from earlier waves of P17 complete | — |
-| P17.W6 | P17-T08 | Single task | All dependencies from earlier waves of P17 complete | — |
+| P17.W6 | P17-T08, P17-T09 | Parallel-safe | All dependencies from earlier waves of P17 complete | — |
 | P17.W7 | P17-GATE | Single task | All dependencies from earlier waves of P17 complete | — |
 
 #### P17-T01 — Store accounts, identifiers and signing
@@ -3857,6 +3857,25 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Verification:** Dashboards
 - **Subtasks:** `P17-T08.1` Monitoring · `P17-T08.2` Support · `P17-T08.3` Retrospective
 
+#### P17-T09 — Forex production enablement (conditional)
+
+`REL` · Size M · Wave P17.W6 · Approval: **USER REVIEW REQUIRED**
+
+- **Objective:** Switch the Forex module (P13) on outside development, only if the user decides to offer it. Added by the plan change of 2026-10-14, which moved QG-20.1 and QG-20.2 here from P13-T14.
+- **Depends on:** P17-T03, P13-T14
+- **Parallel with:** P17-T08
+- **Unblocks:** — (conditional: not a dependency of P17-GATE, because the Forex gates are optional and never block the core release)
+- **Deliverables:** Signed licence review and regulatory review (docs/forex-release-readiness.md sections 2, 3 and 7); disclosure changes, if any; an approved change to the configuration guard that refuses `forex_enabled` outside local and test.
+- **Acceptance criteria:**
+  - A market-data provider is chosen and its licence permits the in-app display, storage, derived data, AI processing and any redistribution (DEC-19, QG-20.1).
+  - The regulatory review is complete and signed for each launch market, Kenya and the UAE (DEC-20, QG-20.2).
+  - The named reviewer has reviewed the disclosures for the real data, including the follow-ups in the pack's section 4.
+  - The staging smoke tests (P15-T11), the core hardening gate (P16-GATE), the hands-on acceptance of the forex screens and the manual device pass are recorded.
+  - No live execution capability exists; enabling one needs a separate approved phase.
+- **Verification:** User approval; licence and legal review records; `track.py qg require QG-20.1 QG-20.2`
+- **Quality gates required before completion:** QG-20.1, QG-20.2
+- **Subtasks:** `P17-T09.1` Provider and licence review · `P17-T09.2` Regulatory review per launch market · `P17-T09.3` Disclosure legal review · `P17-T09.4` Staging smoke and hands-on acceptance · `P17-T09.5` Enablement decision
+
 #### P17-GATE — Release sign-off
 
 `GATE` · Size S · Wave P17.W7 · Approval: **USER REVIEW REQUIRED**
@@ -3877,7 +3896,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | Requirement (source) | Delivered by |
 |---|---|
 | Design tokens, themes, shared component library (UI spec) | P02-T01…T08 |
-| Forex Trading Intelligence module: market dashboard, predictions, technical analysis, economic calendar, Opportunity Ranking Dashboard, trade-risk engine, backtesting, paper trading, Forex Copilot (extension request, 2026-10-09) | P13-T01…T14 (FX-01…FX-14); gates QG-13…QG-20 (QG-FX-01…08) |
+| Forex Trading Intelligence module: market dashboard, predictions, technical analysis, economic calendar, Opportunity Ranking Dashboard, trade-risk engine, backtesting, paper trading, Forex Copilot (extension request, 2026-10-09) | P13-T01…T14 (FX-01…FX-14); gates QG-13…QG-20 (QG-FX-01…08); production enablement P17-T09 |
 | Multi-currency reporting: global reporting currency, FX provider service, conversion engine, historical rates, converter, AI currency tools (request 2026-10-10) | P11-T01…T12 (FXCUR-01…FXCUR-12); gates QG-21…QG-25; extends P05-T06, P08-T05 |
 | Screen 1 Welcome/Onboarding, 2 Sign In/Up | P04-T08 |
 | Screen 3 Home Dashboard | P03-T02 → live P09-T02 |
