@@ -23,6 +23,10 @@ class NotificationRoute {
     AppRoutes.goals,
     AppRoutes.alerts,
     AppRoutes.transactions,
+    // Forex (P13-T11): the forex home, the calendar and paper trading.
+    AppRoutes.forex,
+    AppRoutes.forexCalendar,
+    AppRoutes.forexPaper,
   };
 
   /// The route in a notification payload, or null when it is missing or not allowed. The payload

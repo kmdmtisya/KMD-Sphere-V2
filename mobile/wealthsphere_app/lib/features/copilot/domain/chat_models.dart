@@ -12,7 +12,11 @@ enum SectionKind {
   interpretation,
 
   /// A qualification the server adds itself (stale or missing data, forecasts), never the model.
-  notice;
+  notice,
+
+  /// Where a forex figure came from, with its time and model version, added by the server
+  /// (P13-T10), never by the model.
+  source;
 
   static SectionKind parse(String text, String path) => switch (text) {
     'observed' => observed,
@@ -20,6 +24,7 @@ enum SectionKind {
     'assumption' => assumption,
     'interpretation' => interpretation,
     'notice' => notice,
+    'source' => source,
     _ => throw FormatException('Unknown answer section kind "$text" at $path'),
   };
 }

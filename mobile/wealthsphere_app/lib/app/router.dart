@@ -14,6 +14,13 @@ import '../features/calculator/presentation/calculator_screen.dart';
 import '../features/calculator/presentation/forecast/forecast_screen.dart';
 import '../features/currency/presentation/currency_converter_screen.dart';
 import '../features/dashboard/presentation/home_screen.dart';
+import '../features/forex/application/forex_providers.dart';
+import '../features/forex/presentation/forex_calendar_screen.dart';
+import '../features/forex/presentation/forex_home_screen.dart';
+import '../features/forex/presentation/forex_opportunities_screen.dart';
+import '../features/forex/presentation/forex_pair_screen.dart';
+import '../features/forex/presentation/forex_paper_screen.dart';
+import '../features/forex/presentation/forex_risk_screen.dart';
 import '../features/goals/presentation/goal_detail_screen.dart';
 import '../features/goals/presentation/goal_form_screen.dart';
 import '../features/goals/presentation/goals_screen.dart';
@@ -40,183 +47,228 @@ import 'placeholder_screens.dart';
 /// [tabRoutes]. A feature replaces its placeholder by changing only its own entry here (its
 /// screens live in `features/<name>/presentation`). Paths come from [AppRoutes]; widgets navigate
 /// with those constants and never build path strings.
-final Map<AppTab, RouteBase Function()> tabRoutes =
-    <AppTab, RouteBase Function()>{
-      AppTab.home: () => GoRoute(
-        path: AppRoutes.home,
-        builder: (context, state) => const HomeScreen(),
-      ),
-      AppTab.portfolio: () => GoRoute(
-        path: AppRoutes.portfolio,
-        builder: (context, state) => const PortfolioOverviewScreen(),
-        routes: [
-          GoRoute(
-            path: 'holdings',
-            builder: (context, state) => HoldingsScreen(
-              onOpen: (holding) =>
-                  context.go(AppRoutes.investment(holding.detailKey)),
-            ),
-            routes: [
-              GoRoute(
-                path: ':symbol',
-                builder: (context, state) => InvestmentDetailScreen(
-                  symbol: state.pathParameters['symbol']!,
-                  // Pushed, so Back returns to this investment (not the whole ledger).
-                  onOpenTransaction: (entry) =>
-                      context.push(AppRoutes.transaction(entry.id)),
-                ),
-              ),
-            ],
-          ),
-          GoRoute(
-            path: 'transactions',
-            builder: (context, state) => TransactionsScreen(
-              onOpen: (entry) => context.go(AppRoutes.transaction(entry.id)),
-              onAdd: () => context.go(AppRoutes.addTransaction),
-            ),
-            routes: [
-              // Registered before ':id' so "add" is never read as an entry id.
-              GoRoute(
-                path: 'add',
-                builder: (context, state) => AddTransactionScreen(
-                  correctionOf: state.extra is LedgerEntry
-                      ? state.extra! as LedgerEntry
-                      : null,
-                  onOpenEntry: (id) => context.go(AppRoutes.transaction(id)),
-                  onDone: () => context.go(AppRoutes.transactions),
-                ),
-              ),
-              GoRoute(
-                path: ':id',
-                builder: (context, state) => TransactionDetailScreen(
-                  entryId: state.pathParameters['id']!,
-                  // Pushed, so Back returns to the entry the user came from.
-                  onOpenEntry: (id) => context.push(AppRoutes.transaction(id)),
-                  onAddCorrected: (entry) =>
-                      context.go(AppRoutes.addTransaction, extra: entry),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-      AppTab.ai: () => GoRoute(
-        path: AppRoutes.ai,
-        builder: (context, state) => AiWealthScreen(
-          scope: AiScope.tryParse(
-            state.uri.queryParameters[AppRoutes.aiScopeParam],
-          ),
-          onOpenDoctor: () => context.go(AppRoutes.doctor),
-          onOpenOpportunities: () => context.go(AppRoutes.opportunities),
+final Map<AppTab, RouteBase Function()>
+tabRoutes = <AppTab, RouteBase Function()>{
+  AppTab.home: () => GoRoute(
+    path: AppRoutes.home,
+    builder: (context, state) => const HomeScreen(),
+  ),
+  AppTab.portfolio: () => GoRoute(
+    path: AppRoutes.portfolio,
+    builder: (context, state) => const PortfolioOverviewScreen(),
+    routes: [
+      GoRoute(
+        path: 'holdings',
+        builder: (context, state) => HoldingsScreen(
+          onOpen: (holding) =>
+              context.go(AppRoutes.investment(holding.detailKey)),
         ),
         routes: [
           GoRoute(
-            path: 'opportunities',
-            builder: (context, state) => OpportunitiesScreen(
-              onCompare: () => context.go(AppRoutes.compareOpportunities),
-              onSimulated: () => context.go(AppRoutes.calculator),
-            ),
-            routes: [
-              GoRoute(
-                path: 'compare',
-                builder: (context, state) => CompareScreen(
-                  onBack: () => context.go(AppRoutes.opportunities),
-                ),
-              ),
-            ],
-          ),
-          GoRoute(
-            path: 'doctor',
-            builder: (context, state) => DoctorScreen(
-              onAskAi: (portfolioId) => context.go(
-                AppRoutes.aiWith(AiScope(AiScopeKind.portfolio, portfolioId)),
-              ),
+            path: ':symbol',
+            builder: (context, state) => InvestmentDetailScreen(
+              symbol: state.pathParameters['symbol']!,
+              // Pushed, so Back returns to this investment (not the whole ledger).
+              onOpenTransaction: (entry) =>
+                  context.push(AppRoutes.transaction(entry.id)),
             ),
           ),
         ],
       ),
-      AppTab.goals: () => GoRoute(
-        path: AppRoutes.goals,
-        builder: (context, state) => GoalsScreen(
-          onOpen: (entry) => context.go(AppRoutes.goal(entry.goal.id)),
-          onAdd: () => context.go(AppRoutes.addGoal),
+      GoRoute(
+        path: 'transactions',
+        builder: (context, state) => TransactionsScreen(
+          onOpen: (entry) => context.go(AppRoutes.transaction(entry.id)),
+          onAdd: () => context.go(AppRoutes.addTransaction),
         ),
         routes: [
-          // Registered before ':id' so "add" is never read as a goal id.
+          // Registered before ':id' so "add" is never read as an entry id.
           GoRoute(
             path: 'add',
-            builder: (context, state) => GoalFormScreen(
-              onSaved: (entry) => context.go(AppRoutes.goal(entry.goal.id)),
+            builder: (context, state) => AddTransactionScreen(
+              correctionOf: state.extra is LedgerEntry
+                  ? state.extra! as LedgerEntry
+                  : null,
+              onOpenEntry: (id) => context.go(AppRoutes.transaction(id)),
+              onDone: () => context.go(AppRoutes.transactions),
             ),
           ),
           GoRoute(
             path: ':id',
-            builder: (context, state) => GoalDetailScreen(
-              goalId: state.pathParameters['id']!,
-              onEdit: (goal) => context.go(AppRoutes.editGoal(goal.id)),
-              onAskAi: (goal) => context.go(
-                AppRoutes.aiWith(AiScope(AiScopeKind.goal, goal.id)),
-              ),
+            builder: (context, state) => TransactionDetailScreen(
+              entryId: state.pathParameters['id']!,
+              // Pushed, so Back returns to the entry the user came from.
+              onOpenEntry: (id) => context.push(AppRoutes.transaction(id)),
+              onAddCorrected: (entry) =>
+                  context.go(AppRoutes.addTransaction, extra: entry),
             ),
-            routes: [
-              GoRoute(
-                path: 'edit',
-                builder: (context, state) => GoalFormScreen(
-                  goalId: state.pathParameters['id'],
-                  onSaved: (entry) => context.go(AppRoutes.goal(entry.goal.id)),
-                ),
-              ),
-            ],
           ),
         ],
       ),
-      AppTab.more: () => GoRoute(
-        path: AppRoutes.more,
-        builder: (context, state) => MoreScreen(
-          onOpenNetWorth: () => context.go(AppRoutes.netWorth),
-          onOpenIncome: () => context.go(AppRoutes.income),
-          onOpenCalculator: () => context.go(AppRoutes.calculator),
-          onOpenSettings: () => context.go(AppRoutes.settings),
-          onOpenAlerts: () => context.go(AppRoutes.alerts),
-          onOpenConverter: () => context.go(AppRoutes.converter),
-          onOpenGallery: () => context.push(AppRoutes.gallery),
+    ],
+  ),
+  AppTab.ai: () => GoRoute(
+    path: AppRoutes.ai,
+    builder: (context, state) => AiWealthScreen(
+      scope: AiScope.tryParse(
+        state.uri.queryParameters[AppRoutes.aiScopeParam],
+      ),
+      onOpenDoctor: () => context.go(AppRoutes.doctor),
+      onOpenOpportunities: () => context.go(AppRoutes.opportunities),
+    ),
+    routes: [
+      GoRoute(
+        path: 'opportunities',
+        builder: (context, state) => OpportunitiesScreen(
+          onCompare: () => context.go(AppRoutes.compareOpportunities),
+          onSimulated: () => context.go(AppRoutes.calculator),
         ),
         routes: [
           GoRoute(
-            path: 'alerts',
-            builder: (context, state) => WatchlistAlertsScreen(
-              onOpenInvestment: (key) => context.go(AppRoutes.investment(key)),
+            path: 'compare',
+            builder: (context, state) => CompareScreen(
+              onBack: () => context.go(AppRoutes.opportunities),
             ),
-          ),
-          GoRoute(
-            path: 'converter',
-            builder: (context, state) => const CurrencyConverterScreen(),
-          ),
-          GoRoute(
-            path: 'net-worth',
-            builder: (context, state) => const NetWorthScreen(),
-          ),
-          GoRoute(
-            path: 'income',
-            builder: (context, state) => const IncomeScreen(),
-          ),
-          GoRoute(
-            path: 'settings',
-            builder: (context, state) => const SettingsScreen(),
-          ),
-          GoRoute(
-            path: 'calculator',
-            builder: (context, state) => const CalculatorScreen(),
-            routes: [
-              GoRoute(
-                path: 'forecast',
-                builder: (context, state) => const ForecastScreen(),
-              ),
-            ],
           ),
         ],
       ),
-    };
+      GoRoute(
+        path: 'doctor',
+        builder: (context, state) => DoctorScreen(
+          onAskAi: (portfolioId) => context.go(
+            AppRoutes.aiWith(AiScope(AiScopeKind.portfolio, portfolioId)),
+          ),
+        ),
+      ),
+    ],
+  ),
+  AppTab.goals: () => GoRoute(
+    path: AppRoutes.goals,
+    builder: (context, state) => GoalsScreen(
+      onOpen: (entry) => context.go(AppRoutes.goal(entry.goal.id)),
+      onAdd: () => context.go(AppRoutes.addGoal),
+    ),
+    routes: [
+      // Registered before ':id' so "add" is never read as a goal id.
+      GoRoute(
+        path: 'add',
+        builder: (context, state) => GoalFormScreen(
+          onSaved: (entry) => context.go(AppRoutes.goal(entry.goal.id)),
+        ),
+      ),
+      GoRoute(
+        path: ':id',
+        builder: (context, state) => GoalDetailScreen(
+          goalId: state.pathParameters['id']!,
+          onEdit: (goal) => context.go(AppRoutes.editGoal(goal.id)),
+          onAskAi: (goal) =>
+              context.go(AppRoutes.aiWith(AiScope(AiScopeKind.goal, goal.id))),
+        ),
+        routes: [
+          GoRoute(
+            path: 'edit',
+            builder: (context, state) => GoalFormScreen(
+              goalId: state.pathParameters['id'],
+              onSaved: (entry) => context.go(AppRoutes.goal(entry.goal.id)),
+            ),
+          ),
+        ],
+      ),
+    ],
+  ),
+  AppTab.more: () => GoRoute(
+    path: AppRoutes.more,
+    builder: (context, state) => Consumer(
+      builder: (context, ref, _) => MoreScreen(
+        onOpenNetWorth: () => context.go(AppRoutes.netWorth),
+        onOpenIncome: () => context.go(AppRoutes.income),
+        onOpenCalculator: () => context.go(AppRoutes.calculator),
+        onOpenSettings: () => context.go(AppRoutes.settings),
+        onOpenAlerts: () => context.go(AppRoutes.alerts),
+        onOpenConverter: () => context.go(AppRoutes.converter),
+        // The forex entry exists only when the section is available (DEC-23).
+        onOpenForex: ref.watch(forexAvailableProvider).value == true
+            ? () => context.go(AppRoutes.forex)
+            : null,
+        onOpenGallery: () => context.push(AppRoutes.gallery),
+      ),
+    ),
+    routes: [
+      GoRoute(
+        path: 'alerts',
+        builder: (context, state) => WatchlistAlertsScreen(
+          onOpenInvestment: (key) => context.go(AppRoutes.investment(key)),
+        ),
+      ),
+      GoRoute(
+        path: 'forex',
+        builder: (context, state) => ForexHomeScreen(
+          onOpenPair: (i) => context.go(AppRoutes.forexPair(i)),
+          onOpenOpportunities: () => context.go(AppRoutes.forexOpportunities),
+          onOpenRisk: () => context.go(AppRoutes.forexRisk),
+          onOpenCalendar: () => context.go(AppRoutes.forexCalendar),
+          onOpenPaper: () => context.go(AppRoutes.forexPaper),
+          onOpenCopilot: () => context.go(AppRoutes.ai),
+        ),
+        routes: [
+          GoRoute(
+            path: 'pair/:instrument',
+            builder: (context, state) => ForexPairScreen(
+              instrument: state.pathParameters['instrument']!,
+              onSetUpTrade: (i) => context.push(AppRoutes.forexRiskFor(i)),
+            ),
+          ),
+          GoRoute(
+            path: 'opportunities',
+            builder: (context, state) => ForexOpportunitiesScreen(
+              onOpenPair: (i) => context.go(AppRoutes.forexPair(i)),
+            ),
+          ),
+          GoRoute(
+            path: 'risk',
+            builder: (context, state) => ForexRiskScreen(
+              instrument: state.uri.queryParameters['instrument'] ?? 'EUR_USD',
+            ),
+          ),
+          GoRoute(
+            path: 'calendar',
+            builder: (context, state) => const ForexCalendarScreen(),
+          ),
+          GoRoute(
+            path: 'paper',
+            builder: (context, state) => const ForexPaperScreen(),
+          ),
+        ],
+      ),
+      GoRoute(
+        path: 'converter',
+        builder: (context, state) => const CurrencyConverterScreen(),
+      ),
+      GoRoute(
+        path: 'net-worth',
+        builder: (context, state) => const NetWorthScreen(),
+      ),
+      GoRoute(
+        path: 'income',
+        builder: (context, state) => const IncomeScreen(),
+      ),
+      GoRoute(
+        path: 'settings',
+        builder: (context, state) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: 'calculator',
+        builder: (context, state) => const CalculatorScreen(),
+        routes: [
+          GoRoute(
+            path: 'forecast',
+            builder: (context, state) => const ForecastScreen(),
+          ),
+        ],
+      ),
+    ],
+  ),
+};
 
 /// Builds the app router. Exposed as a function so tests can start at any location.
 GoRouter createRouter({

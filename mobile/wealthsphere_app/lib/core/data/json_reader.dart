@@ -83,6 +83,28 @@ class JsonReader {
     return Decimal.parse(text);
   }
 
+  /// A list of plain decimal strings in which `null` marks a missing value (an indicator's
+  /// warm-up bars, for example). Anything else fails like [decimal].
+  List<Decimal?> decimalsOrNull(String key) {
+    final v = _raw(key);
+    if (v is! List) {
+      throw FormatException('${_at(key)} must be a list, got ${v.runtimeType}');
+    }
+    return List.unmodifiable([
+      for (var i = 0; i < v.length; i++)
+        v[i] == null
+            ? null
+            : v[i] is String && _decimalPattern.hasMatch(v[i] as String)
+            ? Decimal.parse(v[i] as String)
+            : throw FormatException(
+                '${_at(key)}[$i] is not a plain decimal string or null',
+              ),
+    ]);
+  }
+
+  /// The keys of this object, in the order they arrived.
+  Iterable<String> get keys => _map.keys;
+
   Money money(String key) {
     final v = _raw(key);
     try {

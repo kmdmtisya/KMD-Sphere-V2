@@ -1341,20 +1341,20 @@
   - [x] P13-T10.4 Guarantee-language guard
   - [x] P13-T10.5 Evaluation set
   - [x] P13-T10.6 Tests
-- [ ] **P13-T11** · FX-11 Android and iOS Forex Intelligence integration · `NOT_STARTED` ⬜
+- [x] **P13-T11** · FX-11 Android and iOS Forex Intelligence integration · `COMPLETED` ✅
   - Deps: P13-T10, P09-GATE · Wave: W9 · Track: MOB · Size: XL · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P13-T11.1 Navigation and entry points
-  - [ ] P13-T11.2 Overview and live markets
-  - [ ] P13-T11.3 Chart and predictions
-  - [ ] P13-T11.4 Opportunity Ranking Dashboard and scanner
-  - [ ] P13-T11.5 Trade setup and risk calculator
-  - [ ] P13-T11.6 Calendar and backtesting
-  - [ ] P13-T11.7 Paper trading and journal
-  - [ ] P13-T11.8 Copilot and alerts
-  - [ ] P13-T11.9 Streaming resilience
-  - [ ] P13-T11.10 Tests
+  - Started: 2026-10-14T20:27:01+04:00 · Completed: 2026-10-14T21:25:02+04:00 · Duration: 58m 01s · Blocker: —
+  - Evidence: Forex section in the Flutter app (lib/features/forex): More entry shown only when forex is available (DEMO always; live only when the server has forex on, 404 otherwise); home with streamed markets, pair (chart, indicators, levels, forecasts with calibration labels, backtests), Opportunity Ranking and scanner, trade setup and risk calculator (server-computed, disclosures shown), calendar (DEMO events labelled, consensus marked as expectation), paper trading and journal (PAPER TRADING always visible; DEMO read-only), Copilot link with server-built source lines, in-app notices with settings and forex deep links. Stream client: token in first frame, resubscribe after reconnect with 1-30 s backoff, 15 s silence watchdog, close codes 4401/4404/4429, pause/resume with app lifecycle and connectivity; updates batched every 250 ms with the chart in a RepaintBoundary. Prices always show their type and freshness; none shown as executable. Tests: test/features/forex (stream, data, screens incl. 2.0x text, RTL, dark), test/journeys/forex_journey_test.dart; docs/design/forex-mobile.md, parity matrix updated. Local: dart format clean, flutter analyze clean, full flutter test 1793 passed plus the forex journey. PR #164. CI all gates pass.
+  - [x] P13-T11.1 Navigation and entry points
+  - [x] P13-T11.2 Overview and live markets
+  - [x] P13-T11.3 Chart and predictions
+  - [x] P13-T11.4 Opportunity Ranking Dashboard and scanner
+  - [x] P13-T11.5 Trade setup and risk calculator
+  - [x] P13-T11.6 Calendar and backtesting
+  - [x] P13-T11.7 Paper trading and journal
+  - [x] P13-T11.8 Copilot and alerts
+  - [x] P13-T11.9 Streaming resilience
+  - [x] P13-T11.10 Tests
 - [ ] **P13-T12** · FX-12 Forex quality gates verification · `NOT_STARTED` ⬜
   - Deps: P13-T11 · Wave: W10 · Track: QA · Size: M · Approval: no · Gates-done: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19
   - Started: — · Completed: — · Duration: — · Blocker: —

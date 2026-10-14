@@ -120,5 +120,25 @@ List<AnswerSection> sectionsFromStructured(JsonReader s) {
       ),
     for (final t in plain('caveats'))
       AnswerSection(kind: SectionKind.notice, text: t),
+    if (s.has('sources'))
+      for (final line in s.list('sources', sourceLine))
+        AnswerSection(kind: SectionKind.source, text: line),
   ];
+}
+
+/// One server-built source as a line: "get_forecast · as of 2026-10-09T08:00:00Z · simulated ·
+/// model lightgbm v14 · generated 2026-10-09T08:00:00Z".
+String sourceLine(JsonReader r) {
+  final parts = <String>[r.string('tool')];
+  final asOf = r.stringOrNull('as_of');
+  if (asOf != null) parts.add('as of $asOf');
+  if (r.has('data_types')) {
+    final types = r.strings('data_types');
+    if (types.isNotEmpty) parts.add(types.join(', '));
+  }
+  final model = r.stringOrNull('model');
+  if (model != null) parts.add('model $model');
+  final generated = r.stringOrNull('generated_at');
+  if (generated != null) parts.add('generated $generated');
+  return parts.join(' · ');
 }
