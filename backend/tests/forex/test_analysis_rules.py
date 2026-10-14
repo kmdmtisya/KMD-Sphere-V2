@@ -1,5 +1,6 @@
-"""Rules for the analysis layer (P13-T03): no language model touches an indicator value or a
-pattern, the indicator request parser is bounded, and the candle sync is scheduled."""
+"""Rules for the analysis layer (P13-T03 to T05): no language model touches an indicator value, a
+pattern, a calendar value or a forecast; the indicator request parser is bounded; the candle
+sync is scheduled."""
 
 import ast
 from decimal import Decimal
@@ -13,7 +14,7 @@ from app.worker.schedule import build_schedule
 
 APP = Path(__file__).resolve().parents[2] / "app"
 FOREX = APP / "modules" / "forex"
-ANALYSIS_PACKAGES = [FOREX / "analysis", FOREX / "candles"]
+ANALYSIS_PACKAGES = [FOREX / "analysis", FOREX / "candles", FOREX / "forecast", FOREX / "calendar"]
 FORBIDDEN_PREFIXES = ("app.ai", "openai", "anthropic")
 
 

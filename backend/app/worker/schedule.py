@@ -66,6 +66,11 @@ def build_schedule() -> dict[str, dict[str, Any]]:
             "task": "app.worker.tasks.forex_calendar_ingest",
             "schedule": crontab(minute=10),
         },
+        # Forecasts (P13-T05): train, evaluate against the baselines and publish, every hour.
+        "forex-forecast-train": {
+            "task": "app.worker.tasks.forex_forecast_train",
+            "schedule": crontab(minute=20),
+        },
         "forex-maintenance": {
             "task": "app.worker.tasks.forex_maintenance",
             "schedule": crontab(hour=1, minute=15),

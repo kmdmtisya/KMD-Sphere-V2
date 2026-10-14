@@ -1274,18 +1274,18 @@
   - [x] P13-T04.3 Event-risk windows
   - [x] P13-T04.4 API
   - [x] P13-T04.5 Tests
-- [ ] **P13-T05** · FX-05 Prediction models and evaluation framework · `NOT_STARTED` ⬜
+- [x] **P13-T05** · FX-05 Prediction models and evaluation framework · `COMPLETED` ✅
   - Deps: P13-T03, P13-T04 · Wave: W4 · Track: BE · Size: XL · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P13-T05.1 Feature pipeline
-  - [ ] P13-T05.2 Baselines
-  - [ ] P13-T05.3 Statistical and boosting models
-  - [ ] P13-T05.4 Ensembles and volatility
-  - [ ] P13-T05.5 Walk-forward evaluation
-  - [ ] P13-T05.6 Calibration and interval coverage
-  - [ ] P13-T05.7 Drift monitoring
-  - [ ] P13-T05.8 Forecast API
+  - Started: 2026-10-14T11:47:36+04:00 · Completed: 2026-10-14T12:44:08+04:00 · Duration: 56m 32s · Blocker: —
+  - Evidence: Every model (ARIMA, Random Forest, LightGBM, XGBoost, ensemble) benchmarked against no-change, random-walk and drift baselines on purged expanding walk-forward folds, reported even when a baseline wins; edge only with Diebold-Mariano p<0.05 against every baseline, otherwise the random-walk baseline is published as no demonstrated edge (random walk: no edge; positive control: edge found). Leakage: point-in-time features, purged splits checked per fold, audit passes for every model and fails for two deliberately leaky ones. Forecasts carry horizon, up/down probabilities, return quantiles, Decimal price intervals, expected volatility (EWMA/HAR), calibration status (Requires calibration until 300+ held-out bars with ECE<=0.05), out-of-sample metrics vs baselines, freshness, model version and hashes; simulated-data edges stated as not evidence. Drift (PSI/KS, error vs random walk) disables until retraining is approved. Report reports/quality/qg-15-forex-model-validation.md. Migration 0022; deps BSD/MIT/Apache, pip-audit clean; forex 428 tests, 97% coverage; Spectral clean. Full backend suite 3004 passed; coverage policy OK. PR #158. CI all gates pass. · Approved by: user (mtisya@gmail.com), advance approval 2026-10-13 (P13 sequence)
+  - [x] P13-T05.1 Feature pipeline
+  - [x] P13-T05.2 Baselines
+  - [x] P13-T05.3 Statistical and boosting models
+  - [x] P13-T05.4 Ensembles and volatility
+  - [x] P13-T05.5 Walk-forward evaluation
+  - [x] P13-T05.6 Calibration and interval coverage
+  - [x] P13-T05.7 Drift monitoring
+  - [x] P13-T05.8 Forecast API
 - [ ] **P13-T06** · FX-06 Strategy, signal engine and opportunity ranking · `NOT_STARTED` ⬜
   - Deps: P13-T05 · Wave: W5 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

@@ -22,6 +22,12 @@ dependencies = [
   "httpx>=0.28",
   "defusedxml>=0.7.1",
   "celery>=5.4",
+  "numpy>=2.1",
+  "scipy>=1.14",
+  "scikit-learn>=1.5",
+  "statsmodels>=0.14.4",
+  "lightgbm>=4.5",
+  "xgboost-cpu>=2.1",
 ]
 
 [dependency-groups]
@@ -60,6 +66,12 @@ python_version = "3.13"
 strict = true
 plugins = ["pydantic.mypy"]
 files = ["app", "tests"]
+
+# The statistical and machine-learning libraries of the forex forecaster (P13-T05, DEC-22) ship
+# without type information. Their use is confined to app/modules/forex/forecast.
+[[tool.mypy.overrides]]
+module = ["sklearn.*", "statsmodels.*", "lightgbm.*", "xgboost.*", "scipy.*"]
+ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
