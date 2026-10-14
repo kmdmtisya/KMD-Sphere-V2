@@ -36,6 +36,11 @@ FINANCIAL_MODULES = [
     "modules.scoring.features",
     "modules.scoring.scoring",
     "modules.compatibility.impact",
+    "modules.forex.analysis.indicators",
+    "modules.forex.analysis.structure",
+    "modules.forex.analysis.patterns",
+    "modules.forex.candles.sessions",
+    "modules.forex.candles.aggregate",
 ]
 # Sections of financial-methods.md that state formulas (1 to 12): each needs a requirement.
 FORMULA_SECTIONS = range(1, 13)

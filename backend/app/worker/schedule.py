@@ -56,6 +56,11 @@ def build_schedule() -> dict[str, dict[str, Any]]:
             "schedule": crontab(hour=3, minute=0),
         },
         # Forex registry and monthly partitions three months ahead (P13-T02.3), once a day.
+        # One-minute forex candles from the provider (P13-T03), every five minutes.
+        "forex-candle-sync": {
+            "task": "app.worker.tasks.forex_candle_sync",
+            "schedule": crontab(minute="*/5"),
+        },
         "forex-maintenance": {
             "task": "app.worker.tasks.forex_maintenance",
             "schedule": crontab(hour=1, minute=15),

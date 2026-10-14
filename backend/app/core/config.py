@@ -166,6 +166,12 @@ class Settings(BaseSettings):
     # Client messages per socket per minute (subscribe, unsubscribe, ping) before it is closed.
     forex_stream_messages_per_minute: int = Field(default=60, ge=1)
     forex_candles_max: int = Field(default=2000, ge=1, le=5000)
+    # Analysis requests (P13-T03): bars analysed per call, and the one-minute candles that may be
+    # aggregated to build them when the provider published none of that timeframe.
+    forex_analysis_max_bars: int = Field(default=2000, ge=10, le=5000)
+    forex_analysis_source_cap: int = Field(default=150_000, ge=1000, le=1_000_000)
+    # Candle sync (P13-T03): the most one-minute history fetched per pair per run.
+    forex_candle_sync_max_hours: int = Field(default=24, ge=1, le=168)
 
     db_pool_size: int = 5
     db_max_overflow: int = 5

@@ -1255,16 +1255,16 @@
   - [x] P13-T02.5 Stale-data and outage handling
   - [x] P13-T02.6 Fake provider and recorded fixtures
   - [x] P13-T02.7 Tests
-- [ ] **P13-T03** · FX-03 Technical analysis engine · `NOT_STARTED` ⬜
+- [ ] **P13-T03** · FX-03 Technical analysis engine · `IN_PROGRESS` 🔄
   - Deps: P13-T02 · Wave: W3 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-14T10:08:19+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P13-T03.1 Trend indicators
-  - [ ] P13-T03.2 Momentum and volatility indicators
-  - [ ] P13-T03.3 Timeframe aggregation
-  - [ ] P13-T03.4 Market structure
-  - [ ] P13-T03.5 Price-action detectors
-  - [ ] P13-T03.6 Reference vectors and tests
+  - [x] P13-T03.1 Trend indicators
+  - [x] P13-T03.2 Momentum and volatility indicators
+  - [x] P13-T03.3 Timeframe aggregation
+  - [x] P13-T03.4 Market structure
+  - [x] P13-T03.5 Price-action detectors
+  - [x] P13-T03.6 Reference vectors and tests
 - [ ] **P13-T04** · FX-04 Economic calendar and macroeconomic intelligence · `NOT_STARTED` ⬜
   - Deps: P13-T02 · Wave: W3 · Track: BE · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

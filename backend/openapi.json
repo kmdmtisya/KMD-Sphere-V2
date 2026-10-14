@@ -897,6 +897,38 @@
         "title": "AssetSummary",
         "type": "object"
       },
+      "BreakoutOut": {
+        "properties": {
+          "direction": {
+            "enum": [
+              "up",
+              "down"
+            ],
+            "title": "Direction",
+            "type": "string"
+          },
+          "level_price": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Level Price",
+            "type": "string"
+          },
+          "ts": {
+            "format": "date-time",
+            "title": "Ts",
+            "type": "string"
+          }
+        },
+        "required": [
+          "ts",
+          "level_price",
+          "direction"
+        ],
+        "title": "BreakoutOut",
+        "type": "object"
+      },
       "CandleOut": {
         "properties": {
           "close": {
@@ -4575,6 +4607,155 @@
         "title": "IncomeSummaryOut",
         "type": "object"
       },
+      "IndicatorSeries": {
+        "properties": {
+          "first_defined_index": {
+            "description": "Index of the first bar with a value; earlier ones are null",
+            "title": "First Defined Index",
+            "type": "integer"
+          },
+          "name": {
+            "examples": [
+              "macd:12,26,9"
+            ],
+            "title": "Name",
+            "type": "string"
+          },
+          "outputs": {
+            "additionalProperties": {
+              "items": {
+                "anyOf": [
+                  {
+                    "examples": [
+                      "1234.50"
+                    ],
+                    "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            "title": "Outputs",
+            "type": "object"
+          }
+        },
+        "required": [
+          "name",
+          "outputs",
+          "first_defined_index"
+        ],
+        "title": "IndicatorSeries",
+        "type": "object"
+      },
+      "IndicatorsOut": {
+        "properties": {
+          "as_of": {
+            "description": "When the analysis was computed (UTC)",
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "bars": {
+            "title": "Bars",
+            "type": "integer"
+          },
+          "data_types": {
+            "description": "Data types of the candles used (for example simulated)",
+            "items": {
+              "type": "string"
+            },
+            "title": "Data Types",
+            "type": "array"
+          },
+          "forming_excluded": {
+            "description": "Periods still open that were left out",
+            "title": "Forming Excluded",
+            "type": "integer"
+          },
+          "instrument": {
+            "title": "Instrument",
+            "type": "string"
+          },
+          "notice": {
+            "default": "Computed by the backend from stored candles with fixed, documented formulas. Descriptive only: an indicator or pattern is not a forecast, a probability or advice.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "partial_bars": {
+            "description": "Bars aggregated from fewer one-minute candles than a full period",
+            "title": "Partial Bars",
+            "type": "integer"
+          },
+          "price_basis": {
+            "enum": [
+              "mid",
+              "bid",
+              "ask"
+            ],
+            "title": "Price Basis",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "series": {
+            "items": {
+              "$ref": "#/components/schemas/IndicatorSeries"
+            },
+            "title": "Series",
+            "type": "array"
+          },
+          "timeframe": {
+            "enum": [
+              "1m",
+              "5m",
+              "15m",
+              "30m",
+              "1H",
+              "4H",
+              "1D",
+              "1W",
+              "1M"
+            ],
+            "title": "Timeframe",
+            "type": "string"
+          },
+          "timestamps": {
+            "items": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "title": "Timestamps",
+            "type": "array"
+          },
+          "truncated": {
+            "description": "True when more bars exist than were analysed",
+            "title": "Truncated",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "instrument",
+          "timeframe",
+          "price_basis",
+          "provider",
+          "as_of",
+          "data_types",
+          "bars",
+          "partial_bars",
+          "forming_excluded",
+          "truncated",
+          "timestamps",
+          "series"
+        ],
+        "title": "IndicatorsOut",
+        "type": "object"
+      },
       "InstrumentsOut": {
         "properties": {
           "items": {
@@ -4678,6 +4859,56 @@
           "stale"
         ],
         "title": "LatestPriceOut",
+        "type": "object"
+      },
+      "LevelOut": {
+        "properties": {
+          "established_ts": {
+            "format": "date-time",
+            "title": "Established Ts",
+            "type": "string"
+          },
+          "first_ts": {
+            "format": "date-time",
+            "title": "First Ts",
+            "type": "string"
+          },
+          "last_ts": {
+            "format": "date-time",
+            "title": "Last Ts",
+            "type": "string"
+          },
+          "price": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Price",
+            "type": "string"
+          },
+          "role": {
+            "description": "Relative to the last close",
+            "enum": [
+              "support",
+              "resistance"
+            ],
+            "title": "Role",
+            "type": "string"
+          },
+          "touches": {
+            "title": "Touches",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "price",
+          "role",
+          "touches",
+          "first_ts",
+          "last_ts",
+          "established_ts"
+        ],
+        "title": "LevelOut",
         "type": "object"
       },
       "LiabilityCreate": {
@@ -5718,6 +5949,151 @@
           "weeks_of_prices"
         ],
         "title": "PastFigures",
+        "type": "object"
+      },
+      "PatternOut": {
+        "properties": {
+          "bias": {
+            "description": "The shape's reading, not a forecast",
+            "enum": [
+              "bullish",
+              "bearish",
+              "neutral"
+            ],
+            "title": "Bias",
+            "type": "string"
+          },
+          "category": {
+            "enum": [
+              "reversal",
+              "continuation",
+              "indecision",
+              "consolidation",
+              "breakout"
+            ],
+            "title": "Category",
+            "type": "string"
+          },
+          "rule": {
+            "examples": [
+              "bullish_engulfing"
+            ],
+            "title": "Rule",
+            "type": "string"
+          },
+          "timestamps": {
+            "description": "The candles involved, oldest first",
+            "items": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "title": "Timestamps",
+            "type": "array"
+          }
+        },
+        "required": [
+          "rule",
+          "category",
+          "bias",
+          "timestamps"
+        ],
+        "title": "PatternOut",
+        "type": "object"
+      },
+      "PatternsOut": {
+        "properties": {
+          "as_of": {
+            "description": "When the analysis was computed (UTC)",
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "bars": {
+            "title": "Bars",
+            "type": "integer"
+          },
+          "data_types": {
+            "description": "Data types of the candles used (for example simulated)",
+            "items": {
+              "type": "string"
+            },
+            "title": "Data Types",
+            "type": "array"
+          },
+          "forming_excluded": {
+            "description": "Periods still open that were left out",
+            "title": "Forming Excluded",
+            "type": "integer"
+          },
+          "instrument": {
+            "title": "Instrument",
+            "type": "string"
+          },
+          "notice": {
+            "default": "Computed by the backend from stored candles with fixed, documented formulas. Descriptive only: an indicator or pattern is not a forecast, a probability or advice.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "partial_bars": {
+            "description": "Bars aggregated from fewer one-minute candles than a full period",
+            "title": "Partial Bars",
+            "type": "integer"
+          },
+          "patterns": {
+            "items": {
+              "$ref": "#/components/schemas/PatternOut"
+            },
+            "title": "Patterns",
+            "type": "array"
+          },
+          "price_basis": {
+            "enum": [
+              "mid",
+              "bid",
+              "ask"
+            ],
+            "title": "Price Basis",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "timeframe": {
+            "enum": [
+              "1m",
+              "5m",
+              "15m",
+              "30m",
+              "1H",
+              "4H",
+              "1D",
+              "1W",
+              "1M"
+            ],
+            "title": "Timeframe",
+            "type": "string"
+          },
+          "truncated": {
+            "description": "True when more bars exist than were analysed",
+            "title": "Truncated",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "instrument",
+          "timeframe",
+          "price_basis",
+          "provider",
+          "as_of",
+          "data_types",
+          "bars",
+          "partial_bars",
+          "forming_excluded",
+          "truncated",
+          "patterns"
+        ],
+        "title": "PatternsOut",
         "type": "object"
       },
       "PerformanceOut": {
@@ -7980,6 +8356,136 @@
         "title": "SnapshotRateOut",
         "type": "object"
       },
+      "StructureOut": {
+        "properties": {
+          "as_of": {
+            "description": "When the analysis was computed (UTC)",
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "bars": {
+            "title": "Bars",
+            "type": "integer"
+          },
+          "breakouts": {
+            "items": {
+              "$ref": "#/components/schemas/BreakoutOut"
+            },
+            "title": "Breakouts",
+            "type": "array"
+          },
+          "data_types": {
+            "description": "Data types of the candles used (for example simulated)",
+            "items": {
+              "type": "string"
+            },
+            "title": "Data Types",
+            "type": "array"
+          },
+          "forming_excluded": {
+            "description": "Periods still open that were left out",
+            "title": "Forming Excluded",
+            "type": "integer"
+          },
+          "instrument": {
+            "title": "Instrument",
+            "type": "string"
+          },
+          "levels": {
+            "items": {
+              "$ref": "#/components/schemas/LevelOut"
+            },
+            "title": "Levels",
+            "type": "array"
+          },
+          "notice": {
+            "default": "Computed by the backend from stored candles with fixed, documented formulas. Descriptive only: an indicator or pattern is not a forecast, a probability or advice.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "partial_bars": {
+            "description": "Bars aggregated from fewer one-minute candles than a full period",
+            "title": "Partial Bars",
+            "type": "integer"
+          },
+          "price_basis": {
+            "enum": [
+              "mid",
+              "bid",
+              "ask"
+            ],
+            "title": "Price Basis",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "swings": {
+            "items": {
+              "$ref": "#/components/schemas/SwingOut"
+            },
+            "title": "Swings",
+            "type": "array"
+          },
+          "timeframe": {
+            "enum": [
+              "1m",
+              "5m",
+              "15m",
+              "30m",
+              "1H",
+              "4H",
+              "1D",
+              "1W",
+              "1M"
+            ],
+            "title": "Timeframe",
+            "type": "string"
+          },
+          "tolerance": {
+            "description": "Cluster tolerance: half the ATR(14) at the last bar",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Tolerance",
+            "type": "string"
+          },
+          "trendlines": {
+            "items": {
+              "$ref": "#/components/schemas/TrendlineOut"
+            },
+            "title": "Trendlines",
+            "type": "array"
+          },
+          "truncated": {
+            "description": "True when more bars exist than were analysed",
+            "title": "Truncated",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "instrument",
+          "timeframe",
+          "price_basis",
+          "provider",
+          "as_of",
+          "data_types",
+          "bars",
+          "partial_bars",
+          "forming_excluded",
+          "truncated",
+          "tolerance",
+          "swings",
+          "levels",
+          "breakouts",
+          "trendlines"
+        ],
+        "title": "StructureOut",
+        "type": "object"
+      },
       "SummaryOut": {
         "description": "Server-authoritative totals. Money is in `currency`, rounded to its minor units.",
         "properties": {
@@ -8079,6 +8585,44 @@
           "freshness"
         ],
         "title": "SummaryOut",
+        "type": "object"
+      },
+      "SwingOut": {
+        "properties": {
+          "confirmed_ts": {
+            "format": "date-time",
+            "title": "Confirmed Ts",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "high",
+              "low"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "price": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Price",
+            "type": "string"
+          },
+          "ts": {
+            "format": "date-time",
+            "title": "Ts",
+            "type": "string"
+          }
+        },
+        "required": [
+          "ts",
+          "kind",
+          "price",
+          "confirmed_ts"
+        ],
+        "title": "SwingOut",
         "type": "object"
       },
       "ToolCallOut": {
@@ -8582,6 +9126,76 @@
           "next_cursor"
         ],
         "title": "TransactionPage",
+        "type": "object"
+      },
+      "TrendlineOut": {
+        "properties": {
+          "channel_lower_at_last": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Channel Lower At Last",
+            "type": "string"
+          },
+          "channel_upper_at_last": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Channel Upper At Last",
+            "type": "string"
+          },
+          "first_ts": {
+            "format": "date-time",
+            "title": "First Ts",
+            "type": "string"
+          },
+          "intact": {
+            "title": "Intact",
+            "type": "boolean"
+          },
+          "kind": {
+            "enum": [
+              "support",
+              "resistance"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "second_ts": {
+            "format": "date-time",
+            "title": "Second Ts",
+            "type": "string"
+          },
+          "slope_per_bar": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Slope Per Bar",
+            "type": "string"
+          },
+          "value_at_last": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Value At Last",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "first_ts",
+          "second_ts",
+          "slope_per_bar",
+          "value_at_last",
+          "intact",
+          "channel_upper_at_last",
+          "channel_lower_at_last"
+        ],
+        "title": "TrendlineOut",
         "type": "object"
       },
       "TypeIncomeOut": {
@@ -11376,6 +11990,121 @@
         ]
       }
     },
+    "/api/v1/forex/indicators": {
+      "get": {
+        "description": "`indicator` is repeated, each as `name` or `name:p1,p2` from sma, ema, macd, rsi, stochastic, roc, atr, adx and bollinger (for example `rsi:14`, `macd:12,26,9`). Values are null until the warm-up is satisfied or where a ratio is undefined; ask for a wider range to see earlier values. Formulas: docs/financial-methods.md section 19.",
+        "operationId": "indicators_api_v1_forex_indicators_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "instrument",
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Z]{3}_[A-Z]{3}$",
+              "title": "Instrument",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "start",
+            "required": true,
+            "schema": {
+              "format": "date-time",
+              "title": "Start",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "end",
+            "required": true,
+            "schema": {
+              "format": "date-time",
+              "title": "End",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "indicator",
+            "required": true,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 12,
+              "title": "Indicator",
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "timeframe",
+            "required": false,
+            "schema": {
+              "default": "1m",
+              "pattern": "^(1m|5m|15m|30m|1H|4H|1D|1W|1M)$",
+              "title": "Timeframe",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "price_basis",
+            "required": false,
+            "schema": {
+              "default": "mid",
+              "pattern": "^(mid|bid|ask)$",
+              "title": "Price Basis",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IndicatorsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such instrument, or the forex module is switched off for this user"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Technical indicators over stored candles",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
     "/api/v1/forex/instruments": {
       "get": {
         "description": "Reference data from the instrument registry: pip location, display precision, liquidity tier and the default price type a licensed provider would give. The universe is configuration; inactive pairs are left out.",
@@ -11416,6 +12145,108 @@
           }
         ],
         "summary": "The active currency pairs and how each is quoted",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/patterns": {
+      "get": {
+        "description": "Rule-based detections, each naming its rule and the candles used. A pattern's bias describes its shape and is not a forecast or a probability.",
+        "operationId": "patterns_api_v1_forex_patterns_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "instrument",
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Z]{3}_[A-Z]{3}$",
+              "title": "Instrument",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "start",
+            "required": true,
+            "schema": {
+              "format": "date-time",
+              "title": "Start",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "end",
+            "required": true,
+            "schema": {
+              "format": "date-time",
+              "title": "End",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "timeframe",
+            "required": false,
+            "schema": {
+              "default": "1H",
+              "pattern": "^(1m|5m|15m|30m|1H|4H|1D|1W|1M)$",
+              "title": "Timeframe",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "price_basis",
+            "required": false,
+            "schema": {
+              "default": "mid",
+              "pattern": "^(mid|bid|ask)$",
+              "title": "Price Basis",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PatternsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such instrument, or the forex module is switched off for this user"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Candlestick and price-action patterns",
         "tags": [
           "forex"
         ]
@@ -11489,6 +12320,108 @@
           }
         ],
         "summary": "The latest quote of each pair, with its type, true age and the feed's status",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/structure": {
+      "get": {
+        "description": "Swing points are reported once confirmed by two further bars. Levels group swings within half the ATR(14); a level below the last close is support, otherwise resistance. Descriptive only, not a forecast.",
+        "operationId": "structure_api_v1_forex_structure_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "instrument",
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Z]{3}_[A-Z]{3}$",
+              "title": "Instrument",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "start",
+            "required": true,
+            "schema": {
+              "format": "date-time",
+              "title": "Start",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "end",
+            "required": true,
+            "schema": {
+              "format": "date-time",
+              "title": "End",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "timeframe",
+            "required": false,
+            "schema": {
+              "default": "1H",
+              "pattern": "^(1m|5m|15m|30m|1H|4H|1D|1W|1M)$",
+              "title": "Timeframe",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "price_basis",
+            "required": false,
+            "schema": {
+              "default": "mid",
+              "pattern": "^(mid|bid|ask)$",
+              "title": "Price Basis",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StructureOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such instrument, or the forex module is switched off for this user"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Market structure: swings, support and resistance, breakouts, trendlines and channels",
         "tags": [
           "forex"
         ]
