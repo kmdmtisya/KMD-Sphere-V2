@@ -1372,10 +1372,10 @@
   - [x] P13-T13.2 Outage and failover drills
   - [x] P13-T13.3 Observability check
   - [x] P13-T13.4 User acceptance
-- [ ] **P13-T14** · FX-14 Release approval and regulatory readiness · `IN_PROGRESS` 🔄
+- [x] **P13-T14** · FX-14 Release approval and regulatory readiness · `COMPLETED` ✅
   - Deps: P13-T13 · Wave: W12 · Track: REL · Size: M · Approval: yes · Gates-start: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19
-  - Started: 2026-10-14T23:02:02+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-14T23:02:02+04:00 · Completed: 2026-10-15T00:03:39+04:00 · Duration: 1h 01m 37s · Blocker: —
+  - Evidence: Plan change by user decision 2026-10-14: QG-20.1 and QG-20.2 (CRITICAL, not waived) moved to new conditional task P17-T09 Forex production enablement; P13-T14 delivers the licence checklist and regulatory questions (docs/forex-release-readiness.md sections 2, 3), disclosures approved by the user as drafted (QG-20.3), execution-disabled verification (QG-20.4, QG-20.5, 39 tests pass), release decision: not released (forex refused outside local and test). reports/quality/qg-20-forex-release-readiness.md. PR #168. CI all gates pass. · Approved by: user (mtisya@gmail.com), 2026-10-14
   - [x] P13-T14.1 Licence review checklist
   - [x] P13-T14.2 Regulatory review questions
   - [x] P13-T14.3 Risk disclosures

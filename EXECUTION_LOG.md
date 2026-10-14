@@ -2008,3 +2008,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-14T23:43:59+04:00 — QG CHECK QG-20.3
 - evidence: The user (mtisya@gmail.com) approved the 29 forex disclosure statements in docs/forex-release-readiness.md section 4 as drafted on 2026-10-14 (sign-off table section 7); 7 engineering observations carried as follow-ups; the named reviewer's legal review of the wording for real data is part of P17-T09.3; reports/quality/qg-20-forex-release-readiness.md
+
+### 2026-10-15T00:03:39+04:00 — AWAITING_VERIFICATION P13-T14
+- evidence: Plan change by user decision 2026-10-14: QG-20.1 and QG-20.2 (CRITICAL, not waived) moved to new conditional task P17-T09 Forex production enablement; P13-T14 delivers the licence checklist and regulatory questions (docs/forex-release-readiness.md sections 2, 3), disclosures approved by the user as drafted (QG-20.3), execution-disabled verification (QG-20.4, QG-20.5, 39 tests pass), release decision: not released (forex refused outside local and test). reports/quality/qg-20-forex-release-readiness.md. PR #168. CI all gates pass.
+
+### 2026-10-15T00:03:39+04:00 — COMPLETE P13-T14
+- duration: 1h 01m 37s
+- evidence: Plan change by user decision 2026-10-14: QG-20.1 and QG-20.2 (CRITICAL, not waived) moved to new conditional task P17-T09 Forex production enablement; P13-T14 delivers the licence checklist and regulatory questions (docs/forex-release-readiness.md sections 2, 3), disclosures approved by the user as drafted (QG-20.3), execution-disabled verification (QG-20.4, QG-20.5, 39 tests pass), release decision: not released (forex refused outside local and test). reports/quality/qg-20-forex-release-readiness.md. PR #168. CI all gates pass. · Approved by: user (mtisya@gmail.com), 2026-10-14
