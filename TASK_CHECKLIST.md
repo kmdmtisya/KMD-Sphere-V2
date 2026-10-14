@@ -1355,15 +1355,15 @@
   - [x] P13-T11.8 Copilot and alerts
   - [x] P13-T11.9 Streaming resilience
   - [x] P13-T11.10 Tests
-- [ ] **P13-T12** · FX-12 Forex quality gates verification · `NOT_STARTED` ⬜
+- [x] **P13-T12** · FX-12 Forex quality gates verification · `COMPLETED` ✅
   - Deps: P13-T11 · Wave: W10 · Track: QA · Size: M · Approval: no · Gates-done: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P13-T12.1 Market data and indicator gates
-  - [ ] P13-T12.2 Prediction and risk gates
-  - [ ] P13-T12.3 Backtesting and AI gates
-  - [ ] P13-T12.4 Mobile gate
-  - [ ] P13-T12.5 Report
+  - Started: 2026-10-14T21:42:51+04:00 · Completed: 2026-10-14T21:55:55+04:00 · Duration: 13m 04s · Blocker: —
+  - Evidence: QG-13..QG-19 verified and passed via track.py qg with one report per gate (reports/quality/qg-13, qg-14, qg-15, qg-16, qg-17, qg-18, qg-19 and p13-forex-gates-summary.md). Evidence runs 2026-10-14: backend forex/AI/matrix/integrity suites 753 passed; mobile forex/journey/guard tests 73 passed; CI on PR #164 Android debug build, iOS compile and mobile tests with goldens passed. Limits carried forward in the reports: QG-13.2 vendor-format fixtures, not licensed provider records (DEC-19, QG-20.1); QG-15 synthetic and simulated data only; QG-16 unreviewed DEMO contract specs (DEC-24); QG-17 assumed spread, no swaps; QG-18 real-model routing pending ADR-0017; QG-19 manual device pass not done and no server forex pushes yet. PR #165. CI all gates pass.
+  - [x] P13-T12.1 Market data and indicator gates
+  - [x] P13-T12.2 Prediction and risk gates
+  - [x] P13-T12.3 Backtesting and AI gates
+  - [x] P13-T12.4 Mobile gate
+  - [x] P13-T12.5 Report
 - [ ] **P13-T13** · FX-13 Integration and soak validation (local/CI stack) · `NOT_STARTED` ⬜
   - Deps: P13-T12 · Wave: W11 · Track: QA · Size: M · Approval: yes · Gates-start: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19
   - Started: — · Completed: — · Duration: — · Blocker: —
