@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import Settings
 from app.modules.forex.analysis.service import load
+from app.modules.forex.backtest.store import latest_by_rule
 from app.modules.forex.calendar.models import ForexEconomicEvent
 from app.modules.forex.calendar.risk import pair_currencies, windows
 from app.modules.forex.forecast.store import ForexForecast, latest_version
@@ -15,7 +16,13 @@ from app.modules.forex.instruments.models import ForexInstrument
 from app.modules.forex.marketdata.repository import latest_quotes
 from app.modules.forex.marketdata.types import PriceBasis, Timeframe
 from app.modules.forex.signals import setups as su
-from app.modules.forex.signals.ranking import Candidate, ForecastInput, PairInput, candidates
+from app.modules.forex.signals.ranking import (
+    Candidate,
+    ForecastInput,
+    PairInput,
+    StrategyHistory,
+    candidates,
+)
 
 STEP = {
     Timeframe.M5: timedelta(minutes=5),
@@ -116,6 +123,10 @@ async def pair_candidates(
             windows=found,
             forecast=await _forecast(session, spec.code, HORIZON[timeframe]),
             now=now,
+            history={
+                rule: StrategyHistory(r.oos_trades, r.oos_profit_factor, tuple(r.data_types))
+                for rule, r in (await latest_by_rule(session, spec.code, timeframe.value)).items()
+            },
         ),
         settings.forex_signal_weights,
     )

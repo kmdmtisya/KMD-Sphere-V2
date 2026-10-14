@@ -34,7 +34,7 @@ The score is 100 × clip(Σ weight × component, 0, 1), over ten components. Mac
 
 **Forecasts.** A forecast that requires calibration contributes nothing, and says so. A calibrated one counts only when it agrees with the setup.
 
-**Strategy history.** It contributes 0 until out-of-sample backtests exist (P13-T08), and the factor says so.
+**Strategy history.** Since P13-T08 it reads the rule's newest stored walk-forward result on the pair and timeframe: clip(out-of-sample profit factor − 1). It contributes 0 below 30 out-of-sample trades or with no backtest, and the factor says which ([forex-backtesting.md](forex-backtesting.md) section 5).
 
 **Market condition,** in priority order:
 1. High volatility: ATR above 1.5 × its median.
@@ -69,6 +69,6 @@ The ranking is computed on request from stored data: about a second for 12 pairs
 
 ## 4. Open items
 
-- **Strategy history** waits for P13-T08 backtests.
+- **Strategy history** on the simulated feed reflects the simulator's wave; the factor names the data type.
 - **Costs** in the ranking cover only the latest spread. The risk calculator (P13-T07, [forex-risk.md](forex-risk.md)) adds slippage and commission from the contract specifications; swaps are not modelled yet.
 - **With the simulated feed,** setups reflect the simulator's daily wave. Items carry the `simulated` data type and a risk line saying so.

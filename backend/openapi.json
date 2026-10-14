@@ -3732,6 +3732,822 @@
         "title": "ForecastValues",
         "type": "object"
       },
+      "ForexBacktestBenchmarks": {
+        "properties": {
+          "buy_and_hold_return": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Buy And Hold Return",
+            "type": "string"
+          },
+          "no_trade_return": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "No Trade Return",
+            "type": "string"
+          },
+          "note": {
+            "title": "Note",
+            "type": "string"
+          },
+          "random_entry_mean_return": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Random Entry Mean Return"
+          },
+          "random_entry_median_return": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Random Entry Median Return"
+          },
+          "random_entry_runs": {
+            "title": "Random Entry Runs",
+            "type": "integer"
+          },
+          "span": {
+            "items": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "title": "Span",
+            "type": "array"
+          },
+          "strategy_beat_share_of_random_runs": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Strategy Beat Share Of Random Runs"
+          },
+          "strategy_out_of_sample_return": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Strategy Out Of Sample Return",
+            "type": "string"
+          }
+        },
+        "required": [
+          "span",
+          "strategy_out_of_sample_return",
+          "no_trade_return",
+          "buy_and_hold_return",
+          "random_entry_mean_return",
+          "random_entry_median_return",
+          "random_entry_runs",
+          "strategy_beat_share_of_random_runs",
+          "note"
+        ],
+        "title": "ForexBacktestBenchmarks",
+        "type": "object"
+      },
+      "ForexBacktestCosts": {
+        "properties": {
+          "commission_per_lot_side": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Commission Per Lot Side",
+            "type": "string"
+          },
+          "contract_specification_review": {
+            "enum": [
+              "reviewed",
+              "unreviewed"
+            ],
+            "title": "Contract Specification Review",
+            "type": "string"
+          },
+          "contract_specification_version": {
+            "title": "Contract Specification Version",
+            "type": "string"
+          },
+          "slippage_pips_per_fill": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Slippage Pips Per Fill",
+            "type": "string"
+          },
+          "spread_pips": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Spread Pips",
+            "type": "string"
+          },
+          "spread_source": {
+            "title": "Spread Source",
+            "type": "string"
+          },
+          "swaps": {
+            "title": "Swaps",
+            "type": "string"
+          }
+        },
+        "required": [
+          "spread_pips",
+          "spread_source",
+          "slippage_pips_per_fill",
+          "commission_per_lot_side",
+          "contract_specification_version",
+          "contract_specification_review",
+          "swaps"
+        ],
+        "title": "ForexBacktestCosts",
+        "type": "object"
+      },
+      "ForexBacktestData": {
+        "properties": {
+          "bars": {
+            "title": "Bars",
+            "type": "integer"
+          },
+          "data_types": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Data Types",
+            "type": "array"
+          },
+          "end": {
+            "format": "date-time",
+            "title": "End",
+            "type": "string"
+          },
+          "snapshot_hash": {
+            "title": "Snapshot Hash",
+            "type": "string"
+          },
+          "start": {
+            "format": "date-time",
+            "title": "Start",
+            "type": "string"
+          },
+          "warm_up_bars": {
+            "title": "Warm Up Bars",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "snapshot_hash",
+          "bars",
+          "warm_up_bars",
+          "start",
+          "end",
+          "data_types"
+        ],
+        "title": "ForexBacktestData",
+        "type": "object"
+      },
+      "ForexBacktestFullPeriod": {
+        "properties": {
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "metrics": {
+            "$ref": "#/components/schemas/ForexBacktestMetrics"
+          },
+          "params": {
+            "$ref": "#/components/schemas/ForexBacktestParams"
+          }
+        },
+        "required": [
+          "label",
+          "params",
+          "metrics"
+        ],
+        "title": "ForexBacktestFullPeriod",
+        "type": "object"
+      },
+      "ForexBacktestMetrics": {
+        "properties": {
+          "average_trade": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Average Trade"
+          },
+          "costs": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Costs",
+            "type": "string"
+          },
+          "expectancy_r": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Mean R multiple",
+            "title": "Expectancy R"
+          },
+          "exposure": {
+            "description": "Share of bars with an open position",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Exposure",
+            "type": "string"
+          },
+          "gross_loss": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Gross Loss",
+            "type": "string"
+          },
+          "gross_profit": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Gross Profit",
+            "type": "string"
+          },
+          "longest_losing_streak": {
+            "title": "Longest Losing Streak",
+            "type": "integer"
+          },
+          "max_drawdown": {
+            "description": "A fraction of the running peak",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Max Drawdown",
+            "type": "string"
+          },
+          "profit_factor": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "None when there is no losing trade",
+            "title": "Profit Factor"
+          },
+          "sharpe": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sharpe"
+          },
+          "sortino": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sortino"
+          },
+          "total_return": {
+            "description": "A fraction: 0.05 is 5%, net of every cost",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Total Return",
+            "type": "string"
+          },
+          "trades": {
+            "title": "Trades",
+            "type": "integer"
+          },
+          "win_rate": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Win Rate"
+          },
+          "wins": {
+            "title": "Wins",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "trades",
+          "wins",
+          "win_rate",
+          "total_return",
+          "max_drawdown",
+          "gross_profit",
+          "gross_loss",
+          "profit_factor",
+          "average_trade",
+          "expectancy_r",
+          "longest_losing_streak",
+          "exposure",
+          "sharpe",
+          "sortino",
+          "costs"
+        ],
+        "title": "ForexBacktestMetrics",
+        "type": "object"
+      },
+      "ForexBacktestParams": {
+        "properties": {
+          "max_hold": {
+            "title": "Max Hold",
+            "type": "integer"
+          },
+          "reward_multiple": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "None: the rule's own target",
+            "title": "Reward Multiple"
+          },
+          "risk_percent": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Risk Percent",
+            "type": "string"
+          }
+        },
+        "required": [
+          "max_hold",
+          "reward_multiple",
+          "risk_percent"
+        ],
+        "title": "ForexBacktestParams",
+        "type": "object"
+      },
+      "ForexBacktestReportOut": {
+        "properties": {
+          "benchmarks": {
+            "$ref": "#/components/schemas/ForexBacktestBenchmarks"
+          },
+          "code_version": {
+            "title": "Code Version",
+            "type": "string"
+          },
+          "cost_sensitivity": {
+            "items": {
+              "$ref": "#/components/schemas/ForexCostScenario"
+            },
+            "title": "Cost Sensitivity",
+            "type": "array"
+          },
+          "costs": {
+            "$ref": "#/components/schemas/ForexBacktestCosts"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ForexBacktestData"
+          },
+          "engine_version": {
+            "title": "Engine Version",
+            "type": "string"
+          },
+          "full_period": {
+            "$ref": "#/components/schemas/ForexBacktestFullPeriod"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "instrument": {
+            "title": "Instrument",
+            "type": "string"
+          },
+          "label": {
+            "const": "backtested",
+            "title": "Label",
+            "type": "string"
+          },
+          "leakage_audit": {
+            "$ref": "#/components/schemas/ForexLeakageAudit"
+          },
+          "notice": {
+            "title": "Notice",
+            "type": "string"
+          },
+          "out_of_sample_trades": {
+            "items": {
+              "$ref": "#/components/schemas/ForexBacktestTrade"
+            },
+            "title": "Out Of Sample Trades",
+            "type": "array"
+          },
+          "out_of_sample_trades_listed": {
+            "title": "Out Of Sample Trades Listed",
+            "type": "integer"
+          },
+          "report_hash": {
+            "description": "SHA-256 of the canonical report: same inputs, same hash",
+            "title": "Report Hash",
+            "type": "string"
+          },
+          "rule": {
+            "title": "Rule",
+            "type": "string"
+          },
+          "rule_version": {
+            "title": "Rule Version",
+            "type": "integer"
+          },
+          "seed": {
+            "title": "Seed",
+            "type": "integer"
+          },
+          "timeframe": {
+            "title": "Timeframe",
+            "type": "string"
+          },
+          "walk_forward": {
+            "$ref": "#/components/schemas/ForexWalkForward"
+          }
+        },
+        "required": [
+          "id",
+          "label",
+          "notice",
+          "instrument",
+          "timeframe",
+          "rule",
+          "rule_version",
+          "engine_version",
+          "code_version",
+          "seed",
+          "data",
+          "costs",
+          "full_period",
+          "cost_sensitivity",
+          "walk_forward",
+          "benchmarks",
+          "leakage_audit",
+          "out_of_sample_trades",
+          "out_of_sample_trades_listed",
+          "report_hash",
+          "generated_at"
+        ],
+        "title": "ForexBacktestReportOut",
+        "type": "object"
+      },
+      "ForexBacktestSummaryOut": {
+        "properties": {
+          "bars": {
+            "title": "Bars",
+            "type": "integer"
+          },
+          "data_types": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Data Types",
+            "type": "array"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "instrument": {
+            "title": "Instrument",
+            "type": "string"
+          },
+          "label": {
+            "const": "backtested",
+            "title": "Label",
+            "type": "string"
+          },
+          "leakage_audit_passed": {
+            "title": "Leakage Audit Passed",
+            "type": "boolean"
+          },
+          "out_of_sample_profit_factor": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Out Of Sample Profit Factor"
+          },
+          "out_of_sample_return": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Out Of Sample Return",
+            "type": "string"
+          },
+          "out_of_sample_trades": {
+            "title": "Out Of Sample Trades",
+            "type": "integer"
+          },
+          "period_end": {
+            "format": "date-time",
+            "title": "Period End",
+            "type": "string"
+          },
+          "period_start": {
+            "format": "date-time",
+            "title": "Period Start",
+            "type": "string"
+          },
+          "report_hash": {
+            "title": "Report Hash",
+            "type": "string"
+          },
+          "rule": {
+            "title": "Rule",
+            "type": "string"
+          },
+          "rule_version": {
+            "title": "Rule Version",
+            "type": "integer"
+          },
+          "timeframe": {
+            "title": "Timeframe",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "label",
+          "instrument",
+          "timeframe",
+          "rule",
+          "rule_version",
+          "period_start",
+          "period_end",
+          "bars",
+          "data_types",
+          "out_of_sample_trades",
+          "out_of_sample_return",
+          "out_of_sample_profit_factor",
+          "leakage_audit_passed",
+          "report_hash",
+          "generated_at"
+        ],
+        "title": "ForexBacktestSummaryOut",
+        "type": "object"
+      },
+      "ForexBacktestTrade": {
+        "properties": {
+          "bars_held": {
+            "title": "Bars Held",
+            "type": "integer"
+          },
+          "costs": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Costs",
+            "type": "string"
+          },
+          "decided_at": {
+            "format": "date-time",
+            "title": "Decided At",
+            "type": "string"
+          },
+          "entry_at": {
+            "format": "date-time",
+            "title": "Entry At",
+            "type": "string"
+          },
+          "entry_price": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Entry Price",
+            "type": "string"
+          },
+          "exit_at": {
+            "format": "date-time",
+            "title": "Exit At",
+            "type": "string"
+          },
+          "exit_price": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Exit Price",
+            "type": "string"
+          },
+          "pnl": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Pnl",
+            "type": "string"
+          },
+          "r_multiple": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "R Multiple",
+            "type": "string"
+          },
+          "reason": {
+            "enum": [
+              "stop",
+              "target",
+              "gap_stop",
+              "gap_target",
+              "time",
+              "end"
+            ],
+            "title": "Reason",
+            "type": "string"
+          },
+          "side": {
+            "enum": [
+              "long",
+              "short"
+            ],
+            "title": "Side",
+            "type": "string"
+          },
+          "stop": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Stop",
+            "type": "string"
+          },
+          "target": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Target",
+            "type": "string"
+          },
+          "units": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Units",
+            "type": "string"
+          }
+        },
+        "required": [
+          "side",
+          "decided_at",
+          "entry_at",
+          "exit_at",
+          "entry_price",
+          "exit_price",
+          "stop",
+          "target",
+          "units",
+          "pnl",
+          "r_multiple",
+          "costs",
+          "bars_held",
+          "reason"
+        ],
+        "title": "ForexBacktestTrade",
+        "type": "object"
+      },
+      "ForexBacktestsOut": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ForexBacktestSummaryOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "notice": {
+            "default": "Backtested on stored bars with modelled spread, slippage and commission. A backtest is a study of how a published rule would have behaved, not a forecast: it does not show what will happen, and results on simulated data say nothing about real markets. Backtested, paper and live results are separate series and are never combined.",
+            "title": "Notice",
+            "type": "string"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "ForexBacktestsOut",
+        "type": "object"
+      },
       "ForexContractSpecOut": {
         "properties": {
           "commission_per_lot_side": {
@@ -3926,6 +4742,41 @@
           "stale"
         ],
         "title": "ForexConversion",
+        "type": "object"
+      },
+      "ForexCostScenario": {
+        "properties": {
+          "metrics": {
+            "$ref": "#/components/schemas/ForexBacktestMetrics"
+          },
+          "scenario": {
+            "title": "Scenario",
+            "type": "string"
+          },
+          "slippage_multiplier": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Slippage Multiplier",
+            "type": "string"
+          },
+          "spread_and_commission_multiplier": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Spread And Commission Multiplier",
+            "type": "string"
+          }
+        },
+        "required": [
+          "scenario",
+          "spread_and_commission_multiplier",
+          "slippage_multiplier",
+          "metrics"
+        ],
+        "title": "ForexCostScenario",
         "type": "object"
       },
       "ForexCosts": {
@@ -4184,6 +5035,46 @@
           "spec_version"
         ],
         "title": "ForexInstrumentOut",
+        "type": "object"
+      },
+      "ForexLeakageAudit": {
+        "properties": {
+          "cuts": {
+            "items": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "title": "Cuts",
+            "type": "array"
+          },
+          "decisions_compared": {
+            "title": "Decisions Compared",
+            "type": "integer"
+          },
+          "first_difference": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "First Difference"
+          },
+          "passed": {
+            "title": "Passed",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "passed",
+          "cuts",
+          "decisions_compared",
+          "first_difference"
+        ],
+        "title": "ForexLeakageAudit",
         "type": "object"
       },
       "ForexLossProfit": {
@@ -4892,6 +5783,95 @@
           "reviewed_at"
         ],
         "title": "ForexSpecRef",
+        "type": "object"
+      },
+      "ForexWalkForward": {
+        "properties": {
+          "folds": {
+            "title": "Folds",
+            "type": "integer"
+          },
+          "out_of_sample": {
+            "$ref": "#/components/schemas/ForexBacktestMetrics"
+          },
+          "selection": {
+            "title": "Selection",
+            "type": "string"
+          },
+          "stability": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stability"
+          },
+          "windows": {
+            "items": {
+              "$ref": "#/components/schemas/ForexWalkForwardWindow"
+            },
+            "title": "Windows",
+            "type": "array"
+          }
+        },
+        "required": [
+          "folds",
+          "selection",
+          "stability",
+          "windows",
+          "out_of_sample"
+        ],
+        "title": "ForexWalkForward",
+        "type": "object"
+      },
+      "ForexWalkForwardWindow": {
+        "properties": {
+          "chosen": {
+            "$ref": "#/components/schemas/ForexBacktestParams"
+          },
+          "fold": {
+            "title": "Fold",
+            "type": "integer"
+          },
+          "in_sample": {
+            "items": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "title": "In Sample",
+            "type": "array"
+          },
+          "in_sample_metrics": {
+            "$ref": "#/components/schemas/ForexBacktestMetrics"
+          },
+          "out_of_sample": {
+            "items": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "title": "Out Of Sample",
+            "type": "array"
+          },
+          "out_of_sample_metrics": {
+            "$ref": "#/components/schemas/ForexBacktestMetrics"
+          }
+        },
+        "required": [
+          "fold",
+          "in_sample",
+          "out_of_sample",
+          "chosen",
+          "in_sample_metrics",
+          "out_of_sample_metrics"
+        ],
+        "title": "ForexWalkForwardWindow",
         "type": "object"
       },
       "Frequency": {
@@ -14142,6 +15122,198 @@
         "summary": "Scenario Forecast",
         "tags": [
           "forecasts"
+        ]
+      }
+    },
+    "/api/v1/forex/backtests": {
+      "get": {
+        "description": "Summaries of the reports the daily job made from stored bars: the out-of-sample result of walk-forward validation, net of costs, and whether the leakage audit passed. Backtested results only; not a forecast.",
+        "operationId": "backtests_api_v1_forex_backtests_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "instrument",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Z]{3}_[A-Z]{3}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Instrument"
+            }
+          },
+          {
+            "in": "query",
+            "name": "timeframe",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "15m",
+                    "1H",
+                    "4H",
+                    "1D"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Timeframe"
+            }
+          },
+          {
+            "in": "query",
+            "name": "rule",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "trend_continuation",
+                    "breakout",
+                    "reversal",
+                    "range",
+                    "momentum",
+                    "mean_reversion"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Rule"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForexBacktestsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such forex module (switched off) for this user"
+          },
+          "422": {
+            "description": "Invalid filter"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Stored backtest reports of the setup rules, newest first",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/backtests/{report_id}": {
+      "get": {
+        "description": "The full report: data snapshot hash, code version, parameters and seed; the full-period run, cost sensitivity, every walk-forward window in-sample and out-of-sample, benchmarks, the leakage audit and the out-of-sample trades.",
+        "operationId": "backtest_api_v1_forex_backtests__report_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "report_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Report Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForexBacktestReportOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such backtest report, or the forex module is switched off for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "One backtest report in full",
+        "tags": [
+          "forex"
         ]
       }
     },

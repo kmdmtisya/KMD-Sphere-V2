@@ -71,6 +71,11 @@ def build_schedule() -> dict[str, dict[str, Any]]:
             "task": "app.worker.tasks.forex_forecast_train",
             "schedule": crontab(minute=20),
         },
+        # Backtests (P13-T08): every rule on every pair, once a day after the maintenance job.
+        "forex-backtest": {
+            "task": "app.worker.tasks.forex_backtest",
+            "schedule": crontab(hour=2, minute=10),
+        },
         "forex-maintenance": {
             "task": "app.worker.tasks.forex_maintenance",
             "schedule": crontab(hour=1, minute=15),

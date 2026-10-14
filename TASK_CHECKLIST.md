@@ -1307,17 +1307,17 @@
   - [x] P13-T07.5 Costs and slippage
   - [x] P13-T07.6 Exposure and limits
   - [x] P13-T07.7 Reference cases and tests
-- [ ] **P13-T08** · FX-08 Backtesting and strategy validation · `NOT_STARTED` ⬜
+- [ ] **P13-T08** · FX-08 Backtesting and strategy validation · `IN_PROGRESS` 🔄
   - Deps: P13-T06 · Wave: W6 · Track: BE · Size: XL · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-14T14:52:40+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P13-T08.1 Engine and clock
-  - [ ] P13-T08.2 Cost and slippage models
-  - [ ] P13-T08.3 Metrics
-  - [ ] P13-T08.4 Walk-forward harness
-  - [ ] P13-T08.5 Benchmarks
-  - [ ] P13-T08.6 Reproducible reports
-  - [ ] P13-T08.7 Leakage tests
+  - [x] P13-T08.1 Engine and clock
+  - [x] P13-T08.2 Cost and slippage models
+  - [x] P13-T08.3 Metrics
+  - [x] P13-T08.4 Walk-forward harness
+  - [x] P13-T08.5 Benchmarks
+  - [x] P13-T08.6 Reproducible reports
+  - [x] P13-T08.7 Leakage tests
 - [ ] **P13-T09** · FX-09 Paper trading and trade journal · `NOT_STARTED` ⬜
   - Deps: P13-T07, P13-T08 · Wave: W7 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

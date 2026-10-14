@@ -121,6 +121,10 @@ IDOR_TESTS: dict[tuple[str, str], str] = {
     ("GET", "/api/v1/portfolios/{portfolio_id}/risk"): (
         "tests.test_analytics_api::test_bob_cannot_read_alices_risk"
     ),
+    # Reference data (P13-T08): the test shows a report has no owner and reads the same for all.
+    ("GET", "/api/v1/forex/backtests/{report_id}"): (
+        "tests.forex.test_backtest_api::test_a_report_is_reference_data_the_same_for_every_user"
+    ),
 }
 
 # Routes whose path parameters identify global reference data, not anyone's resource, with the

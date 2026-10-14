@@ -19,6 +19,7 @@ from app.main import create_app
 from app.modules.forex import api as forex_api
 from app.modules.forex import stream_api
 from app.modules.forex.analysis import api as analysis_api
+from app.modules.forex.backtest import api as backtest_api
 from app.modules.forex.calendar import api as calendar_api
 from app.modules.forex.forecast import api as forecast_api
 from app.modules.forex.marketdata.factory import build_provider
@@ -39,6 +40,7 @@ def test_no_forex_route_places_orders() -> None:
     routers = (
         forex_api.router,
         analysis_api.router,
+        backtest_api.router,
         calendar_api.router,
         forecast_api.router,
         risk_api.router,

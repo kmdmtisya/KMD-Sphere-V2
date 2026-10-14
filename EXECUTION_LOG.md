@@ -1772,3 +1772,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-14T14:37:49+04:00 — COMPLETE P13-T07
 - duration: 45m 48s
 - evidence: Risk calculator and API (modules/forex/risk: engine, conversion, specs, api), versioned contract specifications (migration 0023, DEMO v1 unreviewed, mark_reviewed, compare_with_provider). Pip value derived from quote and account currency via stored rates kept as exact fractions (EUR/USD, USD/JPY, EUR/GBP via GBP_USD, EUR account; no fixed pip value); size rounded down so planned loss with costs never exceeds the risk; loss/profit and risk/reward before and after costs; margin, leverage, margin use, account impact, exposure; leverage and margin warnings; disclosures that stops can slip or gap. Tests: tests/forex/test_risk_engine.py (reference cases, Fraction oracle, Hypothesis property tests with direct and inverse rates) and tests/forex/test_risk_api.py (real DB). Matrix K-01..K-06, financial-methods section 21, docs/design/forex-risk.md. Local: ruff, mypy, OpenAPI check and Spectral clean; full suite 3105 passed, 17 skipped, coverage 98.2%, policy OK. PR #160. CI all gates pass. · Approved by: user (mtisya@gmail.com), advance approval 2026-10-13 (P13 sequence)
+
+### 2026-10-14T14:52:40+04:00 — START P13-T08
+- FX-08 Backtesting and strategy validation
+- prerequisites verified COMPLETED
