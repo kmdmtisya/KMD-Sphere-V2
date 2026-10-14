@@ -7,7 +7,7 @@ import uuid
 from datetime import datetime
 from typing import Annotated, Literal
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Path, Query
 from pydantic import BaseModel, Field
 from sqlalchemy import select
 
@@ -235,18 +235,25 @@ async def backtests(
 
 
 @router.get(
-    "/backtests/{report_id}",
+    "/backtests/{report_hash}",
     response_model=ForexBacktestReportOut,
     summary="One backtest report in full",
     description="The full report: data snapshot hash, code version, parameters and seed; the "
     "full-period run, cost sensitivity, every walk-forward window in-sample and out-of-sample, "
-    "benchmarks, the leakage audit and the out-of-sample trades.",
-    responses={**UNAUTHORIZED, **not_found("backtest report, or the forex module is switched off")},
+    "benchmarks, the leakage audit and the out-of-sample trades. Addressed by its report hash: "
+    "a report is global reference data, the same for every user.",
+    responses={
+        **UNAUTHORIZED,
+        **invalid("report hash"),
+        **not_found("backtest report, or the forex module is switched off"),
+    },
 )
 async def backtest(
-    report_id: uuid.UUID, _: ForexUser, session: SessionDep
+    report_hash: Annotated[str, Path(pattern=r"^[0-9a-f]{64}$")], _: ForexUser, session: SessionDep
 ) -> ForexBacktestReportOut:
-    row = await session.get(ForexBacktestReport, report_id)
+    row = await session.scalar(
+        select(ForexBacktestReport).where(ForexBacktestReport.report_hash == report_hash)
+    )
     if row is None:
         raise ResourceNotFoundError("backtest report")
     return ForexBacktestReportOut.model_validate({**row.report, "id": row.id})

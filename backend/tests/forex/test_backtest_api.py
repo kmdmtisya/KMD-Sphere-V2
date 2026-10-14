@@ -99,7 +99,7 @@ async def test_reports_are_stored_once_and_served_in_full(
     assert all(i["data_types"] == ["simulated"] and i["bars"] == N - 199 for i in items)
     assert "not a forecast" in body["notice"]
     one = next(i for i in items if i["rule"] == "trend_continuation")
-    full = await http.get(f"{PATH}/backtests/{one['id']}", headers=user.headers)
+    full = await http.get(f"{PATH}/backtests/{one['report_hash']}", headers=user.headers)
     assert full.status_code == 200, full.text
     report = full.json()
     assert report["report_hash"] == one["report_hash"] and report["label"] == "backtested"
@@ -134,17 +134,18 @@ async def test_reports_are_stored_once_and_served_in_full(
 async def test_a_report_is_reference_data_the_same_for_every_user(
     http: httpx.AsyncClient, user: TestUser, stored: str
 ) -> None:
-    """The IDOR check for `/backtests/{report_id}`: a report belongs to no one. It is made by the
-    job from shared bars, holds no user column, and every signed-in user reads the same one."""
+    """Why `/backtests/{report_hash}` is exempt from the IDOR sweep: a report belongs to no one.
+    It is made by the job from shared bars, holds no user column, and every signed-in user reads
+    the same one."""
     columns = {c.name for c in ForexBacktestReport.__table__.columns}
     assert not {c for c in columns if "user" in c or "owner" in c}
     items = (
         await http.get(f"{PATH}/backtests", params={"instrument": PAIR}, headers=user.headers)
     ).json()["items"]
-    report_id = items[0]["id"]
+    report_hash = items[0]["report_hash"]
     other = await make_user(http, "backtest-reader")
-    mine = await http.get(f"{PATH}/backtests/{report_id}", headers=user.headers)
-    theirs = await http.get(f"{PATH}/backtests/{report_id}", headers=other.headers)
+    mine = await http.get(f"{PATH}/backtests/{report_hash}", headers=user.headers)
+    theirs = await http.get(f"{PATH}/backtests/{report_hash}", headers=other.headers)
     assert mine.status_code == theirs.status_code == 200
     assert mine.json() == theirs.json()
 
@@ -198,8 +199,10 @@ async def test_bad_requests_sign_in_and_the_flag(
         assert (
             await http.get(f"{PATH}/backtests", params=params, headers=user.headers)
         ).status_code == 422
-    missing = "00000000-0000-0000-0000-000000000000"
+    missing = "0" * 64
     assert (await http.get(f"{PATH}/backtests/{missing}", headers=user.headers)).status_code == 404
+    bad = await http.get(f"{PATH}/backtests/not-a-hash", headers=user.headers)
+    assert bad.status_code == 422
     assert (await http.get(f"{PATH}/backtests")).status_code == 401
     off = create_app(
         migrated_settings.model_copy(update={"forex_enabled": False}),

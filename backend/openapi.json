@@ -15250,18 +15250,18 @@
         ]
       }
     },
-    "/api/v1/forex/backtests/{report_id}": {
+    "/api/v1/forex/backtests/{report_hash}": {
       "get": {
-        "description": "The full report: data snapshot hash, code version, parameters and seed; the full-period run, cost sensitivity, every walk-forward window in-sample and out-of-sample, benchmarks, the leakage audit and the out-of-sample trades.",
-        "operationId": "backtest_api_v1_forex_backtests__report_id__get",
+        "description": "The full report: data snapshot hash, code version, parameters and seed; the full-period run, cost sensitivity, every walk-forward window in-sample and out-of-sample, benchmarks, the leakage audit and the out-of-sample trades. Addressed by its report hash: a report is global reference data, the same for every user.",
+        "operationId": "backtest_api_v1_forex_backtests__report_hash__get",
         "parameters": [
           {
             "in": "path",
-            "name": "report_id",
+            "name": "report_hash",
             "required": true,
             "schema": {
-              "format": "uuid",
-              "title": "Report Id",
+              "pattern": "^[0-9a-f]{64}$",
+              "title": "Report Hash",
               "type": "string"
             }
           }
@@ -15284,14 +15284,7 @@
             "description": "No such backtest report, or the forex module is switched off for this user"
           },
           "422": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            },
-            "description": "Validation Error"
+            "description": "Invalid report hash"
           },
           "429": {
             "description": "Rate limit exceeded (docs/security.md, API protection)",

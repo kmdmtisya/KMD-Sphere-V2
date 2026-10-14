@@ -50,7 +50,7 @@ About 9 ms per bar goes on finding setups, so 2,000 bars take about 20 seconds p
 Both endpoints need sign-in and the forex flag; when the flag is off they answer 404. Reports are reference data, the same for every user.
 
 - `GET /api/v1/forex/backtests?instrument=&timeframe=&rule=&limit=` returns summaries, newest first. Each summary gives the out-of-sample trades, return and profit factor, the data types, and whether the leakage audit passed.
-- `GET /api/v1/forex/backtests/{id}` returns the full typed report:
+- `GET /api/v1/forex/backtests/{report_hash}` returns the full typed report. A report is addressed by its content hash because it is global reference data with no owner, so the route is on the reference-data list of the IDOR registry:
   - the data snapshot, the cost assumptions and the full-period run;
   - the cost sensitivity;
   - every walk-forward window, in-sample and out-of-sample;
