@@ -1372,14 +1372,14 @@
   - [x] P13-T13.2 Outage and failover drills
   - [x] P13-T13.3 Observability check
   - [x] P13-T13.4 User acceptance
-- [ ] **P13-T14** · FX-14 Release approval and regulatory readiness · `NOT_STARTED` ⬜
+- [ ] **P13-T14** · FX-14 Release approval and regulatory readiness · `BLOCKED` ⛔
   - Deps: P13-T13 · Wave: W12 · Track: REL · Size: M · Approval: yes · Gates-start: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-14T23:02:02+04:00 · Completed: — · Duration: — · Blocker: Awaiting DEC-19 licence review and DEC-20 legal review (Kenya, UAE) and disclosure approval, deferred by the user on 2026-10-14. Readiness pack prepared (docs/forex-release-readiness.md); QG-20.4 and QG-20.5 verified; QG-20.1 to QG-20.3 open; release decision: not released, forex refused outside local and test
   - Evidence: —
   - [ ] P13-T14.1 Licence review
   - [ ] P13-T14.2 Regulatory review
   - [ ] P13-T14.3 Risk disclosures
-  - [ ] P13-T14.4 Execution-disabled verification
+  - [x] P13-T14.4 Execution-disabled verification
   - [ ] P13-T14.5 Release decision
 - [ ] **P13-GATE** · Phase P13 exit gate · `NOT_STARTED` ⬜
   - Deps: P13-T01, P13-T02, P13-T03, P13-T04, P13-T05, P13-T06, P13-T07, P13-T08, P13-T09, P13-T10, P13-T11, P13-T12, P13-T13, P13-T14 · Wave: W13 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19, QG-20
