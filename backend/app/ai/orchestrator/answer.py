@@ -7,7 +7,7 @@ the tool ran in the same turn."""
 
 import json
 import re
-from typing import Annotated
+from typing import Annotated, Any
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints, ValidationError
 
@@ -36,6 +36,9 @@ class StructuredAnswer(BaseModel):
     interpretation: Annotated[str, StringConstraints(strip_whitespace=True, max_length=1500)] = ""
     # Added by the server, never by the model: fixed qualifications (stale data, forecasts).
     caveats: list[Text] = Field(default_factory=list, max_length=MAX_ITEMS)
+    # Added by the server, never by the model: where the forex figures came from, with their
+    # times, data types and model versions (P13-T10, QG-18.1, QG-18.2).
+    sources: list[dict[str, Any]] = Field(default_factory=list, max_length=MAX_ITEMS)
 
     def is_empty(self) -> bool:
         return not (self.observed or self.calculated or self.assumptions or self.interpretation)
@@ -65,8 +68,8 @@ def parse_answer(reply: str) -> StructuredAnswer:
         data = json.loads(text)
     except ValueError as error:
         raise NotAnAnswer from error
-    if not isinstance(data, dict) or "caveats" in data:
-        raise NotAnAnswer  # the model does not write caveats
+    if not isinstance(data, dict) or "caveats" in data or "sources" in data:
+        raise NotAnAnswer  # the model writes neither caveats nor sources
     try:
         answer = StructuredAnswer.model_validate(data)
     except ValidationError as error:
@@ -91,4 +94,19 @@ def render(answer: StructuredAnswer) -> str:
     if answer.interpretation:
         parts.append("Interpretation\n" + answer.interpretation)
     section("Please note", answer.caveats)
+    section("Sources", [_source_line(s) for s in answer.sources])
     return "\n\n".join(parts)
+
+
+def _source_line(source: dict[str, Any]) -> str:
+    """ "get_forecast as of <time> (simulated) model arima v3 generated <time>"."""
+    parts = [str(source.get("tool"))]
+    if source.get("as_of"):
+        parts.append(f"as of {source['as_of']}")
+    if source.get("data_types"):
+        parts.append(f"({', '.join(source['data_types'])})")
+    if source.get("model"):
+        parts.append(f"model {source['model']}")
+    if source.get("generated_at"):
+        parts.append(f"generated {source['generated_at']}")
+    return " ".join(parts)

@@ -1330,16 +1330,16 @@
   - [x] P13-T09.4 Journal and tags
   - [x] P13-T09.5 Analytics
   - [x] P13-T09.6 Isolation and IDOR tests
-- [ ] **P13-T10** · FX-10 AI Forex Copilot (allow-listed tools) · `NOT_STARTED` ⬜
+- [ ] **P13-T10** · FX-10 AI Forex Copilot (allow-listed tools) · `IN_PROGRESS` 🔄
   - Deps: P13-T09, P10-GATE, P12-GATE · Wave: W8 · Track: AI · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-14T19:14:18+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P13-T10.1 Tool schemas and authorisation
-  - [ ] P13-T10.2 Orchestrator integration
-  - [ ] P13-T10.3 Structured output validation
-  - [ ] P13-T10.4 Guarantee-language guard
-  - [ ] P13-T10.5 Evaluation set
-  - [ ] P13-T10.6 Tests
+  - [x] P13-T10.1 Tool schemas and authorisation
+  - [x] P13-T10.2 Orchestrator integration
+  - [x] P13-T10.3 Structured output validation
+  - [x] P13-T10.4 Guarantee-language guard
+  - [x] P13-T10.5 Evaluation set
+  - [x] P13-T10.6 Tests
 - [ ] **P13-T11** · FX-11 Android and iOS Forex Intelligence integration · `NOT_STARTED` ⬜
   - Deps: P13-T10, P09-GATE · Wave: W9 · Track: MOB · Size: XL · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

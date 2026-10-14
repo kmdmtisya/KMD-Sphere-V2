@@ -20,12 +20,17 @@ _RULES: tuple[tuple[str, str, re.Pattern[str]], ...] = (
     (
         "trade_execution",
         "I can explain and compare, but I cannot place orders or move money. "
-        "Trades must be made with your broker.",
+        "Trades must be made with your broker. For forex, you can simulate a trade in a "
+        "paper account (PAPER TRADING).",
         re.compile(
             r"\b(place|execute|submit|send|make|enter)\b.{0,25}"
             r"\b(an? )?(buy |sell |market |limit )?"
             r"(order|trade)s?\b|"
             r"\b(buy|sell)\b.{0,50}\b(for me|right now|immediately|automatically)\b|"
+            r"\b(open|close|take)\b.{0,20}\b(long|short|position|trade)s?\b.{0,30}"
+            r"\b(for me|on my (account|behalf)|right now|immediately)\b|"
+            r"\bgo (long|short)\b.{0,30}\b(for me|on my (account|behalf))\b|"
+            r"\b(buy|sell)\s+\d+(\.\d+)?\s+(standard |mini |micro )?lots?\b|"
             r"\bauto-?trad\w*|\b(withdraw|transfer|wire)\b.{0,25}\b(money|funds|cash)\b",
             re.IGNORECASE,
         ),

@@ -43,15 +43,23 @@ def test_no_analysis_code_imports_the_ai_layer_or_a_model_client() -> None:
             assert not module.startswith(FORBIDDEN_PREFIXES), f"{path.name} imports {module}"
 
 
-def test_no_ai_tool_can_produce_or_edit_an_indicator_yet() -> None:
-    """The AI tool layer has no forex analysis tool. The Forex Copilot (P13-T10) may only read
-    results through allow-listed, authorised tools, never compute or edit them."""
-    from app.ai.tools.base import ALLOWED_TOOLS
+def test_the_ai_forex_tools_only_read() -> None:
+    """Since P13-T10 the Forex Copilot reads analysis results through allow-listed tools; it never
+    computes over user input it stores, and never writes: the tool module adds, changes and
+    deletes nothing, and the tools exist only while forex is switched on."""
+    from pathlib import Path
 
-    for name in ALLOWED_TOOLS:
-        assert not any(
-            w in name for w in ("indicator", "candle", "forex", "pattern", "structure")
-        ), name
+    from app.ai.tools.factory import build_tool_registry
+    from app.ai.tools.forex import FOREX_TOOLS
+    from tests.conftest import make_settings
+
+    source = (Path(__file__).resolve().parents[2] / "app" / "ai" / "tools" / "forex.py").read_text(
+        encoding="utf-8"
+    )
+    for write in (".add(", ".delete(", ".commit(", ".flush(", "insert(", "update(", ".merge("):
+        assert write not in source, write
+    assert not set(FOREX_TOOLS) & build_tool_registry(make_settings()).names
+    assert set(FOREX_TOOLS) <= build_tool_registry(make_settings(forex_enabled=True)).names
 
 
 def test_the_candle_sync_job_is_scheduled_every_five_minutes() -> None:

@@ -40,6 +40,19 @@ The model can call **only** these tools. There is no generic "query", "fetch", "
 | `get_portfolio_value` | `SummaryService` under one snapshot (P11-T06) | portfolio id or all, optional currency | value, holdings, cash and every rate used |
 | `get_fx_exposure` | `AllocationService` | portfolio id | value per currency (base currency) and weights |
 | `get_portfolio_diagnosis` | `DoctorService` (P12-T01) | portfolio id | Portfolio Doctor findings with severity, thresholds and assumptions; hypothetical scenarios marked `is_trade: false` |
+| `get_forex_quote` | forex quote board (P13-T02), forex flag on only | pair | bid, ask, mid, spread, quote time and age, freshness, data type; a stale or missing price is reported, never filled in |
+| `get_candles` | forex bar loader (P13-T03) | pair, timeframe, up to 100 bars | closed mid bars with data types |
+| `get_indicators` | forex indicator library (P13-T03) | pair, timeframe | latest EMA, RSI, ATR, ADX, MACD and Bollinger values with the bar's close time |
+| `get_market_structure` | forex structure and pattern rules (P13-T03) | pair, timeframe | support and resistance levels, recent breakouts and patterns |
+| `get_forecast` | forex forecast store (P13-T05) | pair, horizon | probability with calibration label, median and 80% interval, volatility, model name and version, generated time, edge |
+| `explain_forecast_change` | forex forecast store (P13-T05) | pair, horizon | the two latest forecasts side by side, model version change, drift and calibration status |
+| `get_opportunities` | Opportunity Ranking (P13-T06) | timeframe, up to 10 | research candidates (not recommendations) with score, risk, illustrative levels, freshness |
+| `get_economic_events` | forex calendar (P13-T04) | optional currency, hours ahead | scheduled events with importance, values, source, DEMO flag and risk windows |
+| `calculate_trade_risk` | risk calculator service (P13-T07) | a hypothetical trade from the user's own numbers | size, pip value, loss and profit, costs, margin, warnings, disclosures; nothing placed or stored |
+| `get_backtest_summary` | backtest report store (P13-T08) | pair, timeframe | each rule's latest out-of-sample result net of costs, leakage audit status (backtested series) |
+| `get_paper_performance` | `PaperService` (P13-T09), the caller's own paper accounts | optional paper account id (the caller's) | per account: closed trades, net P/L, win rate, profit factor, drawdown, open positions (PAPER TRADING) |
+
+The forex tools (P13-T10) are registered only when the forex module is switched on (DEC-23); none can place, change or close a trade, real or paper.
 
 **Every tool is read-only.** None calls an external URL on its own initiative: data comes from our database through the same services the API uses, which already enforce ownership (ADR-0011).
 

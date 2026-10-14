@@ -38,6 +38,18 @@ ALLOWED_TOOLS: frozenset[str] = frozenset(
         "get_fx_exposure",
         # Portfolio Doctor (P12-T01).
         "get_portfolio_diagnosis",
+        # Forex Copilot (P13-T10): read-only, registered only when forex is switched on.
+        "get_forex_quote",
+        "get_candles",
+        "get_indicators",
+        "get_market_structure",
+        "get_forecast",
+        "get_opportunities",
+        "get_economic_events",
+        "calculate_trade_risk",
+        "get_backtest_summary",
+        "get_paper_performance",
+        "explain_forecast_change",
     }
 )
 

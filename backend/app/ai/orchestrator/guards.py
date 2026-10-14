@@ -13,7 +13,31 @@ from typing import Any
 from app.ai.orchestrator.answer import StructuredAnswer
 from app.ai.tools.base import ToolOutcome
 
-FORECAST_TOOLS = frozenset({"run_compound_forecast", "run_goal_forecast", "get_goal_progress"})
+FORECAST_TOOLS = frozenset(
+    {
+        "run_compound_forecast",
+        "run_goal_forecast",
+        "get_goal_progress",
+        "get_forecast",
+        "explain_forecast_change",
+    }
+)
+# The Forex Copilot's tools (P13-T10): their answers get the forex checks and qualifications.
+FOREX_TOOLS = frozenset(
+    {
+        "get_forex_quote",
+        "get_candles",
+        "get_indicators",
+        "get_market_structure",
+        "get_forecast",
+        "get_opportunities",
+        "get_economic_events",
+        "calculate_trade_risk",
+        "get_backtest_summary",
+        "get_paper_performance",
+        "explain_forecast_change",
+    }
+)
 
 # --------------------------------------------------------------------------- number provenance
 _NUMBER = re.compile(
@@ -149,6 +173,34 @@ def guarantee_problems(texts: Iterable[str], forecast_used: bool) -> list[str]:
     return sorted(set(problems))
 
 
+# ------------------------------------------------------------------------ personal advice (P13-T10)
+# Telling the user to trade: "you should buy EUR/USD", "go long now", "I recommend selling". The
+# Copilot explains data and scenarios; a trade instruction is personalised advice.
+_TRADE_VERB = (
+    r"(?:buy|sell|short|go long|go short|enter|open|close|exit|"
+    r"buying|selling|shorting|going long|going short|entering|opening|closing|"
+    r"take (?:a |the )?(?:long|short|trade|position))"
+)
+_ADVICE = re.compile(
+    r"\b(?:you should|you must|you need to|i(?:'d| would)? (?:recommend|suggest|advise)"
+    r"(?: that you)?|my (?:recommendation|advice) is to|"
+    r"now is (?:a |the )?(?:good |right |best )?time to)\s+(?:\w+\s+){0,2}" + _TRADE_VERB + r"\b|"
+    r"\b(?:buy|sell|go long|go short)\s+(?:\S+\s+){0,2}(?:now|today|immediately|right away)\b|"
+    r"\b(?:enter|open)\s+(?:a\s+)?(?:long|short)(?:\s+(?:position|trade))?\s+"
+    r"(?:now|today|immediately)\b",
+    re.IGNORECASE,
+)
+
+
+def advice_problems(texts: Iterable[str]) -> list[str]:
+    """Trade instructions to the user. Negated forms ("I cannot tell you to buy") are allowed."""
+    for text in texts:
+        for sentence in _SENTENCE.split(text):
+            if _ADVICE.search(sentence) and not _NEGATION.search(sentence):
+                return ["personal_advice"]
+    return []
+
+
 # ------------------------------------------------------------------------------ links, sources
 _LINK = re.compile(r"(https?://|www\.|\bftp://|\bdata:|\bjavascript:)", re.IGNORECASE)
 
@@ -172,6 +224,41 @@ FORECAST_NOTICE = (
     "predictions or guaranteed returns."
 )
 NO_DATA_NOTICE = "Some data could not be retrieved ({tools}); this answer covers only what could."
+SIMULATED_NOTICE = (
+    "Forex prices in this answer come from the simulated development feed, not a live market."
+)
+CALIBRATION_NOTICE = (
+    "The forecast probability used here requires calibration and is not reliable as a probability."
+)
+RESEARCH_NOTICE = (
+    "Research candidates are ranked by a published formula; they are not recommendations to buy "
+    "or sell and not probabilities of profit."
+)
+PAPER_NOTICE = (
+    "Paper results are virtual money and simulated fills, never combined with backtested or real "
+    "results. I cannot place or manage trades; you can simulate one in a paper account."
+)
+BACKTEST_NOTICE = "Backtested results are a study of a rule on past bars, not a forecast."
+DEMO_NOTICE = "Economic events in this answer are DEMO data, not a real calendar."
+
+
+def _values(value: Any, key: str) -> Iterable[Any]:
+    """Every value stored under `key` anywhere in a tool result."""
+    if isinstance(value, Mapping):
+        for k, v in value.items():
+            if k == key:
+                yield v
+            yield from _values(v, key)
+    elif isinstance(value, (list, tuple)):
+        for item in value:
+            yield from _values(item, key)
+
+
+def _simulated(data: Mapping[str, Any] | None) -> bool:
+    for v in (*_values(data, "data_type"), *_values(data, "data_types")):
+        if v == "simulated" or (isinstance(v, (list, tuple)) and "simulated" in v):
+            return True
+    return False
 
 
 def _as_of(outcome: ToolOutcome) -> datetime | None:
@@ -209,4 +296,52 @@ def caveats_for(
         notes.append(NO_DATA_NOTICE.format(tools=", ".join(failed)))
     if any(o.ok and o.tool in FORECAST_TOOLS for o in outcomes):
         notes.append(FORECAST_NOTICE)
+    forex = [o for o in outcomes if o.ok and o.tool in FOREX_TOOLS]
+    if any(_simulated(o.data) for o in forex):
+        notes.append(SIMULATED_NOTICE)
+    if any(
+        "Requires calibration" in _values(o.data, "probability_label")
+        or "requires_calibration" in _values(o.data, "calibration_status")
+        for o in forex
+        if o.tool in FORECAST_TOOLS
+    ):
+        notes.append(CALIBRATION_NOTICE)
+    if any(o.tool == "get_opportunities" for o in forex):
+        notes.append(RESEARCH_NOTICE)
+    if any(o.tool == "get_backtest_summary" for o in forex):
+        notes.append(BACKTEST_NOTICE)
+    if any(o.tool == "get_paper_performance" for o in forex):
+        notes.append(PAPER_NOTICE)
+    if any(True in _values(o.data, "demo") for o in forex if o.tool == "get_economic_events"):
+        notes.append(DEMO_NOTICE)
     return notes
+
+
+def sources_for(outcomes: Iterable[ToolOutcome]) -> list[dict[str, Any]]:
+    """Where the forex figures came from, built by the server from the tool results (QG-18.1,
+    QG-18.2): each tool's time, data types and, for a forecast, the model version and when it
+    was generated."""
+    out: list[dict[str, Any]] = []
+    for o in outcomes:
+        if not (o.ok and o.tool in FOREX_TOOLS):
+            continue
+        data = o.data or {}
+        types = sorted(
+            {
+                t
+                for v in (*_values(data, "data_type"), *_values(data, "data_types"))
+                for t in (v if isinstance(v, (list, tuple)) else [v])
+                if isinstance(t, str)
+            }
+        )
+        ref: dict[str, Any] = {"tool": o.tool, "as_of": data.get("as_of"), "data_types": types}
+        model = data.get("model")
+        if isinstance(model, Mapping):
+            ref["model"] = f"{model.get('name')} {model.get('version')}"
+            ref["calibration"] = model.get("calibration_status")
+        if data.get("generated_at"):
+            ref["generated_at"] = data["generated_at"]
+        if data.get("model_version"):
+            ref["model"] = data["model_version"]
+        out.append(ref)
+    return out

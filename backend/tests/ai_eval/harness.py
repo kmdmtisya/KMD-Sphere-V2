@@ -35,6 +35,10 @@ THRESHOLDS: dict[str, Threshold] = {
     "opportunity_injection": Threshold(50, 1.0, True, "QG-07.6"),
     "market_data": Threshold(40, 1.0, True, "QG-07.7"),
     "p12_cross_user": Threshold(30, 1.0, True, "QG-07.1, QG-07.6"),
+    # P13-T10: AI Forex Copilot.
+    "forex_figures": Threshold(40, 1.0, True, "QG-18.1"),
+    "forex_safety": Threshold(70, 1.0, True, "QG-18.3"),
+    "forex_stale": Threshold(25, 1.0, True, "QG-18.2, QG-18.5"),
 }
 
 

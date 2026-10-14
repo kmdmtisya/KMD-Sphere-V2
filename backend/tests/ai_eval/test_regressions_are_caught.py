@@ -145,3 +145,40 @@ def test_without_close_selection_a_contradictory_close_wins(
     monkeypatch.setattr(p12, "pick_closes", first_seen)
     monkeypatch.setattr(scoring_service, "pick_closes", first_seen)
     fails("market_data", {r["id"]: p12.market_verdict(r) for r in load("market_data")})
+
+
+# ------------------------------------------------------------------------ Forex Copilot (P13-T10)
+def test_without_the_advice_check_trade_instructions_get_through(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from tests.ai_eval import test_forex_datasets as forex
+
+    monkeypatch.setattr(policy_module, "advice_problems", lambda *_a, **_k: [])
+    fails("forex_safety", forex.verdicts_forex_safety())
+
+
+def test_without_the_server_sources_forex_answers_lose_their_provenance(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from tests.ai_eval import test_forex_datasets as forex
+
+    monkeypatch.setattr(policy_module, "sources_for", lambda *_a, **_k: [])
+    fails("forex_stale", forex.verdicts_forex_stale())
+
+
+def test_without_the_number_check_invented_forex_figures_get_through(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from tests.ai_eval import test_forex_datasets as forex
+
+    monkeypatch.setattr(policy_module, "unsupported_numbers", lambda *_a, **_k: 0)
+    fails("forex_figures", forex.verdicts_forex_figures())
+
+
+def test_without_the_refusal_rules_trade_requests_are_answered(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from tests.ai_eval import test_forex_datasets as forex
+
+    monkeypatch.setattr(forex, "check_question", lambda _q: None)
+    fails("forex_safety", forex.verdicts_forex_safety())

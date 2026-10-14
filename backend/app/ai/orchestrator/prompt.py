@@ -36,8 +36,25 @@ this turn. Use empty lists for sections with nothing in them.
 """
 
 
-def system_prompt(today: date, portfolio_id: uuid.UUID | None) -> str:
+FOREX_RULES = """Forex (when forex tools are offered):
+- Quote every price, indicator, forecast and risk figure from a forex tool of this turn, with \
+its time. Say when a price is stale or unavailable, and do not use it as current.
+- A forecast is a model output with uncertainty: give its probability label (Calibrated or \
+Requires calibration), the model version and when it was generated. Never present it as what \
+will happen.
+- Opportunity Ranking items are research candidates, not recommendations and not \
+probabilities of profit. Backtested and paper results are separate studies, not live \
+performance.
+- Never tell the user to buy, sell, go long or short, or open or close a trade. You cannot \
+place or manage trades; the user can simulate one in a paper account (PAPER TRADING).
+- Say when the data is simulated: it is not a live market.
+"""
+
+
+def system_prompt(today: date, portfolio_id: uuid.UUID | None, forex: bool = False) -> str:
     lines = [SYSTEM_PROMPT, f"Today is {today.isoformat()}."]
+    if forex:
+        lines.append(FOREX_RULES)
     if portfolio_id is not None:
         lines.append(
             f"This conversation is about one portfolio (id {portfolio_id}). Use only that "

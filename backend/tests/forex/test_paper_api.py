@@ -376,8 +376,14 @@ async def test_paper_money_never_reaches_net_worth(
 
 def test_no_real_money_module_reads_paper_tables() -> None:
     """Static isolation (design section 11): outside the paper package, nothing imports it or
-    names its tables, except the wiring (main and the worker)."""
-    allowed = {APP / "main.py", APP / "worker" / "tasks.py"}
+    names its tables, except the wiring (main and the worker) and the Copilot's paper tool."""
+    allowed = {
+        APP / "main.py",
+        APP / "worker" / "tasks.py",
+        # The Copilot's get_paper_performance tool (P13-T10): it reads the caller's own paper
+        # series, labelled PAPER TRADING, and never combines it with real-money figures.
+        APP / "ai" / "tools" / "forex.py",
+    }
     paper = APP / "modules" / "forex" / "paper"
     for path in APP.rglob("*.py"):
         if paper in path.parents or path in allowed:
