@@ -1955,3 +1955,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-14T21:51:25+04:00 — QG PASSED QG-19
 - evidence: reports/quality/qg-19-forex-mobile.md (manual device pass not done; a release item); mobile forex tests passed on 2026-10-14.
+
+### 2026-10-14T21:55:55+04:00 — COMPLETE P13-T12
+- duration: 13m 04s
+- evidence: QG-13..QG-19 verified and passed via track.py qg with one report per gate (reports/quality/qg-13, qg-14, qg-15, qg-16, qg-17, qg-18, qg-19 and p13-forex-gates-summary.md). Evidence runs 2026-10-14: backend forex/AI/matrix/integrity suites 753 passed; mobile forex/journey/guard tests 73 passed; CI on PR #164 Android debug build, iOS compile and mobile tests with goldens passed. Limits carried forward in the reports: QG-13.2 vendor-format fixtures, not licensed provider records (DEC-19, QG-20.1); QG-15 synthetic and simulated data only; QG-16 unreviewed DEMO contract specs (DEC-24); QG-17 assumed spread, no swaps; QG-18 real-model routing pending ADR-0017; QG-19 manual device pass not done and no server forex pushes yet. PR #165. CI all gates pass.
