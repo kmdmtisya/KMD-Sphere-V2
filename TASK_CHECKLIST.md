@@ -1307,10 +1307,12 @@
   - [x] P13-T07.5 Costs and slippage
   - [x] P13-T07.6 Exposure and limits
   - [x] P13-T07.7 Reference cases and tests
-- [ ] **P13-T08** · FX-08 Backtesting and strategy validation · `IN_PROGRESS` 🔄
+- [x] **P13-T08** · FX-08 Backtesting and strategy validation · `COMPLETED` ✅
   - Deps: P13-T06 · Wave: W6 · Track: BE · Size: XL · Approval: no
-  - Started: 2026-10-14T14:52:40+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-14T14:52:40+04:00 · Completed: 2026-10-14T16:20:58+04:00 · Duration: 1h 28m 18s · Blocker: —
+  - Evidence: Backtester (modules/forex/backtest: strategy, engine, metrics, validation, report, runner, store, service, api; migration 0024; daily forex_backtest job). Fills at the next open with half spread, slippage and commission per side; sizing via the P13-T07 risk engine; stated exit order (stop first when a bar touches both, gaps at the open). Metrics: return, drawdown, win rate, profit factor, average trade, expectancy, streaks, exposure, Sharpe, Sortino, costs. Walk-forward (4 folds, 9-point grid, IS and OOS separate), benchmarks (no trade, buy and hold, 20 seeded random-entry runs), cost sensitivity (costs only raised). Leakage audit (mirrored and stretched futures) fails a deliberately leaky strategy and passes the real rules; same inputs and seed give the same SHA-256 report hash. Opportunity Ranking strategy_history now uses OOS profit factor from 30 trades, labelled with data type. Tests: tests/forex/test_backtest_core.py, tests/forex/test_backtest_api.py (incl. cross-user reference-data test), signals history test. Matrix B-01..B-06, financial-methods section 22, docs/design/forex-backtesting.md, reports/quality/qg-17-forex-backtest-validation.md. Local: ruff, mypy, OpenAPI and Spectral clean; full suite 3146 passed, 14 skipped, coverage policy OK (forex 98.5%, worker 91.9%); the IDOR registry failure was fixed after the run; 3 live-Keycloak tests failed locally only (dev Keycloak user requires an OTP the helper has no secret for; skipped in CI, no identity change here).
+ First CI run failed the IDOR sweep (it expects 404 for another user on registered id routes); fixed by addressing global reference reports by content hash (/backtests/{report_hash}) on the reference-data exemption list; integrity suite, IDOR and backtest tests pass locally. PR #161. CI all gates pass.
+ First CI run failed the IDOR sweep (it expects 404 for another user on registered id routes); fixed by addressing global reference reports by content hash (/backtests/{report_hash}) on the reference-data exemption list; integrity suite, IDOR and backtest tests pass locally. PR #161. CI all gates pass.
   - [x] P13-T08.1 Engine and clock
   - [x] P13-T08.2 Cost and slippage models
   - [x] P13-T08.3 Metrics
