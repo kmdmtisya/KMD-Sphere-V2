@@ -44,6 +44,7 @@ from app.modules.forex import api as forex_api
 from app.modules.forex import stream_api as forex_stream_api
 from app.modules.forex.analysis import api as forex_analysis_api
 from app.modules.forex.calendar import api as forex_calendar_api
+from app.modules.forex.forecast import api as forex_forecast_api
 from app.modules.forex.marketdata.feed import run_feed
 from app.modules.forex.marketdata.gateway import QuoteHub
 from app.modules.fx import api as fx_api
@@ -271,6 +272,7 @@ def create_app(
     app.include_router(forex_api.router)
     app.include_router(forex_analysis_api.router)
     app.include_router(forex_calendar_api.router)
+    app.include_router(forex_forecast_api.router)
     app.include_router(forex_stream_api.router)
     telemetry.instrument(app)
     return app

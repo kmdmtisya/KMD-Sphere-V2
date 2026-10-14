@@ -172,6 +172,17 @@ class Settings(BaseSettings):
     forex_analysis_source_cap: int = Field(default=150_000, ge=1000, le=1_000_000)
     # Candle sync (P13-T03): the most one-minute history fetched per pair per run.
     forex_candle_sync_max_hours: int = Field(default=24, ge=1, le=168)
+    # Forecasting (P13-T05): horizons trained by the hourly job, bars per training run, and the
+    # seed that makes runs reproducible.
+    forex_forecast_horizons: list[Literal["15m", "1h", "4h", "24h", "1w"]] = [
+        "15m",
+        "1h",
+        "4h",
+        "24h",
+        "1w",
+    ]
+    forex_forecast_max_bars: int = Field(default=2000, ge=500, le=10_000)
+    forex_forecast_seed: int = 7
 
     db_pool_size: int = 5
     db_max_overflow: int = 5

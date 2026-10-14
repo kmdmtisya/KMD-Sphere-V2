@@ -2652,6 +2652,85 @@
         "title": "EligibilityOut",
         "type": "object"
       },
+      "EvaluationOut": {
+        "properties": {
+          "drift": {
+            "additionalProperties": true,
+            "title": "Drift",
+            "type": "object"
+          },
+          "horizon": {
+            "enum": [
+              "15m",
+              "1h",
+              "4h",
+              "24h",
+              "1w"
+            ],
+            "title": "Horizon",
+            "type": "string"
+          },
+          "instrument": {
+            "title": "Instrument",
+            "type": "string"
+          },
+          "model": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ModelInfo"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "notice": {
+            "default": "A statistical estimate from past prices: not a prediction of what will happen, not advice, and never a guaranteed return. Probabilities are model outputs, not success rates; intervals can be wrong.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "results": {
+            "description": "Every model and baseline, whatever the outcome",
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Results",
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "available",
+              "unavailable"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "volatility": {
+            "additionalProperties": true,
+            "title": "Volatility",
+            "type": "object"
+          }
+        },
+        "required": [
+          "instrument",
+          "horizon",
+          "status"
+        ],
+        "title": "EvaluationOut",
+        "type": "object"
+      },
       "EventOut": {
         "properties": {
           "actual_seen_at": {
@@ -3263,6 +3342,96 @@
         "title": "ForecastInReporting",
         "type": "object"
       },
+      "ForecastOut": {
+        "properties": {
+          "bars_ahead": {
+            "title": "Bars Ahead",
+            "type": "integer"
+          },
+          "forecast": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ForecastValues"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "horizon": {
+            "enum": [
+              "15m",
+              "1h",
+              "4h",
+              "24h",
+              "1w"
+            ],
+            "title": "Horizon",
+            "type": "string"
+          },
+          "instrument": {
+            "title": "Instrument",
+            "type": "string"
+          },
+          "model": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ModelInfo"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "notice": {
+            "default": "A statistical estimate from past prices: not a prediction of what will happen, not advice, and never a guaranteed return. Probabilities are model outputs, not success rates; intervals can be wrong.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "out_of_sample": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/OutOfSample"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "status": {
+            "enum": [
+              "available",
+              "unavailable"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "timeframe": {
+            "title": "Timeframe",
+            "type": "string"
+          }
+        },
+        "required": [
+          "instrument",
+          "horizon",
+          "timeframe",
+          "bars_ahead",
+          "status"
+        ],
+        "title": "ForecastOut",
+        "type": "object"
+      },
       "ForecastProjection": {
         "properties": {
           "annual_return_percent": {
@@ -3345,6 +3514,135 @@
           "growth"
         ],
         "title": "ForecastScenarios",
+        "type": "object"
+      },
+      "ForecastValues": {
+        "properties": {
+          "age_seconds": {
+            "title": "Age Seconds",
+            "type": "integer"
+          },
+          "as_of": {
+            "description": "The last closed bar the forecast starts from (UTC)",
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "data_types": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Data Types",
+            "type": "array"
+          },
+          "expected_volatility": {
+            "description": "Standard deviation of the log return over the horizon",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Expected Volatility",
+            "type": "string"
+          },
+          "fresh": {
+            "title": "Fresh",
+            "type": "boolean"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "last_close": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Last Close",
+            "type": "string"
+          },
+          "price_interval_50": {
+            "$ref": "#/components/schemas/Interval"
+          },
+          "price_interval_80": {
+            "$ref": "#/components/schemas/Interval"
+          },
+          "price_median": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Price Median",
+            "type": "string"
+          },
+          "prob_down": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Prob Down",
+            "type": "string"
+          },
+          "prob_up": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Prob Up",
+            "type": "string"
+          },
+          "probability_label": {
+            "enum": [
+              "Requires calibration",
+              "Calibrated"
+            ],
+            "title": "Probability Label",
+            "type": "string"
+          },
+          "probability_note": {
+            "default": "A model probability, not a success rate.",
+            "title": "Probability Note",
+            "type": "string"
+          },
+          "return_quantiles": {
+            "additionalProperties": {
+              "examples": [
+                "1234.50"
+              ],
+              "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+              "type": "string"
+            },
+            "description": "Log return over the horizon: q10, q25, q50, q75, q90",
+            "title": "Return Quantiles",
+            "type": "object"
+          },
+          "volatility_model": {
+            "enum": [
+              "ewma",
+              "har"
+            ],
+            "title": "Volatility Model",
+            "type": "string"
+          }
+        },
+        "required": [
+          "as_of",
+          "generated_at",
+          "age_seconds",
+          "fresh",
+          "last_close",
+          "prob_up",
+          "prob_down",
+          "probability_label",
+          "return_quantiles",
+          "price_median",
+          "price_interval_50",
+          "price_interval_80",
+          "expected_volatility",
+          "volatility_model",
+          "data_types"
+        ],
+        "title": "ForecastValues",
         "type": "object"
       },
       "Frequency": {
@@ -5116,6 +5414,32 @@
         "title": "InstrumentsOut",
         "type": "object"
       },
+      "Interval": {
+        "properties": {
+          "high": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "High",
+            "type": "string"
+          },
+          "low": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Low",
+            "type": "string"
+          }
+        },
+        "required": [
+          "low",
+          "high"
+        ],
+        "title": "Interval",
+        "type": "object"
+      },
       "InvestorOut": {
         "properties": {
           "horizon_years": {
@@ -5844,6 +6168,101 @@
         "title": "MetadataField",
         "type": "object"
       },
+      "ModelInfo": {
+        "properties": {
+          "calibration_status": {
+            "enum": [
+              "calibrated",
+              "requires_calibration"
+            ],
+            "title": "Calibration Status",
+            "type": "string"
+          },
+          "code_version": {
+            "title": "Code Version",
+            "type": "string"
+          },
+          "data_snapshot_hash": {
+            "title": "Data Snapshot Hash",
+            "type": "string"
+          },
+          "data_types": {
+            "description": "Data types of the candles the model was trained on",
+            "items": {
+              "type": "string"
+            },
+            "title": "Data Types",
+            "type": "array"
+          },
+          "drift_status": {
+            "enum": [
+              "ok",
+              "breached"
+            ],
+            "title": "Drift Status",
+            "type": "string"
+          },
+          "edge": {
+            "title": "Edge",
+            "type": "boolean"
+          },
+          "family": {
+            "title": "Family",
+            "type": "string"
+          },
+          "feature_set_hash": {
+            "title": "Feature Set Hash",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "probability_source": {
+            "enum": [
+              "raw",
+              "recalibrated"
+            ],
+            "title": "Probability Source",
+            "type": "string"
+          },
+          "seed": {
+            "title": "Seed",
+            "type": "integer"
+          },
+          "statement": {
+            "title": "Statement",
+            "type": "string"
+          },
+          "trained_at": {
+            "format": "date-time",
+            "title": "Trained At",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "family",
+          "version",
+          "trained_at",
+          "feature_set_hash",
+          "data_snapshot_hash",
+          "code_version",
+          "seed",
+          "edge",
+          "statement",
+          "data_types",
+          "probability_source",
+          "calibration_status",
+          "drift_status"
+        ],
+        "title": "ModelInfo",
+        "type": "object"
+      },
       "Money": {
         "additionalProperties": false,
         "description": "An amount in a currency. The amount is a string, written with the currency's minor units\nin responses (\"1234.50\", \"1500\" for JPY).",
@@ -6214,6 +6633,43 @@
           "explanation_source"
         ],
         "title": "OpportunityOut",
+        "type": "object"
+      },
+      "OutOfSample": {
+        "properties": {
+          "baselines": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "type": "number"
+              },
+              "type": "object"
+            },
+            "title": "Baselines",
+            "type": "object"
+          },
+          "folds": {
+            "title": "Folds",
+            "type": "integer"
+          },
+          "model": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "title": "Model",
+            "type": "object"
+          },
+          "test_rows": {
+            "title": "Test Rows",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "folds",
+          "test_rows",
+          "model",
+          "baselines"
+        ],
+        "title": "OutOfSample",
         "type": "object"
       },
       "PastFigures": {
@@ -12672,6 +13128,160 @@
           }
         ],
         "summary": "Stored candles of a pair, oldest first",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/forecasts": {
+      "get": {
+        "description": "Horizons 15m, 1h, 4h, 24h and 1w. Unavailable, with the reason, when there is not enough history or drift has disabled the model. Formulas and rules: docs/design/forex-forecasting.md.",
+        "operationId": "forecast_api_v1_forex_forecasts_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "instrument",
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Z]{3}_[A-Z]{3}$",
+              "title": "Instrument",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "horizon",
+            "required": false,
+            "schema": {
+              "default": "1h",
+              "enum": [
+                "15m",
+                "1h",
+                "4h",
+                "24h",
+                "1w"
+              ],
+              "title": "Horizon",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForecastOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such instrument, or the forex module is switched off for this user"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "The latest forecast for a pair and horizon, with its evaluation against baselines",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/forecasts/evaluation": {
+      "get": {
+        "description": "Every model and baseline with its metrics, comparison with each baseline (Diebold-Mariano), calibration and edge statement, plus the volatility models and drift checks. Reported whatever it shows, including when a baseline wins.",
+        "operationId": "evaluation_api_v1_forex_forecasts_evaluation_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "instrument",
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Z]{3}_[A-Z]{3}$",
+              "title": "Instrument",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "horizon",
+            "required": false,
+            "schema": {
+              "default": "1h",
+              "enum": [
+                "15m",
+                "1h",
+                "4h",
+                "24h",
+                "1w"
+              ],
+              "title": "Horizon",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvaluationOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such instrument, or the forex module is switched off for this user"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "The out-of-sample evaluation behind the latest forecast",
         "tags": [
           "forex"
         ]

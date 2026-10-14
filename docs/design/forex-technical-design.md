@@ -121,6 +121,8 @@ As built in P13-T04: [forex-calendar.md](forex-calendar.md).
 
 ## 7. Prediction engine
 
+As built in P13-T05: [forex-forecasting.md](forex-forecasting.md); evidence in reports/quality/qg-15-forex-model-validation.md.
+
 ### 7.1 Framework
 
 A `Forecaster` interface (`fit`, `predict_distribution`, `version`, `features_used`) with a registry. Model families: baselines (random walk, no-change, drift), ARIMA/SARIMA (statsmodels), gradient boosting (LightGBM, XGBoost), Random Forest, volatility models (GARCH-family or realised-volatility regressors), ensembles. LSTM/GRU/Transformer models are **research-only** (DEC-22): they run behind a flag, are never the default, and ship only if they beat the baselines out of sample and survive QG-15.

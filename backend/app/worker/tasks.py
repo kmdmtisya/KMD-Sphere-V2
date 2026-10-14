@@ -15,6 +15,7 @@ from app.modules.alerts.evaluation import EvaluationResult, evaluate_alerts
 from app.modules.forex.calendar.ingest import ingest as ingest_forex_calendar
 from app.modules.forex.calendar.sources import DemoCalendarSource
 from app.modules.forex.candles.sync import sync_minutes as sync_forex_minutes
+from app.modules.forex.forecast.service import train as train_forex_forecast
 from app.modules.forex.instruments.registry import active_instruments as active_forex_instruments
 from app.modules.forex.instruments.registry import load_registry as load_forex_registry
 from app.modules.forex.instruments.registry import sync as sync_forex_instruments
@@ -416,6 +417,37 @@ def forex_calendar_ingest_job(day: str | None = None) -> dict[str, object]:
             return asdict(report)
 
         outcome = await run_once(sessions, "forex_calendar_ingest", key, work)
+        if outcome.skipped or outcome.value is None:
+            return {"skipped": True}
+        return outcome.value
+
+    return run_async(go)
+
+
+@celery_app.task(base=JobTask, name="app.worker.tasks.forex_forecast_train")
+def forex_forecast_train_job(slot: str | None = None) -> dict[str, object]:
+    """Trains, evaluates and publishes forecasts for every active pair and configured horizon,
+    once an hour (P13-T05). Only when forex is switched on. A pair and horizon disabled by drift
+    is skipped until retraining is approved; one without enough history publishes nothing."""
+    settings = get_settings()
+    if not settings.forex_enabled:
+        return {"forex": "disabled"}
+    key = slot or datetime.now(UTC).strftime("%Y-%m-%dT%H")
+
+    async def go(sessions: SessionFactory) -> dict[str, object]:
+        async def work(session: AsyncSession) -> dict[str, object]:
+            now = datetime.now(UTC)
+            counts: dict[str, object] = {}
+            for instrument in [i.code for i in await active_forex_instruments(session)]:
+                for horizon in settings.forex_forecast_horizons:
+                    outcome = await train_forex_forecast(
+                        session, settings, instrument, horizon, now
+                    )
+                    seen = counts.get(outcome.result, 0)
+                    counts[outcome.result] = (seen if isinstance(seen, int) else 0) + 1
+            return counts
+
+        outcome = await run_once(sessions, "forex_forecast_train", key, work)
         if outcome.skipped or outcome.value is None:
             return {"skipped": True}
         return outcome.value

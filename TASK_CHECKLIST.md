@@ -1274,18 +1274,18 @@
   - [x] P13-T04.3 Event-risk windows
   - [x] P13-T04.4 API
   - [x] P13-T04.5 Tests
-- [ ] **P13-T05** · FX-05 Prediction models and evaluation framework · `NOT_STARTED` ⬜
+- [ ] **P13-T05** · FX-05 Prediction models and evaluation framework · `IN_PROGRESS` 🔄
   - Deps: P13-T03, P13-T04 · Wave: W4 · Track: BE · Size: XL · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-14T11:47:36+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P13-T05.1 Feature pipeline
-  - [ ] P13-T05.2 Baselines
-  - [ ] P13-T05.3 Statistical and boosting models
-  - [ ] P13-T05.4 Ensembles and volatility
-  - [ ] P13-T05.5 Walk-forward evaluation
-  - [ ] P13-T05.6 Calibration and interval coverage
-  - [ ] P13-T05.7 Drift monitoring
-  - [ ] P13-T05.8 Forecast API
+  - [x] P13-T05.1 Feature pipeline
+  - [x] P13-T05.2 Baselines
+  - [x] P13-T05.3 Statistical and boosting models
+  - [x] P13-T05.4 Ensembles and volatility
+  - [x] P13-T05.5 Walk-forward evaluation
+  - [x] P13-T05.6 Calibration and interval coverage
+  - [x] P13-T05.7 Drift monitoring
+  - [x] P13-T05.8 Forecast API
 - [ ] **P13-T06** · FX-06 Strategy, signal engine and opportunity ranking · `NOT_STARTED` ⬜
   - Deps: P13-T05 · Wave: W5 · Track: BE · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

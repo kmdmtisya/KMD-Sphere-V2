@@ -20,6 +20,7 @@ from app.modules.forex import api as forex_api
 from app.modules.forex import stream_api
 from app.modules.forex.analysis import api as analysis_api
 from app.modules.forex.calendar import api as calendar_api
+from app.modules.forex.forecast import api as forecast_api
 from app.modules.forex.marketdata.factory import build_provider
 from app.modules.forex.marketdata.types import DataType
 from tests.conftest import make_settings
@@ -33,7 +34,13 @@ ORDER_CALL = re.compile(r"\b(place|submit|send|execute|close)_(order|trade|posit
 def test_no_forex_route_places_orders() -> None:
     app = create_app(make_settings(forex_enabled=True), readiness_checks={})
     documented = [p for p in app.openapi()["paths"] if p.startswith("/api/v1/forex")]
-    routers = (forex_api.router, analysis_api.router, calendar_api.router, stream_api.router)
+    routers = (
+        forex_api.router,
+        analysis_api.router,
+        calendar_api.router,
+        forecast_api.router,
+        stream_api.router,
+    )
     declared = [getattr(r, "path", "") for router in routers for r in router.routes]
     forex_paths = sorted({*documented, *declared})
     assert set(documented) <= set(declared)
