@@ -1806,3 +1806,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-14T20:27:01+04:00 — START P13-T11
 - FX-11 Android and iOS Forex Intelligence integration
 - prerequisites verified COMPLETED
+
+### 2026-10-14T21:25:02+04:00 — COMPLETE P13-T11
+- duration: 58m 01s
+- evidence: Forex section in the Flutter app (lib/features/forex): More entry shown only when forex is available (DEMO always; live only when the server has forex on, 404 otherwise); home with streamed markets, pair (chart, indicators, levels, forecasts with calibration labels, backtests), Opportunity Ranking and scanner, trade setup and risk calculator (server-computed, disclosures shown), calendar (DEMO events labelled, consensus marked as expectation), paper trading and journal (PAPER TRADING always visible; DEMO read-only), Copilot link with server-built source lines, in-app notices with settings and forex deep links. Stream client: token in first frame, resubscribe after reconnect with 1-30 s backoff, 15 s silence watchdog, close codes 4401/4404/4429, pause/resume with app lifecycle and connectivity; updates batched every 250 ms with the chart in a RepaintBoundary. Prices always show their type and freshness; none shown as executable. Tests: test/features/forex (stream, data, screens incl. 2.0x text, RTL, dark), test/journeys/forex_journey_test.dart; docs/design/forex-mobile.md, parity matrix updated. Local: dart format clean, flutter analyze clean, full flutter test 1793 passed plus the forex journey. PR #164. CI all gates pass.
