@@ -1265,15 +1265,15 @@
   - [x] P13-T03.4 Market structure
   - [x] P13-T03.5 Price-action detectors
   - [x] P13-T03.6 Reference vectors and tests
-- [ ] **P13-T04** · FX-04 Economic calendar and macroeconomic intelligence · `NOT_STARTED` ⬜
+- [ ] **P13-T04** · FX-04 Economic calendar and macroeconomic intelligence · `IN_PROGRESS` 🔄
   - Deps: P13-T02 · Wave: W3 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-14T11:12:41+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P13-T04.1 Event model and schema
-  - [ ] P13-T04.2 Provider adapter
-  - [ ] P13-T04.3 Event-risk windows
-  - [ ] P13-T04.4 API
-  - [ ] P13-T04.5 Tests
+  - [x] P13-T04.1 Event model and schema
+  - [x] P13-T04.2 Provider adapter
+  - [x] P13-T04.3 Event-risk windows
+  - [x] P13-T04.4 API
+  - [x] P13-T04.5 Tests
 - [ ] **P13-T05** · FX-05 Prediction models and evaluation framework · `NOT_STARTED` ⬜
   - Deps: P13-T03, P13-T04 · Wave: W4 · Track: BE · Size: XL · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —

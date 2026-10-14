@@ -144,6 +144,10 @@ class TestNoUnreviewedProviderDataLeavesTheApi:
         # vendor's streaming, display and redistribution licence is reviewed.
         "/api/v1/forex/quotes",
         "/api/v1/forex/candles",
+        # P13-T04: per user, authenticated, behind the forex flag. Central-bank policy rates from
+        # the DEMO calendar only (fictional, labelled); a real calendar source is blocked like the
+        # feed.
+        "/api/v1/forex/policy-rates/differential",
     }
     MARKET_WORDS: ClassVar[tuple[str, ...]] = (
         "price",

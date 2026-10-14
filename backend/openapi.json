@@ -929,6 +929,44 @@
         "title": "BreakoutOut",
         "type": "object"
       },
+      "CalendarOut": {
+        "properties": {
+          "end": {
+            "format": "date-time",
+            "title": "End",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/EventOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "notice": {
+            "default": "Scheduled releases with their source and time. Confirmed values (actual, previous) are facts as published; the consensus forecast is an expectation; commentary is not data. A risk window marks when prices often move around a release; it is not a prediction. DEMO items are fictional.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "start": {
+            "format": "date-time",
+            "title": "Start",
+            "type": "string"
+          },
+          "timezone": {
+            "title": "Timezone",
+            "type": "string"
+          }
+        },
+        "required": [
+          "timezone",
+          "start",
+          "end",
+          "items"
+        ],
+        "title": "CalendarOut",
+        "type": "object"
+      },
       "CandleOut": {
         "properties": {
           "close": {
@@ -1184,6 +1222,24 @@
         ],
         "title": "CheckStatus",
         "type": "string"
+      },
+      "Commentary": {
+        "properties": {
+          "label": {
+            "default": "Commentary from the source: not confirmed data",
+            "title": "Label",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "Commentary",
+        "type": "object"
       },
       "CompareOut": {
         "properties": {
@@ -1745,6 +1801,64 @@
         "title": "Confidence",
         "type": "string"
       },
+      "Confirmed": {
+        "properties": {
+          "actual": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Actual"
+          },
+          "previous": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previous"
+          },
+          "released": {
+            "description": "True once the actual value is published",
+            "title": "Released",
+            "type": "boolean"
+          },
+          "unit": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unit"
+          }
+        },
+        "required": [
+          "released",
+          "actual",
+          "previous",
+          "unit"
+        ],
+        "title": "Confirmed",
+        "type": "object"
+      },
       "ConversationDetailOut": {
         "properties": {
           "created_at": {
@@ -2301,6 +2415,63 @@
         "title": "DeviceRegister",
         "type": "object"
       },
+      "DifferentialOut": {
+        "properties": {
+          "base": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RateOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "differential": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Base rate minus quote rate, in percentage points; null when either is unknown",
+            "title": "Differential"
+          },
+          "instrument": {
+            "title": "Instrument",
+            "type": "string"
+          },
+          "notice": {
+            "default": "Policy rates as published by each central bank, with their dates. The differential is base minus quote. DEMO rates are fictional.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "quote": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RateOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "instrument",
+          "base",
+          "quote",
+          "differential"
+        ],
+        "title": "DifferentialOut",
+        "type": "object"
+      },
       "DimensionOut": {
         "properties": {
           "hhi": {
@@ -2481,6 +2652,149 @@
         "title": "EligibilityOut",
         "type": "object"
       },
+      "EventOut": {
+        "properties": {
+          "actual_seen_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Actual Seen At"
+          },
+          "commentary": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Commentary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "confirmed": {
+            "$ref": "#/components/schemas/Confirmed"
+          },
+          "currencies": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Currencies",
+            "type": "array"
+          },
+          "expectation": {
+            "$ref": "#/components/schemas/Expectation"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "importance": {
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Importance",
+            "type": "string"
+          },
+          "is_demo": {
+            "title": "Is Demo",
+            "type": "boolean"
+          },
+          "kind": {
+            "enum": [
+              "indicator",
+              "central_bank_decision",
+              "speech",
+              "other"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "licence_status": {
+            "enum": [
+              "demo",
+              "public_domain",
+              "unconfirmed",
+              "licensed"
+            ],
+            "title": "Licence Status",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "retrieved_at": {
+            "format": "date-time",
+            "title": "Retrieved At",
+            "type": "string"
+          },
+          "risk_window": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/WindowOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "scheduled_at": {
+            "description": "UTC",
+            "format": "date-time",
+            "title": "Scheduled At",
+            "type": "string"
+          },
+          "scheduled_local": {
+            "description": "The same instant in the requested time zone",
+            "format": "date-time",
+            "title": "Scheduled Local",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "source_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Url"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "kind",
+          "currencies",
+          "importance",
+          "scheduled_at",
+          "scheduled_local",
+          "confirmed",
+          "expectation",
+          "commentary",
+          "risk_window",
+          "source",
+          "source_url",
+          "licence_status",
+          "is_demo",
+          "retrieved_at",
+          "actual_seen_at"
+        ],
+        "title": "EventOut",
+        "type": "object"
+      },
       "EvidenceOut": {
         "properties": {
           "asset_id": {
@@ -2598,6 +2912,31 @@
           "relevance"
         ],
         "title": "EvidenceOut",
+        "type": "object"
+      },
+      "Expectation": {
+        "properties": {
+          "forecast": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Consensus forecast: an expectation, not a fact",
+            "title": "Forecast"
+          }
+        },
+        "required": [
+          "forecast"
+        ],
+        "title": "Expectation",
         "type": "object"
       },
       "ExplanationOut": {
@@ -6906,6 +7245,68 @@
         "title": "QuotesOut",
         "type": "object"
       },
+      "RateOut": {
+        "properties": {
+          "bank": {
+            "title": "Bank",
+            "type": "string"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "decided_at": {
+            "format": "date-time",
+            "title": "Decided At",
+            "type": "string"
+          },
+          "effective_date": {
+            "format": "date",
+            "title": "Effective Date",
+            "type": "string"
+          },
+          "is_demo": {
+            "title": "Is Demo",
+            "type": "boolean"
+          },
+          "rate": {
+            "description": "Percent a year",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Rate",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "source_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Url"
+          }
+        },
+        "required": [
+          "currency",
+          "bank",
+          "rate",
+          "effective_date",
+          "decided_at",
+          "source",
+          "source_url",
+          "is_demo"
+        ],
+        "title": "RateOut",
+        "type": "object"
+      },
       "ReadyStatus": {
         "properties": {
           "checks": {
@@ -7089,171 +7490,6 @@
           }
         },
         "title": "ReversalCreate",
-        "type": "object"
-      },
-      "RiskOut": {
-        "properties": {
-          "as_of": {
-            "format": "date-time",
-            "title": "As Of",
-            "type": "string"
-          },
-          "assumed_deposit_count": {
-            "description": "Postings that needed cash no recorded deposit provided; each is treated as a deposit on its date",
-            "title": "Assumed Deposit Count",
-            "type": "integer"
-          },
-          "currency": {
-            "title": "Currency",
-            "type": "string"
-          },
-          "end": {
-            "format": "date",
-            "title": "End",
-            "type": "string"
-          },
-          "frequency": {
-            "enum": [
-              "daily",
-              "weekly",
-              "monthly"
-            ],
-            "title": "Frequency",
-            "type": "string"
-          },
-          "incomplete_points": {
-            "title": "Incomplete Points",
-            "type": "integer"
-          },
-          "max_drawdown": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/DrawdownOut"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "notice": {
-            "title": "Notice",
-            "type": "string"
-          },
-          "period_volatility_percent": {
-            "anyOf": [
-              {
-                "examples": [
-                  "1234.50"
-                ],
-                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Period Volatility Percent"
-          },
-          "points": {
-            "items": {
-              "$ref": "#/components/schemas/SeriesPointOut"
-            },
-            "title": "Points",
-            "type": "array"
-          },
-          "portfolio_id": {
-            "format": "uuid",
-            "title": "Portfolio Id",
-            "type": "string"
-          },
-          "returns": {
-            "description": "Number of period returns measured",
-            "title": "Returns",
-            "type": "integer"
-          },
-          "start": {
-            "format": "date",
-            "title": "Start",
-            "type": "string"
-          },
-          "status": {
-            "enum": [
-              "ok",
-              "insufficient_data",
-              "incomplete_data",
-              "undefined_period"
-            ],
-            "title": "Status",
-            "type": "string"
-          },
-          "time_weighted_annualized_percent": {
-            "anyOf": [
-              {
-                "examples": [
-                  "1234.50"
-                ],
-                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "Only for ranges of at least a year",
-            "title": "Time Weighted Annualized Percent"
-          },
-          "time_weighted_return_percent": {
-            "anyOf": [
-              {
-                "examples": [
-                  "1234.50"
-                ],
-                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Time Weighted Return Percent"
-          },
-          "volatility_percent": {
-            "anyOf": [
-              {
-                "examples": [
-                  "1234.50"
-                ],
-                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "Annualised",
-            "title": "Volatility Percent"
-          }
-        },
-        "required": [
-          "portfolio_id",
-          "currency",
-          "frequency",
-          "start",
-          "end",
-          "status",
-          "points",
-          "returns",
-          "volatility_percent",
-          "period_volatility_percent",
-          "max_drawdown",
-          "time_weighted_return_percent",
-          "time_weighted_annualized_percent",
-          "incomplete_points",
-          "assumed_deposit_count",
-          "as_of",
-          "notice"
-        ],
-        "title": "RiskOut",
         "type": "object"
       },
       "RiskProfileCreate": {
@@ -9579,6 +9815,55 @@
         "title": "WatchlistItemOut",
         "type": "object"
       },
+      "WindowOut": {
+        "properties": {
+          "currencies": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Currencies",
+            "type": "array"
+          },
+          "ends": {
+            "format": "date-time",
+            "title": "Ends",
+            "type": "string"
+          },
+          "importance": {
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Importance",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "scheduled_at": {
+            "format": "date-time",
+            "title": "Scheduled At",
+            "type": "string"
+          },
+          "starts": {
+            "format": "date-time",
+            "title": "Starts",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "currencies",
+          "importance",
+          "scheduled_at",
+          "starts",
+          "ends"
+        ],
+        "title": "WindowOut",
+        "type": "object"
+      },
       "YearValue": {
         "properties": {
           "value": {
@@ -9601,6 +9886,43 @@
           "value"
         ],
         "title": "YearValue",
+        "type": "object"
+      },
+      "app__modules__forex__calendar__api__RiskOut": {
+        "properties": {
+          "at": {
+            "format": "date-time",
+            "title": "At",
+            "type": "string"
+          },
+          "in_window": {
+            "title": "In Window",
+            "type": "boolean"
+          },
+          "instrument": {
+            "title": "Instrument",
+            "type": "string"
+          },
+          "notice": {
+            "default": "Scheduled releases with their source and time. Confirmed values (actual, previous) are facts as published; the consensus forecast is an expectation; commentary is not data. A risk window marks when prices often move around a release; it is not a prediction. DEMO items are fictional.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "windows": {
+            "items": {
+              "$ref": "#/components/schemas/WindowOut"
+            },
+            "title": "Windows",
+            "type": "array"
+          }
+        },
+        "required": [
+          "instrument",
+          "at",
+          "in_window",
+          "windows"
+        ],
+        "title": "RiskOut",
         "type": "object"
       },
       "app__modules__forex__marketdata__schemas__InstrumentOut": {
@@ -9665,6 +9987,171 @@
           "spec_version"
         ],
         "title": "InstrumentOut",
+        "type": "object"
+      },
+      "app__modules__portfolio__analytics_schemas__RiskOut": {
+        "properties": {
+          "as_of": {
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "assumed_deposit_count": {
+            "description": "Postings that needed cash no recorded deposit provided; each is treated as a deposit on its date",
+            "title": "Assumed Deposit Count",
+            "type": "integer"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "end": {
+            "format": "date",
+            "title": "End",
+            "type": "string"
+          },
+          "frequency": {
+            "enum": [
+              "daily",
+              "weekly",
+              "monthly"
+            ],
+            "title": "Frequency",
+            "type": "string"
+          },
+          "incomplete_points": {
+            "title": "Incomplete Points",
+            "type": "integer"
+          },
+          "max_drawdown": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DrawdownOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "notice": {
+            "title": "Notice",
+            "type": "string"
+          },
+          "period_volatility_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Period Volatility Percent"
+          },
+          "points": {
+            "items": {
+              "$ref": "#/components/schemas/SeriesPointOut"
+            },
+            "title": "Points",
+            "type": "array"
+          },
+          "portfolio_id": {
+            "format": "uuid",
+            "title": "Portfolio Id",
+            "type": "string"
+          },
+          "returns": {
+            "description": "Number of period returns measured",
+            "title": "Returns",
+            "type": "integer"
+          },
+          "start": {
+            "format": "date",
+            "title": "Start",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "ok",
+              "insufficient_data",
+              "incomplete_data",
+              "undefined_period"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "time_weighted_annualized_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Only for ranges of at least a year",
+            "title": "Time Weighted Annualized Percent"
+          },
+          "time_weighted_return_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Time Weighted Return Percent"
+          },
+          "volatility_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Annualised",
+            "title": "Volatility Percent"
+          }
+        },
+        "required": [
+          "portfolio_id",
+          "currency",
+          "frequency",
+          "start",
+          "end",
+          "status",
+          "points",
+          "returns",
+          "volatility_percent",
+          "period_volatility_percent",
+          "max_drawdown",
+          "time_weighted_return_percent",
+          "time_weighted_annualized_percent",
+          "incomplete_points",
+          "assumed_deposit_count",
+          "as_of",
+          "notice"
+        ],
+        "title": "RiskOut",
         "type": "object"
       },
       "app__modules__universe__schemas__InstrumentOut": {
@@ -11874,6 +12361,206 @@
         ]
       }
     },
+    "/api/v1/forex/calendar": {
+      "get": {
+        "description": "Events scheduled in [start, end) (at most 92 days), optionally for some currencies and from a minimum importance. Each event separates confirmed values, the consensus expectation and commentary, and carries its source and retrieval time.",
+        "operationId": "calendar_api_v1_forex_calendar_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "start",
+            "required": true,
+            "schema": {
+              "format": "date-time",
+              "title": "Start",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "end",
+            "required": true,
+            "schema": {
+              "format": "date-time",
+              "title": "End",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "currency",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "items": {
+                    "pattern": "^[A-Z]{3}$",
+                    "type": "string"
+                  },
+                  "maxItems": 20,
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Currency"
+            }
+          },
+          {
+            "in": "query",
+            "name": "min_importance",
+            "required": false,
+            "schema": {
+              "default": "low",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "title": "Min Importance",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "tz",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 64,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Tz"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such instrument, or the forex module is switched off for this user"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Scheduled economic events with their published values",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/calendar/risk": {
+      "get": {
+        "description": "Windows of medium and high importance releases for either currency of the pair that are open at `at` (now when omitted). A window is a schedule fact, not a forecast.",
+        "operationId": "risk_api_v1_forex_calendar_risk_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "instrument",
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Z]{3}_[A-Z]{3}$",
+              "title": "Instrument",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "at",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "At"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/app__modules__forex__calendar__api__RiskOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such instrument, or the forex module is switched off for this user"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Event-risk windows open for a pair at a time",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
     "/api/v1/forex/candles": {
       "get": {
         "description": "Complete candles in [start, end), at most `forex_candles_max` of them (`truncated` says when more exist). A period without a candle is absent, never filled in; a forming candle is not stored. Times are UTC and must carry a time zone.",
@@ -12247,6 +12934,66 @@
           }
         ],
         "summary": "Candlestick and price-action patterns",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/policy-rates/differential": {
+      "get": {
+        "description": "The latest effective policy rate of each currency of the pair, with its bank, dates and source, and base minus quote in percentage points.",
+        "operationId": "differential_api_v1_forex_policy_rates_differential_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "instrument",
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Z]{3}_[A-Z]{3}$",
+              "title": "Instrument",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DifferentialOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such instrument, or the forex module is switched off for this user"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Central-bank policy rates of a pair and their differential",
         "tags": [
           "forex"
         ]
@@ -14750,7 +15497,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RiskOut"
+                  "$ref": "#/components/schemas/app__modules__portfolio__analytics_schemas__RiskOut"
                 }
               }
             },

@@ -91,3 +91,20 @@ async def test_the_candle_sync_stores_provider_minutes_once_per_slot(
         assert newest == WED - timedelta(minutes=1)
     finally:
         await db.dispose()
+
+
+async def test_the_calendar_ingest_is_off_with_the_module_and_idempotent_per_run(
+    migrated_settings: Settings,  # noqa: F811
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    use(monkeypatch, migrated_settings.model_copy(update={"forex_enabled": False}))
+    off = (
+        await asyncio.to_thread(tasks.forex_calendar_ingest_job.apply, args=("2026-10-07T10",))
+    ).get()
+    assert off == {"forex": "disabled"}
+    use(monkeypatch, migrated_settings.model_copy(update={"forex_enabled": True}))
+    key = "2026-10-07T10"
+    result = (await asyncio.to_thread(tasks.forex_calendar_ingest_job.apply, args=(key,))).get()
+    assert result["source"] == "demo" and result["added"] > 0 and result["rates"] > 0
+    again = (await asyncio.to_thread(tasks.forex_calendar_ingest_job.apply, args=(key,))).get()
+    assert again == {"skipped": True}

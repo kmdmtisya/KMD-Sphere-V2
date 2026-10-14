@@ -162,6 +162,7 @@ The licence position is in ADR-0014 section 4 and `docs/market-data-providers.md
 - Redistribution control: provider data reaches users only as per-user values with provenance (holdings and summary valuations, watchlist latest price, `GET /api/v1/fx-rates/{base}/{quote}`), all behind authentication. There is no bulk, search, history or public price endpoint, and a test fails if a route mentioning prices, quotes, rates or markets is added without updating the reviewed list, which forces a licence check first.
 - Storage: prices and rates are stored with provider, as-of and ingestion times (needed for audit and valuation). Whether storing history is allowed depends on the unsigned licences.
 - Forex (P13-T02): `GET /api/v1/forex/quotes`, `GET /api/v1/forex/candles` and the stream were reviewed and added to the list. They serve only the in-house simulated feed (DEC-19, fixture-only), so no third-party data is shown. A real forex feed is blocked by QG-20.1 until its streaming, display and redistribution licence is reviewed.
+- Forex calendar (P13-T04): `GET /api/v1/forex/policy-rates/differential` was reviewed and added to the list. It serves DEMO policy rates only; a real calendar provider waits for DEC-19, as the quote feed does.
 - **Result:** no provider term is known to be violated in the current code because no real provider is enabled. Production use stays blocked until the licences in ADR-0014 are confirmed in writing.
 
 ### Log review (P08-T09.3)

@@ -61,6 +61,11 @@ def build_schedule() -> dict[str, dict[str, Any]]:
             "task": "app.worker.tasks.forex_candle_sync",
             "schedule": crontab(minute="*/5"),
         },
+        # The economic calendar (P13-T04), every hour, so released values arrive within the hour.
+        "forex-calendar-ingest": {
+            "task": "app.worker.tasks.forex_calendar_ingest",
+            "schedule": crontab(minute=10),
+        },
         "forex-maintenance": {
             "task": "app.worker.tasks.forex_maintenance",
             "schedule": crontab(hour=1, minute=15),

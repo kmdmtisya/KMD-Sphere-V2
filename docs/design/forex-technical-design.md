@@ -111,6 +111,8 @@ Rules: warm-up periods are explicit (an indicator returns `None` before it has e
 
 ## 6. Economic calendar and macro intelligence
 
+As built in P13-T04: [forex-calendar.md](forex-calendar.md).
+
 `EconomicEvent`: name, affected currencies, scheduled time (UTC), actual / forecast / previous (nullable), unit, importance, source, retrieved_at. Central-bank decisions and rate differentials are stored with their source.
 
 - **Confirmed data** (event values, central-bank statements) and **interpretation** (volatility implications, AI commentary) are different fields and are labelled differently in the API and UI.
