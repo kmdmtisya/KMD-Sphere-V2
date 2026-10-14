@@ -1723,3 +1723,14 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 - P13-T15 (the advanced Forex web workspace) cannot finish before the web exists, so it moved to the web phase as P14-T24 (WEB-24, wave 9, depends on P13-T10 and P14-T13); P13 returns to 15 tasks and P13-T12 and P13-GATE no longer depend on it
 - criteria QG-19.6 and QG-19.7 were removed from QG-19 (title back to "Mobile Experience") and re-registered as QG-28.9 and QG-33.9 (By P14-T24); P14-T22 and P14-GATE depend on P14-T24
 - P13 continues with P13-T03 and P13-T04; the advance approvals for P13-T05, T07, T13, T14 and P13-GATE stand; the P13 pause recorded earlier in this log is lifted once this change is merged
+
+### 2026-10-14T10:08:19+04:00 — START P13-T03
+- FX-03 Technical analysis engine
+- prerequisites verified COMPLETED
+
+### 2026-10-14T11:05:59+04:00 — AWAITING_VERIFICATION P13-T03
+- evidence: Indicators (SMA, EMA, MACD, RSI, Stochastic, ROC, ATR, ADX, Bollinger) match an independent exact-Fraction oracle within 1e-18 and the published RSI(14) worked example exactly; aggregation 1m to 1M on the New York 17:00 calendar with DST; missing minutes flagged partial, empty periods absent, closed-market candles ignored, forming periods excluded, nothing filled; swing points confirmation-based (no look-ahead), levels, breakouts, trendlines, channels; 13 candlestick rules plus consolidation and breakout-retest citing their candles; API /forex/indicators, /structure, /patterns behind the flag; no AI import in the analysis code. Matrix T-01..T-18, financial-methods section 19. 351 forex tests, 98% coverage; full backend suite 2902 passed; Spectral clean. PR #156. CI all gates pass.
+
+### 2026-10-14T11:05:59+04:00 — COMPLETE P13-T03
+- duration: 57m 40s
+- evidence: Indicators (SMA, EMA, MACD, RSI, Stochastic, ROC, ATR, ADX, Bollinger) match an independent exact-Fraction oracle within 1e-18 and the published RSI(14) worked example exactly; aggregation 1m to 1M on the New York 17:00 calendar with DST; missing minutes flagged partial, empty periods absent, closed-market candles ignored, forming periods excluded, nothing filled; swing points confirmation-based (no look-ahead), levels, breakouts, trendlines, channels; 13 candlestick rules plus consolidation and breakout-retest citing their candles; API /forex/indicators, /structure, /patterns behind the flag; no AI import in the analysis code. Matrix T-01..T-18, financial-methods section 19. 351 forex tests, 98% coverage; full backend suite 2902 passed; Spectral clean. PR #156. CI all gates pass.

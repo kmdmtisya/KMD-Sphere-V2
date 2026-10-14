@@ -4,7 +4,7 @@ import logging
 import uuid
 from collections.abc import Awaitable, Callable
 from dataclasses import asdict
-from datetime import UTC, date, datetime
+from datetime import UTC, date, datetime, timedelta
 
 import redis
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -12,8 +12,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.ai.conversations.service import ConversationService
 from app.core.config import get_settings
 from app.modules.alerts.evaluation import EvaluationResult, evaluate_alerts
+from app.modules.forex.candles.sync import sync_minutes as sync_forex_minutes
+from app.modules.forex.instruments.registry import active_instruments as active_forex_instruments
 from app.modules.forex.instruments.registry import load_registry as load_forex_registry
 from app.modules.forex.instruments.registry import sync as sync_forex_instruments
+from app.modules.forex.marketdata.factory import build_provider as build_forex_provider
 from app.modules.forex.marketdata.feed import MONTHS_AHEAD as FOREX_MONTHS_AHEAD
 from app.modules.forex.marketdata.partitions import PARTITIONED as FOREX_PARTITIONED
 from app.modules.forex.marketdata.partitions import ensure_months as ensure_forex_months
@@ -352,6 +355,35 @@ def forex_maintenance_job(day: str | None = None) -> dict[str, object]:
             return {**asdict(report), "partitions_created": created}
 
         outcome = await run_once(sessions, "forex_maintenance", key, work)
+        if outcome.skipped or outcome.value is None:
+            return {"skipped": True}
+        return outcome.value
+
+    return run_async(go)
+
+
+@celery_app.task(base=JobTask, name="app.worker.tasks.forex_candle_sync")
+def forex_candle_sync_job(slot: str | None = None) -> dict[str, object]:
+    """Stores the provider's one-minute candles for the active forex pairs (P13-T03). Only when
+    the forex module is switched on; the provider is the simulated one (DEC-19)."""
+    settings = get_settings()
+    if not settings.forex_enabled:
+        return {"forex": "disabled"}
+    key = slot or datetime.now(UTC).strftime("%Y-%m-%dT%H:%M")
+
+    async def go(sessions: SessionFactory) -> dict[str, object]:
+        async def work(session: AsyncSession) -> dict[str, object]:
+            codes = [i.code for i in await active_forex_instruments(session)]
+            report = await sync_forex_minutes(
+                session,
+                build_forex_provider(settings),
+                codes,
+                datetime.now(UTC),
+                timedelta(hours=settings.forex_candle_sync_max_hours),
+            )
+            return {"stored": report.stored, "failed": report.failed}
+
+        outcome = await run_once(sessions, "forex_candle_sync", key, work)
         if outcome.skipped or outcome.value is None:
             return {"skipped": True}
         return outcome.value

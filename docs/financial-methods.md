@@ -296,3 +296,50 @@ The minimum investment is compared with A converted to the instrument's currency
 | Not suitable | any eligibility rule fails (investment-universe.md), or the converted amount is below the minimum |
 | Caution | the minimum is unchecked; a Doctor check worsens and ends at medium or high; or the instrument's share after exceeds the Doctor's medium holding threshold (20%) |
 | Fits | otherwise |
+
+## 19. Forex technical analysis (docs/design/forex-analysis.md)
+
+Indicators are pure `Decimal` functions over a price series, computed at 28 significant digits. The API rounds them half-up to 8 decimal places for display only.
+
+**Conventions**
+- Every output has one value per input bar.
+- A value is null until there is enough history (the warm-up). A value is also null where a ratio is undefined; it is never zero in place of "undefined".
+- Value i depends only on bars 0..i (no look-ahead).
+
+| Indicator | Definition | First value |
+|---|---|---|
+| SMA(n) | mean of the last n closes | n − 1 |
+| EMA(n) | EMA_t = EMA_{t−1} + α (x_t − EMA_{t−1}), α = 2/(n+1), seeded with SMA(n) | n − 1 |
+| MACD(f, s, g) | line = EMA(f) − EMA(s); signal = EMA(g) of the line seeded with the SMA of its first g values; histogram = line − signal; f < s | s − 1 (signal s + g − 2) |
+| RSI(n) | average gain and loss: Wilder, A_t = ((n−1) A_{t−1} + v_t) / n, seeded with the mean of the first n changes; RSI = 100 − 100 / (1 + gain / loss). If loss is 0: 100 when gain > 0, null when gain is also 0 | n |
+| Stochastic(k, d, s) | %K = 100 (close − lowest low) / (highest high − lowest low) over k bars, null for a flat range, smoothed by SMA(s); %D = SMA(d) of %K | k − 1 + (s − 1) |
+| ROC(n) | 100 (x_t / x_{t−n} − 1); null if x_{t−n} = 0 | n |
+| True range | first bar high − low; then max(high − low, abs(high − previous close), abs(low − previous close)) | 0 |
+| ATR(n) | Wilder average of the true range, seeded with the mean of the first n true ranges | n − 1 |
+| ADX(n) | +DM, −DM (Wilder). Smoothed sums S_t = S_{t−1} − S_{t−1}/n + v_t, seeded with the sum over bars 1..n. +DI = 100 S(+DM) / S(TR), and likewise −DI; both 0 when S(TR) = 0. DX = 100 abs(+DI − −DI) / (+DI + −DI), 0 when both are 0. ADX = Wilder average of DX seeded with the mean of the first n DX values | DI at n, ADX at 2n − 1 |
+| Bollinger(n, k) | middle = SMA(n); bands = middle ± k σ, where σ is the population standard deviation of the window; bandwidth = (upper − lower) / middle | n − 1 |
+
+**Session calendar and aggregation**
+- **Trading day:** 24 hours from 17:00 New York time, named after the calendar day it ends on.
+- **Week:** Sunday 17:00 to Friday 17:00 New York time. Daylight saving changes on a closed Sunday, so a trading day is always 24 hours.
+- **Periods:** intraday periods are aligned to the day's open; 1D is a trading day, 1W a trading week, and 1M the trading days whose names fall in a calendar month.
+- **What a full period expects:** the period's minutes (a month counts its weekdays only).
+- **Aggregation of complete one-minute candles:**
+  - open is the first candle's open, close the last candle's close;
+  - high and low are the extremes;
+  - volume is the sum, or null if any candle lacks a volume.
+- **Gaps are not filled:**
+  - a period missing minutes is marked partial;
+  - a period with no candle is absent;
+  - candles stamped while the market is closed are ignored and counted;
+  - an unfinished period is marked forming and not analysed.
+
+**Structure and patterns**
+- **Swing points:** a swing high is strictly above the 2 bars before it and at least as high as the 2 after; a swing low is the mirror. A swing is known only from the bar that confirms it.
+- **Levels:** swing prices grouped within half the ATR(14) at the last bar, needing at least 2 touches. The level price is the mean of the group; it is support below the last close and resistance otherwise.
+- **Breakouts:** a close beyond a level after the level was established.
+- **Trendlines:** a line through the last two swing lows (support) or the last two swing highs (resistance).
+- **Channels:** the parallel line through the furthest opposite extreme.
+- **Candlestick rules:** fixed body, shadow and range thresholds, with a prior-fall or prior-rise context (the close 5 bars earlier), as listed in `analysis/patterns.py`.
+
+Every pattern hit names its rule and its candles. A pattern's bias describes the shape; it is not a forecast or a probability.

@@ -1255,16 +1255,16 @@
   - [x] P13-T02.5 Stale-data and outage handling
   - [x] P13-T02.6 Fake provider and recorded fixtures
   - [x] P13-T02.7 Tests
-- [ ] **P13-T03** · FX-03 Technical analysis engine · `NOT_STARTED` ⬜
+- [x] **P13-T03** · FX-03 Technical analysis engine · `COMPLETED` ✅
   - Deps: P13-T02 · Wave: W3 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P13-T03.1 Trend indicators
-  - [ ] P13-T03.2 Momentum and volatility indicators
-  - [ ] P13-T03.3 Timeframe aggregation
-  - [ ] P13-T03.4 Market structure
-  - [ ] P13-T03.5 Price-action detectors
-  - [ ] P13-T03.6 Reference vectors and tests
+  - Started: 2026-10-14T10:08:19+04:00 · Completed: 2026-10-14T11:05:59+04:00 · Duration: 57m 40s · Blocker: —
+  - Evidence: Indicators (SMA, EMA, MACD, RSI, Stochastic, ROC, ATR, ADX, Bollinger) match an independent exact-Fraction oracle within 1e-18 and the published RSI(14) worked example exactly; aggregation 1m to 1M on the New York 17:00 calendar with DST; missing minutes flagged partial, empty periods absent, closed-market candles ignored, forming periods excluded, nothing filled; swing points confirmation-based (no look-ahead), levels, breakouts, trendlines, channels; 13 candlestick rules plus consolidation and breakout-retest citing their candles; API /forex/indicators, /structure, /patterns behind the flag; no AI import in the analysis code. Matrix T-01..T-18, financial-methods section 19. 351 forex tests, 98% coverage; full backend suite 2902 passed; Spectral clean. PR #156. CI all gates pass.
+  - [x] P13-T03.1 Trend indicators
+  - [x] P13-T03.2 Momentum and volatility indicators
+  - [x] P13-T03.3 Timeframe aggregation
+  - [x] P13-T03.4 Market structure
+  - [x] P13-T03.5 Price-action detectors
+  - [x] P13-T03.6 Reference vectors and tests
 - [ ] **P13-T04** · FX-04 Economic calendar and macroeconomic intelligence · `NOT_STARTED` ⬜
   - Deps: P13-T02 · Wave: W3 · Track: BE · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

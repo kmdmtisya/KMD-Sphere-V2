@@ -95,6 +95,8 @@ Timeframes: 1m, 5m, 15m, 30m, 1H, 4H, 1D, 1W, 1M. Higher timeframes are **aggreg
 
 ## 5. Technical analysis engine
 
+As built in P13-T03: [forex-analysis.md](forex-analysis.md).
+
 Pure functions over candle arrays, `Decimal` in and out, deterministic, no I/O.
 
 | Group | Items |
