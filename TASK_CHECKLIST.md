@@ -34,7 +34,7 @@
   - Started: 2026-10-09T12:27:16+04:00 · Completed: 2026-10-09T13:40:12+04:00 · Duration: 1h 12m 56s · Blocker: —
   - Evidence: User verified the reviewed plan and quality-gate framework in chat ('I have Verified, lets proceed') · Approved by: user (mtisya@gmail.com)
   - [x] P00-T02.1 Define task, wave and status model
-  - [x] P00-T02.2 Write the roadmap data for P00-P16
+  - [x] P00-T02.2 Write the roadmap data for P00-P17
   - [x] P00-T02.3 Implement and test scripts/track.py on a scratch copy
   - [x] P00-T02.4 Generate the four documents
 - [x] **P00-T03** · Draft the UI-specific execution plan (supplementary) · `COMPLETED` ✅
@@ -155,7 +155,7 @@
 - [x] **P01-T11** · Security and supply-chain baseline in CI · `COMPLETED` ✅
   - Deps: P01-T09, P01-T10 · Wave: W5 · Track: SEC · Size: M · Approval: no
   - Started: 2026-10-09T16:21:26+04:00 · Completed: 2026-10-09T16:45:28+04:00 · Duration: 24m 02s · Blocker: —
-  - Evidence: Run 37931445813 (https://github.com/kmdmtisya/KMD-Sphere-V2/actions/runs/37931445813) success on 13bc785: gitleaks (fetch-depth 0, 'no leaks found'), pip-audit + OSV-Scanner (67 Python + 105 Dart packages, no vulnerabilities), CodeQL python security-extended (SARIF uploaded), Trivy fs vuln+secret+misconfig HIGH/CRITICAL (none), CycloneDX SBOM artifact 'sbom-cyclonedx' (492 components, non-empty check). Scanner binaries downloaded with SHA-256 verification (osv-scanner, trivy, syft 'OK'); all 10 third-party action refs pinned to commit SHAs; dependabot.yml (actions, uv, pub, docker-compose; first PRs #1-#3 opened); SECURITY.md. SEEDED SECRET TEST: random fake key on throwaway branch test/seeded-secret, run 37931671715: job 'secret scan (gitleaks)' FAILED with generic-api-key in backend/seeded_secret_test.py, overall run failure; local pre-commit gitleaks hook also blocked the commit (needed SKIP=gitleaks to push it); branch deleted, seeded file never on main. Local gitleaks history scan: 15 commits, no leaks; its working-tree triage found 1 tracked finding (JWT-shaped test fixture) which was fixed by building it at runtime instead of suppressing the rule. Limit: container image scanning is added with the Dockerfiles in P14-T04 (no images exist yet), so QG-08.4 is not ticked
+  - Evidence: Run 37931445813 (https://github.com/kmdmtisya/KMD-Sphere-V2/actions/runs/37931445813) success on 13bc785: gitleaks (fetch-depth 0, 'no leaks found'), pip-audit + OSV-Scanner (67 Python + 105 Dart packages, no vulnerabilities), CodeQL python security-extended (SARIF uploaded), Trivy fs vuln+secret+misconfig HIGH/CRITICAL (none), CycloneDX SBOM artifact 'sbom-cyclonedx' (492 components, non-empty check). Scanner binaries downloaded with SHA-256 verification (osv-scanner, trivy, syft 'OK'); all 10 third-party action refs pinned to commit SHAs; dependabot.yml (actions, uv, pub, docker-compose; first PRs #1-#3 opened); SECURITY.md. SEEDED SECRET TEST: random fake key on throwaway branch test/seeded-secret, run 37931671715: job 'secret scan (gitleaks)' FAILED with generic-api-key in backend/seeded_secret_test.py, overall run failure; local pre-commit gitleaks hook also blocked the commit (needed SKIP=gitleaks to push it); branch deleted, seeded file never on main. Local gitleaks history scan: 15 commits, no leaks; its working-tree triage found 1 tracked finding (JWT-shaped test fixture) which was fixed by building it at runtime instead of suppressing the rule. Limit: container image scanning is added with the Dockerfiles in P15-T04 (no images exist yet), so QG-08.4 is not ticked
   - [x] P01-T11.1 Secret scanning
   - [x] P01-T11.2 Python and Dart dependency audit
   - [x] P01-T11.3 SAST
@@ -457,7 +457,7 @@
 - [x] **P04-T09** · Security test suite v1 and threat model · `COMPLETED` ✅
   - Deps: P04-T03, P04-T04, P04-T05, P04-T07 · Wave: W5 · Track: SEC · Size: M · Approval: yes
   - Started: 2026-10-10T08:26:13+04:00 · Completed: 2026-10-10T19:15:55+04:00 · Duration: 10h 49m 42s · Blocker: —
-  - Evidence: PR #39 (commit 1f3328e). Security suite in CI as its own step (backend 208 passed, mobile 128 passed); route-authentication coverage test; inventory guards; docs/threat-model.md and docs/security-findings.md reviewed by the user. User decision recorded: SF-10 two-step verification stays optional for now (revisit at P15). SF-18 (iOS Keychain survives reinstall) added as an open finding. · Approved by: user (mtisya@gmail.com)
+  - Evidence: PR #39 (commit 1f3328e). Security suite in CI as its own step (backend 208 passed, mobile 128 passed); route-authentication coverage test; inventory guards; docs/threat-model.md and docs/security-findings.md reviewed by the user. User decision recorded: SF-10 two-step verification stays optional for now (revisit at P16). SF-18 (iOS Keychain survives reinstall) added as an open finding. · Approved by: user (mtisya@gmail.com)
   - [x] P04-T09.1 Automated tests in CI
   - [x] P04-T09.2 Threat model
   - [x] P04-T09.3 Findings register
@@ -1123,14 +1123,14 @@
 - [x] **P11-T12** · FXCUR-12 Release readiness sign-off · `COMPLETED` ✅
   - Deps: P11-T11 · Wave: W10 · Track: REL · Size: S · Approval: yes · Gates-start: QG-21, QG-22, QG-23, QG-24, QG-25
   - Started: 2026-10-13T08:57:35+04:00 · Completed: 2026-10-13T12:22:37+04:00 · Duration: 3h 25m 02s · Blocker: —
-  - Evidence: User signed off release readiness on 2026-10-13 (docs/fxcur-release-signoff.md). Production conditions: buy the Pro plan, get ExchangeRate-API's written licence confirmation, run the real-provider soak (P14-T11), re-check terms at P16. PR #136. · Approved by: user (mtisya@gmail.com)
+  - Evidence: User signed off release readiness on 2026-10-13 (docs/fxcur-release-signoff.md). Production conditions: buy the Pro plan, get ExchangeRate-API's written licence confirmation, run the real-provider soak (P15-T11), re-check terms at P17. PR #136. · Approved by: user (mtisya@gmail.com)
   - [x] P11-T12.1 Licence review
   - [x] P11-T12.2 Retention policy check
   - [x] P11-T12.3 Sign-off
 - [x] **P11-GATE** · Phase P11 exit gate · `COMPLETED` ✅
   - Deps: P11-T01, P11-T02, P11-T03, P11-T04, P11-T05, P11-T06, P11-T07, P11-T08, P11-T09, P11-T10, P11-T11, P11-T12 · Wave: W11 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-21, QG-22, QG-23, QG-24, QG-25
   - Started: 2026-10-13T12:27:54+04:00 · Completed: 2026-10-13T12:27:54+04:00 · Duration: 0m 00s · Blocker: —
-  - Evidence: Approved by the user after the P11-T12 sign-off and the phase summary. Open before production (accepted, tracked in docs/fxcur-release-signoff.md): buy the ExchangeRate-API Pro plan, get its written licence confirmation, run the real-provider soak (P14-T11), re-check the terms at P16. · Approved by: user (mtisya@gmail.com)
+  - Evidence: Approved by the user after the P11-T12 sign-off and the phase summary. Open before production (accepted, tracked in docs/fxcur-release-signoff.md): buy the ExchangeRate-API Pro plan, get its written licence confirmation, run the real-provider soak (P15-T11), re-check the terms at P17. · Approved by: user (mtisya@gmail.com)
   - [x] P11-GATE.1 Run gates
   - [x] P11-GATE.2 Present summary
   - [x] P11-GATE.3 Record approval
@@ -1385,267 +1385,488 @@
   - [ ] P13-GATE.1 Run gates
   - [ ] P13-GATE.2 Present summary
   - [ ] P13-GATE.3 Record approval
-## P14 — Cloud Infrastructure & Deployment Pipeline
+## P14 — Enterprise Web Portal (WEB workstream)
 
 - Phase approval: `PENDING`
-- Entry gates: prerequisite phase gates completed (P01); cumulative criteria QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
-- Exit gates: QG-08.4,5,7; QG-10.2,4,5,6,7,8 — required by `P14-GATE` (Gates-done)
-- Release gates: P14-T11 (Gates-start)
+- Entry gates: prerequisite phase gates completed (P09, P10, P11, P12) — enforced as dependencies of every wave-1 task
+- Exit gates: QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33, QG-34 — required by `P14-GATE` (Gates-done)
+- Release gates: P14-T23 starts only after QG-26..QG-33 are satisfied
 
-- [ ] **P14-T01** · Cloud provider, region and residency decision · `NOT_STARTED` ⬜
-  - Deps: P01-GATE · Wave: W1 · Track: DOC · Size: S · Approval: yes
+- [ ] **P14-T01** · WEB-01 Repository audit and requirements · `NOT_STARTED` ⬜
+  - Deps: P09-GATE, P10-GATE, P11-GATE, P12-GATE · Wave: W1 · Track: DOC · Size: S · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T01.1 Options and cost
-  - [ ] P14-T01.2 Residency/regulatory notes
-  - [ ] P14-T01.3 ADR
-- [ ] **P14-T02** · Terraform foundation · `NOT_STARTED` ⬜
-  - Deps: P14-T01 · Wave: W2 · Track: INF · Size: L · Approval: no
+  - [ ] P14-T01.1 Mobile capability inventory
+  - [ ] P14-T01.2 API contract inventory
+  - [ ] P14-T01.3 Gap and constraint list
+  - [ ] P14-T01.4 Parity matrix baseline
+- [ ] **P14-T02** · WEB-02 Architecture evaluation and ADR · `NOT_STARTED` ⬜
+  - Deps: P14-T01 · Wave: W2 · Track: DOC · Size: M · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T02.1 State backend
-  - [ ] P14-T02.2 Network
-  - [ ] P14-T02.3 IAM
-  - [ ] P14-T02.4 Env modules
-- [ ] **P14-T03** · Managed data services · `NOT_STARTED` ⬜
-  - Deps: P14-T02 · Wave: W3 · Track: INF · Size: L · Approval: no
+  - [ ] P14-T02.1 Option comparison
+  - [ ] P14-T02.2 Session and security model
+  - [ ] P14-T02.3 Stack and licence review
+  - [ ] P14-T02.4 ADR-0018
+- [ ] **P14-T03** · WEB-03 Web design system and UX specification · `NOT_STARTED` ⬜
+  - Deps: P14-T02 · Wave: W3 · Track: WEB · Size: L · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T03.1 PostgreSQL
-  - [ ] P14-T03.2 Redis
-  - [ ] P14-T03.3 Object storage
-  - [ ] P14-T03.4 Queue
-- [ ] **P14-T04** · Container images and registry · `NOT_STARTED` ⬜
-  - Deps: P01-T07, P01-T11, P01-GATE · Wave: W1 · Track: INF · Size: M · Approval: no
+  - [ ] P14-T03.1 Token source and generators
+  - [ ] P14-T03.2 Web component library
+  - [ ] P14-T03.3 Charts and data grid
+  - [ ] P14-T03.4 Component gallery and visual tests
+  - [ ] P14-T03.5 UX specification review
+- [ ] **P14-T04** · WEB-04 Web application foundation · `NOT_STARTED` ⬜
+  - Deps: P14-T02 · Wave: W3 · Track: WEB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T04.1 Dockerfiles
-  - [ ] P14-T04.2 Registry push
-  - [ ] P14-T04.3 Scan and SBOM
-- [ ] **P14-T05** · Compute platform and ingress · `NOT_STARTED` ⬜
-  - Deps: P14-T03, P14-T04 · Wave: W4 · Track: INF · Size: L · Approval: no
+  - [ ] P14-T04.1 App scaffold and tooling
+  - [ ] P14-T04.2 Generated API client and drift check
+  - [ ] P14-T04.3 Lint guards
+  - [ ] P14-T04.4 Test harness
+  - [ ] P14-T04.5 Web CI workflow
+- [ ] **P14-T05** · WEB-05 Authentication and session integration · `NOT_STARTED` ⬜
+  - Deps: P14-T04 · Wave: W4 · Track: SEC · Size: L · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T05.1 Service
-  - [ ] P14-T05.2 Ingress/TLS
-  - [ ] P14-T05.3 Autoscaling
-- [ ] **P14-T06** · Secrets management and CI-to-cloud trust · `NOT_STARTED` ⬜
-  - Deps: P14-T02 · Wave: W3 · Track: SEC · Size: M · Approval: no
+  - [ ] P14-T05.1 Keycloak web client
+  - [ ] P14-T05.2 BFF sign-in, refresh and logout
+  - [ ] P14-T05.3 Session store and cookies
+  - [ ] P14-T05.4 CSRF and proxy allow-list
+  - [ ] P14-T05.5 Security tests
+- [ ] **P14-T06** · WEB-06 Application shell and navigation · `NOT_STARTED` ⬜
+  - Deps: P14-T03, P14-T05 · Wave: W5 · Track: WEB · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T06.1 Secret manager
-  - [ ] P14-T06.2 Rotation
-  - [ ] P14-T06.3 CI OIDC
-- [ ] **P14-T07** · Production Keycloak deployment · `NOT_STARTED` ⬜
-  - Deps: P14-T05, P14-T06, P04-T01 · Wave: W5 · Track: INF · Size: L · Approval: no
+  - [ ] P14-T06.1 Shell layout
+  - [ ] P14-T06.2 Navigation and routes
+  - [ ] P14-T06.3 Top-bar controls
+  - [ ] P14-T06.4 Right panel
+  - [ ] P14-T06.5 Responsive and keyboard tests
+- [ ] **P14-T07** · WEB-07 Home and executive dashboards · `NOT_STARTED` ⬜
+  - Deps: P14-T05, P14-T06 · Wave: W6 · Track: WEB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T07.1 Deployment
-  - [ ] P14-T07.2 DB and SMTP
-  - [ ] P14-T07.3 Realm import
-- [ ] **P14-T08** · CD pipelines · `NOT_STARTED` ⬜
-  - Deps: P14-T05, P14-T07 · Wave: W6 · Track: INF · Size: L · Approval: no
+  - [ ] P14-T07.1 KPI row and charts
+  - [ ] P14-T07.2 Recent activity and AI insights
+  - [ ] P14-T07.3 Search endpoint and command palette
+  - [ ] P14-T07.4 Layout customisation
+  - [ ] P14-T07.5 Tests
+- [ ] **P14-T08** · WEB-08 Portfolio and investment management · `NOT_STARTED` ⬜
+  - Deps: P14-T05, P14-T06 · Wave: W6 · Track: WEB · Size: XL · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T08.1 Staging deploy
-  - [ ] P14-T08.2 Migration job
-  - [ ] P14-T08.3 Production approval and gate check
-  - [ ] P14-T08.4 Promotion and rollback
-- [ ] **P14-T09** · Observability stack · `NOT_STARTED` ⬜
-  - Deps: P14-T05, P01-T12 · Wave: W5 · Track: INF · Size: L · Approval: no
+  - [ ] P14-T08.1 Portfolio list and detail
+  - [ ] P14-T08.2 Holdings grid
+  - [ ] P14-T08.3 Transaction workflows
+  - [ ] P14-T08.4 Valuations and assets
+  - [ ] P14-T08.5 Saved table views
+  - [ ] P14-T08.6 Tests
+- [ ] **P14-T09** · WEB-09 Financial analytics · `NOT_STARTED` ⬜
+  - Deps: P14-T08 · Wave: W7 · Track: WEB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T09.1 Metrics/traces/logs
-  - [ ] P14-T09.2 Dashboards
-  - [ ] P14-T09.3 Alerts and SLOs
-- [ ] **P14-T10** · Backup, restore and disaster recovery · `NOT_STARTED` ⬜
-  - Deps: P14-T03 · Wave: W5 · Track: INF · Size: M · Approval: yes
+  - [ ] P14-T09.1 Performance
+  - [ ] P14-T09.2 Allocation and exposure
+  - [ ] P14-T09.3 Risk
+  - [ ] P14-T09.4 Comparisons and drill-down
+  - [ ] P14-T09.5 Tests
+- [ ] **P14-T10** · WEB-10 Compounding, forecasting and goals · `NOT_STARTED` ⬜
+  - Deps: P14-T05, P14-T06 · Wave: W7 · Track: WEB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T10.1 Backups
-  - [ ] P14-T10.2 Restore test
-  - [ ] P14-T10.3 Runbook
-- [ ] **P14-T11** · Staging verification (staging release gate) · `NOT_STARTED` ⬜
-  - Deps: P14-T08, P14-T09 · Wave: W7 · Track: QA · Size: M · Approval: no · Gates-start: QG-02.1, QG-02.2, QG-02.3, QG-02.4, QG-03.1, QG-03.2, QG-03.6, QG-08.3, QG-08.4, QG-08.6, QG-11.1, QG-11.2, QG-11.5
+  - [ ] P14-T10.1 Compounding calculator
+  - [ ] P14-T10.2 Forecast scenarios
+  - [ ] P14-T10.3 Goals
+  - [ ] P14-T10.4 Tests
+- [ ] **P14-T11** · WEB-11 Net worth and passive income · `NOT_STARTED` ⬜
+  - Deps: P14-T05, P14-T06 · Wave: W7 · Track: WEB · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T11.1 Check start gates
-  - [ ] P14-T11.2 Deploy
-  - [ ] P14-T11.3 Smoke
-  - [ ] P14-T11.4 Report
+  - [ ] P14-T11.1 Net worth and liabilities
+  - [ ] P14-T11.2 Passive income
+  - [ ] P14-T11.3 Net-worth history endpoint
+  - [ ] P14-T11.4 Tests
+- [ ] **P14-T12** · WEB-12 AI Wealth Copilot and intelligence · `NOT_STARTED` ⬜
+  - Deps: P14-T05, P14-T06 · Wave: W6 · Track: AI · Size: XL · Approval: no
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P14-T12.1 Chat streaming through the BFF
+  - [ ] P14-T12.2 Copilot page and docked panel
+  - [ ] P14-T12.3 Portfolio Doctor
+  - [ ] P14-T12.4 Opportunities, compare and simulate
+  - [ ] P14-T12.5 Universe and research
+  - [ ] P14-T12.6 Tests
+- [ ] **P14-T13** · WEB-13 Forex live markets entry · `NOT_STARTED` ⬜
+  - Deps: P14-T06 · Wave: W8 · Track: WEB · Size: M · Approval: no
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P14-T13.1 Flag-aware entry
+  - [ ] P14-T13.2 WebSocket ticket (API and BFF)
+  - [ ] P14-T13.3 Live markets page
+  - [ ] P14-T13.4 Tests
+- [ ] **P14-T14** · WEB-14 Multi-currency conversion · `NOT_STARTED` ⬜
+  - Deps: P14-T05, P14-T06 · Wave: W7 · Track: WEB · Size: M · Approval: no
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P14-T14.1 Reporting-currency switch
+  - [ ] P14-T14.2 Converter
+  - [ ] P14-T14.3 FX status and history
+  - [ ] P14-T14.4 Tests
+- [ ] **P14-T15** · WEB-15 Reports and exports · `NOT_STARTED` ⬜
+  - Deps: P14-T08, P14-T09, P14-T10, P14-T11, P14-T14 · Wave: W8 · Track: BE · Size: XL · Approval: yes
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P14-T15.1 Report formats decision
+  - [ ] P14-T15.2 Report service and endpoints
+  - [ ] P14-T15.3 Web report catalogue
+  - [ ] P14-T15.4 Tests
+- [ ] **P14-T16** · WEB-16 Profile, settings and notifications · `NOT_STARTED` ⬜
+  - Deps: P14-T05, P14-T06 · Wave: W7 · Track: WEB · Size: M · Approval: no
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P14-T16.1 Profile and preferences
+  - [ ] P14-T16.2 Security and sessions
+  - [ ] P14-T16.3 Watchlist and alerts
+  - [ ] P14-T16.4 Notification centre
+  - [ ] P14-T16.5 Tests
+- [ ] **P14-T17** · WEB-17 Administration and permissions · `NOT_STARTED` ⬜
+  - Deps: P14-T05, P14-T06 · Wave: W8 · Track: SEC · Size: M · Approval: yes
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P14-T17.1 Scope decision
+  - [ ] P14-T17.2 Role-gated endpoints
+  - [ ] P14-T17.3 Operator views
+  - [ ] P14-T17.4 Tests
+- [ ] **P14-T18** · WEB-18 Cross-platform synchronisation testing · `NOT_STARTED` ⬜
+  - Deps: P14-T07, P14-T08, P14-T10, P14-T11, P14-T12, P14-T14, P14-T16 · Wave: W9 · Track: QA · Size: L · Approval: no
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P14-T18.1 Optimistic concurrency
+  - [ ] P14-T18.2 Cross-channel journey tests
+  - [ ] P14-T18.3 Route parity check
+  - [ ] P14-T18.4 Parity matrix update
+- [ ] **P14-T19** · WEB-19 Security and accessibility testing · `NOT_STARTED` ⬜
+  - Deps: P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17 · Wave: W9 · Track: SEC · Size: L · Approval: no
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P14-T19.1 Web threat model update
+  - [ ] P14-T19.2 Security tests and scans
+  - [ ] P14-T19.3 Accessibility audit
+  - [ ] P14-T19.4 Remediation
+- [ ] **P14-T20** · WEB-20 Performance and browser testing · `NOT_STARTED` ⬜
+  - Deps: P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17 · Wave: W9 · Track: QA · Size: L · Approval: no
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P14-T20.1 Budgets and Lighthouse CI
+  - [ ] P14-T20.2 Large-data and chart tests
+  - [ ] P14-T20.3 API latency
+  - [ ] P14-T20.4 Browser matrix
+  - [ ] P14-T20.5 Layout verification
+- [ ] **P14-T21** · WEB-21 CI/CD and deployment · `NOT_STARTED` ⬜
+  - Deps: P14-T04, P15-T04, P15-T08 · Wave: W9 · Track: INF · Size: M · Approval: no
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P14-T21.1 Image and scan
+  - [ ] P14-T21.2 CD to staging and production
+  - [ ] P14-T21.3 Configuration validation
+  - [ ] P14-T21.4 Required check
+- [ ] **P14-T22** · WEB-22 Staging and end-to-end validation · `NOT_STARTED` ⬜
+  - Deps: P14-T18, P14-T19, P14-T20, P14-T21, P14-T24, P15-T05, P15-T07, P15-T09 · Wave: W10 · Track: QA · Size: M · Approval: yes
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P14-T22.1 Staging deployment
+  - [ ] P14-T22.2 Journey run
+  - [ ] P14-T22.3 Headers and TLS
+  - [ ] P14-T22.4 Monitoring and error reporting
+  - [ ] P14-T22.5 Rollback drill
+- [ ] **P14-T23** · WEB-23 Production readiness and approval · `NOT_STARTED` ⬜
+  - Deps: P14-T22 · Wave: W11 · Track: REL · Size: M · Approval: yes · Gates-start: QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P14-T23.1 Readiness review
+  - [ ] P14-T23.2 Open items
+  - [ ] P14-T23.3 Approval
+- [ ] **P14-T24** · WEB-24 Forex web workspace (advanced) · `NOT_STARTED` ⬜
+  - Deps: P13-T10, P14-T13 · Wave: W9 · Track: WEB · Size: L · Approval: no
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P14-T24.1 Analysis and forecast panels
+  - [ ] P14-T24.2 Scanner and opportunity ranking
+  - [ ] P14-T24.3 Risk calculator and backtests
+  - [ ] P14-T24.4 Paper trading and journal
+  - [ ] P14-T24.5 Forex Copilot and alerts
+  - [ ] P14-T24.6 Tests
 - [ ] **P14-GATE** · Phase P14 exit gate · `NOT_STARTED` ⬜
-  - Deps: P14-T01, P14-T02, P14-T03, P14-T04, P14-T05, P14-T06, P14-T07, P14-T08, P14-T09, P14-T10, P14-T11 · Wave: W8 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-08.4, QG-08.5, QG-08.7, QG-10.2, QG-10.4, QG-10.5, QG-10.6, QG-10.7, QG-10.8
+  - Deps: P14-T01, P14-T02, P14-T03, P14-T04, P14-T05, P14-T06, P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17, P14-T18, P14-T19, P14-T20, P14-T21, P14-T22, P14-T23, P14-T24 · Wave: W12 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33, QG-34
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P14-GATE.1 Run gates
   - [ ] P14-GATE.2 Present summary
   - [ ] P14-GATE.3 Record approval
 
-
-## P15 — Production Hardening & Quality Assurance
+## P15 — Cloud Infrastructure & Deployment Pipeline
 
 - Phase approval: `PENDING`
-- Entry gates: prerequisite phase gates completed (P09, P10, P11, P12, P14); cumulative criteria QG-01.1,2,3,5; QG-02.1–6; QG-03.1–6; QG-04.1–5; QG-05.1–4; QG-06.1–7; QG-07.1–8; QG-08.1,3,4,5,6,7; QG-09.5; QG-10.1–8; QG-11.1–6 — enforced as dependencies of every wave-1 task
-- Exit gates: QG-01.4; QG-04.6; QG-05.5; QG-08.2,8; QG-09.1,2,3,4,6; QG-12.1,3,4,7 — required by `P15-GATE` (Gates-done)
-- Release gates: —
+- Entry gates: prerequisite phase gates completed (P01); cumulative criteria QG-01.1–2; QG-02.1–6; QG-03.1,6; QG-04.1–3; QG-05.1–2; QG-08.3,6; QG-10.1,3 — enforced as dependencies of every wave-1 task
+- Exit gates: QG-08.4,5,7; QG-10.2,4,5,6,7,8 — required by `P15-GATE` (Gates-done)
+- Release gates: P15-T11 (Gates-start)
 
-- [ ] **P15-T01** · OWASP API Security review · `NOT_STARTED` ⬜
-  - Deps: P09-GATE, P10-GATE, P11-GATE, P12-GATE, P14-GATE · Wave: W1 · Track: SEC · Size: L · Approval: no
+- [ ] **P15-T01** · Cloud provider, region and residency decision · `NOT_STARTED` ⬜
+  - Deps: P01-GATE · Wave: W1 · Track: DOC · Size: S · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P15-T01.1 Checklist
-  - [ ] P15-T01.2 IDOR sweep
-  - [ ] P15-T01.3 Fixes
-- [ ] **P15-T02** · OWASP MASVS mobile review · `NOT_STARTED` ⬜
-  - Deps: P09-GATE, P10-GATE, P11-GATE, P12-GATE, P14-GATE · Wave: W1 · Track: SEC · Size: L · Approval: no
+  - [ ] P15-T01.1 Options and cost
+  - [ ] P15-T01.2 Residency/regulatory notes
+  - [ ] P15-T01.3 ADR
+- [ ] **P15-T02** · Terraform foundation · `NOT_STARTED` ⬜
+  - Deps: P15-T01 · Wave: W2 · Track: INF · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P15-T02.1 Checklist
-  - [ ] P15-T02.2 Storage/network audit
-  - [ ] P15-T02.3 Fixes
-- [ ] **P15-T03** · Independent penetration test · `NOT_STARTED` ⬜
-  - Deps: P15-T01, P15-T02 · Wave: W2 · Track: SEC · Size: L · Approval: yes
+  - [ ] P15-T02.1 State backend
+  - [ ] P15-T02.2 Network
+  - [ ] P15-T02.3 IAM
+  - [ ] P15-T02.4 Env modules
+- [ ] **P15-T03** · Managed data services · `NOT_STARTED` ⬜
+  - Deps: P15-T02 · Wave: W3 · Track: INF · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P15-T03.1 Scope
-  - [ ] P15-T03.2 Test
-  - [ ] P15-T03.3 Remediate
-- [ ] **P15-T04** · Performance and load testing · `NOT_STARTED` ⬜
-  - Deps: P09-GATE, P10-GATE, P11-GATE, P12-GATE, P14-GATE · Wave: W1 · Track: QA · Size: L · Approval: yes
+  - [ ] P15-T03.1 PostgreSQL
+  - [ ] P15-T03.2 Redis
+  - [ ] P15-T03.3 Object storage
+  - [ ] P15-T03.4 Queue
+- [ ] **P15-T04** · Container images and registry · `NOT_STARTED` ⬜
+  - Deps: P01-T07, P01-T11, P01-GATE · Wave: W1 · Track: INF · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P15-T04.1 Confirm targets from docs/quality-targets.md
-  - [ ] P15-T04.2 API and database load scenarios
-  - [ ] P15-T04.3 Mobile start-up, memory and crash measurements on devices
-  - [ ] P15-T04.4 Capacity assumptions and bottlenecks
-  - [ ] P15-T04.5 Tuning
-- [ ] **P15-T05** · Privacy and compliance workflows · `NOT_STARTED` ⬜
-  - Deps: P09-GATE, P10-GATE, P11-GATE, P12-GATE, P14-GATE · Wave: W1 · Track: BE · Size: L · Approval: yes
+  - [ ] P15-T04.1 Dockerfiles
+  - [ ] P15-T04.2 Registry push
+  - [ ] P15-T04.3 Scan and SBOM
+- [ ] **P15-T05** · Compute platform and ingress · `NOT_STARTED` ⬜
+  - Deps: P15-T03, P15-T04 · Wave: W4 · Track: INF · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P15-T05.1 Export
-  - [ ] P15-T05.2 Deletion
-  - [ ] P15-T05.3 Retention
-  - [ ] P15-T05.4 Policies
-- [ ] **P15-T06** · Accessibility QA (UX Gate 5) · `NOT_STARTED` ⬜
-  - Deps: P09-GATE, P10-GATE, P11-GATE, P12-GATE, P14-GATE · Wave: W1 · Track: QA · Size: L · Approval: yes
+  - [ ] P15-T05.1 Service
+  - [ ] P15-T05.2 Ingress/TLS
+  - [ ] P15-T05.3 Autoscaling
+- [ ] **P15-T06** · Secrets management and CI-to-cloud trust · `NOT_STARTED` ⬜
+  - Deps: P15-T02 · Wave: W3 · Track: SEC · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P15-T06.1 Android
-  - [ ] P15-T06.2 iOS
-  - [ ] P15-T06.3 Report
-- [ ] **P15-T07** · Full regression and E2E on staging · `NOT_STARTED` ⬜
-  - Deps: P15-T03, P15-T05, P15-T06 · Wave: W3 · Track: QA · Size: L · Approval: no
+  - [ ] P15-T06.1 Secret manager
+  - [ ] P15-T06.2 Rotation
+  - [ ] P15-T06.3 CI OIDC
+- [ ] **P15-T07** · Production Keycloak deployment · `NOT_STARTED` ⬜
+  - Deps: P15-T05, P15-T06, P04-T01 · Wave: W5 · Track: INF · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P15-T07.1 Backend
-  - [ ] P15-T07.2 Mobile
-  - [ ] P15-T07.3 E2E
-- [ ] **P15-T08** · Final dependency and licence audit · `NOT_STARTED` ⬜
-  - Deps: P15-T01, P15-T02 · Wave: W2 · Track: SEC · Size: M · Approval: no
+  - [ ] P15-T07.1 Deployment
+  - [ ] P15-T07.2 DB and SMTP
+  - [ ] P15-T07.3 Realm import
+- [ ] **P15-T08** · CD pipelines · `NOT_STARTED` ⬜
+  - Deps: P15-T05, P15-T07 · Wave: W6 · Track: INF · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P15-T08.1 Audit
-  - [ ] P15-T08.2 Triage
-- [ ] **P15-T09** · Operational readiness · `NOT_STARTED` ⬜
-  - Deps: P14-T09, P14-T10, P15-T04 · Wave: W2 · Track: INF · Size: M · Approval: no
+  - [ ] P15-T08.1 Staging deploy
+  - [ ] P15-T08.2 Migration job
+  - [ ] P15-T08.3 Production approval and gate check
+  - [ ] P15-T08.4 Promotion and rollback
+- [ ] **P15-T09** · Observability stack · `NOT_STARTED` ⬜
+  - Deps: P15-T05, P01-T12 · Wave: W5 · Track: INF · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P15-T09.1 Runbooks
-  - [ ] P15-T09.2 Incident process
-  - [ ] P15-T09.3 DR drill
-- [ ] **P15-T10** · Production readiness review · `NOT_STARTED` ⬜
-  - Deps: P15-T03, P15-T07, P15-T08, P15-T09, P15-T11 · Wave: W5 · Track: DOC · Size: M · Approval: yes
+  - [ ] P15-T09.1 Metrics/traces/logs
+  - [ ] P15-T09.2 Dashboards
+  - [ ] P15-T09.3 Alerts and SLOs
+- [ ] **P15-T10** · Backup, restore and disaster recovery · `NOT_STARTED` ⬜
+  - Deps: P15-T03 · Wave: W5 · Track: INF · Size: M · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P15-T10.1 Criteria matrix
-  - [ ] P15-T10.2 Risk register
-  - [ ] P15-T10.3 Go/no-go
-- [ ] **P15-T11** · Final quality-gate re-verification · `NOT_STARTED` ⬜
-  - Deps: P15-T03, P15-T07, P15-T08, P15-T09 · Wave: W4 · Track: QA · Size: L · Approval: no
+  - [ ] P15-T10.1 Backups
+  - [ ] P15-T10.2 Restore test
+  - [ ] P15-T10.3 Runbook
+- [ ] **P15-T11** · Staging verification (staging release gate) · `NOT_STARTED` ⬜
+  - Deps: P15-T08, P15-T09 · Wave: W7 · Track: QA · Size: M · Approval: no · Gates-start: QG-02.1, QG-02.2, QG-02.3, QG-02.4, QG-03.1, QG-03.2, QG-03.6, QG-08.3, QG-08.4, QG-08.6, QG-11.1, QG-11.2, QG-11.5
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P15-T11.1 Re-run all CK suites
-  - [ ] P15-T11.2 Re-verify criteria with fresh evidence
-  - [ ] P15-T11.3 Record failures and remediation
-  - [ ] P15-T11.4 qg check QG-12.1
+  - [ ] P15-T11.1 Check start gates
+  - [ ] P15-T11.2 Deploy
+  - [ ] P15-T11.3 Smoke
+  - [ ] P15-T11.4 Report
 - [ ] **P15-GATE** · Phase P15 exit gate · `NOT_STARTED` ⬜
-  - Deps: P15-T01, P15-T02, P15-T03, P15-T04, P15-T05, P15-T06, P15-T07, P15-T08, P15-T09, P15-T10, P15-T11 · Wave: W6 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-01.4, QG-04.6, QG-05.5, QG-08.2, QG-08.8, QG-09.1, QG-09.2, QG-09.3, QG-09.4, QG-09.6, QG-12.1, QG-12.3, QG-12.4, QG-12.7
+  - Deps: P15-T01, P15-T02, P15-T03, P15-T04, P15-T05, P15-T06, P15-T07, P15-T08, P15-T09, P15-T10, P15-T11 · Wave: W8 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-08.4, QG-08.5, QG-08.7, QG-10.2, QG-10.4, QG-10.5, QG-10.6, QG-10.7, QG-10.8
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P15-GATE.1 Run gates
   - [ ] P15-GATE.2 Present summary
-  - [ ] P15-GATE.3 Record decision
+  - [ ] P15-GATE.3 Record approval
 
 
-## P16 — Release & Production Deployment
+## P16 — Production Hardening & Quality Assurance
 
 - Phase approval: `PENDING`
-- Entry gates: prerequisite phase gates completed (P15); cumulative criteria QG-01.1–5; QG-02.1–6; QG-03.1–6; QG-04.1–6; QG-05.1–5; QG-06.1–7; QG-07.1–8; QG-08.1–8; QG-09.1–6; QG-10.1–8; QG-11.1–6; QG-12.1,3,4,7 — enforced as dependencies of every wave-1 task
-- Exit gates: QG-04.7; QG-05.6; QG-12.2,5,6,8 — required by `P16-GATE` (Gates-done)
-- Release gates: P16-T03, P16-T07 (Gates-start)
+- Entry gates: prerequisite phase gates completed (P09, P10, P11, P12, P14, P15); cumulative criteria QG-01.1,2,3,5; QG-02.1–6; QG-03.1–6; QG-04.1–5; QG-05.1–4; QG-06.1–7; QG-07.1–8; QG-08.1,3,4,5,6,7; QG-09.5; QG-10.1–8; QG-11.1–6 — enforced as dependencies of every wave-1 task
+- Exit gates: QG-01.4; QG-04.6; QG-05.5; QG-08.2,8; QG-09.1,2,3,4,6; QG-12.1,3,4,7 — required by `P16-GATE` (Gates-done)
+- Release gates: —
 
-- [ ] **P16-T01** · Store accounts, identifiers and signing · `NOT_STARTED` ⬜
-  - Deps: P15-GATE · Wave: W1 · Track: REL · Size: M · Approval: yes
+- [ ] **P16-T01** · OWASP API Security review · `NOT_STARTED` ⬜
+  - Deps: P09-GATE, P10-GATE, P11-GATE, P12-GATE, P14-GATE, P15-GATE · Wave: W1 · Track: SEC · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P16-T01.1 Accounts
-  - [ ] P16-T01.2 Signing
-  - [ ] P16-T01.3 Forms
-- [ ] **P16-T02** · Release builds and pipeline · `NOT_STARTED` ⬜
-  - Deps: P16-T01 · Wave: W2 · Track: REL · Size: L · Approval: no
+  - [ ] P16-T01.1 Checklist
+  - [ ] P16-T01.2 IDOR sweep
+  - [ ] P16-T01.3 Fixes
+- [ ] **P16-T02** · OWASP MASVS mobile review · `NOT_STARTED` ⬜
+  - Deps: P09-GATE, P10-GATE, P11-GATE, P12-GATE, P14-GATE, P15-GATE · Wave: W1 · Track: SEC · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P16-T02.1 Android
-  - [ ] P16-T02.2 iOS
-  - [ ] P16-T02.3 Versioning
-- [ ] **P16-T03** · Production infrastructure deployment (production release gate) · `NOT_STARTED` ⬜
-  - Deps: P15-GATE, P14-T08 · Wave: W1 · Track: INF · Size: L · Approval: yes · Gates-start: QG-all@P15, QG-12.1, QG-12.3, QG-12.4, QG-12.7, QG-12.8 · Gates-done: QG-12.5
+  - [ ] P16-T02.1 Checklist
+  - [ ] P16-T02.2 Storage/network audit
+  - [ ] P16-T02.3 Fixes
+- [ ] **P16-T03** · Independent penetration test · `NOT_STARTED` ⬜
+  - Deps: P16-T01, P16-T02 · Wave: W2 · Track: SEC · Size: L · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P16-T03.1 Check release gates
-  - [ ] P16-T03.2 Deploy
-  - [ ] P16-T03.3 Migrate
-  - [ ] P16-T03.4 Verify
-- [ ] **P16-T04** · Internal and closed testing · `NOT_STARTED` ⬜
-  - Deps: P16-T02, P16-T03 · Wave: W3 · Track: REL · Size: L · Approval: no
+  - [ ] P16-T03.1 Scope
+  - [ ] P16-T03.2 Test
+  - [ ] P16-T03.3 Remediate
+- [ ] **P16-T04** · Performance and load testing · `NOT_STARTED` ⬜
+  - Deps: P09-GATE, P10-GATE, P11-GATE, P12-GATE, P14-GATE, P15-GATE · Wave: W1 · Track: QA · Size: L · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P16-T04.1 Distribute
-  - [ ] P16-T04.2 Collect feedback
-  - [ ] P16-T04.3 Fix
-- [ ] **P16-T05** · Store listings and policy compliance · `NOT_STARTED` ⬜
-  - Deps: P16-T02 · Wave: W3 · Track: REL · Size: M · Approval: yes
+  - [ ] P16-T04.1 Confirm targets from docs/quality-targets.md
+  - [ ] P16-T04.2 API and database load scenarios
+  - [ ] P16-T04.3 Mobile start-up, memory and crash measurements on devices
+  - [ ] P16-T04.4 Capacity assumptions and bottlenecks
+  - [ ] P16-T04.5 Tuning
+- [ ] **P16-T05** · Privacy and compliance workflows · `NOT_STARTED` ⬜
+  - Deps: P09-GATE, P10-GATE, P11-GATE, P12-GATE, P14-GATE, P15-GATE · Wave: W1 · Track: BE · Size: L · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P16-T05.1 Assets
-  - [ ] P16-T05.2 Copy
-  - [ ] P16-T05.3 Declarations
-- [ ] **P16-T06** · Launch rehearsal and checklist · `NOT_STARTED` ⬜
-  - Deps: P16-T04, P16-T05 · Wave: W4 · Track: QA · Size: M · Approval: yes
+  - [ ] P16-T05.1 Export
+  - [ ] P16-T05.2 Deletion
+  - [ ] P16-T05.3 Retention
+  - [ ] P16-T05.4 Policies
+- [ ] **P16-T06** · Accessibility QA (UX Gate 5) · `NOT_STARTED` ⬜
+  - Deps: P09-GATE, P10-GATE, P11-GATE, P12-GATE, P14-GATE, P15-GATE · Wave: W1 · Track: QA · Size: L · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P16-T06.1 Checklist
-  - [ ] P16-T06.2 Rehearsal
-  - [ ] P16-T06.3 Rollback
-- [ ] **P16-T07** · Store submission and staged rollout · `NOT_STARTED` ⬜
-  - Deps: P16-T06 · Wave: W5 · Track: REL · Size: M · Approval: yes · Gates-start: QG-all@P16, QG-12.2, QG-12.5, QG-12.6, QG-12.8
+  - [ ] P16-T06.1 Android
+  - [ ] P16-T06.2 iOS
+  - [ ] P16-T06.3 Report
+- [ ] **P16-T07** · Full regression and E2E on staging · `NOT_STARTED` ⬜
+  - Deps: P16-T03, P16-T05, P16-T06 · Wave: W3 · Track: QA · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P16-T07.1 Check release gates
-  - [ ] P16-T07.2 Submit
-  - [ ] P16-T07.3 Staged rollout
-- [ ] **P16-T08** · Post-launch monitoring and hypercare · `NOT_STARTED` ⬜
-  - Deps: P16-T07 · Wave: W6 · Track: REL · Size: M · Approval: no
+  - [ ] P16-T07.1 Backend
+  - [ ] P16-T07.2 Mobile
+  - [ ] P16-T07.3 E2E
+- [ ] **P16-T08** · Final dependency and licence audit · `NOT_STARTED` ⬜
+  - Deps: P16-T01, P16-T02 · Wave: W2 · Track: SEC · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P16-T08.1 Monitoring
-  - [ ] P16-T08.2 Support
-  - [ ] P16-T08.3 Retrospective
-- [ ] **P16-GATE** · Release sign-off · `NOT_STARTED` ⬜
-  - Deps: P16-T01, P16-T02, P16-T03, P16-T04, P16-T05, P16-T06, P16-T07, P16-T08 · Wave: W7 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-04.7, QG-05.6, QG-12.2, QG-12.5, QG-12.6, QG-12.8
+  - [ ] P16-T08.1 Audit
+  - [ ] P16-T08.2 Triage
+- [ ] **P16-T09** · Operational readiness · `NOT_STARTED` ⬜
+  - Deps: P15-T09, P15-T10, P16-T04 · Wave: W2 · Track: INF · Size: M · Approval: no
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P16-T09.1 Runbooks
+  - [ ] P16-T09.2 Incident process
+  - [ ] P16-T09.3 DR drill
+- [ ] **P16-T10** · Production readiness review · `NOT_STARTED` ⬜
+  - Deps: P16-T03, P16-T07, P16-T08, P16-T09, P16-T11 · Wave: W5 · Track: DOC · Size: M · Approval: yes
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P16-T10.1 Criteria matrix
+  - [ ] P16-T10.2 Risk register
+  - [ ] P16-T10.3 Go/no-go
+- [ ] **P16-T11** · Final quality-gate re-verification · `NOT_STARTED` ⬜
+  - Deps: P16-T03, P16-T07, P16-T08, P16-T09 · Wave: W4 · Track: QA · Size: L · Approval: no
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P16-T11.1 Re-run all CK suites
+  - [ ] P16-T11.2 Re-verify criteria with fresh evidence
+  - [ ] P16-T11.3 Record failures and remediation
+  - [ ] P16-T11.4 qg check QG-12.1
+- [ ] **P16-GATE** · Phase P16 exit gate · `NOT_STARTED` ⬜
+  - Deps: P16-T01, P16-T02, P16-T03, P16-T04, P16-T05, P16-T06, P16-T07, P16-T08, P16-T09, P16-T10, P16-T11 · Wave: W6 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-01.4, QG-04.6, QG-05.5, QG-08.2, QG-08.8, QG-09.1, QG-09.2, QG-09.3, QG-09.4, QG-09.6, QG-12.1, QG-12.3, QG-12.4, QG-12.7
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P16-GATE.1 Run gates
   - [ ] P16-GATE.2 Present summary
-  - [ ] P16-GATE.3 Record sign-off
+  - [ ] P16-GATE.3 Record decision
+
+
+## P17 — Release & Production Deployment
+
+- Phase approval: `PENDING`
+- Entry gates: prerequisite phase gates completed (P16); cumulative criteria QG-01.1–5; QG-02.1–6; QG-03.1–6; QG-04.1–6; QG-05.1–5; QG-06.1–7; QG-07.1–8; QG-08.1–8; QG-09.1–6; QG-10.1–8; QG-11.1–6; QG-12.1,3,4,7 — enforced as dependencies of every wave-1 task
+- Exit gates: QG-04.7; QG-05.6; QG-12.2,5,6,8 — required by `P17-GATE` (Gates-done)
+- Release gates: P17-T03, P17-T07 (Gates-start)
+
+- [ ] **P17-T01** · Store accounts, identifiers and signing · `NOT_STARTED` ⬜
+  - Deps: P16-GATE · Wave: W1 · Track: REL · Size: M · Approval: yes
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P17-T01.1 Accounts
+  - [ ] P17-T01.2 Signing
+  - [ ] P17-T01.3 Forms
+- [ ] **P17-T02** · Release builds and pipeline · `NOT_STARTED` ⬜
+  - Deps: P17-T01 · Wave: W2 · Track: REL · Size: L · Approval: no
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P17-T02.1 Android
+  - [ ] P17-T02.2 iOS
+  - [ ] P17-T02.3 Versioning
+- [ ] **P17-T03** · Production infrastructure deployment (production release gate) · `NOT_STARTED` ⬜
+  - Deps: P16-GATE, P15-T08 · Wave: W1 · Track: INF · Size: L · Approval: yes · Gates-start: QG-all@P16, QG-12.1, QG-12.3, QG-12.4, QG-12.7, QG-12.8 · Gates-done: QG-12.5
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P17-T03.1 Check release gates
+  - [ ] P17-T03.2 Deploy
+  - [ ] P17-T03.3 Migrate
+  - [ ] P17-T03.4 Verify
+- [ ] **P17-T04** · Internal and closed testing · `NOT_STARTED` ⬜
+  - Deps: P17-T02, P17-T03 · Wave: W3 · Track: REL · Size: L · Approval: no
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P17-T04.1 Distribute
+  - [ ] P17-T04.2 Collect feedback
+  - [ ] P17-T04.3 Fix
+- [ ] **P17-T05** · Store listings and policy compliance · `NOT_STARTED` ⬜
+  - Deps: P17-T02 · Wave: W3 · Track: REL · Size: M · Approval: yes
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P17-T05.1 Assets
+  - [ ] P17-T05.2 Copy
+  - [ ] P17-T05.3 Declarations
+- [ ] **P17-T06** · Launch rehearsal and checklist · `NOT_STARTED` ⬜
+  - Deps: P17-T04, P17-T05 · Wave: W4 · Track: QA · Size: M · Approval: yes
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P17-T06.1 Checklist
+  - [ ] P17-T06.2 Rehearsal
+  - [ ] P17-T06.3 Rollback
+- [ ] **P17-T07** · Store submission and staged rollout · `NOT_STARTED` ⬜
+  - Deps: P17-T06 · Wave: W5 · Track: REL · Size: M · Approval: yes · Gates-start: QG-all@P17, QG-12.2, QG-12.5, QG-12.6, QG-12.8
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P17-T07.1 Check release gates
+  - [ ] P17-T07.2 Submit
+  - [ ] P17-T07.3 Staged rollout
+- [ ] **P17-T08** · Post-launch monitoring and hypercare · `NOT_STARTED` ⬜
+  - Deps: P17-T07 · Wave: W6 · Track: REL · Size: M · Approval: no
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P17-T08.1 Monitoring
+  - [ ] P17-T08.2 Support
+  - [ ] P17-T08.3 Retrospective
+- [ ] **P17-GATE** · Release sign-off · `NOT_STARTED` ⬜
+  - Deps: P17-T01, P17-T02, P17-T03, P17-T04, P17-T05, P17-T06, P17-T07, P17-T08 · Wave: W7 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-04.7, QG-05.6, QG-12.2, QG-12.5, QG-12.6, QG-12.8
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P17-GATE.1 Run gates
+  - [ ] P17-GATE.2 Present summary
+  - [ ] P17-GATE.3 Record sign-off

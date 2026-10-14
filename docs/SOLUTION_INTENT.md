@@ -38,9 +38,11 @@ Portfolio Management -> Wealth Planning -> Investment Intelligence
 ## 4. Target Platforms
 - **Android:** production application distributed through Google Play.
 - **iOS:** production application distributed through the Apple App Store.
-- **Future Web:** consume the same backend APIs without redesigning core business services.
+- **Web portal (proposed 2026-10-14, section 35):** a desktop-grade browser application with functional parity with the apps, on the same backend APIs, identity and data.
 
-Flutter is the preferred mobile technology so Android and iOS share a common codebase while retaining native security capabilities.
+**WealthSphere is one platform with three channels: Android, iOS and Web.** All three use the same backend APIs, business rules, financial engines, authentication and data. No channel has its own financial logic or user store.
+
+Flutter is the preferred mobile technology so Android and iOS share a common codebase while retaining native security capabilities. The web portal's technology is proposed in ADR-0018 (Next.js and TypeScript with a Backend-for-Frontend; pending approval).
 
 ## 5. Core User Journey
 ```text
@@ -214,6 +216,7 @@ Cross-user portfolio access is a critical security failure.
 ## 24. Technology Intent
 Preferred initial stack:
 - Mobile: Flutter, Dart, Riverpod, GoRouter, Dio, Freezed, Secure Storage, Local Authentication
+- Web (proposed, ADR-0018): Next.js, React, TypeScript, Tailwind CSS on shared design tokens, TanStack Query and Table, ECharts and Lightweight Charts, with a Backend-for-Frontend for sessions
 - Backend: Python, FastAPI, Pydantic, SQLAlchemy, Alembic
 - Data: PostgreSQL, pgvector, Redis
 - Messaging: RabbitMQ/Celery
@@ -278,7 +281,7 @@ The objective is not for AI to make financial decisions on behalf of the user. T
 
 
 ## 34. Forex Market Intelligence Module (approved extension, ADR-0009)
-_Status: approved by the user 2026-10-09 (ADR-0009, phase P13). Not part of the core release path (P00-P12 and P14-P16); it is planned as phase P13, between the AI phases and cloud infrastructure._
+_Status: approved by the user 2026-10-09 (ADR-0009, phase P13). Not part of the core release path (P00-P12 and P15-P17); it is planned as phase P13, between the AI phases and cloud infrastructure._
 
 **Intent.** Help users study the foreign-exchange market with timestamped market data, deterministic technical analysis, probabilistic forecasts with honest validation, a transparent opportunity ranking, trade risk management, backtesting and paper trading, explained by the AI Copilot through allow-listed tools.
 
@@ -293,6 +296,60 @@ _Status: approved by the user 2026-10-09 (ADR-0009, phase P13). Not part of the 
 - Position sizing never assumes a fixed pip value; stop-loss orders do not guarantee a maximum loss, and leverage and margin warnings are shown.
 
 **Quality.** Gates QG-FX-01…08 (QG-13…QG-20) in QUALITY_GATES.md; plan in EXECUTION_PLAN.md phase P13; design in docs/design/forex-technical-design.md.
+
+
+## 35. Enterprise Web Portal (proposed extension, ADR-0018)
+_Status: proposed 2026-10-14; phase P14 (WEB workstream) and ADR-0018 await the user's approval. Details: docs/web/WEB_PORTAL_ARCHITECTURE.md, WEB_UI_UX_SPECIFICATION.md, CROSS_PLATFORM_FEATURE_PARITY_MATRIX.md and WEB_DEPLOYMENT_PLAN.md._
+
+1. **Vision and purpose.** A wealth-management workspace for desktop and laptop browsers. It is not a marketing site or a read-only report, and not an enlarged phone screen. A user moves between phone and desktop without losing data, preferences or capability.
+2. **Functional parity.** Every capability of the apps is available on the web, subject to the user's permissions. The parity matrix records each one, with its API, tests and gate evidence. Capabilities no channel has yet are planned dependencies, never claimed parity.
+3. **Desktop journeys.** Review the executive dashboard; manage portfolios and record transactions in data grids; analyse performance over time ranges; plan with the calculator, forecasts and goals; work with the AI Copilot docked beside any page; run reports and exports; and, when enabled, study forex markets in a multi-panel workspace.
+4. **Architecture.**
+   - A browser UI with a thin Backend-for-Frontend, in front of the existing FastAPI backend.
+   - No new business services and no second database.
+   - The backend stays authoritative for every financial figure.
+5. **Shared backend services.** The web uses the same `/api/v1` endpoints. Small additions (reports and exports, owner-scoped search, net-worth history, optimistic concurrency, operator views) are API changes with schemas, tests and migrations, available to every channel.
+6. **Authentication and authorisation.**
+   - Sign-in uses Keycloak OIDC, Authorization Code with PKCE, and MFA.
+   - Tokens are held server-side by the BFF; the browser holds only an HttpOnly session cookie.
+   - CSRF protection and a strict CSP apply.
+   - Ownership and roles are enforced by the API on every call; hidden UI is never the control.
+7. **Responsive UI/UX.**
+   - Desktop from 1280 px, laptop and tablet from 768 px, phone browsers below that.
+   - Tables become card lists on phones.
+   - The brand tokens, light and dark themes and the server's disclosures are shared with the apps.
+8. **Web financial dashboards.** KPI cards, interactive charts with table alternatives, and grids with sorting, filtering, resizing, saved views and keyboard navigation. Every figure carries its as-of time and currency.
+9. **AI and Forex.**
+   - **Copilot:** the same orchestrator and allow-listed tools, with the same answer policy (facts, calculations, assumptions and interpretation kept apart; no guaranteed returns).
+   - **Forex:** the module stays behind its flag (DEC-23) and stays decision support and paper trading only, with no trade execution.
+10. **Multi-currency reporting.** The global reporting currency is the same preference as on the apps. Conversions use the same snapshots, engine and rounding (FXCUR).
+11. **Cross-platform synchronisation.**
+    - One identity and one data store.
+    - Writes invalidate caches on every channel.
+    - Optimistic concurrency guards edits made on two channels.
+    - Timestamps and audit records are the same.
+12. **Accessibility and browsers.**
+    - Target: WCAG 2.2 AA.
+    - Browsers: Chrome, Edge, Firefox and Safari; supported versions in DEC-36.
+13. **Web security and privacy.**
+    - No financial data stored at rest in the browser.
+    - No tokens in browser storage.
+    - No personal data or amounts in front-end telemetry.
+    - The same rate limits and audit as the apps.
+14. **Performance.** The proposed budgets (DEC-36):
+    - Lighthouse: performance at least 85, accessibility at least 95.
+    - Core Web Vitals at p75: LCP at most 2.5 s, INP at most 200 ms, CLS at most 0.1.
+    - Dashboard API: p95 at most 500 ms.
+
+    No result is claimed without measurement.
+15. **Deployment.** One stateless web container behind the same ingress as the API, with static assets on a CDN, on the cloud chosen in DEC-02. Nothing is provisioned without approval.
+16. **Operational monitoring.** BFF metrics and logs (no bodies or tokens), front-end error reporting, real-user web vitals, and alerts, all on the platform's telemetry stack.
+17. **Platform quality gates.** QG-WEB-01 to QG-WEB-09 (QG-26 to QG-34). A failed mandatory gate blocks phase completion and release.
+18. **Milestones.**
+    - **Before the web:** the Forex module (P13) runs in full first (user decision, 2026-10-14).
+    - **First in the web:** foundation, authentication and shell, then the executive dashboard, portfolio management and the AI Copilot.
+    - **Then:** the remaining modules, and the advanced Forex workspace on the finished Forex APIs (P14-T24).
+    - **Last:** synchronisation, security, accessibility, performance and browser testing, CI/CD, staging and readiness.
 
 ---
 

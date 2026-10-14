@@ -3,7 +3,7 @@ members (viewer or editor) in a later phase. Ownership checks use `owned_by` (AD
 
 Financial rows are never silently deleted: a portfolio cannot be removed while it has a ledger
 (RESTRICT), and a user cannot be removed while they own portfolios. Erasure is the explicit
-account-deletion workflow (P15-T05)."""
+account-deletion workflow (P16-T05)."""
 
 import uuid
 from datetime import datetime

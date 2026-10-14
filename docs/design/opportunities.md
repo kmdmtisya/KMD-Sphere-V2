@@ -66,7 +66,7 @@ The prompt asks for a JSON object per candidate and forbids new facts, figures, 
 `opportunity_runs` and `opportunities` hold the request, the investor facts eligibility used, the weights, the excluded candidates, each opportunity's facts and explanation, and the model used.
 
 - **Unchanged:** the database refuses updates (`opportunities_reject_update`).
-- **Deleted with the user:** retention and deletion follow P15-T05.
+- **Deleted with the user:** retention and deletion follow P16-T05.
 - **Portfolio reference:** the portfolio id is kept as a reference without a foreign key, so a run outlives an archived portfolio unchanged.
 
 | Endpoint | Returns |

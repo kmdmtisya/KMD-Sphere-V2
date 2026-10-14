@@ -57,11 +57,11 @@ Money is `NUMERIC(28,8)`, quantities `NUMERIC(28,12)`, rates `NUMERIC(28,12)` (A
 - **Idempotency:** the same key twice in one portfolio is rejected (the API turns this into "return the first posting", P05-T04). Different portfolios can reuse a key.
 - A **BUY or SELL** must name an asset, a quantity above zero and a unit price.
 - Fees and taxes are not negative. The FX rate is above zero. Settlement is not before the trade date. Currencies are 3 capital letters.
-- **No silent deletion:** a user cannot be deleted while they own portfolios, a portfolio not while it has a ledger, an asset not while it is traded or valued (all `RESTRICT`). Removing a person's data is the explicit account-deletion workflow (P15-T05).
+- **No silent deletion:** a user cannot be deleted while they own portfolios, a portfolio not while it has a ledger, an asset not while it is traded or valued (all `RESTRICT`). Removing a person's data is the explicit account-deletion workflow (P16-T05).
 
 ## 3. Decisions for your review
 
-1. **Append-only at the database level now** (not only in the API of P05-T04). Benefit: no code path, script or future developer can edit history. Cost: erasure and any bulk correction need a deliberate, privileged procedure (planned for P15-T05).
+1. **Append-only at the database level now** (not only in the API of P05-T04). Benefit: no code path, script or future developer can edit history. Cost: erasure and any bulk correction need a deliberate, privileged procedure (planned for P16-T05).
 2. **Corrections as reversals that copy the original's figures** (negated by the holdings logic), so no column holds a negative except valuation adjustments. Alternative: store the opposite-signed amounts; rejected because every sum and constraint would then need sign rules.
 3. **Asset classes are a table**, not a database enum, so adding the 16th or 17th class needs no migration. The 16 initial rows are seeded in P05-T02 (the implementation guide lists 15; I will list what I seed and why).
 4. **Global and user-defined assets in one table**, with `owner_user_id` deciding visibility. A house or private business belongs to one user; a listed share belongs to nobody. Services must check that a portfolio only trades assets its owner can see (P05-T04).
@@ -72,7 +72,7 @@ Money is `NUMERIC(28,8)`, quantities `NUMERIC(28,12)`, rates `NUMERIC(28,12)` (A
 
 ## 4. Not in this migration
 
-Market prices (P09), income events, liabilities, goals, AI tables and notifications arrive with their own phases. Account deletion, retention and erasure: P15-T05.
+Market prices (P09), income events, liabilities, goals, AI tables and notifications arrive with their own phases. Account deletion, retention and erasure: P16-T05.
 
 ## 5. Reporting currency and FX additions (P11-T02, migration 0015)
 

@@ -20,7 +20,7 @@ Before changing code, read:
 `docs/SOLUTION_INTENT.md` defines the product direction. Do not implement features that conflict with it without explicitly documenting the conflict.
 
 ## Mission
-Build a secure, scalable Android/iOS personal wealth intelligence platform using the architecture and engineering constraints defined by the project documents.
+Build a secure, scalable personal wealth intelligence platform for Android, iOS and the web (web: proposed, phase P14) using the architecture and engineering constraints defined by the project documents.
 
 ## Non-Negotiable Rules
 - Do not bypass authentication or authorization.
@@ -43,6 +43,7 @@ Build a secure, scalable Android/iOS personal wealth intelligence platform using
 
 ## Architecture Defaults
 - Mobile: Flutter/Dart.
+- Web (proposed, ADR-0018, pending approval): Next.js + TypeScript with a Backend-for-Frontend; no business logic in `web/`; tokens never in browser storage.
 - State: Riverpod.
 - Navigation: GoRouter.
 - HTTP: Dio.
@@ -140,6 +141,7 @@ Do not start by building the AI recommendation interface. Establish trusted port
 ## Mandatory UI/UX Rules (v1.1)
 - Follow the `UI/UX Design Specification` in `docs/SOLUTION_INTENT.md` and the implementation guide.
 - Build Android/iOS from a shared Flutter design system with semantic theme tokens.
+- WealthSphere is one platform with three channels (Android, iOS, Web). Web work follows `docs/web/` and the web rules in the implementation guide; update `docs/web/CROSS_PLATFORM_FEATURE_PARITY_MATRIX.md` with every feature.
 - Primary tabs: Home, Portfolio, AI Wealth, Goals, More.
 - Implement the 13 documented screens; prioritize Home, Portfolio, Calculator, Forecast, AI Wealth.
 - Reuse shared chart, card, investment, goal, AI, risk and state widgets.

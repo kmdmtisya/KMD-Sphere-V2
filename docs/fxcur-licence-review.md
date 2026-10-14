@@ -27,7 +27,7 @@ Date: 2026-10-13. Reviewer: Claude (engineering review of the published terms, *
 | Attribution | No requirement stated | We name the source anyway (below) |
 | Data "only suitable for informational or illustrative purposes"; using rates for transactions "explicitly not recommended"; no warranties; liability capped at ZAR 500 | The app never executes trades (CLAUDE.md); every conversion carries "Indicative rate for information; not a quote for a transaction", and the converter always shows "Exchange rates are for information only, not for transactions" | Fits; the warranty and liability limits are a business risk to accept |
 | The Free Plan "can be discontinued … without notice"; paid fee changes need "at least 60 days" notice | Pro plan (paid) | Pro chosen for this reason |
-| The terms can change, effective on next use or 30 days after posting | — | Re-check the terms before each release (P16) |
+| The terms can change, effective on next use or 30 days after posting | — | Re-check the terms before each release (P17) |
 | South African law and courts | — | Business risk to accept |
 
 **Open before production (not before P11-GATE):**
@@ -42,7 +42,7 @@ Date: 2026-10-13. Reviewer: Claude (engineering review of the published terms, *
    >
    > Thank you.
 
-3. The real-provider soak (P14-T11) checks quota counting and publication times against the live service.
+3. The real-provider soak (P15-T11) checks quota counting and publication times against the live service.
 
 ## ECB euro reference rates (fallback)
 

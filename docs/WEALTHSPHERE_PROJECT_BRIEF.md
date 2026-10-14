@@ -420,7 +420,24 @@ Support small and large Android phones and current iPhone sizes; tablets may use
 Reference concept board: `docs/design/wealthsphere-ui-concept.png` (copy the supplied design reference into the repository). The image is inspirational, not a strict source for copy, calculations, portfolio data, asset prices, or recommendations.
 
 ## Forex Trading Intelligence Module (approved extension, 2026-10-09)
-An optional workstream (plan phase P13, ADR-0009) adds AI-assisted forex market intelligence to WealthSphere as **decision support and paper trading only**: timestamped live quotes with feed status, technical analysis, probabilistic forecasts validated against baselines, an Opportunity Ranking Dashboard, a deterministic trade-risk calculator, backtesting, paper trading with a journal, and an AI Forex Copilot that uses allow-listed tools. It does not execute trades, does not promise returns, and keeps paper balances separate from real wealth. It starts only after the core platform phases P08-P14 and is gated by quality gates QG-13…QG-20. See SOLUTION_INTENT section 34 and docs/design/forex-technical-design.md.
+An optional workstream (plan phase P13, ADR-0009) adds AI-assisted forex market intelligence to WealthSphere as **decision support and paper trading only**: timestamped live quotes with feed status, technical analysis, probabilistic forecasts validated against baselines, an Opportunity Ranking Dashboard, a deterministic trade-risk calculator, backtesting, paper trading with a journal, and an AI Forex Copilot that uses allow-listed tools. It does not execute trades, does not promise returns, and keeps paper balances separate from real wealth. It starts only after the core platform phases P08-P15 and is gated by quality gates QG-13…QG-20. See SOLUTION_INTENT section 34 and docs/design/forex-technical-design.md.
 
 ## Multi-Currency Reporting (approved extension, 2026-10-10)
 Plan phase P11 (FXCUR, ADR-0010) makes the reporting currency a global user setting: one choice (AED, USD, KES, EUR, GBP, JPY, CHF, CAD, AUD, ZAR initially) switches every financial figure in the app, using timestamped provider rates, consistent rate snapshots and historical rates for past figures. Underlying balances, transactions and records never change. It includes an FX provider service with fallback and caching, a currency converter screen and authorised AI currency tools, and is gated by QG-21…QG-25. See SOLUTION_INTENT section 8 and docs/design/multi-currency-design.md.
+
+## Enterprise Web Portal (proposed extension, 2026-10-14)
+WealthSphere becomes one platform with three channels: Android, iOS and Web.
+
+**The portal.** A desktop-grade browser application with functional parity with the apps. It uses the same APIs, identity, data, business rules and financial engines, and has no logic of its own.
+
+**Proposed technology (ADR-0018).** Next.js and TypeScript, with a Backend-for-Frontend that keeps tokens server-side and gives the browser an HttpOnly session cookie. Design tokens are shared with the Flutter apps.
+
+**Order of work** (the user's decisions of 2026-10-14):
+0. The Forex module (P13) is completed in full before the web work.
+1. Foundation, authentication and shell.
+2. Executive dashboard, portfolio management and the AI Copilot.
+3. The remaining modules.
+4. The advanced Forex workspace (P14-T24), on the finished Forex APIs.
+5. Synchronisation, security, accessibility, performance, CI/CD, staging and readiness.
+
+**Plan and documents.** Phase P14 (WEB workstream), with gates QG-WEB-01..09 = QG-26..QG-34 and decisions DEC-30..DEC-38, in EXECUTION_PLAN.md. Details are in docs/web/, and the intent in SOLUTION_INTENT.md section 35. Awaiting approval.
