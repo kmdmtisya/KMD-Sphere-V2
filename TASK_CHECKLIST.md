@@ -1232,7 +1232,7 @@
 
 - Phase approval: `APPROVED by user (mtisya@gmail.com) at 2026-10-13T21:53:47+04:00`
 - Entry gates: prerequisite phase gates completed (P08, P09, P10, P11, P12); cumulative criteria QG-06.1–7; QG-07.1–8; QG-08.1,3,6; QG-11.3–4 — enforced as dependencies of every wave-1 task
-- Exit gates: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19, QG-20 — required by `P13-GATE` (Gates-done)
+- Exit gates: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19, QG-20.3, QG-20.4, QG-20.5 — required by `P13-GATE` (Gates-done); QG-20.1 and QG-20.2 moved to P17-T09 (plan change 2026-10-14)
 - Release gates: P13-T13 and P13-T14 start only after QG-13..QG-19 are satisfied
 
 - [x] **P13-T01** · FX-01 Requirements, architecture and regulatory scoping · `COMPLETED` ✅
@@ -1372,17 +1372,17 @@
   - [x] P13-T13.2 Outage and failover drills
   - [x] P13-T13.3 Observability check
   - [x] P13-T13.4 User acceptance
-- [ ] **P13-T14** · FX-14 Release approval and regulatory readiness · `BLOCKED` ⛔
+- [ ] **P13-T14** · FX-14 Release approval and regulatory readiness · `IN_PROGRESS` 🔄
   - Deps: P13-T13 · Wave: W12 · Track: REL · Size: M · Approval: yes · Gates-start: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19
-  - Started: 2026-10-14T23:02:02+04:00 · Completed: — · Duration: — · Blocker: Awaiting DEC-19 licence review and DEC-20 legal review (Kenya, UAE) and disclosure approval, deferred by the user on 2026-10-14. Readiness pack prepared (docs/forex-release-readiness.md); QG-20.4 and QG-20.5 verified; QG-20.1 to QG-20.3 open; release decision: not released, forex refused outside local and test
+  - Started: 2026-10-14T23:02:02+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P13-T14.1 Licence review
-  - [ ] P13-T14.2 Regulatory review
-  - [ ] P13-T14.3 Risk disclosures
+  - [x] P13-T14.1 Licence review checklist
+  - [x] P13-T14.2 Regulatory review questions
+  - [x] P13-T14.3 Risk disclosures
   - [x] P13-T14.4 Execution-disabled verification
-  - [ ] P13-T14.5 Release decision
+  - [x] P13-T14.5 Release decision
 - [ ] **P13-GATE** · Phase P13 exit gate · `NOT_STARTED` ⬜
-  - Deps: P13-T01, P13-T02, P13-T03, P13-T04, P13-T05, P13-T06, P13-T07, P13-T08, P13-T09, P13-T10, P13-T11, P13-T12, P13-T13, P13-T14 · Wave: W13 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19, QG-20
+  - Deps: P13-T01, P13-T02, P13-T03, P13-T04, P13-T05, P13-T06, P13-T07, P13-T08, P13-T09, P13-T10, P13-T11, P13-T12, P13-T13, P13-T14 · Wave: W13 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19, QG-20.3, QG-20.4, QG-20.5
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P13-GATE.1 Run gates
@@ -1866,6 +1866,15 @@
   - [ ] P17-T08.1 Monitoring
   - [ ] P17-T08.2 Support
   - [ ] P17-T08.3 Retrospective
+- [ ] **P17-T09** · Forex production enablement (conditional) · `NOT_STARTED` ⬜
+  - Deps: P17-T03, P13-T14 · Wave: W6 · Track: REL · Size: M · Approval: yes · Gates-done: QG-20.1, QG-20.2
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P17-T09.1 Provider and licence review
+  - [ ] P17-T09.2 Regulatory review per launch market
+  - [ ] P17-T09.3 Disclosure legal review
+  - [ ] P17-T09.4 Staging smoke and hands-on acceptance
+  - [ ] P17-T09.5 Enablement decision
 - [ ] **P17-GATE** · Release sign-off · `NOT_STARTED` ⬜
   - Deps: P17-T01, P17-T02, P17-T03, P17-T04, P17-T05, P17-T06, P17-T07, P17-T08 · Wave: W7 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-04.7, QG-05.6, QG-12.2, QG-12.5, QG-12.6, QG-12.8
   - Started: — · Completed: — · Duration: — · Blocker: —

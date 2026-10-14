@@ -1,14 +1,13 @@
 # Forex release and regulatory readiness pack (P13-T14, DEC-19, DEC-20)
 
-**Reviewer:** Kelvin Mutisya David (named for DEC-20; the same reviewer as P12, DEC-10). **Decision owner:** the user. **Prepared by:** Claude (engineering draft, 2026-10-14). **Status: prepared, not reviewed.** The user has deferred DEC-19 (data licence) and DEC-20 (regulatory review). Nothing in this pack is legal advice, and no item is marked as reviewed.
+**Reviewer:** Kelvin Mutisya David (named for DEC-20; the same reviewer as P12, DEC-10). **Decision owner:** the user. **Prepared by:** Claude (engineering draft, 2026-10-14). **Status (2026-10-14): the disclosures (section 4) are approved by the user as drafted, and the release decision (section 6) is approved: not released. The licence review (section 2) and the regulatory review (section 3) have not been done.** By the user's plan change of 2026-10-14 they move to P17-T09 (Forex production enablement), which must pass before forex is switched on outside development (QG-20.1 and QG-20.2, both CRITICAL, still apply in full). Nothing in this pack is legal advice.
 
-**What you are asked to do:**
+**What remains, in P17-T09, if forex is to be offered:**
 1. Choose a market-data provider and answer the licence checklist in section 2 against its contract (QG-20.1).
-2. Answer the regulatory questions in section 3 for Kenya and the UAE (QG-20.2).
-3. Mark each statement in section 4 as *approve*, *change* (with replacement wording) or *remove* (QG-20.3).
-4. Sign the table in section 7.
+2. The reviewer answers the regulatory questions in section 3 for Kenya and the UAE (QG-20.2) and reviews the section 4 disclosures for the real data, including the observations.
+3. Sign the open lines of the table in section 7.
 
-I then apply your changes, re-run the tests that pin the wording, check QG-20.1 to QG-20.3 with your decisions as evidence, and complete P13-T14.
+Any wording changes are then applied with the tests that pin the wording, and QG-20.1 and QG-20.2 are checked with the signed answers as evidence.
 
 **Scope:** the Forex module of P13 in the API and the mobile app. That covers market data, indicators, the economic calendar, forecasts, the opportunity ranking, the risk calculator, backtests, paper trading and the Forex Copilot. The P12 wording, signed off in [compliance-review-p12.md](compliance-review-p12.md), is not repeated here.
 
@@ -41,7 +40,7 @@ No provider has been chosen. The adapter in `marketdata/oanda.py` was built from
 | 2.10 | **Economic calendar**: DEMO events today | `calendar/` | A licence for a calendar source (if one is wired) | |
 | 2.11 | **Cost and limits**: rate limits, connection limits, cost per month | `forex_*` settings | Do our settings fit within the plan's limits? | |
 
-**Until 2.1 to 2.9 are answered for a named provider, QG-20.1 stays open.** The configuration also refuses any provider other than the simulated one (`test_the_only_configurable_provider_is_simulated`).
+**Until 2.1 to 2.9 are answered for a named provider, QG-20.1 stays open (P17-T09.1).** The configuration also refuses any provider other than the simulated one (`test_the_only_configurable_provider_is_simulated`).
 
 ## 3. Regulatory questions per launch market (P13-T14.2, DEC-20, QG-20.2)
 
@@ -60,7 +59,7 @@ The launch markets are **Kenya and the UAE** (DEC-20). I have not stated any reg
 | 3.9 | Must the disclosures be shown in Swahili or Arabic? | | |
 | 3.10 | Data protection: forex questions and paper positions are user data sent to the model provider as tool results (ADR-0017). Is a disclosure needed? | | |
 
-**Until each market's column is answered and signed, QG-20.2 stays open.**
+**Until each market's column is answered and signed, QG-20.2 stays open (P17-T09.2).**
 
 ## 4. Disclosure inventory (P13-T14.3, QG-20.3)
 
@@ -141,12 +140,12 @@ Live execution is not part of this decision. It would need its own approved phas
 
 ## 7. Sign-off
 
-*To be completed by the reviewer and the user.* Leave a line blank to mean "not yet reviewed".
+A blank line means "not yet reviewed". The open lines belong to P17-T09.
 
 | Item | Role | Name | Date | Decision |
 |---|---|---|---|---|
 | Section 2: licence (QG-20.1) | User (DEC-19) | | | |
 | Section 3: Kenya (QG-20.2) | Reviewer | | | |
 | Section 3: UAE (QG-20.2) | Reviewer | | | |
-| Section 4: disclosures (QG-20.3) | Reviewer | | | |
-| Section 6: release decision | User | | | |
+| Section 4: disclosures (QG-20.3) | User (decision owner) | user (mtisya@gmail.com) | 2026-10-14 | **Approved as drafted** (recorded on the user's answer in the session). The 7 observations are carried as follow-ups. The named reviewer's legal review of the wording is part of P17-T09.3 |
+| Section 6: release decision | User | user (mtisya@gmail.com) | 2026-10-14 | **Approved: not released.** Licence and regulatory reviews moved to P17-T09 by plan change |
