@@ -4888,6 +4888,29 @@
         "title": "ForexExposure",
         "type": "object"
       },
+      "ForexExposureItem": {
+        "properties": {
+          "amount": {
+            "description": "Signed, in that currency: positive is long",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Amount",
+            "type": "string"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          }
+        },
+        "required": [
+          "currency",
+          "amount"
+        ],
+        "title": "ForexExposureItem",
+        "type": "object"
+      },
       "ForexFactorOut": {
         "properties": {
           "contribution": {
@@ -5426,6 +5449,1301 @@
           "rule_version"
         ],
         "title": "ForexOpportunityOut",
+        "type": "object"
+      },
+      "ForexPaperAccountCreate": {
+        "properties": {
+          "currency": {
+            "examples": [
+              "USD"
+            ],
+            "pattern": "^[A-Z]{3}$",
+            "title": "Currency",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "starting_balance": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Virtual money; omitted: the default (10000), marked as such",
+            "title": "Starting Balance"
+          }
+        },
+        "required": [
+          "name",
+          "currency"
+        ],
+        "title": "ForexPaperAccountCreate",
+        "type": "object"
+      },
+      "ForexPaperAccountOut": {
+        "properties": {
+          "balance": {
+            "description": "Starting balance + realised P/L - open commissions",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Balance",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "equity": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Equity",
+            "type": "string"
+          },
+          "exposure": {
+            "items": {
+              "$ref": "#/components/schemas/ForexExposureItem"
+            },
+            "title": "Exposure",
+            "type": "array"
+          },
+          "free_margin": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Free Margin",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "margin_level_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Margin Level Percent"
+          },
+          "mode": {
+            "const": "PAPER TRADING",
+            "default": "PAPER TRADING",
+            "title": "Mode",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "notice": {
+            "default": "PAPER TRADING: virtual money and simulated fills at the stored bid and ask, with modelled slippage and commission. Nothing is sent to a broker. Paper results are a separate series: they never enter net worth, holdings or the analytics of a real portfolio, and are never combined with backtested or live-observed results.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "open_positions": {
+            "title": "Open Positions",
+            "type": "integer"
+          },
+          "pending_orders": {
+            "title": "Pending Orders",
+            "type": "integer"
+          },
+          "realised_this_week": {
+            "description": "Since Monday 00:00 UTC",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Realised This Week",
+            "type": "string"
+          },
+          "realised_today": {
+            "description": "Since 00:00 UTC",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Realised Today",
+            "type": "string"
+          },
+          "starting_balance": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Starting Balance",
+            "type": "string"
+          },
+          "starting_balance_is_default": {
+            "title": "Starting Balance Is Default",
+            "type": "boolean"
+          },
+          "status": {
+            "enum": [
+              "active",
+              "closed"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "unrealised_pnl": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Unrealised Pnl",
+            "type": "string"
+          },
+          "used_margin": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Used Margin",
+            "type": "string"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "currency",
+          "status",
+          "starting_balance",
+          "starting_balance_is_default",
+          "balance",
+          "unrealised_pnl",
+          "equity",
+          "used_margin",
+          "free_margin",
+          "margin_level_percent",
+          "open_positions",
+          "pending_orders",
+          "realised_today",
+          "realised_this_week",
+          "exposure",
+          "warnings",
+          "created_at"
+        ],
+        "title": "ForexPaperAccountOut",
+        "type": "object"
+      },
+      "ForexPaperAccountsOut": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ForexPaperAccountOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "mode": {
+            "const": "PAPER TRADING",
+            "default": "PAPER TRADING",
+            "title": "Mode",
+            "type": "string"
+          },
+          "notice": {
+            "default": "PAPER TRADING: virtual money and simulated fills at the stored bid and ask, with modelled slippage and commission. Nothing is sent to a broker. Paper results are a separate series: they never enter net worth, holdings or the analytics of a real portfolio, and are never combined with backtested or live-observed results.",
+            "title": "Notice",
+            "type": "string"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "ForexPaperAccountsOut",
+        "type": "object"
+      },
+      "ForexPaperAnalyticsOut": {
+        "properties": {
+          "account_id": {
+            "format": "uuid",
+            "title": "Account Id",
+            "type": "string"
+          },
+          "by_instrument": {
+            "items": {
+              "$ref": "#/components/schemas/ForexPaperGroup"
+            },
+            "title": "By Instrument",
+            "type": "array"
+          },
+          "by_strategy_tag": {
+            "items": {
+              "$ref": "#/components/schemas/ForexPaperGroup"
+            },
+            "title": "By Strategy Tag",
+            "type": "array"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "label": {
+            "const": "paper",
+            "default": "paper",
+            "title": "Label",
+            "type": "string"
+          },
+          "longest_losing_streak": {
+            "title": "Longest Losing Streak",
+            "type": "integer"
+          },
+          "max_drawdown": {
+            "description": "Of the closed balance, as a fraction",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Max Drawdown",
+            "type": "string"
+          },
+          "mode": {
+            "const": "PAPER TRADING",
+            "default": "PAPER TRADING",
+            "title": "Mode",
+            "type": "string"
+          },
+          "open_positions": {
+            "title": "Open Positions",
+            "type": "integer"
+          },
+          "overall": {
+            "$ref": "#/components/schemas/ForexPaperSummary"
+          },
+          "return_on_starting_balance": {
+            "description": "A fraction",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Return On Starting Balance",
+            "type": "string"
+          },
+          "series_note": {
+            "default": "Paper results only: a separate, labelled series, never combined with backtested (P13-T08) or live-observed results and never part of a real portfolio's analytics.",
+            "title": "Series Note",
+            "type": "string"
+          },
+          "starting_balance": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Starting Balance",
+            "type": "string"
+          }
+        },
+        "required": [
+          "account_id",
+          "currency",
+          "starting_balance",
+          "overall",
+          "max_drawdown",
+          "return_on_starting_balance",
+          "longest_losing_streak",
+          "by_strategy_tag",
+          "by_instrument",
+          "open_positions"
+        ],
+        "title": "ForexPaperAnalyticsOut",
+        "type": "object"
+      },
+      "ForexPaperGroup": {
+        "properties": {
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/ForexPaperSummary"
+          }
+        },
+        "required": [
+          "key",
+          "summary"
+        ],
+        "title": "ForexPaperGroup",
+        "type": "object"
+      },
+      "ForexPaperJournalCreate": {
+        "properties": {
+          "note": {
+            "maxLength": 4000,
+            "minLength": 1,
+            "title": "Note",
+            "type": "string"
+          },
+          "position_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Position Id"
+          },
+          "tags": {
+            "items": {
+              "pattern": "^[a-z0-9][a-z0-9_-]{0,39}$",
+              "type": "string"
+            },
+            "maxItems": 10,
+            "title": "Tags",
+            "type": "array"
+          }
+        },
+        "required": [
+          "note"
+        ],
+        "title": "ForexPaperJournalCreate",
+        "type": "object"
+      },
+      "ForexPaperJournalListOut": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ForexPaperJournalOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "mode": {
+            "const": "PAPER TRADING",
+            "default": "PAPER TRADING",
+            "title": "Mode",
+            "type": "string"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "ForexPaperJournalListOut",
+        "type": "object"
+      },
+      "ForexPaperJournalOut": {
+        "properties": {
+          "account_id": {
+            "format": "uuid",
+            "title": "Account Id",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "mode": {
+            "const": "PAPER TRADING",
+            "default": "PAPER TRADING",
+            "title": "Mode",
+            "type": "string"
+          },
+          "note": {
+            "title": "Note",
+            "type": "string"
+          },
+          "position_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Position Id"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "account_id",
+          "position_id",
+          "note",
+          "tags",
+          "created_at"
+        ],
+        "title": "ForexPaperJournalOut",
+        "type": "object"
+      },
+      "ForexPaperLevels": {
+        "properties": {
+          "stop": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Stop",
+            "type": "string"
+          },
+          "target": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target"
+          }
+        },
+        "required": [
+          "stop"
+        ],
+        "title": "ForexPaperLevels",
+        "type": "object"
+      },
+      "ForexPaperOrderCreate": {
+        "properties": {
+          "instrument": {
+            "examples": [
+              "EUR_USD"
+            ],
+            "pattern": "^[A-Z]{3}_[A-Z]{3}$",
+            "title": "Instrument",
+            "type": "string"
+          },
+          "limit_price": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "For a limit order only",
+            "title": "Limit Price"
+          },
+          "lots": {
+            "description": "A multiple of the pair's lot step",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Lots",
+            "type": "string"
+          },
+          "order_type": {
+            "default": "market",
+            "enum": [
+              "market",
+              "limit"
+            ],
+            "title": "Order Type",
+            "type": "string"
+          },
+          "side": {
+            "enum": [
+              "long",
+              "short"
+            ],
+            "title": "Side",
+            "type": "string"
+          },
+          "stop": {
+            "description": "Required: every paper position has a stop-loss",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Stop",
+            "type": "string"
+          },
+          "strategy_tag": {
+            "anyOf": [
+              {
+                "pattern": "^[a-z0-9][a-z0-9_-]{0,39}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Strategy Tag"
+          },
+          "target": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target"
+          }
+        },
+        "required": [
+          "instrument",
+          "side",
+          "lots",
+          "stop"
+        ],
+        "title": "ForexPaperOrderCreate",
+        "type": "object"
+      },
+      "ForexPaperOrderOut": {
+        "properties": {
+          "account_id": {
+            "format": "uuid",
+            "title": "Account Id",
+            "type": "string"
+          },
+          "cancelled_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cancelled At"
+          },
+          "contract_specification_version": {
+            "title": "Contract Specification Version",
+            "type": "integer"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "filled_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filled At"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "instrument": {
+            "title": "Instrument",
+            "type": "string"
+          },
+          "limit_price": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Limit Price"
+          },
+          "lots": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Lots",
+            "type": "string"
+          },
+          "mode": {
+            "const": "PAPER TRADING",
+            "default": "PAPER TRADING",
+            "title": "Mode",
+            "type": "string"
+          },
+          "order_type": {
+            "enum": [
+              "market",
+              "limit"
+            ],
+            "title": "Order Type",
+            "type": "string"
+          },
+          "side": {
+            "enum": [
+              "long",
+              "short"
+            ],
+            "title": "Side",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "pending",
+              "filled",
+              "cancelled",
+              "rejected"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "stop": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Stop",
+            "type": "string"
+          },
+          "strategy_tag": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Strategy Tag"
+          },
+          "target": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target"
+          },
+          "units": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Units",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "account_id",
+          "instrument",
+          "side",
+          "order_type",
+          "lots",
+          "units",
+          "limit_price",
+          "stop",
+          "target",
+          "status",
+          "strategy_tag",
+          "contract_specification_version",
+          "created_at",
+          "filled_at",
+          "cancelled_at"
+        ],
+        "title": "ForexPaperOrderOut",
+        "type": "object"
+      },
+      "ForexPaperOrderPlacedOut": {
+        "properties": {
+          "disclosures": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Disclosures",
+            "type": "array"
+          },
+          "mode": {
+            "const": "PAPER TRADING",
+            "default": "PAPER TRADING",
+            "title": "Mode",
+            "type": "string"
+          },
+          "notice": {
+            "default": "PAPER TRADING: virtual money and simulated fills at the stored bid and ask, with modelled slippage and commission. Nothing is sent to a broker. Paper results are a separate series: they never enter net worth, holdings or the analytics of a real portfolio, and are never combined with backtested or live-observed results.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "order": {
+            "$ref": "#/components/schemas/ForexPaperOrderOut"
+          },
+          "position": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ForexPaperPositionOut"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Set when a market order filled"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "order",
+          "position",
+          "warnings",
+          "disclosures"
+        ],
+        "title": "ForexPaperOrderPlacedOut",
+        "type": "object"
+      },
+      "ForexPaperOrdersOut": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ForexPaperOrderOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "mode": {
+            "const": "PAPER TRADING",
+            "default": "PAPER TRADING",
+            "title": "Mode",
+            "type": "string"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "ForexPaperOrdersOut",
+        "type": "object"
+      },
+      "ForexPaperPositionOut": {
+        "properties": {
+          "account_id": {
+            "format": "uuid",
+            "title": "Account Id",
+            "type": "string"
+          },
+          "costs": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Costs"
+          },
+          "current_price": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Open: the closing side of the quote",
+            "title": "Current Price"
+          },
+          "data_type": {
+            "description": "Of the quote the entry used, for example simulated",
+            "title": "Data Type",
+            "type": "string"
+          },
+          "entry_at": {
+            "format": "date-time",
+            "title": "Entry At",
+            "type": "string"
+          },
+          "entry_price": {
+            "description": "The fill: bid or ask with slippage",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Entry Price",
+            "type": "string"
+          },
+          "exit_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Exit At"
+          },
+          "exit_price": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Exit Price"
+          },
+          "exit_rate": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Quote to account currency at the exit",
+            "title": "Exit Rate"
+          },
+          "exit_rate_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Exit Rate Path"
+          },
+          "exit_reason": {
+            "anyOf": [
+              {
+                "enum": [
+                  "stop",
+                  "target",
+                  "manual"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Exit Reason"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "instrument": {
+            "title": "Instrument",
+            "type": "string"
+          },
+          "lots": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Lots",
+            "type": "string"
+          },
+          "margin": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Margin",
+            "type": "string"
+          },
+          "mode": {
+            "const": "PAPER TRADING",
+            "default": "PAPER TRADING",
+            "title": "Mode",
+            "type": "string"
+          },
+          "order_id": {
+            "format": "uuid",
+            "title": "Order Id",
+            "type": "string"
+          },
+          "realised_pnl": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Net of spread, slippage, commission",
+            "title": "Realised Pnl"
+          },
+          "side": {
+            "enum": [
+              "long",
+              "short"
+            ],
+            "title": "Side",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "open",
+              "closed"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "stop": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Stop",
+            "type": "string"
+          },
+          "strategy_tag": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Strategy Tag"
+          },
+          "target": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target"
+          },
+          "units": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Units",
+            "type": "string"
+          },
+          "unrealised_pnl": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unrealised Pnl"
+          }
+        },
+        "required": [
+          "id",
+          "account_id",
+          "order_id",
+          "instrument",
+          "side",
+          "lots",
+          "units",
+          "status",
+          "entry_price",
+          "entry_at",
+          "data_type",
+          "stop",
+          "target",
+          "margin",
+          "strategy_tag",
+          "current_price",
+          "unrealised_pnl",
+          "exit_price",
+          "exit_at",
+          "exit_reason",
+          "exit_rate",
+          "exit_rate_path",
+          "realised_pnl",
+          "costs"
+        ],
+        "title": "ForexPaperPositionOut",
+        "type": "object"
+      },
+      "ForexPaperPositionsOut": {
+        "properties": {
+          "account_id": {
+            "format": "uuid",
+            "title": "Account Id",
+            "type": "string"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ForexPaperPositionOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "mode": {
+            "const": "PAPER TRADING",
+            "default": "PAPER TRADING",
+            "title": "Mode",
+            "type": "string"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "account_id",
+          "currency",
+          "items",
+          "warnings"
+        ],
+        "title": "ForexPaperPositionsOut",
+        "type": "object"
+      },
+      "ForexPaperSummary": {
+        "properties": {
+          "average_pnl": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Average Pnl"
+          },
+          "best": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Best"
+          },
+          "costs": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Costs",
+            "type": "string"
+          },
+          "gross_loss": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Gross Loss",
+            "type": "string"
+          },
+          "gross_profit": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Gross Profit",
+            "type": "string"
+          },
+          "net_pnl": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Net Pnl",
+            "type": "string"
+          },
+          "profit_factor": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Profit Factor"
+          },
+          "trades": {
+            "title": "Trades",
+            "type": "integer"
+          },
+          "win_rate": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Win Rate"
+          },
+          "wins": {
+            "title": "Wins",
+            "type": "integer"
+          },
+          "worst": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Worst"
+          }
+        },
+        "required": [
+          "trades",
+          "wins",
+          "win_rate",
+          "net_pnl",
+          "gross_profit",
+          "gross_loss",
+          "profit_factor",
+          "average_pnl",
+          "best",
+          "worst",
+          "costs"
+        ],
+        "title": "ForexPaperSummary",
         "type": "object"
       },
       "ForexPipValue": {
@@ -16191,6 +17509,1016 @@
           }
         ],
         "summary": "Every setup found for one pair, with its full explanation",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/paper/accounts": {
+      "get": {
+        "description": "Each with its balance, equity, margin and exposure after the latest quotes are evaluated.",
+        "operationId": "list_accounts_api_v1_forex_paper_accounts_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForexPaperAccountsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such paper resource, or the forex module is switched off for this user"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "The caller's paper accounts",
+        "tags": [
+          "forex"
+        ]
+      },
+      "post": {
+        "description": "Virtual money only. The currency must be a forex currency; an omitted starting balance uses the default and is marked as such. At most the configured number of active accounts.",
+        "operationId": "create_account_api_v1_forex_paper_accounts_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForexPaperAccountCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForexPaperAccountOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "409": {
+            "description": "too many active paper accounts"
+          },
+          "422": {
+            "description": "Invalid account"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Open a paper-trading account (virtual money)",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/paper/accounts/{account_id}": {
+      "get": {
+        "description": "Pending limit orders, stops and targets are evaluated against the stored quotes first. Another user's account answers 404.",
+        "operationId": "get_account_api_v1_forex_paper_accounts__account_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "account_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Account Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForexPaperAccountOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such paper resource, or the forex module is switched off for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "One paper account: balance, equity, margin and exposure",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/paper/accounts/{account_id}/analytics": {
+      "get": {
+        "description": "Closed paper positions only: net P/L, win rate, profit factor, drawdown and breakdowns by strategy tag and pair. Never combined with backtested, live-observed or real-portfolio results.",
+        "operationId": "analytics_api_v1_forex_paper_accounts__account_id__analytics_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "account_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Account Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForexPaperAnalyticsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such paper resource, or the forex module is switched off for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Paper-trading performance: a separate, labelled series",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/paper/accounts/{account_id}/close": {
+      "post": {
+        "description": "A closed account takes no new orders. Refused while positions are open or orders pending.",
+        "operationId": "close_account_api_v1_forex_paper_accounts__account_id__close_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "account_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Account Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForexPaperAccountOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such paper resource, or the forex module is switched off for this user"
+          },
+          "409": {
+            "description": "open positions or pending orders"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Close a paper account (no open positions or pending orders)",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/paper/accounts/{account_id}/journal": {
+      "get": {
+        "description": "Notes, newest first, optionally filtered by tag.",
+        "operationId": "list_journal_api_v1_forex_paper_accounts__account_id__journal_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "account_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Account Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "tag",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[a-z0-9][a-z0-9_-]{0,39}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Tag"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForexPaperJournalListOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such paper resource, or the forex module is switched off for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "The paper trading journal",
+        "tags": [
+          "forex"
+        ]
+      },
+      "post": {
+        "description": "Tags are lower-cased and de-duplicated; a linked position must belong to this account.",
+        "operationId": "add_journal_api_v1_forex_paper_accounts__account_id__journal_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "account_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Account Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForexPaperJournalCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForexPaperJournalOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such paper resource, or the forex module is switched off for this user"
+          },
+          "422": {
+            "description": "Invalid journal entry"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Add a journal entry, optionally about one position",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/paper/accounts/{account_id}/journal/{entry_id}": {
+      "delete": {
+        "description": "Removes one of the caller's journal entries.",
+        "operationId": "delete_journal_api_v1_forex_paper_accounts__account_id__journal__entry_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "account_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Account Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "entry_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Entry Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such paper resource, or the forex module is switched off for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Delete a journal entry",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/paper/accounts/{account_id}/orders": {
+      "get": {
+        "description": "The account's paper orders, optionally by status, after evaluating pending limit orders.",
+        "operationId": "list_orders_api_v1_forex_paper_accounts__account_id__orders_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "account_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Account Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "pending",
+                    "filled",
+                    "cancelled",
+                    "rejected"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForexPaperOrdersOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such paper resource, or the forex module is switched off for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Paper orders",
+        "tags": [
+          "forex"
+        ]
+      },
+      "post": {
+        "description": "A market order fills at once at the stored ask (buy) or bid (sell) with the specification's slippage; a limit order waits for the quote to reach its price. Refused with no fresh quote, a bad size or levels, or not enough free paper margin; limits beyond the settings give warnings. Nothing is sent to a broker.",
+        "operationId": "place_order_api_v1_forex_paper_accounts__account_id__orders_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "account_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Account Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForexPaperOrderCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForexPaperOrderPlacedOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such paper resource, or the forex module is switched off for this user"
+          },
+          "409": {
+            "description": "the paper account is closed"
+          },
+          "422": {
+            "description": "Invalid order"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Place a simulated paper order (market or limit) with a stop-loss",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/paper/accounts/{account_id}/orders/{order_id}/cancel": {
+      "post": {
+        "description": "Only a pending limit order can be cancelled.",
+        "operationId": "cancel_order_api_v1_forex_paper_accounts__account_id__orders__order_id__cancel_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "account_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Account Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "order_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Order Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForexPaperOrderOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such paper resource, or the forex module is switched off for this user"
+          },
+          "409": {
+            "description": "the order is not pending"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Cancel a pending paper order",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/paper/accounts/{account_id}/positions": {
+      "get": {
+        "description": "Open positions are valued at the closing side of the latest quote, converted into the account currency; closed ones show the exit, the rate used and the realised P/L net of costs.",
+        "operationId": "list_positions_api_v1_forex_paper_accounts__account_id__positions_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "account_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Account Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "open",
+                    "closed"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForexPaperPositionsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such paper resource, or the forex module is switched off for this user"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Paper positions, open ones valued at the current quote",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/paper/accounts/{account_id}/positions/{position_id}/close": {
+      "post": {
+        "description": "A simulated market close at the latest fresh quote with slippage. Nothing is sent to a broker.",
+        "operationId": "close_position_api_v1_forex_paper_accounts__account_id__positions__position_id__close_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "account_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Account Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "position_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Position Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForexPaperPositionOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such paper resource, or the forex module is switched off for this user"
+          },
+          "409": {
+            "description": "the position is already closed"
+          },
+          "422": {
+            "description": "Invalid no fresh quote"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Close a paper position at the current bid or ask",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/paper/accounts/{account_id}/positions/{position_id}/levels": {
+      "put": {
+        "description": "The stop must stay on the losing side and the target on the winning side of the current closing price.",
+        "operationId": "set_levels_api_v1_forex_paper_accounts__account_id__positions__position_id__levels_put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "account_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Account Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "position_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Position Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForexPaperLevels"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForexPaperPositionOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such paper resource, or the forex module is switched off for this user"
+          },
+          "409": {
+            "description": "the position is already closed"
+          },
+          "422": {
+            "description": "Invalid levels"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Move a paper position's stop-loss and take-profit",
         "tags": [
           "forex"
         ]

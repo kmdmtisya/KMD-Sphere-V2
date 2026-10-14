@@ -49,6 +49,8 @@ FINANCIAL_MODULES = [
     "modules.forex.backtest.engine",
     "modules.forex.backtest.metrics",
     "modules.forex.backtest.validation",
+    "modules.forex.paper.book",
+    "modules.forex.paper.analytics",
 ]
 # Sections of financial-methods.md that state formulas (1 to 12): each needs a requirement.
 FORMULA_SECTIONS = range(1, 13)

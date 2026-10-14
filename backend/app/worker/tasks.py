@@ -24,6 +24,8 @@ from app.modules.forex.marketdata.factory import build_provider as build_forex_p
 from app.modules.forex.marketdata.feed import MONTHS_AHEAD as FOREX_MONTHS_AHEAD
 from app.modules.forex.marketdata.partitions import PARTITIONED as FOREX_PARTITIONED
 from app.modules.forex.marketdata.partitions import ensure_months as ensure_forex_months
+from app.modules.forex.paper.service import PaperService
+from app.modules.forex.paper.service import accounts_to_evaluate as paper_accounts_to_evaluate
 from app.modules.forex.risk.specs import sync as sync_forex_contract_specs
 from app.modules.fx.refresh import refresh_once_per_window
 from app.modules.market_data.ingestion import (
@@ -481,6 +483,34 @@ def forex_backtest_job(day: str | None = None) -> dict[str, object]:
             return counts
 
         outcome = await run_once(sessions, "forex_backtest", key, work)
+        if outcome.skipped or outcome.value is None:
+            return {"skipped": True}
+        return outcome.value
+
+    return run_async(go)
+
+
+@celery_app.task(base=JobTask, name="app.worker.tasks.forex_paper_evaluate")
+def forex_paper_evaluate_job(slot: str | None = None) -> dict[str, object]:
+    """Fills pending paper limit orders and triggers paper stops and targets from the stored
+    quotes, every minute (P13-T09). PAPER TRADING only; nothing reaches a broker. Only when
+    forex is switched on. Accounts are also evaluated whenever they are read."""
+    settings = get_settings()
+    if not settings.forex_enabled:
+        return {"forex": "disabled"}
+    key = slot or datetime.now(UTC).strftime("%Y-%m-%dT%H:%M")
+
+    async def go(sessions: SessionFactory) -> dict[str, object]:
+        async def work(session: AsyncSession) -> dict[str, object]:
+            now = datetime.now(UTC)
+            service = PaperService(session, settings)
+            accounts = await paper_accounts_to_evaluate(session)
+            changes = 0
+            for account in accounts:
+                changes += await service.evaluate(account, now)
+            return {"accounts": len(accounts), "fills_and_exits": changes}
+
+        outcome = await run_once(sessions, "forex_paper_evaluate", key, work)
         if outcome.skipped or outcome.value is None:
             return {"skipped": True}
         return outcome.value

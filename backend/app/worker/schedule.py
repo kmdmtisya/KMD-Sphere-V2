@@ -76,6 +76,11 @@ def build_schedule() -> dict[str, dict[str, Any]]:
             "task": "app.worker.tasks.forex_backtest",
             "schedule": crontab(hour=2, minute=10),
         },
+        # Paper trading (P13-T09): limit orders, stops and targets, every minute.
+        "forex-paper-evaluate": {
+            "task": "app.worker.tasks.forex_paper_evaluate",
+            "schedule": crontab(),
+        },
         "forex-maintenance": {
             "task": "app.worker.tasks.forex_maintenance",
             "schedule": crontab(hour=1, minute=15),

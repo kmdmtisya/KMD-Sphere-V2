@@ -117,6 +117,6 @@ The guarantee-language guard runs over every warning and disclosure.
 ## 6. Differences from the plan, and open items
 
 - **Migration 0023.** The wave table in EXECUTION_PLAN says T07 adds no migration. That note predates DEC-24, which chose a reviewed, versioned table, so T07 adds migration 0023 for `forex_contract_specs`.
-- **Limits that need positions.** The design lists loss limits per day and per week, and an exposure limit per currency across positions. These need paper positions, so they arrive with paper trading (P13-T10). For a single trade, exposure as a share of the balance equals the position leverage, so the leverage limit covers it.
+- **Limits that need positions.** The design lists loss limits per day and per week, and an exposure limit per currency across positions. These need paper positions, so they arrived with paper trading (P13-T09; this document first said P13-T10 in error): see [forex-paper-trading.md](forex-paper-trading.md) section 4. For a single trade, exposure as a share of the balance equals the position leverage, so the leverage limit covers it.
 - **Margin closeout.** Closeout levels depend on the broker. Until the specifications are reviewed against a broker, the margin-use warning stands in for them.
 - **Specification review.** The specifications must be reviewed before any real use. The forex module stays fixture-only and off outside development (DEC-19, DEC-20, DEC-23).

@@ -547,3 +547,68 @@ The strategy is rebuilt from each series. Any difference fails the audit.
     strategy_history = clip(out-of-sample profit factor − 1, 0, 1)
 
 It is 1 with no losing trade. It is 0 with fewer than 30 out-of-sample trades or with no stored backtest. The factor names the data type the backtest used.
+
+## 23. Forex paper trading (docs/design/forex-paper-trading.md)
+
+PAPER TRADING: virtual money and simulated fills. Nothing is sent to a broker. Paper results are a separate series: they never enter net worth, holdings or the analytics of a real portfolio, and they are never combined with backtested or live-observed results. All arithmetic is Decimal.
+
+**Fills** come from the pair's stored quotes, never the mid. A suspect quote is never used.
+
+| Order | Fill |
+|---|---|
+| Market buy (open a long, close a short) | ask + slippage |
+| Market sell (open a short, close a long) | bid − slippage |
+| Limit buy | its price, once ask ≤ limit |
+| Limit sell | its price, once bid ≥ limit |
+| Stop (a market order) | the triggering quote's closing side, with slippage, once the closing side reaches the stop. A gap fills beyond the stop |
+| Target (a limit order) | its price, once the closing side reaches it |
+
+Slippage = slippage_pips × 10^pip_location. A market order needs a quote no older than `forex_quote_stale_seconds`. Quotes are taken in time order after the last one checked, and the first trigger wins.
+
+**Size.** Lots must be a multiple of the lot step, from the minimum to the maximum lots; units = lots × contract size.
+
+**Money,** in the account currency, kept to 4 places and shown in the currency's minor units:
+
+    commission (per side)  = units / contract size × commission per lot per side × rate
+    margin                 = units × entry × rate_entry × margin rate
+    realised P/L           = side × units × (exit − entry) × rate_exit − entry commission − exit commission
+    costs                  = (units × |entry − mid at entry| + units × |exit − mid at exit|) × rate_exit + commissions
+    balance                = starting balance + Σ realised P/L − commissions of open positions
+    unrealised             = Σ side × units × (closing price now − entry) × rate_now
+    equity                 = balance + unrealised;  free margin = equity − used margin
+    margin level           = equity / used margin × 100
+
+The rate converts the quote currency into the account currency at the stated time (section 21's conversion, from the stored quotes as of that time).
+
+**Refusals.** An order is refused when:
+- there is no fresh quote;
+- the lots are not a valid size;
+- the stop or target is on the wrong side;
+- a limit price is already reached;
+- the required margin exceeds the free margin;
+- the account is closed.
+
+**Warnings.** These are reported, never applied:
+- risk at the stop, with commissions, above `forex_risk_max_percent` of equity;
+- leverage across the open positions plus the order above `forex_risk_max_leverage`;
+- margin use above `forex_risk_max_margin_use_percent`;
+- realised paper loss since 00:00 UTC of at least `forex_paper_max_daily_loss_percent` (5) of the starting balance;
+- realised paper loss since Monday 00:00 UTC of at least `forex_paper_max_weekly_loss_percent` (10) of the starting balance;
+- exposure to any currency other than the account's, across the open positions plus the order, above `forex_paper_max_currency_exposure_percent` (1,000) of equity;
+- a non-tradable quote;
+- an unreviewed specification;
+- a less liquid pair.
+
+When the margin level falls below 100%, the account says so. Positions are not closed automatically.
+
+**Analytics,** over closed positions in the order they closed:
+
+    net P/L         = Σ realised P/L
+    win rate        = positions with realised P/L > 0 / closed positions
+    profit factor   = gross profit / gross loss          (none without a loss)
+    average         = net P/L / closed positions
+    max drawdown    = max over closes of (running peak − closed balance) / running peak,
+                      closed balance = starting balance + cumulative realised P/L
+    return          = net P/L / starting balance
+
+Breakdowns are given by strategy tag (untagged positions are grouped under "untagged") and by pair.

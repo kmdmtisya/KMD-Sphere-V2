@@ -1320,16 +1320,16 @@
   - [x] P13-T08.5 Benchmarks
   - [x] P13-T08.6 Reproducible reports
   - [x] P13-T08.7 Leakage tests
-- [ ] **P13-T09** · FX-09 Paper trading and trade journal · `NOT_STARTED` ⬜
+- [ ] **P13-T09** · FX-09 Paper trading and trade journal · `IN_PROGRESS` 🔄
   - Deps: P13-T07, P13-T08 · Wave: W7 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-14T16:37:53+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P13-T09.1 Schema and migration
-  - [ ] P13-T09.2 Virtual account and orders
-  - [ ] P13-T09.3 Positions and P/L
-  - [ ] P13-T09.4 Journal and tags
-  - [ ] P13-T09.5 Analytics
-  - [ ] P13-T09.6 Isolation and IDOR tests
+  - [x] P13-T09.1 Schema and migration
+  - [x] P13-T09.2 Virtual account and orders
+  - [x] P13-T09.3 Positions and P/L
+  - [x] P13-T09.4 Journal and tags
+  - [x] P13-T09.5 Analytics
+  - [x] P13-T09.6 Isolation and IDOR tests
 - [ ] **P13-T10** · FX-10 AI Forex Copilot (allow-listed tools) · `NOT_STARTED` ⬜
   - Deps: P13-T09, P10-GATE, P12-GATE · Wave: W8 · Track: AI · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

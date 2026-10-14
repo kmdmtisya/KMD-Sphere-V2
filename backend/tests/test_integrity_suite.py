@@ -41,7 +41,12 @@ async def app(migrated_settings: Settings) -> AsyncIterator[FastAPI]:  # noqa: F
     application = create_app(
         # Hundreds of requests from one test client: limits are tested in test_api_protection.
         migrated_settings.model_copy(
-            update={"rate_limit_user_requests": 100_000, "rate_limit_ip_requests": 100_000}
+            update={
+                "rate_limit_user_requests": 100_000,
+                "rate_limit_ip_requests": 100_000,
+                # Forex on, so the sweep reaches the paper-trading routes (P13-T09).
+                "forex_enabled": True,
+            }
         ),
         readiness_checks={},
         token_verifier=ah.verifier(),
@@ -214,6 +219,48 @@ async def alice_world(
             json={"platform": "android", "token": "alice-device-token-123"},
         )
     )
+    # Paper trading (P13-T09): an account, a pending order, an open position and a note.
+    await db.execute(
+        "INSERT INTO forex_instruments (code, base, quote, pip_location, display_precision, "
+        "liquidity_tier, default_data_type, spec_version) VALUES ('EUR_USD', 'EUR', 'USD', -4, 5, "
+        "'major', 'tradable_quote', 1) ON CONFLICT (code) DO NOTHING"
+    )
+    paper = await ok(
+        await http.post(
+            "/api/v1/forex/paper/accounts",
+            headers=h,
+            json={"name": "Alice paper", "currency": "USD"},
+        )
+    )
+    paper_id = uuid.UUID(paper["id"])
+    order_id = await db.fetchval(
+        "INSERT INTO forex_paper_orders (account_id, user_id, instrument, side, order_type, lots, "
+        "units, limit_price, stop, status, spec_version, checked_until) SELECT id, user_id, "
+        "'EUR_USD', 'long', 'limit', 0.1, 10000, 1.05, 1.04, 'pending', 1, now() "
+        "FROM forex_paper_accounts WHERE id = $1 RETURNING id",
+        paper_id,
+    )
+    filled = await db.fetchval(
+        "INSERT INTO forex_paper_orders (account_id, user_id, instrument, side, order_type, lots, "
+        "units, stop, status, spec_version, checked_until, filled_at) SELECT id, user_id, "
+        "'EUR_USD', 'long', 'market', 0.1, 10000, 1.04, 'filled', 1, now(), now() "
+        "FROM forex_paper_accounts WHERE id = $1 RETURNING id",
+        paper_id,
+    )
+    position_id = await db.fetchval(
+        "INSERT INTO forex_paper_positions (account_id, user_id, order_id, instrument, side, lots, "
+        "units, entry_price, entry_mid, entry_quote_at, data_type, stop, margin, entry_commission, "
+        "status, checked_until) SELECT id, user_id, $2, 'EUR_USD', 'long', 0.1, 10000, 1.1, 1.1, "
+        "'2099-01-01', 'simulated', 1.04, 366.3, 0, 'open', '2099-01-01' "
+        "FROM forex_paper_accounts WHERE id = $1 RETURNING id",
+        paper_id,
+        filled,
+    )
+    note = await ok(
+        await http.post(
+            f"/api/v1/forex/paper/accounts/{paper_id}/journal", headers=h, json={"note": "Alice"}
+        )
+    )
     return {
         "conversation_id": str(conversation_id),
         "run_id": str(run_id),
@@ -227,11 +274,28 @@ async def alice_world(
         "valuation_id": valuation["id"],
         "asset_id": asset["id"],
         "risk_profile_id": risk["id"],
+        "account_id": str(paper_id),
+        "order_id": str(order_id),
+        "position_id": str(position_id),
+        "entry_id": note["id"],
     }
 
 
 # A valid body for each write route, so a 404 can only come from the ownership check.
 BODIES: dict[tuple[str, str], dict[str, Any] | None] = {
+    ("POST", "/api/v1/forex/paper/accounts/{account_id}/close"): None,
+    ("POST", "/api/v1/forex/paper/accounts/{account_id}/orders"): {
+        "instrument": "EUR_USD",
+        "side": "long",
+        "lots": "0.1",
+        "stop": "1.0",
+    },
+    ("POST", "/api/v1/forex/paper/accounts/{account_id}/orders/{order_id}/cancel"): None,
+    ("POST", "/api/v1/forex/paper/accounts/{account_id}/positions/{position_id}/close"): None,
+    ("PUT", "/api/v1/forex/paper/accounts/{account_id}/positions/{position_id}/levels"): {
+        "stop": "1.0"
+    },
+    ("POST", "/api/v1/forex/paper/accounts/{account_id}/journal"): {"note": "Bob was here"},
     ("PATCH", "/api/v1/portfolios/{portfolio_id}"): {"name": "Taken by Bob"},
     ("POST", "/api/v1/portfolios/{portfolio_id}/archive"): None,
     ("POST", "/api/v1/portfolios/{portfolio_id}/transactions"): {
@@ -280,6 +344,10 @@ SNAPSHOT_TABLES = (
     "fx_conversion_audit",
     "opportunity_runs",
     "opportunities",
+    "forex_paper_accounts",
+    "forex_paper_orders",
+    "forex_paper_positions",
+    "forex_paper_journal",
 )
 
 
@@ -316,6 +384,11 @@ async def snapshot(db: asyncpg.Connection, user_id: str) -> dict[str, str]:
         "opportunity_runs": "SELECT * FROM opportunity_runs WHERE user_id = $1 ORDER BY id",
         "opportunities": "SELECT o.* FROM opportunities o "
         "JOIN opportunity_runs r ON r.id = o.run_id WHERE r.user_id = $1 ORDER BY o.id",
+        "forex_paper_accounts": "SELECT * FROM forex_paper_accounts WHERE user_id = $1 ORDER BY id",
+        "forex_paper_orders": "SELECT * FROM forex_paper_orders WHERE user_id = $1 ORDER BY id",
+        "forex_paper_positions": "SELECT * FROM forex_paper_positions WHERE user_id = $1 "
+        "ORDER BY id",
+        "forex_paper_journal": "SELECT * FROM forex_paper_journal WHERE user_id = $1 ORDER BY id",
     }
     assert set(queries) == set(SNAPSHOT_TABLES)
     out = {}
