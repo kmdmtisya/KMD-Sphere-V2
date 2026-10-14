@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-15T00:21:39+04:00 by `scripts/track.py`._
+_Generated at 2026-10-15T00:24:46+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -49,7 +49,7 @@ _Generated at 2026-10-15T00:21:39+04:00 by `scripts/track.py`._
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
 Criteria satisfied overall: 115/209.
 
-Current phase **P13** exit-gate criteria outstanding: none.
+Current phase **P14** exit-gate criteria outstanding: QG-26.1, QG-26.2, QG-26.3, QG-26.4, QG-26.5, QG-27.1, QG-27.2, QG-27.3, QG-27.4, QG-27.5, QG-27.6, QG-28.1, QG-28.2, QG-28.3, QG-28.4, QG-28.5, QG-28.6, QG-28.7, QG-28.8, QG-28.9, QG-29.1, QG-29.2, QG-29.3, QG-29.4, QG-29.5, QG-29.6, QG-29.7, QG-29.8, QG-30.1, QG-30.2, QG-30.3, QG-30.4, QG-30.5, QG-30.6, QG-31.1, QG-31.2, QG-31.3, QG-31.4, QG-31.5, QG-31.6, QG-32.1, QG-32.2, QG-32.3, QG-32.4, QG-32.5, QG-32.6, QG-33.1, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.6, QG-33.7, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
