@@ -13,6 +13,7 @@ from app.core.config import Settings
 from app.modules.forex.instruments.registry import load_registry, sync
 from app.modules.forex.marketdata.factory import build_provider, heartbeat_policy, quality_policy
 from app.modules.forex.marketdata.gateway import QuoteHub
+from app.modules.forex.marketdata.metrics import ForexMetrics
 from app.modules.forex.marketdata.monitor import Clock, FeedMonitor, utc_now
 from app.modules.forex.marketdata.partitions import PARTITIONED, ensure_months
 from app.modules.forex.marketdata.provider import ForexProvider
@@ -34,7 +35,9 @@ class ForexFeed:
         provider: ForexProvider,
         clock: Clock = utc_now,
         max_backfill: timedelta = MAX_BACKFILL,
+        metrics: ForexMetrics | None = None,
     ) -> None:
+        self._metrics = metrics
         self._sessions = sessions
         self._hub = hub
         self._provider = provider
@@ -47,9 +50,14 @@ class ForexFeed:
     async def on_quote(self, quote: ReceivedQuote) -> None:
         try:
             async with self._sessions() as session:
-                self.stored += await store_quotes(session, [quote])
+                added = await store_quotes(session, [quote])
+            self.stored += added
+            if self._metrics is not None:
+                self._metrics.quotes_stored.add(added)
         except Exception as error:  # storage trouble must not stop the stream
             self.failures += 1
+            if self._metrics is not None:
+                self._metrics.store_failures.add(1)
             logger.warning("forex quote not stored", extra={"error": type(error).__name__})
         self._hub.publish(quote)
 
@@ -64,7 +72,10 @@ class ForexFeed:
         try:
             candles = await self._provider.candles(instrument, Timeframe.M1, start, until)
             async with self._sessions() as session:
-                self.backfilled += await store_candles(session, candles, self._clock())
+                added = await store_candles(session, candles, self._clock())
+            self.backfilled += added
+            if self._metrics is not None:
+                self._metrics.candles_backfilled.add(added)
         except Exception as error:  # ProviderError or storage: logged, the stream goes on
             self.failures += 1
             logger.warning(
@@ -94,6 +105,7 @@ async def run_feed(
     stop: asyncio.Event,
     provider: ForexProvider | None = None,
     clock: Clock = utc_now,
+    metrics: ForexMetrics | None = None,
 ) -> None:
     """Runs the feed until `stop` is set (started by the app when `forex_feed_enabled`)."""
     provider = provider or build_provider(settings, clock)
@@ -101,7 +113,7 @@ async def run_feed(
     client = StreamClient(
         provider,
         instruments,
-        ForexFeed(sessions, hub, provider, clock),
+        ForexFeed(sessions, hub, provider, clock, metrics=metrics),
         FeedMonitor(heartbeat_policy(settings), clock),
         quality_policy(settings),
         clock=clock,

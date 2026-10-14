@@ -54,7 +54,7 @@ The code lives in `backend/app/modules/forex/`. It shares nothing with `app/modu
 | Quote already older than 60 s when received | `stale` |
 | Served quote older than 60 s (`forex_quote_stale_seconds`) | `freshness: stale`, `quality: stale`, with its true `age_seconds` |
 | No usable quote within 7 days (`forex_quote_lookback_days`) | `freshness: unavailable`, with **no price fields** |
-| Provider outage | Nothing is stored or shown in its place. The feed reports `disconnected`, and the board shows the last good quote with its true age, which becomes stale |
+| Provider outage | Nothing is stored or shown in its place. The feed reports `disconnected`. While the feed in this process reports `disconnected`, the board shows the last good quote with its true age as **stale at once**, however recent it is (P13-T13: the outage drill found such quotes shown as fresh for up to a minute). A process that runs no feed judges stored quotes by age alone |
 | Gap after a reconnect (more than 2 minutes in a pair's provider time) | Backfilled from the provider's own 1-minute candles, at most one day. Never interpolated |
 
 ## 4. Streaming client and feed status (T02.4)

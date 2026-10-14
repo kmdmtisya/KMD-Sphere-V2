@@ -1,0 +1,133 @@
+{
+  "started": "2026-10-14T18:07:43.200644+00:00",
+  "ended": "2026-10-14T18:22:17.102728+00:00",
+  "soak_seconds": 600,
+  "outage_seconds": 150,
+  "recovery_seconds": 120,
+  "pairs": 12,
+  "quotes_stored": 6480,
+  "quotes_per_pair_min": 540,
+  "quotes_per_pair_max": 540,
+  "invented_or_altered_prices": 0,
+  "quotes_dated_inside_outage": 0,
+  "candles_after_recovery": 36,
+  "status_transitions": [
+    [
+      0.0,
+      "connected"
+    ],
+    [
+      600.4,
+      "disconnected"
+    ],
+    [
+      794.7,
+      "connected"
+    ]
+  ],
+  "degraded_seen": false,
+  "disconnected_seen": true,
+  "connected_at_end": true,
+  "board_during_outage": [
+    {
+      "seconds": "10",
+      "stale": 12
+    },
+    {
+      "seconds": "20",
+      "stale": 12
+    },
+    {
+      "seconds": "30",
+      "stale": 12
+    },
+    {
+      "seconds": "40",
+      "stale": 12
+    },
+    {
+      "seconds": "50",
+      "stale": 12
+    },
+    {
+      "seconds": "60",
+      "stale": 12
+    },
+    {
+      "seconds": "70",
+      "stale": 12
+    },
+    {
+      "seconds": "80",
+      "stale": 12
+    },
+    {
+      "seconds": "90",
+      "stale": 12
+    },
+    {
+      "seconds": "100",
+      "stale": 12
+    },
+    {
+      "seconds": "110",
+      "stale": 12
+    },
+    {
+      "seconds": "120",
+      "stale": 12
+    },
+    {
+      "seconds": "130",
+      "stale": 12
+    },
+    {
+      "seconds": "140",
+      "stale": 12
+    },
+    {
+      "seconds": "150",
+      "stale": 12
+    }
+  ],
+  "fresh_on_board_during_outage": 0,
+  "subscribers": [
+    {
+      "received": 6456,
+      "out_of_order": 0,
+      "duplicates": 0
+    },
+    {
+      "received": 6456,
+      "out_of_order": 0,
+      "duplicates": 0
+    },
+    {
+      "received": 6456,
+      "out_of_order": 0,
+      "duplicates": 0
+    },
+    {
+      "received": 6456,
+      "out_of_order": 0,
+      "duplicates": 0
+    },
+    {
+      "received": 6456,
+      "out_of_order": 0,
+      "duplicates": 0
+    }
+  ],
+  "heap_bytes_after_warmup": 2660771,
+  "heap_bytes_after_soak": 2728963,
+  "status_gauge_max_during_outage": 2.0,
+  "metrics_exposed": [
+    "forex_candles_backfilled_total",
+    "forex_feed_status",
+    "forex_last_quote_age_seconds",
+    "forex_quote_store_failures_total",
+    "forex_quotes_stored_total",
+    "forex_stream_connections"
+  ],
+  "quotes_stored_counter": 6492.0
+}

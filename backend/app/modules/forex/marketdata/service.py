@@ -42,7 +42,10 @@ def quote_out(
     now: datetime,
     policy: QualityPolicy,
     feed: FeedStatus,
+    outage: bool = False,
 ) -> QuoteOut:
+    """`outage`: the feed in this process reports itself disconnected, so the last price, however
+    recent, cannot be current: it is shown as stale (found by the P13-T13 outage drill)."""
     fresh = freshness(stored.ts_provider if stored else None, now, policy)
     if stored is None or fresh is Freshness.UNAVAILABLE:
         return QuoteOut(
@@ -59,7 +62,7 @@ def quote_out(
             freshness=Freshness.UNAVAILABLE.value,
             feed_status=feed.value,
         )
-    stale = fresh is Freshness.STALE or stored.quality == Quality.STALE.value
+    stale = fresh is Freshness.STALE or stored.quality == Quality.STALE.value or outage
     return QuoteOut(
         instrument=instrument,
         provider=stored.provider,
@@ -87,4 +90,7 @@ async def quote_board(
 ) -> list[QuoteOut]:
     stored = await latest_quotes(session, provider, instruments, now - lookback)
     feed = feed_status_of(hub, provider)
-    return [quote_out(i, stored.get(i), now, policy, feed) for i in instruments]
+    # Only an explicit disconnect from a feed in this process counts as an outage: a process that
+    # runs no feed knows nothing about it, and its stored prices are judged by age alone.
+    outage = hub is not None and hub.feed_status.get(provider) is FeedStatus.DISCONNECTED
+    return [quote_out(i, stored.get(i), now, policy, feed, outage) for i in instruments]

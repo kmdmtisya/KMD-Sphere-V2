@@ -14,3 +14,5 @@ Runs, 2026-10-14:
 - `cd backend && uv run pytest tests/forex tests/ai/test_forex_tools.py tests/ai/test_forex_chat.py tests/ai_eval tests/test_financial_matrix.py tests/test_integrity_suite.py tests/test_idor_coverage.py -q`: 753 passed.
 - `cd mobile/wealthsphere_app && flutter test test/features/forex test/journeys/forex_journey_test.dart test/guards`: 73 passed.
 - CI on PR #164: `format, analyze, test (incl. goldens)`, `android debug build` and `ios compile (no codesign)` passed.
+
+**Found after this report, by the P13-T13 outage drill.** During an outage, the board showed the last quotes as `fresh` for up to a minute, until they aged past the stale threshold, although the in-process feed already reported `disconnected`. This is fixed in P13-T13: while the feed reports `disconnected`, the board shows them as stale at once. It is tested in `tests/forex/test_forex_observability.py::test_a_recent_price_is_stale_during_an_explicit_outage` and by the soak report's "no fresh price during the outage" check. QG-13.5 holds with the fix.
