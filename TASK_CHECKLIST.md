@@ -1364,14 +1364,14 @@
   - [x] P13-T12.3 Backtesting and AI gates
   - [x] P13-T12.4 Mobile gate
   - [x] P13-T12.5 Report
-- [ ] **P13-T13** · FX-13 Integration and soak validation (local/CI stack) · `NOT_STARTED` ⬜
+- [ ] **P13-T13** · FX-13 Integration and soak validation (local/CI stack) · `IN_PROGRESS` 🔄
   - Deps: P13-T12 · Wave: W11 · Track: QA · Size: M · Approval: yes · Gates-start: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-14T21:59:43+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P13-T13.1 Streaming soak
-  - [ ] P13-T13.2 Outage and failover drills
-  - [ ] P13-T13.3 Observability check
-  - [ ] P13-T13.4 User acceptance
+  - [x] P13-T13.1 Streaming soak
+  - [x] P13-T13.2 Outage and failover drills
+  - [x] P13-T13.3 Observability check
+  - [x] P13-T13.4 User acceptance
 - [ ] **P13-T14** · FX-14 Release approval and regulatory readiness · `NOT_STARTED` ⬜
   - Deps: P13-T13 · Wave: W12 · Track: REL · Size: M · Approval: yes · Gates-start: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19
   - Started: — · Completed: — · Duration: — · Blocker: —

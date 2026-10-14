@@ -48,6 +48,7 @@ from app.modules.forex.calendar import api as forex_calendar_api
 from app.modules.forex.forecast import api as forex_forecast_api
 from app.modules.forex.marketdata.feed import run_feed
 from app.modules.forex.marketdata.gateway import QuoteHub
+from app.modules.forex.marketdata.metrics import ForexMetrics
 from app.modules.forex.paper import api as forex_paper_api
 from app.modules.forex.risk import api as forex_risk_api
 from app.modules.forex.signals import api as forex_signals_api
@@ -105,6 +106,7 @@ def create_app(
     forex_hub = QuoteHub(
         settings.forex_stream_max_connections_per_user, settings.forex_stream_max_instruments
     )
+    forex_metrics = ForexMetrics(telemetry.meter_provider, forex_hub)
 
     @asynccontextmanager
     async def lifespan(_: FastAPI) -> AsyncIterator[None]:
@@ -112,7 +114,9 @@ def create_app(
         stop = asyncio.Event()
         feed: asyncio.Task[None] | None = None
         if settings.forex_enabled and settings.forex_feed_enabled:
-            feed = asyncio.create_task(run_feed(settings, db.session_factory, forex_hub, stop))
+            feed = asyncio.create_task(
+                run_feed(settings, db.session_factory, forex_hub, stop, metrics=forex_metrics)
+            )
         yield
         stop.set()
         if feed is not None:
@@ -219,6 +223,7 @@ def create_app(
     app.state.response_cache = response_cache
     app.state.cache_store = cache_store  # short-lived shared caches (FX rate board, P11-T03)
     app.state.forex_hub = forex_hub  # the forex stream's fan-out (P13-T02)
+    app.state.forex_metrics = forex_metrics  # feed metrics on /metrics (P13-T13)
     app.state.forex_stream_heartbeat_seconds = forex_stream_api.HEARTBEAT_SECONDS
     # Added innermost first: headers wrap everything, so 413 and 429 answers carry them too.
     app.add_middleware(BodySizeLimitMiddleware, max_bytes=settings.max_request_body_bytes)

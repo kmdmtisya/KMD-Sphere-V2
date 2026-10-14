@@ -1,0 +1,39 @@
+# Prometheus alert rules for the forex feed (P13-T13.3). They read the metrics in
+# backend/app/modules/forex/marketdata/metrics.py, exposed on the token-protected /metrics endpoint.
+# The local stack has no Prometheus or Alertmanager yet: these rules are loaded when the monitoring
+# stack exists (P15/P16). backend/tests/forex/test_forex_observability.py checks that every
+# metric they use is exposed by the app.
+#
+# The simulated market is closed from Friday 21:00 to Sunday 21:00 UTC: quotes stop while the feed
+# stays connected (heartbeats only). Silence ForexQuotesStale for that window in Alertmanager.
+groups:
+  - name: forex-feed
+    rules:
+      - alert: ForexFeedDisconnected
+        expr: max(forex_feed_status) >= 2
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: The forex feed is disconnected; prices are shown as stale or unavailable.
+      - alert: ForexFeedDegraded
+        expr: max(forex_feed_status) == 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: The forex feed has missed heartbeats for five minutes.
+      - alert: ForexQuotesStale
+        expr: max(forex_last_quote_age_seconds) > 300 and on() max(forex_feed_status) == 0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: The feed is connected but no fresh quote has arrived for five minutes.
+      - alert: ForexQuoteStoreFailures
+        expr: increase(forex_quote_store_failures_total[5m]) > 0
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: Forex quotes could not be stored (the stream continues; history has gaps).

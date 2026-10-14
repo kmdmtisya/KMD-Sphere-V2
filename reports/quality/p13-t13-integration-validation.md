@@ -1,0 +1,16 @@
+# P13-T13 Integration and soak validation (local stack) — 2026-10-14
+
+The forex module ran end to end on the local stack: compose PostgreSQL, the real feed (stream client, monitor, storage, gap backfill and fan-out) and the simulated provider (DEC-19). Cloud staging does not exist yet (P15). The module's staging smoke tests are P15-T11.
+
+| Subtask | Evidence | Result |
+|---|---|---|
+| T13.1 Streaming soak | [p13-t13-forex-soak.md](p13-t13-forex-soak.md) ([JSON](p13-t13-forex-soak.json)): 10 min, 12 pairs, 5 subscribers on every pair. 6,480 quotes stored (540 per pair); every one equals the simulated provider's own price at its second, labelled simulated (0 mismatches); no out-of-order or duplicate quote at any subscriber; Python heap growth 0.07 MB after warm-up | Pass |
+| T13.2 Outage and failover drills | The same run: a 150 s provider outage. The feed reported disconnected at once; no quote was stored inside the outage; the board showed every pair as stale throughout; the feed reconnected and backfilled 36 one-minute candles. Automated drills in the suite: `test_stream_client.py` (heartbeat loss, backoff, replays, gaps), `test_forex_api.py` (outage survived, silent feed unknown), and the app stream client's close-code, watchdog and offline tests | Pass. **Found and fixed:** the board had shown the last quotes as fresh for up to a minute of an outage. They are now stale while the feed reports disconnected (`test_forex_observability.py`; noted in the QG-13 report). **Failover:** there is a single provider (the simulated one), so failing over to a second provider is not applicable until a licensed feed exists |
+| T13.3 Observability check | New feed metrics on the token-protected `/metrics` endpoint: `forex_feed_status`, `forex_quotes_stored_total`, `forex_quote_store_failures_total`, `forex_candles_backfilled_total`, `forex_stream_connections` and `forex_last_quote_age_seconds`. Alert rules in `infra/docker/otel/forex-alerts.yaml`: feed disconnected, feed degraded, quotes stale while connected, store failures. `test_forex_observability.py` checks the metrics and that every metric the rules read is exposed. During the soak, the status gauge read 2 during the outage. The feed logs each status change | Pass for metrics and alert rules. **Limit:** the local stack has no Prometheus, Grafana or Alertmanager, so the rules are not evaluated live and there is no dashboard. Both come with the monitoring stack (P15/P16) |
+| T13.4 User acceptance | The user approved P13-T13 in advance on 2026-10-13, as a simulated-feed soak on the local stack, within the P13 sequence | Recorded as that advance approval. **Not yet done:** a hands-on acceptance of the app's forex screens by the user. It should be recorded before release, together with the manual device pass (QG-19) |
+
+**Not invented, not shown as live.** Across the soak, every price came from the provider and was labelled simulated. No price was stored or shown as fresh while the feed was down.
+
+**Commands:**
+- `cd backend && uv run python ../scripts/forex_soak.py --soak-seconds 600 --outage-seconds 150 --recovery-seconds 120` (pass, 2026-10-14 18:07 to 18:22 UTC);
+- `uv run pytest tests/forex/test_forex_observability.py tests/forex/test_forex_api.py -q` (35 passed).
