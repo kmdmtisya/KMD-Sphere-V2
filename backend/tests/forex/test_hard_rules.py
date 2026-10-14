@@ -23,6 +23,7 @@ from app.modules.forex.calendar import api as calendar_api
 from app.modules.forex.forecast import api as forecast_api
 from app.modules.forex.marketdata.factory import build_provider
 from app.modules.forex.marketdata.types import DataType
+from app.modules.forex.risk import api as risk_api
 from app.modules.forex.signals import api as signals_api
 from tests.conftest import make_settings
 
@@ -40,6 +41,7 @@ def test_no_forex_route_places_orders() -> None:
         analysis_api.router,
         calendar_api.router,
         forecast_api.router,
+        risk_api.router,
         signals_api.router,
         stream_api.router,
     )

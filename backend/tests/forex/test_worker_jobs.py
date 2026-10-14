@@ -1,5 +1,6 @@
-"""The forex worker jobs on the real database (P13-T02.3, P13-T03): registry and partition
-maintenance, and the one-minute candle sync (switched off with the module; idempotent per slot)."""
+"""The forex worker jobs on the real database (P13-T02.3, P13-T03, P13-T07): registry, contract
+specification and partition maintenance, and the one-minute candle sync (switched off with the
+module; idempotent per slot)."""
 
 import asyncio
 import uuid
@@ -40,6 +41,7 @@ async def test_maintenance_syncs_the_registry_and_creates_partitions_ahead_once_
     day = "2033-02-10"
     result = (await asyncio.to_thread(tasks.forex_maintenance_job.apply, args=(day,))).get()
     assert result["active"] == 12 and result["added"] in (0, 12)
+    assert result["contract_specs"]["version"] == 1  # the contract specifications (P13-T07)
     assert set(result["partitions_created"]) >= {
         "forex_quotes_p203302",
         "forex_quotes_p203303",

@@ -385,3 +385,80 @@ The positive weights sum to 1. The weights are versioned settings, published in 
 The total maps to low (0), medium (1), medium-high (2) or high (3 or more).
 
 **Pips.** Pips are the distance divided by 10^pip_location, rounded half-up to 0.1. Risk/reward is rounded to 0.01.
+
+## 21. Forex trade risk calculator (docs/design/forex-risk.md)
+
+A calculator for study and paper trading. It sizes a hypothetical position; nothing is placed. All arithmetic is Decimal at 50 significant digits. Rounding happens only for display.
+
+**Pip value.** It is never a constant.
+
+    pip size                       = 10^pip_location            (0.0001; 0.01 for JPY pairs)
+    pip value per lot (quote ccy)  = contract size x pip size
+    pip value per lot (account)    = pip value per lot (quote ccy) x rate(quote -> account)
+
+**The conversion rate** comes from the latest stored quotes, kept as an exact fraction of mids:
+
+| Case | Rate | Path shown |
+|---|---|---|
+| Quote currency = account currency | 1 | same currency |
+| A pair QUOTE_ACCOUNT | its mid | QUOTE_ACCOUNT mid |
+| A pair ACCOUNT_QUOTE | 1 / its mid | 1 / ACCOUNT_QUOTE mid |
+| Otherwise, through USD | (quote -> USD) x (USD -> account), each leg as above | both legs |
+
+With no path the request is refused (422); a rate is never assumed. The rate's time is the oldest quote used. It is marked stale when older than `forex_quote_stale_seconds`. A rate from a less liquid pair counts as indicative.
+
+**Costs,** per unit, in the quote currency, for entry and exit:
+
+    cost = spread + 2 x slippage_pips x pip size + 2 x commission per lot per side / contract size
+
+The spread is ask − bid from the pair's latest quote when it is fresh. Otherwise it is unknown, counted as 0, and a warning says the costs are understated. Slippage and commission come from the contract specification. Swaps and financing are not included.
+
+**Size.** The size is rounded down, so the planned loss with costs never exceeds the risk amount:
+
+    risk amount  = balance x risk percent / 100
+    units        = floor( (risk amount / rate) / ((|entry − stop| + cost) x step) ) x step
+    step         = lot step x contract size
+
+Below the minimum lot size, no position is sized (0). Above the maximum, the size is capped. Both cases carry a warning.
+
+**Outputs** (account currency unless stated):
+
+    loss before costs   = units x |entry − stop| x rate
+    costs               = units x cost x rate              (spread, slippage, commission, total)
+    loss after costs    = loss before costs + costs
+    profit before costs = units x |target − entry| x rate
+    profit after costs  = profit before costs − costs
+    risk/reward         = |target − entry| / |entry − stop|      (before costs)
+                        = profit after costs / loss after costs   (after costs)
+    notional            = units x entry x rate
+    margin              = notional x margin rate
+    position leverage   = notional / balance;  maximum leverage = 1 / margin rate
+    margin use %        = margin / balance x 100
+    account impact %    = loss after costs / balance x 100
+    exposure            = base currency ±units, quote currency ∓units x entry
+
+**Warnings,** returned, never applied silently:
+- the risk percent is above `forex_risk_max_percent` (2);
+- the position leverage is above `forex_risk_max_leverage` (30);
+- the margin exceeds the balance;
+- the margin use is above `forex_risk_max_margin_use_percent` (50);
+- the rate is non-tradable or stale;
+- the spread is unknown;
+- the specification is unreviewed;
+- the pair is less liquid.
+
+**Disclosures,** always present:
+- a stop does not cap the loss, because prices can gap or slip past it;
+- leverage amplifies losses;
+- the values are estimates.
+
+**Rounding:**
+
+| Quantity | Rounding |
+|---|---|
+| Money | The account currency's minor units, half-up |
+| Pip value per lot | 0.0001 |
+| Pips | 0.1 |
+| Ratios and percentages | 0.01 |
+| Lots | Exact multiples of the lot step |
+| Exposure | The pair's display precision |

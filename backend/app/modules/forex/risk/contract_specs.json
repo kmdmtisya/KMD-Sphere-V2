@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "review_status": "unreviewed",
+  "note": "DEMO defaults for development (DEC-24): typical retail values, not a broker's terms. A reviewer must check them against the chosen provider's or broker's published specifications and record the review (store.mark_reviewed) before any real use. Commission is in the quote currency per standard lot per side; slippage is an assumption in pips per fill; margin_rate is the initial margin as a fraction of notional (0.0333 is about 30:1).",
+  "instruments": [
+    {"code": "EUR_USD", "contract_size": "100000", "lot_step": "0.01", "min_lots": "0.01", "max_lots": "100", "margin_rate": "0.0333", "commission_per_lot_side": "0", "slippage_pips": "0.2"},
+    {"code": "GBP_USD", "contract_size": "100000", "lot_step": "0.01", "min_lots": "0.01", "max_lots": "100", "margin_rate": "0.0333", "commission_per_lot_side": "0", "slippage_pips": "0.3"},
+    {"code": "USD_JPY", "contract_size": "100000", "lot_step": "0.01", "min_lots": "0.01", "max_lots": "100", "margin_rate": "0.0333", "commission_per_lot_side": "0", "slippage_pips": "0.2"},
+    {"code": "USD_CHF", "contract_size": "100000", "lot_step": "0.01", "min_lots": "0.01", "max_lots": "100", "margin_rate": "0.0333", "commission_per_lot_side": "0", "slippage_pips": "0.3"},
+    {"code": "AUD_USD", "contract_size": "100000", "lot_step": "0.01", "min_lots": "0.01", "max_lots": "100", "margin_rate": "0.0333", "commission_per_lot_side": "0", "slippage_pips": "0.3"},
+    {"code": "USD_CAD", "contract_size": "100000", "lot_step": "0.01", "min_lots": "0.01", "max_lots": "100", "margin_rate": "0.0333", "commission_per_lot_side": "0", "slippage_pips": "0.3"},
+    {"code": "NZD_USD", "contract_size": "100000", "lot_step": "0.01", "min_lots": "0.01", "max_lots": "100", "margin_rate": "0.0333", "commission_per_lot_side": "0", "slippage_pips": "0.4"},
+    {"code": "EUR_GBP", "contract_size": "100000", "lot_step": "0.01", "min_lots": "0.01", "max_lots": "100", "margin_rate": "0.05", "commission_per_lot_side": "0", "slippage_pips": "0.5"},
+    {"code": "EUR_JPY", "contract_size": "100000", "lot_step": "0.01", "min_lots": "0.01", "max_lots": "100", "margin_rate": "0.05", "commission_per_lot_side": "0", "slippage_pips": "0.5"},
+    {"code": "GBP_JPY", "contract_size": "100000", "lot_step": "0.01", "min_lots": "0.01", "max_lots": "100", "margin_rate": "0.05", "commission_per_lot_side": "0", "slippage_pips": "0.8"},
+    {"code": "USD_ZAR", "contract_size": "100000", "lot_step": "0.01", "min_lots": "0.01", "max_lots": "50", "margin_rate": "0.10", "commission_per_lot_side": "0", "slippage_pips": "5"},
+    {"code": "USD_KES", "contract_size": "100000", "lot_step": "0.01", "min_lots": "0.01", "max_lots": "20", "margin_rate": "0.20", "commission_per_lot_side": "0", "slippage_pips": "10"}
+  ]
+}

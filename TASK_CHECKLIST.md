@@ -1296,17 +1296,17 @@
   - [x] P13-T06.4 Explanation payload
   - [x] P13-T06.5 Ranking API
   - [x] P13-T06.6 Tests
-- [ ] **P13-T07** · FX-07 Trade risk management engine · `NOT_STARTED` ⬜
+- [ ] **P13-T07** · FX-07 Trade risk management engine · `IN_PROGRESS` 🔄
   - Deps: P13-T06 · Wave: W6 · Track: BE · Size: L · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-14T13:52:01+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P13-T07.1 Contract specification model
-  - [ ] P13-T07.2 Pip value and conversion
-  - [ ] P13-T07.3 Position sizing
-  - [ ] P13-T07.4 Margin and leverage
-  - [ ] P13-T07.5 Costs and slippage
-  - [ ] P13-T07.6 Exposure and limits
-  - [ ] P13-T07.7 Reference cases and tests
+  - [x] P13-T07.1 Contract specification model
+  - [x] P13-T07.2 Pip value and conversion
+  - [x] P13-T07.3 Position sizing
+  - [x] P13-T07.4 Margin and leverage
+  - [x] P13-T07.5 Costs and slippage
+  - [x] P13-T07.6 Exposure and limits
+  - [x] P13-T07.7 Reference cases and tests
 - [ ] **P13-T08** · FX-08 Backtesting and strategy validation · `NOT_STARTED` ⬜
   - Deps: P13-T06 · Wave: W6 · Track: BE · Size: XL · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
