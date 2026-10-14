@@ -343,3 +343,45 @@ Indicators are pure `Decimal` functions over a price series, computed at 28 sign
 - **Candlestick rules:** fixed body, shadow and range thresholds, with a prior-fall or prior-rise context (the close 5 bars earlier), as listed in `analysis/patterns.py`.
 
 Every pattern hit names its rule and its candles. A pattern's bias describes the shape; it is not a forecast or a probability.
+
+## 20. Forex opportunity score (docs/design/forex-signals.md)
+
+The score ranks research candidates. It is not a probability of profit.
+
+    score = 100 x clip(sum(weight_i x component_i), 0, 1), rounded half-up to 0.1
+
+**Components.** Every component lies in [0, 1].
+
+| Component | Weight | Value |
+|---|---|---|
+| trend_strength | 0.15 | ADX / 50 when the directional indicators agree with the setup |
+| momentum | 0.10 | (RSI − 50) / 30 for a bullish setup, the mirror for a bearish one |
+| volatility_suitability | 0.10 | 1 − abs(ATR / median ATR − 1) |
+| spread_and_cost | 0.10 | 1 − spread / (0.1 × ATR); 0 when the spread is unknown |
+| liquidity | 0.10 | 1, 0.7 or 0.3 for a major, minor or exotic pair |
+| technical_confluence | 0.15 | other setups pointing the same way / 3 |
+| forecast_calibration | 0.10 | 2 × abs(p − 0.5), for a calibrated forecast that agrees with the setup |
+| strategy_history | 0.05 | 0 until P13-T08 |
+| risk_reward | 0.15 | (reward / risk) / 3 |
+| macro_event_risk | −0.20 (a penalty) | 1 inside a high-importance window, 0.5 inside a medium one |
+
+The positive weights sum to 1. The weights are versioned settings, published in every response.
+
+**Adjustments to the score:**
+- an open high-importance event window halves the score;
+- with no fresh quote, the score is multiplied by 0.75;
+- bars older than two periods exclude the candidate.
+
+**Risk level.** It is built from points:
+
+| Condition | Points |
+|---|---|
+| Volatility above 1.5 × usual | 2 |
+| Volatility above 1.2 × usual | 1 |
+| Spread above 10% of ATR, or unknown | 1 |
+| High-importance event window | 2 |
+| Medium-importance event window | 1 |
+
+The total maps to low (0), medium (1), medium-high (2) or high (3 or more).
+
+**Pips.** Pips are the distance divided by 10^pip_location, rounded half-up to 0.1. Risk/reward is rounded to 0.01.

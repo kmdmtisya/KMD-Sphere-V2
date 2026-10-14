@@ -143,6 +143,8 @@ Probability up and down, predicted return distribution (quantiles), expected vol
 
 ## 8. Signal engine and Opportunity Ranking Dashboard
 
+As built in P13-T06: [forex-signals.md](forex-signals.md).
+
 ### 8.1 Setups
 
 Trend continuation, breakout, reversal, range trading, momentum, mean reversion. Each setup is a named rule set (`rule_id`, version) over indicators and structure, with a defined invalidation level.

@@ -183,6 +183,22 @@ class Settings(BaseSettings):
     ]
     forex_forecast_max_bars: int = Field(default=2000, ge=500, le=10_000)
     forex_forecast_seed: int = 7
+    # Opportunity score weights (P13-T06, published in every ranking response). Positive weights
+    # sum to 1; macro_event_risk is a penalty (zero or negative).
+    forex_signal_weights: dict[str, Decimal] = Field(
+        default_factory=lambda: {
+            "trend_strength": Decimal("0.15"),
+            "momentum": Decimal("0.10"),
+            "volatility_suitability": Decimal("0.10"),
+            "spread_and_cost": Decimal("0.10"),
+            "liquidity": Decimal("0.10"),
+            "technical_confluence": Decimal("0.15"),
+            "forecast_calibration": Decimal("0.10"),
+            "strategy_history": Decimal("0.05"),
+            "risk_reward": Decimal("0.15"),
+            "macro_event_risk": Decimal("-0.20"),
+        }
+    )
 
     db_pool_size: int = 5
     db_max_overflow: int = 5
@@ -256,6 +272,14 @@ class Settings(BaseSettings):
         if self.forex_heartbeat_degraded_seconds >= self.forex_heartbeat_disconnected_seconds:
             raise ValueError("the forex degraded window must be shorter than the disconnected one")
         return self
+
+    @field_validator("forex_signal_weights")
+    @classmethod
+    def _valid_signal_weights(cls, weights: dict[str, Decimal]) -> dict[str, Decimal]:
+        from app.modules.forex.signals.scoring import validate_weights
+
+        validate_weights(weights)
+        return weights
 
     @field_validator("cors_allowed_origins")
     @classmethod

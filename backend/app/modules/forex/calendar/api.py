@@ -98,7 +98,7 @@ class CalendarOut(BaseModel):
     notice: str = NOTICE
 
 
-class RiskOut(BaseModel):
+class ForexEventRiskOut(BaseModel):
     instrument: str
     at: datetime
     in_window: bool
@@ -227,7 +227,7 @@ async def calendar(
 
 @router.get(
     "/calendar/risk",
-    response_model=RiskOut,
+    response_model=ForexEventRiskOut,
     summary="Event-risk windows open for a pair at a time",
     description="Windows of medium and high importance releases for either currency of the pair "
     "that are open at `at` (now when omitted). A window is a schedule fact, not a forecast.",
@@ -238,7 +238,7 @@ async def risk(
     session: SessionDep,
     instrument: Annotated[str, Query(pattern=INSTRUMENT_PATTERN)],
     at: datetime | None = None,
-) -> RiskOut:
+) -> ForexEventRiskOut:
     when = at or datetime.now(UTC)
     if when.tzinfo is None:
         raise InvalidValueError("at must carry a time zone")
@@ -246,7 +246,7 @@ async def risk(
         raise ResourceNotFoundError("forex instrument")
     nearby = await _events(session, when - timedelta(hours=2), when + timedelta(hours=2))
     found = active(windows(nearby), instrument, when)
-    return RiskOut(
+    return ForexEventRiskOut(
         instrument=instrument,
         at=when,
         in_window=bool(found),
