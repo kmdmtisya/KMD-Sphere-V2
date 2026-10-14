@@ -1970,3 +1970,22 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-14T22:41:13+04:00 — COMPLETE P13-T13
 - duration: 41m 30s
 - evidence: Soak and outage drill on the local stack (scripts/forex_soak.py; reports/quality/p13-t13-forex-soak.md and p13-t13-integration-validation.md): 10 min soak, 12 pairs, 5 subscribers; 6,480 quotes each equal to the simulated provider's own price (0 mismatches), no out-of-order or duplicate quote, heap growth 0.07 MB; 150 s provider outage: disconnected reported, nothing stored, every price stale, reconnect and 36 candles backfilled. Found and fixed: the quote board showed last prices as fresh for up to a minute of an outage; now stale while the in-process feed reports disconnected (tests/forex/test_forex_observability.py). Feed metrics on /metrics and alert rules (infra/docker/otel/forex-alerts.yaml) checked by test. Limits: no local Prometheus/Grafana/Alertmanager (P15/P16); single provider, so no failover; user acceptance recorded as the advance approval, hands-on acceptance of the screens still to do before release. Local: ruff, mypy clean; forex observability and API tests 35 passed. PR #166. CI all gates pass. · Approved by: user (mtisya@gmail.com), advance approval 2026-10-13 (P13 sequence)
+
+### 2026-10-14T23:02:02+04:00 — START P13-T14
+- FX-14 Release approval and regulatory readiness
+- prerequisites verified COMPLETED
+
+### 2026-10-14T23:02:13+04:00 — QG START QG-20
+- QG-FX-08: Release and Regulatory Readiness
+
+### 2026-10-14T23:02:14+04:00 — QG CHECK QG-20.4
+- evidence: reports/quality/qg-20-forex-release-readiness.md: test_paper_money_never_reaches_net_worth and test_no_real_money_module_reads_paper_tables (tests/forex/test_paper_api.py) pass; paper tables are in the integrity suite IDOR sweep and snapshot; every paper response carries the PAPER TRADING notice and X-Trading-Mode header; 39 passed locally 2026-10-14, same tests in the required backend gate
+
+### 2026-10-14T23:02:14+04:00 — QG CHECK QG-20.5
+- evidence: reports/quality/qg-20-forex-release-readiness.md and docs/forex-release-readiness.md section 5: tests/forex/test_hard_rules.py (no route places orders, no forex source outside paper names an order endpoint or call, only the simulated provider is configurable, forex off by default and refused outside local and test), 11 read-only allow-listed Copilot forex tools, Copilot refuses trade instructions (test_forex_chat.py, forex_safety set zero tolerance); 39 passed locally 2026-10-14, same tests in the required backend gate
+
+### 2026-10-14T23:02:21+04:00 — QG BLOCKED QG-20
+- reason: QG-20.1 to QG-20.3 await user decisions deferred on 2026-10-14: DEC-19 market-data licence (no provider chosen) and DEC-20 regulatory review for Kenya and the UAE plus disclosure approval; review pack docs/forex-release-readiness.md
+
+### 2026-10-14T23:02:22+04:00 — BLOCKED P13-T14
+- reason: Awaiting DEC-19 licence review and DEC-20 legal review (Kenya, UAE) and disclosure approval, deferred by the user on 2026-10-14. Readiness pack prepared (docs/forex-release-readiness.md); QG-20.4 and QG-20.5 verified; QG-20.1 to QG-20.3 open; release decision: not released, forex refused outside local and test
