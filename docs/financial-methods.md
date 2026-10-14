@@ -361,7 +361,7 @@ The score ranks research candidates. It is not a probability of profit.
 | liquidity | 0.10 | 1, 0.7 or 0.3 for a major, minor or exotic pair |
 | technical_confluence | 0.15 | other setups pointing the same way / 3 |
 | forecast_calibration | 0.10 | 2 × abs(p − 0.5), for a calibrated forecast that agrees with the setup |
-| strategy_history | 0.05 | 0 until P13-T08 |
+| strategy_history | 0.05 | clip(out-of-sample profit factor − 1), 1 with no losing trade; 0 below 30 out-of-sample trades or with no backtest (section 22) |
 | risk_reward | 0.15 | (reward / risk) / 3 |
 | macro_event_risk | −0.20 (a penalty) | 1 inside a high-importance window, 0.5 inside a medium one |
 
@@ -462,3 +462,88 @@ Below the minimum lot size, no position is sized (0). Above the maximum, the siz
 | Ratios and percentages | 0.01 |
 | Lots | Exact multiples of the lot step |
 | Exposure | The pair's display precision |
+
+## 22. Forex backtesting (docs/design/forex-backtesting.md)
+
+A backtest studies how a published setup rule would have behaved on stored bars. It is not a forecast. Backtested results are labelled `backtested` and are never added to paper or live results. All arithmetic is Decimal at 50 significant digits.
+
+**Clock.** A decision made at the close of bar i is filled at the open of bar i + 1. A decision sees only copies of the last 200 closed bars, the live ranking's window. A decision on the last bar is not filled. One position is open at a time.
+
+**Fills,** per unit:
+
+    buy price   = price + spread / 2 + slippage
+    sell price  = price − spread / 2 − slippage
+    commission  = commission per lot per side / contract size, on entry and on exit
+
+The spread is an assumption per liquidity tier (1.2, 2.0 and 40 pips, the simulated feed's typical spreads). The slippage and commission come from the contract specification (section 21).
+
+**Entry and size.**
+- An entry is skipped when the open has already gapped through the stop or the target.
+- The size is the risk engine's: risk = equity × 1% by default, rounded down to the lot step, with the round-trip cost included.
+- Below the minimum lot size, the entry is skipped.
+
+**Exits,** in this order on each bar:
+1. the open gapped through the stop: filled at the open;
+2. the open gapped through the target: filled at the open;
+3. the bar touched the stop: filled at the stop (the stop is assumed first when a bar touches both levels);
+4. the bar touched the target: filled at the target;
+5. the holding limit is reached: filled at the close;
+6. the end of the window: filled at the last close.
+
+**Equity** is marked at each close: cash plus the open position at the close, less its exit commission. Backtests are kept in the pair's quote currency, starting from 100,000 units, and are read as returns.
+
+**Metrics,** net of all costs:
+
+    total return       = final equity / initial equity − 1
+    maximum drawdown   = max over t of (running peak − equity_t) / running peak
+    win rate           = trades with pnl > 0 / trades
+    profit factor      = gross profit / gross loss           (none without a loss)
+    expectancy (R)     = mean of pnl / planned risk
+    Sharpe             = mean(r) / sample sd(r) × sqrt(bars per year), r = per-bar equity returns
+    Sortino            = mean(r) / sqrt(mean(min(r, 0)²)) × sqrt(bars per year)
+    exposure           = bars with a position / bars
+
+Bars per year are 260 days × 24 hours: 5m 74,880; 15m 24,960; 1H 6,240; 4H 1,560; 1D 260. The risk-free rate is 0.
+
+**Walk-forward.**
+- The tradable bars are cut into folds + 1 equal windows (4 folds by default).
+- For each k, the parameter grid is run on window k. The grid is holding limit {24, 48, 96} × reward {the rule's target, 1.5R, 3R}.
+- The parameters with the best in-sample net return (ties: first in grid order) are run once on window k + 1.
+- Positions never cross a window edge.
+- The out-of-sample windows are compounded.
+- Stability is the share of consecutive folds that chose the same parameters.
+
+**Benchmarks,** on the same out-of-sample bars:
+- **No trade:** a return of 0.
+- **Buy and hold:** one long position of the starting notional, with costs.
+- **Random entry:** 20 seeded runs at the strategy's trade frequency and median stop distance, with a 2R target and the same engine. The report gives the share of random runs the strategy beat.
+
+**Cost sensitivity.** The full-period run is repeated with spread and commission, and slippage, multiplied by 2 and by 3. Costs are never removed.
+
+**Look-ahead audit.** The decisions on the bars before each cut are made on the real series and on two altered futures:
+- **mirrored:** every later move reversed;
+- **stretched:** every later move doubled.
+
+The strategy is rebuilt from each series. Any difference fails the audit.
+
+**Report hash.** The hash is SHA-256 of the canonical JSON of the report, with sorted keys and without the generation time. It covers:
+- the data snapshot hash, which is SHA-256 of every bar;
+- the code version;
+- the parameters;
+- the seed;
+- every result.
+
+**Rounding in reports:**
+
+| Quantity | Places |
+|---|---|
+| Returns and shares | 6, as fractions |
+| Ratios | 0.01 |
+| Money | 0.01 |
+| Prices | One place beyond the pair's display precision |
+
+**Strategy history in the opportunity score** (section 20):
+
+    strategy_history = clip(out-of-sample profit factor − 1, 0, 1)
+
+It is 1 with no losing trade. It is 0 with fewer than 30 out-of-sample trades or with no stored backtest. The factor names the data type the backtest used.

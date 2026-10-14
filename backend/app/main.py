@@ -43,6 +43,7 @@ from app.modules.forecasting import api as forecasting_api
 from app.modules.forex import api as forex_api
 from app.modules.forex import stream_api as forex_stream_api
 from app.modules.forex.analysis import api as forex_analysis_api
+from app.modules.forex.backtest import api as forex_backtest_api
 from app.modules.forex.calendar import api as forex_calendar_api
 from app.modules.forex.forecast import api as forex_forecast_api
 from app.modules.forex.marketdata.feed import run_feed
@@ -273,6 +274,7 @@ def create_app(
     app.include_router(dashboard.router)
     app.include_router(forex_api.router)
     app.include_router(forex_analysis_api.router)
+    app.include_router(forex_backtest_api.router)
     app.include_router(forex_calendar_api.router)
     app.include_router(forex_forecast_api.router)
     app.include_router(forex_risk_api.router)

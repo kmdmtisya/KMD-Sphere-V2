@@ -241,10 +241,32 @@ def test_every_candidate_explains_every_factor_and_its_contribution() -> None:
     assert [f.name for f in c.factors] == list(sc.COMPONENTS)
     assert sc.score(c.factors) == c.score  # nothing hidden: the factors give the score
     hist = next(f for f in c.factors if f.name == "strategy_history")
-    assert hist.value == 0 and "P13-T08" in hist.detail
+    assert hist.value == 0 and "no out-of-sample backtest" in hist.detail
     assert c.spread_pips == D("1.2") and c.levels_pips["risk_reward"] > 0
     assert c.adjustments == [] and c.excluded is False
     assert any("simulated" in r for r in c.risks) and len(c.assumptions) == 3
+
+
+def test_strategy_history_counts_only_with_enough_out_of_sample_trades() -> None:
+    def hist(history: dict[str, ranking.StrategyHistory]) -> list[sc.Factor]:
+        base = ranking.candidates(pair(), sc.DEFAULT_WEIGHTS)[0]
+        found = ranking.candidates(pair(history=history), sc.DEFAULT_WEIGHTS)
+        same = next(c for c in found if c.setup.rule == base.setup.rule)
+        return [f for f in same.factors if f.name == "strategy_history"]
+
+    rule = ranking.candidates(pair(), sc.DEFAULT_WEIGHTS)[0].setup.rule
+    few = hist({rule: ranking.StrategyHistory(12, D("2.5"), ("simulated",))})[0]
+    assert few.value == 0 and "fewer than 30" in few.detail and "simulated" in few.detail
+    good = hist({rule: ranking.StrategyHistory(40, D("1.6"), ("simulated",))})[0]
+    assert good.value == D("0.6") and "profit factor 1.6 over 40" in good.detail
+    capped = hist({rule: ranking.StrategyHistory(40, D("3.1"), ())})[0]
+    assert capped.value == 1
+    poor = hist({rule: ranking.StrategyHistory(40, D("0.8"), ())})[0]
+    assert poor.value == 0
+    flawless = hist({rule: ranking.StrategyHistory(35, None, ())})[0]
+    assert flawless.value == 1 and "no losing trade" in flawless.detail
+    other = hist({"no_such_rule": ranking.StrategyHistory(40, D(2), ())})[0]
+    assert other.value == 0
 
 
 def test_demotions_and_exclusions_say_why() -> None:

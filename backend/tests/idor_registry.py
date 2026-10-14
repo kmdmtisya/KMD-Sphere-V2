@@ -128,4 +128,9 @@ IDOR_TESTS: dict[tuple[str, str], str] = {
 NOT_USER_RESOURCES: dict[tuple[str, str], str] = {
     ("GET", "/api/v1/fx-rates/{base}/{quote}"): "currency codes; FX rates are global market data",
     ("GET", "/api/v1/fx/rates/{base}/{quote}"): "currency codes; FX rates are global market data",
+    ("GET", "/api/v1/forex/backtests/{report_hash}"): (
+        "the content hash of a backtest report: global reference data made by a job from shared "
+        "bars, with no owner (tests.forex.test_backtest_api::"
+        "test_a_report_is_reference_data_the_same_for_every_user)"
+    ),
 }

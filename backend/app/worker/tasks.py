@@ -12,6 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.ai.conversations.service import ConversationService
 from app.core.config import get_settings
 from app.modules.alerts.evaluation import EvaluationResult, evaluate_alerts
+from app.modules.forex.backtest.service import run_and_store as run_forex_backtests
 from app.modules.forex.calendar.ingest import ingest as ingest_forex_calendar
 from app.modules.forex.calendar.sources import DemoCalendarSource
 from app.modules.forex.candles.sync import sync_minutes as sync_forex_minutes
@@ -451,6 +452,35 @@ def forex_forecast_train_job(slot: str | None = None) -> dict[str, object]:
             return counts
 
         outcome = await run_once(sessions, "forex_forecast_train", key, work)
+        if outcome.skipped or outcome.value is None:
+            return {"skipped": True}
+        return outcome.value
+
+    return run_async(go)
+
+
+@celery_app.task(base=JobTask, name="app.worker.tasks.forex_backtest")
+def forex_backtest_job(day: str | None = None) -> dict[str, object]:
+    """Backtests every setup rule on every active pair from the stored bars, once a day (P13-T08):
+    walk-forward validation, benchmarks, cost sensitivity and the leakage audit, stored as
+    reproducible reports (a report with the same hash is not stored twice). Only when forex is
+    switched on."""
+    settings = get_settings()
+    if not settings.forex_enabled:
+        return {"forex": "disabled"}
+    key = day or datetime.now(UTC).date().isoformat()
+
+    async def go(sessions: SessionFactory) -> dict[str, object]:
+        async def work(session: AsyncSession) -> dict[str, object]:
+            now = datetime.now(UTC)
+            counts: dict[str, object] = {}
+            for pair in await active_forex_instruments(session):
+                outcome = await run_forex_backtests(session, settings, pair, now)
+                seen = counts.get(outcome.status, 0)
+                counts[outcome.status] = (seen if isinstance(seen, int) else 0) + 1
+            return counts
+
+        outcome = await run_once(sessions, "forex_backtest", key, work)
         if outcome.skipped or outcome.value is None:
             return {"skipped": True}
         return outcome.value

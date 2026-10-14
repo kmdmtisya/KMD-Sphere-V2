@@ -183,6 +183,12 @@ class Settings(BaseSettings):
     ]
     forex_forecast_max_bars: int = Field(default=2000, ge=500, le=10_000)
     forex_forecast_seed: int = 7
+    # Backtests (P13-T08): the timeframe the daily job tests, the most recent bars per run (200 of
+    # them warm the indicators up), the walk-forward folds and the seed of the random benchmark.
+    forex_backtest_timeframe: Literal["15m", "1H", "4H", "1D"] = "1H"
+    forex_backtest_max_bars: int = Field(default=2000, ge=600, le=5000)
+    forex_backtest_folds: int = Field(default=4, ge=1, le=10)
+    forex_backtest_seed: int = 7
     # Risk calculator limits (P13-T07): exceeding one gives a warning, never a silent change.
     forex_risk_max_percent: Decimal = Field(default=Decimal(2), gt=0, le=100)
     forex_risk_max_leverage: Decimal = Field(default=Decimal(30), gt=0, le=1000)

@@ -5,9 +5,14 @@ Demotions and exclusions (design section 8.2), each stated in `adjustments`:
 - bars older than two bar periods: **excluded** (stale data is not ranked);
 - an open, or about to open, high-importance event window: score x 0.5;
 - no fresh live quote (the spread is unknown): score x 0.75;
-- a forecast that requires calibration: it contributes nothing, and says so."""
+- a forecast that requires calibration: it contributes nothing, and says so.
 
-from collections.abc import Sequence
+Strategy history (P13-T08) is the rule's out-of-sample walk-forward result on the pair and
+timeframe, net of costs: clip(profit factor - 1, 0, 1), and 1 when there was no losing trade.
+With no stored backtest, or fewer than 30 out-of-sample trades, it contributes nothing, and the
+factor says why."""
+
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from decimal import ROUND_HALF_UP, Decimal
@@ -29,6 +34,35 @@ from app.modules.forex.signals.scoring import (
 D = Decimal
 ZERO, ONE = D(0), D(1)
 QUOTE_FRESH = timedelta(seconds=60)
+MIN_HISTORY_TRADES = 30
+
+
+@dataclass(frozen=True)
+class StrategyHistory:
+    """A rule's stored out-of-sample backtest result (P13-T08)."""
+
+    trades: int
+    profit_factor: Decimal | None
+    data_types: tuple[str, ...]
+
+
+def history_factor(h: StrategyHistory | None) -> tuple[Decimal, str]:
+    if h is None:
+        return ZERO, "no out-of-sample backtest of this rule here yet: contributes nothing"
+    on = f" ({', '.join(h.data_types)} data)" if h.data_types else ""
+    if h.trades < MIN_HISTORY_TRADES:
+        return (
+            ZERO,
+            f"{h.trades} out-of-sample backtest trades{on}, fewer than {MIN_HISTORY_TRADES}: "
+            "contributes nothing",
+        )
+    if h.profit_factor is None:
+        return ONE, f"no losing trade in {h.trades} out-of-sample backtest trades{on}"
+    return (
+        clip(h.profit_factor - ONE),
+        f"out-of-sample profit factor {h.profit_factor} over {h.trades} backtest trades{on}, "
+        "net of costs",
+    )
 
 
 @dataclass(frozen=True)
@@ -54,6 +88,7 @@ class PairInput:
     windows: list[RiskWindow]
     forecast: ForecastInput | None
     now: datetime
+    history: Mapping[str, StrategyHistory] = field(default_factory=dict)  # by rule (P13-T08)
 
 
 @dataclass
@@ -169,10 +204,7 @@ def candidates(p: PairInput, weights: dict[str, Decimal]) -> list[Candidate]:
                 f"{same} other setup(s) point the same way",
             ),
             "forecast_calibration": (fc_value, fc_detail),
-            "strategy_history": (
-                ZERO,
-                "no out-of-sample backtest yet (P13-T08): contributes nothing",
-            ),
+            "strategy_history": history_factor(p.history.get(s.rule)),
             "risk_reward": (clip(rr / 3), f"reward / risk {rr:.2f}"),
             "macro_event_risk": (penalty, "; ".join(events) if events else "no event window"),
         }

@@ -23,6 +23,7 @@ import app.ai.conversations.models  # noqa: E402
 import app.core.audit  # noqa: E402
 import app.modules.alerts.models  # noqa: E402
 import app.modules.assets.models  # noqa: E402
+import app.modules.forex.backtest.store  # noqa: E402
 import app.modules.forex.calendar.models  # noqa: E402
 import app.modules.forex.forecast.store  # noqa: E402
 import app.modules.forex.instruments.models  # noqa: E402
