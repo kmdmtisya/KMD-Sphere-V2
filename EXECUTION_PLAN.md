@@ -133,7 +133,7 @@ P00 → P01 ─┬─ MOBILE  : P02 → P03 → P07 ─────────�
 
 **Multi-currency reporting (P11, FXCUR):** placed after P10 because it needs the P05 FX service, P06 analytics, P08 FX ingestion and provider abstraction, the P09 live screens and the P10 AI tool framework; placing it before P12 means AI Intelligence, Forex and hardening get the reporting currency natively instead of retrofitting it.
 
-**Web portal (P14, WEB):** a channel of the core platform. It depends only on the completed P09 to P12, so it can start once approved; its CI/CD and staging tasks use the P15 infrastructure, and hardening (P16) covers it. The advanced Forex web workspace sits in the Forex lane (P13-T15) so the optional module never blocks the core release.
+**Web portal (P14, WEB):** a channel of the core platform. It depends on the completed P09 to P12 and, by the user's order decision (DEC-38), starts after P13 is complete; its CI/CD and staging tasks use the P15 infrastructure, and hardening (P16) covers it. The advanced Forex web workspace (P14-T24) builds on the finished P13 APIs.
 
 **Forex workstream (P13):** runs after P12 and before P15. It is off the critical path of the core release, and its production enablement waits for P16 and the staging smoke tests in P15-T11.
 
