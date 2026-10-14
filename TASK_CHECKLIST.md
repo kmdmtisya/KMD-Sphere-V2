@@ -1364,10 +1364,10 @@
   - [x] P13-T12.3 Backtesting and AI gates
   - [x] P13-T12.4 Mobile gate
   - [x] P13-T12.5 Report
-- [ ] **P13-T13** · FX-13 Integration and soak validation (local/CI stack) · `IN_PROGRESS` 🔄
+- [x] **P13-T13** · FX-13 Integration and soak validation (local/CI stack) · `COMPLETED` ✅
   - Deps: P13-T12 · Wave: W11 · Track: QA · Size: M · Approval: yes · Gates-start: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19
-  - Started: 2026-10-14T21:59:43+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-14T21:59:43+04:00 · Completed: 2026-10-14T22:41:13+04:00 · Duration: 41m 30s · Blocker: —
+  - Evidence: Soak and outage drill on the local stack (scripts/forex_soak.py; reports/quality/p13-t13-forex-soak.md and p13-t13-integration-validation.md): 10 min soak, 12 pairs, 5 subscribers; 6,480 quotes each equal to the simulated provider's own price (0 mismatches), no out-of-order or duplicate quote, heap growth 0.07 MB; 150 s provider outage: disconnected reported, nothing stored, every price stale, reconnect and 36 candles backfilled. Found and fixed: the quote board showed last prices as fresh for up to a minute of an outage; now stale while the in-process feed reports disconnected (tests/forex/test_forex_observability.py). Feed metrics on /metrics and alert rules (infra/docker/otel/forex-alerts.yaml) checked by test. Limits: no local Prometheus/Grafana/Alertmanager (P15/P16); single provider, so no failover; user acceptance recorded as the advance approval, hands-on acceptance of the screens still to do before release. Local: ruff, mypy clean; forex observability and API tests 35 passed. PR #166. CI all gates pass. · Approved by: user (mtisya@gmail.com), advance approval 2026-10-13 (P13 sequence)
   - [x] P13-T13.1 Streaming soak
   - [x] P13-T13.2 Outage and failover drills
   - [x] P13-T13.3 Observability check
