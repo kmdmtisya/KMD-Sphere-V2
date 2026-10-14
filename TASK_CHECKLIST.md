@@ -1330,10 +1330,11 @@
   - [x] P13-T09.4 Journal and tags
   - [x] P13-T09.5 Analytics
   - [x] P13-T09.6 Isolation and IDOR tests
-- [ ] **P13-T10** · FX-10 AI Forex Copilot (allow-listed tools) · `IN_PROGRESS` 🔄
+- [x] **P13-T10** · FX-10 AI Forex Copilot (allow-listed tools) · `COMPLETED` ✅
   - Deps: P13-T09, P10-GATE, P12-GATE · Wave: W8 · Track: AI · Size: L · Approval: no
-  - Started: 2026-10-14T19:14:18+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-14T19:14:18+04:00 · Completed: 2026-10-14T20:08:46+04:00 · Duration: 54m 28s · Blocker: —
+  - Evidence: AI Forex Copilot: 11 read-only allow-listed forex tools (app/ai/tools/forex.py) registered only with forex on, documented in docs/ai-governance.md; risk calculation shared via risk/service.py (OpenAPI unchanged); server-built sources (time, data types, model version, generated time) and caveats for stale, simulated, uncalibrated, research, backtest, paper and DEMO data; personal_advice output guard when forex tools ran; trade requests declined naming the paper account; forex prompt rules only with forex tools. Evaluation: forex_figures 40/40, forex_safety 70/70, forex_stale 26/26 (zero tolerance) with regression meta-tests; tests/ai/test_forex_tools.py (all tools, authorisation, audit, stale), tests/ai/test_forex_chat.py (chat end to end). docs/design/forex-copilot.md, docs/ai-evaluation.md.
+ Local: ruff, mypy, OpenAPI check clean; full suite 3264 passed, 14 skipped, coverage policy OK (ai 97.6%, forex 98.5%, worker 92.3%); the paper isolation test flagged the Copilot paper tool and now lists it as an explicit, documented exception; 3 live-Keycloak tests fail locally only (dev Keycloak OTP; skipped in CI). PR #163. CI all gates pass.
   - [x] P13-T10.1 Tool schemas and authorisation
   - [x] P13-T10.2 Orchestrator integration
   - [x] P13-T10.3 Structured output validation
