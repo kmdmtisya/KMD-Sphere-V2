@@ -14,7 +14,13 @@ from app.worker.schedule import build_schedule
 
 APP = Path(__file__).resolve().parents[2] / "app"
 FOREX = APP / "modules" / "forex"
-ANALYSIS_PACKAGES = [FOREX / "analysis", FOREX / "candles", FOREX / "forecast", FOREX / "calendar"]
+ANALYSIS_PACKAGES = [
+    FOREX / "analysis",
+    FOREX / "candles",
+    FOREX / "forecast",
+    FOREX / "calendar",
+    FOREX / "signals",
+]
 FORBIDDEN_PREFIXES = ("app.ai", "openai", "anthropic")
 
 

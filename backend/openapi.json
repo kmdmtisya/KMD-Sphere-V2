@@ -2136,6 +2136,52 @@
         "title": "ConvertOut",
         "type": "object"
       },
+      "Costs": {
+        "properties": {
+          "note": {
+            "default": "Spread only: swaps, commissions and slippage are not included.",
+            "title": "Note",
+            "type": "string"
+          },
+          "spread_pips": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "From the latest fresh quote; null when unknown",
+            "title": "Spread Pips"
+          },
+          "spread_share_of_risk": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Spread Share Of Risk"
+          }
+        },
+        "required": [
+          "spread_pips",
+          "spread_share_of_risk"
+        ],
+        "title": "Costs",
+        "type": "object"
+      },
       "CurrencyOut": {
         "properties": {
           "code": {
@@ -3496,6 +3542,47 @@
         "title": "ForecastProjection",
         "type": "object"
       },
+      "ForecastRef": {
+        "properties": {
+          "calibration": {
+            "enum": [
+              "Calibrated",
+              "Requires calibration"
+            ],
+            "title": "Calibration",
+            "type": "string"
+          },
+          "horizon": {
+            "title": "Horizon",
+            "type": "string"
+          },
+          "model": {
+            "title": "Model",
+            "type": "string"
+          },
+          "model_version": {
+            "title": "Model Version",
+            "type": "string"
+          },
+          "prob_up": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Prob Up",
+            "type": "string"
+          }
+        },
+        "required": [
+          "horizon",
+          "prob_up",
+          "calibration",
+          "model",
+          "model_version"
+        ],
+        "title": "ForecastRef",
+        "type": "object"
+      },
       "ForecastScenarios": {
         "properties": {
           "base": {
@@ -3643,6 +3730,362 @@
           "data_types"
         ],
         "title": "ForecastValues",
+        "type": "object"
+      },
+      "ForexEventRiskOut": {
+        "properties": {
+          "at": {
+            "format": "date-time",
+            "title": "At",
+            "type": "string"
+          },
+          "in_window": {
+            "title": "In Window",
+            "type": "boolean"
+          },
+          "instrument": {
+            "title": "Instrument",
+            "type": "string"
+          },
+          "notice": {
+            "default": "Scheduled releases with their source and time. Confirmed values (actual, previous) are facts as published; the consensus forecast is an expectation; commentary is not data. A risk window marks when prices often move around a release; it is not a prediction. DEMO items are fictional.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "windows": {
+            "items": {
+              "$ref": "#/components/schemas/WindowOut"
+            },
+            "title": "Windows",
+            "type": "array"
+          }
+        },
+        "required": [
+          "instrument",
+          "at",
+          "in_window",
+          "windows"
+        ],
+        "title": "ForexEventRiskOut",
+        "type": "object"
+      },
+      "ForexFactorOut": {
+        "properties": {
+          "contribution": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Contribution",
+            "type": "string"
+          },
+          "detail": {
+            "title": "Detail",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "value": {
+            "description": "0 to 1",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Value",
+            "type": "string"
+          },
+          "weight": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Weight",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "value",
+          "weight",
+          "contribution",
+          "detail"
+        ],
+        "title": "ForexFactorOut",
+        "type": "object"
+      },
+      "ForexFreshness": {
+        "properties": {
+          "bar_age_seconds": {
+            "title": "Bar Age Seconds",
+            "type": "integer"
+          },
+          "bar_as_of": {
+            "format": "date-time",
+            "title": "Bar As Of",
+            "type": "string"
+          },
+          "data_types": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Data Types",
+            "type": "array"
+          },
+          "quote_age_seconds": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Quote Age Seconds"
+          }
+        },
+        "required": [
+          "bar_as_of",
+          "bar_age_seconds",
+          "quote_age_seconds",
+          "data_types"
+        ],
+        "title": "ForexFreshness",
+        "type": "object"
+      },
+      "ForexInstrumentOut": {
+        "properties": {
+          "base": {
+            "title": "Base",
+            "type": "string"
+          },
+          "code": {
+            "examples": [
+              "EUR_USD"
+            ],
+            "pattern": "^[A-Z]{3}_[A-Z]{3}$",
+            "title": "Code",
+            "type": "string"
+          },
+          "default_data_type": {
+            "description": "What a licensed provider's price for this pair is by default; the development feed labels every price simulated",
+            "enum": [
+              "tradable_quote",
+              "indicative_rate"
+            ],
+            "title": "Default Data Type",
+            "type": "string"
+          },
+          "display_precision": {
+            "description": "Decimals a price is shown with",
+            "title": "Display Precision",
+            "type": "integer"
+          },
+          "liquidity_tier": {
+            "enum": [
+              "major",
+              "minor",
+              "exotic"
+            ],
+            "title": "Liquidity Tier",
+            "type": "string"
+          },
+          "pip_location": {
+            "description": "A pip is 10 to this power of the quote currency",
+            "title": "Pip Location",
+            "type": "integer"
+          },
+          "quote": {
+            "title": "Quote",
+            "type": "string"
+          },
+          "spec_version": {
+            "title": "Spec Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "code",
+          "base",
+          "quote",
+          "pip_location",
+          "display_precision",
+          "liquidity_tier",
+          "default_data_type",
+          "spec_version"
+        ],
+        "title": "ForexInstrumentOut",
+        "type": "object"
+      },
+      "ForexOpportunityOut": {
+        "properties": {
+          "adjustments": {
+            "description": "Demotions or exclusions, each with its reason",
+            "items": {
+              "type": "string"
+            },
+            "title": "Adjustments",
+            "type": "array"
+          },
+          "assumptions": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Assumptions",
+            "type": "array"
+          },
+          "costs": {
+            "$ref": "#/components/schemas/Costs"
+          },
+          "evidence": {
+            "description": "What the rule saw",
+            "items": {
+              "type": "string"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "factors": {
+            "items": {
+              "$ref": "#/components/schemas/ForexFactorOut"
+            },
+            "title": "Factors",
+            "type": "array"
+          },
+          "forecast": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ForecastRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "freshness": {
+            "$ref": "#/components/schemas/ForexFreshness"
+          },
+          "instrument": {
+            "title": "Instrument",
+            "type": "string"
+          },
+          "label": {
+            "default": "Research candidate",
+            "title": "Label",
+            "type": "string"
+          },
+          "levels": {
+            "$ref": "#/components/schemas/Levels"
+          },
+          "market_condition": {
+            "enum": [
+              "trending",
+              "consolidating",
+              "high_volatility",
+              "momentum_strengthening",
+              "mixed"
+            ],
+            "title": "Market Condition",
+            "type": "string"
+          },
+          "opportunity_type": {
+            "enum": [
+              "trend_continuation",
+              "breakout",
+              "reversal",
+              "range",
+              "momentum",
+              "mean_reversion"
+            ],
+            "title": "Opportunity Type",
+            "type": "string"
+          },
+          "rank": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rank"
+          },
+          "risk": {
+            "enum": [
+              "low",
+              "medium",
+              "medium_high",
+              "high"
+            ],
+            "title": "Risk",
+            "type": "string"
+          },
+          "risks": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Risks",
+            "type": "array"
+          },
+          "rule": {
+            "title": "Rule",
+            "type": "string"
+          },
+          "rule_version": {
+            "title": "Rule Version",
+            "type": "integer"
+          },
+          "scenario": {
+            "enum": [
+              "Bullish scenario",
+              "Bearish scenario"
+            ],
+            "title": "Scenario",
+            "type": "string"
+          },
+          "score": {
+            "description": "0 to 100: ranks research candidates; not a probability",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Score",
+            "type": "string"
+          },
+          "tier": {
+            "enum": [
+              "major",
+              "minor",
+              "exotic"
+            ],
+            "title": "Tier",
+            "type": "string"
+          }
+        },
+        "required": [
+          "rank",
+          "instrument",
+          "tier",
+          "market_condition",
+          "opportunity_type",
+          "scenario",
+          "risk",
+          "score",
+          "levels",
+          "factors",
+          "adjustments",
+          "assumptions",
+          "risks",
+          "evidence",
+          "costs",
+          "freshness",
+          "forecast",
+          "rule",
+          "rule_version"
+        ],
+        "title": "ForexOpportunityOut",
         "type": "object"
       },
       "Frequency": {
@@ -5393,11 +5836,131 @@
         "title": "IndicatorsOut",
         "type": "object"
       },
+      "InstrumentOut": {
+        "properties": {
+          "asset_class": {
+            "title": "Asset Class",
+            "type": "string"
+          },
+          "asset_id": {
+            "format": "uuid",
+            "title": "Asset Id",
+            "type": "string"
+          },
+          "country": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Country"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "data_as_of": {
+            "format": "date-time",
+            "title": "Data As Of",
+            "type": "string"
+          },
+          "eligibility": {
+            "$ref": "#/components/schemas/EligibilityOut"
+          },
+          "is_demo": {
+            "description": "Fictional instrument for demo and development",
+            "title": "Is Demo",
+            "type": "boolean"
+          },
+          "jurisdictions": {
+            "description": "Where the source says it is offered",
+            "items": {
+              "type": "string"
+            },
+            "title": "Jurisdictions",
+            "type": "array"
+          },
+          "licence_status": {
+            "enum": [
+              "demo",
+              "unconfirmed",
+              "licensed"
+            ],
+            "title": "Licence Status",
+            "type": "string"
+          },
+          "liquidity": {
+            "description": "Assumed from the asset class",
+            "enum": [
+              "immediate",
+              "market",
+              "term",
+              "illiquid",
+              "unknown"
+            ],
+            "title": "Liquidity",
+            "type": "string"
+          },
+          "minimum_investment": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "risk_level": {
+            "description": "The source's classification, 1 lowest",
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Risk Level",
+            "type": "integer"
+          },
+          "symbol": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Symbol"
+          }
+        },
+        "required": [
+          "asset_id",
+          "symbol",
+          "name",
+          "asset_class",
+          "currency",
+          "country",
+          "risk_level",
+          "liquidity",
+          "jurisdictions",
+          "minimum_investment",
+          "is_demo",
+          "licence_status",
+          "data_as_of",
+          "eligibility"
+        ],
+        "title": "InstrumentOut",
+        "type": "object"
+      },
       "InstrumentsOut": {
         "properties": {
           "items": {
             "items": {
-              "$ref": "#/components/schemas/app__modules__forex__marketdata__schemas__InstrumentOut"
+              "$ref": "#/components/schemas/ForexInstrumentOut"
             },
             "title": "Items",
             "type": "array"
@@ -5572,6 +6135,78 @@
           "established_ts"
         ],
         "title": "LevelOut",
+        "type": "object"
+      },
+      "Levels": {
+        "properties": {
+          "as_of": {
+            "description": "The closed bar the levels come from (UTC)",
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "entry": {
+            "description": "Illustrative: the last close",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Entry",
+            "type": "string"
+          },
+          "reward_pips": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Reward Pips",
+            "type": "string"
+          },
+          "risk_pips": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Risk Pips",
+            "type": "string"
+          },
+          "risk_reward": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Risk Reward",
+            "type": "string"
+          },
+          "stop": {
+            "description": "Illustrative invalidation level",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Stop",
+            "type": "string"
+          },
+          "target": {
+            "description": "Illustrative target from the rule",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Target",
+            "type": "string"
+          }
+        },
+        "required": [
+          "as_of",
+          "entry",
+          "stop",
+          "target",
+          "risk_pips",
+          "reward_pips",
+          "risk_reward"
+        ],
+        "title": "Levels",
         "type": "object"
       },
       "LiabilityCreate": {
@@ -7701,6 +8336,70 @@
         "title": "QuotesOut",
         "type": "object"
       },
+      "RankingOut": {
+        "properties": {
+          "as_of": {
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "excluded": {
+            "items": {
+              "$ref": "#/components/schemas/ForexOpportunityOut"
+            },
+            "title": "Excluded",
+            "type": "array"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ForexOpportunityOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "notice": {
+            "default": "Research candidates ranked by a published formula from stored prices. Not advice, not a recommendation to buy or sell, and not a probability of profit. Levels are illustrative: markets can move past any level, and stops do not cap a loss. WealthSphere places no trades.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "timeframe": {
+            "enum": [
+              "5m",
+              "15m",
+              "1H",
+              "4H",
+              "1D"
+            ],
+            "title": "Timeframe",
+            "type": "string"
+          },
+          "weights": {
+            "additionalProperties": {
+              "examples": [
+                "1234.50"
+              ],
+              "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+              "type": "string"
+            },
+            "title": "Weights",
+            "type": "object"
+          },
+          "weights_version": {
+            "title": "Weights Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "timeframe",
+          "as_of",
+          "weights_version",
+          "weights",
+          "items",
+          "excluded"
+        ],
+        "title": "RankingOut",
+        "type": "object"
+      },
       "RateOut": {
         "properties": {
           "bank": {
@@ -7946,6 +8645,171 @@
           }
         },
         "title": "ReversalCreate",
+        "type": "object"
+      },
+      "RiskOut": {
+        "properties": {
+          "as_of": {
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "assumed_deposit_count": {
+            "description": "Postings that needed cash no recorded deposit provided; each is treated as a deposit on its date",
+            "title": "Assumed Deposit Count",
+            "type": "integer"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "end": {
+            "format": "date",
+            "title": "End",
+            "type": "string"
+          },
+          "frequency": {
+            "enum": [
+              "daily",
+              "weekly",
+              "monthly"
+            ],
+            "title": "Frequency",
+            "type": "string"
+          },
+          "incomplete_points": {
+            "title": "Incomplete Points",
+            "type": "integer"
+          },
+          "max_drawdown": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DrawdownOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "notice": {
+            "title": "Notice",
+            "type": "string"
+          },
+          "period_volatility_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Period Volatility Percent"
+          },
+          "points": {
+            "items": {
+              "$ref": "#/components/schemas/SeriesPointOut"
+            },
+            "title": "Points",
+            "type": "array"
+          },
+          "portfolio_id": {
+            "format": "uuid",
+            "title": "Portfolio Id",
+            "type": "string"
+          },
+          "returns": {
+            "description": "Number of period returns measured",
+            "title": "Returns",
+            "type": "integer"
+          },
+          "start": {
+            "format": "date",
+            "title": "Start",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "ok",
+              "insufficient_data",
+              "incomplete_data",
+              "undefined_period"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "time_weighted_annualized_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Only for ranges of at least a year",
+            "title": "Time Weighted Annualized Percent"
+          },
+          "time_weighted_return_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Time Weighted Return Percent"
+          },
+          "volatility_percent": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Annualised",
+            "title": "Volatility Percent"
+          }
+        },
+        "required": [
+          "portfolio_id",
+          "currency",
+          "frequency",
+          "start",
+          "end",
+          "status",
+          "points",
+          "returns",
+          "volatility_percent",
+          "period_volatility_percent",
+          "max_drawdown",
+          "time_weighted_return_percent",
+          "time_weighted_annualized_percent",
+          "incomplete_points",
+          "assumed_deposit_count",
+          "as_of",
+          "notice"
+        ],
+        "title": "RiskOut",
         "type": "object"
       },
       "RiskProfileCreate": {
@@ -8747,6 +9611,50 @@
           "complete"
         ],
         "title": "SeriesPointOut",
+        "type": "object"
+      },
+      "SetupsOut": {
+        "properties": {
+          "as_of": {
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "instrument": {
+            "title": "Instrument",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ForexOpportunityOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "notice": {
+            "default": "Research candidates ranked by a published formula from stored prices. Not advice, not a recommendation to buy or sell, and not a probability of profit. Levels are illustrative: markets can move past any level, and stops do not cap a loss. WealthSphere places no trades.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "timeframe": {
+            "enum": [
+              "5m",
+              "15m",
+              "1H",
+              "4H",
+              "1D"
+            ],
+            "title": "Timeframe",
+            "type": "string"
+          }
+        },
+        "required": [
+          "instrument",
+          "timeframe",
+          "as_of",
+          "items"
+        ],
+        "title": "SetupsOut",
         "type": "object"
       },
       "Severity": {
@@ -9964,7 +10872,7 @@
           },
           "items": {
             "items": {
-              "$ref": "#/components/schemas/app__modules__universe__schemas__InstrumentOut"
+              "$ref": "#/components/schemas/InstrumentOut"
             },
             "title": "Items",
             "type": "array"
@@ -10342,392 +11250,6 @@
           "value"
         ],
         "title": "YearValue",
-        "type": "object"
-      },
-      "app__modules__forex__calendar__api__RiskOut": {
-        "properties": {
-          "at": {
-            "format": "date-time",
-            "title": "At",
-            "type": "string"
-          },
-          "in_window": {
-            "title": "In Window",
-            "type": "boolean"
-          },
-          "instrument": {
-            "title": "Instrument",
-            "type": "string"
-          },
-          "notice": {
-            "default": "Scheduled releases with their source and time. Confirmed values (actual, previous) are facts as published; the consensus forecast is an expectation; commentary is not data. A risk window marks when prices often move around a release; it is not a prediction. DEMO items are fictional.",
-            "title": "Notice",
-            "type": "string"
-          },
-          "windows": {
-            "items": {
-              "$ref": "#/components/schemas/WindowOut"
-            },
-            "title": "Windows",
-            "type": "array"
-          }
-        },
-        "required": [
-          "instrument",
-          "at",
-          "in_window",
-          "windows"
-        ],
-        "title": "RiskOut",
-        "type": "object"
-      },
-      "app__modules__forex__marketdata__schemas__InstrumentOut": {
-        "properties": {
-          "base": {
-            "title": "Base",
-            "type": "string"
-          },
-          "code": {
-            "examples": [
-              "EUR_USD"
-            ],
-            "pattern": "^[A-Z]{3}_[A-Z]{3}$",
-            "title": "Code",
-            "type": "string"
-          },
-          "default_data_type": {
-            "description": "What a licensed provider's price for this pair is by default; the development feed labels every price simulated",
-            "enum": [
-              "tradable_quote",
-              "indicative_rate"
-            ],
-            "title": "Default Data Type",
-            "type": "string"
-          },
-          "display_precision": {
-            "description": "Decimals a price is shown with",
-            "title": "Display Precision",
-            "type": "integer"
-          },
-          "liquidity_tier": {
-            "enum": [
-              "major",
-              "minor",
-              "exotic"
-            ],
-            "title": "Liquidity Tier",
-            "type": "string"
-          },
-          "pip_location": {
-            "description": "A pip is 10 to this power of the quote currency",
-            "title": "Pip Location",
-            "type": "integer"
-          },
-          "quote": {
-            "title": "Quote",
-            "type": "string"
-          },
-          "spec_version": {
-            "title": "Spec Version",
-            "type": "integer"
-          }
-        },
-        "required": [
-          "code",
-          "base",
-          "quote",
-          "pip_location",
-          "display_precision",
-          "liquidity_tier",
-          "default_data_type",
-          "spec_version"
-        ],
-        "title": "InstrumentOut",
-        "type": "object"
-      },
-      "app__modules__portfolio__analytics_schemas__RiskOut": {
-        "properties": {
-          "as_of": {
-            "format": "date-time",
-            "title": "As Of",
-            "type": "string"
-          },
-          "assumed_deposit_count": {
-            "description": "Postings that needed cash no recorded deposit provided; each is treated as a deposit on its date",
-            "title": "Assumed Deposit Count",
-            "type": "integer"
-          },
-          "currency": {
-            "title": "Currency",
-            "type": "string"
-          },
-          "end": {
-            "format": "date",
-            "title": "End",
-            "type": "string"
-          },
-          "frequency": {
-            "enum": [
-              "daily",
-              "weekly",
-              "monthly"
-            ],
-            "title": "Frequency",
-            "type": "string"
-          },
-          "incomplete_points": {
-            "title": "Incomplete Points",
-            "type": "integer"
-          },
-          "max_drawdown": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/DrawdownOut"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "notice": {
-            "title": "Notice",
-            "type": "string"
-          },
-          "period_volatility_percent": {
-            "anyOf": [
-              {
-                "examples": [
-                  "1234.50"
-                ],
-                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Period Volatility Percent"
-          },
-          "points": {
-            "items": {
-              "$ref": "#/components/schemas/SeriesPointOut"
-            },
-            "title": "Points",
-            "type": "array"
-          },
-          "portfolio_id": {
-            "format": "uuid",
-            "title": "Portfolio Id",
-            "type": "string"
-          },
-          "returns": {
-            "description": "Number of period returns measured",
-            "title": "Returns",
-            "type": "integer"
-          },
-          "start": {
-            "format": "date",
-            "title": "Start",
-            "type": "string"
-          },
-          "status": {
-            "enum": [
-              "ok",
-              "insufficient_data",
-              "incomplete_data",
-              "undefined_period"
-            ],
-            "title": "Status",
-            "type": "string"
-          },
-          "time_weighted_annualized_percent": {
-            "anyOf": [
-              {
-                "examples": [
-                  "1234.50"
-                ],
-                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "Only for ranges of at least a year",
-            "title": "Time Weighted Annualized Percent"
-          },
-          "time_weighted_return_percent": {
-            "anyOf": [
-              {
-                "examples": [
-                  "1234.50"
-                ],
-                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Time Weighted Return Percent"
-          },
-          "volatility_percent": {
-            "anyOf": [
-              {
-                "examples": [
-                  "1234.50"
-                ],
-                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "Annualised",
-            "title": "Volatility Percent"
-          }
-        },
-        "required": [
-          "portfolio_id",
-          "currency",
-          "frequency",
-          "start",
-          "end",
-          "status",
-          "points",
-          "returns",
-          "volatility_percent",
-          "period_volatility_percent",
-          "max_drawdown",
-          "time_weighted_return_percent",
-          "time_weighted_annualized_percent",
-          "incomplete_points",
-          "assumed_deposit_count",
-          "as_of",
-          "notice"
-        ],
-        "title": "RiskOut",
-        "type": "object"
-      },
-      "app__modules__universe__schemas__InstrumentOut": {
-        "properties": {
-          "asset_class": {
-            "title": "Asset Class",
-            "type": "string"
-          },
-          "asset_id": {
-            "format": "uuid",
-            "title": "Asset Id",
-            "type": "string"
-          },
-          "country": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Country"
-          },
-          "currency": {
-            "title": "Currency",
-            "type": "string"
-          },
-          "data_as_of": {
-            "format": "date-time",
-            "title": "Data As Of",
-            "type": "string"
-          },
-          "eligibility": {
-            "$ref": "#/components/schemas/EligibilityOut"
-          },
-          "is_demo": {
-            "description": "Fictional instrument for demo and development",
-            "title": "Is Demo",
-            "type": "boolean"
-          },
-          "jurisdictions": {
-            "description": "Where the source says it is offered",
-            "items": {
-              "type": "string"
-            },
-            "title": "Jurisdictions",
-            "type": "array"
-          },
-          "licence_status": {
-            "enum": [
-              "demo",
-              "unconfirmed",
-              "licensed"
-            ],
-            "title": "Licence Status",
-            "type": "string"
-          },
-          "liquidity": {
-            "description": "Assumed from the asset class",
-            "enum": [
-              "immediate",
-              "market",
-              "term",
-              "illiquid",
-              "unknown"
-            ],
-            "title": "Liquidity",
-            "type": "string"
-          },
-          "minimum_investment": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/Money"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "name": {
-            "title": "Name",
-            "type": "string"
-          },
-          "risk_level": {
-            "description": "The source's classification, 1 lowest",
-            "maximum": 5.0,
-            "minimum": 1.0,
-            "title": "Risk Level",
-            "type": "integer"
-          },
-          "symbol": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Symbol"
-          }
-        },
-        "required": [
-          "asset_id",
-          "symbol",
-          "name",
-          "asset_class",
-          "currency",
-          "country",
-          "risk_level",
-          "liquidity",
-          "jurisdictions",
-          "minimum_investment",
-          "is_demo",
-          "licence_status",
-          "data_as_of",
-          "eligibility"
-        ],
-        "title": "InstrumentOut",
         "type": "object"
       }
     },
@@ -12978,7 +13500,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/app__modules__forex__calendar__api__RiskOut"
+                  "$ref": "#/components/schemas/ForexEventRiskOut"
                 }
               }
             },
@@ -13442,6 +13964,217 @@
           }
         ],
         "summary": "The active currency pairs and how each is quoted",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/opportunities": {
+      "get": {
+        "description": "The best setup of each active pair on the timeframe, ranked by score, with the market condition, opportunity type, risk, every factor with its weight and contribution, illustrative levels, costs and freshness. Candidates with stale data are listed under `excluded`. Filters: setup, risk, tier.",
+        "operationId": "opportunities_api_v1_forex_opportunities_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "timeframe",
+            "required": false,
+            "schema": {
+              "default": "1H",
+              "enum": [
+                "5m",
+                "15m",
+                "1H",
+                "4H",
+                "1D"
+              ],
+              "title": "Timeframe",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "setup",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "trend_continuation",
+                    "breakout",
+                    "reversal",
+                    "range",
+                    "momentum",
+                    "mean_reversion"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Setup"
+            }
+          },
+          {
+            "in": "query",
+            "name": "risk",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "low",
+                    "medium",
+                    "medium_high",
+                    "high"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Risk"
+            }
+          },
+          {
+            "in": "query",
+            "name": "tier",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "major",
+                    "minor",
+                    "exotic"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Tier"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RankingOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such instrument, or the forex module is switched off for this user"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Opportunity Ranking: research candidates ranked by a published score",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/opportunities/setups": {
+      "get": {
+        "description": "All setups that hold on the latest closed bar of the pair, best first. Research candidates only; levels are illustrative.",
+        "operationId": "pair_setups_api_v1_forex_opportunities_setups_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "instrument",
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Z]{3}_[A-Z]{3}$",
+              "title": "Instrument",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "timeframe",
+            "required": false,
+            "schema": {
+              "default": "1H",
+              "enum": [
+                "5m",
+                "15m",
+                "1H",
+                "4H",
+                "1D"
+              ],
+              "title": "Timeframe",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SetupsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such instrument, or the forex module is switched off for this user"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Every setup found for one pair, with its full explanation",
         "tags": [
           "forex"
         ]
@@ -16107,7 +16840,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/app__modules__portfolio__analytics_schemas__RiskOut"
+                  "$ref": "#/components/schemas/RiskOut"
                 }
               }
             },

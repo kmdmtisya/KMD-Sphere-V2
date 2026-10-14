@@ -20,7 +20,7 @@ from app.modules.forex.marketdata.repository import stored_candles
 from app.modules.forex.marketdata.schemas import (
     CandleOut,
     CandlesOut,
-    InstrumentOut,
+    ForexInstrumentOut,
     InstrumentsOut,
     QuotesOut,
 )
@@ -56,7 +56,7 @@ async def instruments(_: ForexUser, session: SessionDep) -> InstrumentsOut:
     rows = await active_instruments(session)
     return InstrumentsOut(
         items=[
-            InstrumentOut(
+            ForexInstrumentOut(
                 code=r.code,
                 base=r.base,
                 quote=r.quote,

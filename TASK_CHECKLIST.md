@@ -1286,16 +1286,16 @@
   - [x] P13-T05.6 Calibration and interval coverage
   - [x] P13-T05.7 Drift monitoring
   - [x] P13-T05.8 Forecast API
-- [ ] **P13-T06** · FX-06 Strategy, signal engine and opportunity ranking · `NOT_STARTED` ⬜
+- [ ] **P13-T06** · FX-06 Strategy, signal engine and opportunity ranking · `IN_PROGRESS` 🔄
   - Deps: P13-T05 · Wave: W5 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-14T12:57:49+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P13-T06.1 Setup rules
-  - [ ] P13-T06.2 Scoring model and weights
-  - [ ] P13-T06.3 Ranking and market-condition classifier
-  - [ ] P13-T06.4 Explanation payload
-  - [ ] P13-T06.5 Ranking API
-  - [ ] P13-T06.6 Tests
+  - [x] P13-T06.1 Setup rules
+  - [x] P13-T06.2 Scoring model and weights
+  - [x] P13-T06.3 Ranking and market-condition classifier
+  - [x] P13-T06.4 Explanation payload
+  - [x] P13-T06.5 Ranking API
+  - [x] P13-T06.6 Tests
 - [ ] **P13-T07** · FX-07 Trade risk management engine · `NOT_STARTED` ⬜
   - Deps: P13-T06 · Wave: W6 · Track: BE · Size: L · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —

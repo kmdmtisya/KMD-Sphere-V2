@@ -22,7 +22,7 @@ DataTypeName = Literal["tradable_quote", "indicative_rate", "delayed", "simulate
 FeedStatusName = Literal["connected", "degraded", "disconnected"]
 
 
-class InstrumentOut(BaseModel):
+class ForexInstrumentOut(BaseModel):
     code: str = Field(pattern=INSTRUMENT_PATTERN, examples=["EUR_USD"])
     base: str
     quote: str
@@ -37,7 +37,7 @@ class InstrumentOut(BaseModel):
 
 
 class InstrumentsOut(BaseModel):
-    items: list[InstrumentOut]
+    items: list[ForexInstrumentOut]
     notice: str = NOTICE
 
 
