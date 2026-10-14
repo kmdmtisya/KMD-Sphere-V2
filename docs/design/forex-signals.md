@@ -70,5 +70,5 @@ The ranking is computed on request from stored data: about a second for 12 pairs
 ## 4. Open items
 
 - **Strategy history** waits for P13-T08 backtests.
-- **Costs** cover only the latest spread. Swap and commission models come with the risk engine (P13-T07).
+- **Costs** in the ranking cover only the latest spread. The risk calculator (P13-T07, [forex-risk.md](forex-risk.md)) adds slippage and commission from the contract specifications; swaps are not modelled yet.
 - **With the simulated feed,** setups reflect the simulator's daily wave. Items carry the `simulated` data type and a risk line saying so.

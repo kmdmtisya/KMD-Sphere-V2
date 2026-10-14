@@ -3732,6 +3732,251 @@
         "title": "ForecastValues",
         "type": "object"
       },
+      "ForexContractSpecOut": {
+        "properties": {
+          "commission_per_lot_side": {
+            "description": "Quote currency",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Commission Per Lot Side",
+            "type": "string"
+          },
+          "contract_size": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Contract Size",
+            "type": "string"
+          },
+          "instrument": {
+            "title": "Instrument",
+            "type": "string"
+          },
+          "lot_step": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Lot Step",
+            "type": "string"
+          },
+          "margin_rate": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Margin Rate",
+            "type": "string"
+          },
+          "max_leverage": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Max Leverage",
+            "type": "string"
+          },
+          "max_lots": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Max Lots",
+            "type": "string"
+          },
+          "min_lots": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Min Lots",
+            "type": "string"
+          },
+          "review_status": {
+            "enum": [
+              "unreviewed",
+              "reviewed"
+            ],
+            "title": "Review Status",
+            "type": "string"
+          },
+          "reviewed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewed At"
+          },
+          "reviewed_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewed By"
+          },
+          "slippage_pips": {
+            "description": "Assumed per fill",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Slippage Pips",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "instrument",
+          "version",
+          "contract_size",
+          "lot_step",
+          "min_lots",
+          "max_lots",
+          "margin_rate",
+          "max_leverage",
+          "commission_per_lot_side",
+          "slippage_pips",
+          "review_status",
+          "reviewed_by",
+          "reviewed_at"
+        ],
+        "title": "ForexContractSpecOut",
+        "type": "object"
+      },
+      "ForexContractSpecsOut": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ForexContractSpecOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "note": {
+            "default": "Unreviewed specifications are development defaults, not a broker's terms.",
+            "title": "Note",
+            "type": "string"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "ForexContractSpecsOut",
+        "type": "object"
+      },
+      "ForexConversion": {
+        "properties": {
+          "as_of": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "As Of"
+          },
+          "data_types": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Data Types",
+            "type": "array"
+          },
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "rate": {
+            "description": "1 unit of the quote currency in the account currency",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Rate",
+            "type": "string"
+          },
+          "stale": {
+            "title": "Stale",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "rate",
+          "path",
+          "as_of",
+          "data_types",
+          "stale"
+        ],
+        "title": "ForexConversion",
+        "type": "object"
+      },
+      "ForexCosts": {
+        "properties": {
+          "commission": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Commission",
+            "type": "string"
+          },
+          "note": {
+            "default": "Spread from the latest fresh quote (zero and warned when unknown), slippage and commission from the contract specification, each for entry and exit. Swaps and financing are not included.",
+            "title": "Note",
+            "type": "string"
+          },
+          "slippage": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Slippage",
+            "type": "string"
+          },
+          "spread": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Spread",
+            "type": "string"
+          },
+          "total": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Total",
+            "type": "string"
+          }
+        },
+        "required": [
+          "spread",
+          "slippage",
+          "commission",
+          "total"
+        ],
+        "title": "ForexCosts",
+        "type": "object"
+      },
       "ForexEventRiskOut": {
         "properties": {
           "at": {
@@ -3767,6 +4012,29 @@
           "windows"
         ],
         "title": "ForexEventRiskOut",
+        "type": "object"
+      },
+      "ForexExposure": {
+        "properties": {
+          "amount": {
+            "description": "Signed: positive long, negative short",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Amount",
+            "type": "string"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          }
+        },
+        "required": [
+          "currency",
+          "amount"
+        ],
+        "title": "ForexExposure",
         "type": "object"
       },
       "ForexFactorOut": {
@@ -3916,6 +4184,187 @@
           "spec_version"
         ],
         "title": "ForexInstrumentOut",
+        "type": "object"
+      },
+      "ForexLossProfit": {
+        "properties": {
+          "loss_after_costs": {
+            "description": "Planned loss at the stop with costs; gaps can exceed it",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Loss After Costs",
+            "type": "string"
+          },
+          "loss_before_costs": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Loss Before Costs",
+            "type": "string"
+          },
+          "profit_after_costs": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Profit After Costs"
+          },
+          "profit_before_costs": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Profit Before Costs"
+          },
+          "risk_amount": {
+            "description": "Balance x risk percent",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Risk Amount",
+            "type": "string"
+          },
+          "risk_reward_after_costs": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Risk Reward After Costs"
+          },
+          "risk_reward_before_costs": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Risk Reward Before Costs"
+          },
+          "stop_pips": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Stop Pips",
+            "type": "string"
+          },
+          "target_pips": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Pips"
+          }
+        },
+        "required": [
+          "risk_amount",
+          "stop_pips",
+          "target_pips",
+          "loss_before_costs",
+          "loss_after_costs",
+          "profit_before_costs",
+          "profit_after_costs",
+          "risk_reward_before_costs",
+          "risk_reward_after_costs"
+        ],
+        "title": "ForexLossProfit",
+        "type": "object"
+      },
+      "ForexMargin": {
+        "properties": {
+          "margin": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Margin",
+            "type": "string"
+          },
+          "margin_use_percent": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Margin Use Percent",
+            "type": "string"
+          },
+          "max_leverage": {
+            "description": "1 / margin rate of the specification",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Max Leverage",
+            "type": "string"
+          },
+          "notional": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Notional",
+            "type": "string"
+          },
+          "position_leverage": {
+            "description": "Notional / balance",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Position Leverage",
+            "type": "string"
+          }
+        },
+        "required": [
+          "notional",
+          "margin",
+          "margin_use_percent",
+          "position_leverage",
+          "max_leverage"
+        ],
+        "title": "ForexMargin",
         "type": "object"
       },
       "ForexOpportunityOut": {
@@ -4086,6 +4535,363 @@
           "rule_version"
         ],
         "title": "ForexOpportunityOut",
+        "type": "object"
+      },
+      "ForexPipValue": {
+        "properties": {
+          "per_lot_account_currency": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Per Lot Account Currency",
+            "type": "string"
+          },
+          "per_lot_quote_currency": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Per Lot Quote Currency",
+            "type": "string"
+          },
+          "pip_size": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Pip Size",
+            "type": "string"
+          },
+          "quote_currency": {
+            "title": "Quote Currency",
+            "type": "string"
+          }
+        },
+        "required": [
+          "pip_size",
+          "per_lot_quote_currency",
+          "per_lot_account_currency",
+          "quote_currency"
+        ],
+        "title": "ForexPipValue",
+        "type": "object"
+      },
+      "ForexPositionSize": {
+        "properties": {
+          "lots": {
+            "description": "Standard lots, a multiple of the lot step",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Lots",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "sized",
+              "below_minimum",
+              "capped_at_maximum"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "units": {
+            "description": "Base-currency units",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Units",
+            "type": "string"
+          }
+        },
+        "required": [
+          "units",
+          "lots",
+          "status"
+        ],
+        "title": "ForexPositionSize",
+        "type": "object"
+      },
+      "ForexRiskLimits": {
+        "properties": {
+          "max_leverage": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Max Leverage",
+            "type": "string"
+          },
+          "max_margin_use_percent": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Max Margin Use Percent",
+            "type": "string"
+          },
+          "max_risk_percent": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Max Risk Percent",
+            "type": "string"
+          }
+        },
+        "required": [
+          "max_risk_percent",
+          "max_leverage",
+          "max_margin_use_percent"
+        ],
+        "title": "ForexRiskLimits",
+        "type": "object"
+      },
+      "ForexRiskOut": {
+        "properties": {
+          "account_currency": {
+            "title": "Account Currency",
+            "type": "string"
+          },
+          "account_impact_percent": {
+            "description": "Loss after costs / balance",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Account Impact Percent",
+            "type": "string"
+          },
+          "conversion": {
+            "$ref": "#/components/schemas/ForexConversion"
+          },
+          "costs": {
+            "$ref": "#/components/schemas/ForexCosts"
+          },
+          "direction": {
+            "enum": [
+              "long",
+              "short"
+            ],
+            "title": "Direction",
+            "type": "string"
+          },
+          "disclosures": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Disclosures",
+            "type": "array"
+          },
+          "exposure": {
+            "items": {
+              "$ref": "#/components/schemas/ForexExposure"
+            },
+            "title": "Exposure",
+            "type": "array"
+          },
+          "exposure_percent": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Exposure Percent",
+            "type": "string"
+          },
+          "instrument": {
+            "title": "Instrument",
+            "type": "string"
+          },
+          "limits": {
+            "$ref": "#/components/schemas/ForexRiskLimits"
+          },
+          "margin": {
+            "$ref": "#/components/schemas/ForexMargin"
+          },
+          "notice": {
+            "default": "A position-size and risk calculator for study and paper trading. Not advice and not a recommendation; WealthSphere places no trades. Values are estimates.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "outcome": {
+            "$ref": "#/components/schemas/ForexLossProfit"
+          },
+          "pip_value": {
+            "$ref": "#/components/schemas/ForexPipValue"
+          },
+          "size": {
+            "$ref": "#/components/schemas/ForexPositionSize"
+          },
+          "specification": {
+            "$ref": "#/components/schemas/ForexSpecRef"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "instrument",
+          "direction",
+          "account_currency",
+          "size",
+          "pip_value",
+          "outcome",
+          "costs",
+          "margin",
+          "account_impact_percent",
+          "exposure",
+          "exposure_percent",
+          "conversion",
+          "specification",
+          "limits",
+          "warnings",
+          "disclosures"
+        ],
+        "title": "ForexRiskOut",
+        "type": "object"
+      },
+      "ForexRiskRequest": {
+        "properties": {
+          "account_currency": {
+            "examples": [
+              "USD"
+            ],
+            "pattern": "^[A-Z]{3}$",
+            "title": "Account Currency",
+            "type": "string"
+          },
+          "balance": {
+            "description": "Account balance in the account currency",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Balance",
+            "type": "string"
+          },
+          "direction": {
+            "enum": [
+              "long",
+              "short"
+            ],
+            "title": "Direction",
+            "type": "string"
+          },
+          "entry": {
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Entry",
+            "type": "string"
+          },
+          "instrument": {
+            "examples": [
+              "EUR_USD"
+            ],
+            "pattern": "^[A-Z]{3}_[A-Z]{3}$",
+            "title": "Instrument",
+            "type": "string"
+          },
+          "risk_percent": {
+            "description": "Share of the balance to risk, in percent",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Risk Percent",
+            "type": "string"
+          },
+          "stop": {
+            "description": "Stop-loss level; it does not cap the loss (gaps, slippage)",
+            "examples": [
+              "1234.50"
+            ],
+            "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+            "title": "Stop",
+            "type": "string"
+          },
+          "target": {
+            "anyOf": [
+              {
+                "examples": [
+                  "1234.50"
+                ],
+                "pattern": "^-?\\d{1,20}(\\.\\d{1,12})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional take-profit level",
+            "title": "Target"
+          }
+        },
+        "required": [
+          "instrument",
+          "direction",
+          "entry",
+          "stop",
+          "balance",
+          "account_currency",
+          "risk_percent"
+        ],
+        "title": "ForexRiskRequest",
+        "type": "object"
+      },
+      "ForexSpecRef": {
+        "properties": {
+          "review_status": {
+            "enum": [
+              "unreviewed",
+              "reviewed"
+            ],
+            "title": "Review Status",
+            "type": "string"
+          },
+          "reviewed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewed At"
+          },
+          "reviewed_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewed By"
+          },
+          "version": {
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "version",
+          "review_status",
+          "reviewed_by",
+          "reviewed_at"
+        ],
+        "title": "ForexSpecRef",
         "type": "object"
       },
       "Frequency": {
@@ -13655,6 +14461,51 @@
         ]
       }
     },
+    "/api/v1/forex/contract-specs": {
+      "get": {
+        "description": "The active, versioned specification of each active pair: contract size, lot step and limits, margin rate (and the maximum leverage it implies), commission and the slippage assumption, with the review status.",
+        "operationId": "contract_specs_api_v1_forex_contract_specs_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForexContractSpecsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such forex module (switched off) for this user"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "The contract specifications the risk calculator uses",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
     "/api/v1/forex/forecasts": {
       "get": {
         "description": "Horizons 15m, 1h, 4h, 24h and 1w. Unavailable, with the reason, when there is not enough history or drift has disabled the model. Formulas and rules: docs/design/forex-forecasting.md.",
@@ -14410,6 +15261,64 @@
           }
         ],
         "summary": "The latest quote of each pair, with its type, true age and the feed's status",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/risk/calculate": {
+      "post": {
+        "description": "Sizes a hypothetical position so the planned loss at the stop, including costs, stays within the risk percent; the size is rounded down to the lot step. The pip value is converted into the account currency at a stored rate whose path and freshness are returned. Warnings cover limits, margin, leverage, rate quality and unreviewed specifications. Nothing is stored or placed.",
+        "operationId": "calculate_api_v1_forex_risk_calculate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForexRiskRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForexRiskOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such forex module (switched off) for this user"
+          },
+          "422": {
+            "description": "Invalid trade or no stored conversion rate"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Position size, pip value, loss, profit, costs, margin and exposure of a trade idea",
         "tags": [
           "forex"
         ]

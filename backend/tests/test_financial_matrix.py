@@ -44,6 +44,8 @@ FINANCIAL_MODULES = [
     "modules.forex.signals.scoring",
     "modules.forex.signals.setups",
     "modules.forex.signals.ranking",
+    "modules.forex.risk.engine",
+    "modules.forex.risk.conversion",
 ]
 # Sections of financial-methods.md that state formulas (1 to 12): each needs a requirement.
 FORMULA_SECTIONS = range(1, 13)

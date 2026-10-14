@@ -183,6 +183,10 @@ class Settings(BaseSettings):
     ]
     forex_forecast_max_bars: int = Field(default=2000, ge=500, le=10_000)
     forex_forecast_seed: int = 7
+    # Risk calculator limits (P13-T07): exceeding one gives a warning, never a silent change.
+    forex_risk_max_percent: Decimal = Field(default=Decimal(2), gt=0, le=100)
+    forex_risk_max_leverage: Decimal = Field(default=Decimal(30), gt=0, le=1000)
+    forex_risk_max_margin_use_percent: Decimal = Field(default=Decimal(50), gt=0, le=100)
     # Opportunity score weights (P13-T06, published in every ranking response). Positive weights
     # sum to 1; macro_event_risk is a penalty (zero or negative).
     forex_signal_weights: dict[str, Decimal] = Field(

@@ -19,6 +19,7 @@ from app.modules.forex.marketdata.provider import ForexProvider
 from app.modules.forex.marketdata.repository import store_candles, store_quotes
 from app.modules.forex.marketdata.stream import StreamClient
 from app.modules.forex.marketdata.types import FeedStatus, ReceivedQuote, Timeframe
+from app.modules.forex.risk.specs import sync as sync_specs
 
 logger = logging.getLogger(__name__)
 MONTHS_AHEAD = 3  # partitions for this month and the next two
@@ -75,10 +76,12 @@ class ForexFeed:
 async def prepare(
     sessions: async_sessionmaker[AsyncSession], settings: Settings, today: datetime
 ) -> list[str]:
-    """Registry in the database and partitions ahead. Returns the active pairs."""
+    """Registry and contract specifications in the database, and partitions ahead. Returns the
+    active pairs."""
     async with sessions() as session:
         registry = load_registry()
         await sync(session, registry, settings.forex_universe)
+        await sync_specs(session)
         for table in PARTITIONED:
             await ensure_months(session, table, today.date(), MONTHS_AHEAD)
     return [s.code for s in registry.active(settings.forex_universe)]
