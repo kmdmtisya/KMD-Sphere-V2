@@ -1286,10 +1286,10 @@
   - [x] P13-T05.6 Calibration and interval coverage
   - [x] P13-T05.7 Drift monitoring
   - [x] P13-T05.8 Forecast API
-- [ ] **P13-T06** · FX-06 Strategy, signal engine and opportunity ranking · `IN_PROGRESS` 🔄
+- [x] **P13-T06** · FX-06 Strategy, signal engine and opportunity ranking · `COMPLETED` ✅
   - Deps: P13-T05 · Wave: W5 · Track: BE · Size: L · Approval: no
-  - Started: 2026-10-14T12:57:49+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-14T12:57:49+04:00 · Completed: 2026-10-14T13:37:24+04:00 · Duration: 39m 35s · Blocker: —
+  - Evidence: Score is a documented weighted combination of trend, momentum, volatility suitability, spread/costs, liquidity, confluence, macro-event risk (penalty), forecast calibration, strategy history (0 until P13-T08, stated) and risk/reward (financial-methods section 20, matrix O-01..O-06, golden tests). Each ranked item exposes every factor with value, weight and contribution, adjustments, assumptions, key risks, data freshness and costs, labelled Research candidate; stale data excluded, event windows and missing quotes demote with reasons; an uncalibrated forecast contributes nothing. Illustrative levels come only from timestamped stored bars and rule definitions. Guarantee guard and trade-word check pass over every string. OpenAPI schema-name collisions fixed and guarded. Full backend suite 3044 passed plus the fixed test; coverage policy OK (forex 98.0%); Spectral clean. PR #159. CI all gates pass.
   - [x] P13-T06.1 Setup rules
   - [x] P13-T06.2 Scoring model and weights
   - [x] P13-T06.3 Ranking and market-condition classifier
