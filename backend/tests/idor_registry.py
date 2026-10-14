@@ -121,6 +121,43 @@ IDOR_TESTS: dict[tuple[str, str], str] = {
     ("GET", "/api/v1/portfolios/{portfolio_id}/risk"): (
         "tests.test_analytics_api::test_bob_cannot_read_alices_risk"
     ),
+    # Paper trading (P13-T09): every route of another user's account answers 404.
+    ("GET", "/api/v1/forex/paper/accounts/{account_id}"): (
+        "tests.forex.test_paper_api::test_another_users_paper_resources_are_404_on_every_route"
+    ),
+    ("POST", "/api/v1/forex/paper/accounts/{account_id}/close"): (
+        "tests.forex.test_paper_api::test_another_users_paper_resources_are_404_on_every_route"
+    ),
+    ("GET", "/api/v1/forex/paper/accounts/{account_id}/orders"): (
+        "tests.forex.test_paper_api::test_another_users_paper_resources_are_404_on_every_route"
+    ),
+    ("POST", "/api/v1/forex/paper/accounts/{account_id}/orders"): (
+        "tests.forex.test_paper_api::test_another_users_paper_resources_are_404_on_every_route"
+    ),
+    ("POST", "/api/v1/forex/paper/accounts/{account_id}/orders/{order_id}/cancel"): (
+        "tests.forex.test_paper_api::test_another_users_paper_resources_are_404_on_every_route"
+    ),
+    ("GET", "/api/v1/forex/paper/accounts/{account_id}/positions"): (
+        "tests.forex.test_paper_api::test_another_users_paper_resources_are_404_on_every_route"
+    ),
+    ("POST", "/api/v1/forex/paper/accounts/{account_id}/positions/{position_id}/close"): (
+        "tests.forex.test_paper_api::test_another_users_paper_resources_are_404_on_every_route"
+    ),
+    ("PUT", "/api/v1/forex/paper/accounts/{account_id}/positions/{position_id}/levels"): (
+        "tests.forex.test_paper_api::test_another_users_paper_resources_are_404_on_every_route"
+    ),
+    ("GET", "/api/v1/forex/paper/accounts/{account_id}/journal"): (
+        "tests.forex.test_paper_api::test_another_users_paper_resources_are_404_on_every_route"
+    ),
+    ("POST", "/api/v1/forex/paper/accounts/{account_id}/journal"): (
+        "tests.forex.test_paper_api::test_another_users_paper_resources_are_404_on_every_route"
+    ),
+    ("DELETE", "/api/v1/forex/paper/accounts/{account_id}/journal/{entry_id}"): (
+        "tests.forex.test_paper_api::test_another_users_paper_resources_are_404_on_every_route"
+    ),
+    ("GET", "/api/v1/forex/paper/accounts/{account_id}/analytics"): (
+        "tests.forex.test_paper_api::test_another_users_paper_resources_are_404_on_every_route"
+    ),
 }
 
 # Routes whose path parameters identify global reference data, not anyone's resource, with the

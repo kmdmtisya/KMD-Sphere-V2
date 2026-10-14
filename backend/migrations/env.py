@@ -28,6 +28,7 @@ import app.modules.forex.calendar.models  # noqa: E402
 import app.modules.forex.forecast.store  # noqa: E402
 import app.modules.forex.instruments.models  # noqa: E402
 import app.modules.forex.marketdata.models  # noqa: E402
+import app.modules.forex.paper.models  # noqa: E402
 import app.modules.forex.risk.specs  # noqa: E402
 import app.modules.fx.models  # noqa: E402
 import app.modules.fx.snapshot  # noqa: E402

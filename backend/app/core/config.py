@@ -193,6 +193,15 @@ class Settings(BaseSettings):
     forex_risk_max_percent: Decimal = Field(default=Decimal(2), gt=0, le=100)
     forex_risk_max_leverage: Decimal = Field(default=Decimal(30), gt=0, le=1000)
     forex_risk_max_margin_use_percent: Decimal = Field(default=Decimal(50), gt=0, le=100)
+    # Paper trading (P13-T09): accounts per user, the default starting balance (marked as the
+    # default on the account), and the limits that give warnings on a paper order.
+    forex_paper_max_accounts: int = Field(default=5, ge=1, le=20)
+    forex_paper_default_balance: Decimal = Field(default=Decimal(10000), gt=0)
+    forex_paper_min_balance: Decimal = Field(default=Decimal(100), gt=0)
+    forex_paper_max_balance: Decimal = Field(default=Decimal(10_000_000), gt=0)
+    forex_paper_max_daily_loss_percent: Decimal = Field(default=Decimal(5), gt=0, le=100)
+    forex_paper_max_weekly_loss_percent: Decimal = Field(default=Decimal(10), gt=0, le=100)
+    forex_paper_max_currency_exposure_percent: Decimal = Field(default=Decimal(1000), gt=0)
     # Opportunity score weights (P13-T06, published in every ranking response). Positive weights
     # sum to 1; macro_event_risk is a penalty (zero or negative).
     forex_signal_weights: dict[str, Decimal] = Field(

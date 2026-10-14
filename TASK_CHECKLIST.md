@@ -1320,16 +1320,16 @@
   - [x] P13-T08.5 Benchmarks
   - [x] P13-T08.6 Reproducible reports
   - [x] P13-T08.7 Leakage tests
-- [ ] **P13-T09** · FX-09 Paper trading and trade journal · `NOT_STARTED` ⬜
+- [x] **P13-T09** · FX-09 Paper trading and trade journal · `COMPLETED` ✅
   - Deps: P13-T07, P13-T08 · Wave: W7 · Track: BE · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P13-T09.1 Schema and migration
-  - [ ] P13-T09.2 Virtual account and orders
-  - [ ] P13-T09.3 Positions and P/L
-  - [ ] P13-T09.4 Journal and tags
-  - [ ] P13-T09.5 Analytics
-  - [ ] P13-T09.6 Isolation and IDOR tests
+  - Started: 2026-10-14T16:37:53+04:00 · Completed: 2026-10-14T17:41:23+04:00 · Duration: 1h 03m 30s · Blocker: —
+  - Evidence: Paper trading (modules/forex/paper: models, book, quotes, service, analytics, api; migration 0025; minute job forex_paper_evaluate). Separate forex_paper_* tables with no foreign key to or from portfolios, holdings, transactions or net worth; fills at the stored bid or ask with slippage and commission (never the mid), limit orders, stops as market orders (gaps fill beyond), targets at their price, P/L converted at the rates of the triggering quote; journal with tags; analytics as the separate labelled paper series. Every response carries mode PAPER TRADING and the X-Trading-Mode header. Refusals only when unfillable; warnings for risk, leverage, margin use, daily and weekly paper loss and per-currency exposure (deferred from T07; T07 doc corrected). Tests: tests/forex/test_paper_core.py, tests/forex/test_paper_api.py (hand-worked fills and P/L, IDOR on all 12 id routes, net worth unchanged, static isolation, job, flag); integrity suite runs with forex on and sweeps every paper route; matrix E-01..E-06, financial-methods section 23, docs/design/forex-paper-trading.md. Bug found and fixed: blank account name returned 500, now 422. Local: ruff, mypy, OpenAPI and Spectral clean; full suite 3242 passed, 14 skipped, coverage policy OK (forex 98.4%, worker 92.3%); 3 live-Keycloak tests fail locally only (dev Keycloak user requires an OTP; skipped in CI, no identity change). PR #162. CI all gates pass.
+  - [x] P13-T09.1 Schema and migration
+  - [x] P13-T09.2 Virtual account and orders
+  - [x] P13-T09.3 Positions and P/L
+  - [x] P13-T09.4 Journal and tags
+  - [x] P13-T09.5 Analytics
+  - [x] P13-T09.6 Isolation and IDOR tests
 - [ ] **P13-T10** · FX-10 AI Forex Copilot (allow-listed tools) · `NOT_STARTED` ⬜
   - Deps: P13-T09, P10-GATE, P12-GATE · Wave: W8 · Track: AI · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
