@@ -16,6 +16,7 @@ class MoreScreen extends StatelessWidget {
     this.onOpenSettings,
     this.onOpenAlerts,
     this.onOpenConverter,
+    this.onOpenForex,
     this.onOpenGallery,
     super.key,
   });
@@ -26,6 +27,9 @@ class MoreScreen extends StatelessWidget {
   final VoidCallback? onOpenSettings;
   final VoidCallback? onOpenAlerts;
   final VoidCallback? onOpenConverter;
+
+  /// Set only when the forex section is available (DEMO, or switched on on the server).
+  final VoidCallback? onOpenForex;
 
   /// Debug builds only.
   final VoidCallback? onOpenGallery;
@@ -75,6 +79,13 @@ class MoreScreen extends StatelessWidget {
             subtitle: l10n.moreWatchlistAlertsSub,
             onTap: onOpenAlerts,
           ),
+          if (onOpenForex != null)
+            _MoreTile(
+              icon: Icons.candlestick_chart_outlined,
+              title: l10n.fxTitle,
+              subtitle: l10n.fxEntrySubtitle,
+              onTap: onOpenForex,
+            ),
           _Heading(l10n.moreSectionSoon),
           _MoreTile(
             icon: Icons.description_outlined,

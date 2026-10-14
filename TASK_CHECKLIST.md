@@ -1341,20 +1341,20 @@
   - [x] P13-T10.4 Guarantee-language guard
   - [x] P13-T10.5 Evaluation set
   - [x] P13-T10.6 Tests
-- [ ] **P13-T11** · FX-11 Android and iOS Forex Intelligence integration · `NOT_STARTED` ⬜
+- [ ] **P13-T11** · FX-11 Android and iOS Forex Intelligence integration · `IN_PROGRESS` 🔄
   - Deps: P13-T10, P09-GATE · Wave: W9 · Track: MOB · Size: XL · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-14T20:27:01+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P13-T11.1 Navigation and entry points
-  - [ ] P13-T11.2 Overview and live markets
-  - [ ] P13-T11.3 Chart and predictions
-  - [ ] P13-T11.4 Opportunity Ranking Dashboard and scanner
-  - [ ] P13-T11.5 Trade setup and risk calculator
-  - [ ] P13-T11.6 Calendar and backtesting
-  - [ ] P13-T11.7 Paper trading and journal
-  - [ ] P13-T11.8 Copilot and alerts
-  - [ ] P13-T11.9 Streaming resilience
-  - [ ] P13-T11.10 Tests
+  - [x] P13-T11.1 Navigation and entry points
+  - [x] P13-T11.2 Overview and live markets
+  - [x] P13-T11.3 Chart and predictions
+  - [x] P13-T11.4 Opportunity Ranking Dashboard and scanner
+  - [x] P13-T11.5 Trade setup and risk calculator
+  - [x] P13-T11.6 Calendar and backtesting
+  - [x] P13-T11.7 Paper trading and journal
+  - [x] P13-T11.8 Copilot and alerts
+  - [x] P13-T11.9 Streaming resilience
+  - [x] P13-T11.10 Tests
 - [ ] **P13-T12** · FX-12 Forex quality gates verification · `NOT_STARTED` ⬜
   - Deps: P13-T11 · Wave: W10 · Track: QA · Size: M · Approval: no · Gates-done: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19
   - Started: — · Completed: — · Duration: — · Blocker: —

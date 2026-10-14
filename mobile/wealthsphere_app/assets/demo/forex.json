@@ -1,0 +1,2995 @@
+{
+  "demo": true,
+  "as_of": "2026-10-09T08:00:00Z",
+  "notice": "DEMO: illustrative simulated prices and research for exploring the app. Not live market data, not advice, and nothing is traded.",
+  "quotes": {
+    "as_of": "2026-10-09T08:00:00Z",
+    "provider": "demo",
+    "feed_status": "connected",
+    "items": [
+      {
+        "instrument": "EUR_USD",
+        "provider": "demo",
+        "bid": "1.08610",
+        "ask": "1.08622",
+        "mid": "1.08616",
+        "mid_derived": true,
+        "ts_provider": "2026-10-09T07:59:57Z",
+        "ts_received": "2026-10-09T07:59:57Z",
+        "age_seconds": 3,
+        "data_type": "simulated",
+        "quality": "ok",
+        "freshness": "fresh",
+        "feed_status": "connected"
+      },
+      {
+        "instrument": "GBP_USD",
+        "provider": "demo",
+        "bid": "1.26414",
+        "ask": "1.26426",
+        "mid": "1.26420",
+        "mid_derived": true,
+        "ts_provider": "2026-10-09T07:59:57Z",
+        "ts_received": "2026-10-09T07:59:57Z",
+        "age_seconds": 3,
+        "data_type": "simulated",
+        "quality": "ok",
+        "freshness": "fresh",
+        "feed_status": "connected"
+      },
+      {
+        "instrument": "USD_JPY",
+        "provider": "demo",
+        "bid": "149.868",
+        "ask": "149.880",
+        "mid": "149.874",
+        "mid_derived": true,
+        "ts_provider": "2026-10-09T07:59:57Z",
+        "ts_received": "2026-10-09T07:59:57Z",
+        "age_seconds": 3,
+        "data_type": "simulated",
+        "quality": "ok",
+        "freshness": "fresh",
+        "feed_status": "connected"
+      },
+      {
+        "instrument": "AUD_USD",
+        "provider": "demo",
+        "bid": "0.65506",
+        "ask": "0.65518",
+        "mid": "0.65512",
+        "mid_derived": true,
+        "ts_provider": "2026-10-09T07:59:57Z",
+        "ts_received": "2026-10-09T07:59:57Z",
+        "age_seconds": 3,
+        "data_type": "simulated",
+        "quality": "ok",
+        "freshness": "fresh",
+        "feed_status": "connected"
+      },
+      {
+        "instrument": "EUR_GBP",
+        "provider": "demo",
+        "bid": "0.85908",
+        "ask": "0.85928",
+        "mid": "0.85918",
+        "mid_derived": true,
+        "ts_provider": "2026-10-09T07:59:57Z",
+        "ts_received": "2026-10-09T07:59:57Z",
+        "age_seconds": 3,
+        "data_type": "simulated",
+        "quality": "ok",
+        "freshness": "fresh",
+        "feed_status": "connected"
+      },
+      {
+        "instrument": "USD_KES",
+        "provider": "demo",
+        "bid": "128.950",
+        "ask": "129.350",
+        "mid": "129.150",
+        "mid_derived": true,
+        "ts_provider": "2026-10-09T07:59:57Z",
+        "ts_received": "2026-10-09T07:59:57Z",
+        "age_seconds": 900,
+        "data_type": "simulated",
+        "quality": "stale",
+        "freshness": "stale",
+        "feed_status": "connected"
+      }
+    ],
+    "notice": "DEMO: illustrative simulated prices and research for exploring the app. Not live market data, not advice, and nothing is traded."
+  },
+  "candles": {
+    "EUR_USD": [
+      {
+        "ts": "2026-10-07T08:00:00Z",
+        "open": "1.08186",
+        "high": "1.08216",
+        "low": "1.08136",
+        "close": "1.08166",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T09:00:00Z",
+        "open": "1.08233",
+        "high": "1.08273",
+        "low": "1.08203",
+        "close": "1.08243",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T10:00:00Z",
+        "open": "1.08220",
+        "high": "1.08250",
+        "low": "1.08180",
+        "close": "1.08210",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T11:00:00Z",
+        "open": "1.08267",
+        "high": "1.08317",
+        "low": "1.08237",
+        "close": "1.08287",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T12:00:00Z",
+        "open": "1.08254",
+        "high": "1.08284",
+        "low": "1.08224",
+        "close": "1.08254",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T13:00:00Z",
+        "open": "1.08241",
+        "high": "1.08271",
+        "low": "1.08191",
+        "close": "1.08221",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T14:00:00Z",
+        "open": "1.08288",
+        "high": "1.08328",
+        "low": "1.08258",
+        "close": "1.08298",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T15:00:00Z",
+        "open": "1.08275",
+        "high": "1.08305",
+        "low": "1.08235",
+        "close": "1.08265",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T16:00:00Z",
+        "open": "1.08212",
+        "high": "1.08262",
+        "low": "1.08182",
+        "close": "1.08232",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T17:00:00Z",
+        "open": "1.08309",
+        "high": "1.08339",
+        "low": "1.08279",
+        "close": "1.08309",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T18:00:00Z",
+        "open": "1.08296",
+        "high": "1.08326",
+        "low": "1.08246",
+        "close": "1.08276",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T19:00:00Z",
+        "open": "1.08233",
+        "high": "1.08273",
+        "low": "1.08203",
+        "close": "1.08243",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T20:00:00Z",
+        "open": "1.08330",
+        "high": "1.08360",
+        "low": "1.08290",
+        "close": "1.08320",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T21:00:00Z",
+        "open": "1.08267",
+        "high": "1.08317",
+        "low": "1.08237",
+        "close": "1.08287",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T22:00:00Z",
+        "open": "1.08364",
+        "high": "1.08394",
+        "low": "1.08334",
+        "close": "1.08364",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T23:00:00Z",
+        "open": "1.08351",
+        "high": "1.08381",
+        "low": "1.08301",
+        "close": "1.08331",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T00:00:00Z",
+        "open": "1.08288",
+        "high": "1.08328",
+        "low": "1.08258",
+        "close": "1.08298",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T01:00:00Z",
+        "open": "1.08385",
+        "high": "1.08415",
+        "low": "1.08345",
+        "close": "1.08375",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T02:00:00Z",
+        "open": "1.08322",
+        "high": "1.08372",
+        "low": "1.08292",
+        "close": "1.08342",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T03:00:00Z",
+        "open": "1.08309",
+        "high": "1.08339",
+        "low": "1.08279",
+        "close": "1.08309",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T04:00:00Z",
+        "open": "1.08406",
+        "high": "1.08436",
+        "low": "1.08356",
+        "close": "1.08386",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T05:00:00Z",
+        "open": "1.08343",
+        "high": "1.08383",
+        "low": "1.08313",
+        "close": "1.08353",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T06:00:00Z",
+        "open": "1.08330",
+        "high": "1.08360",
+        "low": "1.08290",
+        "close": "1.08320",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T07:00:00Z",
+        "open": "1.08377",
+        "high": "1.08427",
+        "low": "1.08347",
+        "close": "1.08397",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T08:00:00Z",
+        "open": "1.08364",
+        "high": "1.08394",
+        "low": "1.08334",
+        "close": "1.08364",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T09:00:00Z",
+        "open": "1.08461",
+        "high": "1.08491",
+        "low": "1.08411",
+        "close": "1.08441",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T10:00:00Z",
+        "open": "1.08398",
+        "high": "1.08438",
+        "low": "1.08368",
+        "close": "1.08408",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T11:00:00Z",
+        "open": "1.08385",
+        "high": "1.08415",
+        "low": "1.08345",
+        "close": "1.08375",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T12:00:00Z",
+        "open": "1.08432",
+        "high": "1.08482",
+        "low": "1.08402",
+        "close": "1.08452",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T13:00:00Z",
+        "open": "1.08419",
+        "high": "1.08449",
+        "low": "1.08389",
+        "close": "1.08419",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T14:00:00Z",
+        "open": "1.08406",
+        "high": "1.08436",
+        "low": "1.08356",
+        "close": "1.08386",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T15:00:00Z",
+        "open": "1.08453",
+        "high": "1.08493",
+        "low": "1.08423",
+        "close": "1.08463",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T16:00:00Z",
+        "open": "1.08440",
+        "high": "1.08470",
+        "low": "1.08400",
+        "close": "1.08430",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T17:00:00Z",
+        "open": "1.08377",
+        "high": "1.08427",
+        "low": "1.08347",
+        "close": "1.08397",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T18:00:00Z",
+        "open": "1.08474",
+        "high": "1.08504",
+        "low": "1.08444",
+        "close": "1.08474",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T19:00:00Z",
+        "open": "1.08461",
+        "high": "1.08491",
+        "low": "1.08411",
+        "close": "1.08441",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T20:00:00Z",
+        "open": "1.08508",
+        "high": "1.08548",
+        "low": "1.08478",
+        "close": "1.08518",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T21:00:00Z",
+        "open": "1.08495",
+        "high": "1.08525",
+        "low": "1.08455",
+        "close": "1.08485",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T22:00:00Z",
+        "open": "1.08432",
+        "high": "1.08482",
+        "low": "1.08402",
+        "close": "1.08452",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T23:00:00Z",
+        "open": "1.08529",
+        "high": "1.08559",
+        "low": "1.08499",
+        "close": "1.08529",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T00:00:00Z",
+        "open": "1.08516",
+        "high": "1.08546",
+        "low": "1.08466",
+        "close": "1.08496",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T01:00:00Z",
+        "open": "1.08453",
+        "high": "1.08493",
+        "low": "1.08423",
+        "close": "1.08463",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T02:00:00Z",
+        "open": "1.08550",
+        "high": "1.08580",
+        "low": "1.08510",
+        "close": "1.08540",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T03:00:00Z",
+        "open": "1.08487",
+        "high": "1.08537",
+        "low": "1.08457",
+        "close": "1.08507",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T04:00:00Z",
+        "open": "1.08474",
+        "high": "1.08504",
+        "low": "1.08444",
+        "close": "1.08474",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T05:00:00Z",
+        "open": "1.08571",
+        "high": "1.08601",
+        "low": "1.08521",
+        "close": "1.08551",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T06:00:00Z",
+        "open": "1.08508",
+        "high": "1.08548",
+        "low": "1.08478",
+        "close": "1.08518",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T07:00:00Z",
+        "open": "1.08605",
+        "high": "1.08635",
+        "low": "1.08565",
+        "close": "1.08595",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T08:00:00Z",
+        "open": "1.08542",
+        "high": "1.08592",
+        "low": "1.08512",
+        "close": "1.08562",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T09:00:00Z",
+        "open": "1.08529",
+        "high": "1.08559",
+        "low": "1.08499",
+        "close": "1.08529",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T10:00:00Z",
+        "open": "1.08626",
+        "high": "1.08656",
+        "low": "1.08576",
+        "close": "1.08606",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T11:00:00Z",
+        "open": "1.08563",
+        "high": "1.08603",
+        "low": "1.08533",
+        "close": "1.08573",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T12:00:00Z",
+        "open": "1.08550",
+        "high": "1.08580",
+        "low": "1.08510",
+        "close": "1.08540",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T13:00:00Z",
+        "open": "1.08597",
+        "high": "1.08647",
+        "low": "1.08567",
+        "close": "1.08617",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T14:00:00Z",
+        "open": "1.08584",
+        "high": "1.08614",
+        "low": "1.08554",
+        "close": "1.08584",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T15:00:00Z",
+        "open": "1.08571",
+        "high": "1.08601",
+        "low": "1.08521",
+        "close": "1.08551",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T16:00:00Z",
+        "open": "1.08618",
+        "high": "1.08658",
+        "low": "1.08588",
+        "close": "1.08628",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T17:00:00Z",
+        "open": "1.08605",
+        "high": "1.08635",
+        "low": "1.08565",
+        "close": "1.08595",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T18:00:00Z",
+        "open": "1.08652",
+        "high": "1.08702",
+        "low": "1.08622",
+        "close": "1.08672",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T19:00:00Z",
+        "open": "1.08639",
+        "high": "1.08669",
+        "low": "1.08609",
+        "close": "1.08639",
+        "volume": null,
+        "data_type": "simulated"
+      }
+    ],
+    "GBP_USD": [
+      {
+        "ts": "2026-10-07T08:00:00Z",
+        "open": "1.25990",
+        "high": "1.26020",
+        "low": "1.25940",
+        "close": "1.25970",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T09:00:00Z",
+        "open": "1.26037",
+        "high": "1.26077",
+        "low": "1.26007",
+        "close": "1.26047",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T10:00:00Z",
+        "open": "1.26024",
+        "high": "1.26054",
+        "low": "1.25984",
+        "close": "1.26014",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T11:00:00Z",
+        "open": "1.26071",
+        "high": "1.26121",
+        "low": "1.26041",
+        "close": "1.26091",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T12:00:00Z",
+        "open": "1.26058",
+        "high": "1.26088",
+        "low": "1.26028",
+        "close": "1.26058",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T13:00:00Z",
+        "open": "1.26045",
+        "high": "1.26075",
+        "low": "1.25995",
+        "close": "1.26025",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T14:00:00Z",
+        "open": "1.26092",
+        "high": "1.26132",
+        "low": "1.26062",
+        "close": "1.26102",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T15:00:00Z",
+        "open": "1.26079",
+        "high": "1.26109",
+        "low": "1.26039",
+        "close": "1.26069",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T16:00:00Z",
+        "open": "1.26016",
+        "high": "1.26066",
+        "low": "1.25986",
+        "close": "1.26036",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T17:00:00Z",
+        "open": "1.26113",
+        "high": "1.26143",
+        "low": "1.26083",
+        "close": "1.26113",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T18:00:00Z",
+        "open": "1.26100",
+        "high": "1.26130",
+        "low": "1.26050",
+        "close": "1.26080",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T19:00:00Z",
+        "open": "1.26037",
+        "high": "1.26077",
+        "low": "1.26007",
+        "close": "1.26047",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T20:00:00Z",
+        "open": "1.26134",
+        "high": "1.26164",
+        "low": "1.26094",
+        "close": "1.26124",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T21:00:00Z",
+        "open": "1.26071",
+        "high": "1.26121",
+        "low": "1.26041",
+        "close": "1.26091",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T22:00:00Z",
+        "open": "1.26168",
+        "high": "1.26198",
+        "low": "1.26138",
+        "close": "1.26168",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T23:00:00Z",
+        "open": "1.26155",
+        "high": "1.26185",
+        "low": "1.26105",
+        "close": "1.26135",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T00:00:00Z",
+        "open": "1.26092",
+        "high": "1.26132",
+        "low": "1.26062",
+        "close": "1.26102",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T01:00:00Z",
+        "open": "1.26189",
+        "high": "1.26219",
+        "low": "1.26149",
+        "close": "1.26179",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T02:00:00Z",
+        "open": "1.26126",
+        "high": "1.26176",
+        "low": "1.26096",
+        "close": "1.26146",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T03:00:00Z",
+        "open": "1.26113",
+        "high": "1.26143",
+        "low": "1.26083",
+        "close": "1.26113",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T04:00:00Z",
+        "open": "1.26210",
+        "high": "1.26240",
+        "low": "1.26160",
+        "close": "1.26190",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T05:00:00Z",
+        "open": "1.26147",
+        "high": "1.26187",
+        "low": "1.26117",
+        "close": "1.26157",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T06:00:00Z",
+        "open": "1.26134",
+        "high": "1.26164",
+        "low": "1.26094",
+        "close": "1.26124",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T07:00:00Z",
+        "open": "1.26181",
+        "high": "1.26231",
+        "low": "1.26151",
+        "close": "1.26201",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T08:00:00Z",
+        "open": "1.26168",
+        "high": "1.26198",
+        "low": "1.26138",
+        "close": "1.26168",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T09:00:00Z",
+        "open": "1.26265",
+        "high": "1.26295",
+        "low": "1.26215",
+        "close": "1.26245",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T10:00:00Z",
+        "open": "1.26202",
+        "high": "1.26242",
+        "low": "1.26172",
+        "close": "1.26212",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T11:00:00Z",
+        "open": "1.26189",
+        "high": "1.26219",
+        "low": "1.26149",
+        "close": "1.26179",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T12:00:00Z",
+        "open": "1.26236",
+        "high": "1.26286",
+        "low": "1.26206",
+        "close": "1.26256",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T13:00:00Z",
+        "open": "1.26223",
+        "high": "1.26253",
+        "low": "1.26193",
+        "close": "1.26223",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T14:00:00Z",
+        "open": "1.26210",
+        "high": "1.26240",
+        "low": "1.26160",
+        "close": "1.26190",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T15:00:00Z",
+        "open": "1.26257",
+        "high": "1.26297",
+        "low": "1.26227",
+        "close": "1.26267",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T16:00:00Z",
+        "open": "1.26244",
+        "high": "1.26274",
+        "low": "1.26204",
+        "close": "1.26234",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T17:00:00Z",
+        "open": "1.26181",
+        "high": "1.26231",
+        "low": "1.26151",
+        "close": "1.26201",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T18:00:00Z",
+        "open": "1.26278",
+        "high": "1.26308",
+        "low": "1.26248",
+        "close": "1.26278",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T19:00:00Z",
+        "open": "1.26265",
+        "high": "1.26295",
+        "low": "1.26215",
+        "close": "1.26245",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T20:00:00Z",
+        "open": "1.26312",
+        "high": "1.26352",
+        "low": "1.26282",
+        "close": "1.26322",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T21:00:00Z",
+        "open": "1.26299",
+        "high": "1.26329",
+        "low": "1.26259",
+        "close": "1.26289",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T22:00:00Z",
+        "open": "1.26236",
+        "high": "1.26286",
+        "low": "1.26206",
+        "close": "1.26256",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T23:00:00Z",
+        "open": "1.26333",
+        "high": "1.26363",
+        "low": "1.26303",
+        "close": "1.26333",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T00:00:00Z",
+        "open": "1.26320",
+        "high": "1.26350",
+        "low": "1.26270",
+        "close": "1.26300",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T01:00:00Z",
+        "open": "1.26257",
+        "high": "1.26297",
+        "low": "1.26227",
+        "close": "1.26267",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T02:00:00Z",
+        "open": "1.26354",
+        "high": "1.26384",
+        "low": "1.26314",
+        "close": "1.26344",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T03:00:00Z",
+        "open": "1.26291",
+        "high": "1.26341",
+        "low": "1.26261",
+        "close": "1.26311",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T04:00:00Z",
+        "open": "1.26278",
+        "high": "1.26308",
+        "low": "1.26248",
+        "close": "1.26278",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T05:00:00Z",
+        "open": "1.26375",
+        "high": "1.26405",
+        "low": "1.26325",
+        "close": "1.26355",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T06:00:00Z",
+        "open": "1.26312",
+        "high": "1.26352",
+        "low": "1.26282",
+        "close": "1.26322",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T07:00:00Z",
+        "open": "1.26409",
+        "high": "1.26439",
+        "low": "1.26369",
+        "close": "1.26399",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T08:00:00Z",
+        "open": "1.26346",
+        "high": "1.26396",
+        "low": "1.26316",
+        "close": "1.26366",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T09:00:00Z",
+        "open": "1.26333",
+        "high": "1.26363",
+        "low": "1.26303",
+        "close": "1.26333",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T10:00:00Z",
+        "open": "1.26430",
+        "high": "1.26460",
+        "low": "1.26380",
+        "close": "1.26410",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T11:00:00Z",
+        "open": "1.26367",
+        "high": "1.26407",
+        "low": "1.26337",
+        "close": "1.26377",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T12:00:00Z",
+        "open": "1.26354",
+        "high": "1.26384",
+        "low": "1.26314",
+        "close": "1.26344",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T13:00:00Z",
+        "open": "1.26401",
+        "high": "1.26451",
+        "low": "1.26371",
+        "close": "1.26421",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T14:00:00Z",
+        "open": "1.26388",
+        "high": "1.26418",
+        "low": "1.26358",
+        "close": "1.26388",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T15:00:00Z",
+        "open": "1.26375",
+        "high": "1.26405",
+        "low": "1.26325",
+        "close": "1.26355",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T16:00:00Z",
+        "open": "1.26422",
+        "high": "1.26462",
+        "low": "1.26392",
+        "close": "1.26432",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T17:00:00Z",
+        "open": "1.26409",
+        "high": "1.26439",
+        "low": "1.26369",
+        "close": "1.26399",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T18:00:00Z",
+        "open": "1.26456",
+        "high": "1.26506",
+        "low": "1.26426",
+        "close": "1.26476",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T19:00:00Z",
+        "open": "1.26443",
+        "high": "1.26473",
+        "low": "1.26413",
+        "close": "1.26443",
+        "volume": null,
+        "data_type": "simulated"
+      }
+    ],
+    "USD_JPY": [
+      {
+        "ts": "2026-10-07T08:00:00Z",
+        "open": "149.444",
+        "high": "149.474",
+        "low": "149.394",
+        "close": "149.424",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T09:00:00Z",
+        "open": "149.491",
+        "high": "149.531",
+        "low": "149.461",
+        "close": "149.501",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T10:00:00Z",
+        "open": "149.478",
+        "high": "149.508",
+        "low": "149.438",
+        "close": "149.468",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T11:00:00Z",
+        "open": "149.525",
+        "high": "149.575",
+        "low": "149.495",
+        "close": "149.545",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T12:00:00Z",
+        "open": "149.512",
+        "high": "149.542",
+        "low": "149.482",
+        "close": "149.512",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T13:00:00Z",
+        "open": "149.499",
+        "high": "149.529",
+        "low": "149.449",
+        "close": "149.479",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T14:00:00Z",
+        "open": "149.546",
+        "high": "149.586",
+        "low": "149.516",
+        "close": "149.556",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T15:00:00Z",
+        "open": "149.533",
+        "high": "149.563",
+        "low": "149.493",
+        "close": "149.523",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T16:00:00Z",
+        "open": "149.470",
+        "high": "149.520",
+        "low": "149.440",
+        "close": "149.490",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T17:00:00Z",
+        "open": "149.567",
+        "high": "149.597",
+        "low": "149.537",
+        "close": "149.567",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T18:00:00Z",
+        "open": "149.554",
+        "high": "149.584",
+        "low": "149.504",
+        "close": "149.534",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T19:00:00Z",
+        "open": "149.491",
+        "high": "149.531",
+        "low": "149.461",
+        "close": "149.501",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T20:00:00Z",
+        "open": "149.588",
+        "high": "149.618",
+        "low": "149.548",
+        "close": "149.578",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T21:00:00Z",
+        "open": "149.525",
+        "high": "149.575",
+        "low": "149.495",
+        "close": "149.545",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T22:00:00Z",
+        "open": "149.622",
+        "high": "149.652",
+        "low": "149.592",
+        "close": "149.622",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T23:00:00Z",
+        "open": "149.609",
+        "high": "149.639",
+        "low": "149.559",
+        "close": "149.589",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T00:00:00Z",
+        "open": "149.546",
+        "high": "149.586",
+        "low": "149.516",
+        "close": "149.556",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T01:00:00Z",
+        "open": "149.643",
+        "high": "149.673",
+        "low": "149.603",
+        "close": "149.633",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T02:00:00Z",
+        "open": "149.580",
+        "high": "149.630",
+        "low": "149.550",
+        "close": "149.600",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T03:00:00Z",
+        "open": "149.567",
+        "high": "149.597",
+        "low": "149.537",
+        "close": "149.567",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T04:00:00Z",
+        "open": "149.664",
+        "high": "149.694",
+        "low": "149.614",
+        "close": "149.644",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T05:00:00Z",
+        "open": "149.601",
+        "high": "149.641",
+        "low": "149.571",
+        "close": "149.611",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T06:00:00Z",
+        "open": "149.588",
+        "high": "149.618",
+        "low": "149.548",
+        "close": "149.578",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T07:00:00Z",
+        "open": "149.635",
+        "high": "149.685",
+        "low": "149.605",
+        "close": "149.655",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T08:00:00Z",
+        "open": "149.622",
+        "high": "149.652",
+        "low": "149.592",
+        "close": "149.622",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T09:00:00Z",
+        "open": "149.719",
+        "high": "149.749",
+        "low": "149.669",
+        "close": "149.699",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T10:00:00Z",
+        "open": "149.656",
+        "high": "149.696",
+        "low": "149.626",
+        "close": "149.666",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T11:00:00Z",
+        "open": "149.643",
+        "high": "149.673",
+        "low": "149.603",
+        "close": "149.633",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T12:00:00Z",
+        "open": "149.690",
+        "high": "149.740",
+        "low": "149.660",
+        "close": "149.710",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T13:00:00Z",
+        "open": "149.677",
+        "high": "149.707",
+        "low": "149.647",
+        "close": "149.677",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T14:00:00Z",
+        "open": "149.664",
+        "high": "149.694",
+        "low": "149.614",
+        "close": "149.644",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T15:00:00Z",
+        "open": "149.711",
+        "high": "149.751",
+        "low": "149.681",
+        "close": "149.721",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T16:00:00Z",
+        "open": "149.698",
+        "high": "149.728",
+        "low": "149.658",
+        "close": "149.688",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T17:00:00Z",
+        "open": "149.635",
+        "high": "149.685",
+        "low": "149.605",
+        "close": "149.655",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T18:00:00Z",
+        "open": "149.732",
+        "high": "149.762",
+        "low": "149.702",
+        "close": "149.732",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T19:00:00Z",
+        "open": "149.719",
+        "high": "149.749",
+        "low": "149.669",
+        "close": "149.699",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T20:00:00Z",
+        "open": "149.766",
+        "high": "149.806",
+        "low": "149.736",
+        "close": "149.776",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T21:00:00Z",
+        "open": "149.753",
+        "high": "149.783",
+        "low": "149.713",
+        "close": "149.743",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T22:00:00Z",
+        "open": "149.690",
+        "high": "149.740",
+        "low": "149.660",
+        "close": "149.710",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T23:00:00Z",
+        "open": "149.787",
+        "high": "149.817",
+        "low": "149.757",
+        "close": "149.787",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T00:00:00Z",
+        "open": "149.774",
+        "high": "149.804",
+        "low": "149.724",
+        "close": "149.754",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T01:00:00Z",
+        "open": "149.711",
+        "high": "149.751",
+        "low": "149.681",
+        "close": "149.721",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T02:00:00Z",
+        "open": "149.808",
+        "high": "149.838",
+        "low": "149.768",
+        "close": "149.798",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T03:00:00Z",
+        "open": "149.745",
+        "high": "149.795",
+        "low": "149.715",
+        "close": "149.765",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T04:00:00Z",
+        "open": "149.732",
+        "high": "149.762",
+        "low": "149.702",
+        "close": "149.732",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T05:00:00Z",
+        "open": "149.829",
+        "high": "149.859",
+        "low": "149.779",
+        "close": "149.809",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T06:00:00Z",
+        "open": "149.766",
+        "high": "149.806",
+        "low": "149.736",
+        "close": "149.776",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T07:00:00Z",
+        "open": "149.863",
+        "high": "149.893",
+        "low": "149.823",
+        "close": "149.853",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T08:00:00Z",
+        "open": "149.800",
+        "high": "149.850",
+        "low": "149.770",
+        "close": "149.820",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T09:00:00Z",
+        "open": "149.787",
+        "high": "149.817",
+        "low": "149.757",
+        "close": "149.787",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T10:00:00Z",
+        "open": "149.884",
+        "high": "149.914",
+        "low": "149.834",
+        "close": "149.864",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T11:00:00Z",
+        "open": "149.821",
+        "high": "149.861",
+        "low": "149.791",
+        "close": "149.831",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T12:00:00Z",
+        "open": "149.808",
+        "high": "149.838",
+        "low": "149.768",
+        "close": "149.798",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T13:00:00Z",
+        "open": "149.855",
+        "high": "149.905",
+        "low": "149.825",
+        "close": "149.875",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T14:00:00Z",
+        "open": "149.842",
+        "high": "149.872",
+        "low": "149.812",
+        "close": "149.842",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T15:00:00Z",
+        "open": "149.829",
+        "high": "149.859",
+        "low": "149.779",
+        "close": "149.809",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T16:00:00Z",
+        "open": "149.876",
+        "high": "149.916",
+        "low": "149.846",
+        "close": "149.886",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T17:00:00Z",
+        "open": "149.863",
+        "high": "149.893",
+        "low": "149.823",
+        "close": "149.853",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T18:00:00Z",
+        "open": "149.910",
+        "high": "149.960",
+        "low": "149.880",
+        "close": "149.930",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T19:00:00Z",
+        "open": "149.897",
+        "high": "149.927",
+        "low": "149.867",
+        "close": "149.897",
+        "volume": null,
+        "data_type": "simulated"
+      }
+    ],
+    "AUD_USD": [
+      {
+        "ts": "2026-10-07T08:00:00Z",
+        "open": "0.65082",
+        "high": "0.65112",
+        "low": "0.65032",
+        "close": "0.65062",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T09:00:00Z",
+        "open": "0.65129",
+        "high": "0.65169",
+        "low": "0.65099",
+        "close": "0.65139",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T10:00:00Z",
+        "open": "0.65116",
+        "high": "0.65146",
+        "low": "0.65076",
+        "close": "0.65106",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T11:00:00Z",
+        "open": "0.65163",
+        "high": "0.65213",
+        "low": "0.65133",
+        "close": "0.65183",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T12:00:00Z",
+        "open": "0.65150",
+        "high": "0.65180",
+        "low": "0.65120",
+        "close": "0.65150",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T13:00:00Z",
+        "open": "0.65137",
+        "high": "0.65167",
+        "low": "0.65087",
+        "close": "0.65117",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T14:00:00Z",
+        "open": "0.65184",
+        "high": "0.65224",
+        "low": "0.65154",
+        "close": "0.65194",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T15:00:00Z",
+        "open": "0.65171",
+        "high": "0.65201",
+        "low": "0.65131",
+        "close": "0.65161",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T16:00:00Z",
+        "open": "0.65108",
+        "high": "0.65158",
+        "low": "0.65078",
+        "close": "0.65128",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T17:00:00Z",
+        "open": "0.65205",
+        "high": "0.65235",
+        "low": "0.65175",
+        "close": "0.65205",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T18:00:00Z",
+        "open": "0.65192",
+        "high": "0.65222",
+        "low": "0.65142",
+        "close": "0.65172",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T19:00:00Z",
+        "open": "0.65129",
+        "high": "0.65169",
+        "low": "0.65099",
+        "close": "0.65139",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T20:00:00Z",
+        "open": "0.65226",
+        "high": "0.65256",
+        "low": "0.65186",
+        "close": "0.65216",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T21:00:00Z",
+        "open": "0.65163",
+        "high": "0.65213",
+        "low": "0.65133",
+        "close": "0.65183",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T22:00:00Z",
+        "open": "0.65260",
+        "high": "0.65290",
+        "low": "0.65230",
+        "close": "0.65260",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-07T23:00:00Z",
+        "open": "0.65247",
+        "high": "0.65277",
+        "low": "0.65197",
+        "close": "0.65227",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T00:00:00Z",
+        "open": "0.65184",
+        "high": "0.65224",
+        "low": "0.65154",
+        "close": "0.65194",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T01:00:00Z",
+        "open": "0.65281",
+        "high": "0.65311",
+        "low": "0.65241",
+        "close": "0.65271",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T02:00:00Z",
+        "open": "0.65218",
+        "high": "0.65268",
+        "low": "0.65188",
+        "close": "0.65238",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T03:00:00Z",
+        "open": "0.65205",
+        "high": "0.65235",
+        "low": "0.65175",
+        "close": "0.65205",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T04:00:00Z",
+        "open": "0.65302",
+        "high": "0.65332",
+        "low": "0.65252",
+        "close": "0.65282",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T05:00:00Z",
+        "open": "0.65239",
+        "high": "0.65279",
+        "low": "0.65209",
+        "close": "0.65249",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T06:00:00Z",
+        "open": "0.65226",
+        "high": "0.65256",
+        "low": "0.65186",
+        "close": "0.65216",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T07:00:00Z",
+        "open": "0.65273",
+        "high": "0.65323",
+        "low": "0.65243",
+        "close": "0.65293",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T08:00:00Z",
+        "open": "0.65260",
+        "high": "0.65290",
+        "low": "0.65230",
+        "close": "0.65260",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T09:00:00Z",
+        "open": "0.65357",
+        "high": "0.65387",
+        "low": "0.65307",
+        "close": "0.65337",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T10:00:00Z",
+        "open": "0.65294",
+        "high": "0.65334",
+        "low": "0.65264",
+        "close": "0.65304",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T11:00:00Z",
+        "open": "0.65281",
+        "high": "0.65311",
+        "low": "0.65241",
+        "close": "0.65271",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T12:00:00Z",
+        "open": "0.65328",
+        "high": "0.65378",
+        "low": "0.65298",
+        "close": "0.65348",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T13:00:00Z",
+        "open": "0.65315",
+        "high": "0.65345",
+        "low": "0.65285",
+        "close": "0.65315",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T14:00:00Z",
+        "open": "0.65302",
+        "high": "0.65332",
+        "low": "0.65252",
+        "close": "0.65282",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T15:00:00Z",
+        "open": "0.65349",
+        "high": "0.65389",
+        "low": "0.65319",
+        "close": "0.65359",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T16:00:00Z",
+        "open": "0.65336",
+        "high": "0.65366",
+        "low": "0.65296",
+        "close": "0.65326",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T17:00:00Z",
+        "open": "0.65273",
+        "high": "0.65323",
+        "low": "0.65243",
+        "close": "0.65293",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T18:00:00Z",
+        "open": "0.65370",
+        "high": "0.65400",
+        "low": "0.65340",
+        "close": "0.65370",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T19:00:00Z",
+        "open": "0.65357",
+        "high": "0.65387",
+        "low": "0.65307",
+        "close": "0.65337",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T20:00:00Z",
+        "open": "0.65404",
+        "high": "0.65444",
+        "low": "0.65374",
+        "close": "0.65414",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T21:00:00Z",
+        "open": "0.65391",
+        "high": "0.65421",
+        "low": "0.65351",
+        "close": "0.65381",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T22:00:00Z",
+        "open": "0.65328",
+        "high": "0.65378",
+        "low": "0.65298",
+        "close": "0.65348",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-08T23:00:00Z",
+        "open": "0.65425",
+        "high": "0.65455",
+        "low": "0.65395",
+        "close": "0.65425",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T00:00:00Z",
+        "open": "0.65412",
+        "high": "0.65442",
+        "low": "0.65362",
+        "close": "0.65392",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T01:00:00Z",
+        "open": "0.65349",
+        "high": "0.65389",
+        "low": "0.65319",
+        "close": "0.65359",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T02:00:00Z",
+        "open": "0.65446",
+        "high": "0.65476",
+        "low": "0.65406",
+        "close": "0.65436",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T03:00:00Z",
+        "open": "0.65383",
+        "high": "0.65433",
+        "low": "0.65353",
+        "close": "0.65403",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T04:00:00Z",
+        "open": "0.65370",
+        "high": "0.65400",
+        "low": "0.65340",
+        "close": "0.65370",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T05:00:00Z",
+        "open": "0.65467",
+        "high": "0.65497",
+        "low": "0.65417",
+        "close": "0.65447",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T06:00:00Z",
+        "open": "0.65404",
+        "high": "0.65444",
+        "low": "0.65374",
+        "close": "0.65414",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T07:00:00Z",
+        "open": "0.65501",
+        "high": "0.65531",
+        "low": "0.65461",
+        "close": "0.65491",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T08:00:00Z",
+        "open": "0.65438",
+        "high": "0.65488",
+        "low": "0.65408",
+        "close": "0.65458",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T09:00:00Z",
+        "open": "0.65425",
+        "high": "0.65455",
+        "low": "0.65395",
+        "close": "0.65425",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T10:00:00Z",
+        "open": "0.65522",
+        "high": "0.65552",
+        "low": "0.65472",
+        "close": "0.65502",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T11:00:00Z",
+        "open": "0.65459",
+        "high": "0.65499",
+        "low": "0.65429",
+        "close": "0.65469",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T12:00:00Z",
+        "open": "0.65446",
+        "high": "0.65476",
+        "low": "0.65406",
+        "close": "0.65436",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T13:00:00Z",
+        "open": "0.65493",
+        "high": "0.65543",
+        "low": "0.65463",
+        "close": "0.65513",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T14:00:00Z",
+        "open": "0.65480",
+        "high": "0.65510",
+        "low": "0.65450",
+        "close": "0.65480",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T15:00:00Z",
+        "open": "0.65467",
+        "high": "0.65497",
+        "low": "0.65417",
+        "close": "0.65447",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T16:00:00Z",
+        "open": "0.65514",
+        "high": "0.65554",
+        "low": "0.65484",
+        "close": "0.65524",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T17:00:00Z",
+        "open": "0.65501",
+        "high": "0.65531",
+        "low": "0.65461",
+        "close": "0.65491",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T18:00:00Z",
+        "open": "0.65548",
+        "high": "0.65598",
+        "low": "0.65518",
+        "close": "0.65568",
+        "volume": null,
+        "data_type": "simulated"
+      },
+      {
+        "ts": "2026-10-09T19:00:00Z",
+        "open": "0.65535",
+        "high": "0.65565",
+        "low": "0.65505",
+        "close": "0.65535",
+        "volume": null,
+        "data_type": "simulated"
+      }
+    ]
+  },
+  "indicators": {
+    "EUR_USD": [
+      {
+        "name": "rsi",
+        "value": "61.42"
+      },
+      {
+        "name": "atr",
+        "value": "0.00087"
+      },
+      {
+        "name": "adx",
+        "value": "27.9"
+      },
+      {
+        "name": "ema:20",
+        "value": "1.08544"
+      },
+      {
+        "name": "ema:50",
+        "value": "1.08391"
+      },
+      {
+        "name": "macd.histogram",
+        "value": "0.00012"
+      }
+    ]
+  },
+  "levels": {
+    "EUR_USD": [
+      {
+        "price": "1.08950",
+        "role": "resistance",
+        "touches": 3,
+        "first_ts": "2026-10-09T08:00:00Z",
+        "last_ts": "2026-10-09T08:00:00Z",
+        "established_ts": "2026-10-09T08:00:00Z"
+      },
+      {
+        "price": "1.08320",
+        "role": "support",
+        "touches": 4,
+        "first_ts": "2026-10-09T08:00:00Z",
+        "last_ts": "2026-10-09T08:00:00Z",
+        "established_ts": "2026-10-09T08:00:00Z"
+      }
+    ]
+  },
+  "forecast_notice": "A model forecast with its uncertainty, not a prediction and not advice.",
+  "forecasts": {
+    "EUR_USD:4h": {
+      "instrument": "EUR_USD",
+      "horizon": "4h",
+      "timeframe": "1H",
+      "bars_ahead": 4,
+      "status": "available",
+      "reason": null,
+      "notice": "A model forecast with its uncertainty, not a prediction and not advice.",
+      "model": {
+        "name": "lightgbm",
+        "version": "demo-1",
+        "family": "tree",
+        "trained_at": "2026-10-09T08:00:00Z",
+        "calibration_status": "calibrated",
+        "drift_status": "ok",
+        "edge": false,
+        "data_types": [
+          "simulated"
+        ],
+        "statement": "no demonstrated edge: the random-walk baseline is shown (on simulated data: not evidence about real markets)",
+        "probability_source": "raw",
+        "feature_set_hash": "demo",
+        "data_snapshot_hash": "demo",
+        "code_version": "demo",
+        "seed": 7
+      },
+      "forecast": {
+        "as_of": "2026-10-09T08:00:00Z",
+        "generated_at": "2026-10-09T08:00:00Z",
+        "age_seconds": 0,
+        "fresh": true,
+        "last_close": "1.08616",
+        "prob_up": "0.5612",
+        "prob_down": "0.4388",
+        "probability_label": "Calibrated",
+        "probability_note": "Calibrated on out-of-sample windows.",
+        "return_quantiles": {
+          "q10": "-0.0032",
+          "q25": "-0.0014",
+          "q50": "0.0008",
+          "q75": "0.0029",
+          "q90": "0.0047"
+        },
+        "price_median": "1.08702",
+        "price_interval_50": {
+          "low": "1.08465",
+          "high": "1.08931"
+        },
+        "price_interval_80": {
+          "low": "1.08311",
+          "high": "1.09087"
+        },
+        "expected_volatility": "0.00214",
+        "volatility_model": "ewma",
+        "data_types": [
+          "simulated"
+        ]
+      }
+    },
+    "EUR_USD:24h": {
+      "instrument": "EUR_USD",
+      "horizon": "24h",
+      "timeframe": "4H",
+      "bars_ahead": 6,
+      "status": "available",
+      "reason": null,
+      "notice": "A model forecast with its uncertainty, not a prediction and not advice.",
+      "model": {
+        "name": "arima",
+        "version": "demo-1",
+        "family": "statistical",
+        "trained_at": "2026-10-09T08:00:00Z",
+        "calibration_status": "requires_calibration",
+        "drift_status": "ok",
+        "edge": false,
+        "data_types": [
+          "simulated"
+        ],
+        "statement": "no demonstrated edge: the random-walk baseline is shown (on simulated data: not evidence about real markets)",
+        "probability_source": "raw",
+        "feature_set_hash": "demo",
+        "data_snapshot_hash": "demo",
+        "code_version": "demo",
+        "seed": 7
+      },
+      "forecast": {
+        "as_of": "2026-10-09T08:00:00Z",
+        "generated_at": "2026-10-09T08:00:00Z",
+        "age_seconds": 0,
+        "fresh": true,
+        "last_close": "1.08616",
+        "prob_up": "0.5310",
+        "prob_down": "0.4690",
+        "probability_label": "Requires calibration",
+        "probability_note": "Not reliable as a probability until calibrated.",
+        "return_quantiles": {
+          "q10": "-0.0071",
+          "q25": "-0.0031",
+          "q50": "0.0004",
+          "q75": "0.0042",
+          "q90": "0.0079"
+        },
+        "price_median": "1.08659",
+        "price_interval_50": {
+          "low": "1.08279",
+          "high": "1.09072"
+        },
+        "price_interval_80": {
+          "low": "1.07845",
+          "high": "1.09474"
+        },
+        "expected_volatility": "0.00511",
+        "volatility_model": "har",
+        "data_types": [
+          "simulated"
+        ]
+      }
+    }
+  },
+  "ranking": {
+    "as_of": "2026-10-09T08:00:00Z",
+    "timeframe": "1H",
+    "weights_version": 1,
+    "weights": {},
+    "notice": "Research candidates ranked by a published formula from stored prices. Not advice, not a recommendation to buy or sell, and not a probability of profit.",
+    "excluded": [],
+    "items": [
+      {
+        "rank": 1,
+        "instrument": "EUR_USD",
+        "tier": "major",
+        "label": "Research candidate",
+        "market_condition": "trending",
+        "opportunity_type": "trend_continuation",
+        "scenario": "Bullish scenario",
+        "risk": "medium",
+        "score": "68.4",
+        "levels": {
+          "as_of": "2026-10-09T08:00:00Z",
+          "entry": "1.08616",
+          "stop": "1.08320",
+          "target": "1.09208",
+          "risk_pips": "29.6",
+          "reward_pips": "59.2",
+          "risk_reward": "2.00"
+        },
+        "factors": [
+          {
+            "name": "trend_strength",
+            "value": "0.558",
+            "weight": "0.15",
+            "contribution": "0.0837",
+            "detail": "ADX 27.9, directional indicators agree"
+          },
+          {
+            "name": "momentum",
+            "value": "0.381",
+            "weight": "0.10",
+            "contribution": "0.0381",
+            "detail": "RSI 61.4"
+          },
+          {
+            "name": "risk_reward",
+            "value": "0.667",
+            "weight": "0.15",
+            "contribution": "0.1000",
+            "detail": "reward / risk 2.00"
+          },
+          {
+            "name": "macro_event_risk",
+            "value": "0",
+            "weight": "-0.20",
+            "contribution": "0",
+            "detail": "no event window"
+          }
+        ],
+        "adjustments": [],
+        "assumptions": [
+          "Levels come from the last closed bar and the rule definition."
+        ],
+        "risks": [
+          "Simulated prices: says nothing about real markets.",
+          "Prices can move past any level."
+        ],
+        "evidence": [
+          "EMA(20) above EMA(50)"
+        ],
+        "costs": {
+          "spread_pips": "1.2",
+          "spread_share_of_risk": "0.04",
+          "note": "Spread only."
+        },
+        "freshness": {
+          "bar_as_of": "2026-10-09T08:00:00Z",
+          "bar_age_seconds": 120,
+          "quote_age_seconds": 3,
+          "data_types": [
+            "simulated"
+          ]
+        },
+        "forecast": {
+          "horizon": "4h",
+          "prob_up": "0.5612",
+          "calibration": "Calibrated",
+          "model": "lightgbm",
+          "model_version": "demo-1"
+        },
+        "rule": "trend_continuation",
+        "rule_version": 1
+      },
+      {
+        "rank": 2,
+        "instrument": "AUD_USD",
+        "tier": "major",
+        "label": "Research candidate",
+        "market_condition": "consolidating",
+        "opportunity_type": "range",
+        "scenario": "Bearish scenario",
+        "risk": "low",
+        "score": "52.1",
+        "levels": {
+          "as_of": "2026-10-09T08:00:00Z",
+          "entry": "0.65512",
+          "stop": "0.65790",
+          "target": "0.65250",
+          "risk_pips": "27.8",
+          "reward_pips": "26.2",
+          "risk_reward": "0.94"
+        },
+        "factors": [
+          {
+            "name": "volatility_suitability",
+            "value": "0.910",
+            "weight": "0.10",
+            "contribution": "0.0910",
+            "detail": "ATR is 0.91 x its median"
+          },
+          {
+            "name": "liquidity",
+            "value": "1",
+            "weight": "0.10",
+            "contribution": "0.1000",
+            "detail": "major pair"
+          }
+        ],
+        "adjustments": [],
+        "assumptions": [
+          "Levels come from the last closed bar and the rule definition."
+        ],
+        "risks": [
+          "Simulated prices: says nothing about real markets."
+        ],
+        "evidence": [
+          "ADX below 20"
+        ],
+        "costs": {
+          "spread_pips": "1.2",
+          "spread_share_of_risk": "0.04",
+          "note": "Spread only."
+        },
+        "freshness": {
+          "bar_as_of": "2026-10-09T08:00:00Z",
+          "bar_age_seconds": 120,
+          "quote_age_seconds": 3,
+          "data_types": [
+            "simulated"
+          ]
+        },
+        "forecast": null,
+        "rule": "range",
+        "rule_version": 1
+      }
+    ]
+  },
+  "calendar": [
+    {
+      "id": "demo-ev-1",
+      "name": "US Non-Farm Payrolls",
+      "kind": "employment",
+      "currencies": [
+        "USD"
+      ],
+      "importance": "high",
+      "scheduled_at": "2026-10-09T12:30:00Z",
+      "scheduled_local": "2026-10-09T12:30:00Z",
+      "is_demo": true,
+      "licence_status": "demo",
+      "source": "demo",
+      "source_url": null,
+      "retrieved_at": "2026-10-09T08:00:00Z",
+      "actual_seen_at": null,
+      "commentary": null,
+      "confirmed": {
+        "actual": null,
+        "previous": "142",
+        "unit": "k",
+        "released": false
+      },
+      "expectation": {
+        "forecast": "155"
+      },
+      "risk_window": {
+        "name": "US Non-Farm Payrolls",
+        "currencies": [
+          "USD"
+        ],
+        "importance": "high",
+        "scheduled_at": "2026-10-09T12:30:00Z",
+        "starts": "2026-10-09T12:00:00Z",
+        "ends": "2026-10-09T13:30:00Z"
+      }
+    },
+    {
+      "id": "demo-ev-2",
+      "name": "ECB Interest Rate Decision",
+      "kind": "policy_rate",
+      "currencies": [
+        "EUR"
+      ],
+      "importance": "high",
+      "scheduled_at": "2026-10-10T12:15:00Z",
+      "scheduled_local": "2026-10-10T12:15:00Z",
+      "is_demo": true,
+      "licence_status": "demo",
+      "source": "demo",
+      "source_url": null,
+      "retrieved_at": "2026-10-09T08:00:00Z",
+      "actual_seen_at": null,
+      "commentary": null,
+      "confirmed": {
+        "actual": null,
+        "previous": "2.25",
+        "unit": "%",
+        "released": false
+      },
+      "expectation": {
+        "forecast": "2.25"
+      },
+      "risk_window": null
+    },
+    {
+      "id": "demo-ev-3",
+      "name": "UK Retail Sales",
+      "kind": "consumption",
+      "currencies": [
+        "GBP"
+      ],
+      "importance": "medium",
+      "scheduled_at": "2026-10-08T06:00:00Z",
+      "scheduled_local": "2026-10-08T06:00:00Z",
+      "is_demo": true,
+      "licence_status": "demo",
+      "source": "demo",
+      "source_url": null,
+      "retrieved_at": "2026-10-09T08:00:00Z",
+      "actual_seen_at": "2026-10-09T08:00:00Z",
+      "commentary": null,
+      "confirmed": {
+        "actual": "0.4",
+        "previous": "0.1",
+        "unit": "%",
+        "released": true
+      },
+      "expectation": {
+        "forecast": "0.2"
+      },
+      "risk_window": null
+    }
+  ],
+  "risk_example": {
+    "instrument": "EUR_USD",
+    "direction": "long",
+    "account_currency": "USD",
+    "size": {
+      "units": "19000",
+      "lots": "0.19",
+      "status": "sized"
+    },
+    "pip_value": {
+      "pip_size": "0.0001",
+      "per_lot_quote_currency": "10",
+      "per_lot_account_currency": "10",
+      "quote_currency": "USD"
+    },
+    "outcome": {
+      "risk_amount": "100",
+      "stop_pips": "50",
+      "target_pips": "100",
+      "loss_before_costs": "95",
+      "loss_after_costs": "98.04",
+      "profit_before_costs": "190",
+      "profit_after_costs": "186.96",
+      "risk_reward_before_costs": "2",
+      "risk_reward_after_costs": "1.91"
+    },
+    "costs": {
+      "spread": "2.28",
+      "slippage": "0.76",
+      "commission": "0",
+      "total": "3.04",
+      "note": "Spread, slippage and commission for entry and exit."
+    },
+    "margin": {
+      "notional": "20900",
+      "margin": "695.97",
+      "margin_use_percent": "6.96",
+      "position_leverage": "2.09",
+      "max_leverage": "30.03"
+    },
+    "account_impact_percent": "0.98",
+    "exposure": [],
+    "exposure_percent": "209",
+    "conversion": {
+      "rate": "1",
+      "path": "same currency",
+      "as_of": null,
+      "data_types": [],
+      "stale": false
+    },
+    "specification": {
+      "version": 1,
+      "review_status": "unreviewed",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    "limits": {
+      "max_risk_percent": "2",
+      "max_leverage": "30",
+      "max_margin_use_percent": "50"
+    },
+    "warnings": [
+      "The contract specifications are unreviewed defaults, not a broker's terms."
+    ],
+    "disclosures": [
+      "A stop-loss does not guarantee the maximum loss: prices can gap or slip past it, for example over a weekend or around news.",
+      "Leverage amplifies losses as well as gains; a loss can exceed the margin placed.",
+      "All values are estimates from the configured contract specifications and the stated rates and costs. This is a calculator for study and paper trading, not advice; nothing is placed."
+    ],
+    "notice": "DEMO: one worked example."
+  },
+  "backtests": [
+    {
+      "instrument": "EUR_USD",
+      "rule": "trend_continuation",
+      "out_of_sample_trades": 42,
+      "out_of_sample_return": "0.0371",
+      "out_of_sample_profit_factor": "1.32",
+      "leakage_audit_passed": true,
+      "period_start": "2026-07-01T00:00:00Z",
+      "period_end": "2026-10-08T00:00:00Z",
+      "data_types": [
+        "simulated"
+      ]
+    },
+    {
+      "instrument": "EUR_USD",
+      "rule": "breakout",
+      "out_of_sample_trades": 18,
+      "out_of_sample_return": "-0.0124",
+      "out_of_sample_profit_factor": "0.81",
+      "leakage_audit_passed": true,
+      "period_start": "2026-07-01T00:00:00Z",
+      "period_end": "2026-10-08T00:00:00Z",
+      "data_types": [
+        "simulated"
+      ]
+    }
+  ],
+  "paper_accounts": [
+    {
+      "mode": "PAPER TRADING",
+      "id": "demo-paper-1",
+      "name": "Practice",
+      "currency": "USD",
+      "status": "active",
+      "starting_balance": "10000",
+      "starting_balance_is_default": true,
+      "balance": "10086.4",
+      "unrealised_pnl": "12.6",
+      "equity": "10099",
+      "used_margin": "361.71",
+      "free_margin": "9737.29",
+      "margin_level_percent": "2792.02",
+      "open_positions": 1,
+      "pending_orders": 0,
+      "realised_today": "0",
+      "realised_this_week": "86.4",
+      "exposure": [],
+      "warnings": [],
+      "created_at": "2026-10-01T09:00:00Z",
+      "notice": "PAPER TRADING"
+    }
+  ],
+  "paper_positions": [
+    {
+      "mode": "PAPER TRADING",
+      "id": "demo-pos-1",
+      "account_id": "demo-paper-1",
+      "order_id": "demo-ord-1",
+      "instrument": "EUR_USD",
+      "side": "long",
+      "lots": "0.1",
+      "units": "10000",
+      "status": "open",
+      "entry_price": "1.08490",
+      "entry_at": "2026-10-08T14:00:00Z",
+      "data_type": "simulated",
+      "stop": "1.08200",
+      "target": "1.09100",
+      "margin": "361.71",
+      "strategy_tag": "trend",
+      "current_price": "1.08616",
+      "unrealised_pnl": "12.6",
+      "exit_price": null,
+      "exit_at": null,
+      "exit_reason": null,
+      "exit_rate": null,
+      "exit_rate_path": null,
+      "realised_pnl": null,
+      "costs": null
+    },
+    {
+      "mode": "PAPER TRADING",
+      "id": "demo-pos-0",
+      "account_id": "demo-paper-1",
+      "order_id": "demo-ord-0",
+      "instrument": "GBP_USD",
+      "side": "short",
+      "lots": "0.1",
+      "units": "10000",
+      "status": "closed",
+      "entry_price": "1.27290",
+      "entry_at": "2026-10-06T10:00:00Z",
+      "data_type": "simulated",
+      "stop": "1.27800",
+      "target": "1.26400",
+      "margin": "423.88",
+      "strategy_tag": "range",
+      "current_price": null,
+      "unrealised_pnl": null,
+      "exit_price": "1.26400",
+      "exit_at": "2026-10-07T16:00:00Z",
+      "exit_reason": "target",
+      "exit_rate": "1",
+      "exit_rate_path": "same currency",
+      "realised_pnl": "86.4",
+      "costs": "2.6"
+    }
+  ],
+  "journal": [
+    {
+      "mode": "PAPER TRADING",
+      "id": "demo-note-0",
+      "account_id": "demo-paper-1",
+      "position_id": "demo-pos-0",
+      "note": "Took the range rule's short at the top of the band; target hit the next day.",
+      "tags": [
+        "range",
+        "review"
+      ],
+      "created_at": "2026-10-07T17:00:00Z"
+    }
+  ],
+  "paper_performance": {
+    "mode": "PAPER TRADING",
+    "label": "paper",
+    "account_id": "demo-paper-1",
+    "currency": "USD",
+    "series_note": "Paper results only: a separate, labelled series, never combined with backtested or live-observed results and never part of a real portfolio's analytics.",
+    "starting_balance": "10000",
+    "overall": {
+      "trades": 1,
+      "wins": 1,
+      "win_rate": "1",
+      "net_pnl": "86.4",
+      "gross_profit": "86.4",
+      "gross_loss": "0",
+      "profit_factor": null,
+      "average_pnl": "86.4",
+      "best": "86.4",
+      "worst": "86.4",
+      "costs": "2.6"
+    },
+    "max_drawdown": "0",
+    "return_on_starting_balance": "0.00864",
+    "longest_losing_streak": 0,
+    "by_strategy_tag": [],
+    "by_instrument": [],
+    "open_positions": 1
+  },
+  "stream_frames": [
+    {
+      "type": "quote",
+      "instrument": "EUR_USD",
+      "provider": "demo",
+      "bid": "1.08615",
+      "ask": "1.08627",
+      "mid": "1.08621",
+      "mid_derived": true,
+      "ts_provider": "2026-10-09T07:59:57Z",
+      "ts_received": "2026-10-09T07:59:57Z",
+      "age_seconds": 3,
+      "data_type": "simulated",
+      "quality": "ok",
+      "freshness": "fresh",
+      "feed_status": "connected"
+    },
+    {
+      "type": "quote",
+      "instrument": "GBP_USD",
+      "provider": "demo",
+      "bid": "1.26405",
+      "ask": "1.26417",
+      "mid": "1.26411",
+      "mid_derived": true,
+      "ts_provider": "2026-10-09T07:59:57Z",
+      "ts_received": "2026-10-09T07:59:57Z",
+      "age_seconds": 3,
+      "data_type": "simulated",
+      "quality": "ok",
+      "freshness": "fresh",
+      "feed_status": "connected"
+    },
+    {
+      "type": "quote",
+      "instrument": "USD_JPY",
+      "provider": "demo",
+      "bid": "149.875",
+      "ask": "149.887",
+      "mid": "149.881",
+      "mid_derived": true,
+      "ts_provider": "2026-10-09T07:59:57Z",
+      "ts_received": "2026-10-09T07:59:57Z",
+      "age_seconds": 3,
+      "data_type": "simulated",
+      "quality": "ok",
+      "freshness": "fresh",
+      "feed_status": "connected"
+    },
+    {
+      "type": "quote",
+      "instrument": "EUR_USD",
+      "provider": "demo",
+      "bid": "1.08603",
+      "ask": "1.08615",
+      "mid": "1.08609",
+      "mid_derived": true,
+      "ts_provider": "2026-10-09T07:59:57Z",
+      "ts_received": "2026-10-09T07:59:57Z",
+      "age_seconds": 3,
+      "data_type": "simulated",
+      "quality": "ok",
+      "freshness": "fresh",
+      "feed_status": "connected"
+    },
+    {
+      "type": "quote",
+      "instrument": "AUD_USD",
+      "provider": "demo",
+      "bid": "0.65512",
+      "ask": "0.65524",
+      "mid": "0.65518",
+      "mid_derived": true,
+      "ts_provider": "2026-10-09T07:59:57Z",
+      "ts_received": "2026-10-09T07:59:57Z",
+      "age_seconds": 3,
+      "data_type": "simulated",
+      "quality": "ok",
+      "freshness": "fresh",
+      "feed_status": "connected"
+    }
+  ]
+}

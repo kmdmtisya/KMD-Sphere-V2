@@ -413,4 +413,287 @@ write("currency.json", {
     ],
     "notice": "Demo rates, not live. The demo converts the examples only.",
 })
+
+
+# ---------------------------------------------------------------------------------- forex (P13-T11)
+# Illustrative forex data for the DEMO app: simulated prices, a DEMO calendar, a worked risk
+# example, backtest summaries and a PAPER TRADING account. Shapes follow the forex API.
+FX_AS_OF = "2026-10-09T08:00:00Z"
+FX_PAIRS = [
+    # code, mid, pip location, display precision, tier, half spread in pips
+    ("EUR_USD", "1.08616", -4, 5, "major", "0.6"),
+    ("GBP_USD", "1.26420", -4, 5, "major", "0.6"),
+    ("USD_JPY", "149.874", -2, 3, "major", "0.6"),
+    ("AUD_USD", "0.65512", -4, 5, "major", "0.6"),
+    ("EUR_GBP", "0.85918", -4, 5, "minor", "1.0"),
+    ("USD_KES", "129.150", -2, 3, "exotic", "20"),
+]
+
+
+def fx_quote(code, mid, loc, prec, tier, half, age=3, freshness="fresh"):
+    pip = Decimal(1).scaleb(loc)
+    m = Decimal(mid)
+    h = Decimal(half) * pip
+    places = "1e-%d" % prec
+    return {
+        "instrument": code,
+        "provider": "demo",
+        "bid": q(m - h, places),
+        "ask": q(m + h, places),
+        "mid": q(m, places),
+        "mid_derived": True,
+        "ts_provider": "2026-10-09T07:59:57Z",
+        "ts_received": "2026-10-09T07:59:57Z",
+        "age_seconds": age,
+        "data_type": "simulated",
+        "quality": "ok" if freshness == "fresh" else "stale",
+        "freshness": freshness,
+        "feed_status": "connected",
+    }
+
+
+fx_quotes = [fx_quote(*p) for p in FX_PAIRS[:-1]] + [fx_quote(*FX_PAIRS[-1], age=900, freshness="stale")]
+
+
+def fx_candles(mid, loc, prec, n=60):
+    """A gentle rise with a regular wiggle: illustrative only."""
+    places = "1e-%d" % prec
+    pip = Decimal(1).scaleb(loc)
+    start = Decimal(mid) - pip * 40
+    rows = []
+    for k in range(n):
+        close = start + pip * (Decimal(k) * Decimal("0.7") + Decimal((k * 7) % 11) - 5)
+        open_ = close - pip * Decimal((k * 3) % 5 - 2)
+        high = max(open_, close) + pip * 3
+        low = min(open_, close) - pip * 3
+        hour = 8 + k  # hourly bars ending at the as-of time
+        day = 7 + hour // 24
+        rows.append({
+            "ts": "2026-10-%02dT%02d:00:00Z" % (day, hour % 24),
+            "open": q(open_, places),
+            "high": q(high, places),
+            "low": q(low, places),
+            "close": q(close, places),
+            "volume": None,
+            "data_type": "simulated",
+        })
+    return rows
+
+
+FOREX_NOTICE = (
+    "DEMO: illustrative simulated prices and research for exploring the app. Not live market data, "
+    "not advice, and nothing is traded."
+)
+
+write("forex.json", {
+    "as_of": FX_AS_OF,
+    "notice": FOREX_NOTICE,
+    "quotes": {"as_of": FX_AS_OF, "provider": "demo", "feed_status": "connected", "items": fx_quotes,
+               "notice": FOREX_NOTICE},
+    "candles": {p[0]: fx_candles(p[1], p[2], p[3]) for p in FX_PAIRS[:4]},
+    "indicators": {
+        "EUR_USD": [
+            {"name": "rsi", "value": "61.42"},
+            {"name": "atr", "value": "0.00087"},
+            {"name": "adx", "value": "27.9"},
+            {"name": "ema:20", "value": "1.08544"},
+            {"name": "ema:50", "value": "1.08391"},
+            {"name": "macd.histogram", "value": "0.00012"},
+        ],
+    },
+    "levels": {
+        "EUR_USD": [
+            {"price": "1.08950", "role": "resistance", "touches": 3, "first_ts": FX_AS_OF,
+             "last_ts": FX_AS_OF, "established_ts": FX_AS_OF},
+            {"price": "1.08320", "role": "support", "touches": 4, "first_ts": FX_AS_OF,
+             "last_ts": FX_AS_OF, "established_ts": FX_AS_OF},
+        ],
+    },
+    "forecast_notice": "A model forecast with its uncertainty, not a prediction and not advice.",
+    "forecasts": {
+        "EUR_USD:4h": {
+            "instrument": "EUR_USD", "horizon": "4h", "timeframe": "1H", "bars_ahead": 4,
+            "status": "available", "reason": None,
+            "notice": "A model forecast with its uncertainty, not a prediction and not advice.",
+            "model": {"name": "lightgbm", "version": "demo-1", "family": "tree",
+                      "trained_at": FX_AS_OF, "calibration_status": "calibrated",
+                      "drift_status": "ok", "edge": False, "data_types": ["simulated"],
+                      "statement": "no demonstrated edge: the random-walk baseline is shown (on simulated data: not evidence about real markets)",
+                      "probability_source": "raw", "feature_set_hash": "demo", "data_snapshot_hash": "demo",
+                      "code_version": "demo", "seed": 7},
+            "forecast": {"as_of": FX_AS_OF, "generated_at": FX_AS_OF, "age_seconds": 0, "fresh": True,
+                         "last_close": "1.08616", "prob_up": "0.5612", "prob_down": "0.4388",
+                         "probability_label": "Calibrated",
+                         "probability_note": "Calibrated on out-of-sample windows.",
+                         "return_quantiles": {"q10": "-0.0032", "q25": "-0.0014", "q50": "0.0008", "q75": "0.0029", "q90": "0.0047"},
+                         "price_median": "1.08702", "price_interval_50": {"low": "1.08465", "high": "1.08931"},
+                         "price_interval_80": {"low": "1.08311", "high": "1.09087"},
+                         "expected_volatility": "0.00214", "volatility_model": "ewma",
+                         "data_types": ["simulated"]},
+        },
+        "EUR_USD:24h": {
+            "instrument": "EUR_USD", "horizon": "24h", "timeframe": "4H", "bars_ahead": 6,
+            "status": "available", "reason": None,
+            "notice": "A model forecast with its uncertainty, not a prediction and not advice.",
+            "model": {"name": "arima", "version": "demo-1", "family": "statistical",
+                      "trained_at": FX_AS_OF, "calibration_status": "requires_calibration",
+                      "drift_status": "ok", "edge": False, "data_types": ["simulated"],
+                      "statement": "no demonstrated edge: the random-walk baseline is shown (on simulated data: not evidence about real markets)",
+                      "probability_source": "raw", "feature_set_hash": "demo", "data_snapshot_hash": "demo",
+                      "code_version": "demo", "seed": 7},
+            "forecast": {"as_of": FX_AS_OF, "generated_at": FX_AS_OF, "age_seconds": 0, "fresh": True,
+                         "last_close": "1.08616", "prob_up": "0.5310", "prob_down": "0.4690",
+                         "probability_label": "Requires calibration",
+                         "probability_note": "Not reliable as a probability until calibrated.",
+                         "return_quantiles": {"q10": "-0.0071", "q25": "-0.0031", "q50": "0.0004", "q75": "0.0042", "q90": "0.0079"},
+                         "price_median": "1.08659", "price_interval_50": {"low": "1.08279", "high": "1.09072"},
+                         "price_interval_80": {"low": "1.07845", "high": "1.09474"},
+                         "expected_volatility": "0.00511", "volatility_model": "har",
+                         "data_types": ["simulated"]},
+        },
+    },
+    "ranking": {
+        "as_of": FX_AS_OF, "timeframe": "1H", "weights_version": 1, "weights": {},
+        "notice": "Research candidates ranked by a published formula from stored prices. Not advice, not a recommendation to buy or sell, and not a probability of profit.",
+        "excluded": [],
+        "items": [
+            {
+                "rank": 1, "instrument": "EUR_USD", "tier": "major", "label": "Research candidate",
+                "market_condition": "trending", "opportunity_type": "trend_continuation",
+                "scenario": "Bullish scenario", "risk": "medium", "score": "68.4",
+                "levels": {"as_of": FX_AS_OF, "entry": "1.08616", "stop": "1.08320", "target": "1.09208",
+                           "risk_pips": "29.6", "reward_pips": "59.2", "risk_reward": "2.00"},
+                "factors": [
+                    {"name": "trend_strength", "value": "0.558", "weight": "0.15", "contribution": "0.0837", "detail": "ADX 27.9, directional indicators agree"},
+                    {"name": "momentum", "value": "0.381", "weight": "0.10", "contribution": "0.0381", "detail": "RSI 61.4"},
+                    {"name": "risk_reward", "value": "0.667", "weight": "0.15", "contribution": "0.1000", "detail": "reward / risk 2.00"},
+                    {"name": "macro_event_risk", "value": "0", "weight": "-0.20", "contribution": "0", "detail": "no event window"},
+                ],
+                "adjustments": [], "assumptions": ["Levels come from the last closed bar and the rule definition."],
+                "risks": ["Simulated prices: says nothing about real markets.", "Prices can move past any level."],
+                "evidence": ["EMA(20) above EMA(50)"],
+                "costs": {"spread_pips": "1.2", "spread_share_of_risk": "0.04", "note": "Spread only."},
+                "freshness": {"bar_as_of": FX_AS_OF, "bar_age_seconds": 120, "quote_age_seconds": 3, "data_types": ["simulated"]},
+                "forecast": {"horizon": "4h", "prob_up": "0.5612", "calibration": "Calibrated", "model": "lightgbm", "model_version": "demo-1"},
+                "rule": "trend_continuation", "rule_version": 1,
+            },
+            {
+                "rank": 2, "instrument": "AUD_USD", "tier": "major", "label": "Research candidate",
+                "market_condition": "consolidating", "opportunity_type": "range",
+                "scenario": "Bearish scenario", "risk": "low", "score": "52.1",
+                "levels": {"as_of": FX_AS_OF, "entry": "0.65512", "stop": "0.65790", "target": "0.65250",
+                           "risk_pips": "27.8", "reward_pips": "26.2", "risk_reward": "0.94"},
+                "factors": [
+                    {"name": "volatility_suitability", "value": "0.910", "weight": "0.10", "contribution": "0.0910", "detail": "ATR is 0.91 x its median"},
+                    {"name": "liquidity", "value": "1", "weight": "0.10", "contribution": "0.1000", "detail": "major pair"},
+                ],
+                "adjustments": [], "assumptions": ["Levels come from the last closed bar and the rule definition."],
+                "risks": ["Simulated prices: says nothing about real markets."],
+                "evidence": ["ADX below 20"],
+                "costs": {"spread_pips": "1.2", "spread_share_of_risk": "0.04", "note": "Spread only."},
+                "freshness": {"bar_as_of": FX_AS_OF, "bar_age_seconds": 120, "quote_age_seconds": 3, "data_types": ["simulated"]},
+                "forecast": None, "rule": "range", "rule_version": 1,
+            },
+        ],
+    },
+    "calendar": [
+        {"id": "demo-ev-1", "name": "US Non-Farm Payrolls", "kind": "employment", "currencies": ["USD"],
+         "importance": "high", "scheduled_at": "2026-10-09T12:30:00Z", "scheduled_local": "2026-10-09T12:30:00Z",
+         "is_demo": True, "licence_status": "demo", "source": "demo", "source_url": None, "retrieved_at": FX_AS_OF,
+         "actual_seen_at": None, "commentary": None,
+         "confirmed": {"actual": None, "previous": "142", "unit": "k", "released": False},
+         "expectation": {"forecast": "155"},
+         "risk_window": {"name": "US Non-Farm Payrolls", "currencies": ["USD"], "importance": "high",
+                         "scheduled_at": "2026-10-09T12:30:00Z", "starts": "2026-10-09T12:00:00Z", "ends": "2026-10-09T13:30:00Z"}},
+        {"id": "demo-ev-2", "name": "ECB Interest Rate Decision", "kind": "policy_rate", "currencies": ["EUR"],
+         "importance": "high", "scheduled_at": "2026-10-10T12:15:00Z", "scheduled_local": "2026-10-10T12:15:00Z",
+         "is_demo": True, "licence_status": "demo", "source": "demo", "source_url": None, "retrieved_at": FX_AS_OF,
+         "actual_seen_at": None, "commentary": None,
+         "confirmed": {"actual": None, "previous": "2.25", "unit": "%", "released": False},
+         "expectation": {"forecast": "2.25"}, "risk_window": None},
+        {"id": "demo-ev-3", "name": "UK Retail Sales", "kind": "consumption", "currencies": ["GBP"],
+         "importance": "medium", "scheduled_at": "2026-10-08T06:00:00Z", "scheduled_local": "2026-10-08T06:00:00Z",
+         "is_demo": True, "licence_status": "demo", "source": "demo", "source_url": None, "retrieved_at": FX_AS_OF,
+         "actual_seen_at": FX_AS_OF, "commentary": None,
+         "confirmed": {"actual": "0.4", "previous": "0.1", "unit": "%", "released": True},
+         "expectation": {"forecast": "0.2"}, "risk_window": None},
+    ],
+    "risk_example": {
+        "instrument": "EUR_USD", "direction": "long", "account_currency": "USD",
+        "size": {"units": "19000", "lots": "0.19", "status": "sized"},
+        "pip_value": {"pip_size": "0.0001", "per_lot_quote_currency": "10", "per_lot_account_currency": "10", "quote_currency": "USD"},
+        "outcome": {"risk_amount": "100", "stop_pips": "50", "target_pips": "100", "loss_before_costs": "95",
+                    "loss_after_costs": "98.04", "profit_before_costs": "190", "profit_after_costs": "186.96",
+                    "risk_reward_before_costs": "2", "risk_reward_after_costs": "1.91"},
+        "costs": {"spread": "2.28", "slippage": "0.76", "commission": "0", "total": "3.04", "note": "Spread, slippage and commission for entry and exit."},
+        "margin": {"notional": "20900", "margin": "695.97", "margin_use_percent": "6.96", "position_leverage": "2.09", "max_leverage": "30.03"},
+        "account_impact_percent": "0.98", "exposure": [], "exposure_percent": "209",
+        "conversion": {"rate": "1", "path": "same currency", "as_of": None, "data_types": [], "stale": False},
+        "specification": {"version": 1, "review_status": "unreviewed", "reviewed_by": None, "reviewed_at": None},
+        "limits": {"max_risk_percent": "2", "max_leverage": "30", "max_margin_use_percent": "50"},
+        "warnings": ["The contract specifications are unreviewed defaults, not a broker's terms."],
+        "disclosures": [
+            "A stop-loss does not guarantee the maximum loss: prices can gap or slip past it, for example over a weekend or around news.",
+            "Leverage amplifies losses as well as gains; a loss can exceed the margin placed.",
+            "All values are estimates from the configured contract specifications and the stated rates and costs. This is a calculator for study and paper trading, not advice; nothing is placed.",
+        ],
+        "notice": "DEMO: one worked example.",
+    },
+    "backtests": [
+        {"instrument": "EUR_USD", "rule": "trend_continuation", "out_of_sample_trades": 42, "out_of_sample_return": "0.0371",
+         "out_of_sample_profit_factor": "1.32", "leakage_audit_passed": True, "period_start": "2026-07-01T00:00:00Z",
+         "period_end": "2026-10-08T00:00:00Z", "data_types": ["simulated"]},
+        {"instrument": "EUR_USD", "rule": "breakout", "out_of_sample_trades": 18, "out_of_sample_return": "-0.0124",
+         "out_of_sample_profit_factor": "0.81", "leakage_audit_passed": True, "period_start": "2026-07-01T00:00:00Z",
+         "period_end": "2026-10-08T00:00:00Z", "data_types": ["simulated"]},
+    ],
+    "paper_accounts": [
+        {"mode": "PAPER TRADING", "id": "demo-paper-1", "name": "Practice", "currency": "USD", "status": "active",
+         "starting_balance": "10000", "starting_balance_is_default": True, "balance": "10086.4",
+         "unrealised_pnl": "12.6", "equity": "10099", "used_margin": "361.71", "free_margin": "9737.29",
+         "margin_level_percent": "2792.02", "open_positions": 1, "pending_orders": 0,
+         "realised_today": "0", "realised_this_week": "86.4", "exposure": [], "warnings": [],
+         "created_at": "2026-10-01T09:00:00Z", "notice": "PAPER TRADING"},
+    ],
+    "paper_positions": [
+        {"mode": "PAPER TRADING", "id": "demo-pos-1", "account_id": "demo-paper-1", "order_id": "demo-ord-1",
+         "instrument": "EUR_USD", "side": "long", "lots": "0.1", "units": "10000", "status": "open",
+         "entry_price": "1.08490", "entry_at": "2026-10-08T14:00:00Z", "data_type": "simulated",
+         "stop": "1.08200", "target": "1.09100", "margin": "361.71", "strategy_tag": "trend",
+         "current_price": "1.08616", "unrealised_pnl": "12.6", "exit_price": None, "exit_at": None,
+         "exit_reason": None, "exit_rate": None, "exit_rate_path": None, "realised_pnl": None, "costs": None},
+        {"mode": "PAPER TRADING", "id": "demo-pos-0", "account_id": "demo-paper-1", "order_id": "demo-ord-0",
+         "instrument": "GBP_USD", "side": "short", "lots": "0.1", "units": "10000", "status": "closed",
+         "entry_price": "1.27290", "entry_at": "2026-10-06T10:00:00Z", "data_type": "simulated",
+         "stop": "1.27800", "target": "1.26400", "margin": "423.88", "strategy_tag": "range",
+         "current_price": None, "unrealised_pnl": None, "exit_price": "1.26400", "exit_at": "2026-10-07T16:00:00Z",
+         "exit_reason": "target", "exit_rate": "1", "exit_rate_path": "same currency", "realised_pnl": "86.4",
+         "costs": "2.6"},
+    ],
+    "journal": [
+        {"mode": "PAPER TRADING", "id": "demo-note-0", "account_id": "demo-paper-1", "position_id": "demo-pos-0",
+         "note": "Took the range rule's short at the top of the band; target hit the next day.",
+         "tags": ["range", "review"], "created_at": "2026-10-07T17:00:00Z"},
+    ],
+    "paper_performance": {
+        "mode": "PAPER TRADING", "label": "paper", "account_id": "demo-paper-1", "currency": "USD",
+        "series_note": "Paper results only: a separate, labelled series, never combined with backtested or live-observed results and never part of a real portfolio's analytics.",
+        "starting_balance": "10000",
+        "overall": {"trades": 1, "wins": 1, "win_rate": "1", "net_pnl": "86.4", "gross_profit": "86.4",
+                    "gross_loss": "0", "profit_factor": None, "average_pnl": "86.4", "best": "86.4",
+                    "worst": "86.4", "costs": "2.6"},
+        "max_drawdown": "0", "return_on_starting_balance": "0.00864", "longest_losing_streak": 0,
+        "by_strategy_tag": [], "by_instrument": [], "open_positions": 1,
+    },
+    # Frames the DEMO stream replays in a loop, so the live-markets list moves (simulated).
+    "stream_frames": [
+        {"type": "quote", **fx_quote("EUR_USD", "1.08621", -4, 5, "major", "0.6")},
+        {"type": "quote", **fx_quote("GBP_USD", "1.26411", -4, 5, "major", "0.6")},
+        {"type": "quote", **fx_quote("USD_JPY", "149.881", -2, 3, "major", "0.6")},
+        {"type": "quote", **fx_quote("EUR_USD", "1.08609", -4, 5, "major", "0.6")},
+        {"type": "quote", **fx_quote("AUD_USD", "0.65518", -4, 5, "major", "0.6")},
+    ],
+})
+
+
 print("wrote", sorted(p.name for p in OUT.glob("*.json")))

@@ -34,6 +34,7 @@ String sectionHeading(AppLocalizations l10n, SectionKind kind) =>
       SectionKind.assumption => l10n.aiSectionAssumption,
       SectionKind.interpretation => l10n.aiSectionInterpretation,
       SectionKind.notice => l10n.aiSectionNotice,
+      SectionKind.source => l10n.aiSectionSource,
     };
 
 /// AI Wealth: a conversation with the Copilot. Every word of every answer comes from the

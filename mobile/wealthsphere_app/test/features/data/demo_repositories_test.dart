@@ -269,8 +269,11 @@ void main() {
           expect(turn.failed || turn.refused, isFalse, reason: q);
           expect(
             turn.sections.map((s) => s.kind),
-            // The four statement kinds; a notice is only ever added by the live server.
-            SectionKind.values.where((k) => k != SectionKind.notice),
+            // The four statement kinds; notices and sources are only ever added by the live
+            // server.
+            SectionKind.values.where(
+              (k) => k != SectionKind.notice && k != SectionKind.source,
+            ),
             reason: q,
           );
           expect(turn.sources, isNotEmpty, reason: q);

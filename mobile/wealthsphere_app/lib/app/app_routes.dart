@@ -25,6 +25,11 @@ abstract final class AppRoutes {
   static const String alerts = '/more/alerts';
   static const String converter = '/more/converter';
   static const String forecast = '/more/calculator/forecast';
+  static const String forex = '/more/forex';
+  static const String forexOpportunities = '/more/forex/opportunities';
+  static const String forexRisk = '/more/forex/risk';
+  static const String forexCalendar = '/more/forex/calendar';
+  static const String forexPaper = '/more/forex/paper';
 
   /// Screen 1 (first launch) and screen 2, outside the tab shell.
   static const String welcome = '/welcome';
@@ -42,6 +47,14 @@ abstract final class AppRoutes {
       '$holdings/${Uri.encodeComponent(symbol)}';
 
   /// One ledger entry. The id is encoded, so an odd id can never change the path.
+  /// One forex pair, for example `EUR_USD`.
+  static String forexPair(String instrument) =>
+      '$forex/pair/${Uri.encodeComponent(instrument)}';
+
+  /// The risk calculator, prefilled with [instrument].
+  static String forexRiskFor(String instrument) =>
+      '$forexRisk?instrument=${Uri.encodeQueryComponent(instrument)}';
+
   static String transaction(String id) =>
       '$transactions/${Uri.encodeComponent(id)}';
 
