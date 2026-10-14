@@ -1296,10 +1296,10 @@
   - [x] P13-T06.4 Explanation payload
   - [x] P13-T06.5 Ranking API
   - [x] P13-T06.6 Tests
-- [ ] **P13-T07** · FX-07 Trade risk management engine · `IN_PROGRESS` 🔄
+- [x] **P13-T07** · FX-07 Trade risk management engine · `COMPLETED` ✅
   - Deps: P13-T06 · Wave: W6 · Track: BE · Size: L · Approval: yes
-  - Started: 2026-10-14T13:52:01+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-14T13:52:01+04:00 · Completed: 2026-10-14T14:37:49+04:00 · Duration: 45m 48s · Blocker: —
+  - Evidence: Risk calculator and API (modules/forex/risk: engine, conversion, specs, api), versioned contract specifications (migration 0023, DEMO v1 unreviewed, mark_reviewed, compare_with_provider). Pip value derived from quote and account currency via stored rates kept as exact fractions (EUR/USD, USD/JPY, EUR/GBP via GBP_USD, EUR account; no fixed pip value); size rounded down so planned loss with costs never exceeds the risk; loss/profit and risk/reward before and after costs; margin, leverage, margin use, account impact, exposure; leverage and margin warnings; disclosures that stops can slip or gap. Tests: tests/forex/test_risk_engine.py (reference cases, Fraction oracle, Hypothesis property tests with direct and inverse rates) and tests/forex/test_risk_api.py (real DB). Matrix K-01..K-06, financial-methods section 21, docs/design/forex-risk.md. Local: ruff, mypy, OpenAPI check and Spectral clean; full suite 3105 passed, 17 skipped, coverage 98.2%, policy OK. PR #160. CI all gates pass. · Approved by: user (mtisya@gmail.com), advance approval 2026-10-13 (P13 sequence)
   - [x] P13-T07.1 Contract specification model
   - [x] P13-T07.2 Pip value and conversion
   - [x] P13-T07.3 Position sizing
