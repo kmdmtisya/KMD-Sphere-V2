@@ -1352,18 +1352,8 @@
   - [ ] P13-T11.8 Copilot and alerts
   - [ ] P13-T11.9 Streaming resilience
   - [ ] P13-T11.10 Tests
-- [ ] **P13-T15** · FX-15 Forex web workspace (advanced) · `NOT_STARTED` ⬜
-  - Deps: P13-T10, P14-T13 · Wave: W9 · Track: WEB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P13-T15.1 Analysis and forecast panels
-  - [ ] P13-T15.2 Scanner and opportunity ranking
-  - [ ] P13-T15.3 Risk calculator and backtests
-  - [ ] P13-T15.4 Paper trading and journal
-  - [ ] P13-T15.5 Forex Copilot and alerts
-  - [ ] P13-T15.6 Tests
 - [ ] **P13-T12** · FX-12 Forex quality gates verification · `NOT_STARTED` ⬜
-  - Deps: P13-T11, P13-T15 · Wave: W10 · Track: QA · Size: M · Approval: no · Gates-done: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19
+  - Deps: P13-T11 · Wave: W10 · Track: QA · Size: M · Approval: no · Gates-done: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P13-T12.1 Market data and indicator gates
@@ -1389,7 +1379,7 @@
   - [ ] P13-T14.4 Execution-disabled verification
   - [ ] P13-T14.5 Release decision
 - [ ] **P13-GATE** · Phase P13 exit gate · `NOT_STARTED` ⬜
-  - Deps: P13-T01, P13-T02, P13-T03, P13-T04, P13-T05, P13-T06, P13-T07, P13-T08, P13-T09, P13-T10, P13-T11, P13-T12, P13-T13, P13-T14, P13-T15 · Wave: W13 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19, QG-20
+  - Deps: P13-T01, P13-T02, P13-T03, P13-T04, P13-T05, P13-T06, P13-T07, P13-T08, P13-T09, P13-T10, P13-T11, P13-T12, P13-T13, P13-T14 · Wave: W13 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19, QG-20
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P13-GATE.1 Run gates
@@ -1583,7 +1573,7 @@
   - [ ] P14-T21.3 Configuration validation
   - [ ] P14-T21.4 Required check
 - [ ] **P14-T22** · WEB-22 Staging and end-to-end validation · `NOT_STARTED` ⬜
-  - Deps: P14-T18, P14-T19, P14-T20, P14-T21, P15-T05, P15-T07, P15-T09 · Wave: W10 · Track: QA · Size: M · Approval: yes
+  - Deps: P14-T18, P14-T19, P14-T20, P14-T21, P14-T24, P15-T05, P15-T07, P15-T09 · Wave: W10 · Track: QA · Size: M · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P14-T22.1 Staging deployment
@@ -1598,8 +1588,18 @@
   - [ ] P14-T23.1 Readiness review
   - [ ] P14-T23.2 Open items
   - [ ] P14-T23.3 Approval
+- [ ] **P14-T24** · WEB-24 Forex web workspace (advanced) · `NOT_STARTED` ⬜
+  - Deps: P13-T10, P14-T13 · Wave: W9 · Track: WEB · Size: L · Approval: no
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P14-T24.1 Analysis and forecast panels
+  - [ ] P14-T24.2 Scanner and opportunity ranking
+  - [ ] P14-T24.3 Risk calculator and backtests
+  - [ ] P14-T24.4 Paper trading and journal
+  - [ ] P14-T24.5 Forex Copilot and alerts
+  - [ ] P14-T24.6 Tests
 - [ ] **P14-GATE** · Phase P14 exit gate · `NOT_STARTED` ⬜
-  - Deps: P14-T01, P14-T02, P14-T03, P14-T04, P14-T05, P14-T06, P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17, P14-T18, P14-T19, P14-T20, P14-T21, P14-T22, P14-T23 · Wave: W12 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33, QG-34
+  - Deps: P14-T01, P14-T02, P14-T03, P14-T04, P14-T05, P14-T06, P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17, P14-T18, P14-T19, P14-T20, P14-T21, P14-T22, P14-T23, P14-T24 · Wave: W12 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33, QG-34
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P14-GATE.1 Run gates

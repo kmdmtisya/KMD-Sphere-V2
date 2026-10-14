@@ -346,9 +346,9 @@ _Status: proposed 2026-10-14; phase P14 (WEB workstream) and ADR-0018 await the 
 16. **Operational monitoring.** BFF metrics and logs (no bodies or tokens), front-end error reporting, real-user web vitals, and alerts, all on the platform's telemetry stack.
 17. **Platform quality gates.** QG-WEB-01 to QG-WEB-09 (QG-26 to QG-34). A failed mandatory gate blocks phase completion and release.
 18. **Milestones.**
-    - **First** (the user's priority of 2026-10-14): foundation, authentication and shell, then the executive dashboard, portfolio management and the AI Copilot.
-    - **Then:** the remaining modules.
-    - **Advanced Forex workspace:** after the core modules, in the Forex lane (P13-T15).
+    - **Before the web:** the Forex module (P13) runs in full first (user decision, 2026-10-14).
+    - **First in the web:** foundation, authentication and shell, then the executive dashboard, portfolio management and the AI Copilot.
+    - **Then:** the remaining modules, and the advanced Forex workspace on the finished Forex APIs (P14-T24).
     - **Last:** synchronisation, security, accessibility, performance and browser testing, CI/CD, staging and readiness.
 
 ---

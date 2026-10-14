@@ -1258,4 +1258,4 @@ Rules for web work (phase P14, ADR-0018), in addition to every rule above:
   - Performance budgets (DEC-36), measured and never assumed.
   - Playwright journeys in Chromium, Firefox and WebKit.
   - Gates QG-26..QG-34.
-- **Forex.** The Forex entry follows the server flag. The advanced workspace is P13-T15. There is no order affordance of any kind.
+- **Forex.** The Forex entry follows the server flag. The advanced workspace is P14-T24, built after P13 is complete. There is no order affordance of any kind.

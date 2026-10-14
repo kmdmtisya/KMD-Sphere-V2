@@ -113,13 +113,13 @@ Conflicts and resolutions found in the documents:
 | P10 | AI Tool Layer & Wealth Copilot | AI | P04, P05, P06 (P09-T01 for mobile wiring) | 11 | 7 |
 | P11 | Multi-Currency Reporting & FX Management (FXCUR workstream) | CORE | P05, P06, P08, P09, P10 | 13 | 11 |
 | P12 | AI Investment Intelligence & Portfolio Doctor | AI | P08, P10, P11 | 11 | 6 |
-| P13 | Forex Trading Intelligence (FX workstream) | FX | P08, P09, P10, P11, P12 (P13-T15 needs P14-T13) | 16 | 13 |
-| P14 | Enterprise Web Portal (WEB workstream) | WEB | P09, P10, P11, P12 (P14-T21/T22 need P15 tasks) | 24 | 12 |
+| P13 | Forex Trading Intelligence (FX workstream) | FX | P08, P09, P10, P11, P12 | 15 | 13 |
+| P14 | Enterprise Web Portal (WEB workstream) | WEB | P09, P10, P11, P12 (P14-T24 needs P13-T10; P14-T21/T22 need P15 tasks) | 25 | 12 |
 | P15 | Cloud Infrastructure & Deployment Pipeline | INFRA | P01 (early start allowed); deployment tasks need P04-T01 | 12 | 8 |
 | P16 | Production Hardening & Quality Assurance | HARDENING | P09, P10, P11, P12, P14, P15 | 12 | 6 |
 | P17 | Release & Production Deployment | RELEASE | P16 | 9 | 7 |
 
-**Valid single-lane order:** P00 → … → P12 → P14 (waves 1 to 8) → P13 → P15 → P14 (waves 9 to 12) → P16 → P17. Phase numbers follow the roadmap (web portal P14 directly after Forex P13), but the execution order differs from the numeric order: P13-T15 needs P14-T13, P14-T21/T22 need P15 tasks, and DEC-38 runs the web core before the rest of P13 (PLAN CHANGE 2026-10-14).
+**Valid single-lane order:** the numeric order P00 → … → P13 → P14 → P15 → P16 → P17, with one exception: P14-T21 and P14-T22 (web CI/CD and staging) need the P15 pipeline tasks, so they run after those. Per the user's decision of 2026-10-14, P13 runs in full before the web work (DEC-38).
 
 **Parallel lanes** (after `P01-GATE`, each needs its own phase approvals and worktree):
 
@@ -290,7 +290,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | DEC-35 | Web-only preferences (dashboard layouts, saved table views) stored server-side (proposed) or per browser; web push (proposed: not in v1) | P14-T07 | Claude proposes, user approves | Open |
 | DEC-36 | Web performance budgets and supported browsers (proposed: Lighthouse performance at least 85 and accessibility at least 95; LCP at most 2.5 s, INP at most 200 ms, CLS at most 0.1 at p75; dashboard API p95 at most 500 ms; the two latest major versions of Chrome, Edge and Firefox, and Safari 17 or later) | P14-T20 | User | Open |
 | DEC-37 | Web portal in the v1 release with core gates (proposed) or after v1 behind its own release | P14-T01 | User | Open |
-| DEC-38 | Execution order: web core (P14 waves 1 to 8) before resuming P13 (proposed, from the user's priority of 2026-10-14) | P14-T01 | User | Open |
+| DEC-38 | Execution order: Forex P13 runs in full before the web portal P14 (decided by the user 2026-10-14; the earlier proposal to run the web core first is withdrawn) | P14-T01 | User | Resolved (2026-10-14) |
 
 ## 9. Key risks
 
@@ -2646,7 +2646,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Entry criteria:** P08-GATE, P09-GATE, P10-GATE and P12-GATE complete; user approves the phase and ADR-0009 (P13-T01).
 - **Exit criteria:** QG-13..QG-20 (QG-FX-01..08) satisfied; paper trading separate from real holdings; no live execution in the build; market-data licence and regulatory reviews recorded.
 - **Prerequisite phases:** P08, P09, P10, P11, P12 · **Lane:** FX (sits between the AI phases and the cloud infrastructure phase P15; it needs no cloud environment, so it is validated on the local/CI stack and joins staging in P15-T11)
-- **Task alias:** the FX-nn names are the same tasks as P13-Tnn (FX-01 = P13-T01 … FX-15 = P13-T15; FX-15 is the advanced Forex web workspace, added 2026-10-14); the tracker tracks the P13-Tnn IDs. QG-FX-nn are the gates QG-(12+nn).
+- **Task alias:** the FX-nn names are the same tasks as P13-Tnn (FX-01 = P13-T01 … FX-14 = P13-T14); the tracker tracks the P13-Tnn IDs. QG-FX-nn are the gates QG-(12+nn).
 - **Entry gates:** prerequisite phase gates completed (P08, P09, P10, P11, P12); cumulative quality criteria QG-06.1–7; QG-07.1–8; QG-08.1,3,6; QG-11.3–4; user approval of the phase.
 - **Task-level gates:** each task's CK suites and acceptance criteria.
 - **Exit gates:** QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19, QG-20 (every criterion) required by `P13-GATE` plus user review.
@@ -2662,7 +2662,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | P13.W6 | P13-T07, P13-T08 | Parallel-safe | Phase approved and all dependencies complete | T07 and T08 touch different modules; only one adds a migration (T07 none, T08 report store). |
 | P13.W7 | P13-T09 | Single task | Phase approved and all dependencies complete | — |
 | P13.W8 | P13-T10 | Single task | Phase approved and all dependencies complete | — |
-| P13.W9 | P13-T11, P13-T15 | Parallel-safe | Phase approved and all dependencies complete | — |
+| P13.W9 | P13-T11 | Single task | Phase approved and all dependencies complete | — |
 | P13.W10 | P13-T12 | Single task | Phase approved and all dependencies complete | — |
 | P13.W11 | P13-T13 | Single task | Phase approved and all dependencies complete | — |
 | P13.W12 | P13-T14 | Single task | Phase approved and all dependencies complete | — |
@@ -2843,29 +2843,12 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Verification:** CK-M, flutter test incl. goldens; integration tests; manual device pass.
 - **Subtasks:** `P13-T11.1` Navigation and entry points · `P13-T11.2` Overview and live markets · `P13-T11.3` Chart and predictions · `P13-T11.4` Opportunity Ranking Dashboard and scanner · `P13-T11.5` Trade setup and risk calculator · `P13-T11.6` Calendar and backtesting · `P13-T11.7` Paper trading and journal · `P13-T11.8` Copilot and alerts · `P13-T11.9` Streaming resilience · `P13-T11.10` Tests
 
-#### P13-T15 — FX-15 Forex web workspace (advanced)
-
-`WEB` · Size L · Wave P13.W9 · Approval: none
-
-- **Objective:** The advanced Forex workspace in the web portal: analysis and forecast panels, scanner and opportunity ranking, risk calculator, backtests, paper trading and journal, Forex Copilot and alerts, on the P13 APIs. It continues WEB-13 (P14-T13).
-- **Depends on:** P13-T10, P14-T13
-- **Parallel with:** P13-T11 (different client)
-- **Unblocks:** P13-T12, P13-GATE
-- **Deliverables:** Multi-panel desktop workspace, candle chart with indicators, paper-trading pages, Forex Copilot panel.
-- **Acceptance criteria:**
-  - Every price, forecast and score shows its data type, time, calibration label and feed status; PAPER TRADING is always labelled.
-  - There is no order affordance for real money; paper data never appears in real wealth figures.
-  - The paper-trading journey passes in Chromium, Firefox and WebKit.
-- **Verification:** CK-W, CK-B.
-- **Quality criteria evidenced here:** QG-19.6, QG-19.7
-- **Subtasks:** `P13-T15.1` Analysis and forecast panels · `P13-T15.2` Scanner and opportunity ranking · `P13-T15.3` Risk calculator and backtests · `P13-T15.4` Paper trading and journal · `P13-T15.5` Forex Copilot and alerts · `P13-T15.6` Tests
-
 #### P13-T12 — FX-12 Forex quality gates verification
 
 `QA` · Size M · Wave P13.W10 · Approval: no
 
 - **Objective:** Run and evidence QG-FX-01..07 (QG-13..QG-19) with reports under reports/quality/.
-- **Depends on:** P13-T11, P13-T15
+- **Depends on:** P13-T11
 - **Parallel with:** — (sequential)
 - **Unblocks:** P13-T13
 - **Deliverables:** Quality report per gate.
@@ -2914,7 +2897,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 `GATE` · Size S · Wave P13.W13 · Approval: **USER REVIEW REQUIRED**
 
 - **Objective:** Confirm the Forex Trading Intelligence module.
-- **Depends on:** P13-T01, P13-T02, P13-T03, P13-T04, P13-T05, P13-T06, P13-T07, P13-T08, P13-T09, P13-T10, P13-T11, P13-T12, P13-T13, P13-T14, P13-T15
+- **Depends on:** P13-T01, P13-T02, P13-T03, P13-T04, P13-T05, P13-T06, P13-T07, P13-T08, P13-T09, P13-T10, P13-T11, P13-T12, P13-T13, P13-T14
 - **Parallel with:** — (sequential)
 - **Unblocks:** —
 - **Deliverables:** Gate summary.
@@ -2932,8 +2915,8 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Entry criteria:** P09-GATE, P10-GATE, P11-GATE and P12-GATE complete; the user approves the phase and ADR-0018 (P14-T02).
 - **Exit criteria:** QG-26..QG-34 (QG-WEB-01..09) satisfied; parity matrix complete with exceptions recorded; no financial logic in the web client; the user approves readiness.
 - **Prerequisite phases:** P09, P10, P11, P12 · **Lane:** WEB. It can start as soon as it is approved; it does not wait for P13 or P15. P14-T13 uses the P13-T02 forex APIs; P14-T21 and P14-T22 need the P15 pipeline, compute, Keycloak and observability tasks.
-- **Task alias:** WEB-nn = P14-Tnn (WEB-01 = P14-T01 … WEB-23 = P14-T23). WEB-13 covers the Forex entry and live markets; the advanced Forex workspace is FX-15 = P13-T15, in the Forex lane, so the optional Forex module never blocks the core release. QG-WEB-nn are the gates QG-(25+nn).
-- **Recommended order (DEC-38, the user's priority of 2026-10-14):** P14 waves 1 to 6 (foundation, authentication, shell, then dashboard, portfolio and Copilot), then waves 7 and 8; resume P13 (T03 onwards, including P13-T15); P15; then P14 waves 9 to 12, P16 and P17.
+- **Task alias:** WEB-nn = P14-Tnn (WEB-01 = P14-T01 … WEB-24 = P14-T24). WEB-13 covers the Forex entry and live markets; WEB-24 is the advanced Forex workspace. P13 is complete before P14 starts (DEC-38), so the web builds on finished Forex APIs. QG-WEB-nn are the gates QG-(25+nn).
+- **Order (DEC-38, decided by the user 2026-10-14):** P13 runs in full first. Then P14 waves 1 to 6 (foundation, authentication, shell, then the priority modules: dashboard, portfolio and Copilot), waves 7 and 8, P15 where P14-T21/T22 need it, then P14 waves 9 to 12, P16 and P17.
 - **Entry gates:** prerequisite phase gates completed (P09, P10, P11, P12); user approval of the phase.
 - **Task-level gates:** each task's CK suites (CK-W for web, plus CK-B, CK-API, CK-DB where the backend changes) and acceptance criteria.
 - **Exit gates:** QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33, QG-34 (every criterion) required by `P14-GATE` plus user review.
@@ -2949,7 +2932,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | P14.W6 | P14-T07, P14-T08, P14-T12 | Parallel-safe | Phase approved and all dependencies complete | Priority wave (user, 2026-10-14). Different routes; shared components change only through T03's library. |
 | P14.W7 | P14-T09, P14-T10, P14-T11, P14-T14, P14-T16 | Parallel-safe | Phase approved and all dependencies complete | Different routes and features; T11 adds one backend endpoint (no migration expected). |
 | P14.W8 | P14-T13, P14-T15, P14-T17 | Parallel-safe | Phase approved and all dependencies complete | T15 is backend-heavy (report service); T13 adds the ticket endpoint; T17 adds operator endpoints. Coordinate any migration ids. |
-| P14.W9 | P14-T18, P14-T19, P14-T20, P14-T21 | Parallel-safe | Phase approved and all dependencies complete | T19 and T20 write tests and reports; T21 writes CI and deployment files; T18 adds concurrency checks to the API. |
+| P14.W9 | P14-T18, P14-T19, P14-T20, P14-T21, P14-T24 | Parallel-safe | Phase approved and all dependencies complete | T19 and T20 write tests and reports; T21 writes CI and deployment files; T18 adds concurrency checks to the API. |
 | P14.W10 | P14-T22 | Single task | Phase approved and all dependencies complete | — |
 | P14.W11 | P14-T23 | Single task | Phase approved and all dependencies complete | — |
 | P14.W12 | P14-GATE | Single task | Phase approved and all dependencies complete | — |
@@ -3146,9 +3129,9 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 
 `WEB` · Size M · Wave P14.W8 · Approval: none
 
-- **Objective:** The Forex entry point behind the server flag and a live-markets page on the existing P13-T02 APIs; the advanced workspace is P13-T15.
+- **Objective:** The Forex entry point behind the server flag and a live-markets page on the existing P13-T02 APIs; the advanced workspace is P14-T24.
 - **Depends on:** P14-T06
-- **Unblocks:** P14-T19, P14-T20, P13-T15
+- **Unblocks:** P14-T18, P14-T19, P14-T20, P14-T24
 - **Deliverables:** Live-markets page; single-use WebSocket ticket minted by the BFF and exchanged by the API.
 - **Acceptance criteria:**
   - Hidden when the flag is off.
@@ -3288,7 +3271,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 `QA` · Size M · Wave P14.W10 · Approval: **USER REVIEW REQUIRED**
 
 - **Objective:** Deploy the portal to staging and run the full journeys on real infrastructure.
-- **Depends on:** P14-T18, P14-T19, P14-T20, P14-T21, P15-T05, P15-T07, P15-T09
+- **Depends on:** P14-T18, P14-T19, P14-T20, P14-T21, P14-T24, P15-T05, P15-T07, P15-T09
 - **Unblocks:** P14-T23
 - **Deliverables:** Staging deployment, journey results, header and TLS checks, monitoring, rollback drill.
 - **Acceptance criteria:**
@@ -3315,12 +3298,28 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Quality gates required before start:** QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33
 - **Subtasks:** `P14-T23.1` Readiness review · `P14-T23.2` Open items · `P14-T23.3` Approval
 
+#### P14-T24 — WEB-24 Forex web workspace (advanced)
+
+`WEB` · Size L · Wave P14.W9 · Approval: none
+
+- **Objective:** The advanced Forex workspace in the web portal: analysis and forecast panels, scanner and opportunity ranking, risk calculator, backtests, paper trading and journal, Forex Copilot and alerts, on the finished P13 APIs. It continues WEB-13 (P14-T13).
+- **Depends on:** P13-T10, P14-T13
+- **Unblocks:** P14-T22, P14-GATE
+- **Deliverables:** Multi-panel desktop workspace, candle chart with indicators, paper-trading pages, Forex Copilot panel.
+- **Acceptance criteria:**
+  - Every price, forecast and score shows its data type, time, calibration label and feed status; PAPER TRADING is always labelled.
+  - There is no order affordance for real money; paper data never appears in real wealth figures.
+  - The paper-trading journey passes in Chromium, Firefox and WebKit.
+- **Verification:** CK-W, CK-B.
+- **Quality criteria evidenced here:** QG-28.9, QG-33.9
+- **Subtasks:** `P14-T24.1` Analysis and forecast panels · `P14-T24.2` Scanner and opportunity ranking · `P14-T24.3` Risk calculator and backtests · `P14-T24.4` Paper trading and journal · `P14-T24.5` Forex Copilot and alerts · `P14-T24.6` Tests
+
 #### P14-GATE — Phase P14 exit gate
 
 `GATE` · Size S · Wave P14.W12 · Approval: **USER REVIEW REQUIRED**
 
 - **Objective:** Confirm the web portal.
-- **Depends on:** P14-T01, P14-T02, P14-T03, P14-T04, P14-T05, P14-T06, P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17, P14-T18, P14-T19, P14-T20, P14-T21, P14-T22, P14-T23
+- **Depends on:** P14-T01, P14-T02, P14-T03, P14-T04, P14-T05, P14-T06, P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17, P14-T18, P14-T19, P14-T20, P14-T21, P14-T22, P14-T23, P14-T24
 - **Unblocks:** P16 wave 1
 - **Deliverables:** Gate summary.
 - **Acceptance criteria:**

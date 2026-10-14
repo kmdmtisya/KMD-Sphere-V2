@@ -432,11 +432,12 @@ WealthSphere becomes one platform with three channels: Android, iOS and Web.
 
 **Proposed technology (ADR-0018).** Next.js and TypeScript, with a Backend-for-Frontend that keeps tokens server-side and gives the browser an HttpOnly session cookie. Design tokens are shared with the Flutter apps.
 
-**Order of work** (the user's priority):
+**Order of work** (the user's decisions of 2026-10-14):
+0. The Forex module (P13) is completed in full before the web work.
 1. Foundation, authentication and shell.
 2. Executive dashboard, portfolio management and the AI Copilot.
 3. The remaining modules.
-4. The advanced Forex workspace.
+4. The advanced Forex workspace (P14-T24), on the finished Forex APIs.
 5. Synchronisation, security, accessibility, performance, CI/CD, staging and readiness.
 
 **Plan and documents.** Phase P14 (WEB workstream), with gates QG-WEB-01..09 = QG-26..QG-34 and decisions DEC-30..DEC-38, in EXECUTION_PLAN.md. Details are in docs/web/, and the intent in SOLUTION_INTENT.md section 35. Awaiting approval.

@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-14T09:46:05+04:00 by `scripts/track.py`._
+_Generated at 2026-10-14T09:54:08+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -29,7 +29,7 @@ _Generated at 2026-10-14T09:46:05+04:00 by `scripts/track.py`._
 | QG-16 | QG-FX-04: Trading Risk Accuracy | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
 | QG-17 | QG-FX-05: Backtesting Integrity | ⬜ NOT_STARTED | 0/4 | Unassigned | — |
 | QG-18 | QG-FX-06: AI Trading Intelligence | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
-| QG-19 | QG-FX-07: Mobile and Web Experience | ⬜ NOT_STARTED | 0/7 | Unassigned | — |
+| QG-19 | QG-FX-07: Mobile Experience | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
 | QG-20 | QG-FX-08: Release and Regulatory Readiness | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
 | QG-21 | QG-FXCUR-01: Exchange Rate Accuracy | ✅ PASSED | 5/5 | Unassigned | — |
 | QG-22 | QG-FXCUR-02: Portfolio Consistency | ✅ PASSED | 5/5 | Unassigned | — |
@@ -38,18 +38,18 @@ _Generated at 2026-10-14T09:46:05+04:00 by `scripts/track.py`._
 | QG-25 | QG-FXCUR-05: AI Integration | ✅ PASSED | 5/5 | Unassigned | — |
 | QG-26 | QG-WEB-01: Architecture and Integration | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
 | QG-27 | QG-WEB-02: UI/UX and Design System | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
-| QG-28 | QG-WEB-03: Functional Parity | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
+| QG-28 | QG-WEB-03: Functional Parity | ⬜ NOT_STARTED | 0/9 | Unassigned | — |
 | QG-29 | QG-WEB-04: Authentication and Security | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
 | QG-30 | QG-WEB-05: Financial Accuracy | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
 | QG-31 | QG-WEB-06: Performance | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
 | QG-32 | QG-WEB-07: Browser Compatibility | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
-| QG-33 | QG-WEB-08: End-to-End Testing | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
+| QG-33 | QG-WEB-08: End-to-End Testing | ⬜ NOT_STARTED | 0/9 | Unassigned | — |
 | QG-34 | QG-WEB-09: Production Readiness | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
 Criteria satisfied overall: 79/209.
 
-Current phase **P13** exit-gate criteria outstanding: QG-13.1, QG-13.2, QG-13.3, QG-13.4, QG-13.5, QG-14.1, QG-14.2, QG-14.3, QG-15.1, QG-15.2, QG-15.3, QG-15.4, QG-15.5, QG-15.6, QG-16.1, QG-16.2, QG-16.3, QG-16.4, QG-16.5, QG-17.1, QG-17.2, QG-17.3, QG-17.4, QG-18.1, QG-18.2, QG-18.3, QG-18.4, QG-18.5, QG-19.1, QG-19.2, QG-19.3, QG-19.4, QG-19.5, QG-19.6, QG-19.7, QG-20.1, QG-20.2, QG-20.3, QG-20.4, QG-20.5.
+Current phase **P13** exit-gate criteria outstanding: QG-13.1, QG-13.2, QG-13.3, QG-13.4, QG-13.5, QG-14.1, QG-14.2, QG-14.3, QG-15.1, QG-15.2, QG-15.3, QG-15.4, QG-15.5, QG-15.6, QG-16.1, QG-16.2, QG-16.3, QG-16.4, QG-16.5, QG-17.1, QG-17.2, QG-17.3, QG-17.4, QG-18.1, QG-18.2, QG-18.3, QG-18.4, QG-18.5, QG-19.1, QG-19.2, QG-19.3, QG-19.4, QG-19.5, QG-20.1, QG-20.2, QG-20.3, QG-20.4, QG-20.5.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -395,15 +395,13 @@ Blocking Issues: —
 Blocks: —  
 Approved By: —
 
-### QG-19: QG-FX-07: Mobile and Web Experience
+### QG-19: QG-FX-07: Mobile Experience
 
 - [ ] QG-19.1 Android and iOS builds pass · Required: P13 · By: P13-T11
 - [ ] QG-19.2 Charts remain responsive during streaming updates · Required: P13 · By: P13-T11
 - [ ] QG-19.3 Background and foreground transitions are handled · Required: P13 · By: P13-T11
 - [ ] QG-19.4 Notifications are tested · Required: P13 · By: P13-T11
 - [ ] QG-19.5 Network interruption recovery is verified · Required: P13 · By: P13-T11
-- [ ] QG-19.6 Web Forex workspace: charts responsive while streaming; data type, feed status and PAPER TRADING labels always shown; no order affordance · Required: P13 · By: P13-T15
-- [ ] QG-19.7 Web paper-trading journey passes (Chromium, Firefox, WebKit) · Required: P13 · By: P13-T15
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -569,9 +567,10 @@ Approved By: —
 - [ ] QG-28.3 Create, read, update and delete workflows verified · Required: P14 · By: P14-T08
 - [ ] QG-28.4 Financial analytics verified · Required: P14 · By: P14-T09
 - [ ] QG-28.5 AI modules verified · Required: P14 · By: P14-T12
-- [ ] QG-28.6 Forex entry verified: hidden when the flag is off; live markets labelled when on (advanced workspace: QG-19.6) · Required: P14 · By: P14-T13
+- [ ] QG-28.6 Forex entry verified: hidden when the flag is off; live markets labelled when on (advanced workspace: QG-28.9) · Required: P14 · By: P14-T13
 - [ ] QG-28.7 Currency conversion verified · Required: P14 · By: P14-T14
 - [ ] QG-28.8 Reports and exports verified · Required: P14 · By: P14-T15
+- [ ] QG-28.9 Advanced Forex web workspace: charts responsive while streaming; data type, feed status and PAPER TRADING labels always shown; no order affordance · Required: P14 · By: P14-T24
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -668,9 +667,10 @@ Approved By: —
 - [ ] QG-33.3 Investment transaction workflows pass · Required: P14 · By: P14-T22
 - [ ] QG-33.4 Currency switching passes · Required: P14 · By: P14-T22
 - [ ] QG-33.5 AI Copilot interaction passes · Required: P14 · By: P14-T22
-- [ ] QG-33.6 Forex journeys pass where implemented (live markets here; paper trading: QG-19.7) · Required: P14 · By: P14-T13
+- [ ] QG-33.6 Forex journeys pass where implemented (live markets and the advanced workspace) · Required: P14 · By: P14-T13
 - [ ] QG-33.7 Cross-platform synchronisation passes · Required: P14 · By: P14-T18 · CRITICAL
 - [ ] QG-33.8 Export and reporting journeys pass · Required: P14 · By: P14-T22
+- [ ] QG-33.9 Web paper-trading journey passes (Chromium, Firefox, WebKit) · Required: P14 · By: P14-T24
 
 Status: NOT_STARTED  
 Owner: Unassigned  

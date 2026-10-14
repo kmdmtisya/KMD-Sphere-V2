@@ -129,7 +129,7 @@ The mobile behaviour is unchanged; these are the desktop forms.
   - Uncertainty and the not-advice notice are always visible.
 - **Doctor, Opportunities, Compare, Simulate.** Desktop layouts with comparison tables. Every opportunity card shows risks, assumptions, data freshness and evidence, and the no-trading notice.
 - **Calculator, forecast, goals, net worth, income, currency.** Input form and results side by side on desktop; scenario tables next to charts; converter and rate status.
-- **Forex workspace (live markets: P14-T13; advanced workspace: P13-T15).**
+- **Forex workspace (live markets: P14-T13; advanced workspace: P14-T24).**
   - A multi-panel layout: watchlist, candle chart with indicators, quote panel with feed status, calendar, scanner and paper trading.
   - PAPER TRADING and simulated or delayed labels are always on.
   - There is no order button of any kind for real money.
