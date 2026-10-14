@@ -1238,3 +1238,24 @@ An optional workstream (plan phase P13, ADR-0009) adds AI-assisted forex market 
 Plan phase P11 (FXCUR, ADR-0010) makes the reporting currency a global user setting: one choice (AED, USD, KES, EUR, GBP, JPY, CHF, CAD, AUD, ZAR initially) switches every financial figure in the app, using timestamped provider rates, consistent rate snapshots and historical rates for past figures. Underlying balances, transactions and records never change. It includes an FX provider service with fallback and caching, a currency converter screen and authorised AI currency tools, and is gated by QG-21…QG-25. See SOLUTION_INTENT section 8 and docs/design/multi-currency-design.md.
 
 **Implementation rules for Claude Code:** read docs/design/multi-currency-design.md first; extend the P05 FX service and P08 provider layer instead of adding parallel ones; never mutate stored amounts or rates when converting; convert on the backend in Decimal with one snapshot per response; never show a cached rate as current or invent a rate when providers fail.
+
+## Enterprise Web Portal (proposed extension, 2026-10-14)
+Rules for web work (phase P15, ADR-0018), in addition to every rule above:
+
+- **One backend.** The web calls the same `/api/v1` APIs through its BFF.
+  - No business logic, financial calculation or authorisation decision in `web/`.
+  - Display formatting of decimal strings only; never floating-point money.
+  - A lint rule and a test enforce this.
+- **Sessions.**
+  - Tokens stay in the BFF, encrypted in Redis.
+  - Never put a token in localStorage, sessionStorage, a script-readable cookie or a URL.
+  - State-changing requests carry a CSRF token.
+  - Keep the CSP strict, with nonces.
+- **Contract and tokens.** The API client is generated from `backend/openapi.json`, and design tokens are generated from `design/tokens/`. Regenerate them, never hand-edit; CI fails on drift.
+- **Parity.** Update `docs/web/CROSS_PLATFORM_FEATURE_PARITY_MATRIX.md` with every feature on any channel. A feature that no channel has is a planned dependency, never claimed parity.
+- **Quality.**
+  - WCAG 2.2 AA: axe in tests, plus a manual screen-reader pass for key journeys.
+  - Performance budgets (DEC-36), measured and never assumed.
+  - Playwright journeys in Chromium, Firefox and WebKit.
+  - Gates QG-26..QG-34.
+- **Forex.** The Forex entry follows the server flag. The advanced workspace is P13-T15. There is no order affordance of any kind.

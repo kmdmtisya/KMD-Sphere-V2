@@ -66,7 +66,7 @@ Launch jurisdictions were set by the user for P12. The jurisdiction rules in cod
 | 3.3 | Are any asset classes restricted for retail investors or for residents (for example cryptocurrency, private equity, property shares)? Each restriction can be added as an excluded class for that country (`JurisdictionRules.excluded_classes`). |
 | 3.4 | Is residence the right test, or does citizenship or the user's account country matter? |
 | 3.5 | Does the risk-tolerance filter amount to a suitability assessment or "know your customer" step, and what does that trigger? |
-| 3.6 | Data protection: the model sees only candidate facts (no identity, no amounts). Does sending even that to an external model provider need a disclosure to the user in either country (see ADR-0017)? Account deletion and retention are in P15-T05. |
+| 3.6 | Data protection: the model sees only candidate facts (no identity, no amounts). Does sending even that to an external model provider need a disclosure to the user in either country (see ADR-0017)? Account deletion and retention are in P16-T05. |
 | 3.7 | Do you want the same wording in both countries, or a per-country disclosure shown by residence? The app already stores residence, so per-country text is possible. |
 
 ## 4. Reviewer's decisions (P12-T10.2)
@@ -77,7 +77,7 @@ Launch jurisdictions were set by the user for P12. The jurisdiction rules in cod
 |---|---|---|
 | 1 to 22 | **Approve, unchanged** | Signed off as drafted. |
 | Observations 2.1 to 2.8 | **No change to the wording** | Carried as open follow-ups for the first release with real instruments (the copy is reviewed again then, see item 7 of section 2): a statement that WealthSphere is not a licensed adviser or broker, a general loss-of-money line on the opportunity screen, a data-delay sentence, a note that Doctor severity is not a rating, and Swahili and Arabic translations. |
-| Questions 3.1 to 3.7 | **Not answered; open** | No legal review has been done, so no jurisdiction is marked as reviewed. They must be answered before real instruments or live data are introduced, and before launch (P15-T05). |
+| Questions 3.1 to 3.7 | **Not answered; open** | No legal review has been done, so no jurisdiction is marked as reviewed. They must be answered before real instruments or live data are introduced, and before launch (P16-T05). |
 
 ## 5. Sign-off (acceptance: the reviewer signs off wording and jurisdictional disclosures)
 

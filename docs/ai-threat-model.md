@@ -38,5 +38,5 @@ Cross-user requests by id, by name and by "all users"; injection in the user mes
 | Risk | Why it remains | Handling |
 |---|---|---|
 | A model can still phrase something misleadingly within the rules | Language is not fully checkable | Number-provenance check, forbidden-phrase checks, evaluation datasets, disclaimers, human review of the evaluation set (QG-07) |
-| Provider-side retention beyond our control | Contractual, not technical | Minimisation; ADR-0017 records the reviewed terms; revisit before release (P15) |
+| Provider-side retention beyond our control | Contractual, not technical | Minimisation; ADR-0017 records the reviewed terms; revisit before release (P16) |
 | Prompt injection can degrade answer quality even when it cannot reach data | Models follow text | Authorisation outside the model; quality suite; users see the evidence |

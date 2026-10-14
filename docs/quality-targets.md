@@ -9,7 +9,7 @@ These are the "approved targets" that QUALITY_GATES.md refers to (QG-04.3, QG-04
 | Platform | Minimum | Rationale | Flutter default |
 |---|---|---|---|
 | Android | **8.0 (API 26)** | A finance app benefits from a modern security baseline and avoids the long tail of unpatched devices; Keystore and biometric support are mature | API 24 |
-| Android target / compile | API 36 now; **track Google Play's required target level at submission time** | Play requires recent target levels for new apps and updates; confirm the exact requirement before P16 | compile 36 |
+| Android target / compile | API 36 now; **track Google Play's required target level at submission time** | Play requires recent target levels for new apps and updates; confirm the exact requirement before P17 | compile 36 |
 | iOS | **16.0** | Covers iPhone 8 and later; Face ID/Touch ID and Keychain behave consistently; avoids supporting 5-year-old OS releases | 15.0 |
 | Form factor | Phones, portrait. Tablets and landscape are later phases | Per UI specification | |
 | Policy | Support the current and previous two major OS releases plus the stated minimum; review yearly or when store data shows a drop in a version's share | | |
@@ -61,7 +61,7 @@ Measured server-side at the API boundary under the design workload in section 4.
 | Authentication endpoints | p95 <= 500 ms (excluding deliberate rate-limit delays) | Same |
 | Market-data freshness | Delayed quotes refreshed at least every 15 min during market hours; every displayed price carries `as_of` | Ingestion metrics |
 | Background jobs | Refresh of up to 500 instruments completes within 60 s; failed jobs retry with exponential backoff (max 5) then land in a dead-letter queue with an alert | Worker metrics, fault-injection test |
-| Recovery | RPO <= 15 min (point-in-time recovery), RTO <= 4 h | Restore drill (P14-T10, P15-T09) |
+| Recovery | RPO <= 15 min (point-in-time recovery), RTO <= 4 h | Restore drill (P14-T10, P16-T09) |
 
 ## 4. Design workload and capacity assumptions (to confirm)
 
@@ -118,10 +118,10 @@ Items marked **100%** or **0** are zero-tolerance: any failure blocks the releas
 
 | Target group | First validated | Re-verified |
 |---|---|---|
-| Platform support, minimum versions | P01 (this document), P01-T06 build config | P15-T11 |
-| Mobile performance and stability | Baseline during P03-T07 on devices | P15-T04, P15-T11 |
-| API / database SLOs | Load-test baseline in P06 with the first engines | P15-T04, P15-T11 |
-| AI evaluation | Datasets drafted in P10-T09 | P12-T08, P15-T11 |
+| Platform support, minimum versions | P01 (this document), P01-T06 build config | P16-T11 |
+| Mobile performance and stability | Baseline during P03-T07 on devices | P16-T04, P16-T11 |
+| API / database SLOs | Load-test baseline in P06 with the first engines | P16-T04, P16-T11 |
+| AI evaluation | Datasets drafted in P10-T09 | P12-T08, P16-T11 |
 
 ## 9. Decisions requested
 
@@ -129,4 +129,4 @@ Items marked **100%** or **0** are zero-tolerance: any failure blocks the releas
 2. **DEC-16:** approve the mobile, API and database targets, or give different numbers.
 3. **DEC-16 / capacity:** confirm or replace the design workload in section 4.
 4. **DEC-17:** approve the AI evaluation datasets, sizes and thresholds, including the zero-tolerance list.
-5. Confirm that physical test devices (one low-end Android, one iPhone) and a way to test on iOS will be available before P03-T07 and P15.
+5. Confirm that physical test devices (one low-end Android, one iPhone) and a way to test on iOS will be available before P03-T07 and P16.

@@ -1695,3 +1695,19 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-13T23:12:28+04:00 — COMPLETE P13-T02
 - duration: 1h 00m 15s
 - evidence: Every stored quote carries provider, pair, bid, ask, DB-derived mid, UTC provider and receipt time, data type, quality and feed status. Unavailable or stale is reported, never invented. Stale data, heartbeat loss and reconnect tested on an injected clock. Fixture-only (DEC-19), behind a flag off by default and refused outside dev (DEC-20, DEC-23). Migration 0020 adds monthly partitions with BRIN (DEC-21). Tests: 99 forex tests, 97% coverage; full backend suite 2617 passed locally; Spectral clean. PR #154. CI all gates pass. · Approved by: user (mtisya@gmail.com), advance approval 2026-10-13 (P13 sequence)
+
+### 2026-10-14T08:57:55+04:00 — PLAN CHANGE (proposed) — add phase P15 Enterprise Web Portal (WEB workstream) and gates QG-26..QG-34
+- requested by the user 2026-10-14: a web portal with full functional parity with the Android and iOS apps, on the same backend, identity and data; priority: web foundation, executive dashboard, portfolio management and the AI Copilot before the advanced Forex workspace
+- repository assessment (commit 23d0903): no Flutter web target; flutter_appauth and local_auth have no web support; tokens are in flutter_secure_storage (browser storage on the web); the API is bearer-only with CORS off; OpenAPI exported and linted; no export, report, admin, global-search, net-worth-history or saved-layout capability exists on any channel (recorded as planned dependencies)
+- proposed architecture: ADR-0018 (Proposed), a dedicated Next.js/TypeScript portal with a Backend-for-Frontend (server-side tokens, HttpOnly cookie, CSRF, strict CSP); generated API client and shared design tokens; no financial logic in the web
+- renumbered phases: Hardening P15 -> P16, Release P16 -> P17 (task ids, gates, decisions and documents updated; earlier entries in this log keep the old ids); the tracker's QG-12.1 rule now requires core criteria due by P16
+- added 24 tasks (WEB-01..WEB-23 = P15-T01..T23, plus P15-GATE), 107 subtasks, 9 gates / 61 criteria (QG-WEB-01..09 = QG-26..QG-34), decisions DEC-30..DEC-38, 6 risks, check suite CK-W
+- added P13-T15 (FX-15, the advanced Forex web workspace, 6 subtasks) in the Forex lane, so the optional Forex module never blocks the core release, plus criteria QG-19.6 and QG-19.7; P13-T12 and P13-GATE now depend on it
+- P16 hardening wave 1 now also depends on P15-GATE; numeric order is no longer a valid single-lane order (documented in EXECUTION_PLAN section 6)
+- documents: docs/web/WEB_PORTAL_ARCHITECTURE.md, WEB_UI_UX_SPECIFICATION.md, CROSS_PLATFORM_FEATURE_PARITY_MATRIX.md, WEB_DEPLOYMENT_PLAN.md; SOLUTION_INTENT sections 4, 24 and 35; brief, guide and CLAUDE.md extensions
+- P15 phase approval PENDING; ADR-0018 Proposed; no web code written
+
+### 2026-10-14T08:57:55+04:00 — DECISION — P13 sequence paused after P13-T02, pending the web plan approval
+- the user's instruction of 2026-10-13 (run P13-T01 to P13-GATE sequentially) is paused at a clean boundary: P13-T01 and P13-T02 are complete and merged; P13-T03 is not started
+- reason: the user's priority of 2026-10-14 puts the web foundation, dashboard, portfolio and Copilot before the advanced Forex workspace; the proposed order (DEC-38) resumes P13 after P15 waves 1 to 8
+- the advance approvals recorded for P13-T05, T07, T13, T14 and P13-GATE are unchanged

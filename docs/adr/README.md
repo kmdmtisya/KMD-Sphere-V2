@@ -21,3 +21,4 @@ Format: Context / Decision / Consequences. Status values: Proposed, Accepted, Su
 | [0015](0015-offline-cache.md) | Encrypted offline snapshots (DEC-12) | Accepted |
 | [0016](0016-push-notification-path.md) | Push-notification path (DEC-08) | Accepted |
 | [0017](0017-llm-provider-and-key-custody.md) | LLM provider, key custody, budget and retention (DEC-05) | Accepted |
+| [0018](0018-web-portal-architecture.md) | Web portal frontend architecture and session model (DEC-30, DEC-31) | Proposed |

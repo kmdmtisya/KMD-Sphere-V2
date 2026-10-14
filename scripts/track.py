@@ -29,7 +29,7 @@ Usage (run from the repository root):
   python scripts/track.py qg reverify QG-06 --evidence "..." [--approved-by "name"]
   python scripts/track.py qg waive QG-02.6 --justification "..." --approved-by "name" --risk-owner "name" --expires YYYY-MM-DD
   python scripts/track.py qg revoke-waiver W-001
-  python scripts/track.py qg require QG-02.1 QG-03 QG-all@P15   # exit 1 if not satisfied (for CI)
+  python scripts/track.py qg require QG-02.1 QG-03 QG-all@P16   # exit 1 if not satisfied (for CI)
 Add --root <dir> to operate on a copy of the tracking files.
 """
 from __future__ import annotations
@@ -735,9 +735,9 @@ def cmd_qg(cl: Checklist, args) -> None:
             if st in ("FAILED", "BLOCKED"):
                 die(f"{g} is {st}; run `qg resolve {g}` after remediation first")
             if cid == "QG-12.1":
-                un = reg.unsatisfied(["QG-all@P15"])
+                un = reg.unsatisfied(["QG-all@P16"])
                 if un:
-                    die("QG-12.1 requires every core criterion (all gates except QG-12 and the optional Forex gates QG-13..QG-20) due by P15; unsatisfied: " + short(un))
+                    die("QG-12.1 requires every core criterion (all gates except QG-12 and the optional Forex gates QG-13..QG-20) due by P16; unsatisfied: " + short(un))
             c.done = True
             c.meta["Evidence"] = clean(args.evidence)
             c.meta["Verified"] = ts

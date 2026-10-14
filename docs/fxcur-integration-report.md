@@ -32,4 +32,4 @@ cd mobile/wealthsphere_app && WS_E2E_CONFIG=../../e2e.json flutter test e2e
 ## Not covered here
 
 - A real FX provider (key, quota, live outages): P11-T11 soaks the scheduler against the fake provider; the real-provider soak is P14-T11.
-- Device runs on Android and iOS hardware: CI builds both platforms; device testing is part of release (P16).
+- Device runs on Android and iOS hardware: CI builds both platforms; device testing is part of release (P17).

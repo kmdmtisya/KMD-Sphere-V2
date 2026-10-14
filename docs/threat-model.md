@@ -1,6 +1,6 @@
 # WealthSphere Threat Model (v1, P04-T09)
 
-Status: Approved by the user 2026-10-10 (P04-T09) (P04-T09, 2026-10-10). Scope: everything built through P04, plus the planned AI surface (P12) so its controls are designed in, not added later. Reviewed again at P10 (AI tool layer), P14 (cloud) and P15 (hardening, OWASP API Top 10 / MASVS review, penetration test).
+Status: Approved by the user 2026-10-10 (P04-T09) (P04-T09, 2026-10-10). Scope: everything built through P04, plus the planned AI surface (P12) so its controls are designed in, not added later. Reviewed again at P10 (AI tool layer), P14 (cloud) and P16 (hardening, OWASP API Top 10 / MASVS review, penetration test).
 
 Method: STRIDE per surface. Each threat lists the control, where it is tested, and its status: **In place** (implemented and tested), **Partial** (implemented, a gap is known), **Planned** (owned by a later task). Findings found while building P04 are in [security-findings.md](security-findings.md).
 
@@ -59,7 +59,7 @@ Trust boundaries:
 | # | STRIDE | Threat | Control | Tested by | Status |
 |---|---|---|---|---|---|
 | I1 | S | Password guessing / credential stuffing | Brute-force detection: 5 failures, temporary lockout 1 to 15 min (never permanent, so accounts cannot be locked by others); password policy (12+ chars, mixed, history 5) | `test_keycloak_realm.py`; `keycloak_dev.py smoke` (lockout checks) | In place |
-| I2 | S | Stolen password alone is enough | TOTP MFA available; set up from More > Account | smoke (TOTP enrolment, wrong code refused) | **Partial**: MFA is optional (user decision 2026-10-10, SF-10; revisited at P15) |
+| I2 | S | Stolen password alone is enough | TOTP MFA available; set up from More > Account | smoke (TOTP enrolment, wrong code refused) | **Partial**: MFA is optional (user decision 2026-10-10, SF-10; revisited at P16) |
 | I3 | S/E | Authorization code interception (custom scheme hijack) | Public client with PKCE S256 required; exact redirect URI; implicit and password grants off | realm tests; smoke (no-PKCE refused, implicit and password grants refused) | In place |
 | I4 | I | Long-lived tokens leak | Access 5 min; refresh rotation with reuse detection (`revokeRefreshToken`, max reuse 0); SSO idle 30 min, max 10 h; no `offline_access` scope requested | realm tests; mobile `keycloak_oidc_client_test` | In place |
 | I5 | T | Realm misconfiguration drifts | Realm as code (`infra/keycloak/realm-export.json`), tests over the export; `sync-realm` | `test_keycloak_realm.py` | In place (dev); production realm hardening (HTTPS only, admin access, SMTP) is P14 |
@@ -76,7 +76,7 @@ Trust boundaries:
 | A5 | D | Oversized bodies | 1 MiB limit by Content-Length and while streaming | `test_api_protection.py` | In place |
 | A6 | T/I | Browser-based attacks on API responses | `nosniff`, `X-Frame-Options: DENY`, deny-all CSP, `no-referrer`, CORP, `Cache-Control: no-store`, HSTS in deployed environments; CORS off (explicit https origins only, no credentials) | `test_api_protection.py` | In place |
 | A7 | I | Error responses or logs leak secrets or financial data | RFC 7807 errors without internals; validation errors never echo values; log redaction for credentials, tokens and amounts | `test_redaction.py`, `test_identity_api.py`, `test_auth_coverage.py` | In place |
-| A8 | R | A user denies a change; changes cannot be traced | Append-only `audit_events` (DB triggers reject UPDATE/DELETE/TRUNCATE, ORM guards); correlation ID per request; written in the same transaction as the change | `test_audit.py` | In place; the application DB role should not own the table (P15), retention and erasure (P15-T05) |
+| A8 | R | A user denies a change; changes cannot be traced | Append-only `audit_events` (DB triggers reject UPDATE/DELETE/TRUNCATE, ORM guards); correlation ID per request; written in the same transaction as the change | `test_audit.py` | In place; the application DB role should not own the table (P16), retention and erasure (P16-T05) |
 | A9 | T | Injection (SQL) | SQLAlchemy expressions only; no string-built SQL; typed Pydantic input with `extra="forbid"` | identity and authz tests | In place; SAST (CodeQL) runs in CI |
 | A10 | T | Financial result tampering by the client | Backend authoritative; money as Decimal/NUMERIC; the app never computes financial truth | P05 onwards (financial tests, QG-06) | Planned |
 
@@ -89,9 +89,9 @@ Trust boundaries:
 | M3 | S | Someone picks up an unlocked phone | App lock (biometrics / device PIN): on restore, on resume after the chosen timeout, after 5 min idle; only success unlocks; without device security only sign-out remains | `app_lock_test`, `app_lock_gate_test`; emulator (PIN) | In place; fingerprint enrolment and Face ID not yet exercised on hardware |
 | M4 | I | App-switcher snapshot shows balances | Privacy cover while inactive; Android 13+ Recents screenshot disabled | `app_lock_gate_test`; emulator (Recents shows the cover) | In place |
 | M5 | S | Phishing inside the app (fake login form) | No credentials entered in the app: hosted pages in the system browser (address bar visible); ephemeral session on iOS | `auth_screens_test`, `keycloak_oidc_client_test` | In place |
-| M6 | T/I | Network interception | HTTPS required in release builds (config refuses http); debug allows cleartext only to loopback dev hosts | `token_set_test` (AppConfig) | In place; certificate pinning decided in P15 |
+| M6 | T/I | Network interception | HTTPS required in release builds (config refuses http); debug allows cleartext only to loopback dev hosts | `token_set_test` (AppConfig) | In place; certificate pinning decided in P16 |
 | M7 | E | Refresh token replay after theft | Rotation: each refresh returns a new token and kills the old one; a refused refresh ends the session on the device | `token_manager_test`, `api_client_test`; emulator (revoked session signs out) | In place |
-| M8 | T | Rooted/jailbroken device, instrumentation, repackaging | Out of scope for v1 controls; tokens protected by hardware keystore where available | — | Planned (P15 MASVS review: root/jailbreak signals, tamper detection) |
+| M8 | T | Rooted/jailbroken device, instrumentation, repackaging | Out of scope for v1 controls; tokens protected by hardware keystore where available | — | Planned (P16 MASVS review: root/jailbreak signals, tamper detection) |
 | M9 | I | Deep links carry attacker-controlled input | Strict parsing of route parameters (AI scope); invalid values ignored; backend authorises every resource anyway | `test/app/app_routes_test.dart` | In place |
 
 ### 3.4 Data stores and infrastructure
@@ -121,11 +121,11 @@ Designed-in controls; each becomes a tested control in its task.
 
 | Item | Risk | Owner / when |
 |---|---|---|
-| MFA optional | A stolen password is enough for accounts without TOTP | Accepted by the user on 2026-10-10 (optional for now); revisit at P15 |
+| MFA optional | A stolen password is enough for accounts without TOTP | Accepted by the user on 2026-10-10 (optional for now); revisit at P16 |
 | iOS not exercised on a device | Keychain options and Face ID behaviour are unit-tested, and CI compiles iOS, but they have not been run on an iPhone | Run on a device or simulator before P04-GATE closes QG-05.4, or defer with approval |
 | Client IP attribution behind a proxy | Per-IP limits could be bypassed or shared wrongly | P14 (load balancer, `--proxy-headers`) |
-| App DB role owns `audit_events` | The owner could disable the triggers | P15 (separate least-privilege role) |
-| No certificate pinning, root/jailbreak detection | Higher risk on compromised devices | P15 MASVS review |
+| App DB role owns `audit_events` | The owner could disable the triggers | P16 (separate least-privilege role) |
+| No certificate pinning, root/jailbreak detection | Higher risk on compromised devices | P16 MASVS review |
 | Dev stack uses HTTP for Keycloak and API | Dev only; release builds refuse HTTP | P14 (TLS everywhere) |
 
 ## 5. Security test suite

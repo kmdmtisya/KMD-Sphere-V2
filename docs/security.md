@@ -22,8 +22,8 @@ Derived from CLAUDE.md (Security Rules), `SOLUTION_INTENT.md` section 23 and the
 | Logging | No secrets or unnecessary financial payloads in logs; redaction filter with tests | P01-T12 |
 | Supply chain | Secret scanning, dependency and container scanning, SAST, SBOM | P01-T11 |
 | Backups | Encrypted backups, restore tests, documented RPO/RTO | P14-T10 |
-| Privacy | Consent, retention, export and account deletion | P15-T05 |
-| Reviews | OWASP API Security Top 10, OWASP MASVS, penetration test | P15 |
+| Privacy | Consent, retention, export and account deletion | P16-T05 |
+| Reviews | OWASP API Security Top 10, OWASP MASVS, penetration test | P16 |
 
 ## Secrets handling (current)
 - Local development values live in `.env` (ignored by git); only `.env.example` with placeholders is committed.
@@ -77,7 +77,7 @@ await session.commit()                         # the change and its event commit
 - **Correlation.** Each event stores the request's correlation ID (`X-Correlation-ID`), linking it to logs and traces.
 - **Redaction.** `details` pass through `app.core.redaction.redact`: credentials, tokens and financial values (amounts, prices, balances and so on) are replaced with `[REDACTED]`; floats are never stored; details over 8 KiB are reduced to their key names. Store field names and resource ids, not amounts; the resource's own append-only history holds the values.
 - **AI tool calls** store `hash_arguments(arguments)`, not the arguments (docs/ai-governance.md).
-- **No foreign key to users**, so the trail outlives the rows it describes. Retention and account-deletion handling are defined in P15-T05 (privacy: export, deletion, retention). In deployed environments the application database role should not own `audit_events` (P15 hardening), so it cannot disable the triggers.
+- **No foreign key to users**, so the trail outlives the rows it describes. Retention and account-deletion handling are defined in P16-T05 (privacy: export, deletion, retention). In deployed environments the application database role should not own `audit_events` (P16 hardening), so it cannot disable the triggers.
 
 ## API protection (P04-T05)
 

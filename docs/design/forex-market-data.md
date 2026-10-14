@@ -76,7 +76,7 @@ The windows are half-open: silence of exactly 10 s already counts as `degraded`.
 
 **Tests.** Time, sleeping, waiting and randomness are injected, so the tests drive heartbeat loss and reconnects on a fake clock without waiting.
 
-**Where the feed runs.** The feed runs in the API process only when both `forex_enabled` and `forex_feed_enabled` are set. A REST call made where no feed runs reports the feed as `disconnected`. Fan-out across several API processes (Redis pub/sub) is a P15 hardening item.
+**Where the feed runs.** The feed runs in the API process only when both `forex_enabled` and `forex_feed_enabled` are set. A REST call made where no feed runs reports the feed as `disconnected`. Fan-out across several API processes (Redis pub/sub) is a P16 hardening item.
 
 ## 5. API
 

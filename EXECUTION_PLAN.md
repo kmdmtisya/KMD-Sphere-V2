@@ -43,10 +43,10 @@ Conflicts and resolutions found in the documents:
 | D4 | 'No binary floating point for money' applies to the client as well. | `Decimal` + currency code, amounts as strings in JSON; `double` only inside chart widgets (ADR-0003). |
 | D5 | Several brand tokens fail WCAG AA as text (teal 3.74:1, gold 1.79:1 on white; muted 4.43:1 on #F5F7FA; blue/red/teal/muted on navy 2.8–3.9:1). | Brand colours remain fills/accents; P02-T01 derives text-safe shades and enforces contrast with a test. |
 | D6 | Concept board shows a Buy button on Investment Details. | Not built: no trade execution in the initial release (P07-T04). |
-| D7 | iOS cannot be built on this Windows machine. | macOS CI job (P01-T10) compiles iOS; device QA needs a Mac or cloud device (P03-T07, P15-T06). |
+| D7 | iOS cannot be built on this Windows machine. | macOS CI job (P01-T10) compiles iOS; device QA needs a Mac or cloud device (P03-T07, P16-T06). |
 | D8 | CLAUDE.md lives in docs/; Claude Code loads it from the repo root. | Moved to root in P01-T02. |
 | D9 | Guide §16 lists Dio, secure storage and local_auth for the shell. | Deferred to P04-T06/T07 when first used (avoid unnecessary dependencies). |
-| D10 | The project brief says 'Phase 0–6'; CLAUDE.md lists 17 steps; SOLUTION_INTENT lists Phase 0–10. | This roadmap uses P00–P16 and maps each source phase in the traceability appendix. |
+| D10 | The project brief says 'Phase 0–6'; CLAUDE.md lists 17 steps; SOLUTION_INTENT lists Phase 0–10. | This roadmap uses P00–P17 and maps each source phase in the traceability appendix. |
 | D11 | Guide §5 shows many `services/*` folders; CLAUDE.md says start as a modular monolith. | Single `backend/` modular monolith with domain modules (ADR-0004). |
 
 ## 3. Identifiers, status model and timestamps
@@ -113,28 +113,31 @@ Conflicts and resolutions found in the documents:
 | P10 | AI Tool Layer & Wealth Copilot | AI | P04, P05, P06 (P09-T01 for mobile wiring) | 11 | 7 |
 | P11 | Multi-Currency Reporting & FX Management (FXCUR workstream) | CORE | P05, P06, P08, P09, P10 | 13 | 11 |
 | P12 | AI Investment Intelligence & Portfolio Doctor | AI | P08, P10, P11 | 11 | 6 |
-| P13 | Forex Trading Intelligence (FX workstream) | FX | P08, P09, P10, P11, P12 | 15 | 13 |
+| P13 | Forex Trading Intelligence (FX workstream) | FX | P08, P09, P10, P11, P12 (P13-T15 needs P15-T13) | 16 | 13 |
 | P14 | Cloud Infrastructure & Deployment Pipeline | INFRA | P01 (early start allowed); deployment tasks need P04-T01 | 12 | 8 |
-| P15 | Production Hardening & Quality Assurance | HARDENING | P09, P10, P11, P12, P14 | 12 | 6 |
-| P16 | Release & Production Deployment | RELEASE | P15 | 9 | 7 |
+| P15 | Enterprise Web Portal (WEB workstream) | WEB | P09, P10, P11, P12 (P15-T21/T22 need P14 tasks) | 24 | 12 |
+| P16 | Production Hardening & Quality Assurance | HARDENING | P09, P10, P11, P12, P14, P15 | 12 | 6 |
+| P17 | Release & Production Deployment | RELEASE | P16 | 9 | 7 |
 
-**Valid single-lane order:** P00 → P01 → P02 → P03 → P04 → P05 → P06 → P07 → P08 → P09 → P10 → P11 → P12 → P13 → P14 → P15 → P16 (numeric order satisfies every dependency).
+**Valid single-lane order:** P00 → … → P12 → P15 (waves 1 to 8) → P13 → P14 → P15 (waves 9 to 12) → P16 → P17. Numeric order is no longer a valid single-lane order: P13-T15 needs P15-T13, and P15-T21/T22 need P14 tasks (PLAN CHANGE 2026-10-14).
 
 **Parallel lanes** (after `P01-GATE`, each needs its own phase approvals and worktree):
 
 ```text
 P00 → P01 ─┬─ MOBILE  : P02 → P03 → P07 ──────────────┐
            ├─ BACKEND : P04 → P05 → P06 → P08 ────────┼─ P09 (join, UX gate 4) → P10 → P12 ─┐
-           │            ▲ P04-T08 needs P02-GATE        │                                      ├─ P15 → P16
+           │            ▲ P04-T08 needs P02-GATE        │                                      ├─ P16 → P17
            │            ▲ P05-T10 needs P03-T01         │                                      │
            └─ INFRA   : P14 (T01 decision, T04 images, then IaC…) ─────────────────────────────┘
 ```
 
 **Multi-currency reporting (P11, FXCUR):** placed after P10 because it needs the P05 FX service, P06 analytics, P08 FX ingestion and provider abstraction, the P09 live screens and the P10 AI tool framework; placing it before P12 means AI Intelligence, Forex and hardening get the reporting currency natively instead of retrofitting it.
 
-**Forex workstream (P13):** runs after P12 and before P14. It is off the critical path of the core release, and its production enablement waits for P15 and the staging smoke tests in P14-T11.
+**Web portal (P15, WEB):** a channel of the core platform. It depends only on the completed P09 to P12, so it can start once approved; its CI/CD and staging tasks use the P14 infrastructure, and hardening (P16) covers it. The advanced Forex web workspace sits in the Forex lane (P13-T15) so the optional module never blocks the core release.
 
-**Critical path (longest dependency chain):** P00-GATE → P01 foundation → P04 identity → P05 core → P06 analytics → P09 integration → P10 Copilot → P11 multi-currency reporting → P12 Intelligence → P15 hardening → P16 release. P06-T01 (forecast engine) is pure code and can start right after P01 to de-risk the calculator early.
+**Forex workstream (P13):** runs after P12 and before P14. It is off the critical path of the core release, and its production enablement waits for P16 and the staging smoke tests in P14-T11.
+
+**Critical path (longest dependency chain):** P00-GATE → P01 foundation → P04 identity → P05 core → P06 analytics → P09 integration → P10 Copilot → P11 multi-currency reporting → P12 Intelligence → P16 hardening → P17 release. P06-T01 (forecast engine) is pure code and can start right after P01 to de-risk the calculator early.
 
 **Long-lead items to start early:** Apple/Google developer accounts (DEC-09), cloud decision (DEC-02), market-data licensing (DEC-04), LLM provider/budget (DEC-05), legal review (DEC-10), Android toolchain (P01-T01).
 
@@ -152,28 +155,29 @@ P00 → P01 ─┬─ MOBILE  : P02 → P03 → P07 ─────────�
 | **CK-API** Contract | `backend/` | `python scripts/export_openapi.py --check` · `spectral lint openapi.json` |
 | **CK-S** Security | repo root | `gitleaks detect` · `pip-audit` · `bandit -r backend/app` (or semgrep) · `trivy image <img>` · `syft` SBOM · Dart `flutter pub outdated` review |
 | **CK-INF** Infrastructure | `infrastructure/terraform` | `terraform fmt -check -recursive` · `terraform validate` · `tflint` · `checkov -d .` |
+| **CK-W** Web | `web/` | `npm ci` · `npm run lint` · `npm run typecheck` · `npm run client:check` · `npm run tokens:check` · `npm test` · `npx playwright test` · `npx lhci autorun` |
 | **CK-TRK** Tracking | repo root | `python scripts/track.py validate` (run after every tracker change) |
 
 Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0007 (P01-T03) and can be changed there before use. A task may only be completed when its listed gates pass **and** its acceptance criteria are evidenced.
 
-### 7.2 Platform quality gates (QG-01 … QG-25)
+### 7.2 Platform quality gates (QG-01 … QG-34)
 
 **QUALITY_GATES.md is the authoritative quality-gate register.** Each gate lists its criteria as checkboxes with a stable id (`QG-06.2`), the phase in which the criterion first becomes required, the task that produces its evidence, and a CRITICAL flag for security, financial-integrity and authorisation criteria. Gate statuses: `NOT_STARTED`, `IN_PROGRESS`, `BLOCKED`, `FAILED`, `PASSED`, `WAIVED`.
 
 | Gate | Name | Criteria | Critical | Required in phases |
 |---|---|---|---|---|
-| QG-01 | Architecture and Design | 5 | 0 | P01, P02, P05, P15 |
+| QG-01 | Architecture and Design | 5 | 0 | P01, P02, P05, P16 |
 | QG-02 | Code Quality | 6 | 1 | P01 |
 | QG-03 | Automated Testing | 6 | 1 | P01, P05, P06, P09 |
-| QG-04 | Android Platform | 7 | 0 | P01, P03, P04, P15, P16 |
-| QG-05 | iOS Platform | 6 | 0 | P01, P03, P04, P15, P16 |
+| QG-04 | Android Platform | 7 | 0 | P01, P03, P04, P16, P17 |
+| QG-05 | iOS Platform | 6 | 0 | P01, P03, P04, P16, P17 |
 | QG-06 | Financial Accuracy and Data Integrity | 7 | 7 | P05, P06, P08 |
 | QG-07 | AI Reliability and Investment Intelligence | 8 | 4 | P10, P12 |
-| QG-08 | Security and Privacy | 8 | 6 | P01, P04, P14, P15 |
-| QG-09 | Performance and Scalability | 6 | 0 | P08, P15 |
+| QG-08 | Security and Privacy | 8 | 6 | P01, P04, P14, P16 |
+| QG-09 | Performance and Scalability | 6 | 0 | P08, P16 |
 | QG-10 | CI/CD and Infrastructure | 8 | 0 | P01, P14 |
 | QG-11 | End-to-End Integration | 6 | 1 | P08, P09, P10 |
-| QG-12 | Production Release Readiness | 8 | 3 | P15, P16 |
+| QG-12 | Production Release Readiness | 8 | 3 | P16, P17 |
 | QG-13 (QG-FX-01) | Forex Market Data Integrity | 5 | 2 | P13 |
 | QG-14 (QG-FX-02) | Forex Technical Indicator Accuracy | 3 | 0 | P13 |
 | QG-15 (QG-FX-03) | Forex Prediction Model Validation | 6 | 0 | P13 |
@@ -195,13 +199,13 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | Entry gates | Conditions before a phase begins | Prerequisite phase gates (`Pnn-GATE`) are added as dependencies of every wave-1 task (one documented exception: P06-T01 may start after P01-GATE). Phase approval by the user is also required. |
 | Task-level gates | Checks before a task is marked complete | The task's CK check suites and acceptance criteria are evidenced; tasks bound to QG criteria carry `Gates-done` and `track.py complete` refuses until those criteria are verified or validly waived. |
 | Exit gates | Conditions before the phase is complete | `Pnn-GATE` carries `Gates-done` = every criterion first required in that phase; the gate cannot complete, and the phase cannot be closed, until they are satisfied. |
-| Release gates | Extra conditions before staging or production | `Gates-start` on P14-T11 (staging), P16-T03 (production deployment) and P16-T07 (store submission); `track.py start` refuses until satisfied. CI repeats the check with `track.py qg require`. |
+| Release gates | Extra conditions before staging or production | `Gates-start` on P14-T11 (staging), P17-T03 (production deployment) and P17-T07 (store submission); `track.py start` refuses until satisfied. CI repeats the check with `track.py qg require`. |
 
 **Enforcement rules (tracker-implemented):**
 
 - A phase cannot be completed unless all of its mandatory exit-gate criteria are satisfied (verified with evidence, or under an active waiver).
 - `qg fail <criterion> --issue … --blocks <task ids>` sets the gate `FAILED`, unticks the criterion and lists the blocked tasks; `start` and `complete` of those tasks (and therefore their dependents) are refused until `qg resolve` and a fresh `qg check` with new evidence. Tasks not listed and not dependent on them continue.
-- `qg check` requires an evidence statement and records the verification timestamp; `QG-12.1` additionally verifies that every core criterion due by P15 is satisfied (all gates except QG-12 and the optional Forex gates QG-13…QG-20; the multi-currency gates QG-21…QG-25 are core).
+- `qg check` requires an evidence statement and records the verification timestamp; `QG-12.1` additionally verifies that every core criterion due by P16 is satisfied (all gates except QG-12 and the optional Forex gates QG-13…QG-20; the multi-currency gates QG-21…QG-25 are core).
 - A gate becomes `PASSED` only via `qg pass` once every criterion is satisfied; `QG-12` and any gate with waived criteria also require `--approved-by`.
 - `validate` reports a COMPLETED task whose gate criteria are no longer satisfied as a regression warning, and fails if a gate shows PASSED/WAIVED without satisfied criteria, evidence and ISO 8601 timestamps.
 - Nothing is auto-ticked: only `qg check` with evidence ticks a criterion; timestamps always come from the system clock.
@@ -219,7 +223,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 7. End and verification timestamps are recorded by the tracker; `qg reverify` refreshes the verification timestamp on later re-runs.
 8. The tracker refreshes QUALITY_GATES.md, PROGRESS_DASHBOARD.md and EXECUTION_LOG.md.
 
-**CI/CD integration (spec 8.4):** P01-T15 makes backend, mobile, security and tracker checks required status checks with branch protection; P14-T08 builds the pipeline so staging deploys only after build, test, security and integration jobs succeed and production needs a protected-environment approval plus `track.py qg require` on the production start gates; P14-T11, P16-T03 and P16-T07 are the corresponding release-gate tasks. Gate results are written to QUALITY_GATES.md, surfaced in PROGRESS_DASHBOARD.md and referenced in EXECUTION_LOG.md by the tracker.
+**CI/CD integration (spec 8.4):** P01-T15 makes backend, mobile, security and tracker checks required status checks with branch protection; P14-T08 builds the pipeline so staging deploys only after build, test, security and integration jobs succeed and production needs a protected-environment approval plus `track.py qg require` on the production start gates; P14-T11, P17-T03 and P17-T07 are the corresponding release-gate tasks. Gate results are written to QUALITY_GATES.md, surfaced in PROGRESS_DASHBOARD.md and referenced in EXECUTION_LOG.md by the tracker.
 
 ### 7.3 Phase gate matrix
 
@@ -240,8 +244,9 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | P12 | P08, P10, P11 | QG-07.4,7 | — |
 | P13 | P08, P09, P10, P11, P12 | QG-13 … QG-20 (every criterion) | P13-T13, P13-T14 (QG-13..QG-19 satisfied before start) |
 | P14 | P01 | QG-08.4,5,7; QG-10.2,4,5,6,7,8 | P14-T11 |
-| P15 | P09, P10, P11, P12, P14 | QG-01.4; QG-04.6; QG-05.5; QG-08.2,8; QG-09.1,2,3,4,6; QG-12.1,3,4,7 | — |
-| P16 | P15 | QG-04.7; QG-05.6; QG-12.2,5,6,8 | P16-T03, P16-T07 |
+| P15 | P09, P10, P11, P12 | QG-26 … QG-34 (every criterion) | P15-T23 (QG-26..QG-33 satisfied before start) |
+| P16 | P09, P10, P11, P12, P14, P15 | QG-01.4; QG-04.6; QG-05.5; QG-08.2,8; QG-09.1,2,3,4,6; QG-12.1,3,4,7 | — |
+| P17 | P16 | QG-04.7; QG-05.6; QG-12.2,5,6,8 | P17-T03, P17-T07 |
 
 
 ## 8. Decision register
@@ -256,9 +261,9 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | DEC-06 | Money rounding convention (half-up vs half-even) and minor-unit handling | P01-T03 | User + Claude | Resolved: ROUND_HALF_UP (ADR-0006) |
 | DEC-07 | Backend tooling: uv + ruff + mypy + pytest (proposed) | P01-T03 | Claude proposes | Resolved: uv, ruff, mypy, pytest (ADR-0004) |
 | DEC-08 | Push-notification path (FCM + APNs) and Firebase project | P09-T08 | User | Resolved: build provider-agnostic now, FCM/APNs when the Firebase project exists (ADR-0016, 2026-10-12) |
-| DEC-09 | Apple Developer and Google Play accounts / legal entity (long lead time: start during P09) | P16-T01 | User | Open |
-| DEC-10 | Jurisdictions, regulatory classification and disclaimer wording (legal review) | P12-T10 / P15-T05 | User + legal | Open |
-| DEC-11 | Penetration-test provider (external vs internal) | P15-T03 | User | Open |
+| DEC-09 | Apple Developer and Google Play accounts / legal entity (long lead time: start during P09) | P17-T01 | User | Open |
+| DEC-10 | Jurisdictions, regulatory classification and disclaimer wording (legal review) | P12-T10 / P16-T05 | User + legal | Open |
+| DEC-11 | Penetration-test provider (external vs internal) | P16-T03 | User | Open |
 | DEC-12 | Offline cache storage (encrypted Drift vs alternatives) | P09-T06 | Claude proposes, user approves | Resolved: encrypted per-response snapshots, AES-256-GCM, key in secure storage (ADR-0015, 2026-10-12) |
 | DEC-13 | Charts library: fl_chart (open-source, proposed) vs Syncfusion (licence) | P02-T06 | User | Resolved: fl_chart (confirmed 2026-10-09) |
 | DEC-15 | Supported Android versions (minimum API level) and iOS versions/devices | P01-T16 | User | Resolved: Android 8.0 (API 26), iOS 16.0 |
@@ -275,8 +280,17 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | DEC-25 | FX rate provider(s) for reporting conversion: primary and fallback (candidates: Open Exchange Rates, ExchangeRate-API, Currencylayer, OANDA, or the P08/DEC-04 provider), licence for in-app display and caching, quota | P11-T01 / P11-T03 | User | Resolved: ExchangeRate-API Pro (about USD 10 a month, budget approved 2026-10-13) first, ECB as fallback (order set at P11-T12); written licence confirmation from ExchangeRate-API outstanding before production |
 | DEC-26 | Rate refresh cadence and staleness thresholds (current / cached / stale) per provider tier | P11-T03 | Claude proposes, user approves | Resolved (P11-T01): daily ECB current ≤36h, cached ≤72h; hourly providers current ≤2h, cached ≤24h; 15-minute refresh window |
 | DEC-27 | Cross-rate pivot currency (proposed USD) and per-currency display precision | P11-T04 | Claude proposes, user approves | Resolved (P11-T01): USD pivot; precision from each currency's minor units |
-| DEC-28 | Conversion-audit scope and retention: which conversions are financial records (proposed: AI and report conversions, not cosmetic UI switches) | P11-T02 / P11-T12 | User | Resolved: AI answers, reports and converter use are audited, display switches are not (P11-T01, checked at P11-T12); retention follows the audit policy, set in P15-T05 |
+| DEC-28 | Conversion-audit scope and retention: which conversions are financial records (proposed: AI and report conversions, not cosmetic UI switches) | P11-T02 / P11-T12 | User | Resolved: AI answers, reports and converter use are audited, display switches are not (P11-T01, checked at P11-T12); retention follows the audit policy, set in P16-T05 |
 | DEC-29 | Optional FX scenario overlay on forecasts in v1, or later (proposed: later) | P11-T06 | User | Resolved (P11-T01): later, not in v1 |
+| DEC-30 | Web frontend architecture: Flutter Web vs a dedicated Next.js / React / TypeScript app (proposed: Next.js, ADR-0018) | P15-T02 | Claude proposes, user approves | Open |
+| DEC-31 | Web session model: Backend-for-Frontend with server-side tokens and HttpOnly cookies (proposed) | P15-T02 / P15-T05 | Claude proposes, user approves | Open |
+| DEC-32 | Web hosting, domain and CDN (follows DEC-02) | P15-T21 | User | Open |
+| DEC-33 | Report and export formats and content (PDF, CSV, XLSX), generated by the backend | P15-T15 | User | Open |
+| DEC-34 | Administration scope: which operator functions exist, what data they may show, who holds the support role | P15-T17 | User | Open |
+| DEC-35 | Web-only preferences (dashboard layouts, saved table views) stored server-side (proposed) or per browser; web push (proposed: not in v1) | P15-T07 | Claude proposes, user approves | Open |
+| DEC-36 | Web performance budgets and supported browsers (proposed: Lighthouse performance at least 85 and accessibility at least 95; LCP at most 2.5 s, INP at most 200 ms, CLS at most 0.1 at p75; dashboard API p95 at most 500 ms; the two latest major versions of Chrome, Edge and Firefox, and Safari 17 or later) | P15-T20 | User | Open |
+| DEC-37 | Web portal in the v1 release with core gates (proposed) or after v1 behind its own release | P15-T01 | User | Open |
+| DEC-38 | Execution order: web core (P15 waves 1 to 8) before resuming P13 (proposed, from the user's priority of 2026-10-14) | P15-T01 | User | Open |
 
 ## 9. Key risks
 
@@ -288,8 +302,8 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | LLM invents facts or guarantees returns | Allow-listed tools, validated four-section output, guarantee-language guard, evidence-only opportunity explanations. |
 | Market-data licence or cost surprises | Licensing decision before adapters (P08-T01); fake provider keeps development unblocked. |
 | iOS verification gap on Windows | macOS CI build now; Mac/cloud device for VoiceOver and release builds. |
-| Store review delays for a finance app | Accounts and declarations started early (DEC-09, P16-T05); no advice/guarantee wording. |
-| Gates become paperwork (criteria ticked without real evidence) | Tracker requires an evidence statement and timestamp per criterion, `validate` checks them, critical criteria cannot be waived, and P15-T11 re-verifies everything on the release candidate. |
+| Store review delays for a finance app | Accounts and declarations started early (DEC-09, P17-T05); no advice/guarantee wording. |
+| Gates become paperwork (criteria ticked without real evidence) | Tracker requires an evidence statement and timestamp per criterion, `validate` checks them, critical criteria cannot be waived, and P16-T11 re-verifies everything on the release candidate. |
 | Scope creep into trading/robo-advice | Explicit non-goal; no execution affordances (D6). The Forex module (P13) is bounded to decision support and paper trading; live execution needs a separate approved phase (ADR-0009). |
 | Forex data licence or redistribution limits (display, storage, streaming) | DEC-19 and the licence review (P13-T14) before any provider is wired to users; fake provider keeps development unblocked; indicative rates are labelled and never shown as executable quotes. |
 | Forex regulatory classification (advice or arrangement of dealing) in a launch market | DEC-20 legal review before release; information-only wording, risk disclosures, no personalised recommendations or execution. |
@@ -299,6 +313,12 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | Reporting-currency figures disagree between screens, reports and AI | One rate snapshot per view/report, reconciliation tests, AI tools use the same conversion service (QG-22, QG-25). |
 | A display-currency switch mutates stored amounts | Conversion is read-only; originals and transaction rates are immutable; tests assert unchanged records (QG-22.2). |
 | FX provider outage or quota exhaustion | Fallback provider, central cache, backoff, explicit cached/unavailable status; never invented rates (QG-23). |
+| Two UI codebases drift apart (web and Flutter) | Generated API client, generated tokens, catalogue-parity check, parity matrix and a CI route-parity check (P15-T04, P15-T18); a mobile feature is not done until its web status is recorded. |
+| BFF or session mistakes expose tokens or allow CSRF | Server-side token custody, HttpOnly host-only cookies, CSRF tokens, strict CSP, security tests and review (QG-29). |
+| Web figures differ from mobile or the API | No money arithmetic in the web (lint and test), decimal strings only, reconciliation tests per page (QG-30). |
+| Performance targets missed on chart-heavy pages | Budgets in CI, server rendering, route splitting, lazy charts, decimation, virtualised grids (QG-31). |
+| Web scope delays the mobile release | DEC-37; priority modules first; advanced Forex in the Forex lane; exports and admin need decisions before they are built. |
+| Chart or grid library licence terms | Licence allow-list in the security gate; open licences only; TradingView Lightweight Charts attribution kept. |
 
 ## 10. Phase and task detail
 
@@ -348,7 +368,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
   - `python scripts/track.py validate` passes (unique IDs, acyclic dependencies, wave order, checkbox/status consistency).
   - No task other than P00 tasks is marked started or completed; no timestamps are fabricated.
 - **Verification:** `python scripts/track.py validate && python scripts/track.py dashboard`
-- **Subtasks:** `P00-T02.1` Define task, wave and status model · `P00-T02.2` Write the roadmap data for P00-P16 · `P00-T02.3` Implement and test scripts/track.py on a scratch copy · `P00-T02.4` Generate the four documents
+- **Subtasks:** `P00-T02.1` Define task, wave and status model · `P00-T02.2` Write the roadmap data for P00-P17 · `P00-T02.3` Implement and test scripts/track.py on a scratch copy · `P00-T02.4` Generate the four documents
 
 #### P00-T03 — Draft the UI-specific execution plan (supplementary)
 
@@ -2021,7 +2041,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Objective:** User verifies live behaviour on device.
 - **Depends on:** P09-T01, P09-T02, P09-T03, P09-T04, P09-T05, P09-T06, P09-T07, P09-T08, P09-T09, P09-T10
 - **Parallel with:** — (sequential)
-- **Unblocks:** P15-T01, P15-T02, P15-T04, P15-T05, P15-T06
+- **Unblocks:** P16-T01, P16-T02, P16-T04, P16-T05, P16-T06
 - **Deliverables:** Gate summary.
 - **Acceptance criteria:**
   - User approval recorded.
@@ -2203,7 +2223,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Objective:** Confirm Copilot readiness.
 - **Depends on:** P10-T01, P10-T02, P10-T03, P10-T04, P10-T05, P10-T06, P10-T07, P10-T08, P10-T09, P10-T10
 - **Parallel with:** — (sequential)
-- **Unblocks:** P11-T01, P12-T01, P12-T02, P15-T01, P15-T02, P15-T04, P15-T05, P15-T06
+- **Unblocks:** P11-T01, P12-T01, P12-T02, P16-T01, P16-T02, P16-T04, P16-T05, P16-T06
 - **Deliverables:** Gate summary.
 - **Acceptance criteria:**
   - User approval recorded.
@@ -2216,7 +2236,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Goal:** A global reporting currency: users switch every financial figure in the app (dashboard, portfolios, holdings, analytics, net worth, income, goals, calculator, forecasts, AI) between currencies with one setting, using timestamped provider rates, consistent snapshots and historically correct rates, without changing any underlying balance, transaction or historical record (ADR-0010).
 - **Entry criteria:** P05-GATE, P06-GATE, P08-GATE, P09-GATE and P10-GATE complete; user approves the phase and ADR-0010 (P11-T01).
 - **Exit criteria:** QG-21..QG-25 (QG-FXCUR-01..05) satisfied; reporting currency works end to end on Android and iOS and in the Copilot.
-- **Prerequisite phases:** P05, P06, P08, P09, P10 · **Lane:** CORE (extends the P05/P08 FX foundations; later phases P12 AI Intelligence, P13 Forex and P15 hardening build on it)
+- **Prerequisite phases:** P05, P06, P08, P09, P10 · **Lane:** CORE (extends the P05/P08 FX foundations; later phases P12 AI Intelligence, P13 Forex and P16 hardening build on it)
 - **Task alias:** FXCUR-nn = P11-Tnn; QG-FXCUR-nn = QG-(20+nn).
 - **Entry gates:** prerequisite phase gates completed (P05, P06, P08, P09, P10); cumulative quality criteria QG-03.1–6; QG-06.1–7; QG-07.1,2,3,5,6,8; QG-08.1,3,6; QG-11.1–6; user approval of the phase.
 - **Task-level gates:** each task's CK suites and acceptance criteria.
@@ -2412,7 +2432,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 
 `REL` · Size S · Wave P11.W10 · Approval: **USER REVIEW REQUIRED**
 
-- **Objective:** User sign-off that the reporting-currency feature is ready to ship with the core release (P16), including FX-provider licence terms for in-app display (DEC-25) and the conversion-audit retention policy (DEC-28).
+- **Objective:** User sign-off that the reporting-currency feature is ready to ship with the core release (P17), including FX-provider licence terms for in-app display (DEC-25) and the conversion-audit retention policy (DEC-28).
 - **Depends on:** P11-T11
 - **Parallel with:** — (sequential)
 - **Unblocks:** P11-GATE
@@ -2431,7 +2451,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Objective:** Confirm multi-currency reporting.
 - **Depends on:** P11-T01, P11-T02, P11-T03, P11-T04, P11-T05, P11-T06, P11-T07, P11-T08, P11-T09, P11-T10, P11-T11, P11-T12
 - **Parallel with:** — (sequential)
-- **Unblocks:** P12-T01, P12-T02, P13-T01, P15-T01, P15-T02, P15-T04, P15-T05, P15-T06
+- **Unblocks:** P12-T01, P12-T02, P13-T01, P16-T01, P16-T02, P16-T04, P16-T05, P16-T06
 - **Deliverables:** Gate summary.
 - **Acceptance criteria:**
   - User approval recorded.
@@ -2612,7 +2632,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Objective:** Confirm Investment Intelligence.
 - **Depends on:** P12-T01, P12-T02, P12-T03, P12-T04, P12-T05, P12-T06, P12-T07, P12-T08, P12-T09, P12-T10
 - **Parallel with:** — (sequential)
-- **Unblocks:** P15-T01, P15-T02, P15-T04, P15-T05, P15-T06
+- **Unblocks:** P16-T01, P16-T02, P16-T04, P16-T05, P16-T06
 - **Deliverables:** Gate summary.
 - **Acceptance criteria:**
   - User approval recorded.
@@ -2626,7 +2646,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Entry criteria:** P08-GATE, P09-GATE, P10-GATE and P12-GATE complete; user approves the phase and ADR-0009 (P13-T01).
 - **Exit criteria:** QG-13..QG-20 (QG-FX-01..08) satisfied; paper trading separate from real holdings; no live execution in the build; market-data licence and regulatory reviews recorded.
 - **Prerequisite phases:** P08, P09, P10, P11, P12 · **Lane:** FX (sits between the AI phases and the cloud infrastructure phase P14; it needs no cloud environment, so it is validated on the local/CI stack and joins staging in P14-T11)
-- **Task alias:** the FX-nn names are the same tasks as P13-Tnn (FX-01 = P13-T01 … FX-14 = P13-T14); the tracker tracks the P13-Tnn IDs. QG-FX-nn are the gates QG-(12+nn).
+- **Task alias:** the FX-nn names are the same tasks as P13-Tnn (FX-01 = P13-T01 … FX-15 = P13-T15; FX-15 is the advanced Forex web workspace, added 2026-10-14); the tracker tracks the P13-Tnn IDs. QG-FX-nn are the gates QG-(12+nn).
 - **Entry gates:** prerequisite phase gates completed (P08, P09, P10, P11, P12); cumulative quality criteria QG-06.1–7; QG-07.1–8; QG-08.1,3,6; QG-11.3–4; user approval of the phase.
 - **Task-level gates:** each task's CK suites and acceptance criteria.
 - **Exit gates:** QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19, QG-20 (every criterion) required by `P13-GATE` plus user review.
@@ -2642,7 +2662,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | P13.W6 | P13-T07, P13-T08 | Parallel-safe | Phase approved and all dependencies complete | T07 and T08 touch different modules; only one adds a migration (T07 none, T08 report store). |
 | P13.W7 | P13-T09 | Single task | Phase approved and all dependencies complete | — |
 | P13.W8 | P13-T10 | Single task | Phase approved and all dependencies complete | — |
-| P13.W9 | P13-T11 | Single task | Phase approved and all dependencies complete | — |
+| P13.W9 | P13-T11, P13-T15 | Parallel-safe | Phase approved and all dependencies complete | — |
 | P13.W10 | P13-T12 | Single task | Phase approved and all dependencies complete | — |
 | P13.W11 | P13-T13 | Single task | Phase approved and all dependencies complete | — |
 | P13.W12 | P13-T14 | Single task | Phase approved and all dependencies complete | — |
@@ -2823,12 +2843,29 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Verification:** CK-M, flutter test incl. goldens; integration tests; manual device pass.
 - **Subtasks:** `P13-T11.1` Navigation and entry points · `P13-T11.2` Overview and live markets · `P13-T11.3` Chart and predictions · `P13-T11.4` Opportunity Ranking Dashboard and scanner · `P13-T11.5` Trade setup and risk calculator · `P13-T11.6` Calendar and backtesting · `P13-T11.7` Paper trading and journal · `P13-T11.8` Copilot and alerts · `P13-T11.9` Streaming resilience · `P13-T11.10` Tests
 
+#### P13-T15 — FX-15 Forex web workspace (advanced)
+
+`WEB` · Size L · Wave P13.W9 · Approval: none
+
+- **Objective:** The advanced Forex workspace in the web portal: analysis and forecast panels, scanner and opportunity ranking, risk calculator, backtests, paper trading and journal, Forex Copilot and alerts, on the P13 APIs. It continues WEB-13 (P15-T13).
+- **Depends on:** P13-T10, P15-T13
+- **Parallel with:** P13-T11 (different client)
+- **Unblocks:** P13-T12, P13-GATE
+- **Deliverables:** Multi-panel desktop workspace, candle chart with indicators, paper-trading pages, Forex Copilot panel.
+- **Acceptance criteria:**
+  - Every price, forecast and score shows its data type, time, calibration label and feed status; PAPER TRADING is always labelled.
+  - There is no order affordance for real money; paper data never appears in real wealth figures.
+  - The paper-trading journey passes in Chromium, Firefox and WebKit.
+- **Verification:** CK-W, CK-B.
+- **Quality criteria evidenced here:** QG-19.6, QG-19.7
+- **Subtasks:** `P13-T15.1` Analysis and forecast panels · `P13-T15.2` Scanner and opportunity ranking · `P13-T15.3` Risk calculator and backtests · `P13-T15.4` Paper trading and journal · `P13-T15.5` Forex Copilot and alerts · `P13-T15.6` Tests
+
 #### P13-T12 — FX-12 Forex quality gates verification
 
 `QA` · Size M · Wave P13.W10 · Approval: no
 
 - **Objective:** Run and evidence QG-FX-01..07 (QG-13..QG-19) with reports under reports/quality/.
-- **Depends on:** P13-T11
+- **Depends on:** P13-T11, P13-T15
 - **Parallel with:** — (sequential)
 - **Unblocks:** P13-T13
 - **Deliverables:** Quality report per gate.
@@ -2867,7 +2904,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
   - Market-data licence permits the in-app display, storage and any redistribution.
   - Regulatory review is complete for each launch market (DEC-20); disclosures are approved.
   - No live execution capability exists in the build; enabling one needs a separate approved phase.
-  - The release decision covers the module's readiness only. Enabling the Forex feature flag in production additionally requires the core hardening gate (P15-GATE) and the staging smoke tests in P14-T11.
+  - The release decision covers the module's readiness only. Enabling the Forex feature flag in production additionally requires the core hardening gate (P16-GATE) and the staging smoke tests in P14-T11.
 - **Verification:** User approval; legal review records.
 - **Quality gates required before start:** QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19
 - **Subtasks:** `P13-T14.1` Licence review · `P13-T14.2` Regulatory review · `P13-T14.3` Risk disclosures · `P13-T14.4` Execution-disabled verification · `P13-T14.5` Release decision
@@ -2877,7 +2914,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 `GATE` · Size S · Wave P13.W13 · Approval: **USER REVIEW REQUIRED**
 
 - **Objective:** Confirm the Forex Trading Intelligence module.
-- **Depends on:** P13-T01, P13-T02, P13-T03, P13-T04, P13-T05, P13-T06, P13-T07, P13-T08, P13-T09, P13-T10, P13-T11, P13-T12, P13-T13, P13-T14
+- **Depends on:** P13-T01, P13-T02, P13-T03, P13-T04, P13-T05, P13-T06, P13-T07, P13-T08, P13-T09, P13-T10, P13-T11, P13-T12, P13-T13, P13-T14, P13-T15
 - **Parallel with:** — (sequential)
 - **Unblocks:** —
 - **Deliverables:** Gate summary.
@@ -3016,7 +3053,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Objective:** Build, scan, deploy to staging, run migrations, manual production promotion and rollback.
 - **Depends on:** P14-T05, P14-T07
 - **Parallel with:** — (sequential)
-- **Unblocks:** P14-T11, P14-GATE, P16-T03
+- **Unblocks:** P14-T11, P14-GATE, P17-T03
 - **Deliverables:** Workflows.
 - **Acceptance criteria:**
   - Rollback tested; migrations run as a gated job.
@@ -3032,7 +3069,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Objective:** Prometheus/Grafana/OTel collector/Sentry with alerts and SLOs.
 - **Depends on:** P14-T05, P01-T12
 - **Parallel with:** P14-T07, P14-T10
-- **Unblocks:** P14-T11, P14-GATE, P15-T09
+- **Unblocks:** P14-T11, P14-GATE, P16-T09
 - **Deliverables:** Dashboards and alert rules.
 - **Acceptance criteria:**
   - Alert fires in a controlled failure test.
@@ -3046,7 +3083,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Objective:** PITR backups, restore test and RPO/RTO targets.
 - **Depends on:** P14-T03
 - **Parallel with:** P14-T07, P14-T09
-- **Unblocks:** P14-GATE, P15-T09
+- **Unblocks:** P14-GATE, P16-T09
 - **Deliverables:** Runbook.
 - **Acceptance criteria:**
   - Restore to a clean environment verified with row counts and checksums.
@@ -3079,7 +3116,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Objective:** Confirm infrastructure.
 - **Depends on:** P14-T01, P14-T02, P14-T03, P14-T04, P14-T05, P14-T06, P14-T07, P14-T08, P14-T09, P14-T10, P14-T11
 - **Parallel with:** — (sequential)
-- **Unblocks:** P15-T01, P15-T02, P15-T04, P15-T05, P15-T06
+- **Unblocks:** P16-T01, P16-T02, P16-T04, P16-T05, P16-T06
 - **Deliverables:** Gate summary.
 - **Acceptance criteria:**
   - User approval recorded.
@@ -3087,341 +3124,746 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Quality gates required before completion:** QG-08.4, QG-08.5, QG-08.7, QG-10.2, QG-10.4, QG-10.5, QG-10.6, QG-10.7, QG-10.8
 - **Subtasks:** `P14-GATE.1` Run gates · `P14-GATE.2` Present summary · `P14-GATE.3` Record approval
 
-### P15 — Production Hardening & Quality Assurance
+### P15 — Enterprise Web Portal (WEB workstream)
+
+- **Goal:** A desktop-grade web portal with functional parity with the Android and iOS apps, on the same backend, identity and data (docs/web/WEB_PORTAL_ARCHITECTURE.md, ADR-0018).
+- **Entry criteria:** P09-GATE, P10-GATE, P11-GATE and P12-GATE complete; the user approves the phase and ADR-0018 (P15-T02).
+- **Exit criteria:** QG-26..QG-34 (QG-WEB-01..09) satisfied; parity matrix complete with exceptions recorded; no financial logic in the web client; the user approves readiness.
+- **Prerequisite phases:** P09, P10, P11, P12 · **Lane:** WEB. It can start as soon as it is approved; it does not wait for P13 or P14. P15-T13 uses the P13-T02 forex APIs; P15-T21 and P15-T22 need the P14 pipeline, compute, Keycloak and observability tasks.
+- **Task alias:** WEB-nn = P15-Tnn (WEB-01 = P15-T01 … WEB-23 = P15-T23). WEB-13 covers the Forex entry and live markets; the advanced Forex workspace is FX-15 = P13-T15, in the Forex lane, so the optional Forex module never blocks the core release. QG-WEB-nn are the gates QG-(25+nn).
+- **Recommended order (DEC-38, the user's priority of 2026-10-14):** P15 waves 1 to 6 (foundation, authentication, shell, then dashboard, portfolio and Copilot), then waves 7 and 8; resume P13 (T03 onwards, including P13-T15); P14; then P15 waves 9 to 12, P16 and P17.
+- **Entry gates:** prerequisite phase gates completed (P09, P10, P11, P12); user approval of the phase.
+- **Task-level gates:** each task's CK suites (CK-W for web, plus CK-B, CK-API, CK-DB where the backend changes) and acceptance criteria.
+- **Exit gates:** QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33, QG-34 (every criterion) required by `P15-GATE` plus user review.
+- **Release gates:** `Gates-start` on P15-T23: QG-26..QG-33 satisfied. The production rollout of the web container is part of P17.
+
+| Wave | Tasks | Mode | Entry condition | Conflict notes |
+|---|---|---|---|---|
+| P15.W1 | P15-T01 | Single task | Phase approved and all dependencies complete | — |
+| P15.W2 | P15-T02 | Single task | Phase approved and all dependencies complete | — |
+| P15.W3 | P15-T03, P15-T04 | Parallel-safe | Phase approved and all dependencies complete | T03 writes design/ and web/src/components; T04 writes the web/ scaffold. Agree the folder split first. |
+| P15.W4 | P15-T05 | Single task | Phase approved and all dependencies complete | — |
+| P15.W5 | P15-T06 | Single task | Phase approved and all dependencies complete | — |
+| P15.W6 | P15-T07, P15-T08, P15-T12 | Parallel-safe | Phase approved and all dependencies complete | Priority wave (user, 2026-10-14). Different routes; shared components change only through T03's library. |
+| P15.W7 | P15-T09, P15-T10, P15-T11, P15-T14, P15-T16 | Parallel-safe | Phase approved and all dependencies complete | Different routes and features; T11 adds one backend endpoint (no migration expected). |
+| P15.W8 | P15-T13, P15-T15, P15-T17 | Parallel-safe | Phase approved and all dependencies complete | T15 is backend-heavy (report service); T13 adds the ticket endpoint; T17 adds operator endpoints. Coordinate any migration ids. |
+| P15.W9 | P15-T18, P15-T19, P15-T20, P15-T21 | Parallel-safe | Phase approved and all dependencies complete | T19 and T20 write tests and reports; T21 writes CI and deployment files; T18 adds concurrency checks to the API. |
+| P15.W10 | P15-T22 | Single task | Phase approved and all dependencies complete | — |
+| P15.W11 | P15-T23 | Single task | Phase approved and all dependencies complete | — |
+| P15.W12 | P15-GATE | Single task | Phase approved and all dependencies complete | — |
+
+#### P15-T01 — WEB-01 Repository audit and requirements
+
+`DOC` · Size S · Wave P15.W1 · Approval: none
+
+- **Objective:** Establish from repository evidence what each channel has today and what the web brief adds.
+- **Depends on:** P09-GATE, P10-GATE, P11-GATE, P12-GATE
+- **Unblocks:** P15-T02
+- **Deliverables:** Feature parity matrix baseline (docs/web/CROSS_PLATFORM_FEATURE_PARITY_MATRIX.md), backend gap list, web deployment constraints.
+- **Acceptance criteria:**
+  - Every mobile route and live repository is mapped to its backend API.
+  - Capabilities no platform has today are listed as planned dependencies, never as parity.
+  - Constraints affecting the web (plugins without web support, bearer-only API, CORS policy) are recorded.
+- **Verification:** CK-TRK; review
+- **Subtasks:** `P15-T01.1` Mobile capability inventory · `P15-T01.2` API contract inventory · `P15-T01.3` Gap and constraint list · `P15-T01.4` Parity matrix baseline
+
+#### P15-T02 — WEB-02 Architecture evaluation and ADR
+
+`DOC` · Size M · Wave P15.W2 · Approval: **USER REVIEW REQUIRED**
+
+- **Objective:** Choose Flutter Web or a dedicated Next.js frontend on repository evidence; define the session model and layout.
+- **Depends on:** P15-T01
+- **Unblocks:** P15-T03, P15-T04
+- **Deliverables:** ADR-0018 accepted; docs/web/WEB_PORTAL_ARCHITECTURE.md; stack with licences.
+- **Acceptance criteria:**
+  - Both options are compared against code reuse, parity, maintenance, desktop UX, charts, authentication, testing, accessibility, cost, performance, security and scalability.
+  - The session model keeps access and refresh tokens out of browser storage (DEC-31).
+  - No financial logic is duplicated by design; the backend stays authoritative.
+  - The user approves the decision (DEC-30).
+- **Verification:** CK-TRK; review
+- **Quality criteria evidenced here:** QG-26.1, QG-26.5
+- **Subtasks:** `P15-T02.1` Option comparison · `P15-T02.2` Session and security model · `P15-T02.3` Stack and licence review · `P15-T02.4` ADR-0018
+
+#### P15-T03 — WEB-03 Web design system and UX specification
+
+`WEB` · Size L · Wave P15.W3 · Approval: **USER REVIEW REQUIRED**
+
+- **Objective:** One token source for mobile and web, the web component library and the UX specification, reviewed at a web UX gate.
+- **Depends on:** P15-T02
+- **Unblocks:** P15-T06
+- **Deliverables:** design/tokens/wealthsphere.tokens.json with Dart and CSS generators and a sync test; components and gallery; docs/web/WEB_UI_UX_SPECIFICATION.md approved.
+- **Acceptance criteria:**
+  - The generated Dart palette equals today's values (mobile goldens unchanged).
+  - Every web component renders in light and dark, at 200% zoom and in RTL, with measured contrast and no serious axe violation.
+  - The user approves the gallery and the specification (web UX gate).
+- **Verification:** CK-W
+- **Quality criteria evidenced here:** QG-27.1, QG-27.5
+- **Subtasks:** `P15-T03.1` Token source and generators · `P15-T03.2` Web component library · `P15-T03.3` Charts and data grid · `P15-T03.4` Component gallery and visual tests · `P15-T03.5` UX specification review
+
+#### P15-T04 — WEB-04 Web application foundation
+
+`WEB` · Size L · Wave P15.W3 · Approval: none
+
+- **Objective:** The `web/` application with build, lint, types, tests, the generated API client, the BFF skeleton and web CI.
+- **Depends on:** P15-T02
+- **Unblocks:** P15-T05, P15-T21
+- **Deliverables:** Next.js app, client generated from backend/openapi.json with a drift check, lint rules (no money arithmetic, no colour literals), Vitest and Playwright against the e2e server, `.github/workflows/web.yml`.
+- **Acceptance criteria:**
+  - CI builds, lints, type-checks and tests the web app.
+  - The generated client matches openapi.json; a drift fails CI.
+  - The money-arithmetic rule fails on a seeded violation; no secrets are committed.
+- **Verification:** CK-W
+- **Quality criteria evidenced here:** QG-26.3
+- **Subtasks:** `P15-T04.1` App scaffold and tooling · `P15-T04.2` Generated API client and drift check · `P15-T04.3` Lint guards · `P15-T04.4` Test harness · `P15-T04.5` Web CI workflow
+
+#### P15-T05 — WEB-05 Authentication and session integration
+
+`SEC` · Size L · Wave P15.W4 · Approval: **USER REVIEW REQUIRED**
+
+- **Objective:** Sign-in through the BFF (Authorization Code with PKCE), server-side token custody, cookie sessions, CSRF, logout and MFA.
+- **Depends on:** P15-T04
+- **Unblocks:** P15-T06, P15-T07, P15-T08, P15-T10, P15-T11, P15-T12, P15-T14, P15-T16, P15-T17
+- **Deliverables:** `wealthsphere-web` client in the realm export and authorised party; BFF auth routes; encrypted Redis session store; CSRF; allow-listed proxy; `channel` on audit events; tests.
+- **Acceptance criteria:**
+  - No token is in browser storage or a script-readable cookie (tested).
+  - Login, logout, refresh, idle and absolute expiry are verified; MFA applies as the realm requires.
+  - Forged and cross-origin state-changing requests are refused; the proxy reaches only /api/v1.
+  - Cross-user isolation holds through the BFF.
+- **Verification:** CK-W, CK-B, CK-API
+- **Quality criteria evidenced here:** QG-29.1, QG-29.2, QG-29.3, QG-29.6
+- **Subtasks:** `P15-T05.1` Keycloak web client · `P15-T05.2` BFF sign-in, refresh and logout · `P15-T05.3` Session store and cookies · `P15-T05.4` CSRF and proxy allow-list · `P15-T05.5` Security tests
+
+#### P15-T06 — WEB-06 Application shell and navigation
+
+`WEB` · Size M · Wave P15.W5 · Approval: none
+
+- **Objective:** Sidebar, top bar (search, portfolio, reporting currency, data status, notifications, theme, profile), right panel and routes for every module.
+- **Depends on:** P15-T03, P15-T05
+- **Unblocks:** P15-T07, P15-T08, P15-T10, P15-T11, P15-T12, P15-T13, P15-T14, P15-T16, P15-T17
+- **Deliverables:** Shell, routes, top-bar controls, right panel, responsive layouts.
+- **Acceptance criteria:**
+  - Every mobile destination has a web route or a recorded exception.
+  - The shell works at 1440, 1024 and 390 px, by keyboard, with a skip link and visible focus.
+  - The Forex entry shows only when the server flag is on; operator entries only for the support role (server-checked).
+- **Verification:** CK-W
+- **Subtasks:** `P15-T06.1` Shell layout · `P15-T06.2` Navigation and routes · `P15-T06.3` Top-bar controls · `P15-T06.4` Right panel · `P15-T06.5` Responsive and keyboard tests
+
+#### P15-T07 — WEB-07 Home and executive dashboards
+
+`WEB` · Size L · Wave P15.W6 · Approval: none
+
+- **Objective:** The executive dashboard, global search and a customisable layout (priority module).
+- **Depends on:** P15-T05, P15-T06
+- **Unblocks:** P15-T18, P15-T19, P15-T20
+- **Deliverables:** Dashboard page; owner-scoped search endpoint and command palette; saved layout preference (DEC-35).
+- **Acceptance criteria:**
+  - Every figure equals the API response for the same request and reporting currency (reconciliation test).
+  - Loading, error, empty, stale and offline states exist.
+  - Search returns only the signed-in user's records (cross-user test).
+- **Verification:** CK-W
+- **Subtasks:** `P15-T07.1` KPI row and charts · `P15-T07.2` Recent activity and AI insights · `P15-T07.3` Search endpoint and command palette · `P15-T07.4` Layout customisation · `P15-T07.5` Tests
+
+#### P15-T08 — WEB-08 Portfolio and investment management
+
+`WEB` · Size XL · Wave P15.W6 · Approval: none
+
+- **Objective:** Portfolios, holdings, transactions (every type, reversals), valuations, assets and custom assets (priority module).
+- **Depends on:** P15-T05, P15-T06
+- **Unblocks:** P15-T09, P15-T15, P15-T18, P15-T19, P15-T20
+- **Deliverables:** Portfolio pages, data grids, transaction drawer, valuations, asset search and custom assets.
+- **Acceptance criteria:**
+  - Create, edit and archive portfolios; add and reverse every transaction type; valuations CRUD.
+  - Totals and holdings equal the API for the same request; nothing is calculated in the browser.
+  - Grids sort, filter, paginate, resize and work by keyboard; card lists below 768 px.
+- **Verification:** CK-W
+- **Quality criteria evidenced here:** QG-28.3, QG-30.1, QG-30.3
+- **Subtasks:** `P15-T08.1` Portfolio list and detail · `P15-T08.2` Holdings grid · `P15-T08.3` Transaction workflows · `P15-T08.4` Valuations and assets · `P15-T08.5` Saved table views · `P15-T08.6` Tests
+
+#### P15-T09 — WEB-09 Financial analytics
+
+`WEB` · Size L · Wave P15.W7 · Approval: none
+
+- **Objective:** Performance (TWR, XIRR, CAGR), allocation by class, currency and country, risk, time ranges and drill-down.
+- **Depends on:** P15-T08
+- **Unblocks:** P15-T15, P15-T19, P15-T20
+- **Deliverables:** Analytics pages with accessible charts.
+- **Acceptance criteria:**
+  - Values equal the analytics API; charts have a summary and a table view.
+  - Time-range filters and drill-down work.
+- **Verification:** CK-W
+- **Quality criteria evidenced here:** QG-28.4
+- **Subtasks:** `P15-T09.1` Performance · `P15-T09.2` Allocation and exposure · `P15-T09.3` Risk · `P15-T09.4` Comparisons and drill-down · `P15-T09.5` Tests
+
+#### P15-T10 — WEB-10 Compounding, forecasting and goals
+
+`WEB` · Size L · Wave P15.W7 · Approval: none
+
+- **Objective:** The calculator, forecast scenarios and goals on the backend engines.
+- **Depends on:** P15-T05, P15-T06
+- **Unblocks:** P15-T15, P15-T18, P15-T19, P15-T20
+- **Deliverables:** Calculator, scenario comparison and goal pages.
+- **Acceptance criteria:**
+  - Outputs equal the forecast API for the same inputs.
+  - Assumptions and uncertainty disclosures are always shown.
+  - Goal CRUD and progress work.
+- **Verification:** CK-W
+- **Quality criteria evidenced here:** QG-30.4
+- **Subtasks:** `P15-T10.1` Compounding calculator · `P15-T10.2` Forecast scenarios · `P15-T10.3` Goals · `P15-T10.4` Tests
+
+#### P15-T11 — WEB-11 Net worth and passive income
+
+`WEB` · Size M · Wave P15.W7 · Approval: none
+
+- **Objective:** Net worth, liabilities, income and a net-worth history series.
+- **Depends on:** P15-T05, P15-T06
+- **Unblocks:** P15-T15, P15-T18, P15-T19, P15-T20
+- **Deliverables:** Pages; owner-scoped, deterministic history endpoint with tests.
+- **Acceptance criteria:**
+  - Figures reconcile with the API.
+  - The history endpoint is owner-scoped, derived from stored data, documented and tested.
+- **Verification:** CK-W
+- **Subtasks:** `P15-T11.1` Net worth and liabilities · `P15-T11.2` Passive income · `P15-T11.3` Net-worth history endpoint · `P15-T11.4` Tests
+
+#### P15-T12 — WEB-12 AI Wealth Copilot and intelligence
+
+`AI` · Size XL · Wave P15.W6 · Approval: none
+
+- **Objective:** The Copilot (streamed chat, conversations, scopes, docked panel), Portfolio Doctor, opportunities, compare, simulate, universe and research (priority module).
+- **Depends on:** P15-T05, P15-T06
+- **Unblocks:** P15-T18, P15-T19, P15-T20
+- **Deliverables:** Copilot page and panel; AI Investment Intelligence pages.
+- **Acceptance criteria:**
+  - Streaming works through the BFF with backpressure; the answer shows facts, calculations, assumptions, interpretation and sources.
+  - The same server-side tool authorisation applies (cross-user test through the web).
+  - Server notices are shown unchanged; nothing implies guaranteed returns.
+- **Verification:** CK-W, CK-B, CK-API
+- **Quality criteria evidenced here:** QG-28.5
+- **Subtasks:** `P15-T12.1` Chat streaming through the BFF · `P15-T12.2` Copilot page and docked panel · `P15-T12.3` Portfolio Doctor · `P15-T12.4` Opportunities, compare and simulate · `P15-T12.5` Universe and research · `P15-T12.6` Tests
+
+#### P15-T13 — WEB-13 Forex live markets entry
+
+`WEB` · Size M · Wave P15.W8 · Approval: none
+
+- **Objective:** The Forex entry point behind the server flag and a live-markets page on the existing P13-T02 APIs; the advanced workspace is P13-T15.
+- **Depends on:** P15-T06
+- **Unblocks:** P15-T19, P15-T20, P13-T15
+- **Deliverables:** Live-markets page; single-use WebSocket ticket minted by the BFF and exchanged by the API.
+- **Acceptance criteria:**
+  - Hidden when the flag is off.
+  - Every price shows its data type, age, feed status and the simulated label; stale is shown as stale.
+  - The ticket is single-use, short-lived and never logged; there is no order affordance.
+- **Verification:** CK-W
+- **Quality criteria evidenced here:** QG-28.6, QG-33.6
+- **Subtasks:** `P15-T13.1` Flag-aware entry · `P15-T13.2` WebSocket ticket (API and BFF) · `P15-T13.3` Live markets page · `P15-T13.4` Tests
+
+#### P15-T14 — WEB-14 Multi-currency conversion
+
+`WEB` · Size M · Wave P15.W7 · Approval: none
+
+- **Objective:** The global reporting currency, converter, FX status and history, as in FXCUR.
+- **Depends on:** P15-T05, P15-T06
+- **Unblocks:** P15-T15, P15-T18, P15-T19, P15-T20
+- **Deliverables:** Currency switch, converter and FX pages.
+- **Acceptance criteria:**
+  - Switching the currency updates every figure through the server.
+  - The converter equals /fx/convert for the same snapshot; rate source and age are shown.
+- **Verification:** CK-W
+- **Quality criteria evidenced here:** QG-28.7, QG-30.2, QG-30.6
+- **Subtasks:** `P15-T14.1` Reporting-currency switch · `P15-T14.2` Converter · `P15-T14.3` FX status and history · `P15-T14.4` Tests
+
+#### P15-T15 — WEB-15 Reports and exports
+
+`BE` · Size XL · Wave P15.W8 · Approval: **USER REVIEW REQUIRED**
+
+- **Objective:** Backend report service and the web catalogue: PDF, CSV and XLSX for portfolio, performance, net worth, income, FX exposure, goals and forecasts.
+- **Depends on:** P15-T08, P15-T09, P15-T10, P15-T11, P15-T14
+- **Unblocks:** P15-T19, P15-T20
+- **Deliverables:** Report endpoints (owner-scoped), generators, web catalogue and downloads.
+- **Acceptance criteria:**
+  - Formats and content approved (DEC-33).
+  - Figures equal the API for the same snapshot and currency; every file carries as-of times, currency and disclosures.
+  - Owner-scoped (cross-user tests); report conversions are audited (DEC-28).
+- **Verification:** CK-W, CK-B, CK-API
+- **Quality criteria evidenced here:** QG-28.8, QG-30.5
+- **Subtasks:** `P15-T15.1` Report formats decision · `P15-T15.2` Report service and endpoints · `P15-T15.3` Web report catalogue · `P15-T15.4` Tests
+
+#### P15-T16 — WEB-16 Profile, settings and notifications
+
+`WEB` · Size M · Wave P15.W7 · Approval: none
+
+- **Objective:** Profile, risk profile, preferences, security links (password, MFA, sessions), watchlist, alerts and the notification centre.
+- **Depends on:** P15-T05, P15-T06
+- **Unblocks:** P15-T18, P15-T19, P15-T20
+- **Deliverables:** Settings pages and the notification centre.
+- **Acceptance criteria:**
+  - A preference changed on the web is the one mobile reads (shared).
+  - Alerts CRUD works; the notification centre shows alert events.
+  - The account-deletion entry appears when P16-T05 provides it.
+- **Verification:** CK-W
+- **Subtasks:** `P15-T16.1` Profile and preferences · `P15-T16.2` Security and sessions · `P15-T16.3` Watchlist and alerts · `P15-T16.4` Notification centre · `P15-T16.5` Tests
+
+#### P15-T17 — WEB-17 Administration and permissions
+
+`SEC` · Size M · Wave P15.W8 · Approval: **USER REVIEW REQUIRED**
+
+- **Objective:** Decide the operator scope (DEC-34) and build role-gated, read-only operator views.
+- **Depends on:** P15-T05, P15-T06
+- **Unblocks:** P15-T19, P15-T20
+- **Deliverables:** Approved scope; endpoints requiring the support role; operator pages; access audit.
+- **Acceptance criteria:**
+  - Scope approved by the user.
+  - Operator endpoints refuse users without the role; entries are hidden for them; access is audited.
+  - No operator view exposes a user's financial data unless the approved scope says so.
+- **Verification:** CK-W, CK-B, CK-API
+- **Quality criteria evidenced here:** QG-29.4
+- **Subtasks:** `P15-T17.1` Scope decision · `P15-T17.2` Role-gated endpoints · `P15-T17.3` Operator views · `P15-T17.4` Tests
+
+#### P15-T18 — WEB-18 Cross-platform synchronisation testing
+
+`QA` · Size L · Wave P15.W9 · Approval: none
+
+- **Objective:** Prove that one user's data and preferences are the same on every channel, and make concurrent edits safe.
+- **Depends on:** P15-T07, P15-T08, P15-T10, P15-T11, P15-T12, P15-T14, P15-T16
+- **Unblocks:** P15-T22
+- **Deliverables:** ETag or version checks with 409 on editable records; cross-channel tests; CI route-parity check.
+- **Acceptance criteria:**
+  - Added through the API as mobile does, the record is visible on the web; edited on the web, it reads back changed through the API.
+  - A concurrent edit gets 409 and a reload prompt; no silent overwrite.
+  - Every mobile route maps to a web route or a recorded exception (CI).
+- **Verification:** CK-W, CK-B, CK-API
+- **Quality criteria evidenced here:** QG-26.2, QG-26.4, QG-28.1, QG-28.2, QG-33.7
+- **Subtasks:** `P15-T18.1` Optimistic concurrency · `P15-T18.2` Cross-channel journey tests · `P15-T18.3` Route parity check · `P15-T18.4` Parity matrix update
+
+#### P15-T19 — WEB-19 Security and accessibility testing
+
+`SEC` · Size L · Wave P15.W9 · Approval: none
+
+- **Objective:** Security tests (session, CSRF, XSS, CSP, cross-user through the web, dependencies, secrets) and a WCAG 2.2 AA audit.
+- **Depends on:** P15-T07, P15-T08, P15-T09, P15-T10, P15-T11, P15-T12, P15-T13, P15-T14, P15-T15, P15-T16, P15-T17
+- **Unblocks:** P15-T22
+- **Deliverables:** Updated threat model, test results, accessibility report.
+- **Acceptance criteria:**
+  - No open high-severity finding.
+  - axe reports no serious or critical violation on any page; manual NVDA and VoiceOver passes of the key journeys.
+  - CSP is enforced.
+- **Verification:** CK-W, CK-B, CK-API
+- **Quality criteria evidenced here:** QG-27.6, QG-29.5, QG-29.7, QG-29.8
+- **Subtasks:** `P15-T19.1` Web threat model update · `P15-T19.2` Security tests and scans · `P15-T19.3` Accessibility audit · `P15-T19.4` Remediation
+
+#### P15-T20 — WEB-20 Performance and browser testing
+
+`QA` · Size L · Wave P15.W9 · Approval: none
+
+- **Objective:** Measure against the approved targets (DEC-36) and test the supported browsers and breakpoints.
+- **Depends on:** P15-T07, P15-T08, P15-T09, P15-T10, P15-T11, P15-T12, P15-T13, P15-T14, P15-T15, P15-T16, P15-T17
+- **Unblocks:** P15-T22
+- **Deliverables:** Measurements and the supported-browser list.
+- **Acceptance criteria:**
+  - Lighthouse and web vitals are measured; failures against the budget are recorded, never hidden.
+  - A seeded large book stays usable; charts stay responsive while updating.
+  - Chrome, Edge, Firefox and Safari pass the journeys at the three breakpoints.
+- **Verification:** CK-W, CK-B, CK-API
+- **Quality criteria evidenced here:** QG-27.2, QG-27.3, QG-27.4, QG-31.1, QG-31.2, QG-31.3, QG-31.4, QG-31.5, QG-31.6, QG-32.1, QG-32.2, QG-32.3, QG-32.4, QG-32.5, QG-32.6
+- **Subtasks:** `P15-T20.1` Budgets and Lighthouse CI · `P15-T20.2` Large-data and chart tests · `P15-T20.3` API latency · `P15-T20.4` Browser matrix · `P15-T20.5` Layout verification
+
+#### P15-T21 — WEB-21 CI/CD and deployment
+
+`INF` · Size M · Wave P15.W9 · Approval: none
+
+- **Objective:** Container image, continuous delivery to staging, production approval and rollback.
+- **Depends on:** P15-T04, P14-T04, P14-T08
+- **Unblocks:** P15-T22
+- **Deliverables:** Web image in the registry, CD workflow, start-up configuration validation, `web gate` as a required check (repository admin).
+- **Acceptance criteria:**
+  - The image is built and scanned; deploy and rollback are scripted.
+  - Configuration is validated at start; secrets come from the secret store.
+- **Verification:** CK-W
+- **Quality criteria evidenced here:** QG-34.1, QG-34.2
+- **Subtasks:** `P15-T21.1` Image and scan · `P15-T21.2` CD to staging and production · `P15-T21.3` Configuration validation · `P15-T21.4` Required check
+
+#### P15-T22 — WEB-22 Staging and end-to-end validation
+
+`QA` · Size M · Wave P15.W10 · Approval: **USER REVIEW REQUIRED**
+
+- **Objective:** Deploy the portal to staging and run the full journeys on real infrastructure.
+- **Depends on:** P15-T18, P15-T19, P15-T20, P15-T21, P14-T05, P14-T07, P14-T09
+- **Unblocks:** P15-T23
+- **Deliverables:** Staging deployment, journey results, header and TLS checks, monitoring, rollback drill.
+- **Acceptance criteria:**
+  - The QG-33 journeys pass on staging.
+  - HTTPS and security headers are verified; monitoring and error reporting are live.
+  - Deployment and rollback are exercised.
+- **Verification:** CK-W, CK-B, CK-API
+- **Quality criteria evidenced here:** QG-33.1, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.8, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7
+- **Subtasks:** `P15-T22.1` Staging deployment · `P15-T22.2` Journey run · `P15-T22.3` Headers and TLS · `P15-T22.4` Monitoring and error reporting · `P15-T22.5` Rollback drill
+
+#### P15-T23 — WEB-23 Production readiness and approval
+
+`REL` · Size M · Wave P15.W11 · Approval: **USER REVIEW REQUIRED**
+
+- **Objective:** Readiness review and the user's approval. The production rollout happens with the release (P17).
+- **Depends on:** P15-T22
+- **Unblocks:** P15-GATE
+- **Deliverables:** Readiness record and approval.
+- **Acceptance criteria:**
+  - Every web gate is passed; open items are listed with owners.
+  - The user's approval is recorded.
+- **Verification:** CK-W
+- **Quality criteria evidenced here:** QG-34.8
+- **Quality gates required before start:** QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33
+- **Subtasks:** `P15-T23.1` Readiness review · `P15-T23.2` Open items · `P15-T23.3` Approval
+
+#### P15-GATE — Phase P15 exit gate
+
+`GATE` · Size S · Wave P15.W12 · Approval: **USER REVIEW REQUIRED**
+
+- **Objective:** Confirm the web portal.
+- **Depends on:** P15-T01, P15-T02, P15-T03, P15-T04, P15-T05, P15-T06, P15-T07, P15-T08, P15-T09, P15-T10, P15-T11, P15-T12, P15-T13, P15-T14, P15-T15, P15-T16, P15-T17, P15-T18, P15-T19, P15-T20, P15-T21, P15-T22, P15-T23
+- **Unblocks:** P16 wave 1
+- **Deliverables:** Gate summary.
+- **Acceptance criteria:**
+  - User approval recorded.
+- **Verification:** CK-W, CK-B, CK-S.
+- **Quality gates required before completion:** QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33, QG-34
+- **Subtasks:** `P15-GATE.1` Run gates · `P15-GATE.2` Present summary · `P15-GATE.3` Record approval
+
+---
+
+### P16 — Production Hardening & Quality Assurance
 
 - **Goal:** Independent security review, load testing, privacy workflows, accessibility QA and production readiness.
-- **Entry criteria:** P09-GATE, P10-GATE, P12-GATE and P14-GATE complete.
+- **Entry criteria:** P09-GATE, P10-GATE, P12-GATE, P14-GATE and P15-GATE complete. Security review, load tests and accessibility QA cover the web portal as well as the apps.
 - **Exit criteria:** Findings remediated or accepted; go/no-go approved by the user.
-- **Prerequisite phases:** P09, P10, P11, P12, P14 · **Lane:** HARDENING
-- **Entry gates:** prerequisite phase gates completed (P09, P10, P11, P12, P14); cumulative quality criteria QG-01.1,2,3,5; QG-02.1–6; QG-03.1–6; QG-04.1–5; QG-05.1–4; QG-06.1–7; QG-07.1–8; QG-08.1,3,4,5,6,7; QG-09.5; QG-10.1–8; QG-11.1–6; user approval of the phase.
+- **Prerequisite phases:** P09, P10, P11, P12, P14, P15 · **Lane:** HARDENING
+- **Entry gates:** prerequisite phase gates completed (P09, P10, P11, P12, P14, P15); cumulative quality criteria QG-01.1,2,3,5; QG-02.1–6; QG-03.1–6; QG-04.1–5; QG-05.1–4; QG-06.1–7; QG-07.1–8; QG-08.1,3,4,5,6,7; QG-09.5; QG-10.1–8; QG-11.1–6; user approval of the phase.
 - **Task-level gates:** each task's CK suites and acceptance criteria.
-- **Exit gates:** QG-01.4; QG-04.6; QG-05.5; QG-08.2,8; QG-09.1,2,3,4,6; QG-12.1,3,4,7 (required by `P15-GATE`) plus user review.
+- **Exit gates:** QG-01.4; QG-04.6; QG-05.5; QG-08.2,8; QG-09.1,2,3,4,6; QG-12.1,3,4,7 (required by `P16-GATE`) plus user review.
 - **Release gates:** —
 
 | Wave | Tasks | Mode | Entry condition | Conflict notes |
 |---|---|---|---|---|
-| P15.W1 | P15-T01, P15-T02, P15-T04, P15-T05, P15-T06 | Parallel-safe | Phase approved and cross-phase prerequisites complete | Review/test tasks write reports and test code, not application code. |
-| P15.W2 | P15-T03, P15-T08, P15-T09 | Parallel-safe | All dependencies from earlier waves of P15 complete | — |
-| P15.W3 | P15-T07 | Single task | All dependencies from earlier waves of P15 complete | — |
-| P15.W4 | P15-T11 | Single task | All dependencies from earlier waves of P15 complete | — |
-| P15.W5 | P15-T10 | Single task | All dependencies from earlier waves of P15 complete | — |
-| P15.W6 | P15-GATE | Single task | All dependencies from earlier waves of P15 complete | — |
+| P16.W1 | P16-T01, P16-T02, P16-T04, P16-T05, P16-T06 | Parallel-safe | Phase approved and cross-phase prerequisites complete | Review/test tasks write reports and test code, not application code. |
+| P16.W2 | P16-T03, P16-T08, P16-T09 | Parallel-safe | All dependencies from earlier waves of P16 complete | — |
+| P16.W3 | P16-T07 | Single task | All dependencies from earlier waves of P16 complete | — |
+| P16.W4 | P16-T11 | Single task | All dependencies from earlier waves of P16 complete | — |
+| P16.W5 | P16-T10 | Single task | All dependencies from earlier waves of P16 complete | — |
+| P16.W6 | P16-GATE | Single task | All dependencies from earlier waves of P16 complete | — |
 
-#### P15-T01 — OWASP API Security review
+#### P16-T01 — OWASP API Security review
 
-`SEC` · Size L · Wave P15.W1 · Approval: no
+`SEC` · Size L · Wave P16.W1 · Approval: no
 
 - **Objective:** Review the API against the OWASP API Top 10.
-- **Depends on:** P09-GATE, P10-GATE, P11-GATE, P12-GATE, P14-GATE
-- **Parallel with:** P15-T02, P15-T04, P15-T05, P15-T06
-- **Unblocks:** P15-T03, P15-T08, P15-GATE
+- **Depends on:** P09-GATE, P10-GATE, P11-GATE, P12-GATE, P14-GATE, P15-GATE
+- **Parallel with:** P16-T02, P16-T04, P16-T05, P16-T06
+- **Unblocks:** P16-T03, P16-T08, P16-GATE
 - **Deliverables:** Findings register and fixes.
 - **Acceptance criteria:**
   - No open high findings.
 - **Verification:** CK-B, CK-S
-- **Subtasks:** `P15-T01.1` Checklist · `P15-T01.2` IDOR sweep · `P15-T01.3` Fixes
+- **Subtasks:** `P16-T01.1` Checklist · `P16-T01.2` IDOR sweep · `P16-T01.3` Fixes
 
-#### P15-T02 — OWASP MASVS mobile review
+#### P16-T02 — OWASP MASVS mobile review
 
-`SEC` · Size L · Wave P15.W1 · Approval: no
+`SEC` · Size L · Wave P16.W1 · Approval: no
 
 - **Objective:** MASVS L1/L2 review of the app.
-- **Depends on:** P09-GATE, P10-GATE, P11-GATE, P12-GATE, P14-GATE
-- **Parallel with:** P15-T01, P15-T04, P15-T05, P15-T06
-- **Unblocks:** P15-T03, P15-T08, P15-GATE
+- **Depends on:** P09-GATE, P10-GATE, P11-GATE, P12-GATE, P14-GATE, P15-GATE
+- **Parallel with:** P16-T01, P16-T04, P16-T05, P16-T06
+- **Unblocks:** P16-T03, P16-T08, P16-GATE
 - **Deliverables:** Findings register and fixes.
 - **Acceptance criteria:**
   - Storage, network and platform controls verified; no open high findings.
 - **Verification:** CK-M, CK-S
-- **Subtasks:** `P15-T02.1` Checklist · `P15-T02.2` Storage/network audit · `P15-T02.3` Fixes
+- **Subtasks:** `P16-T02.1` Checklist · `P16-T02.2` Storage/network audit · `P16-T02.3` Fixes
 
-#### P15-T03 — Independent penetration test
+#### P16-T03 — Independent penetration test
 
-`SEC` · Size L · Wave P15.W2 · Approval: **USER REVIEW REQUIRED**
+`SEC` · Size L · Wave P16.W2 · Approval: **USER REVIEW REQUIRED**
 
 - **Objective:** Run and remediate a penetration test (DEC-11).
-- **Depends on:** P15-T01, P15-T02
-- **Parallel with:** P15-T08, P15-T09
-- **Unblocks:** P15-T07, P15-T10, P15-T11, P15-GATE
+- **Depends on:** P16-T01, P16-T02
+- **Parallel with:** P16-T08, P16-T09
+- **Unblocks:** P16-T07, P16-T10, P16-T11, P16-GATE
 - **Deliverables:** Report and remediation.
 - **Acceptance criteria:**
   - All high/critical findings fixed or formally accepted.
 - **Verification:** Retest
-- **Subtasks:** `P15-T03.1` Scope · `P15-T03.2` Test · `P15-T03.3` Remediate
+- **Subtasks:** `P16-T03.1` Scope · `P16-T03.2` Test · `P16-T03.3` Remediate
 
-#### P15-T04 — Performance and load testing
+#### P16-T04 — Performance and load testing
 
-`QA` · Size L · Wave P15.W1 · Approval: **USER REVIEW REQUIRED**
+`QA` · Size L · Wave P16.W1 · Approval: **USER REVIEW REQUIRED**
 
 - **Objective:** Measure latency and capacity incl. AI latency and cost.
-- **Depends on:** P09-GATE, P10-GATE, P11-GATE, P12-GATE, P14-GATE
-- **Parallel with:** P15-T01, P15-T02, P15-T05, P15-T06
-- **Unblocks:** P15-T09, P15-GATE
+- **Depends on:** P09-GATE, P10-GATE, P11-GATE, P12-GATE, P14-GATE, P15-GATE
+- **Parallel with:** P16-T01, P16-T02, P16-T05, P16-T06
+- **Unblocks:** P16-T09, P16-GATE
 - **Deliverables:** Load-test results and tuning.
 - **Acceptance criteria:**
   - Targets agreed with the user are met.
 - **Verification:** k6/Locust run
-- **Subtasks:** `P15-T04.1` Confirm targets from docs/quality-targets.md · `P15-T04.2` API and database load scenarios · `P15-T04.3` Mobile start-up, memory and crash measurements on devices · `P15-T04.4` Capacity assumptions and bottlenecks · `P15-T04.5` Tuning
+- **Subtasks:** `P16-T04.1` Confirm targets from docs/quality-targets.md · `P16-T04.2` API and database load scenarios · `P16-T04.3` Mobile start-up, memory and crash measurements on devices · `P16-T04.4` Capacity assumptions and bottlenecks · `P16-T04.5` Tuning
 
-#### P15-T05 — Privacy and compliance workflows
+#### P16-T05 — Privacy and compliance workflows
 
-`BE` · Size L · Wave P15.W1 · Approval: **USER REVIEW REQUIRED**
+`BE` · Size L · Wave P16.W1 · Approval: **USER REVIEW REQUIRED**
 
 - **Objective:** Data export, account deletion, retention and consent.
-- **Depends on:** P09-GATE, P10-GATE, P11-GATE, P12-GATE, P14-GATE
-- **Parallel with:** P15-T01, P15-T02, P15-T04, P15-T06
-- **Unblocks:** P15-T07, P15-GATE
+- **Depends on:** P09-GATE, P10-GATE, P11-GATE, P12-GATE, P14-GATE, P15-GATE
+- **Parallel with:** P16-T01, P16-T02, P16-T04, P16-T06
+- **Unblocks:** P16-T07, P16-GATE
 - **Deliverables:** Endpoints, jobs, policies.
 - **Acceptance criteria:**
   - Deletion removes or anonymises user data per policy and is audited.
   - Retention and deletion cover the FX conversion audit (`fx_conversion_audit`, append-only, kept indefinitely until this task) and reporting-currency preferences (DEC-28, recorded at P11-T12).
 - **Verification:** CK-B
-- **Subtasks:** `P15-T05.1` Export · `P15-T05.2` Deletion · `P15-T05.3` Retention · `P15-T05.4` Policies
+- **Subtasks:** `P16-T05.1` Export · `P16-T05.2` Deletion · `P16-T05.3` Retention · `P16-T05.4` Policies
 
-#### P15-T06 — Accessibility QA (UX Gate 5)
+#### P16-T06 — Accessibility QA (UX Gate 5)
 
-`QA` · Size L · Wave P15.W1 · Approval: **USER REVIEW REQUIRED**
+`QA` · Size L · Wave P16.W1 · Approval: **USER REVIEW REQUIRED**
 
 - **Objective:** TalkBack/VoiceOver, dynamic type, RTL, reduced motion and contrast on real devices; compare with concept board.
-- **Depends on:** P09-GATE, P10-GATE, P11-GATE, P12-GATE, P14-GATE
-- **Parallel with:** P15-T01, P15-T02, P15-T04, P15-T05
-- **Unblocks:** P15-T07, P15-GATE
+- **Depends on:** P09-GATE, P10-GATE, P11-GATE, P12-GATE, P14-GATE, P15-GATE
+- **Parallel with:** P16-T01, P16-T02, P16-T04, P16-T05
+- **Unblocks:** P16-T07, P16-GATE
 - **Deliverables:** Completed QA report.
 - **Acceptance criteria:**
   - No blocking accessibility defects on Android and iOS.
 - **Verification:** CK-M, CK-I; manual
-- **Subtasks:** `P15-T06.1` Android · `P15-T06.2` iOS · `P15-T06.3` Report
+- **Subtasks:** `P16-T06.1` Android · `P16-T06.2` iOS · `P16-T06.3` Report
 
-#### P15-T07 — Full regression and E2E on staging
+#### P16-T07 — Full regression and E2E on staging
 
-`QA` · Size L · Wave P15.W3 · Approval: no
+`QA` · Size L · Wave P16.W3 · Approval: no
 
 - **Objective:** Run all suites on staging.
-- **Depends on:** P15-T03, P15-T05, P15-T06
+- **Depends on:** P16-T03, P16-T05, P16-T06
 - **Parallel with:** — (sequential)
-- **Unblocks:** P15-T10, P15-T11, P15-GATE
+- **Unblocks:** P16-T10, P16-T11, P16-GATE
 - **Deliverables:** Regression report.
 - **Acceptance criteria:**
   - All suites green; no open blockers.
 - **Verification:** CK-B, CK-M, CK-I
-- **Subtasks:** `P15-T07.1` Backend · `P15-T07.2` Mobile · `P15-T07.3` E2E
+- **Subtasks:** `P16-T07.1` Backend · `P16-T07.2` Mobile · `P16-T07.3` E2E
 
-#### P15-T08 — Final dependency and licence audit
+#### P16-T08 — Final dependency and licence audit
 
-`SEC` · Size M · Wave P15.W2 · Approval: no
+`SEC` · Size M · Wave P16.W2 · Approval: no
 
 - **Objective:** CVE triage, licence check and pinned versions.
-- **Depends on:** P15-T01, P15-T02
-- **Parallel with:** P15-T03, P15-T09
-- **Unblocks:** P15-T10, P15-T11, P15-GATE
+- **Depends on:** P16-T01, P16-T02
+- **Parallel with:** P16-T03, P16-T09
+- **Unblocks:** P16-T10, P16-T11, P16-GATE
 - **Deliverables:** SBOM and report.
 - **Acceptance criteria:**
   - No unwaived high/critical CVEs.
 - **Verification:** CK-S
-- **Subtasks:** `P15-T08.1` Audit · `P15-T08.2` Triage
+- **Subtasks:** `P16-T08.1` Audit · `P16-T08.2` Triage
 
-#### P15-T09 — Operational readiness
+#### P16-T09 — Operational readiness
 
-`INF` · Size M · Wave P15.W2 · Approval: no
+`INF` · Size M · Wave P16.W2 · Approval: no
 
 - **Objective:** Runbooks, incident process and executed DR drill.
-- **Depends on:** P14-T09, P14-T10, P15-T04
-- **Parallel with:** P15-T03, P15-T08
-- **Unblocks:** P15-T10, P15-T11, P15-GATE
+- **Depends on:** P14-T09, P14-T10, P16-T04
+- **Parallel with:** P16-T03, P16-T08
+- **Unblocks:** P16-T10, P16-T11, P16-GATE
 - **Deliverables:** Runbooks and drill record.
 - **Acceptance criteria:**
   - On-call and escalation defined; DR drill within RTO.
 - **Verification:** Drill
-- **Subtasks:** `P15-T09.1` Runbooks · `P15-T09.2` Incident process · `P15-T09.3` DR drill
+- **Subtasks:** `P16-T09.1` Runbooks · `P16-T09.2` Incident process · `P16-T09.3` DR drill
 
-#### P15-T10 — Production readiness review
+#### P16-T10 — Production readiness review
 
-`DOC` · Size M · Wave P15.W5 · Approval: **USER REVIEW REQUIRED**
+`DOC` · Size M · Wave P16.W5 · Approval: **USER REVIEW REQUIRED**
 
 - **Objective:** Compare against MVP acceptance criteria (brief section 16) and the quality-gate register.
-- **Depends on:** P15-T03, P15-T07, P15-T08, P15-T09, P15-T11
+- **Depends on:** P16-T03, P16-T07, P16-T08, P16-T09, P16-T11
 - **Parallel with:** — (sequential)
-- **Unblocks:** P15-GATE
+- **Unblocks:** P16-GATE
 - **Deliverables:** Go/no-go document.
 - **Acceptance criteria:**
   - Every MVP criterion has evidence.
 - **Verification:** User decision
-- **Subtasks:** `P15-T10.1` Criteria matrix · `P15-T10.2` Risk register · `P15-T10.3` Go/no-go
+- **Subtasks:** `P16-T10.1` Criteria matrix · `P16-T10.2` Risk register · `P16-T10.3` Go/no-go
 
-#### P15-T11 — Final quality-gate re-verification
+#### P16-T11 — Final quality-gate re-verification
 
-`QA` · Size L · Wave P15.W4 · Approval: no
+`QA` · Size L · Wave P16.W4 · Approval: no
 
-- **Objective:** Re-run every automated gate and re-verify every QG criterion due at or before P15 against the current release candidate (spec 8.5).
-- **Depends on:** P15-T03, P15-T07, P15-T08, P15-T09
+- **Objective:** Re-run every automated gate and re-verify every QG criterion due at or before P16 against the current release candidate (spec 8.5).
+- **Depends on:** P16-T03, P16-T07, P16-T08, P16-T09
 - **Parallel with:** — (sequential)
-- **Unblocks:** P15-T10, P15-GATE
+- **Unblocks:** P16-T10, P16-GATE
 - **Deliverables:** Updated Verification timestamps and evidence in QUALITY_GATES.md; list of failures with remediation tasks.
 - **Acceptance criteria:**
-  - Every QG-01..QG-11 criterion due by P15 is satisfied on the release candidate, or the failure is recorded and blocks release.
+  - Every QG-01..QG-11 criterion due by P16 is satisfied on the release candidate, or the failure is recorded and blocks release.
   - `track.py qg check QG-12.1` succeeds.
 - **Verification:** All CK suites; `python scripts/track.py qg status`
-- **Subtasks:** `P15-T11.1` Re-run all CK suites · `P15-T11.2` Re-verify criteria with fresh evidence · `P15-T11.3` Record failures and remediation · `P15-T11.4` qg check QG-12.1
+- **Subtasks:** `P16-T11.1` Re-run all CK suites · `P16-T11.2` Re-verify criteria with fresh evidence · `P16-T11.3` Record failures and remediation · `P16-T11.4` qg check QG-12.1
 
-#### P15-GATE — Phase P15 exit gate
+#### P16-GATE — Phase P16 exit gate
 
-`GATE` · Size S · Wave P15.W6 · Approval: **USER REVIEW REQUIRED**
+`GATE` · Size S · Wave P16.W6 · Approval: **USER REVIEW REQUIRED**
 
 - **Objective:** Confirm readiness.
-- **Depends on:** P15-T01, P15-T02, P15-T03, P15-T04, P15-T05, P15-T06, P15-T07, P15-T08, P15-T09, P15-T10, P15-T11
+- **Depends on:** P16-T01, P16-T02, P16-T03, P16-T04, P16-T05, P16-T06, P16-T07, P16-T08, P16-T09, P16-T10, P16-T11
 - **Parallel with:** — (sequential)
-- **Unblocks:** P16-T01, P16-T03
+- **Unblocks:** P17-T01, P17-T03
 - **Deliverables:** Gate summary.
 - **Acceptance criteria:**
   - User go decision recorded.
 - **Verification:** All quality gates.
 - **Quality gates required before completion:** QG-01.4, QG-04.6, QG-05.5, QG-08.2, QG-08.8, QG-09.1, QG-09.2, QG-09.3, QG-09.4, QG-09.6, QG-12.1, QG-12.3, QG-12.4, QG-12.7
-- **Subtasks:** `P15-GATE.1` Run gates · `P15-GATE.2` Present summary · `P15-GATE.3` Record decision
+- **Subtasks:** `P16-GATE.1` Run gates · `P16-GATE.2` Present summary · `P16-GATE.3` Record decision
 
-### P16 — Release & Production Deployment
+### P17 — Release & Production Deployment
 
 - **Goal:** Store accounts, signed release builds, production deployment, store submission, staged rollout and hypercare.
-- **Entry criteria:** P15-GATE complete; DEC-09 (developer accounts) ideally started during P09.
+- **Entry criteria:** P16-GATE complete; DEC-09 (developer accounts) ideally started during P09.
 - **Exit criteria:** App live on Google Play and the App Store with monitoring and a support process.
-- **Prerequisite phases:** P15 · **Lane:** RELEASE
-- **Entry gates:** prerequisite phase gates completed (P15); cumulative quality criteria QG-01.1–5; QG-02.1–6; QG-03.1–6; QG-04.1–6; QG-05.1–5; QG-06.1–7; QG-07.1–8; QG-08.1–8; QG-09.1–6; QG-10.1–8; QG-11.1–6; QG-12.1,3,4,7; user approval of the phase.
-- **Task-level gates:** each task's CK suites and acceptance criteria; additionally quality criteria: P16-T03 → QG-12.5.
-- **Exit gates:** QG-04.7; QG-05.6; QG-12.2,5,6,8 (required by `P16-GATE`) plus user review.
-- **Release gates:** P16-T03 → start: QG-all@P15, QG-12.1, QG-12.3, QG-12.4, QG-12.7, QG-12.8; P16-T07 → start: QG-all@P16, QG-12.2, QG-12.5, QG-12.6, QG-12.8
+- **Prerequisite phases:** P16 · **Lane:** RELEASE
+- **Entry gates:** prerequisite phase gates completed (P16); cumulative quality criteria QG-01.1–5; QG-02.1–6; QG-03.1–6; QG-04.1–6; QG-05.1–5; QG-06.1–7; QG-07.1–8; QG-08.1–8; QG-09.1–6; QG-10.1–8; QG-11.1–6; QG-12.1,3,4,7; user approval of the phase.
+- **Task-level gates:** each task's CK suites and acceptance criteria; additionally quality criteria: P17-T03 → QG-12.5.
+- **Exit gates:** QG-04.7; QG-05.6; QG-12.2,5,6,8 (required by `P17-GATE`) plus user review.
+- **Release gates:** P17-T03 → start: QG-all@P16, QG-12.1, QG-12.3, QG-12.4, QG-12.7, QG-12.8; P17-T07 → start: QG-all@P17, QG-12.2, QG-12.5, QG-12.6, QG-12.8
 
 | Wave | Tasks | Mode | Entry condition | Conflict notes |
 |---|---|---|---|---|
-| P16.W1 | P16-T01, P16-T03 | Parallel-safe | Phase approved and cross-phase prerequisites complete | T01 is mostly user/administrative; T03 is infrastructure. |
-| P16.W2 | P16-T02 | Single task | All dependencies from earlier waves of P16 complete | — |
-| P16.W3 | P16-T04, P16-T05 | Parallel-safe | All dependencies from earlier waves of P16 complete | — |
-| P16.W4 | P16-T06 | Single task | All dependencies from earlier waves of P16 complete | — |
-| P16.W5 | P16-T07 | Single task | All dependencies from earlier waves of P16 complete | — |
-| P16.W6 | P16-T08 | Single task | All dependencies from earlier waves of P16 complete | — |
-| P16.W7 | P16-GATE | Single task | All dependencies from earlier waves of P16 complete | — |
+| P17.W1 | P17-T01, P17-T03 | Parallel-safe | Phase approved and cross-phase prerequisites complete | T01 is mostly user/administrative; T03 is infrastructure. |
+| P17.W2 | P17-T02 | Single task | All dependencies from earlier waves of P17 complete | — |
+| P17.W3 | P17-T04, P17-T05 | Parallel-safe | All dependencies from earlier waves of P17 complete | — |
+| P17.W4 | P17-T06 | Single task | All dependencies from earlier waves of P17 complete | — |
+| P17.W5 | P17-T07 | Single task | All dependencies from earlier waves of P17 complete | — |
+| P17.W6 | P17-T08 | Single task | All dependencies from earlier waves of P17 complete | — |
+| P17.W7 | P17-GATE | Single task | All dependencies from earlier waves of P17 complete | — |
 
-#### P16-T01 — Store accounts, identifiers and signing
+#### P17-T01 — Store accounts, identifiers and signing
 
-`REL` · Size M · Wave P16.W1 · Approval: **USER REVIEW REQUIRED**
+`REL` · Size M · Wave P17.W1 · Approval: **USER REVIEW REQUIRED**
 
 - **Objective:** Apple Developer and Google Play accounts, app IDs, signing keys in secret store, privacy/data-safety forms.
-- **Depends on:** P15-GATE
-- **Parallel with:** P16-T03
-- **Unblocks:** P16-T02, P16-GATE
+- **Depends on:** P16-GATE
+- **Parallel with:** P17-T03
+- **Unblocks:** P17-T02, P17-GATE
 - **Deliverables:** Accounts and signing assets ready.
 - **Acceptance criteria:**
   - Keys are stored only in the secret manager; builds can be signed in CI.
 - **Verification:** Dry-run signed build
-- **Subtasks:** `P16-T01.1` Accounts · `P16-T01.2` Signing · `P16-T01.3` Forms
+- **Subtasks:** `P17-T01.1` Accounts · `P17-T01.2` Signing · `P17-T01.3` Forms
 
-#### P16-T02 — Release builds and pipeline
+#### P17-T02 — Release builds and pipeline
 
-`REL` · Size L · Wave P16.W2 · Approval: no
+`REL` · Size L · Wave P17.W2 · Approval: no
 
 - **Objective:** Android AAB and iOS IPA with versioning and automated upload.
-- **Depends on:** P16-T01
+- **Depends on:** P17-T01
 - **Parallel with:** — (sequential)
-- **Unblocks:** P16-T04, P16-T05, P16-GATE
+- **Unblocks:** P17-T04, P17-T05, P17-GATE
 - **Deliverables:** Release workflow.
 - **Acceptance criteria:**
   - Reproducible signed builds from CI.
 - **Verification:** CI release run
-- **Subtasks:** `P16-T02.1` Android · `P16-T02.2` iOS · `P16-T02.3` Versioning
+- **Subtasks:** `P17-T02.1` Android · `P17-T02.2` iOS · `P17-T02.3` Versioning
 
-#### P16-T03 — Production infrastructure deployment (production release gate)
+#### P17-T03 — Production infrastructure deployment (production release gate)
 
-`INF` · Size L · Wave P16.W1 · Approval: **USER REVIEW REQUIRED**
+`INF` · Size L · Wave P17.W1 · Approval: **USER REVIEW REQUIRED**
 
 - **Objective:** Deploy production via pipeline, run migrations, configure Keycloak and monitoring.
-- **Depends on:** P15-GATE, P14-T08
-- **Parallel with:** P16-T01
-- **Unblocks:** P16-T04, P16-GATE
+- **Depends on:** P16-GATE, P14-T08
+- **Parallel with:** P17-T01
+- **Unblocks:** P17-T04, P17-GATE
 - **Deliverables:** Production environment.
 - **Acceptance criteria:**
-  - All quality criteria due by P15 and QG-12.1/.3/.4/.7/.8 satisfied before deployment starts.
+  - All quality criteria due by P16 and QG-12.1/.3/.4/.7/.8 satisfied before deployment starts.
   - Smoke tests pass; backups verified; monitoring active.
-- **Verification:** Smoke tests; `track.py qg require QG-all@P15 QG-12.3 QG-12.4 QG-12.7 QG-12.8`
-- **Quality gates required before start:** QG-all@P15, QG-12.1, QG-12.3, QG-12.4, QG-12.7, QG-12.8
+- **Verification:** Smoke tests; `track.py qg require QG-all@P16 QG-12.3 QG-12.4 QG-12.7 QG-12.8`
+- **Quality gates required before start:** QG-all@P16, QG-12.1, QG-12.3, QG-12.4, QG-12.7, QG-12.8
 - **Quality gates required before completion:** QG-12.5
-- **Subtasks:** `P16-T03.1` Check release gates · `P16-T03.2` Deploy · `P16-T03.3` Migrate · `P16-T03.4` Verify
+- **Subtasks:** `P17-T03.1` Check release gates · `P17-T03.2` Deploy · `P17-T03.3` Migrate · `P17-T03.4` Verify
 
-#### P16-T04 — Internal and closed testing
+#### P17-T04 — Internal and closed testing
 
-`REL` · Size L · Wave P16.W3 · Approval: no
+`REL` · Size L · Wave P17.W3 · Approval: no
 
 - **Objective:** Play internal track and TestFlight; triage and fix feedback.
-- **Depends on:** P16-T02, P16-T03
-- **Parallel with:** P16-T05
-- **Unblocks:** P16-T06, P16-GATE
+- **Depends on:** P17-T02, P17-T03
+- **Parallel with:** P17-T05
+- **Unblocks:** P17-T06, P17-GATE
 - **Deliverables:** Test report.
 - **Acceptance criteria:**
   - No open blocker or critical defects.
 - **Verification:** Test report
-- **Subtasks:** `P16-T04.1` Distribute · `P16-T04.2` Collect feedback · `P16-T04.3` Fix
+- **Subtasks:** `P17-T04.1` Distribute · `P17-T04.2` Collect feedback · `P17-T04.3` Fix
 
-#### P16-T05 — Store listings and policy compliance
+#### P17-T05 — Store listings and policy compliance
 
-`REL` · Size M · Wave P16.W3 · Approval: **USER REVIEW REQUIRED**
+`REL` · Size M · Wave P17.W3 · Approval: **USER REVIEW REQUIRED**
 
 - **Objective:** Screenshots, descriptions, privacy and financial-app declarations.
-- **Depends on:** P16-T02
-- **Parallel with:** P16-T04
-- **Unblocks:** P16-T06, P16-GATE
+- **Depends on:** P17-T02
+- **Parallel with:** P17-T04
+- **Unblocks:** P17-T06, P17-GATE
 - **Deliverables:** Store listings.
 - **Acceptance criteria:**
   - Listings avoid guaranteed-return language; declarations complete.
 - **Verification:** Store pre-checks
-- **Subtasks:** `P16-T05.1` Assets · `P16-T05.2` Copy · `P16-T05.3` Declarations
+- **Subtasks:** `P17-T05.1` Assets · `P17-T05.2` Copy · `P17-T05.3` Declarations
 
-#### P16-T06 — Launch rehearsal and checklist
+#### P17-T06 — Launch rehearsal and checklist
 
-`QA` · Size M · Wave P16.W4 · Approval: **USER REVIEW REQUIRED**
+`QA` · Size M · Wave P17.W4 · Approval: **USER REVIEW REQUIRED**
 
 - **Objective:** Go-live rehearsal and rollback plan.
-- **Depends on:** P16-T04, P16-T05
+- **Depends on:** P17-T04, P17-T05
 - **Parallel with:** — (sequential)
-- **Unblocks:** P16-T07, P16-GATE
+- **Unblocks:** P17-T07, P17-GATE
 - **Deliverables:** Launch checklist.
 - **Acceptance criteria:**
   - Rehearsal passes; rollback tested.
 - **Verification:** Rehearsal
-- **Subtasks:** `P16-T06.1` Checklist · `P16-T06.2` Rehearsal · `P16-T06.3` Rollback
+- **Subtasks:** `P17-T06.1` Checklist · `P17-T06.2` Rehearsal · `P17-T06.3` Rollback
 
-#### P16-T07 — Store submission and staged rollout
+#### P17-T07 — Store submission and staged rollout
 
-`REL` · Size M · Wave P16.W5 · Approval: **USER REVIEW REQUIRED**
+`REL` · Size M · Wave P17.W5 · Approval: **USER REVIEW REQUIRED**
 
 - **Objective:** Submit and roll out in stages.
-- **Depends on:** P16-T06
+- **Depends on:** P17-T06
 - **Parallel with:** — (sequential)
-- **Unblocks:** P16-T08, P16-GATE
+- **Unblocks:** P17-T08, P17-GATE
 - **Deliverables:** Live app versions.
 - **Acceptance criteria:**
   - All release-build criteria satisfied before submission.
   - Approved by both stores; staged rollout started.
-- **Verification:** Store consoles; `track.py qg require QG-all@P16 QG-12.2 QG-12.5 QG-12.6 QG-12.8`
-- **Quality gates required before start:** QG-all@P16, QG-12.2, QG-12.5, QG-12.6, QG-12.8
-- **Subtasks:** `P16-T07.1` Check release gates · `P16-T07.2` Submit · `P16-T07.3` Staged rollout
+- **Verification:** Store consoles; `track.py qg require QG-all@P17 QG-12.2 QG-12.5 QG-12.6 QG-12.8`
+- **Quality gates required before start:** QG-all@P17, QG-12.2, QG-12.5, QG-12.6, QG-12.8
+- **Subtasks:** `P17-T07.1` Check release gates · `P17-T07.2` Submit · `P17-T07.3` Staged rollout
 
-#### P16-T08 — Post-launch monitoring and hypercare
+#### P17-T08 — Post-launch monitoring and hypercare
 
-`REL` · Size M · Wave P16.W6 · Approval: no
+`REL` · Size M · Wave P17.W6 · Approval: no
 
 - **Objective:** Watch dashboards, crash and error rates; run support process; retrospective.
-- **Depends on:** P16-T07
+- **Depends on:** P17-T07
 - **Parallel with:** — (sequential)
-- **Unblocks:** P16-GATE
+- **Unblocks:** P17-GATE
 - **Deliverables:** Hypercare report.
 - **Acceptance criteria:**
   - Error budget respected for the agreed period.
 - **Verification:** Dashboards
-- **Subtasks:** `P16-T08.1` Monitoring · `P16-T08.2` Support · `P16-T08.3` Retrospective
+- **Subtasks:** `P17-T08.1` Monitoring · `P17-T08.2` Support · `P17-T08.3` Retrospective
 
-#### P16-GATE — Release sign-off
+#### P17-GATE — Release sign-off
 
-`GATE` · Size S · Wave P16.W7 · Approval: **USER REVIEW REQUIRED**
+`GATE` · Size S · Wave P17.W7 · Approval: **USER REVIEW REQUIRED**
 
 - **Objective:** Close the programme.
-- **Depends on:** P16-T01, P16-T02, P16-T03, P16-T04, P16-T05, P16-T06, P16-T07, P16-T08
+- **Depends on:** P17-T01, P17-T02, P17-T03, P17-T04, P17-T05, P17-T06, P17-T07, P17-T08
 - **Parallel with:** — (sequential)
 - **Unblocks:** —
 - **Deliverables:** Release summary.
@@ -3429,7 +3871,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
   - User sign-off recorded.
 - **Verification:** All gates.
 - **Quality gates required before completion:** QG-04.7, QG-05.6, QG-12.2, QG-12.5, QG-12.6, QG-12.8
-- **Subtasks:** `P16-GATE.1` Run gates · `P16-GATE.2` Present summary · `P16-GATE.3` Record sign-off
+- **Subtasks:** `P17-GATE.1` Run gates · `P17-GATE.2` Present summary · `P17-GATE.3` Record sign-off
 
 ## Appendix A — Requirement traceability
 
@@ -3461,14 +3903,14 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | Offline / stale-data behaviour | P09-T06 |
 | AI tool layer, orchestrator, Copilot, AI audit | P10-T01…T10 |
 | AI Investment Intelligence, Portfolio Doctor, Compare, Simulate | P12-T01…T10 |
-| Privacy: export, deletion, retention | P15-T05 |
+| Privacy: export, deletion, retention | P16-T05 |
 | CI/CD and security scanning | P01-T09…T11, P14-T08 |
 | Cloud infrastructure, secrets, backup/DR, observability | P14-T01…T11, P01-T12 |
-| OWASP MASVS / API review, pen test, load test | P15-T01…T04 |
-| Accessibility QA (UX gate 5) | P03-T07, P07-T09, P15-T06 |
-| App Store / Google Play release | P16-T01…T08 |
-| Mandatory platform quality gates QG-01…QG-12 (spec section 8) | QUALITY_GATES.md; bound to phase gates (§7.3); P00-T04, P01-T15, P01-T16, P15-T11; release gates P14-T11, P16-T03, P16-T07 |
-| Brief phases 0–6 / CLAUDE.md 17-step order / SOLUTION_INTENT phases 0–10 | P01 (0), P04–P05 (1–2), P06 (3–5), P08 (6), P10 (7–8), P12 (9), P14–P16 (10) |
+| OWASP MASVS / API review, pen test, load test | P16-T01…T04 |
+| Accessibility QA (UX gate 5) | P03-T07, P07-T09, P16-T06 |
+| App Store / Google Play release | P17-T01…T08 |
+| Mandatory platform quality gates QG-01…QG-12 (spec section 8) | QUALITY_GATES.md; bound to phase gates (§7.3); P00-T04, P01-T15, P01-T16, P16-T11; release gates P14-T11, P17-T03, P17-T07 |
+| Brief phases 0–6 / CLAUDE.md 17-step order / SOLUTION_INTENT phases 0–10 | P01 (0), P04–P05 (1–2), P06 (3–5), P08 (6), P10 (7–8), P12 (9), P14–P17 (10) |
 
 ## Appendix B — UI plan step mapping
 
