@@ -1727,3 +1727,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-14T10:08:19+04:00 — START P13-T03
 - FX-03 Technical analysis engine
 - prerequisites verified COMPLETED
+
+### 2026-10-14T11:05:59+04:00 — AWAITING_VERIFICATION P13-T03
+- evidence: Indicators (SMA, EMA, MACD, RSI, Stochastic, ROC, ATR, ADX, Bollinger) match an independent exact-Fraction oracle within 1e-18 and the published RSI(14) worked example exactly; aggregation 1m to 1M on the New York 17:00 calendar with DST; missing minutes flagged partial, empty periods absent, closed-market candles ignored, forming periods excluded, nothing filled; swing points confirmation-based (no look-ahead), levels, breakouts, trendlines, channels; 13 candlestick rules plus consolidation and breakout-retest citing their candles; API /forex/indicators, /structure, /patterns behind the flag; no AI import in the analysis code. Matrix T-01..T-18, financial-methods section 19. 351 forex tests, 98% coverage; full backend suite 2902 passed; Spectral clean. PR #156. CI all gates pass.
+
+### 2026-10-14T11:05:59+04:00 — COMPLETE P13-T03
+- duration: 57m 40s
+- evidence: Indicators (SMA, EMA, MACD, RSI, Stochastic, ROC, ATR, ADX, Bollinger) match an independent exact-Fraction oracle within 1e-18 and the published RSI(14) worked example exactly; aggregation 1m to 1M on the New York 17:00 calendar with DST; missing minutes flagged partial, empty periods absent, closed-market candles ignored, forming periods excluded, nothing filled; swing points confirmation-based (no look-ahead), levels, breakouts, trendlines, channels; 13 candlestick rules plus consolidation and breakout-retest citing their candles; API /forex/indicators, /structure, /patterns behind the flag; no AI import in the analysis code. Matrix T-01..T-18, financial-methods section 19. 351 forex tests, 98% coverage; full backend suite 2902 passed; Spectral clean. PR #156. CI all gates pass.
