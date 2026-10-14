@@ -1265,15 +1265,15 @@
   - [x] P13-T03.4 Market structure
   - [x] P13-T03.5 Price-action detectors
   - [x] P13-T03.6 Reference vectors and tests
-- [ ] **P13-T04** · FX-04 Economic calendar and macroeconomic intelligence · `NOT_STARTED` ⬜
+- [x] **P13-T04** · FX-04 Economic calendar and macroeconomic intelligence · `COMPLETED` ✅
   - Deps: P13-T02 · Wave: W3 · Track: BE · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P13-T04.1 Event model and schema
-  - [ ] P13-T04.2 Provider adapter
-  - [ ] P13-T04.3 Event-risk windows
-  - [ ] P13-T04.4 API
-  - [ ] P13-T04.5 Tests
+  - Started: 2026-10-14T11:12:41+04:00 · Completed: 2026-10-14T11:37:18+04:00 · Duration: 24m 37s · Blocker: —
+  - Evidence: Events carry source, source URL, licence status, retrieval time and first-seen time of the actual; confirmed values (actual, previous), the consensus forecast and commentary are separate columns and API objects with different labels. Release times stored in UTC and returned in the profile time zone or a validated tz (tested Nairobi, Tokyo). DEMO source with local-time schedules across DST and an RFC 5545 iCalendar adapter on a synthetic fixture; idempotent ingestion that never clears a published actual; hourly job when forex is on. Event-risk windows (high 30/60 min, medium 15/30, low none). Policy-rate differential is null when a rate is unknown. Migration 0021; calendar coverage 98%; Spectral clean. Full backend suite 2958 passed. PR #157. CI all gates pass.
+  - [x] P13-T04.1 Event model and schema
+  - [x] P13-T04.2 Provider adapter
+  - [x] P13-T04.3 Event-risk windows
+  - [x] P13-T04.4 API
+  - [x] P13-T04.5 Tests
 - [ ] **P13-T05** · FX-05 Prediction models and evaluation framework · `NOT_STARTED` ⬜
   - Deps: P13-T03, P13-T04 · Wave: W4 · Track: BE · Size: XL · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —

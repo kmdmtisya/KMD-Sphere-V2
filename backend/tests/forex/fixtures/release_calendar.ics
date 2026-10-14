@@ -1,0 +1,39 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Synthetic test fixture//Release schedule (not a real calendar)//EN
+X-WR-CALNAME:Synthetic statistics release schedule
+BEGIN:VEVENT
+UID:rel-001@example.test
+DTSTAMP:20261001T000000Z
+DTSTART;TZID=America/New_York:20261106T083000
+SUMMARY:Synthetic employment report\, October
+CATEGORIES:HIGH
+END:VEVENT
+BEGIN:VEVENT
+UID:rel-002@example.test
+DTSTAMP:20261001T000000Z
+DTSTART:20261112T133000Z
+SUMMARY:Synthetic consumer price index for October with a summary line that is folded
+  onto a second line
+END:VEVENT
+BEGIN:VEVENT
+UID:rel-003@example.test
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20261126
+SUMMARY:Synthetic holiday (no release)
+END:VEVENT
+BEGIN:VEVENT
+UID:rel-004@example.test
+DTSTAMP:20261001T000000Z
+DTSTART;TZID=America/New_York:20261204T083000
+SUMMARY:Synthetic employment report\, November
+CATEGORIES:HIGH
+END:VEVENT
+BEGIN:VEVENT
+UID:rel-005@example.test
+DTSTAMP:20261001T000000Z
+DTSTART:20270115T133000Z
+SUMMARY:Synthetic retail sales\; outside the requested range
+CATEGORIES:LOW
+END:VEVENT
+END:VCALENDAR

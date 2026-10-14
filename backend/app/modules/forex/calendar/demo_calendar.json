@@ -1,0 +1,28 @@
+{
+  "_fixture": "DEMO. Synthetic economic calendar for development and tests (DEC-19: no licensed calendar provider). Event names, values and policy rates are fictional and labelled DEMO; schedules are set in each release's local time zone so daylight saving is exercised.",
+  "events": [
+    {"id": "us_payrolls", "name": "DEMO United States nonfarm payrolls", "kind": "indicator", "currencies": ["USD"], "importance": "high", "unit": "k", "rule": {"first_weekday": 4}, "local_time": "08:30", "tz": "America/New_York", "base": "150", "spread": "80", "places": 0},
+    {"id": "us_cpi", "name": "DEMO United States consumer prices (m/m)", "kind": "indicator", "currencies": ["USD"], "importance": "high", "unit": "%", "rule": {"monthly_day": 12}, "local_time": "08:30", "tz": "America/New_York", "base": "0.2", "spread": "0.3", "places": 1},
+    {"id": "us_claims", "name": "DEMO United States jobless claims", "kind": "indicator", "currencies": ["USD"], "importance": "medium", "unit": "k", "rule": {"weekly": 3}, "local_time": "08:30", "tz": "America/New_York", "base": "220", "spread": "20", "places": 0},
+    {"id": "ez_cpi", "name": "DEMO Euro area flash inflation (y/y)", "kind": "indicator", "currencies": ["EUR"], "importance": "high", "unit": "%", "rule": {"monthly_day": 1}, "local_time": "11:00", "tz": "Europe/Brussels", "base": "2.1", "spread": "0.4", "places": 1},
+    {"id": "uk_cpi", "name": "DEMO United Kingdom consumer prices (y/y)", "kind": "indicator", "currencies": ["GBP"], "importance": "high", "unit": "%", "rule": {"monthly_day": 15}, "local_time": "07:00", "tz": "Europe/London", "base": "2.5", "spread": "0.5", "places": 1},
+    {"id": "jp_tankan", "name": "DEMO Japan business sentiment", "kind": "indicator", "currencies": ["JPY"], "importance": "medium", "unit": "index", "rule": {"monthly_day": 1}, "local_time": "08:50", "tz": "Asia/Tokyo", "base": "12", "spread": "6", "places": 0},
+    {"id": "ke_cpi", "name": "DEMO Kenya consumer prices (y/y)", "kind": "indicator", "currencies": ["KES"], "importance": "medium", "unit": "%", "rule": {"monthly_day": 30}, "local_time": "14:00", "tz": "Africa/Nairobi", "base": "4.5", "spread": "1.0", "places": 1},
+    {"id": "za_cpi", "name": "DEMO South Africa consumer prices (y/y)", "kind": "indicator", "currencies": ["ZAR"], "importance": "medium", "unit": "%", "rule": {"monthly_day": 20}, "local_time": "10:00", "tz": "Africa/Johannesburg", "base": "4.0", "spread": "0.8", "places": 1},
+    {"id": "fed_decision", "name": "DEMO Federal Reserve rate decision", "kind": "central_bank_decision", "currencies": ["USD"], "importance": "high", "unit": "%", "rule": {"first_weekday": 2}, "local_time": "14:00", "tz": "America/New_York", "base": "4.50", "spread": "0", "places": 2, "commentary": "DEMO commentary, not confirmed data: some market participants expect the rate to be held."},
+    {"id": "ecb_decision", "name": "DEMO European Central Bank rate decision", "kind": "central_bank_decision", "currencies": ["EUR"], "importance": "high", "unit": "%", "rule": {"first_weekday": 3}, "local_time": "14:15", "tz": "Europe/Berlin", "base": "2.25", "spread": "0", "places": 2},
+    {"id": "fed_speech", "name": "DEMO Federal Reserve chair speech", "kind": "speech", "currencies": ["USD"], "importance": "low", "rule": {"monthly_day": 22}, "local_time": "10:00", "tz": "America/New_York"}
+  ],
+  "policy_rates": [
+    {"currency": "USD", "bank": "DEMO Federal Reserve", "rate": "4.50", "effective_date": "2026-09-17", "decided_at": "2026-09-16T18:00:00Z"},
+    {"currency": "EUR", "bank": "DEMO European Central Bank", "rate": "2.25", "effective_date": "2026-09-17", "decided_at": "2026-09-10T12:15:00Z"},
+    {"currency": "GBP", "bank": "DEMO Bank of England", "rate": "4.00", "effective_date": "2026-09-18", "decided_at": "2026-09-18T11:00:00Z"},
+    {"currency": "JPY", "bank": "DEMO Bank of Japan", "rate": "0.50", "effective_date": "2026-09-19", "decided_at": "2026-09-19T03:00:00Z"},
+    {"currency": "CHF", "bank": "DEMO Swiss National Bank", "rate": "0.25", "effective_date": "2026-09-25", "decided_at": "2026-09-25T07:30:00Z"},
+    {"currency": "AUD", "bank": "DEMO Reserve Bank of Australia", "rate": "3.85", "effective_date": "2026-09-30", "decided_at": "2026-09-30T04:30:00Z"},
+    {"currency": "CAD", "bank": "DEMO Bank of Canada", "rate": "2.75", "effective_date": "2026-09-17", "decided_at": "2026-09-17T13:45:00Z"},
+    {"currency": "NZD", "bank": "DEMO Reserve Bank of New Zealand", "rate": "3.25", "effective_date": "2026-10-08", "decided_at": "2026-10-08T01:00:00Z"},
+    {"currency": "ZAR", "bank": "DEMO South African Reserve Bank", "rate": "7.00", "effective_date": "2026-09-18", "decided_at": "2026-09-18T13:00:00Z"},
+    {"currency": "KES", "bank": "DEMO Central Bank of Kenya", "rate": "9.50", "effective_date": "2026-10-07", "decided_at": "2026-10-07T12:00:00Z"}
+  ]
+}

@@ -1734,3 +1734,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-14T11:05:59+04:00 — COMPLETE P13-T03
 - duration: 57m 40s
 - evidence: Indicators (SMA, EMA, MACD, RSI, Stochastic, ROC, ATR, ADX, Bollinger) match an independent exact-Fraction oracle within 1e-18 and the published RSI(14) worked example exactly; aggregation 1m to 1M on the New York 17:00 calendar with DST; missing minutes flagged partial, empty periods absent, closed-market candles ignored, forming periods excluded, nothing filled; swing points confirmation-based (no look-ahead), levels, breakouts, trendlines, channels; 13 candlestick rules plus consolidation and breakout-retest citing their candles; API /forex/indicators, /structure, /patterns behind the flag; no AI import in the analysis code. Matrix T-01..T-18, financial-methods section 19. 351 forex tests, 98% coverage; full backend suite 2902 passed; Spectral clean. PR #156. CI all gates pass.
+
+### 2026-10-14T11:12:41+04:00 — START P13-T04
+- FX-04 Economic calendar and macroeconomic intelligence
+- prerequisites verified COMPLETED
+
+### 2026-10-14T11:37:18+04:00 — COMPLETE P13-T04
+- duration: 24m 37s
+- evidence: Events carry source, source URL, licence status, retrieval time and first-seen time of the actual; confirmed values (actual, previous), the consensus forecast and commentary are separate columns and API objects with different labels. Release times stored in UTC and returned in the profile time zone or a validated tz (tested Nairobi, Tokyo). DEMO source with local-time schedules across DST and an RFC 5545 iCalendar adapter on a synthetic fixture; idempotent ingestion that never clears a published actual; hourly job when forex is on. Event-risk windows (high 30/60 min, medium 15/30, low none). Policy-rate differential is null when a rate is unknown. Migration 0021; calendar coverage 98%; Spectral clean. Full backend suite 2958 passed. PR #157. CI all gates pass.

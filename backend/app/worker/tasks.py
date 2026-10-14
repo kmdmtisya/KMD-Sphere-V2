@@ -12,6 +12,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.ai.conversations.service import ConversationService
 from app.core.config import get_settings
 from app.modules.alerts.evaluation import EvaluationResult, evaluate_alerts
+from app.modules.forex.calendar.ingest import ingest as ingest_forex_calendar
+from app.modules.forex.calendar.sources import DemoCalendarSource
 from app.modules.forex.candles.sync import sync_minutes as sync_forex_minutes
 from app.modules.forex.instruments.registry import active_instruments as active_forex_instruments
 from app.modules.forex.instruments.registry import load_registry as load_forex_registry
@@ -384,6 +386,36 @@ def forex_candle_sync_job(slot: str | None = None) -> dict[str, object]:
             return {"stored": report.stored, "failed": report.failed}
 
         outcome = await run_once(sessions, "forex_candle_sync", key, work)
+        if outcome.skipped or outcome.value is None:
+            return {"skipped": True}
+        return outcome.value
+
+    return run_async(go)
+
+
+@celery_app.task(base=JobTask, name="app.worker.tasks.forex_calendar_ingest")
+def forex_calendar_ingest_job(day: str | None = None) -> dict[str, object]:
+    """Loads the economic calendar every hour (P13-T04): a week back and 30 days ahead, so released
+    values arrive within the hour. Only the synthetic DEMO calendar exists (DEC-19); it runs only
+    when forex is switched on. `day` is the run key: an ISO date, optionally with the hour."""
+    settings = get_settings()
+    if not settings.forex_enabled:
+        return {"forex": "disabled"}
+    key = day or datetime.now(UTC).strftime("%Y-%m-%dT%H")
+
+    async def go(sessions: SessionFactory) -> dict[str, object]:
+        async def work(session: AsyncSession) -> dict[str, object]:
+            today = date.fromisoformat(key[:10])
+            report = await ingest_forex_calendar(
+                session,
+                DemoCalendarSource(),
+                today - timedelta(days=7),
+                today + timedelta(days=30),
+                datetime.now(UTC),
+            )
+            return asdict(report)
+
+        outcome = await run_once(sessions, "forex_calendar_ingest", key, work)
         if outcome.skipped or outcome.value is None:
             return {"skipped": True}
         return outcome.value
