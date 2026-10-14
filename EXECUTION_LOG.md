@@ -1810,3 +1810,148 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-14T21:25:02+04:00 — COMPLETE P13-T11
 - duration: 58m 01s
 - evidence: Forex section in the Flutter app (lib/features/forex): More entry shown only when forex is available (DEMO always; live only when the server has forex on, 404 otherwise); home with streamed markets, pair (chart, indicators, levels, forecasts with calibration labels, backtests), Opportunity Ranking and scanner, trade setup and risk calculator (server-computed, disclosures shown), calendar (DEMO events labelled, consensus marked as expectation), paper trading and journal (PAPER TRADING always visible; DEMO read-only), Copilot link with server-built source lines, in-app notices with settings and forex deep links. Stream client: token in first frame, resubscribe after reconnect with 1-30 s backoff, 15 s silence watchdog, close codes 4401/4404/4429, pause/resume with app lifecycle and connectivity; updates batched every 250 ms with the chart in a RepaintBoundary. Prices always show their type and freshness; none shown as executable. Tests: test/features/forex (stream, data, screens incl. 2.0x text, RTL, dark), test/journeys/forex_journey_test.dart; docs/design/forex-mobile.md, parity matrix updated. Local: dart format clean, flutter analyze clean, full flutter test 1793 passed plus the forex journey. PR #164. CI all gates pass.
+
+### 2026-10-14T21:42:51+04:00 — START P13-T12
+- FX-12 Forex quality gates verification
+- prerequisites verified COMPLETED
+
+### 2026-10-14T21:51:07+04:00 — QG START QG-13
+- QG-FX-01: Market Data Integrity
+
+### 2026-10-14T21:51:07+04:00 — QG CHECK QG-13.1
+- evidence: reports/quality/qg-13-forex-market-data.md: server stream auth, limits and fan-out tests (test_forex_api.py), upstream client heartbeat/backoff/replay tests (test_stream_client.py), app stream client tests (forex_stream_test.dart).
+
+### 2026-10-14T21:51:07+04:00 — QG CHECK QG-13.2
+- evidence: reports/quality/qg-13: adapter tests on recorded vendor-format records (test_oanda_adapter.py: top of book, UTC, numeric prices refused, never simulated), exact derived mid, invalid, crossed and out-of-band quotes refused or suspect. Limit: fixtures, not a licensed provider's records; re-verify when a feed is licensed (DEC-19, QG-20.1).
+
+### 2026-10-14T21:51:08+04:00 — QG CHECK QG-13.3
+- evidence: reports/quality/qg-13: stale-on-arrival, freshness and true age, quote board fresh/stale/unavailable, lookback, feed monitor states; app labels stale prices.
+
+### 2026-10-14T21:51:08+04:00 — QG CHECK QG-13.4
+- evidence: reports/quality/qg-13: naive times refused, UTC normalisation, nanosecond truncation, New York session and daylight-saving tests.
+
+### 2026-10-14T21:51:09+04:00 — QG CHECK QG-13.5
+- evidence: reports/quality/qg-13: outages never invent a price, gaps backfilled, silent feed unknown, outage never reports connected; only the simulated provider is configurable and labels every price; the app always shows the price type and never an executable quote.
+
+### 2026-10-14T21:51:09+04:00 — QG PASSED QG-13
+- evidence: reports/quality/qg-13-forex-market-data.md; backend 753 passed and mobile 73 passed on 2026-10-14.
+
+### 2026-10-14T21:51:10+04:00 — QG START QG-14
+- QG-FX-02: Technical Indicator Accuracy
+
+### 2026-10-14T21:51:10+04:00 — QG CHECK QG-14.1
+- evidence: reports/quality/qg-14-forex-indicators.md: every indicator equals an independent exact oracle (indicator_oracle.py), hand-worked values, the published RSI worked example, exact warm-ups, no look-ahead, no floats (matrix T-01..T-18).
+
+### 2026-10-14T21:51:11+04:00 — QG CHECK QG-14.2
+- evidence: reports/quality/qg-14: five-minute, hourly, weekly and monthly aggregation tests (test_candles_sessions.py), hour equals its five-minute periods, determinism; API aggregation and provider-candle tests.
+
+### 2026-10-14T21:51:12+04:00 — QG CHECK QG-14.3
+- evidence: reports/quality/qg-14: missing minutes stay missing and mark partial periods, empty periods absent, weekend gap, expected counts, daylight saving; outages leave gaps, never filled.
+
+### 2026-10-14T21:51:12+04:00 — QG PASSED QG-14
+- evidence: reports/quality/qg-14-forex-indicators.md; backend forex suite passed on 2026-10-14.
+
+### 2026-10-14T21:51:13+04:00 — QG START QG-15
+- QG-FX-03: Prediction Model Validation
+
+### 2026-10-14T21:51:13+04:00 — QG CHECK QG-15.1
+- evidence: reports/quality/qg-15-forex-model-validation.md section 1 and 2: every model compared with the random-walk and no-change baselines (Diebold-Mariano); no edge on a random walk, the baseline is published; the edge is found on a predictable process.
+
+### 2026-10-14T21:51:13+04:00 — QG CHECK QG-15.2
+- evidence: reports/quality/qg-15 section 3: leakage audit; point-in-time features, purged expanding folds, a deliberately leaky model fails (test_forecast_core.py).
+
+### 2026-10-14T21:51:14+04:00 — QG CHECK QG-15.3
+- evidence: reports/quality/qg-15 section 1: purged walk-forward out-of-sample evaluation with fold and test-row counts recorded per model version.
+
+### 2026-10-14T21:51:14+04:00 — QG CHECK QG-15.4
+- evidence: reports/quality/qg-15 section 5: calibration evaluated (ECE), recalibration only when it improves out-of-sample log loss, calibration status labelled on every forecast.
+
+### 2026-10-14T21:51:14+04:00 — QG CHECK QG-15.5
+- evidence: reports/quality/qg-15 section 4: 50% and 80% interval coverage reported; ARIMA intervals equal statsmodels and cover their level.
+
+### 2026-10-14T21:51:15+04:00 — QG CHECK QG-15.6
+- evidence: reports/quality/qg-15 section 5: PSI and error-drift monitoring with breach rules; a breach disables the model until retraining is approved (approve_retraining).
+
+### 2026-10-14T21:51:15+04:00 — QG PASSED QG-15
+- evidence: reports/quality/qg-15-forex-model-validation.md (synthetic and simulated data only; no edge claimed); forecast tests passed on 2026-10-14.
+
+### 2026-10-14T21:51:15+04:00 — QG START QG-16
+- QG-FX-04: Trading Risk Accuracy
+
+### 2026-10-14T21:51:15+04:00 — QG CHECK QG-16.1
+- evidence: reports/quality/qg-16-forex-trading-risk.md: hand-worked cases, an independent Fraction oracle over five pairs, Hypothesis property tests (planned loss never exceeds the risk; size is the largest), min and max sizes, API and paper fills (matrix K-01..K-06).
+
+### 2026-10-14T21:51:16+04:00 — QG CHECK QG-16.2
+- evidence: reports/quality/qg-16: same, direct, inverse and USD-cross conversions as exact fractions; JPY and cross pairs; other account currencies; missing rate refused; stale and indicative marked; paper P/L at the exit rate.
+
+### 2026-10-14T21:51:16+04:00 — QG CHECK QG-16.3
+- evidence: reports/quality/qg-16: risk/reward before and after costs in reference cases and the costs test; no target gives no reward; Copilot risk figures checked against the tool.
+
+### 2026-10-14T21:51:17+04:00 — QG CHECK QG-16.4
+- evidence: reports/quality/qg-16: margin, position and maximum leverage and margin use worked by hand; leverage, insufficient-margin and margin-use warnings; paper free-margin refusal and margin level.
+
+### 2026-10-14T21:51:17+04:00 — QG CHECK QG-16.5
+- evidence: reports/quality/qg-16: spread (unknown warned), slippage and commission for entry and exit shown in every result; backtests and paper fills pay the same costs.
+
+### 2026-10-14T21:51:17+04:00 — QG PASSED QG-16
+- evidence: reports/quality/qg-16-forex-trading-risk.md (contract specifications are unreviewed DEMO defaults, DEC-24); risk tests passed on 2026-10-14.
+
+### 2026-10-14T21:51:18+04:00 — QG START QG-17
+- QG-FX-05: Backtesting Integrity
+
+### 2026-10-14T21:51:18+04:00 — QG CHECK QG-17.1
+- evidence: reports/quality/qg-17-forex-backtest-validation.md QG-17.1: the leakage audit (mirrored and stretched futures) fails a deliberately leaky strategy and passes the real rules; later bars never change an earlier trade (test_backtest_core.py).
+
+### 2026-10-14T21:51:18+04:00 — QG CHECK QG-17.2
+- evidence: reports/quality/qg-17 QG-17.2: half spread and slippage on every fill plus commission per side; sensitivity only raises costs.
+
+### 2026-10-14T21:51:19+04:00 — QG CHECK QG-17.3
+- evidence: reports/quality/qg-17 QG-17.3: walk-forward with in-sample and out-of-sample results per fold on random-walk, trending and simulated series; windows never overlap.
+
+### 2026-10-14T21:51:19+04:00 — QG CHECK QG-17.4
+- evidence: reports/quality/qg-17 QG-17.4: identical SHA-256 report hashes for runs a day apart; changed seed or bar changes the hash.
+
+### 2026-10-14T21:51:19+04:00 — QG PASSED QG-17
+- evidence: reports/quality/qg-17-forex-backtest-validation.md; backtest tests passed on 2026-10-14.
+
+### 2026-10-14T21:51:20+04:00 — QG START QG-18
+- QG-FX-06: AI Trading Intelligence
+
+### 2026-10-14T21:51:20+04:00 — QG CHECK QG-18.1
+- evidence: reports/quality/qg-18-forex-ai.md: forex_figures 40/40 zero tolerance; server-built sources with as_of and data types; every tool result carries as_of; the model cannot write sources.
+
+### 2026-10-14T21:51:20+04:00 — QG CHECK QG-18.2
+- evidence: reports/quality/qg-18: forecast sources carry the model name and version, calibration and generated time (forex_stale, chat and rendering tests); shown as Source lines in the app.
+
+### 2026-10-14T21:51:21+04:00 — QG CHECK QG-18.3
+- evidence: reports/quality/qg-18: forex_safety 70/70 zero tolerance (guarantee, certainty and personal_advice refused; trade requests declined naming the paper account); zero-tolerance scan; regression meta-tests.
+
+### 2026-10-14T21:51:21+04:00 — QG CHECK QG-18.4
+- evidence: reports/quality/qg-18: structured schema; caveats and sources server-only; rejected answers sent back once with fixed corrections; unknown tool arguments refused.
+
+### 2026-10-14T21:51:22+04:00 — QG CHECK QG-18.5
+- evidence: reports/quality/qg-18: forex_stale 26/26: stale, incomplete, failed, simulated, uncalibrated, research, backtest, paper and DEMO data qualified by the server.
+
+### 2026-10-14T21:51:22+04:00 — QG PASSED QG-18
+- evidence: reports/quality/qg-18-forex-ai.md (real-model routing waits for ADR-0017); AI evaluation passed on 2026-10-14.
+
+### 2026-10-14T21:51:23+04:00 — QG START QG-19
+- QG-FX-07: Mobile Experience
+
+### 2026-10-14T21:51:23+04:00 — QG CHECK QG-19.1
+- evidence: reports/quality/qg-19-forex-mobile.md: CI run 38606515408 on PR #164: android debug build, ios compile (no codesign) and format/analyze/test with goldens passed.
+
+### 2026-10-14T21:51:24+04:00 — QG CHECK QG-19.2
+- evidence: reports/quality/qg-19: stream updates batched every 250 ms (50 ticks give at most two rebuilds), chart in a RepaintBoundary. Limit: not profiled on a device.
+
+### 2026-10-14T21:51:24+04:00 — QG CHECK QG-19.3
+- evidence: reports/quality/qg-19: ForexStreamScope pauses on hide and resumes on show; pause/resume tests for the live and DEMO streams.
+
+### 2026-10-14T21:51:25+04:00 — QG CHECK QG-19.4
+- evidence: reports/quality/qg-19: in-app notices (events, paper exits) with settings, forex deep links allowed and URLs refused. Limit: the server sends no forex push yet.
+
+### 2026-10-14T21:51:25+04:00 — QG CHECK QG-19.5
+- evidence: reports/quality/qg-19: reconnect with backoff and resubscribe, silence watchdog, close codes 4401/4404/4429, pause offline and resume online.
+
+### 2026-10-14T21:51:25+04:00 — QG PASSED QG-19
+- evidence: reports/quality/qg-19-forex-mobile.md (manual device pass not done; a release item); mobile forex tests passed on 2026-10-14.

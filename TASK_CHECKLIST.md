@@ -1355,15 +1355,15 @@
   - [x] P13-T11.8 Copilot and alerts
   - [x] P13-T11.9 Streaming resilience
   - [x] P13-T11.10 Tests
-- [ ] **P13-T12** · FX-12 Forex quality gates verification · `NOT_STARTED` ⬜
+- [ ] **P13-T12** · FX-12 Forex quality gates verification · `IN_PROGRESS` 🔄
   - Deps: P13-T11 · Wave: W10 · Track: QA · Size: M · Approval: no · Gates-done: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-14T21:42:51+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P13-T12.1 Market data and indicator gates
-  - [ ] P13-T12.2 Prediction and risk gates
-  - [ ] P13-T12.3 Backtesting and AI gates
-  - [ ] P13-T12.4 Mobile gate
-  - [ ] P13-T12.5 Report
+  - [x] P13-T12.1 Market data and indicator gates
+  - [x] P13-T12.2 Prediction and risk gates
+  - [x] P13-T12.3 Backtesting and AI gates
+  - [x] P13-T12.4 Mobile gate
+  - [x] P13-T12.5 Report
 - [ ] **P13-T13** · FX-13 Integration and soak validation (local/CI stack) · `NOT_STARTED` ⬜
   - Deps: P13-T12 · Wave: W11 · Track: QA · Size: M · Approval: yes · Gates-start: QG-13, QG-14, QG-15, QG-16, QG-17, QG-18, QG-19
   - Started: — · Completed: — · Duration: — · Blocker: —

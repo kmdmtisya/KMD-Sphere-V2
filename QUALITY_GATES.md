@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-14T21:25:02+04:00 by `scripts/track.py`._
+_Generated at 2026-10-14T21:51:25+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -23,13 +23,13 @@ _Generated at 2026-10-14T21:25:02+04:00 by `scripts/track.py`._
 | QG-10 | CI/CD and Infrastructure | 🔄 IN_PROGRESS | 2/8 | Unassigned | — |
 | QG-11 | End-to-End Integration | 🔄 IN_PROGRESS | 6/6 | Unassigned | — |
 | QG-12 | Production Release Readiness | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
-| QG-13 | QG-FX-01: Market Data Integrity | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
-| QG-14 | QG-FX-02: Technical Indicator Accuracy | ⬜ NOT_STARTED | 0/3 | Unassigned | — |
-| QG-15 | QG-FX-03: Prediction Model Validation | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
-| QG-16 | QG-FX-04: Trading Risk Accuracy | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
-| QG-17 | QG-FX-05: Backtesting Integrity | ⬜ NOT_STARTED | 0/4 | Unassigned | — |
-| QG-18 | QG-FX-06: AI Trading Intelligence | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
-| QG-19 | QG-FX-07: Mobile Experience | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
+| QG-13 | QG-FX-01: Market Data Integrity | ✅ PASSED | 5/5 | Unassigned | — |
+| QG-14 | QG-FX-02: Technical Indicator Accuracy | ✅ PASSED | 3/3 | Unassigned | — |
+| QG-15 | QG-FX-03: Prediction Model Validation | ✅ PASSED | 6/6 | Unassigned | — |
+| QG-16 | QG-FX-04: Trading Risk Accuracy | ✅ PASSED | 5/5 | Unassigned | — |
+| QG-17 | QG-FX-05: Backtesting Integrity | ✅ PASSED | 4/4 | Unassigned | — |
+| QG-18 | QG-FX-06: AI Trading Intelligence | ✅ PASSED | 5/5 | Unassigned | — |
+| QG-19 | QG-FX-07: Mobile Experience | ✅ PASSED | 5/5 | Unassigned | — |
 | QG-20 | QG-FX-08: Release and Regulatory Readiness | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
 | QG-21 | QG-FXCUR-01: Exchange Rate Accuracy | ✅ PASSED | 5/5 | Unassigned | — |
 | QG-22 | QG-FXCUR-02: Portfolio Consistency | ✅ PASSED | 5/5 | Unassigned | — |
@@ -47,9 +47,9 @@ _Generated at 2026-10-14T21:25:02+04:00 by `scripts/track.py`._
 | QG-34 | QG-WEB-09: Production Readiness | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 79/209.
+Criteria satisfied overall: 112/209.
 
-Current phase **P13** exit-gate criteria outstanding: QG-13.1, QG-13.2, QG-13.3, QG-13.4, QG-13.5, QG-14.1, QG-14.2, QG-14.3, QG-15.1, QG-15.2, QG-15.3, QG-15.4, QG-15.5, QG-15.6, QG-16.1, QG-16.2, QG-16.3, QG-16.4, QG-16.5, QG-17.1, QG-17.2, QG-17.3, QG-17.4, QG-18.1, QG-18.2, QG-18.3, QG-18.4, QG-18.5, QG-19.1, QG-19.2, QG-19.3, QG-19.4, QG-19.5, QG-20.1, QG-20.2, QG-20.3, QG-20.4, QG-20.5.
+Current phase **P13** exit-gate criteria outstanding: QG-20.1, QG-20.2, QG-20.3, QG-20.4, QG-20.5.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -291,124 +291,124 @@ Approved By: —
 
 ### QG-13: QG-FX-01: Market Data Integrity
 
-- [ ] QG-13.1 Streaming connectivity is verified · Required: P13 · By: P13-T02
-- [ ] QG-13.2 Bid/ask prices are validated against provider records · Required: P13 · By: P13-T02 · CRITICAL
-- [ ] QG-13.3 Stale-data detection is tested · Required: P13 · By: P13-T02
-- [ ] QG-13.4 Timestamp and timezone handling is verified · Required: P13 · By: P13-T02
-- [ ] QG-13.5 Feed outages are handled safely and prices are never invented or shown as live when delayed, indicative or simulated · Required: P13 · By: P13-T02 · CRITICAL
+- [x] QG-13.1 Streaming connectivity is verified · Required: P13 · By: P13-T02 · Evidence: reports/quality/qg-13-forex-market-data.md: server stream auth, limits and fan-out tests (test_forex_api.py), upstream client heartbeat/backoff/replay tests (test_stream_client.py), app stream client tests (forex_stream_test.dart). · Verified: 2026-10-14T21:51:07+04:00
+- [x] QG-13.2 Bid/ask prices are validated against provider records · Required: P13 · By: P13-T02 · Evidence: reports/quality/qg-13: adapter tests on recorded vendor-format records (test_oanda_adapter.py: top of book, UTC, numeric prices refused, never simulated), exact derived mid, invalid, crossed and out-of-band quotes refused or suspect. Limit: fixtures, not a licensed provider's records; re-verify when a feed is licensed (DEC-19, QG-20.1). · Verified: 2026-10-14T21:51:07+04:00 · CRITICAL
+- [x] QG-13.3 Stale-data detection is tested · Required: P13 · By: P13-T02 · Evidence: reports/quality/qg-13: stale-on-arrival, freshness and true age, quote board fresh/stale/unavailable, lookback, feed monitor states; app labels stale prices. · Verified: 2026-10-14T21:51:08+04:00
+- [x] QG-13.4 Timestamp and timezone handling is verified · Required: P13 · By: P13-T02 · Evidence: reports/quality/qg-13: naive times refused, UTC normalisation, nanosecond truncation, New York session and daylight-saving tests. · Verified: 2026-10-14T21:51:08+04:00
+- [x] QG-13.5 Feed outages are handled safely and prices are never invented or shown as live when delayed, indicative or simulated · Required: P13 · By: P13-T02 · Evidence: reports/quality/qg-13: outages never invent a price, gaps backfilled, silent feed unknown, outage never reports connected; only the simulated provider is configurable and labels every price; the app always shows the price type and never an executable quote. · Verified: 2026-10-14T21:51:08+04:00 · CRITICAL
 
-Status: NOT_STARTED  
+Status: PASSED  
 Owner: Unassigned  
-Start Timestamp: —  
-End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Start Timestamp: 2026-10-14T21:51:07+04:00  
+End Timestamp: 2026-10-14T21:51:09+04:00  
+Verification Timestamp: 2026-10-14T21:51:09+04:00  
+Evidence: reports/quality/qg-13-forex-market-data.md; backend 753 passed and mobile 73 passed on 2026-10-14.  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
 
 ### QG-14: QG-FX-02: Technical Indicator Accuracy
 
-- [ ] QG-14.1 Indicator calculations match independently validated reference cases · Required: P13 · By: P13-T03
-- [ ] QG-14.2 Timeframe aggregation is correct · Required: P13 · By: P13-T03
-- [ ] QG-14.3 Missing candles and irregular market hours are handled · Required: P13 · By: P13-T03
+- [x] QG-14.1 Indicator calculations match independently validated reference cases · Required: P13 · By: P13-T03 · Evidence: reports/quality/qg-14-forex-indicators.md: every indicator equals an independent exact oracle (indicator_oracle.py), hand-worked values, the published RSI worked example, exact warm-ups, no look-ahead, no floats (matrix T-01..T-18). · Verified: 2026-10-14T21:51:10+04:00
+- [x] QG-14.2 Timeframe aggregation is correct · Required: P13 · By: P13-T03 · Evidence: reports/quality/qg-14: five-minute, hourly, weekly and monthly aggregation tests (test_candles_sessions.py), hour equals its five-minute periods, determinism; API aggregation and provider-candle tests. · Verified: 2026-10-14T21:51:11+04:00
+- [x] QG-14.3 Missing candles and irregular market hours are handled · Required: P13 · By: P13-T03 · Evidence: reports/quality/qg-14: missing minutes stay missing and mark partial periods, empty periods absent, weekend gap, expected counts, daylight saving; outages leave gaps, never filled. · Verified: 2026-10-14T21:51:12+04:00
 
-Status: NOT_STARTED  
+Status: PASSED  
 Owner: Unassigned  
-Start Timestamp: —  
-End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Start Timestamp: 2026-10-14T21:51:10+04:00  
+End Timestamp: 2026-10-14T21:51:12+04:00  
+Verification Timestamp: 2026-10-14T21:51:12+04:00  
+Evidence: reports/quality/qg-14-forex-indicators.md; backend forex suite passed on 2026-10-14.  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
 
 ### QG-15: QG-FX-03: Prediction Model Validation
 
-- [ ] QG-15.1 Models outperform, or are honestly reported against, the random-walk and no-change baselines · Required: P13 · By: P13-T05
-- [ ] QG-15.2 No data leakage in features, labels or splits · Required: P13 · By: P13-T05
-- [ ] QG-15.3 Out-of-sample testing is completed · Required: P13 · By: P13-T05
-- [ ] QG-15.4 Probability calibration is evaluated · Required: P13 · By: P13-T05
-- [ ] QG-15.5 Prediction intervals are assessed for coverage · Required: P13 · By: P13-T05
-- [ ] QG-15.6 Model drift monitoring is configured · Required: P13 · By: P13-T05
+- [x] QG-15.1 Models outperform, or are honestly reported against, the random-walk and no-change baselines · Required: P13 · By: P13-T05 · Evidence: reports/quality/qg-15-forex-model-validation.md section 1 and 2: every model compared with the random-walk and no-change baselines (Diebold-Mariano); no edge on a random walk, the baseline is published; the edge is found on a predictable process. · Verified: 2026-10-14T21:51:13+04:00
+- [x] QG-15.2 No data leakage in features, labels or splits · Required: P13 · By: P13-T05 · Evidence: reports/quality/qg-15 section 3: leakage audit; point-in-time features, purged expanding folds, a deliberately leaky model fails (test_forecast_core.py). · Verified: 2026-10-14T21:51:13+04:00
+- [x] QG-15.3 Out-of-sample testing is completed · Required: P13 · By: P13-T05 · Evidence: reports/quality/qg-15 section 1: purged walk-forward out-of-sample evaluation with fold and test-row counts recorded per model version. · Verified: 2026-10-14T21:51:13+04:00
+- [x] QG-15.4 Probability calibration is evaluated · Required: P13 · By: P13-T05 · Evidence: reports/quality/qg-15 section 5: calibration evaluated (ECE), recalibration only when it improves out-of-sample log loss, calibration status labelled on every forecast. · Verified: 2026-10-14T21:51:14+04:00
+- [x] QG-15.5 Prediction intervals are assessed for coverage · Required: P13 · By: P13-T05 · Evidence: reports/quality/qg-15 section 4: 50% and 80% interval coverage reported; ARIMA intervals equal statsmodels and cover their level. · Verified: 2026-10-14T21:51:14+04:00
+- [x] QG-15.6 Model drift monitoring is configured · Required: P13 · By: P13-T05 · Evidence: reports/quality/qg-15 section 5: PSI and error-drift monitoring with breach rules; a breach disables the model until retraining is approved (approve_retraining). · Verified: 2026-10-14T21:51:14+04:00
 
-Status: NOT_STARTED  
+Status: PASSED  
 Owner: Unassigned  
-Start Timestamp: —  
-End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Start Timestamp: 2026-10-14T21:51:13+04:00  
+End Timestamp: 2026-10-14T21:51:15+04:00  
+Verification Timestamp: 2026-10-14T21:51:15+04:00  
+Evidence: reports/quality/qg-15-forex-model-validation.md (synthetic and simulated data only; no edge claimed); forecast tests passed on 2026-10-14.  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
 
 ### QG-16: QG-FX-04: Trading Risk Accuracy
 
-- [ ] QG-16.1 Position sizing is verified against independent reference cases · Required: P13 · By: P13-T07 · CRITICAL
-- [ ] QG-16.2 Pip-value conversions are verified for each quote and account currency case · Required: P13 · By: P13-T07 · CRITICAL
-- [ ] QG-16.3 Risk/reward calculations are verified · Required: P13 · By: P13-T07 · CRITICAL
-- [ ] QG-16.4 Margin and leverage calculations are verified · Required: P13 · By: P13-T07 · CRITICAL
-- [ ] QG-16.5 Costs and slippage are included in outputs · Required: P13 · By: P13-T07 · CRITICAL
+- [x] QG-16.1 Position sizing is verified against independent reference cases · Required: P13 · By: P13-T07 · Evidence: reports/quality/qg-16-forex-trading-risk.md: hand-worked cases, an independent Fraction oracle over five pairs, Hypothesis property tests (planned loss never exceeds the risk; size is the largest), min and max sizes, API and paper fills (matrix K-01..K-06). · Verified: 2026-10-14T21:51:15+04:00 · CRITICAL
+- [x] QG-16.2 Pip-value conversions are verified for each quote and account currency case · Required: P13 · By: P13-T07 · Evidence: reports/quality/qg-16: same, direct, inverse and USD-cross conversions as exact fractions; JPY and cross pairs; other account currencies; missing rate refused; stale and indicative marked; paper P/L at the exit rate. · Verified: 2026-10-14T21:51:16+04:00 · CRITICAL
+- [x] QG-16.3 Risk/reward calculations are verified · Required: P13 · By: P13-T07 · Evidence: reports/quality/qg-16: risk/reward before and after costs in reference cases and the costs test; no target gives no reward; Copilot risk figures checked against the tool. · Verified: 2026-10-14T21:51:16+04:00 · CRITICAL
+- [x] QG-16.4 Margin and leverage calculations are verified · Required: P13 · By: P13-T07 · Evidence: reports/quality/qg-16: margin, position and maximum leverage and margin use worked by hand; leverage, insufficient-margin and margin-use warnings; paper free-margin refusal and margin level. · Verified: 2026-10-14T21:51:17+04:00 · CRITICAL
+- [x] QG-16.5 Costs and slippage are included in outputs · Required: P13 · By: P13-T07 · Evidence: reports/quality/qg-16: spread (unknown warned), slippage and commission for entry and exit shown in every result; backtests and paper fills pay the same costs. · Verified: 2026-10-14T21:51:17+04:00 · CRITICAL
 
-Status: NOT_STARTED  
+Status: PASSED  
 Owner: Unassigned  
-Start Timestamp: —  
-End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Start Timestamp: 2026-10-14T21:51:15+04:00  
+End Timestamp: 2026-10-14T21:51:17+04:00  
+Verification Timestamp: 2026-10-14T21:51:17+04:00  
+Evidence: reports/quality/qg-16-forex-trading-risk.md (contract specifications are unreviewed DEMO defaults, DEC-24); risk tests passed on 2026-10-14.  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
 
 ### QG-17: QG-FX-05: Backtesting Integrity
 
-- [ ] QG-17.1 Look-ahead bias tests pass · Required: P13 · By: P13-T08 · CRITICAL
-- [ ] QG-17.2 Transaction costs and slippage are included · Required: P13 · By: P13-T08
-- [ ] QG-17.3 Walk-forward validation is completed · Required: P13 · By: P13-T08
-- [ ] QG-17.4 Backtest reports are reproducible · Required: P13 · By: P13-T08
+- [x] QG-17.1 Look-ahead bias tests pass · Required: P13 · By: P13-T08 · Evidence: reports/quality/qg-17-forex-backtest-validation.md QG-17.1: the leakage audit (mirrored and stretched futures) fails a deliberately leaky strategy and passes the real rules; later bars never change an earlier trade (test_backtest_core.py). · Verified: 2026-10-14T21:51:18+04:00 · CRITICAL
+- [x] QG-17.2 Transaction costs and slippage are included · Required: P13 · By: P13-T08 · Evidence: reports/quality/qg-17 QG-17.2: half spread and slippage on every fill plus commission per side; sensitivity only raises costs. · Verified: 2026-10-14T21:51:18+04:00
+- [x] QG-17.3 Walk-forward validation is completed · Required: P13 · By: P13-T08 · Evidence: reports/quality/qg-17 QG-17.3: walk-forward with in-sample and out-of-sample results per fold on random-walk, trending and simulated series; windows never overlap. · Verified: 2026-10-14T21:51:19+04:00
+- [x] QG-17.4 Backtest reports are reproducible · Required: P13 · By: P13-T08 · Evidence: reports/quality/qg-17 QG-17.4: identical SHA-256 report hashes for runs a day apart; changed seed or bar changes the hash. · Verified: 2026-10-14T21:51:19+04:00
 
-Status: NOT_STARTED  
+Status: PASSED  
 Owner: Unassigned  
-Start Timestamp: —  
-End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Start Timestamp: 2026-10-14T21:51:18+04:00  
+End Timestamp: 2026-10-14T21:51:19+04:00  
+Verification Timestamp: 2026-10-14T21:51:19+04:00  
+Evidence: reports/quality/qg-17-forex-backtest-validation.md; backtest tests passed on 2026-10-14.  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
 
 ### QG-18: QG-FX-06: AI Trading Intelligence
 
-- [ ] QG-18.1 Market facts are source-backed with timestamps · Required: P13 · By: P13-T10 · CRITICAL
-- [ ] QG-18.2 Prediction timestamps and model versions are included · Required: P13 · By: P13-T10
-- [ ] QG-18.3 No guaranteed-profit language passes the output guard · Required: P13 · By: P13-T10 · CRITICAL
-- [ ] QG-18.4 Structured AI output is validated · Required: P13 · By: P13-T10
-- [ ] QG-18.5 Stale-data conditions are handled · Required: P13 · By: P13-T10
+- [x] QG-18.1 Market facts are source-backed with timestamps · Required: P13 · By: P13-T10 · Evidence: reports/quality/qg-18-forex-ai.md: forex_figures 40/40 zero tolerance; server-built sources with as_of and data types; every tool result carries as_of; the model cannot write sources. · Verified: 2026-10-14T21:51:20+04:00 · CRITICAL
+- [x] QG-18.2 Prediction timestamps and model versions are included · Required: P13 · By: P13-T10 · Evidence: reports/quality/qg-18: forecast sources carry the model name and version, calibration and generated time (forex_stale, chat and rendering tests); shown as Source lines in the app. · Verified: 2026-10-14T21:51:20+04:00
+- [x] QG-18.3 No guaranteed-profit language passes the output guard · Required: P13 · By: P13-T10 · Evidence: reports/quality/qg-18: forex_safety 70/70 zero tolerance (guarantee, certainty and personal_advice refused; trade requests declined naming the paper account); zero-tolerance scan; regression meta-tests. · Verified: 2026-10-14T21:51:21+04:00 · CRITICAL
+- [x] QG-18.4 Structured AI output is validated · Required: P13 · By: P13-T10 · Evidence: reports/quality/qg-18: structured schema; caveats and sources server-only; rejected answers sent back once with fixed corrections; unknown tool arguments refused. · Verified: 2026-10-14T21:51:21+04:00
+- [x] QG-18.5 Stale-data conditions are handled · Required: P13 · By: P13-T10 · Evidence: reports/quality/qg-18: forex_stale 26/26: stale, incomplete, failed, simulated, uncalibrated, research, backtest, paper and DEMO data qualified by the server. · Verified: 2026-10-14T21:51:22+04:00
 
-Status: NOT_STARTED  
+Status: PASSED  
 Owner: Unassigned  
-Start Timestamp: —  
-End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Start Timestamp: 2026-10-14T21:51:20+04:00  
+End Timestamp: 2026-10-14T21:51:22+04:00  
+Verification Timestamp: 2026-10-14T21:51:22+04:00  
+Evidence: reports/quality/qg-18-forex-ai.md (real-model routing waits for ADR-0017); AI evaluation passed on 2026-10-14.  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
 
 ### QG-19: QG-FX-07: Mobile Experience
 
-- [ ] QG-19.1 Android and iOS builds pass · Required: P13 · By: P13-T11
-- [ ] QG-19.2 Charts remain responsive during streaming updates · Required: P13 · By: P13-T11
-- [ ] QG-19.3 Background and foreground transitions are handled · Required: P13 · By: P13-T11
-- [ ] QG-19.4 Notifications are tested · Required: P13 · By: P13-T11
-- [ ] QG-19.5 Network interruption recovery is verified · Required: P13 · By: P13-T11
+- [x] QG-19.1 Android and iOS builds pass · Required: P13 · By: P13-T11 · Evidence: reports/quality/qg-19-forex-mobile.md: CI run 38606515408 on PR #164: android debug build, ios compile (no codesign) and format/analyze/test with goldens passed. · Verified: 2026-10-14T21:51:23+04:00
+- [x] QG-19.2 Charts remain responsive during streaming updates · Required: P13 · By: P13-T11 · Evidence: reports/quality/qg-19: stream updates batched every 250 ms (50 ticks give at most two rebuilds), chart in a RepaintBoundary. Limit: not profiled on a device. · Verified: 2026-10-14T21:51:23+04:00
+- [x] QG-19.3 Background and foreground transitions are handled · Required: P13 · By: P13-T11 · Evidence: reports/quality/qg-19: ForexStreamScope pauses on hide and resumes on show; pause/resume tests for the live and DEMO streams. · Verified: 2026-10-14T21:51:24+04:00
+- [x] QG-19.4 Notifications are tested · Required: P13 · By: P13-T11 · Evidence: reports/quality/qg-19: in-app notices (events, paper exits) with settings, forex deep links allowed and URLs refused. Limit: the server sends no forex push yet. · Verified: 2026-10-14T21:51:25+04:00
+- [x] QG-19.5 Network interruption recovery is verified · Required: P13 · By: P13-T11 · Evidence: reports/quality/qg-19: reconnect with backoff and resubscribe, silence watchdog, close codes 4401/4404/4429, pause offline and resume online. · Verified: 2026-10-14T21:51:25+04:00
 
-Status: NOT_STARTED  
+Status: PASSED  
 Owner: Unassigned  
-Start Timestamp: —  
-End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Start Timestamp: 2026-10-14T21:51:23+04:00  
+End Timestamp: 2026-10-14T21:51:25+04:00  
+Verification Timestamp: 2026-10-14T21:51:25+04:00  
+Evidence: reports/quality/qg-19-forex-mobile.md (manual device pass not done; a release item); mobile forex tests passed on 2026-10-14.  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
