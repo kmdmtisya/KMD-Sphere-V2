@@ -31,6 +31,9 @@ function serverEnv(): Record<string, string> {
 export default defineConfig({
   testDir: "./e2e",
   fullyParallel: true,
+  // Sign-in journeys share a few Keycloak accounts, whose brute-force lockout trips when several workers
+  // sign in at once, so the full-stack run is serial.
+  workers: process.env.CI || process.env.WS_E2E_AUTH ? 1 : undefined,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? [["list"], ["html", { open: "never" }]] : "list",

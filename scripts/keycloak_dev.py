@@ -182,6 +182,9 @@ def seed_users() -> None:
             continue
         if status != 204:
             sys.exit(f"setting the password for {username} failed ({status})")
+    # Clear any brute-force lockout from earlier failed sign-ins (the realm locks an account for a
+    # while after 5), so a fresh seed always starts from a clean slate.
+    admin("DELETE", "/attack-detection/brute-force/users", token)
     # MFA user: drop any OTP credential and require enrolment again, so the smoke test can enrol.
     uid = user_id(token, "mfa@example.test")
     _, creds = admin("GET", f"/users/{uid}/credentials", token)

@@ -30,3 +30,12 @@ export async function apiPatch<T>(path: string, body: unknown): Promise<T> {
   if (!response.ok) throw new ApiError(response.status);
   return (await response.json()) as T;
 }
+
+export async function apiPost<T>(path: string, body: unknown): Promise<T> {
+  const headers: Record<string, string> = { "content-type": "application/json" };
+  const token = csrf();
+  if (token) headers["x-csrf-token"] = token;
+  const response = await fetch(`/api/proxy/${path}`, { method: "POST", headers, body: JSON.stringify(body) });
+  if (!response.ok) throw new ApiError(response.status);
+  return (await response.json()) as T;
+}

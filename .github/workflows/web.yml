@@ -177,7 +177,8 @@ jobs:
         run: |
           set -euo pipefail
           uv run alembic upgrade head
-          nohup uv run uvicorn app.main:app --port 8000 > "$RUNNER_TEMP/api.log" 2>&1 &
+          # Per-user rate limits (covered by the backend suite) are off here: the journeys make many calls as one user.
+          RATE_LIMIT_ENABLED=false nohup uv run uvicorn app.main:app --port 8000 > "$RUNNER_TEMP/api.log" 2>&1 &
           for i in $(seq 1 60); do curl -sf http://127.0.0.1:8000/health/ready > /dev/null && exit 0; sleep 2; done
           echo "API did not start"; tail -50 "$RUNNER_TEMP/api.log"; exit 1
 

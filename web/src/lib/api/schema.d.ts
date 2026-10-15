@@ -1973,6 +1973,26 @@ export interface paths {
         patch: operations["update_risk_profile_api_v1_risk_profiles__risk_profile_id__patch"];
         trace?: never;
     };
+    "/api/v1/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search your own records
+         * @description Portfolios, goals, liabilities and the assets you hold, watch or created. Only the signed-in user's records are ever returned.
+         */
+        get: operations["search_api_v1_search_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/universe": {
         parameters: {
             query?: never;
@@ -7385,6 +7405,33 @@ export interface components {
             weights_percent: {
                 [key: string]: string;
             };
+        };
+        /** SearchHit */
+        SearchHit: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "portfolio" | "goal" | "liability" | "asset";
+            /**
+             * Subtitle
+             * @description Type, symbol or currency, for display
+             */
+            subtitle?: string | null;
+            /** Title */
+            title: string;
+        };
+        /** SearchOut */
+        SearchOut: {
+            /** Query */
+            query: string;
+            /** Results */
+            results: components["schemas"]["SearchHit"][];
         };
         /**
          * SeriesFrequency
@@ -14128,6 +14175,54 @@ export interface operations {
             };
             /** @description No such risk profile for this user */
             404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+            /** @description Rate limit exceeded (docs/security.md, API protection) */
+            429: {
+                headers: {
+                    /** @description Seconds to wait before retrying */
+                    "Retry-After"?: number;
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    search_api_v1_search_get: {
+        parameters: {
+            query: {
+                /** @description Text to find */
+                q: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SearchOut"];
+                };
+            };
+            /** @description Missing, invalid or expired access token */
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };

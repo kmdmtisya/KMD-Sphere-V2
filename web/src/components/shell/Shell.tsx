@@ -8,6 +8,7 @@ import { useStored } from "@/lib/client/local-storage";
 import type { NavGroup } from "@/lib/nav/nav";
 
 import { IconButton } from "../controls/controls";
+import { CommandPalette } from "./CommandPalette";
 import { Sidebar } from "./Sidebar";
 import { TopBar } from "./TopBar";
 import { useBreakpoint } from "./useBreakpoint";
@@ -41,6 +42,7 @@ export function Shell({ groups, user, children }: { groups: NavGroup[]; user: { 
   const overlay = overlayKey === here;
   const setOverlay = (open: boolean | ((v: boolean) => boolean)) => setOverlayKey((open instanceof Function ? open(overlay) : open) ? here : null);
   const [panel, setPanel] = useState(false);
+  const [palette, setPalette] = useState(false);
   const menuRef = useRef<HTMLElement | null>(null);
 
 
@@ -52,6 +54,9 @@ export function Shell({ groups, user, children }: { groups: NavGroup[]; user: { 
       } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "j") {
         e.preventDefault();
         setPanel((v) => !v);
+      } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setPalette(true);
       }
     };
     document.addEventListener("keydown", onKey);
@@ -74,7 +79,8 @@ export function Shell({ groups, user, children }: { groups: NavGroup[]; user: { 
         Skip to the main content
       </a>
       <div className="flex min-h-dvh flex-col bg-scaffold text-fg">
-        <TopBar user={user} showMenu={showMenu} onMenu={() => setOverlay((v) => !v)} onPanel={() => setPanel((v) => !v)} panelOpen={panel} />
+        <TopBar user={user} showMenu={showMenu} onMenu={() => setOverlay((v) => !v)} onPanel={() => setPanel((v) => !v)} onSearch={() => setPalette(true)} panelOpen={panel} />
+        <CommandPalette open={palette} onClose={() => setPalette(false)} groups={groups} />
         <div className="relative flex min-h-0 flex-1">
           {!narrow ? (
             <div className={`shrink-0 border-e border-divider bg-surface ${inlineCollapsed ? "w-16" : "w-60"}`}>
