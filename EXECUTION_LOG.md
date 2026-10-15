@@ -2061,3 +2061,28 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-15T11:18:40+04:00 — COMPLETE P14-T01
 - duration: 3m 44s
 - evidence: docs/web/WEB_REPOSITORY_AUDIT.md: mobile route, mobile API-use and backend API inventories (98 paths, 124 operations + WS); 10 parity-baseline rows corrected to API only (no mobile screen); backend gap list; web constraints (bearer-only API, CORS off, plugins without web equivalent, forex flag, decimal money); component audit; every mobile route mapped to a matrix row and API. Parity matrix updated. Design reference catalogue and mapping (docs/web/WEB_DESIGN_REFERENCE_ANALYSIS.md) approved with PR #170; QG-35.1 and QG-35.2 verified. track.py validate OK. PR #171. CI all gates pass.
+
+### 2026-10-15T11:21:38+04:00 — START P14-T02
+- WEB-02 Architecture evaluation and ADR
+- prerequisites verified COMPLETED
+
+### 2026-10-15T11:23:42+04:00 — DECISION — ADR-0018 accepted; DEC-30, DEC-31, DEC-39, DEC-40 resolved
+- DEC-30 and DEC-31 (user, 2026-10-15): Next.js with a Backend-for-Frontend (ADR-0018 Option B) and the BFF session model. ADR-0018 is accepted; CLAUDE.md, SOLUTION_INTENT, the project brief and the web architecture document are updated.
+- DEC-39: keep the shared WealthSphere tokens; adopt only the references' composition.
+- DEC-40: one appearance setting across devices; the mobile app syncs `theme_mode` with `/me/preferences` in P14-T18.
+
+### 2026-10-15T11:23:42+04:00 — QG START QG-26
+- QG-WEB-01: Architecture and Integration
+
+### 2026-10-15T11:23:43+04:00 — QG CHECK QG-26.1
+- evidence: docs/web/WEB_PORTAL_ARCHITECTURE.md approved with ADR-0018 on 2026-10-15: Next.js App Router with a BFF, rendering split, session and CSRF model, proxy allow-list, streaming, tokens and parity controls; links to theme, reference analysis, UX, parity and deployment documents
+
+### 2026-10-15T11:23:43+04:00 — QG CHECK QG-26.5
+- evidence: ADR-0018 accepted by the user on 2026-10-15 (DEC-30 Next.js with BFF, DEC-31 BFF session model): repository evidence refreshed after P13, comparison across code reuse, parity, maintenance, desktop UX, charts, grids, authentication, accessibility, performance, testing, cost, security, productivity, scalability and theming; stack with npm-registry licences (all runtime MIT/Apache-2.0)
+
+### 2026-10-15T11:34:50+04:00 — AWAITING_VERIFICATION P14-T02
+- evidence: ADR-0018 accepted by the user 2026-10-15 (DEC-30 Next.js with BFF, DEC-31 BFF session model); comparison refreshed with repository evidence after P13 plus scalability and theming; stack and licence review from the npm registry (all runtime MIT or Apache-2.0, axe-core MPL-2.0 test-only); docs/web/WEB_PORTAL_ARCHITECTURE.md approved; DEC-39 and DEC-40 resolved; QG-26.1 and QG-26.5 verified. PR #172. CI all gates pass.
+
+### 2026-10-15T11:34:50+04:00 — COMPLETE P14-T02
+- duration: 13m 12s
+- evidence: ADR-0018 accepted by the user 2026-10-15 (DEC-30 Next.js with BFF, DEC-31 BFF session model); comparison refreshed with repository evidence after P13 plus scalability and theming; stack and licence review from the npm registry (all runtime MIT or Apache-2.0, axe-core MPL-2.0 test-only); docs/web/WEB_PORTAL_ARCHITECTURE.md approved; DEC-39 and DEC-40 resolved; QG-26.1 and QG-26.5 verified. PR #172. CI all gates pass. · Approved by: user (mtisya@gmail.com), 2026-10-15

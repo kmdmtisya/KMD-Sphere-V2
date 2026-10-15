@@ -1,6 +1,6 @@
 # ADR-0018: Web portal frontend architecture (DEC-30, DEC-31)
 
-**Status:** Proposed (2026-10-14). Not accepted until the user approves it; until then no web application code is written.
+**Status:** **Accepted** by the user on 2026-10-15 (P14-T02): Option B, Next.js with a Backend-for-Frontend (DEC-30), and the BFF session model (DEC-31). Proposed 2026-10-14; refreshed on 2026-10-15 (repository evidence after P13, scalability and theming criteria, licence review).
 
 **Context**
 
@@ -15,7 +15,7 @@ The user has asked for a web portal for desktop and laptop browsers. It must hav
 | Tokens are kept in `flutter_secure_storage`; on the web this is browser storage (IndexedDB with a key held in the browser) | `lib/core/auth/token_store.dart` | The requirement is that no long-lived token sits in browser storage. Option A would still need a server-side session (BFF) |
 | App lock uses `local_auth`, which has no web implementation | `lib/core/security` | Desktop needs a different app-lock design on either option |
 | The encrypted offline cache uses `path_provider` and `dart:io` | `lib/core/offline/snapshot_cache.dart` | Not portable as is; the web would use no offline cache in v1 (see the architecture document) |
-| About 27,000 lines of Dart: 8,700 in core and shared code (tokens, 27 components, 3 charts), the rest in 15 feature folders built around a 5-tab phone layout | `lib/` | The reusable part is the design system, DTOs and repositories. Layouts and navigation are phone-shaped and would be re-laid out for desktop on either option |
+| About 31,000 lines of Dart (re-counted 2026-10-15, after P13): 8,700 in core and shared code (tokens, 36 widgets including 3 charts), the rest in 16 feature folders built around a 5-tab phone layout | `lib/` | The reusable part is the design system, DTOs and repositories. Layouts and navigation are phone-shaped and would be re-laid out for desktop on either option |
 | Charts use `fl_chart`: line, donut and forecast charts. No candlestick chart and no data grid | `lib/shared/design_system/charts` | The desktop requirements (data grids with column resizing, saved views and keyboard navigation; candlestick charts) are new on either option |
 | The backend authenticates bearer tokens only; CORS is off by default and allows explicit origins only; the Keycloak realm has a public mobile client and the API client | `app/core/auth.py`, `app/core/config.py`, `infra/keycloak/realm-export.json` | A web client needs a new Keycloak client. A BFF can call the API with bearer tokens unchanged, with no CORS opening |
 | The API is OpenAPI 3.1, exported and Spectral-linted in CI (`backend/openapi.json`) | `scripts/export_openapi.py`, `.spectral.yaml` | A typed TypeScript client can be generated from it and checked in CI |
@@ -40,8 +40,10 @@ Each option is scored for this repository: ++ strong, + adequate, − weak.
 | Hosting cost | + static files only, but still needs a BFF server for sessions | + one small Node container behind the same ingress as the API |
 | Security | − token handling would have to be redone; CSP is harder because of the engine's runtime code loading | ++ strict CSP with nonces, CSRF tokens, SameSite cookies |
 | Developer productivity | + one language | + the most common web stack; agents and developers are productive in it |
+| Scalability | + static assets scale on a CDN; the BFF still needs servers | + stateless Next.js containers scale horizontally behind the ingress; sessions live in Redis, not in the process |
+| Light, Dark and System themes (P14-T25) | + `ThemeMode` exists; a flash-free first paint needs a bootstrap script before the engine loads | ++ CSS variables plus `prefers-color-scheme`; the server renders the saved choice, so there is no flash and no script is needed |
 
-## Decision (proposed)
+## Decision
 
 **Option B: a dedicated Next.js (App Router) / React / TypeScript web portal with a Backend-for-Frontend, in `web/` beside `backend/` and `mobile/`.** The reasons, in order:
 
@@ -57,19 +59,35 @@ Each option is scored for this repository: ++ strong, + adequate, − weak.
 - **Copy and disclosures:** the server's notices (not advice, DEMO, simulated, stale) are shown as sent, never rewritten. The web's own strings sit in one message catalogue with a key-parity check against `app_en.arb`.
 - **Parity:** `docs/web/CROSS_PLATFORM_FEATURE_PARITY_MATRIX.md` and an automated check that every mobile route has a web route or a recorded exception.
 
-### Stack (to confirm in P14-T02)
+### Stack (P14-T02.3: stack and licence review)
 
-| Area | Choice |
-|---|---|
-| Framework and language | Next.js (App Router), React, TypeScript in strict mode |
-| Styling | Tailwind CSS on generated CSS-variable tokens |
-| Components | Radix UI primitives (accessible, unstyled) |
-| Data | TanStack Query for server state; TanStack Table for grids |
-| Charts | Apache ECharts for portfolio charts; TradingView Lightweight Charts for candlesticks (attribution kept as its licence requires) |
-| Decimal display | `decimal.js` for formatting decimal strings only, never for calculating |
-| Tests | Vitest, Testing Library, Playwright, axe-core, Lighthouse CI |
+Versions and licences were read from the npm registry on 2026-10-15 (`npm view <package> version license`). They are the current releases. P14-T04 pins exact versions after the dependency audit; the `security gate` keeps checking `npm audit`, licences and secrets.
 
-Exact versions are pinned in P14-T04 after a licence and dependency audit (the `security gate` covers `npm audit`, licences and secret scanning).
+| Area | Choice | Version on 2026-10-15 | Licence |
+|---|---|---|---|
+| Runtime | Node.js LTS (local: v24.16.0) | 24.x | MIT |
+| Framework | Next.js (App Router) | 16.4.1 | MIT |
+| UI | React, React DOM | 19.3.1 | MIT |
+| Language | TypeScript (strict) | 7.0.2 | Apache-2.0 |
+| Styling | Tailwind CSS on generated CSS-variable tokens | 4.3.3 | MIT |
+| Accessible primitives | Radix UI (for example `@radix-ui/react-dialog`) | 1.3.1 | MIT |
+| Server state | TanStack Query | 5.104.2 | MIT |
+| Data grids | TanStack Table | 9.3.1 | MIT |
+| Portfolio charts | Apache ECharts | 6.1.0 | Apache-2.0 |
+| Candlestick charts | TradingView Lightweight Charts (its attribution notice is kept, as the licence requires) | 5.2.1 | Apache-2.0 |
+| Decimal display | `decimal.js`, for formatting decimal strings only, never for calculating | 10.6.0 | MIT |
+| API client | `openapi-typescript`, generated from `backend/openapi.json` | 7.13.0 | MIT |
+| BFF: OIDC | `openid-client` | 6.8.8 | MIT |
+| BFF: session store | `ioredis` (Redis) | 6.0.0 | MIT |
+| BFF: input validation | `zod` | 4.6.7 | MIT |
+| Tests | Vitest 5.0.4 (MIT); Testing Library for React 16.3.3 (MIT); Playwright 1.64.1 (Apache-2.0); Lighthouse CI 0.15.1 (Apache-2.0) | — | MIT / Apache-2.0 |
+| Accessibility tests | `axe-core` 4.14.0, `@axe-core/playwright` 4.13.0 | — | **MPL-2.0**: file-level copyleft, used only as an unmodified development and test dependency, never shipped in the bundle. Acceptable |
+
+All runtime dependencies are MIT or Apache-2.0, and none is copyleft. The Apache-2.0 NOTICE and attribution requirements (Lightweight Charts, ECharts) are met in an "Open-source notices" page and in the build's licence report.
+
+**Theming (P14-T25, [WEB_THEME_SYSTEM.md](../web/WEB_THEME_SYSTEM.md)):**
+- Tailwind reads the generated CSS variables, so pages, dialogs and grids follow Light, Dark and System without JavaScript.
+- ECharts and Lightweight Charts take colours as values, not CSS variables. They get the resolved token values from a `useChartTheme()` hook and redraw when the theme changes.
 
 ### Session model (DEC-31): Backend-for-Frontend
 

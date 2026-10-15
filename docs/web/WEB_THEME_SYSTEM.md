@@ -64,8 +64,7 @@
 ## 6. Theme-aware components
 
 - **Tokens only.** Components use CSS variables (`--ws-surface`, `--ws-text`, `--ws-series-1..8`, …). A lint rule rejects colour literals in `web/src` outside the generated token files, mirroring the Flutter style guard.
-- **SVG charts:** fills and strokes reference CSS variables directly, so they change with no JavaScript. This covers performance, allocation, currency exposure, net worth, forecast, compounding and forex sparklines.
-- **Canvas charts** (the forex candle chart, if canvas-based): a `useChartTheme()` hook reads the computed token values and redraws when the resolved theme changes.
+- **Charts:** ECharts (portfolio, allocation, currency exposure, net worth, forecast and compounding) and Lightweight Charts (forex candles) take colours as values, per ADR-0018. A `useChartTheme()` hook reads the computed token values and redraws when the resolved theme changes. Small SVG pieces drawn by our own components, such as sparklines and the distribution bar, use CSS variables directly.
 - **Axes, gridlines, legends and tooltips** have their own tokens (`--ws-chart-axis`, `--ws-chart-grid`, `--ws-tooltip-surface`). The dark tooltip card follows the reference (image 1) in both themes.
 - **Gains and losses** always pair colour with a sign, an arrow and text (`ChangeIndicator`). Series are told apart by markers or patterns as well as hue.
 - **Dialogs, menus, toasts and tooltips** render through portals inside `<html>`, so they inherit the theme; none sets its own colours.
@@ -80,9 +79,9 @@
 - **Top bar** (P14-T06): a compact icon button that cycles Light → Dark → System. Its accessible name states the current and next mode ("Appearance: Dark. Switch to System"). Its tooltip says the same.
 - The same words are used on mobile: Light, Dark, System.
 
-## 8. Mobile alignment (proposal DEC-40)
+## 8. Mobile alignment (DEC-40, approved 2026-10-15)
 
-The mobile app keeps its choice on the device only. For one preference across devices, P14-T18 (cross-platform synchronisation) would make the app read `theme_mode` from `/me/preferences` at sign-in and write it on change, keeping the device copy for offline start. This changes mobile behaviour, so it needs the user's approval.
+The mobile app keeps its choice on the device only. For one preference across devices, P14-T18 (cross-platform synchronisation) would make the app read `theme_mode` from `/me/preferences` at sign-in and write it on change, keeping the device copy for offline start. The user approved this on 2026-10-15. It is built in P14-T18.
 
 ## 9. Verification (QG-36)
 

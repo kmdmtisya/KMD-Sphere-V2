@@ -42,7 +42,7 @@ Portfolio Management -> Wealth Planning -> Investment Intelligence
 
 **WealthSphere is one platform with three channels: Android, iOS and Web.** All three use the same backend APIs, business rules, financial engines, authentication and data. No channel has its own financial logic or user store.
 
-Flutter is the preferred mobile technology so Android and iOS share a common codebase while retaining native security capabilities. The web portal's technology is proposed in ADR-0018 (Next.js and TypeScript with a Backend-for-Frontend; pending approval).
+Flutter is the preferred mobile technology so Android and iOS share a common codebase while retaining native security capabilities. The web portal's technology is set by ADR-0018 (Next.js and TypeScript with a Backend-for-Frontend; accepted 2026-10-15).
 
 ## 5. Core User Journey
 ```text
@@ -216,7 +216,7 @@ Cross-user portfolio access is a critical security failure.
 ## 24. Technology Intent
 Preferred initial stack:
 - Mobile: Flutter, Dart, Riverpod, GoRouter, Dio, Freezed, Secure Storage, Local Authentication
-- Web (proposed, ADR-0018): Next.js, React, TypeScript, Tailwind CSS on shared design tokens, TanStack Query and Table, ECharts and Lightweight Charts, with a Backend-for-Frontend for sessions
+- Web (ADR-0018, accepted 2026-10-15): Next.js, React, TypeScript, Tailwind CSS on shared design tokens, TanStack Query and Table, ECharts and Lightweight Charts, with a Backend-for-Frontend for sessions
 - Backend: Python, FastAPI, Pydantic, SQLAlchemy, Alembic
 - Data: PostgreSQL, pgvector, Redis
 - Messaging: RabbitMQ/Celery
@@ -298,8 +298,8 @@ _Status: approved by the user 2026-10-09 (ADR-0009, phase P13). Not part of the 
 **Quality.** Gates QG-FX-01…08 (QG-13…QG-20) in QUALITY_GATES.md; plan in EXECUTION_PLAN.md phase P13; design in docs/design/forex-technical-design.md.
 
 
-## 35. Enterprise Web Portal (proposed extension, ADR-0018)
-_Status: proposed 2026-10-14; phase P14 (WEB workstream) and ADR-0018 await the user's approval. Details: docs/web/WEB_PORTAL_ARCHITECTURE.md, WEB_UI_UX_SPECIFICATION.md, CROSS_PLATFORM_FEATURE_PARITY_MATRIX.md and WEB_DEPLOYMENT_PLAN.md._
+## 35. Enterprise Web Portal (approved extension, ADR-0018)
+_Status: phase P14 (WEB workstream) approved 2026-10-14; ADR-0018 accepted 2026-10-15. Details: docs/web/WEB_PORTAL_ARCHITECTURE.md, WEB_UI_UX_SPECIFICATION.md, CROSS_PLATFORM_FEATURE_PARITY_MATRIX.md and WEB_DEPLOYMENT_PLAN.md._
 
 1. **Vision and purpose.** A wealth-management workspace for desktop and laptop browsers. It is not a marketing site or a read-only report, and not an enlarged phone screen. A user moves between phone and desktop without losing data, preferences or capability.
 2. **Functional parity.** Every capability of the apps is available on the web, subject to the user's permissions. The parity matrix records each one, with its API, tests and gate evidence. Capabilities no channel has yet are planned dependencies, never claimed parity.

@@ -20,7 +20,7 @@ Before changing code, read:
 `docs/SOLUTION_INTENT.md` defines the product direction. Do not implement features that conflict with it without explicitly documenting the conflict.
 
 ## Mission
-Build a secure, scalable personal wealth intelligence platform for Android, iOS and the web (web: proposed, phase P14) using the architecture and engineering constraints defined by the project documents.
+Build a secure, scalable personal wealth intelligence platform for Android, iOS and the web (web: phase P14, ADR-0018) using the architecture and engineering constraints defined by the project documents.
 
 ## Non-Negotiable Rules
 - Do not bypass authentication or authorization.
@@ -43,7 +43,7 @@ Build a secure, scalable personal wealth intelligence platform for Android, iOS 
 
 ## Architecture Defaults
 - Mobile: Flutter/Dart.
-- Web (proposed, ADR-0018, pending approval): Next.js + TypeScript with a Backend-for-Frontend; no business logic in `web/`; tokens never in browser storage.
+- Web (ADR-0018, accepted 2026-10-15): Next.js + TypeScript with a Backend-for-Frontend; no business logic in `web/`; tokens never in browser storage.
 - State: Riverpod.
 - Navigation: GoRouter.
 - HTTP: Dio.
