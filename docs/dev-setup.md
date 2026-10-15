@@ -63,6 +63,8 @@ npm run lint && npm run typecheck && npm test
 npm run build && npm run e2e      # Playwright against the standalone server
 ```
 
+Sign-in on the web needs the stack and the web client: `python scripts/keycloak_dev.py seed-users`, then `python scripts/keycloak_dev.py web-client`, which writes `web/.env.local` (git-ignored, contains the client secret). To run the sign-in journeys: `WS_E2E_AUTH=1 WS_E2E_PASSWORD=<KEYCLOAK_TEST_USER_PASSWORD> WS_API_BASE_URL=http://127.0.0.1:8000 npm run e2e`. A test user who has enrolled TOTP by hand cannot be signed in by the journeys. Use a throwaway Keycloak with a fresh realm import, as CI does; `keycloak_dev.py` reads `KEYCLOAK_PORT`, `KEYCLOAK_ADMIN_PASSWORD`, `KEYCLOAK_TEST_USER_PASSWORD` and `WEB_ENV_FILE` from the environment.
+
 If Playwright cannot download its browser (for example behind TLS interception), run the e2e tests with an installed Google Chrome: `WS_PLAYWRIGHT_CHANNEL=chrome npm run e2e`. After changing the API, run `npm run api:generate` so the typed client matches `backend/openapi.json`; CI fails on drift.
 
 ## Keycloak development realm

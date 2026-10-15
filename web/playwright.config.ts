@@ -1,3 +1,5 @@
+import { existsSync, readFileSync } from "node:fs";
+
 import { defineConfig, devices } from "@playwright/test";
 
 /**
@@ -7,6 +9,24 @@ import { defineConfig, devices } from "@playwright/test";
  * API.
  */
 const PORT = Number(process.env.WS_WEB_PORT ?? 3100);
+
+/**
+ * The BFF's settings for the server under test: the environment (CI), else web/.env.local (written
+ * by `python scripts/keycloak_dev.py web-client`). The public URL is the test server's own origin,
+ * which the development realm registers as a callback.
+ */
+function serverEnv(): Record<string, string> {
+  const env: Record<string, string> = {};
+  if (existsSync(".env.local")) {
+    for (const line of readFileSync(".env.local", "utf8").split(/\r?\n/)) {
+      const match = /^(WS_[A-Z_]+)=(.*)$/.exec(line.trim());
+      if (match) env[match[1]] = match[2];
+    }
+  }
+  for (const [k, v] of Object.entries(process.env)) if (k.startsWith("WS_") && v) env[k] = v;
+  env.WS_PUBLIC_URL = `http://127.0.0.1:${PORT}`;
+  return env;
+}
 
 export default defineConfig({
   testDir: "./e2e",
@@ -31,6 +51,7 @@ export default defineConfig({
     command: `npm run start:standalone -- --port ${PORT} --hostname 127.0.0.1`,
     url: `http://127.0.0.1:${PORT}/api/health`,
     reuseExistingServer: !process.env.CI,
+    env: serverEnv(),
     timeout: 120_000,
   },
 });

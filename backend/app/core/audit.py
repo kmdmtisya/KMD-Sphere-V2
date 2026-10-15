@@ -18,6 +18,7 @@ import hashlib
 import json
 import uuid
 from collections.abc import Mapping
+from contextvars import ContextVar
 from dataclasses import dataclass
 from datetime import date, datetime
 from decimal import Decimal
@@ -141,6 +142,24 @@ def hash_arguments(arguments: Mapping[str, Any]) -> str:
     return hashlib.sha256(canonical.encode()).hexdigest()
 
 
+# The channel a request came through, from the access token's authorised party (`azp`): the
+# mobile app or the web portal's BFF (P14-T05). Set once per request when the token is verified;
+# every audit event of that request records it in `details["channel"]`, so channels can be told
+# apart without a schema change. Clients not listed here leave the channel unset.
+CHANNELS: Mapping[str, str] = {"wealthsphere-mobile": "mobile", "wealthsphere-web": "web"}
+channel_var: ContextVar[str | None] = ContextVar("audit_channel", default=None)
+
+
+def set_request_channel(authorized_party: str | None) -> None:
+    """Records the request's channel from the token's `azp` (see CHANNELS)."""
+    channel_var.set(CHANNELS.get(authorized_party or ""))
+
+
+def _with_channel(details: dict[str, Any]) -> dict[str, Any]:
+    channel = channel_var.get()
+    return {**details, "channel": channel} if channel and "channel" not in details else details
+
+
 class AuditWriter:
     """Adds audit events to the caller's session. It can only append."""
 
@@ -165,7 +184,7 @@ class AuditWriter:
             resource_id=None if resource_id is None else str(resource_id),
             outcome=outcome.value,
             correlation_id=get_correlation_id(),
-            details=sanitise_details(details),
+            details=_with_channel(sanitise_details(details)),
         )
         self._session.add(row)
         await self._session.flush()

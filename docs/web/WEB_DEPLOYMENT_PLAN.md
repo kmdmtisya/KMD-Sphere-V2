@@ -75,7 +75,7 @@ Configuration is validated at start (missing or insecure values stop the contain
 
 - **DNS.** One record per environment for the portal, at the registrar or the DNS service chosen with DEC-02.
 - **TLS.** Managed certificates on the load balancer and CDN, TLS 1.2 or later. HSTS with `includeSubDomains` once all subdomains are HTTPS.
-- **Security headers.** Strict CSP with nonces, `frame-ancestors 'none'`, nosniff, `Referrer-Policy: no-referrer`, a `Permissions-Policy` that denies everything unused. Checked by the CSP step in CI and by the staging smoke tests.
+- **Security headers.** Strict CSP with nonces, `frame-ancestors 'none'`, nosniff, `Referrer-Policy: same-origin` (nothing is sent to other sites; same-origin form posts keep the Origin the CSRF check needs), a `Permissions-Policy` that denies everything unused. Checked by the CSP step in CI and by the staging smoke tests.
 
 ## 6. Monitoring
 

@@ -92,7 +92,9 @@ class Settings(BaseSettings):
     # protected endpoint answers 401 (fail closed).
     oidc_issuer: str = ""
     oidc_audience: str = "wealthsphere-api"
-    oidc_authorized_parties: str = "wealthsphere-mobile"
+    # Clients whose tokens the API accepts (the `azp` claim): the mobile app and the web portal's
+    # BFF (P14-T05, ADR-0018).
+    oidc_authorized_parties: str = "wealthsphere-mobile,wealthsphere-web"
     oidc_jwks_url: str = ""
     jwks_cache_seconds: int = 300
     auth_leeway_seconds: int = 30

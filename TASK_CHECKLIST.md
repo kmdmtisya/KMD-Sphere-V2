@@ -1433,15 +1433,15 @@
   - [x] P14-T04.3 Lint guards
   - [x] P14-T04.4 Test harness
   - [x] P14-T04.5 Web CI workflow
-- [ ] **P14-T05** · WEB-05 Authentication and session integration · `NOT_STARTED` ⬜
+- [ ] **P14-T05** · WEB-05 Authentication and session integration · `IN_PROGRESS` 🔄
   - Deps: P14-T04 · Wave: W4 · Track: SEC · Size: L · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-15T13:54:21+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T05.1 Keycloak web client
-  - [ ] P14-T05.2 BFF sign-in, refresh and logout
-  - [ ] P14-T05.3 Session store and cookies
-  - [ ] P14-T05.4 CSRF and proxy allow-list
-  - [ ] P14-T05.5 Security tests
+  - [x] P14-T05.1 Keycloak web client
+  - [x] P14-T05.2 BFF sign-in, refresh and logout
+  - [x] P14-T05.3 Session store and cookies
+  - [x] P14-T05.4 CSRF and proxy allow-list
+  - [x] P14-T05.5 Security tests
 - [ ] **P14-T06** · WEB-06 Application shell and navigation · `NOT_STARTED` ⬜
   - Deps: P14-T03, P14-T05 · Wave: W5 · Track: WEB · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

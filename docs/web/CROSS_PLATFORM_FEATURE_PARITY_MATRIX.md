@@ -18,7 +18,7 @@ Android and iOS share one Flutter codebase, so their columns match unless stated
 
 | # | Capability | Android / iOS | Backend API | Permission | Web | Web tests | QG |
 |---|---|---|---|---|---|---|---|
-| 1 | Sign in (OIDC, PKCE), MFA (TOTP), sign out | Live (P04, P09) | Keycloak; `GET /me` | Signed in | P14-T05 (BFF, `wealthsphere-web` client) | e2e login and logout, expiry, MFA | QG-29 |
+| 1 | Sign in (OIDC, PKCE), MFA (TOTP), sign out | Live (P04, P09) | Keycloak; `GET /me` | Signed in | **Built (P14-T05):** BFF sign-in with the `wealthsphere-web` client, server-side sessions, CSRF, sign-out | e2e against Keycloak: login, no token in the browser, CSRF, cross-user 404, logout and cookie replay, TOTP enrolment; unit tests for idle, absolute expiry and refresh | QG-29 |
 | 2 | Profile and preferences (theme, notifications) | Live | `GET /me`, `PATCH /me/preferences` | Owner | P14-T16, P14-T25 (Appearance: Light, Dark, System; mobile saves it on the device only until P14-T18 adds the approved sync, DEC-40) | component, e2e | QG-28, QG-36 |
 | 3 | Risk profile | API only (no mobile screen) | `GET/POST/PATCH /risk-profiles` | Owner | P14-T16 | API-contract, e2e | QG-28 |
 | 4 | Home dashboard (wealth, net worth, income, goals) | Live (P09) | `GET /dashboard`, `/net-worth`, `/income/summary`, `/goals/summary` | Owner | **P14-T07 (priority)** | reconciliation with the API, e2e | QG-28, QG-30 |

@@ -230,7 +230,11 @@ async def test_malformed_events_are_rejected(db: Database, action: str, actor: A
 
 @pytest.fixture(scope="module")
 async def app(migrated_settings: Settings) -> AsyncIterator[FastAPI]:  # noqa: F811
-    application = create_app(migrated_settings, readiness_checks={}, token_verifier=ah.verifier())
+    application = create_app(
+        migrated_settings,
+        readiness_checks={},
+        token_verifier=ah.verifier(parties=frozenset({ah.CLIENT, "wealthsphere-web"})),
+    )
     yield application
     await application.state.db.dispose()
 
@@ -280,6 +284,7 @@ async def test_risk_profile_changes_are_audited_and_linked_to_the_request(
     assert json.loads(events[1]["details"]) == {
         "changed": ["risk_tolerance"],
         "risk_tolerance": "growth",
+        "channel": "mobile",  # the token's azp is the mobile app (P14-T05)
     }
 
 
@@ -333,3 +338,42 @@ async def test_a_change_is_not_kept_when_its_audit_event_cannot_be_written(
         uuid.UUID(two_users.alice.id),
     )
     assert after[0]["n"] == before[0]["n"]
+
+
+# --------------------------------------------------------------- channel (P14-T05)
+
+
+def test_the_channel_comes_from_the_authorized_party() -> None:
+    import contextvars
+
+    from app.core.audit import _with_channel, set_request_channel
+
+    def run(azp: str | None, details: dict[str, Any]) -> dict[str, Any]:
+        def inner() -> dict[str, Any]:
+            set_request_channel(azp)
+            return _with_channel(details)
+
+        return contextvars.copy_context().run(inner)
+
+    assert run("wealthsphere-web", {"a": 1}) == {"a": 1, "channel": "web"}
+    assert run("wealthsphere-mobile", {}) == {"channel": "mobile"}
+    assert run("some-other-client", {"a": 1}) == {"a": 1}
+    assert run(None, {}) == {}
+    assert run("wealthsphere-web", {"channel": "explicit"}) == {"channel": "explicit"}
+
+
+@integration
+@pytest.mark.parametrize(("azp", "channel"), [("wealthsphere-web", "web"), (ah.CLIENT, "mobile")])
+async def test_audit_events_record_the_channel_of_the_request(
+    http: httpx.AsyncClient,
+    migrated_settings: Settings,  # noqa: F811
+    azp: str,
+    channel: str,
+) -> None:
+    headers = ah.bearer(ah.token(azp=azp))
+    created = await http.post(
+        "/api/v1/risk-profiles", headers=headers, json={"risk_tolerance": "balanced"}
+    )
+    assert created.status_code == 201
+    events = await _events_for(migrated_settings, created.json()["id"])
+    assert [json.loads(e["details"]).get("channel") for e in events] == [channel]

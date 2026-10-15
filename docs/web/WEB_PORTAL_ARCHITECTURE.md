@@ -52,12 +52,12 @@ mobile/                      unchanged, apart from consuming the generated Dart 
 | Cookie | `__Host-ws_session`: HttpOnly, Secure, SameSite=Lax, path `/`, no domain. Rotated at sign-in and on privilege change |
 | CSRF | Double-submit token: a readable cookie plus an `X-CSRF-Token` header on every non-GET call. Origin and Referer are checked. SameSite=Lax is a second layer |
 | Forwarding | `/api/proxy/*` forwards to FastAPI with `Authorization: Bearer …`. Methods and paths are allow-listed to `/api/v1/*`, the body-size limit is kept, the correlation ID is passed through, and request bodies are never logged |
-| Refresh and expiry | The BFF refreshes access tokens shortly before expiry. The idle timeout is 30 minutes and the absolute timeout 12 hours (to confirm against the realm). When either is reached, the session is removed and the user signs in again |
+| Refresh and expiry | The BFF refreshes access tokens shortly before expiry. The idle timeout is 30 minutes and the absolute timeout 10 hours, the realm's `ssoSessionIdleTimeout` and `ssoSessionMaxLifespan` (confirmed in P14-T05). When either is reached, the session is removed and the user signs in again |
 | Logout | The BFF session is deleted, the refresh token revoked, and Keycloak's RP-initiated logout ends the SSO session |
-| Headers | Strict CSP with nonces, no inline script, `connect-src` limited to the BFF origin, `frame-ancestors 'none'`. HSTS in deployed environments. Plus the existing headers (nosniff, no-referrer, …) |
+| Headers | Strict CSP with nonces, no inline script, `connect-src` limited to the BFF origin, `frame-ancestors 'none'`. HSTS in deployed environments. Plus the existing headers (nosniff, `Referrer-Policy: same-origin`, …). `same-origin` rather than `no-referrer`: with `no-referrer` browsers send `Origin: null` on the portal's own form posts, which the CSRF origin check must refuse (found in P14-T05) |
 | Authorisation | Unchanged and server-side: ownership is checked on every resource (ADR-0011, 404 for another user's resource), and a role is checked for operator views (DEC-34). Hidden UI is never the control |
 | Rate limits | The API's per-IP and per-account budgets apply as for mobile. The BFF also limits sign-in attempts per IP |
-| Audit | Existing audit events (material financial changes, AI tool use) are written by the API and carry a `channel=web` attribute so channels can be told apart. Sign-in and logout are audited by Keycloak |
+| Audit | Existing audit events (material financial changes, AI tool use) are written by the API. Since P14-T05, each records `details.channel` (`web` or `mobile`), derived by the API from the access token's authorised party (`azp`), so the client cannot claim another channel. Sign-in and logout are audited by Keycloak |
 | Streams | AI chat (server-sent events) is proxied as a stream with backpressure. The forex WebSocket uses a single-use ticket valid for 30 s, minted by the BFF; the API exchanges it for a session (P14-T13) |
 
 ## 4. Data, caching and cross-platform consistency
