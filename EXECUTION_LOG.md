@@ -2041,3 +2041,23 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-15T10:57:10+04:00 — PLAN CHANGE approved — P14 reference-driven UI, P14-T25, QG-35 and QG-36
 - The user approved the P14 plan change ("plan approved", 2026-10-15). DEC-39 (brand accent) and DEC-40 (mobile appearance sync) remain open with their proposed defaults; they are confirmed before P14-T03 and P14-T18. The phase name stays "Enterprise Web Portal".
+
+### 2026-10-15T11:14:56+04:00 — START P14-T01
+- WEB-01 Repository audit and requirements
+- prerequisites verified COMPLETED
+
+### 2026-10-15T11:15:24+04:00 — QG START QG-35
+- QG-WEB-10: Design Reference Compliance
+
+### 2026-10-15T11:15:24+04:00 — QG CHECK QG-35.1
+- evidence: docs/web/WEB_DESIGN_REFERENCE_ANALYSIS.md section 1: both images in docs/design/references (executive-wealth-dashboard.png 994x774, forex-intelligence-workspace.png 1062x664; no JPG/JPEG/WebP present) opened and analysed (layout, components, palette, type, spacing); limits reported (low resolution, no light-mode or source files); approved with the P14 plan change 2026-10-15 (PR #170)
+
+### 2026-10-15T11:15:24+04:00 — QG CHECK QG-35.2
+- evidence: docs/web/WEB_DESIGN_REFERENCE_ANALYSIS.md sections 4-7: common patterns, 11 conflicts (palette, dark-only, density/contrast, colour-only signals, trading, advice, ticker, branding, binary theme switch, crypto, placeholder figures) each with a recommended approach, and a reference-to-screen mapping for shell, dashboard, allocation, charts, net worth, AI insights, forex workspace, settings and notifications; approved by the user 2026-10-15 (PR #170); component mapping in docs/web/WEB_REPOSITORY_AUDIT.md section 5
+
+### 2026-10-15T11:18:40+04:00 — AWAITING_VERIFICATION P14-T01
+- evidence: docs/web/WEB_REPOSITORY_AUDIT.md: mobile route, mobile API-use and backend API inventories (98 paths, 124 operations + WS); 10 parity-baseline rows corrected to API only (no mobile screen); backend gap list; web constraints (bearer-only API, CORS off, plugins without web equivalent, forex flag, decimal money); component audit; every mobile route mapped to a matrix row and API. Parity matrix updated. Design reference catalogue and mapping (docs/web/WEB_DESIGN_REFERENCE_ANALYSIS.md) approved with PR #170; QG-35.1 and QG-35.2 verified. track.py validate OK. PR #171. CI all gates pass.
+
+### 2026-10-15T11:18:40+04:00 — COMPLETE P14-T01
+- duration: 3m 44s
+- evidence: docs/web/WEB_REPOSITORY_AUDIT.md: mobile route, mobile API-use and backend API inventories (98 paths, 124 operations + WS); 10 parity-baseline rows corrected to API only (no mobile screen); backend gap list; web constraints (bearer-only API, CORS off, plugins without web equivalent, forex flag, decimal money); component audit; every mobile route mapped to a matrix row and API. Parity matrix updated. Design reference catalogue and mapping (docs/web/WEB_DESIGN_REFERENCE_ANALYSIS.md) approved with PR #170; QG-35.1 and QG-35.2 verified. track.py validate OK. PR #171. CI all gates pass.

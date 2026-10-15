@@ -1,6 +1,6 @@
 # Cross-platform feature parity matrix
 
-**Status:** Proposed baseline (2026-10-14), built from repository evidence at commit 23d0903:
+**Status:** Baseline (2026-10-14, commit 23d0903), re-verified for P14-T01 on 2026-10-15 at `main` 3b3c6b1 ([repository audit](WEB_REPOSITORY_AUDIT.md)). Built from:
 - the mobile live repositories under `mobile/wealthsphere_app/lib/features/*/data`;
 - the mobile routes (`lib/app/app_routes.dart`);
 - the API (`backend/openapi.json`).
@@ -11,7 +11,8 @@ Android and iOS share one Flutter codebase, so their columns match unless stated
 - **No false claims.** A capability that no platform has today is listed as a **planned dependency** (with its task), never as parity already reached.
 - **New features record web status.** A new mobile capability is not done until this matrix records its web status, whether delivered or an exception with a reason. P14-T18 adds a CI check that every mobile route maps to a web route or a recorded exception.
 - **Permissions.** "Owner" means the API returns only the signed-in user's own data and answers 404 for anyone else's (ADR-0011). "Reference" means the same answer for every signed-in user.
-- **QG.** The gate whose evidence covers the row on the web: QG-26 to QG-34 (web) or QG-19 (forex web).
+- **QG.** The gate whose evidence covers the row on the web: QG-26 to QG-36 (web) or QG-19 (forex web).
+- **"API only".** The backend has the capability, but no mobile screen uses it (P14-T01 audit). The web builds it as an **extension** on the existing API. It is not counted as parity, and it is not a backend gap.
 
 ## 1. Capabilities in the apps today
 
@@ -19,24 +20,24 @@ Android and iOS share one Flutter codebase, so their columns match unless stated
 |---|---|---|---|---|---|---|---|
 | 1 | Sign in (OIDC, PKCE), MFA (TOTP), sign out | Live (P04, P09) | Keycloak; `GET /me` | Signed in | P14-T05 (BFF, `wealthsphere-web` client) | e2e login and logout, expiry, MFA | QG-29 |
 | 2 | Profile and preferences (theme, notifications) | Live | `GET /me`, `PATCH /me/preferences` | Owner | P14-T16, P14-T25 (Appearance: Light, Dark, System; mobile saves it on the device only, sync proposed in DEC-40) | component, e2e | QG-28, QG-36 |
-| 3 | Risk profile | Live | `GET/POST/PATCH /risk-profiles` | Owner | P14-T16 | API-contract, e2e | QG-28 |
+| 3 | Risk profile | API only (no mobile screen) | `GET/POST/PATCH /risk-profiles` | Owner | P14-T16 | API-contract, e2e | QG-28 |
 | 4 | Home dashboard (wealth, net worth, income, goals) | Live (P09) | `GET /dashboard`, `/net-worth`, `/income/summary`, `/goals/summary` | Owner | **P14-T07 (priority)** | reconciliation with the API, e2e | QG-28, QG-30 |
-| 5 | Portfolios: list, create, edit, archive; all-portfolio summary | Live | `GET/POST /portfolios`, `PATCH /portfolios/{id}`, `POST /…/archive`, `/portfolios/consolidated/summary`, `/portfolios/{id}/summary` | Owner | **P14-T08 (priority)** | CRUD e2e, IDOR via API | QG-28, QG-30 |
+| 5 | Portfolios: list, create, edit, archive; all-portfolio summary | Live (archive: API only) | `GET/POST /portfolios`, `PATCH /portfolios/{id}`, `POST /…/archive`, `/portfolios/consolidated/summary`, `/portfolios/{id}/summary` | Owner | **P14-T08 (priority)** | CRUD e2e, IDOR via API | QG-28, QG-30 |
 | 6 | Holdings | Live | `GET /portfolios/{id}/holdings` | Owner | **P14-T08** | grid, reconciliation | QG-28, QG-30 |
 | 7 | Transactions: list, add (all types, multi-currency), reverse | Live | `GET/POST /portfolios/{id}/transactions`, `GET …/{tid}`, `POST …/{tid}/reversal` | Owner | **P14-T08** | e2e add and reverse, cross-channel sync | QG-28, QG-30, QG-33 |
-| 8 | Manual valuations (assets without a market price) | Live | `/portfolios/{id}/valuations` (CRUD, `latest`) | Owner | **P14-T08** | CRUD e2e | QG-28 |
-| 9 | Assets: classes, catalogue search, custom assets, detail and prices | Live | `/asset-classes`, `/assets/search`, `POST /assets`, `/assets/{id}`, `/assets/{id}/prices` | Reference, or owner for custom assets | **P14-T08** | component, e2e | QG-28 |
+| 8 | Manual valuations (assets without a market price) | API only (no mobile screen) | `/portfolios/{id}/valuations` (CRUD, `latest`) | Owner | **P14-T08** | CRUD e2e | QG-28 |
+| 9 | Assets: classes, catalogue search, custom assets, detail and prices | Live (catalogue search and custom assets: API only) | `/asset-classes`, `/assets/search`, `POST /assets`, `/assets/{id}`, `/assets/{id}/prices` | Reference, or owner for custom assets | **P14-T08** | component, e2e | QG-28 |
 | 10 | Analytics: performance (TWR, XIRR, CAGR), allocation (class, currency, country), risk (volatility, drawdown) | Live | `/portfolios/{id}/performance`, `/allocation`, `/risk` | Owner | P14-T09 | reconciliation, chart a11y | QG-28, QG-30 |
-| 11 | Compounding calculator | Live (backend-calculated) | `POST /forecasts/compound` | Signed in | P14-T10 | outputs equal the API | QG-30 |
+| 11 | Compounding calculator | Live (backend-calculated) | `POST /forecasts/scenarios` (the app's calculator); `POST /forecasts/compound` is unused by the app | Signed in | P14-T10 | outputs equal the API | QG-30 |
 | 12 | Wealth forecast scenarios | Live | `POST /forecasts/scenarios` | Signed in | P14-T10 | outputs equal the API | QG-30 |
-| 13 | Goals: CRUD, progress, contribution estimate | Live | `/goals` (CRUD), `/goals/{id}/progress`, `/goals/summary`, `POST /forecasts/goal` | Owner | P14-T10 | CRUD e2e | QG-28 |
-| 14 | Net worth and liabilities | Live | `/net-worth`, `/liabilities` (CRUD) | Owner | P14-T11 | reconciliation | QG-28, QG-30 |
+| 13 | Goals: CRUD, progress, contribution estimate | Live (contribution estimate `POST /forecasts/goal`: API only) | `/goals` (CRUD), `/goals/{id}/progress`, `/goals/summary`, `POST /forecasts/goal` | Owner | P14-T10 | CRUD e2e | QG-28 |
+| 14 | Net worth and liabilities | Live (liabilities CRUD: API only) | `/net-worth`, `/liabilities` (CRUD) | Owner | P14-T11 | reconciliation | QG-28, QG-30 |
 | 15 | Passive income | Live | `/income/summary`, `/portfolios/{id}/income` | Owner | P14-T11 | reconciliation | QG-28, QG-30 |
-| 16 | Reporting currency (global) and converter; FX status and refresh | Live (P11) | `/currencies`, `/me/currency-preferences`, `POST /fx/convert`, `/fx/status`, `POST /fx/refresh`, `/fx/rates`, `/fx/history` | Signed in, or owner for preferences | P14-T14 | currency switch e2e; equal to the API for the same snapshot | QG-28, QG-30 |
+| 16 | Reporting currency (global) and converter; FX status and refresh | Live (P11; `/fx/rates` and `/fx/history`: API only) | `/currencies`, `/me/currency-preferences`, `POST /fx/convert`, `/fx/status`, `POST /fx/refresh`, `/fx/rates`, `/fx/history` | Signed in, or owner for preferences | P14-T14 | currency switch e2e; equal to the API for the same snapshot | QG-28, QG-30 |
 | 17 | AI Wealth Copilot: streamed chat, conversations, scopes | Live (P10) | `POST /ai/chat` (SSE), `/ai/conversations` (list, get, delete) | Owner; tools allow-listed and authorised server-side | **P14-T12 (priority)** | stream through the BFF; AI regression set reused; cross-user | QG-28, QG-29 |
 | 18 | Portfolio Doctor | Live (P12) | `POST /ai/portfolio-doctor` | Owner | P14-T12 | e2e | QG-28 |
-| 19 | Opportunities, runs, compare, simulate | Live (P12) | `POST /ai/opportunities`, `/ai/opportunities/runs`, `POST /ai/compare`, `POST /ai/simulate` | Owner | P14-T12 | e2e; notices shown | QG-28 |
-| 20 | Investment universe, scores, compatibility, research | Live in the instrument screens (P12) | `/universe`, `/universe/scores`, `POST /universe/compatibility`, `/research` | Reference, or owner for compatibility | P14-T12 | component | QG-28 |
+| 19 | Opportunities, runs, compare, simulate | Live (P12; simulate hands off to the calculator, `POST /ai/simulate`: API only) | `POST /ai/opportunities`, `/ai/opportunities/runs`, `POST /ai/compare`, `POST /ai/simulate` | Owner | P14-T12 | e2e; notices shown | QG-28 |
+| 20 | Investment universe, scores, compatibility, research | API only (the instrument screens use DEMO data) | `/universe`, `/universe/scores`, `POST /universe/compatibility`, `/research` | Reference, or owner for compatibility | P14-T12 | component | QG-28 |
 | 21 | Watchlist | Live | `/watchlist` (list, add, remove) | Owner | P14-T16 | e2e | QG-28 |
 | 22 | Alerts, alert events, preferences | Live (P08, P09) | `/alerts` (CRUD), `/alerts/events`, `…/seen`, `/alert-preferences` | Owner | P14-T16 (notification centre) | e2e | QG-28 |
 | 23 | Push notifications (device registration) | Live (FCM/APNs, P09) | `/devices` | Owner | **Exception:** no web push in v1; the notification centre shows the same events (row 22). Web push needs DEC-35 | — | — |
