@@ -28,6 +28,8 @@ export type GridColumn<T> = {
   kind?: "text" | "money" | "date";
   currencyKey?: keyof T & string;
   align?: "start" | "end";
+  /** A custom display for the cell (links, badges, actions); sorting still uses the value of `key`. */
+  render?: (row: T) => React.ReactNode;
 };
 
 const features = tableFeatures({
@@ -42,7 +44,8 @@ const helper = createColumnHelper<typeof features, Row>();
 const decimalSort: SortFn<typeof features, Row> = (a, b, id) =>
   compareDecimalStrings(a.getValue<string>(id), b.getValue<string>(id));
 
-function display<T extends Row>(row: T, column: GridColumn<T>, locale: string): string {
+function display<T extends Row>(row: T, column: GridColumn<T>, locale: string): React.ReactNode {
+  if (column.render) return column.render(row);
   const value = row[column.key];
   if (column.kind === "money" && column.currencyKey) return formatMoney(value, row[column.currencyKey], locale).text;
   if (column.kind === "date") return new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(new Date(value));
@@ -70,7 +73,7 @@ export function DataGrid<T extends Row>({
             id: c.key,
             header: c.header,
             sortFn: c.kind === "money" ? decimalSort : "text",
-            cell: (ctx) => display(ctx.row.original as T, c, locale),
+            cell: (ctx) => display(ctx.row.original as T, c, locale) as string,
           }),
         ),
       ),

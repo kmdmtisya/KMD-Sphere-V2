@@ -1460,16 +1460,16 @@
   - [x] P14-T07.3 Search endpoint and command palette
   - [x] P14-T07.4 Layout customisation
   - [x] P14-T07.5 Tests
-- [ ] **P14-T08** · WEB-08 Portfolio and investment management · `NOT_STARTED` ⬜
+- [ ] **P14-T08** · WEB-08 Portfolio and investment management · `IN_PROGRESS` 🔄
   - Deps: P14-T05, P14-T06 · Wave: W6 · Track: WEB · Size: XL · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-15T20:06:15+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T08.1 Portfolio list and detail
-  - [ ] P14-T08.2 Holdings grid
-  - [ ] P14-T08.3 Transaction workflows
-  - [ ] P14-T08.4 Valuations and assets
-  - [ ] P14-T08.5 Saved table views
-  - [ ] P14-T08.6 Tests
+  - [x] P14-T08.1 Portfolio list and detail
+  - [x] P14-T08.2 Holdings grid
+  - [x] P14-T08.3 Transaction workflows
+  - [x] P14-T08.4 Valuations and assets
+  - [x] P14-T08.5 Saved table views
+  - [x] P14-T08.6 Tests
 - [ ] **P14-T09** · WEB-09 Financial analytics · `NOT_STARTED` ⬜
   - Deps: P14-T08 · Wave: W7 · Track: WEB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

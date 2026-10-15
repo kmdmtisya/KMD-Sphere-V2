@@ -1,12 +1,16 @@
 "use client";
 
 /**
- * Calls to the API through the BFF proxy, from the browser (P14-T06). The session cookie goes
- * automatically; state-changing calls add the CSRF token from its readable cookie. Money values stay
- * decimal strings (ADR-0003).
+ * Calls to the API through the BFF proxy, from the browser (P14-T06, extended in P14-T08). The session
+ * cookie goes automatically; state-changing calls add the CSRF token from its readable cookie. Money
+ * values stay decimal strings (ADR-0003).
  */
 export class ApiError extends Error {
-  constructor(readonly status: number) {
+  constructor(
+    readonly status: number,
+    /** The server's problem detail (never a stack trace), for showing to the person. */
+    readonly detail?: string,
+  ) {
     super(`API answered ${status}`);
   }
 }
@@ -16,26 +20,37 @@ function csrf(): string | undefined {
   return raw ? decodeURIComponent(raw) : undefined;
 }
 
-export async function apiGet<T>(path: string): Promise<T> {
-  const response = await fetch(`/api/proxy/${path}`, { headers: { accept: "application/json" } });
-  if (!response.ok) throw new ApiError(response.status);
-  return (await response.json()) as T;
+async function failure(response: Response): Promise<ApiError> {
+  let detail: string | undefined;
+  try {
+    const body = (await response.json()) as { detail?: unknown; title?: unknown; errors?: { field?: string; message?: string }[] };
+    const fields = Array.isArray(body.errors) ? body.errors.map((e) => (e.field ? `${e.field}: ${e.message}` : e.message)).filter(Boolean).join("; ") : "";
+    if (typeof body.detail === "string") detail = body.detail;
+    else if (typeof body.title === "string") detail = body.title;
+    if (fields) detail = detail ? `${detail} (${fields})` : fields;
+  } catch {
+    // No JSON body.
+  }
+  return new ApiError(response.status, detail);
 }
 
-export async function apiPatch<T>(path: string, body: unknown): Promise<T> {
-  const headers: Record<string, string> = { "content-type": "application/json" };
-  const token = csrf();
-  if (token) headers["x-csrf-token"] = token;
-  const response = await fetch(`/api/proxy/${path}`, { method: "PATCH", headers, body: JSON.stringify(body) });
-  if (!response.ok) throw new ApiError(response.status);
-  return (await response.json()) as T;
+export type WriteOptions = { idempotencyKey?: string };
+
+async function send<T>(method: string, path: string, body: unknown, options: WriteOptions = {}): Promise<T> {
+  const headers: Record<string, string> = { accept: "application/json" };
+  if (body !== undefined) headers["content-type"] = "application/json";
+  if (method !== "GET") {
+    const token = csrf();
+    if (token) headers["x-csrf-token"] = token;
+  }
+  if (options.idempotencyKey) headers["idempotency-key"] = options.idempotencyKey;
+  const response = await fetch(`/api/proxy/${path}`, { method, headers, body: body === undefined ? undefined : JSON.stringify(body) });
+  if (!response.ok) throw await failure(response);
+  return response.status === 204 ? (undefined as T) : ((await response.json()) as T);
 }
 
-export async function apiPost<T>(path: string, body: unknown): Promise<T> {
-  const headers: Record<string, string> = { "content-type": "application/json" };
-  const token = csrf();
-  if (token) headers["x-csrf-token"] = token;
-  const response = await fetch(`/api/proxy/${path}`, { method: "POST", headers, body: JSON.stringify(body) });
-  if (!response.ok) throw new ApiError(response.status);
-  return (await response.json()) as T;
-}
+export const apiGet = <T>(path: string) => send<T>("GET", path, undefined);
+export const apiPost = <T>(path: string, body: unknown, options?: WriteOptions) => send<T>("POST", path, body, options);
+export const apiPatch = <T>(path: string, body: unknown) => send<T>("PATCH", path, body);
+export const apiPut = <T>(path: string, body: unknown) => send<T>("PUT", path, body);
+export const apiDelete = (path: string) => send<void>("DELETE", path, undefined);
