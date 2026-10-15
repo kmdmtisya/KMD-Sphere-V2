@@ -1,6 +1,6 @@
 # WealthSphere Web Portal: UI/UX specification
 
-**Status:** Proposed (2026-10-14). It is reviewed at the web UX gate (P14-T03), as the mobile design system was at UX Gate 1. The mobile specification remains the [UI/UX Design Specification v1.1](../SOLUTION_INTENT.md#uiux-design-specification--approved-product-direction-v11). This document adds the desktop and web rules and changes no mobile behaviour. **Visual direction (proposed 2026-10-15):** the reference images in [docs/design/references](../design/references) govern the portal's composition and visual language, as analysed and mapped to screens in [WEB_DESIGN_REFERENCE_ANALYSIS.md](WEB_DESIGN_REFERENCE_ANALYSIS.md); their labels, figures, trading features and branding are not used.
+**Status:** Approved by the user at the web UX gate on 2026-10-15 (P14-T03), with the component gallery and the reference comparison ([WEB_REFERENCE_COMPARISON.md](WEB_REFERENCE_COMPARISON.md)), as the mobile design system was at UX Gate 1. The mobile specification remains the [UI/UX Design Specification v1.1](../SOLUTION_INTENT.md#uiux-design-specification--approved-product-direction-v11). This document adds the desktop and web rules and changes no mobile behaviour. **Visual direction (proposed 2026-10-15):** the reference images in [docs/design/references](../design/references) govern the portal's composition and visual language, as analysed and mapped to screens in [WEB_DESIGN_REFERENCE_ANALYSIS.md](WEB_DESIGN_REFERENCE_ANALYSIS.md); their labels, figures, trading features and branding are not used.
 
 ## 1. Principles
 
@@ -12,7 +12,7 @@
 
 ## 2. Tokens and theme
 
-- **Source.** Brand and semantic tokens come from `design/tokens/wealthsphere.tokens.json`, generated into CSS variables, with the same values and measured contrast as the mobile `BrandPalette` and `WealthColors`:
+- **Source (built in P14-T03).** Brand and semantic tokens come from `design/tokens/wealthsphere.tokens.json`. `python scripts/generate_tokens.py` generates the mobile `BrandPalette` (identical values) and `web/src/tokens/tokens.css`, and measures contrast; `--check` fails CI on drift, and a mobile test proves `WealthColors` uses the same roles. The values match the mobile `BrandPalette` and `WealthColors`:
   - brand: Midnight Navy `#102A43`, Emerald Teal `#0D9488`, Warm Gold `#F2B84B`;
   - text-safe shades: teal 700 `#0F766E`, red 700 `#B91C1C`, amber 700 `#B45309`;
   - dark-mode variants: navy 950 and 800, teal 400, red 400, amber 400.
@@ -108,7 +108,17 @@ Each mirrors a mobile component where one exists (`lib/shared/design_system`), w
 | States | `Skeleton`, `EmptyState`, `ErrorState` (with correlation ID and retry), `OfflineBanner`, `PermissionDenied`, `StatusBanner`, `DisclosurePanel` |
 | Shell | `Sidebar`, `TopBar`, `CommandPalette`, `NotificationCentre`, `RightPanel`, `Breadcrumbs` |
 
-A component gallery route (`/_gallery`, development only), as on mobile, shows every component in light, dark and 200% zoom, and in RTL. Visual regression uses Playwright screenshots.
+A component gallery route (`/_gallery`, development and test builds only), as on mobile, shows every component in light and dark side by side, with DEMO data. Playwright tests run axe in both themes, check component behaviour and overflow at 1440, 1280, 1024, 768 and 375 px, and attach screenshots. The comparison with the references is in [WEB_REFERENCE_COMPARISON.md](WEB_REFERENCE_COMPARISON.md).
+
+**Built in P14-T03:**
+- figures: `CurrencyAmount`, `ChangeIndicator`, `DataAsOfLabel`, `StaleChip`, `DemoBadge`, `SimulatedBadge`, `CalibrationBadge`, `RiskLabel`;
+- cards: `Card`, `KpiCard`;
+- charts: `ChartFrame` (summary and table alternative), `PerformanceLineChart`, `AllocationDonutChart`, `DistributionBar`;
+- data: `DataGrid` (sorting, `aria-sort`, card list under 768 px);
+- states: `Skeleton`, `LoadingState`, `EmptyState`, `ErrorState`, `StatusBanner`, `DisclosurePanel`;
+- controls: `Button`, `IconButton`, `SegmentedControl`.
+
+Still to come: the remaining components with the module tasks that first need them. The shell components (`Sidebar`, `TopBar`, `CommandPalette`, `NotificationCentre`, `RightPanel`) arrive in P14-T06; the AI components in P14-T12; `CandleChart` in P14-T13 and P14-T24; `PortfolioHealthCard`, `GoalProgressCard`, `ScenarioCard` and `OpportunityCard` in their modules. 200% zoom and RTL checks run in P14-T19 and P14-T20.
 
 ## 6. Key screens
 

@@ -1414,16 +1414,16 @@
   - [x] P14-T02.2 Session and security model
   - [x] P14-T02.3 Stack and licence review
   - [x] P14-T02.4 ADR-0018
-- [ ] **P14-T03** · WEB-03 Web design system and UX specification · `NOT_STARTED` ⬜
+- [x] **P14-T03** · WEB-03 Web design system and UX specification · `COMPLETED` ✅
   - Deps: P14-T02 · Wave: W3 · Track: WEB · Size: L · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P14-T03.1 Token source and generators
-  - [ ] P14-T03.2 Web component library
-  - [ ] P14-T03.3 Charts and data grid
-  - [ ] P14-T03.4 Component gallery and visual tests
-  - [ ] P14-T03.5 UX specification review
-  - [ ] P14-T03.6 Reference comparison sheets
+  - Started: 2026-10-15T12:02:37+04:00 · Completed: 2026-10-15T13:40:49+04:00 · Duration: 1h 38m 12s · Blocker: —
+  - Evidence: Shared token source design/tokens/wealthsphere.tokens.json with generator (mobile BrandPalette identical values, web tokens.css, contrast check, CI drift check) and mobile sync test; web components (figures, cards, states, controls, ChartFrame with table alternative, ECharts line and donut, DistributionBar, DataGrid with exact decimal sorting and aria-sort); /_gallery in light and dark with DEMO data; Playwright gallery tests (axe both themes, behaviour, no overflow at 5 widths) 13/13; 48 Vitest tests; mobile 1,798 tests pass; reference comparison docs/web/WEB_REFERENCE_COMPARISON.md with before/after screenshots. QG-27.1, QG-27.5, QG-35.3 verified. Web UX gate approved by the user 2026-10-15. PR #174. CI all gates pass. · Approved by: user (mtisya@gmail.com), web UX gate 2026-10-15
+  - [x] P14-T03.1 Token source and generators
+  - [x] P14-T03.2 Web component library
+  - [x] P14-T03.3 Charts and data grid
+  - [x] P14-T03.4 Component gallery and visual tests
+  - [x] P14-T03.5 UX specification review
+  - [x] P14-T03.6 Reference comparison sheets
 - [x] **P14-T04** · WEB-04 Web application foundation · `COMPLETED` ✅
   - Deps: P14-T02 · Wave: W3 · Track: WEB · Size: L · Approval: no
   - Started: 2026-10-15T11:52:14+04:00 · Completed: 2026-10-15T11:59:15+04:00 · Duration: 7m 01s · Blocker: —

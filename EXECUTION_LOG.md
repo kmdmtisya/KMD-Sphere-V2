@@ -2100,3 +2100,26 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-15T11:59:15+04:00 — COMPLETE P14-T04
 - duration: 7m 01s
 - evidence: web/ foundation: Next.js 16.4.1 standalone app with baseline security headers; BFF skeleton (health route calling the API server to server; /api/v1 allow-listed proxy answering 401 until sessions); typed client generated from backend/openapi.json with drift check; lint guards no-money-arithmetic and no-colour-literals plus CSS colour check and seeded self-test; 39 Vitest tests; Playwright smoke 4/4 locally (with and without the API); web CI workflow with web gate; npm audit (production) in the security gate (0 found), TD-12 for a dev-only tooling advisory. QG-26.3 verified. PR #173. CI all gates pass.
+
+### 2026-10-15T12:02:37+04:00 — START P14-T03
+- WEB-03 Web design system and UX specification
+- prerequisites verified COMPLETED
+
+### 2026-10-15T13:26:09+04:00 — QG START QG-27
+- QG-WEB-02: UI/UX and Design System
+
+### 2026-10-15T13:26:10+04:00 — QG CHECK QG-27.1
+- evidence: design/tokens/wealthsphere.tokens.json is the single source; scripts/generate_tokens.py generates the mobile BrandPalette (identical values, goldens unaffected) and web/src/tokens/tokens.css; --check runs in the web CI and fails on drift; mobile token_source_sync_test proves WealthColors roles and chart series match; web components use only token classes and variables (no-colour-literals lint + CSS check). Approved at the web UX gate by the user 2026-10-15 (PR #174)
+
+### 2026-10-15T13:26:10+04:00 — QG CHECK QG-27.5
+- evidence: Light and dark verified: generated tokens for light, dark and system (prefers-color-scheme in CSS); generator contrast check passes every text pair at 4.5:1 and non-text at 3:1 in both themes; gallery shows every component in both themes, axe finds no serious or critical WCAG 2.2 AA violation in either (web/e2e/gallery.spec.ts), smoke test proves System follows the browser scheme live; screenshots at five widths in docs/design/screenshots/p14/after/P14-T03; approved at the web UX gate 2026-10-15
+
+### 2026-10-15T13:26:10+04:00 — QG CHECK QG-35.3
+- evidence: The shared tokens and components implement the reference visual language in light and dark (layered surfaces with 1 px borders, card title bar with info and actions, large tabular figures with muted minor part, change pill with period delta, distribution bar and list, chart chrome with tooltip card and segmented range), within the WealthSphere palette (DEC-39); docs/web/WEB_REFERENCE_COMPARISON.md compares reference image 1 with the gallery in both themes; approved by the user at the web UX gate 2026-10-15
+
+### 2026-10-15T13:40:49+04:00 — AWAITING_VERIFICATION P14-T03
+- evidence: Shared token source design/tokens/wealthsphere.tokens.json with generator (mobile BrandPalette identical values, web tokens.css, contrast check, CI drift check) and mobile sync test; web components (figures, cards, states, controls, ChartFrame with table alternative, ECharts line and donut, DistributionBar, DataGrid with exact decimal sorting and aria-sort); /_gallery in light and dark with DEMO data; Playwright gallery tests (axe both themes, behaviour, no overflow at 5 widths) 13/13; 48 Vitest tests; mobile 1,798 tests pass; reference comparison docs/web/WEB_REFERENCE_COMPARISON.md with before/after screenshots. QG-27.1, QG-27.5, QG-35.3 verified. Web UX gate approved by the user 2026-10-15. PR #174. CI all gates pass.
+
+### 2026-10-15T13:40:49+04:00 — COMPLETE P14-T03
+- duration: 1h 38m 12s
+- evidence: Shared token source design/tokens/wealthsphere.tokens.json with generator (mobile BrandPalette identical values, web tokens.css, contrast check, CI drift check) and mobile sync test; web components (figures, cards, states, controls, ChartFrame with table alternative, ECharts line and donut, DistributionBar, DataGrid with exact decimal sorting and aria-sort); /_gallery in light and dark with DEMO data; Playwright gallery tests (axe both themes, behaviour, no overflow at 5 widths) 13/13; 48 Vitest tests; mobile 1,798 tests pass; reference comparison docs/web/WEB_REFERENCE_COMPARISON.md with before/after screenshots. QG-27.1, QG-27.5, QG-35.3 verified. Web UX gate approved by the user 2026-10-15. PR #174. CI all gates pass. · Approved by: user (mtisya@gmail.com), web UX gate 2026-10-15

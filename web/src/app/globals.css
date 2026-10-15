@@ -1,23 +1,71 @@
 @import "tailwindcss";
 @import "../tokens/tokens.css";
 
+/*
+ * Tailwind colour and size utilities backed by the generated design tokens (src/tokens/tokens.css,
+ * from design/tokens/wealthsphere.tokens.json). Use these classes or the CSS variables; colour
+ * literals are rejected by the lint guards.
+ */
 @theme inline {
-  --color-surface: var(--ws-surface);
-  --color-surface-raised: var(--ws-surface-raised);
-  --color-fg: var(--ws-text);
-  --color-fg-muted: var(--ws-text-muted);
-  --color-line: var(--ws-border);
+  --color-primary: var(--ws-primary);
+  --color-on-primary: var(--ws-on-primary);
   --color-accent: var(--ws-accent);
+  --color-on-accent: var(--ws-on-accent);
+  --color-scaffold: var(--ws-scaffold);
+  --color-surface: var(--ws-surface);
+  --color-surface-elevated: var(--ws-surface-elevated);
+  --color-line: var(--ws-border);
+  --color-divider: var(--ws-divider);
+  --color-fg: var(--ws-text-primary);
+  --color-fg-muted: var(--ws-text-muted);
+  --color-positive: var(--ws-positive);
+  --color-positive-text: var(--ws-positive-text);
+  --color-negative: var(--ws-negative);
+  --color-negative-text: var(--ws-negative-text);
+  --color-warning: var(--ws-warning);
+  --color-warning-text: var(--ws-warning-text);
+  --color-risk-low: var(--ws-risk-low);
+  --color-risk-medium: var(--ws-risk-medium);
+  --color-risk-high: var(--ws-risk-high);
+  --color-demo-badge: var(--ws-demo-badge);
+  --color-on-demo-badge: var(--ws-on-demo-badge);
+  --color-stale-banner: var(--ws-stale-banner);
+  --color-on-stale-banner: var(--ws-on-stale-banner);
+  --color-focus: var(--ws-focus);
+  --color-tooltip: var(--ws-tooltip-surface);
+  --color-on-tooltip: var(--ws-on-tooltip);
   --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
+html {
+  font-size: 100%;
+}
+
 body {
-  background: var(--ws-surface);
-  color: var(--ws-text);
+  background: var(--ws-scaffold);
+  color: var(--ws-text-primary);
   font-family: var(--font-sans);
+  font-size: var(--ws-font-size-body);
+}
+
+@media (max-width: 767px) {
+  body {
+    font-size: var(--ws-font-size-body-narrow);
+  }
 }
 
 :focus-visible {
   outline: 2px solid var(--ws-focus);
   outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

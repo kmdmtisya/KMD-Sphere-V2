@@ -16,12 +16,15 @@
     "api:check": "node scripts/api-client.mjs --check"
   },
   "dependencies": {
+    "@tanstack/react-table": "^9.3.1",
+    "echarts": "^6.1.0",
     "next": "16.4.1",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "server-only": "^0.0.1"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.64.1",
     "@tailwindcss/turbopack": "^4",
     "@types/node": "^24.19.2",

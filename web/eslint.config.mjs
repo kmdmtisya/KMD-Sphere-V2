@@ -22,6 +22,12 @@ const eslintConfig = defineConfig([
     files: ["src/tokens/**"],
     rules: { "wealthsphere/no-colour-literals": "off" },
   },
+  {
+    // The single, documented conversion of decimal strings to numbers for chart geometry only;
+    // nothing is calculated from them (see the file's header).
+    files: ["src/lib/chart/plot-values.ts"],
+    rules: { "wealthsphere/no-money-arithmetic": "off" },
+  },
   globalIgnores([
     ".next/**",
     "out/**",
