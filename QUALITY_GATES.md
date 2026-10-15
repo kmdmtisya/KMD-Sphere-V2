@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-16T00:22:26+04:00 by `scripts/track.py`._
+_Generated at 2026-10-16T01:16:07+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -38,20 +38,20 @@ _Generated at 2026-10-16T00:22:26+04:00 by `scripts/track.py`._
 | QG-25 | QG-FXCUR-05: AI Integration | ✅ PASSED | 5/5 | Unassigned | — |
 | QG-26 | QG-WEB-01: Architecture and Integration | 🔄 IN_PROGRESS | 3/5 | Unassigned | — |
 | QG-27 | QG-WEB-02: UI/UX and Design System | 🔄 IN_PROGRESS | 2/9 | Unassigned | — |
-| QG-28 | QG-WEB-03: Functional Parity | 🔄 IN_PROGRESS | 3/9 | Unassigned | — |
+| QG-28 | QG-WEB-03: Functional Parity | 🔄 IN_PROGRESS | 5/9 | Unassigned | — |
 | QG-29 | QG-WEB-04: Authentication and Security | 🔄 IN_PROGRESS | 4/8 | Unassigned | — |
-| QG-30 | QG-WEB-05: Financial Accuracy | 🔄 IN_PROGRESS | 3/6 | Unassigned | — |
+| QG-30 | QG-WEB-05: Financial Accuracy | 🔄 IN_PROGRESS | 5/6 | Unassigned | — |
 | QG-31 | QG-WEB-06: Performance | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
 | QG-32 | QG-WEB-07: Browser Compatibility | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
-| QG-33 | QG-WEB-08: End-to-End Testing | ⬜ NOT_STARTED | 0/11 | Unassigned | — |
+| QG-33 | QG-WEB-08: End-to-End Testing | 🔄 IN_PROGRESS | 1/11 | Unassigned | — |
 | QG-34 | QG-WEB-09: Production Readiness | ⬜ NOT_STARTED | 0/9 | Unassigned | — |
 | QG-35 | QG-WEB-10: Design Reference Compliance | 🔄 IN_PROGRESS | 3/5 | Unassigned | — |
 | QG-36 | QG-WEB-11: Theme Management | 🔄 IN_PROGRESS | 5/8 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 138/228.
+Criteria satisfied overall: 143/228.
 
-Current phase **P14** exit-gate criteria outstanding: QG-26.2, QG-26.4, QG-27.2, QG-27.3, QG-27.4, QG-27.6, QG-27.7, QG-27.8, QG-27.9, QG-28.1, QG-28.2, QG-28.6, QG-28.7, QG-28.8, QG-28.9, QG-29.4, QG-29.5, QG-29.7, QG-29.8, QG-30.2, QG-30.5, QG-30.6, QG-31.1, QG-31.2, QG-31.3, QG-31.4, QG-31.5, QG-31.6, QG-32.1, QG-32.2, QG-32.3, QG-32.4, QG-32.5, QG-32.6, QG-33.1, QG-33.10, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.6, QG-33.7, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9, QG-35.4, QG-35.5, QG-36.1, QG-36.2, QG-36.7.
+Current phase **P14** exit-gate criteria outstanding: QG-26.2, QG-26.4, QG-27.2, QG-27.3, QG-27.4, QG-27.6, QG-27.7, QG-27.8, QG-27.9, QG-28.1, QG-28.2, QG-28.8, QG-28.9, QG-29.4, QG-29.5, QG-29.7, QG-29.8, QG-30.5, QG-31.1, QG-31.2, QG-31.3, QG-31.4, QG-31.5, QG-31.6, QG-32.1, QG-32.2, QG-32.3, QG-32.4, QG-32.5, QG-32.6, QG-33.1, QG-33.10, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.7, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9, QG-35.4, QG-35.5, QG-36.1, QG-36.2, QG-36.7.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -572,8 +572,8 @@ Approved By: —
 - [x] QG-28.3 Create, read, update and delete workflows verified · Required: P14 · By: P14-T08 · Evidence: Create, read, update and delete workflows on the web (P14-T08, web/e2e/portfolio.spec.ts against real Keycloak, API, Redis and PostgreSQL): portfolio create (with duplicate-name refusal), read (list, detail), update (edit) and archive; transactions create (all 14 types supported by the form, per-type validation, server refusal shown) with append-only reversal instead of delete; valuations create, edit and delete; custom assets created from the picker. 8 journeys pass; Bob gets 404 for Alice's portfolio. 2026-10-15 · Verified: 2026-10-15T20:36:51+04:00
 - [x] QG-28.4 Financial analytics verified · Required: P14 · By: P14-T09 · Evidence: Web analytics page (P14-T09): performance, value series with periods, risk, allocation by four dimensions with drill-down and comparison; every figure is the API's; e2e reconciles with the API and passes axe in Light and Dark; another user receives 404. · Verified: 2026-10-15T20:54:56+04:00
 - [x] QG-28.5 AI modules verified · Required: P14 · By: P14-T12 · Evidence: Web AI pages (P14-T12): streamed Copilot via the BFF with checks, sources and the four answer parts; Doctor, opportunities, universe, research, compare and simulate; e2e covers unavailable, streamed answer, refusal, text-only rendering, cross-user 404 and axe. Compare, simulate and non-empty universe were not exercised on the test stack (empty universe); no live model was run. · Verified: 2026-10-16T00:02:46+04:00
-- [ ] QG-28.6 Forex entry verified: hidden when the flag is off; live markets labelled when on (advanced workspace: QG-28.9) · Required: P14 · By: P14-T13
-- [ ] QG-28.7 Currency conversion verified · Required: P14 · By: P14-T14
+- [x] QG-28.6 Forex entry verified: hidden when the flag is off; live markets labelled when on (advanced workspace: QG-28.9) · Required: P14 · By: P14-T13 · Evidence: Forex entry (P14-T13): with the module off the nav entry, the /forex page and the ticket route are absent (e2e, CI); with the API started with FOREX_ENABLED and the simulated feed, /forex connects with a single-use ticket and shows quotes labelled by data type and freshness plus a Simulated badge (local live run, WS_E2E_FOREX=1). · Verified: 2026-10-16T01:16:05+04:00
+- [x] QG-28.7 Currency conversion verified · Required: P14 · By: P14-T14 · Evidence: Currency page (P14-T14): reporting-currency switch saved to the account, converter, FX status and history; e2e verifies the switch persists and the converted amount and rate equal the API's response for the same request. · Verified: 2026-10-16T01:16:06+04:00
 - [ ] QG-28.8 Reports and exports verified · Required: P14 · By: P14-T15
 - [ ] QG-28.9 Advanced Forex web workspace: charts responsive while streaming; data type, feed status and PAPER TRADING labels always shown; no order affordance · Required: P14 · By: P14-T24
 
@@ -581,8 +581,8 @@ Status: IN_PROGRESS
 Owner: Unassigned  
 Start Timestamp: 2026-10-15T20:36:51+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-16T00:02:46+04:00  
-Evidence: 3/9 criteria verified; latest QG-28.5 at 2026-10-16T00:02:46+04:00  
+Verification Timestamp: 2026-10-16T01:16:06+04:00  
+Evidence: 5/9 criteria verified; latest QG-28.7 at 2026-10-16T01:16:06+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -611,18 +611,18 @@ Approved By: —
 ### QG-30: QG-WEB-05: Financial Accuracy
 
 - [x] QG-30.1 Web and mobile portfolio totals reconcile (both equal the API for the same request) · Required: P14 · By: P14-T08 · Evidence: Web side: the portfolio detail totals (total value, cash) are asserted equal to the API response for the same request (GET /portfolios/{id}/summary) after a deposit, after a reversal, and for the holding value after a manual valuation (web/e2e/portfolio.spec.ts), and the dashboard's portfolio value equals /portfolios/consolidated/summary (dashboard.spec.ts); the web formats the API's decimal strings and calculates nothing (lint guard). Mobile side: the app's live repositories read the same endpoints and are tested against the API (P09-T10 e2e). Both equal the API for the same request. 2026-10-15 · Verified: 2026-10-15T20:36:51+04:00 · CRITICAL
-- [ ] QG-30.2 FX conversion matches backend calculations for the same snapshot · Required: P14 · By: P14-T14 · CRITICAL
+- [x] QG-30.2 FX conversion matches backend calculations for the same snapshot · Required: P14 · By: P14-T14 · Evidence: Converter e2e compares the displayed converted amount and rate with POST /fx/convert for the same input (run with a seeded test rate; the stored rate is the backend's, nothing is converted in the browser). · Verified: 2026-10-16T01:16:06+04:00 · CRITICAL
 - [x] QG-30.3 Historical valuation rules match · Required: P14 · By: P14-T08 · Evidence: Historical valuation rules stay in the backend: the web shows each holding's value with the API's value_source, value_as_of and stale flag (stale shown with a chip), and valuations are created with an as_of timestamp that the API applies (latest valuation on or before the date asked for); e2e shows a manual valuation entered on the web is the value the API returns and the web displays for the holding. No valuation rule exists in web/. 2026-10-15 · Verified: 2026-10-15T20:36:51+04:00
 - [x] QG-30.4 Compound-growth outputs match · Required: P14 · By: P14-T10 · Evidence: Web calculator, scenarios, target planner and goals show backend figures only; e2e compares the three scenarios' final values and a goal's gap with the API's responses for the same request; inputs validated and sent as decimal strings. · Verified: 2026-10-15T21:10:42+04:00
 - [ ] QG-30.5 Reporting figures reconcile (screens, reports and exports) · Required: P14 · By: P14-T15 · CRITICAL
-- [ ] QG-30.6 Decimal precision and rounding verified (decimal strings only; ADR-0003, ADR-0006) · Required: P14 · By: P14-T14 · CRITICAL
+- [x] QG-30.6 Decimal precision and rounding verified (decimal strings only; ADR-0003, ADR-0006) · Required: P14 · By: P14-T14 · Evidence: Converter and rate history show the API's decimal strings; amounts are validated as decimal strings and sent as such; the money-arithmetic lint rule stays on and no float conversion of money was added. · Verified: 2026-10-16T01:16:07+04:00 · CRITICAL
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
 Start Timestamp: 2026-10-15T20:36:51+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-15T21:10:42+04:00  
-Evidence: 3/6 criteria verified; latest QG-30.4 at 2026-10-15T21:10:42+04:00  
+Verification Timestamp: 2026-10-16T01:16:07+04:00  
+Evidence: 5/6 criteria verified; latest QG-30.6 at 2026-10-16T01:16:07+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -672,19 +672,19 @@ Approved By: —
 - [ ] QG-33.3 Investment transaction workflows pass · Required: P14 · By: P14-T22
 - [ ] QG-33.4 Currency switching passes · Required: P14 · By: P14-T22
 - [ ] QG-33.5 AI Copilot interaction passes · Required: P14 · By: P14-T22
-- [ ] QG-33.6 Forex journeys pass where implemented (live markets and the advanced workspace) · Required: P14 · By: P14-T13
+- [x] QG-33.6 Forex journeys pass where implemented (live markets and the advanced workspace) · Required: P14 · By: P14-T13 · Evidence: Live-markets journey passes where implemented (P14-T13): ticket minted through the proxy, socket authenticated by ticket, quotes shown, axe clean; the advanced workspace (P14-T24) is not yet built, so only the live-markets part is covered. · Verified: 2026-10-16T01:16:05+04:00
 - [ ] QG-33.7 Cross-platform synchronisation passes · Required: P14 · By: P14-T18 · CRITICAL
 - [ ] QG-33.8 Export and reporting journeys pass · Required: P14 · By: P14-T22
 - [ ] QG-33.9 Web paper-trading journey passes (Chromium, Firefox, WebKit) · Required: P14 · By: P14-T24
 - [ ] QG-33.10 Navigation and routing tests pass · Required: P14 · By: P14-T18
 - [ ] QG-33.11 Frontend unit and component tests pass in CI · Required: P14 · By: P14-T21
 
-Status: NOT_STARTED  
+Status: IN_PROGRESS  
 Owner: Unassigned  
-Start Timestamp: —  
+Start Timestamp: 2026-10-16T01:16:05+04:00  
 End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Verification Timestamp: 2026-10-16T01:16:05+04:00  
+Evidence: 1/11 criteria verified; latest QG-33.6 at 2026-10-16T01:16:05+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —

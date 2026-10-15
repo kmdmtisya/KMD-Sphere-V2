@@ -78,7 +78,15 @@ test("with the module on the page connects with a ticket and shows labelled quot
     "Live quotes connected",
     { timeout: 30_000 },
   );
-  await expect(page.getByRole("table", { name: "Live quotes" })).toBeVisible();
+  const table = page.getByRole("table", { name: "Live quotes" });
+  await expect(table).toBeVisible();
+  // The simulated feed delivers quotes, each labelled with its data type; nothing is shown as a live market.
+  await expect(
+    table.getByRole("cell", { name: "simulated" }).first(),
+  ).toBeVisible({ timeout: 30_000 });
+  await expect(
+    page.getByText("Simulated", { exact: true }).first(),
+  ).toBeVisible();
   await expect(
     page.getByText("places no trades", { exact: false }).first(),
   ).toBeVisible();
