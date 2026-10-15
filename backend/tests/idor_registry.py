@@ -6,9 +6,6 @@ Format: (METHOD, path template) -> "tests.module::test_function".
 """
 
 IDOR_TESTS: dict[tuple[str, str], str] = {
-    ("GET", "/api/v1/reports/{kind}"): (
-        "tests.test_reports_api::test_bob_cannot_report_on_alices_portfolio"
-    ),
     ("GET", "/api/v1/ai/opportunities/runs/{run_id}"): (
         "tests.opportunities.test_opportunities_api::test_bob_cannot_read_alices_opportunity_run"
     ),
@@ -168,6 +165,12 @@ IDOR_TESTS: dict[tuple[str, str], str] = {
 NOT_USER_RESOURCES: dict[tuple[str, str], str] = {
     ("GET", "/api/v1/fx-rates/{base}/{quote}"): "currency codes; FX rates are global market data",
     ("GET", "/api/v1/fx/rates/{base}/{quote}"): "currency codes; FX rates are global market data",
+    ("GET", "/api/v1/reports/{kind}"): (
+        "the kind of report (portfolio, net-worth, goals, ...), not an owned resource; the data "
+        "is the "
+        "caller's own and a portfolio_id that is not theirs is 404 (tests.test_reports_api::"
+        "test_bob_cannot_report_on_alices_portfolio)"
+    ),
     ("GET", "/api/v1/forex/backtests/{report_hash}"): (
         "the content hash of a backtest report: global reference data made by a job from shared "
         "bars, with no owner (tests.forex.test_backtest_api::"
