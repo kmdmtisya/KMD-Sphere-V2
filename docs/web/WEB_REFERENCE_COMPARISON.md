@@ -1,6 +1,6 @@
 # Web portal: reference comparison sheets (P14-T03.6, QG-35.3)
 
-**Date:** 2026-10-15. **Compared:** the design references and the web design system gallery (`/_gallery`, DEMO data) in light and dark. The gallery's sample dashboard is composed like reference image 1, so the visual language can be judged before the real pages exist. Later tasks add the full screens and repeat the comparison: the shell in P14-T06, the dashboard in P14-T07, the forex workspace in P14-T24, and the final review in P14-T20.6.
+**Date:** 2026-10-15. **Status:** approved by the user at the web UX gate (2026-10-15). **Compared:** the design references and the web design system gallery (`/_gallery`, DEMO data) in light and dark. The gallery's sample dashboard is composed like reference image 1, so the visual language can be judged before the real pages exist. Later tasks add the full screens and repeat the comparison: the shell in P14-T06, the dashboard in P14-T07, the forex workspace in P14-T24, and the final review in P14-T20.6.
 
 ## Before and after
 

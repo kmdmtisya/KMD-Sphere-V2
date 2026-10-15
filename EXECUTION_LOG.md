@@ -2104,3 +2104,15 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-15T12:02:37+04:00 — START P14-T03
 - WEB-03 Web design system and UX specification
 - prerequisites verified COMPLETED
+
+### 2026-10-15T13:26:09+04:00 — QG START QG-27
+- QG-WEB-02: UI/UX and Design System
+
+### 2026-10-15T13:26:10+04:00 — QG CHECK QG-27.1
+- evidence: design/tokens/wealthsphere.tokens.json is the single source; scripts/generate_tokens.py generates the mobile BrandPalette (identical values, goldens unaffected) and web/src/tokens/tokens.css; --check runs in the web CI and fails on drift; mobile token_source_sync_test proves WealthColors roles and chart series match; web components use only token classes and variables (no-colour-literals lint + CSS check). Approved at the web UX gate by the user 2026-10-15 (PR #174)
+
+### 2026-10-15T13:26:10+04:00 — QG CHECK QG-27.5
+- evidence: Light and dark verified: generated tokens for light, dark and system (prefers-color-scheme in CSS); generator contrast check passes every text pair at 4.5:1 and non-text at 3:1 in both themes; gallery shows every component in both themes, axe finds no serious or critical WCAG 2.2 AA violation in either (web/e2e/gallery.spec.ts), smoke test proves System follows the browser scheme live; screenshots at five widths in docs/design/screenshots/p14/after/P14-T03; approved at the web UX gate 2026-10-15
+
+### 2026-10-15T13:26:10+04:00 — QG CHECK QG-35.3
+- evidence: The shared tokens and components implement the reference visual language in light and dark (layered surfaces with 1 px borders, card title bar with info and actions, large tabular figures with muted minor part, change pill with period delta, distribution bar and list, chart chrome with tooltip card and segmented range), within the WealthSphere palette (DEC-39); docs/web/WEB_REFERENCE_COMPARISON.md compares reference image 1 with the gallery in both themes; approved by the user at the web UX gate 2026-10-15

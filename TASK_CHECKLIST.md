@@ -1422,7 +1422,7 @@
   - [x] P14-T03.2 Web component library
   - [x] P14-T03.3 Charts and data grid
   - [x] P14-T03.4 Component gallery and visual tests
-  - [ ] P14-T03.5 UX specification review
+  - [x] P14-T03.5 UX specification review
   - [x] P14-T03.6 Reference comparison sheets
 - [x] **P14-T04** · WEB-04 Web application foundation · `COMPLETED` ✅
   - Deps: P14-T02 · Wave: W3 · Track: WEB · Size: L · Approval: no
