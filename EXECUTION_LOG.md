@@ -2038,3 +2038,6 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 - Gates: QG-35 (Design Reference Compliance) and QG-36 (Theme Management) added; QG-27.7–27.9, QG-33.10–33.11 and QG-34.9 added; P14-GATE and the P14-T23 start gate include QG-35 and QG-36.
 - New open decisions: DEC-39 (brand accent: keep the shared tokens, proposed) and DEC-40 (sync the mobile appearance to /me/preferences, proposed).
 - Before screenshots: no web portal exists yet; the baseline is the reference images plus the mobile Home in light and dark (docs/design/screenshots/p14/before).
+
+### 2026-10-15T10:57:10+04:00 — PLAN CHANGE approved — P14 reference-driven UI, P14-T25, QG-35 and QG-36
+- The user approved the P14 plan change ("plan approved", 2026-10-15). DEC-39 (brand accent) and DEC-40 (mobile appearance sync) remain open with their proposed defaults; they are confirmed before P14-T03 and P14-T18. The phase name stays "Enterprise Web Portal".

@@ -1,6 +1,6 @@
 # Web portal: appearance (Light, Dark, System) design (P14, alias P14-UI-07 to P14-UI-10)
 
-**Status:** Proposed (2026-10-15), with the P14 plan change. It assumes the proposed stack (Next.js with a Backend-for-Frontend, ADR-0018). If P14-T02 chooses Flutter Web, the preference, its storage and the behaviour below stay the same, and only §4 changes (Flutter `ThemeMode` plus a bootstrap in `index.html`).
+**Status:** Approved with the P14 plan change by the user on 2026-10-15. It assumes the proposed stack (Next.js with a Backend-for-Frontend, ADR-0018). If P14-T02 chooses Flutter Web, the preference, its storage and the behaviour below stay the same, and only §4 changes (Flutter `ThemeMode` plus a bootstrap in `index.html`).
 
 ## 1. Requirements
 

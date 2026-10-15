@@ -1,6 +1,6 @@
 # Web portal: design reference analysis (P14, alias P14-UI-01 and P14-UI-02)
 
-**Status:** Proposed (2026-10-15). It is reviewed with the P14 plan change and again at the web UX gate (P14-T03).
+**Status:** Approved with the P14 plan change by the user on 2026-10-15. It is reviewed again at the web UX gate (P14-T03). DEC-39 (brand accent) is still open: the shared WealthSphere palette is the default until the user decides, before P14-T03.
 
 **Inputs:** the reference images in [docs/design/references](../design/references), the [web UI/UX specification](WEB_UI_UX_SPECIFICATION.md), the mobile design system (`mobile/wealthsphere_app/lib/shared/design_system`) and the project rules in CLAUDE.md.
 
