@@ -1479,14 +1479,14 @@
   - [x] P14-T09.3 Risk
   - [x] P14-T09.4 Comparisons and drill-down
   - [x] P14-T09.5 Tests
-- [ ] **P14-T10** · WEB-10 Compounding, forecasting and goals · `NOT_STARTED` ⬜
+- [ ] **P14-T10** · WEB-10 Compounding, forecasting and goals · `IN_PROGRESS` 🔄
   - Deps: P14-T05, P14-T06 · Wave: W7 · Track: WEB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-15T21:04:12+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T10.1 Compounding calculator
-  - [ ] P14-T10.2 Forecast scenarios
-  - [ ] P14-T10.3 Goals
-  - [ ] P14-T10.4 Tests
+  - [x] P14-T10.1 Compounding calculator
+  - [x] P14-T10.2 Forecast scenarios
+  - [x] P14-T10.3 Goals
+  - [x] P14-T10.4 Tests
 - [ ] **P14-T11** · WEB-11 Net worth and passive income · `NOT_STARTED` ⬜
   - Deps: P14-T05, P14-T06 · Wave: W7 · Track: WEB · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
