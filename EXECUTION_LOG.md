@@ -2079,3 +2079,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-15T11:23:43+04:00 — QG CHECK QG-26.5
 - evidence: ADR-0018 accepted by the user on 2026-10-15 (DEC-30 Next.js with BFF, DEC-31 BFF session model): repository evidence refreshed after P13, comparison across code reuse, parity, maintenance, desktop UX, charts, grids, authentication, accessibility, performance, testing, cost, security, productivity, scalability and theming; stack with npm-registry licences (all runtime MIT/Apache-2.0)
+
+### 2026-10-15T11:34:50+04:00 — AWAITING_VERIFICATION P14-T02
+- evidence: ADR-0018 accepted by the user 2026-10-15 (DEC-30 Next.js with BFF, DEC-31 BFF session model); comparison refreshed with repository evidence after P13 plus scalability and theming; stack and licence review from the npm registry (all runtime MIT or Apache-2.0, axe-core MPL-2.0 test-only); docs/web/WEB_PORTAL_ARCHITECTURE.md approved; DEC-39 and DEC-40 resolved; QG-26.1 and QG-26.5 verified. PR #172. CI all gates pass.
+
+### 2026-10-15T11:34:50+04:00 — COMPLETE P14-T02
+- duration: 13m 12s
+- evidence: ADR-0018 accepted by the user 2026-10-15 (DEC-30 Next.js with BFF, DEC-31 BFF session model); comparison refreshed with repository evidence after P13 plus scalability and theming; stack and licence review from the npm registry (all runtime MIT or Apache-2.0, axe-core MPL-2.0 test-only); docs/web/WEB_PORTAL_ARCHITECTURE.md approved; DEC-39 and DEC-40 resolved; QG-26.1 and QG-26.5 verified. PR #172. CI all gates pass. · Approved by: user (mtisya@gmail.com), 2026-10-15

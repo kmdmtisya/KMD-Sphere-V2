@@ -1406,10 +1406,10 @@
   - [x] P14-T01.5 Design reference catalogue
   - [x] P14-T01.6 Reference-to-screen mapping
   - [x] P14-T01.7 Component audit
-- [ ] **P14-T02** · WEB-02 Architecture evaluation and ADR · `IN_PROGRESS` 🔄
+- [x] **P14-T02** · WEB-02 Architecture evaluation and ADR · `COMPLETED` ✅
   - Deps: P14-T01 · Wave: W2 · Track: DOC · Size: M · Approval: yes
-  - Started: 2026-10-15T11:21:38+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-15T11:21:38+04:00 · Completed: 2026-10-15T11:34:50+04:00 · Duration: 13m 12s · Blocker: —
+  - Evidence: ADR-0018 accepted by the user 2026-10-15 (DEC-30 Next.js with BFF, DEC-31 BFF session model); comparison refreshed with repository evidence after P13 plus scalability and theming; stack and licence review from the npm registry (all runtime MIT or Apache-2.0, axe-core MPL-2.0 test-only); docs/web/WEB_PORTAL_ARCHITECTURE.md approved; DEC-39 and DEC-40 resolved; QG-26.1 and QG-26.5 verified. PR #172. CI all gates pass. · Approved by: user (mtisya@gmail.com), 2026-10-15
   - [x] P14-T02.1 Option comparison
   - [x] P14-T02.2 Session and security model
   - [x] P14-T02.3 Stack and licence review
