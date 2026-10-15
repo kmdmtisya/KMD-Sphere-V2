@@ -40,6 +40,8 @@ export default defineConfig({
   use: {
     baseURL: `http://127.0.0.1:${PORT}`,
     trace: "retain-on-failure",
+    // Colour transitions would otherwise be caught half-way by the contrast checks after a theme switch.
+    reducedMotion: "reduce",
   },
   // Chromium on every run; the full browser matrix (Firefox, WebKit, Edge) arrives with P14-T20.
   // WS_PLAYWRIGHT_CHANNEL=chrome uses an installed Google Chrome where the bundled browser cannot be
