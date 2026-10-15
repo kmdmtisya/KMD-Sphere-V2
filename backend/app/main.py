@@ -63,6 +63,7 @@ from app.modules.notifications import api as notifications_api
 from app.modules.opportunities import api as opportunities_api
 from app.modules.portfolio import analytics_api, summary_api
 from app.modules.portfolio import api as portfolio_api
+from app.modules.reports import api as reports_api
 from app.modules.research import api as research_api
 from app.modules.scoring import api as scoring_api
 from app.modules.search import api as search_api
@@ -195,6 +196,10 @@ def create_app(
                 "description": "Goals and their progress under stated assumptions (estimates)",
             },
             {
+                "name": "reports",
+                "description": "PDF, CSV and XLSX files of the user's own figures (P14-T15)",
+            },
+            {
                 "name": "search",
                 "description": "Search across the signed-in user's own portfolios, goals, "
                 "liabilities and assets (P14-T07)",
@@ -283,6 +288,7 @@ def create_app(
     app.include_router(market_data_api.prices_router)
     app.include_router(valuations_api.router)
     app.include_router(search_api.router)
+    app.include_router(reports_api.router)
     app.include_router(forecasting_api.router)
     app.include_router(goals_api.router)
     app.include_router(networth_api.router)

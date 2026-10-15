@@ -11,7 +11,7 @@ import { serverConfig } from "@/lib/server/config";
  * the authority on what the user may see. Cookies never go upstream and tokens never come back.
  */
 const REQUEST_HEADERS = ["accept", "accept-language", "content-type", "if-match", "if-none-match", "x-correlation-id"];
-const RESPONSE_HEADERS = ["content-type", "etag", "retry-after", "x-correlation-id", "location"];
+const RESPONSE_HEADERS = ["content-type", "content-disposition", "etag", "retry-after", "x-correlation-id", "location"];
 const MAX_BODY_BYTES = 1_000_000;
 
 const json = (status: number, detail: string) =>

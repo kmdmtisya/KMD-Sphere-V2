@@ -1521,14 +1521,14 @@
   - [x] P14-T14.2 Converter
   - [x] P14-T14.3 FX status and history
   - [x] P14-T14.4 Tests
-- [ ] **P14-T15** · WEB-15 Reports and exports · `NOT_STARTED` ⬜
+- [x] **P14-T15** · WEB-15 Reports and exports · `COMPLETED` ✅
   - Deps: P14-T08, P14-T09, P14-T10, P14-T11, P14-T14 · Wave: W8 · Track: BE · Size: XL · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P14-T15.1 Report formats decision
-  - [ ] P14-T15.2 Report service and endpoints
-  - [ ] P14-T15.3 Web report catalogue
-  - [ ] P14-T15.4 Tests
+  - Started: 2026-10-16T01:27:10+04:00 · Completed: 2026-10-16T02:33:27+04:00 · Duration: 1h 06m 17s · Blocker: —
+  - Evidence: Backend: 7 renderer + 5 API tests pass (ruff, mypy clean); web unit 127 pass; e2e reports spec 5 pass, shell spec 15 pass. QG-28.8 and QG-30.5 checked. DEC-33 resolved under the advance approval. PR #186. CI all gates pass. · Approved by: user (mtisya@gmail.com), advance approval 2026-10-15 (P14 sequence)
+  - [x] P14-T15.1 Report formats decision
+  - [x] P14-T15.2 Report service and endpoints
+  - [x] P14-T15.3 Web report catalogue
+  - [x] P14-T15.4 Tests
 - [ ] **P14-T16** · WEB-16 Profile, settings and notifications · `NOT_STARTED` ⬜
   - Deps: P14-T05, P14-T06 · Wave: W7 · Track: WEB · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

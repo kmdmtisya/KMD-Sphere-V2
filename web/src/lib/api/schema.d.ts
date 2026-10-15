@@ -1947,6 +1947,47 @@ export interface paths {
         patch: operations["update_valuation_api_v1_portfolios__portfolio_id__valuations__valuation_id__patch"];
         trace?: never;
     };
+    "/api/v1/reports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Reports
+         * @description The reports that can be generated, and the formats of each.
+         */
+        get: operations["list_reports_api_v1_reports_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reports/{kind}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Report
+         * @description A file of the user's own figures with the time they were generated, the currency, the
+         *     data as-of time and the disclosures. The figures equal the screens' for the same request.
+         */
+        get: operations["get_report_api_v1_reports__kind__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/research": {
         parameters: {
             query?: never;
@@ -7049,6 +7090,19 @@ export interface components {
             code: string;
             /** Message */
             message: string;
+        };
+        /** ReportInfo */
+        ReportInfo: {
+            /** Description */
+            description: string;
+            /** Formats */
+            formats: string[];
+            /** Kind */
+            kind: string;
+            /** Needs Portfolio */
+            needs_portfolio: boolean;
+            /** Title */
+            title: string;
         };
         /**
          * ReportingOut
@@ -14148,6 +14202,103 @@ export interface operations {
                 content?: never;
             };
             /** @description Invalid change */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Rate limit exceeded (docs/security.md, API protection) */
+            429: {
+                headers: {
+                    /** @description Seconds to wait before retrying */
+                    "Retry-After"?: number;
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    list_reports_api_v1_reports_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReportInfo"][];
+                };
+            };
+            /** @description Missing, invalid or expired access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Rate limit exceeded (docs/security.md, API protection) */
+            429: {
+                headers: {
+                    /** @description Seconds to wait before retrying */
+                    "Retry-After"?: number;
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_report_api_v1_reports__kind__get: {
+        parameters: {
+            query?: {
+                /** @description File format */
+                format?: "csv" | "xlsx" | "pdf";
+                /** @description Required for portfolio and performance */
+                portfolio_id?: string | null;
+                /** @description Report currency where the report converts; default: the account's */
+                currency?: string | null;
+            };
+            header?: never;
+            path: {
+                kind: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The report file */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/pdf": unknown;
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": unknown;
+                    "text/csv; charset=utf-8": unknown;
+                };
+            };
+            /** @description Missing, invalid or expired access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description No such report or portfolio for this user */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Invalid portfolio or currency */
             422: {
                 headers: {
                     [name: string]: unknown;

@@ -28,6 +28,8 @@ dependencies = [
   "statsmodels>=0.14.4",
   "lightgbm>=4.5",
   "xgboost-cpu>=2.1",
+  "openpyxl>=3.1",
+  "reportlab>=4.2",
 ]
 
 [dependency-groups]
@@ -67,10 +69,11 @@ strict = true
 plugins = ["pydantic.mypy"]
 files = ["app", "tests"]
 
-# The statistical and machine-learning libraries of the forex forecaster (P13-T05, DEC-22) ship
+# The statistical and machine-learning libraries (and reportlab, used by the report renderer,
+# app/modules/reports/render.py) of the forex forecaster (P13-T05, DEC-22) ship
 # without type information. Their use is confined to app/modules/forex/forecast.
 [[tool.mypy.overrides]]
-module = ["sklearn.*", "statsmodels.*", "lightgbm.*", "xgboost.*", "scipy.*"]
+module = ["sklearn.*", "statsmodels.*", "lightgbm.*", "xgboost.*", "scipy.*", "reportlab.*", "openpyxl.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]
