@@ -1606,10 +1606,10 @@
   - [ ] P14-T24.4 Paper trading and journal
   - [ ] P14-T24.5 Forex Copilot and alerts
   - [ ] P14-T24.6 Tests
-- [ ] **P14-T25** · WEB-25 Appearance: Light, Dark and System · `IN_PROGRESS` 🔄
+- [x] **P14-T25** · WEB-25 Appearance: Light, Dark and System · `COMPLETED` ✅
   - Deps: P14-T03, P14-T05 · Wave: W5 · Track: WEB · Size: M · Approval: no
-  - Started: 2026-10-15T15:19:53+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-15T15:19:53+04:00 · Completed: 2026-10-15T16:09:51+04:00 · Duration: 49m 58s · Blocker: —
+  - Evidence: Appearance (Light, Dark, System): AppearanceSelector and ThemeCycleButton; html data-theme-pref with __Host-ws_theme cookie, BroadcastChannel cross-tab sync, PATCH /me/preferences when signed in and account theme copied at sign-in; inline boot script before first paint (QG-36.6 wording updated by recorded scope change); charts, tables and dialogs follow; 81 unit tests; Playwright 26/26 incl. first-frame, live System, no-JS, cross-tab, chart/dialog, keyboard, axe light/dark and account sync against real Keycloak; screenshots docs/design/screenshots/p14/after/P14-T25. QG-36.3, 36.4, 36.5, 36.6, 36.8 verified. PR #176. CI all gates pass.
   - [x] P14-T25.1 Light theme
   - [x] P14-T25.2 Dark theme
   - [x] P14-T25.3 System mode and persistence
