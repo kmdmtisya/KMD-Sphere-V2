@@ -2030,3 +2030,11 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-15T00:24:46+04:00 — COMPLETE P13-GATE
 - duration: 3m 09s
 - evidence: P13 exit gate: QG-13..QG-19 passed and QG-20.3, QG-20.4, QG-20.5 verified (qg require satisfied); gate summary reports/quality/p13-gate-summary.md; module built and not released (forex refused outside local and test); QG-20.1 and QG-20.2 moved to P17-T09 by the user plan change of 2026-10-14 (PR #168), not waived. Approved by the user on 2026-10-14 (run P13-T14 and P13-GATE to completion). PR #169. CI all gates pass. · Approved by: user (mtisya@gmail.com), 2026-10-14
+
+### 2026-10-15T10:06:39+04:00 — PLAN CHANGE (proposed) — P14 reference-driven UI, appearance task P14-T25, gates QG-35 and QG-36
+- Requested by the user (2026-10-15): the portal follows the images in docs/design/references and has a persistent Light / Dark / System appearance setting, with mandatory gates. Not approved yet: no P14 task is started until the user approves.
+- Both reference images were opened and analysed (docs/web/WEB_DESIGN_REFERENCE_ANALYSIS.md). Both are dark-only, third-party concept designs; their trading, advice and branding elements conflict with project rules and are excluded.
+- Reconciled with the existing plan: the P14-UI-01..14 items map onto existing tasks as aliases (tracker ids stay Pnn-Tnn). Added: P14-T01.5–T01.7, P14-T03.6, P14-T20.6 and the new task P14-T25 (WEB-25 Appearance, Wave W5, parallel with T06). T19, T20 and P14-GATE now depend on T25.
+- Gates: QG-35 (Design Reference Compliance) and QG-36 (Theme Management) added; QG-27.7–27.9, QG-33.10–33.11 and QG-34.9 added; P14-GATE and the P14-T23 start gate include QG-35 and QG-36.
+- New open decisions: DEC-39 (brand accent: keep the shared tokens, proposed) and DEC-40 (sync the mobile appearance to /me/preferences, proposed).
+- Before screenshots: no web portal exists yet; the baseline is the reference images plus the mobile Home in light and dark (docs/design/screenshots/p14/before).
