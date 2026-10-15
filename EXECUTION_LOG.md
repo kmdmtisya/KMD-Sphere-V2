@@ -2281,3 +2281,36 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-16T00:22:26+04:00 — START P14-T13
 - WEB-13 Forex live markets entry
 - prerequisites verified COMPLETED
+
+### 2026-10-16T00:59:44+04:00 — START P14-T14
+- WEB-14 Multi-currency conversion
+- prerequisites verified COMPLETED
+
+### 2026-10-16T01:16:05+04:00 — QG CHECK QG-28.6
+- evidence: Forex entry (P14-T13): with the module off the nav entry, the /forex page and the ticket route are absent (e2e, CI); with the API started with FOREX_ENABLED and the simulated feed, /forex connects with a single-use ticket and shows quotes labelled by data type and freshness plus a Simulated badge (local live run, WS_E2E_FOREX=1).
+
+### 2026-10-16T01:16:05+04:00 — QG CHECK QG-33.6
+- evidence: Live-markets journey passes where implemented (P14-T13): ticket minted through the proxy, socket authenticated by ticket, quotes shown, axe clean; the advanced workspace (P14-T24) is not yet built, so only the live-markets part is covered.
+
+### 2026-10-16T01:16:05+04:00 — AWAITING_VERIFICATION P14-T13
+- evidence: API: POST /forex/stream-ticket (single use, 30 s, hash only, token expiry kept) with unit and API/socket tests in CI; BFF: GET /api/forex/stream-url, WS_FOREX_STREAM_URL validated; web Live markets page. e2e: module off (CI) and module on with the simulated feed (local). PR #184 CI green.
+
+### 2026-10-16T01:16:06+04:00 — COMPLETE P14-T13
+- duration: 53m 40s
+- evidence: Flag-aware entry, ticket flow and live markets page built and verified end to end (module off in CI, module on locally with the simulated feed); QG-28.6 and QG-33.6 checked for the live-markets part. PR #184.
+
+### 2026-10-16T01:16:06+04:00 — QG CHECK QG-28.7
+- evidence: Currency page (P14-T14): reporting-currency switch saved to the account, converter, FX status and history; e2e verifies the switch persists and the converted amount and rate equal the API's response for the same request.
+
+### 2026-10-16T01:16:06+04:00 — QG CHECK QG-30.2
+- evidence: Converter e2e compares the displayed converted amount and rate with POST /fx/convert for the same input (run with a seeded test rate; the stored rate is the backend's, nothing is converted in the browser).
+
+### 2026-10-16T01:16:07+04:00 — QG CHECK QG-30.6
+- evidence: Converter and rate history show the API's decimal strings; amounts are validated as decimal strings and sent as such; the money-arithmetic lint rule stays on and no float conversion of money was added.
+
+### 2026-10-16T01:21:32+04:00 — AWAITING_VERIFICATION P14-T14
+- evidence: Unit 127 pass; e2e vs Keycloak+API: currency spec 5 pass (switch persisted, converter equals API with a seeded rate, malformed amount, status/history, axe light/dark), full suite no failures, forex spec passes with forex off and on; tsc, eslint clean. QG-28.7, QG-30.2, QG-30.6 checked. PR #185. CI all gates pass.
+
+### 2026-10-16T01:21:32+04:00 — COMPLETE P14-T14
+- duration: 21m 48s
+- evidence: Unit 127 pass; e2e vs Keycloak+API: currency spec 5 pass (switch persisted, converter equals API with a seeded rate, malformed amount, status/history, axe light/dark), full suite no failures, forex spec passes with forex off and on; tsc, eslint clean. QG-28.7, QG-30.2, QG-30.6 checked. PR #185. CI all gates pass.

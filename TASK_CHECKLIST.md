@@ -1505,22 +1505,22 @@
   - [x] P14-T12.4 Opportunities, compare and simulate
   - [x] P14-T12.5 Universe and research
   - [x] P14-T12.6 Tests
-- [ ] **P14-T13** · WEB-13 Forex live markets entry · `IN_PROGRESS` 🔄
+- [x] **P14-T13** · WEB-13 Forex live markets entry · `COMPLETED` ✅
   - Deps: P14-T06 · Wave: W8 · Track: WEB · Size: M · Approval: no
-  - Started: 2026-10-16T00:22:26+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-16T00:22:26+04:00 · Completed: 2026-10-16T01:16:06+04:00 · Duration: 53m 40s · Blocker: —
+  - Evidence: Flag-aware entry, ticket flow and live markets page built and verified end to end (module off in CI, module on locally with the simulated feed); QG-28.6 and QG-33.6 checked for the live-markets part. PR #184.
   - [x] P14-T13.1 Flag-aware entry
   - [x] P14-T13.2 WebSocket ticket (API and BFF)
-  - [ ] P14-T13.3 Live markets page
-  - [ ] P14-T13.4 Tests
-- [ ] **P14-T14** · WEB-14 Multi-currency conversion · `NOT_STARTED` ⬜
+  - [x] P14-T13.3 Live markets page
+  - [x] P14-T13.4 Tests
+- [x] **P14-T14** · WEB-14 Multi-currency conversion · `COMPLETED` ✅
   - Deps: P14-T05, P14-T06 · Wave: W7 · Track: WEB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P14-T14.1 Reporting-currency switch
-  - [ ] P14-T14.2 Converter
-  - [ ] P14-T14.3 FX status and history
-  - [ ] P14-T14.4 Tests
+  - Started: 2026-10-16T00:59:44+04:00 · Completed: 2026-10-16T01:21:32+04:00 · Duration: 21m 48s · Blocker: —
+  - Evidence: Unit 127 pass; e2e vs Keycloak+API: currency spec 5 pass (switch persisted, converter equals API with a seeded rate, malformed amount, status/history, axe light/dark), full suite no failures, forex spec passes with forex off and on; tsc, eslint clean. QG-28.7, QG-30.2, QG-30.6 checked. PR #185. CI all gates pass.
+  - [x] P14-T14.1 Reporting-currency switch
+  - [x] P14-T14.2 Converter
+  - [x] P14-T14.3 FX status and history
+  - [x] P14-T14.4 Tests
 - [ ] **P14-T15** · WEB-15 Reports and exports · `NOT_STARTED` ⬜
   - Deps: P14-T08, P14-T09, P14-T10, P14-T11, P14-T14 · Wave: W8 · Track: BE · Size: XL · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —

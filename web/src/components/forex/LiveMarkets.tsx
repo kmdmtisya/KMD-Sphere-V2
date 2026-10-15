@@ -42,8 +42,14 @@ const FEED = {
   disconnected: "Feed disconnected: quotes are not current",
 } as const;
 
-const fetchStreamUrl = async () =>
-  (await apiGet<{ url: string }>("forex/stream-url")).url;
+const fetchStreamUrl = async (): Promise<string> => {
+  // The portal's own route (not the API proxy): it knows the socket address.
+  const response = await fetch("/api/forex/stream-url", {
+    headers: { accept: "application/json" },
+  });
+  if (!response.ok) throw new Error("no stream address");
+  return ((await response.json()) as { url: string }).url;
+};
 const mintTicket = async () =>
   (await apiPost<{ ticket: string }>("forex/stream-ticket", {})).ticket;
 
