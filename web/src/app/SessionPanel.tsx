@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import Link from "next/link";
 
 import { Button } from "@/components/controls/controls";
 import { authRuntime, CSRF_COOKIE, SESSION_COOKIE } from "@/lib/server/auth/runtime";
@@ -21,6 +22,8 @@ export async function SessionPanel() {
   }
   if (!record) {
     return (
+      // A full navigation to a route handler that redirects to Keycloak: a client-side Link would prefetch it.
+      // eslint-disable-next-line @next/next/no-html-link-for-pages
       <a
         href="/api/auth/login"
         className="inline-flex min-h-9 w-fit items-center rounded-[var(--ws-radius-control)] bg-primary px-4 font-semibold text-on-primary"
@@ -35,6 +38,9 @@ export async function SessionPanel() {
       <p>
         Signed in as <strong data-testid="signed-in-as">{who}</strong>
       </p>
+      <Link href="/home" className="inline-flex min-h-9 items-center rounded-[var(--ws-radius-control)] bg-primary px-4 font-semibold text-on-primary">
+        Open the portal
+      </Link>
       <input type="hidden" name="csrf" value={jar.get(CSRF_COOKIE)?.value ?? ""} />
       <Button type="submit">Sign out</Button>
     </form>

@@ -1442,15 +1442,15 @@
   - [x] P14-T05.3 Session store and cookies
   - [x] P14-T05.4 CSRF and proxy allow-list
   - [x] P14-T05.5 Security tests
-- [ ] **P14-T06** · WEB-06 Application shell and navigation · `NOT_STARTED` ⬜
+- [ ] **P14-T06** · WEB-06 Application shell and navigation · `IN_PROGRESS` 🔄
   - Deps: P14-T03, P14-T05 · Wave: W5 · Track: WEB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-15T16:46:09+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T06.1 Shell layout
-  - [ ] P14-T06.2 Navigation and routes
-  - [ ] P14-T06.3 Top-bar controls
-  - [ ] P14-T06.4 Right panel
-  - [ ] P14-T06.5 Responsive and keyboard tests
+  - [x] P14-T06.1 Shell layout
+  - [x] P14-T06.2 Navigation and routes
+  - [x] P14-T06.3 Top-bar controls
+  - [x] P14-T06.4 Right panel
+  - [x] P14-T06.5 Responsive and keyboard tests
 - [ ] **P14-T07** · WEB-07 Home and executive dashboards · `NOT_STARTED` ⬜
   - Deps: P14-T05, P14-T06 · Wave: W6 · Track: WEB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

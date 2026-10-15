@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { SignInTransaction } from "@/lib/server/auth/oidc";
 import { setAuthRuntimeForTests, type AuthRuntime } from "@/lib/server/auth/runtime";
 import { seal } from "@/lib/server/auth/seal";
+import { serverConfig } from "@/lib/server/config";
 import { createSession } from "@/lib/server/auth/session";
 import { MemorySessionStore } from "@/lib/server/auth/store";
 
@@ -96,7 +97,7 @@ describe("sign-in", () => {
     expect(cookie(r, "__Host-ws_theme")).toMatch(/^__Host-ws_theme=dark;/);
     expect(cookie(r, "__Host-ws_theme")).not.toMatch(/HttpOnly/i);
     const [meUrl, meInit] = fetchSpy.mock.calls[0] as [URL, RequestInit];
-    expect(String(meUrl)).toBe("http://127.0.0.1:8000/api/v1/me");
+    expect(String(meUrl)).toBe(new URL("/api/v1/me", serverConfig().apiBaseUrl).href);
     expect(new Headers(meInit.headers).get("authorization")).toBe("Bearer access-1");
   });
 
@@ -158,7 +159,7 @@ describe("proxy", () => {
     const r = await proxyGet(new Request(`${PUBLIC}/api/proxy/me?x=1`, { headers }), ctx(["me"]));
     expect(r.status).toBe(200);
     const [url, init] = fetchSpy.mock.calls[0] as [URL, RequestInit];
-    expect(String(url)).toBe("http://127.0.0.1:8000/api/v1/me?x=1");
+    expect(String(url)).toBe(new URL("/api/v1/me?x=1", serverConfig().apiBaseUrl).href);
     const sent = new Headers(init.headers);
     expect(sent.get("authorization")).toBe("Bearer access-1");
     expect(sent.get("cookie")).toBeNull();

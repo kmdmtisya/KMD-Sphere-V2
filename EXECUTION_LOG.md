@@ -2182,3 +2182,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-15T16:09:52+04:00 — COMPLETE P14-T25
 - duration: 49m 58s
 - evidence: Appearance (Light, Dark, System): AppearanceSelector and ThemeCycleButton; html data-theme-pref with __Host-ws_theme cookie, BroadcastChannel cross-tab sync, PATCH /me/preferences when signed in and account theme copied at sign-in; inline boot script before first paint (QG-36.6 wording updated by recorded scope change); charts, tables and dialogs follow; 81 unit tests; Playwright 26/26 incl. first-frame, live System, no-JS, cross-tab, chart/dialog, keyboard, axe light/dark and account sync against real Keycloak; screenshots docs/design/screenshots/p14/after/P14-T25. QG-36.3, 36.4, 36.5, 36.6, 36.8 verified. PR #176. CI all gates pass.
+
+### 2026-10-15T16:46:09+04:00 — START P14-T06
+- WEB-06 Application shell and navigation
+- prerequisites verified COMPLETED
