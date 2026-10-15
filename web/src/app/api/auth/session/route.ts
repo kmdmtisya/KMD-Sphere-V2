@@ -1,4 +1,8 @@
-import { authRuntime, cookieFrom, SESSION_COOKIE } from "@/lib/server/auth/runtime";
+import {
+  authRuntime,
+  cookieFrom,
+  SESSION_COOKIE,
+} from "@/lib/server/auth/runtime";
 import { readSession } from "@/lib/server/auth/session";
 
 /**
@@ -21,10 +25,17 @@ export async function GET(request: Request) {
   return Response.json(
     {
       signedIn: true,
-      user: { name: record.user.name ?? null, email: record.user.email ?? null },
+      user: {
+        name: record.user.name ?? null,
+        email: record.user.email ?? null,
+      },
+      // Where the identity provider lets the user change their password and manage MFA (a link, never a token).
+      accountUrl: `${runtime.settings.issuer.toString().replace(/\/$/, "")}/account`,
       expiresAt: {
         idle: new Date(record.lastSeenAt + idleSeconds * 1000).toISOString(),
-        absolute: new Date(record.createdAt + absoluteSeconds * 1000).toISOString(),
+        absolute: new Date(
+          record.createdAt + absoluteSeconds * 1000,
+        ).toISOString(),
       },
     },
     { headers },
