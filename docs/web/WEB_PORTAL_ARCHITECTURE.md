@@ -58,7 +58,7 @@ mobile/                      unchanged, apart from consuming the generated Dart 
 | Authorisation | Unchanged and server-side: ownership is checked on every resource (ADR-0011, 404 for another user's resource), and a role is checked for operator views (DEC-34). Hidden UI is never the control |
 | Rate limits | The API's per-IP and per-account budgets apply as for mobile. The BFF also limits sign-in attempts per IP |
 | Audit | Existing audit events (material financial changes, AI tool use) are written by the API. Since P14-T05, each records `details.channel` (`web` or `mobile`), derived by the API from the access token's authorised party (`azp`), so the client cannot claim another channel. Sign-in and logout are audited by Keycloak |
-| Streams | AI chat (server-sent events) is proxied as a stream with backpressure. The forex WebSocket uses a single-use ticket valid for 30 s, minted by the BFF; the API exchanges it for a session (P14-T13) |
+| Streams | AI chat (server-sent events) is proxied as a stream with backpressure. The forex WebSocket uses a single-use ticket valid for 30 s. The browser asks the proxy for it (`POST /api/proxy/forex/stream-ticket`, CSRF-checked); the API mints it for the verified token's identity, stores only its hash (Redis, or memory for one process) and redeems it once, as the socket's first message `{"type":"auth","ticket":...}`, with the token's own expiry. The socket address comes from `GET /api/forex/stream-url` (`WS_FOREX_STREAM_URL`, wss; no query or credentials). P14-T19 must allow exactly that origin in the Content-Security-Policy `connect-src` (P14-T13) |
 
 ## 4. Data, caching and cross-platform consistency
 

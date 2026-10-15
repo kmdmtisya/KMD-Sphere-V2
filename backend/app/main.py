@@ -52,6 +52,7 @@ from app.modules.forex.marketdata.metrics import ForexMetrics
 from app.modules.forex.paper import api as forex_paper_api
 from app.modules.forex.risk import api as forex_risk_api
 from app.modules.forex.signals import api as forex_signals_api
+from app.modules.forex.ws_ticket import MemoryTicketStore, RedisTicketStore, TicketIssuer
 from app.modules.fx import api as fx_api
 from app.modules.goals import api as goals_api
 from app.modules.identity import api as identity_api
@@ -229,6 +230,10 @@ def create_app(
     app.state.response_cache = response_cache
     app.state.cache_store = cache_store  # short-lived shared caches (FX rate board, P11-T03)
     app.state.forex_hub = forex_hub  # the forex stream's fan-out (P13-T02)
+    # Single-use tickets for browsers that never hold the access token (P14-T13).
+    app.state.forex_ticket_issuer = TicketIssuer(
+        RedisTicketStore(redis) if redis is not None else MemoryTicketStore()
+    )
     app.state.forex_metrics = forex_metrics  # feed metrics on /metrics (P13-T13)
     app.state.forex_stream_heartbeat_seconds = forex_stream_api.HEARTBEAT_SECONDS
     # Added innermost first: headers wrap everything, so 413 and 429 answers carry them too.

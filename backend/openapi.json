@@ -13229,6 +13229,26 @@
         "title": "SnapshotRateOut",
         "type": "object"
       },
+      "StreamTicketOut": {
+        "properties": {
+          "expires_in": {
+            "description": "Seconds the ticket can still be used (one use only)",
+            "title": "Expires In",
+            "type": "integer"
+          },
+          "ticket": {
+            "description": "Send as {\"type\": \"auth\", \"ticket\": ...} on the socket",
+            "title": "Ticket",
+            "type": "string"
+          }
+        },
+        "required": [
+          "ticket",
+          "expires_in"
+        ],
+        "title": "StreamTicketOut",
+        "type": "object"
+      },
       "StructureOut": {
         "properties": {
           "as_of": {
@@ -18981,6 +19001,51 @@
           }
         ],
         "summary": "Position size, pip value, loss, profit, costs, margin and exposure of a trade idea",
+        "tags": [
+          "forex"
+        ]
+      }
+    },
+    "/api/v1/forex/stream-ticket": {
+      "post": {
+        "description": "A single-use ticket (30 seconds) that stands for the caller on the live-quotes WebSocket,\nfor clients that must not hold the access token, such as the web portal's browser. The ticket\ncarries the token's own expiry and is never accepted in a URL.",
+        "operationId": "mint_stream_ticket_api_v1_forex_stream_ticket_post",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StreamTicketOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such forex (switched off) for this user"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Mint Stream Ticket",
         "tags": [
           "forex"
         ]
