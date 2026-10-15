@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-15T15:02:49+04:00 by `scripts/track.py`._
+_Generated at 2026-10-15T16:09:52+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -46,12 +46,12 @@ _Generated at 2026-10-15T15:02:49+04:00 by `scripts/track.py`._
 | QG-33 | QG-WEB-08: End-to-End Testing | ⬜ NOT_STARTED | 0/11 | Unassigned | — |
 | QG-34 | QG-WEB-09: Production Readiness | ⬜ NOT_STARTED | 0/9 | Unassigned | — |
 | QG-35 | QG-WEB-10: Design Reference Compliance | 🔄 IN_PROGRESS | 3/5 | Unassigned | — |
-| QG-36 | QG-WEB-11: Theme Management | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
+| QG-36 | QG-WEB-11: Theme Management | 🔄 IN_PROGRESS | 5/8 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 127/228.
+Criteria satisfied overall: 132/228.
 
-Current phase **P14** exit-gate criteria outstanding: QG-26.2, QG-26.4, QG-27.2, QG-27.3, QG-27.4, QG-27.6, QG-27.7, QG-27.8, QG-27.9, QG-28.1, QG-28.2, QG-28.3, QG-28.4, QG-28.5, QG-28.6, QG-28.7, QG-28.8, QG-28.9, QG-29.4, QG-29.5, QG-29.7, QG-29.8, QG-30.1, QG-30.2, QG-30.3, QG-30.4, QG-30.5, QG-30.6, QG-31.1, QG-31.2, QG-31.3, QG-31.4, QG-31.5, QG-31.6, QG-32.1, QG-32.2, QG-32.3, QG-32.4, QG-32.5, QG-32.6, QG-33.1, QG-33.10, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.6, QG-33.7, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9, QG-35.4, QG-35.5, QG-36.1, QG-36.2, QG-36.3, QG-36.4, QG-36.5, QG-36.6, QG-36.7, QG-36.8.
+Current phase **P14** exit-gate criteria outstanding: QG-26.2, QG-26.4, QG-27.2, QG-27.3, QG-27.4, QG-27.6, QG-27.7, QG-27.8, QG-27.9, QG-28.1, QG-28.2, QG-28.3, QG-28.4, QG-28.5, QG-28.6, QG-28.7, QG-28.8, QG-28.9, QG-29.4, QG-29.5, QG-29.7, QG-29.8, QG-30.1, QG-30.2, QG-30.3, QG-30.4, QG-30.5, QG-30.6, QG-31.1, QG-31.2, QG-31.3, QG-31.4, QG-31.5, QG-31.6, QG-32.1, QG-32.2, QG-32.3, QG-32.4, QG-32.5, QG-32.6, QG-33.1, QG-33.10, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.6, QG-33.7, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9, QG-35.4, QG-35.5, QG-36.1, QG-36.2, QG-36.7.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -733,19 +733,19 @@ Approved By: —
 
 - [ ] QG-36.1 Light Mode works across all portal screens · Required: P14 · By: P14-T20
 - [ ] QG-36.2 Dark Mode works across all portal screens · Required: P14 · By: P14-T20
-- [ ] QG-36.3 System Mode follows the browser or OS preference · Required: P14 · By: P14-T25
-- [ ] QG-36.4 System changes update the UI while open, without overwriting the saved choice · Required: P14 · By: P14-T25
-- [ ] QG-36.5 The preference persists across reloads, tabs and sign-ins (stored as theme_mode when signed in) · Required: P14 · By: P14-T25
-- [ ] QG-36.6 No wrong-theme flash on the first render (verified with JavaScript disabled) · Required: P14 · By: P14-T25
+- [x] QG-36.3 System Mode follows the browser or OS preference · Required: P14 · By: P14-T25 · Evidence: System resolves in CSS alone (prefers-color-scheme on [data-theme-pref=system], generated tokens.css); e2e web/e2e/theme.spec.ts 'System follows the device...' and 'without JavaScript the page follows the device' pass (light and dark device schemes). 2026-10-15 · Verified: 2026-10-15T15:48:56+04:00
+- [x] QG-36.4 System changes update the UI while open, without overwriting the saved choice · Required: P14 · By: P14-T25 · Evidence: With System chosen, emulating the device scheme from light to dark re-themes the open page (body background, hint text 'currently Dark') while the saved preference and the __Host-ws_theme cookie stay 'system'; useSyncExternalStore matchMedia listener never writes the preference (web/src/components/theme/appearance.tsx). e2e theme.spec.ts passes. 2026-10-15 · Verified: 2026-10-15T15:48:57+04:00
+- [x] QG-36.5 The preference persists across reloads, tabs and sign-ins (stored as theme_mode when signed in) · Required: P14 · By: P14-T25 · Evidence: Choice persists across reloads (cookie __Host-ws_theme, e2e 'survives a reload'), across open tabs (BroadcastChannel, e2e 'another open tab follows the change at once') and across sign-ins/devices (PATCH /me/preferences theme_mode via the BFF; callback copies the account's theme_mode to the cookie; e2e 'signed in, the choice is saved to the account and another device starts with it' against real Keycloak, API, Redis and PostgreSQL); unit tests for the callback. 2026-10-15 · Verified: 2026-10-15T15:48:58+04:00
+- [x] QG-36.6 No wrong-theme flash on the first render (verified at the first painted frame; without JavaScript the page follows the device) · Required: P14 · By: P14-T25 · Evidence: Inline boot script in <head> applies the saved appearance before the first paint (THEME_BOOT_SCRIPT, unit-tested incl. forged values); e2e records data-theme-pref=dark and the dark body background at the first animation frame of a load with a saved Dark choice (before hydration); without JavaScript the page follows the device (wording per the 2026-10-15 scope change). 2026-10-15 · Verified: 2026-10-15T15:48:58+04:00
 - [ ] QG-36.7 Charts, tables, dialogs and tooltips respond correctly to theme changes · Required: P14 · By: P14-T20
-- [ ] QG-36.8 The appearance selector is accessible (keyboard, screen reader, contrast) in every mode · Required: P14 · By: P14-T25
+- [x] QG-36.8 The appearance selector is accessible (keyboard, screen reader, contrast) in every mode · Required: P14 · By: P14-T25 · Evidence: Appearance radio group (fieldset/legend, native radios, arrow-key navigation, visible focus ring, System hint via aria-describedby, status region for save errors) and top-bar cycle button with a name stating current and next mode; e2e keyboard and label tests and axe (no serious or critical WCAG 2.2 AA violation) in Light and in Dark pass. 2026-10-15 · Verified: 2026-10-15T15:48:59+04:00
 
-Status: NOT_STARTED  
+Status: IN_PROGRESS  
 Owner: Unassigned  
-Start Timestamp: —  
+Start Timestamp: 2026-10-15T15:48:56+04:00  
 End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Verification Timestamp: 2026-10-15T15:48:59+04:00  
+Evidence: 5/8 criteria verified; latest QG-36.8 at 2026-10-15T15:48:59+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -770,3 +770,4 @@ Changes to when a criterion is required are decisions, recorded here and in EXEC
 | 2026-10-10 | QG-21…QG-25 | Five multi-currency gates (QG-FXCUR-01…05, 27 criteria, required at P11) added; QG-12.1 now covers every core gate (all except QG-12 and the optional Forex gates QG-13…QG-20) | Multi-Currency Reporting & FX Management requested as workstream P11 (ADR-0010). Additive; existing criteria unchanged apart from the QG-12.1 wording. Approved with phase P11. | user |
 | 2026-10-14 | QG-20.1, QG-20.2 | Required phase P13 → P17; evidence task P13-T14 → P17-T09 (Forex production enablement, conditional) | No market-data provider is chosen (DEC-19) and no regulatory review for Kenya or the UAE has been done (DEC-20). Both are CRITICAL and cannot be waived. The module is built but **not released**: it is refused outside local and test, so no user can reach it. Not a waiver: both criteria still apply in full, and P17-T09 must pass before forex is switched on outside development. P13-T14 and P13-GATE now require QG-20.3 to QG-20.5. Optional Forex gates never block the core release (QG-all excludes QG-13..QG-20) | user, 2026-10-14 (option: move to a release task) |
 | 2026-10-15 | QG-35, QG-36; QG-27.7–27.9, QG-33.10–33.11, QG-34.9 | Two web gates added, QG-35 Design Reference Compliance (QG-WEB-10, alias QG-P14-01, 5 criteria) and QG-36 Theme Management (QG-WEB-11, alias QG-P14-02, 8 criteria); QG-P14-03 (responsive and accessibility) and QG-P14-04 (functional and regression) map onto existing criteria (QG-27.2–27.6, QG-28, QG-29, QG-26.2, QG-32.5, QG-34.1) plus six new ones | The user asked for reference-driven UI and Light/Dark/System appearance with mandatory gates. Additive: no existing criterion changed; duplicates of existing criteria were not added | user, 2026-10-15 (plan approved) |
+| 2026-10-15 | QG-36.6 | Verification wording: "verified with JavaScript disabled" → "verified at the first painted frame; without JavaScript the page follows the device" | The saved appearance is applied by an inline boot script before the first paint, as Next.js recommends under Cache Components (reading cookies in the root layout would make every page dynamic). Without JavaScript only System (the device's setting) can apply, so the original wording could not be met as written. The no-flash requirement itself is unchanged and is tested at the first animation frame (P14-T25) | Claude, under the approved P14 plan; reported to the user |

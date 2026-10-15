@@ -12,6 +12,27 @@ import {
 } from "@/lib/server/auth/runtime";
 import { randomToken, unseal } from "@/lib/server/auth/seal";
 import { createSession, destroySession } from "@/lib/server/auth/session";
+import { serverConfig } from "@/lib/server/config";
+import { parsePreference, THEME_COOKIE } from "@/lib/theme/theme";
+
+/**
+ * The account's saved appearance (theme_mode in /me/preferences, P14-T25), or null when it has none
+ * or the API cannot be reached. Best effort: sign-in never fails because of it.
+ */
+async function savedAppearance(accessToken: string): Promise<string | null> {
+  try {
+    const me = await fetch(new URL("/api/v1/me", serverConfig().apiBaseUrl), {
+      headers: { authorization: `Bearer ${accessToken}` },
+      cache: "no-store",
+      signal: AbortSignal.timeout(3000),
+    });
+    if (!me.ok) return null;
+    const body = (await me.json()) as { preferences?: { theme_mode?: string | null } };
+    return body.preferences?.theme_mode ?? null;
+  } catch {
+    return null;
+  }
+}
 
 /** Sign-in transactions older than this are refused. */
 const TRANSACTION_MS = 10 * 60 * 1000;
@@ -55,6 +76,19 @@ export async function GET(request: Request) {
   response.cookies.set(sessionCookie(id, settings.absoluteSeconds));
   response.cookies.set(csrfCookie(randomToken(24), settings.absoluteSeconds));
   response.cookies.set(expiredCookie(SIGN_IN_COOKIE));
+  // The account's appearance wins over this browser's, so every device shows the user's choice.
+  const appearance = await savedAppearance(result.tokens.accessToken);
+  if (appearance) {
+    response.cookies.set({
+      name: THEME_COOKIE,
+      value: parsePreference(appearance),
+      path: "/",
+      secure: true,
+      sameSite: "lax",
+      httpOnly: false,
+      maxAge: 60 * 60 * 24 * 365,
+    });
+  }
   response.headers.set("Cache-Control", "no-store");
   return response;
 }

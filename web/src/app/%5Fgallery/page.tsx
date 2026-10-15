@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { GalleryPanel } from "./Gallery";
+import { AppearanceSelector, ThemeCycleButton } from "@/components/theme/appearance";
+
+import { FollowingPanel, GalleryPanel } from "./Gallery";
 
 export const metadata: Metadata = { title: "Component gallery · WealthSphere", robots: { index: false } };
 
@@ -15,6 +17,11 @@ export default function GalleryPage() {
   return (
     <main className="min-h-dvh bg-scaffold">
       <h1 className="sr-only">WealthSphere component gallery</h1>
+      <div className="flex flex-wrap items-end justify-between gap-4 border-b border-divider bg-surface p-6 text-fg">
+        <AppearanceSelector />
+        <ThemeCycleButton />
+      </div>
+      <FollowingPanel />
       <div className="grid 2xl:grid-cols-2">
         <GalleryPanel theme="light" />
         <GalleryPanel theme="dark" />

@@ -1,6 +1,6 @@
-import { createHmac } from "node:crypto";
-
 import { expect, test, type Browser, type Page } from "@playwright/test";
+
+import { signIn } from "./helpers";
 
 /**
  * Sign-in and sessions through the BFF against the real stack (P14-T05): Keycloak (the development
@@ -9,35 +9,8 @@ import { expect, test, type Browser, type Page } from "@playwright/test";
  * WS_E2E_PASSWORD is the seeded test users' password.
  */
 const ENABLED = process.env.WS_E2E_AUTH === "1";
-const PASSWORD = process.env.WS_E2E_PASSWORD ?? "";
 test.skip(!ENABLED, "needs the full stack (WS_E2E_AUTH=1)");
 test.describe.configure({ mode: "serial" });
-
-/** RFC 6238 code for Keycloak's raw TOTP secret (as scripts/keycloak_dev.py does). */
-function totp(rawSecret: string, at = Date.now()): string {
-  const counter = Buffer.alloc(8);
-  counter.writeBigUInt64BE(BigInt(Math.floor(at / 1000 / 30)));
-  const digest = createHmac("sha1", Buffer.from(rawSecret)).update(counter).digest();
-  const offset = digest[digest.length - 1] & 0x0f;
-  return String((digest.readUInt32BE(offset) & 0x7fffffff) % 1_000_000).padStart(6, "0");
-}
-
-async function signIn(page: Page, username: string): Promise<void> {
-  await page.goto("/");
-  await page.getByRole("link", { name: "Sign in" }).click();
-  await page.locator("#username").fill(username);
-  await page.locator("#password").fill(PASSWORD);
-  await page.locator("#kc-login").click();
-  const enrol = page.locator('input[name="totpSecret"]');
-  if (await enrol.count()) {
-    const secret = await enrol.inputValue();
-    await page.locator("#totp").fill(totp(secret));
-    const label = page.locator("#userLabel");
-    if (await label.count()) await label.fill("web e2e");
-    await page.locator('input[type="submit"], button[type="submit"]').first().click();
-  }
-  await expect(page.getByTestId("signed-in-as")).toBeVisible();
-}
 
 async function api(page: Page, path: string, init: { method?: string; body?: unknown; csrf?: boolean } = {}) {
   return page.evaluate(

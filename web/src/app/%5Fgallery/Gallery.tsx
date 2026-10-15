@@ -149,3 +149,28 @@ export function GalleryPanel({ theme }: { theme: "light" | "dark" }) {
     </section>
   );
 }
+
+/**
+ * Components that follow the chosen appearance (no fixed theme scope), so a change of Light, Dark or
+ * System is visible on charts, tables and dialogs at once (P14-T25.4).
+ */
+export function FollowingPanel() {
+  return (
+    <section aria-label="Following your appearance" data-testid="following-panel" className="flex flex-col gap-4 bg-scaffold p-6 text-fg">
+      <h2 className="text-[length:var(--ws-font-size-headline)] font-semibold">Following your appearance</h2>
+      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
+        <KpiCard label="Total wealth" value={demo.totalWealth.value} currency={demo.CURRENCY} changePercent={demo.totalWealth.changePercent} changeAmount={demo.totalWealth.changeAmount} period="this year" footer={<DemoBadge />} />
+        <PerformanceLineChart
+          title="Wealth over time (following)"
+          points={demo.wealthSeries}
+          currency={demo.CURRENCY}
+          summary="DEMO: total wealth went from $138,520.10 on 9 September to $139,986.35 on 9 October."
+        />
+      </div>
+      <dialog open aria-label="Example dialog" className="relative rounded-[var(--ws-radius-card)] border border-divider bg-surface-elevated p-4 text-fg">
+        <p className="font-semibold">Example dialog</p>
+        <p className="text-fg-muted">Dialogs use the same tokens, so they follow the appearance too.</p>
+      </dialog>
+    </section>
+  );
+}

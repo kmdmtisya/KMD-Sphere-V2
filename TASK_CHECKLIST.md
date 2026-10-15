@@ -1606,16 +1606,16 @@
   - [ ] P14-T24.4 Paper trading and journal
   - [ ] P14-T24.5 Forex Copilot and alerts
   - [ ] P14-T24.6 Tests
-- [ ] **P14-T25** · WEB-25 Appearance: Light, Dark and System · `NOT_STARTED` ⬜
+- [x] **P14-T25** · WEB-25 Appearance: Light, Dark and System · `COMPLETED` ✅
   - Deps: P14-T03, P14-T05 · Wave: W5 · Track: WEB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P14-T25.1 Light theme
-  - [ ] P14-T25.2 Dark theme
-  - [ ] P14-T25.3 System mode and persistence
-  - [ ] P14-T25.4 Theme-aware charts, tables and dialogs
-  - [ ] P14-T25.5 Appearance controls
-  - [ ] P14-T25.6 Tests and screenshots
+  - Started: 2026-10-15T15:19:53+04:00 · Completed: 2026-10-15T16:09:51+04:00 · Duration: 49m 58s · Blocker: —
+  - Evidence: Appearance (Light, Dark, System): AppearanceSelector and ThemeCycleButton; html data-theme-pref with __Host-ws_theme cookie, BroadcastChannel cross-tab sync, PATCH /me/preferences when signed in and account theme copied at sign-in; inline boot script before first paint (QG-36.6 wording updated by recorded scope change); charts, tables and dialogs follow; 81 unit tests; Playwright 26/26 incl. first-frame, live System, no-JS, cross-tab, chart/dialog, keyboard, axe light/dark and account sync against real Keycloak; screenshots docs/design/screenshots/p14/after/P14-T25. QG-36.3, 36.4, 36.5, 36.6, 36.8 verified. PR #176. CI all gates pass.
+  - [x] P14-T25.1 Light theme
+  - [x] P14-T25.2 Dark theme
+  - [x] P14-T25.3 System mode and persistence
+  - [x] P14-T25.4 Theme-aware charts, tables and dialogs
+  - [x] P14-T25.5 Appearance controls
+  - [x] P14-T25.6 Tests and screenshots
 - [ ] **P14-GATE** · Phase P14 exit gate · `NOT_STARTED` ⬜
   - Deps: P14-T01, P14-T02, P14-T03, P14-T04, P14-T05, P14-T06, P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17, P14-T18, P14-T19, P14-T20, P14-T21, P14-T22, P14-T23, P14-T24, P14-T25 · Wave: W12 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33, QG-34, QG-35, QG-36
   - Started: — · Completed: — · Duration: — · Blocker: —

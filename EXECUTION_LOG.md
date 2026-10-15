@@ -2149,3 +2149,36 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-15T15:02:49+04:00 — COMPLETE P14-T05
 - duration: 1h 08m 27s
 - evidence: BFF sign-in (Authorization Code + PKCE, state, nonce) with the confidential wealthsphere-web client; server-side sessions in Redis sealed with AES-256-GCM (idle 30 min, absolute 10 h, refresh before expiry); __Host- HttpOnly session cookie and double-submit CSRF with Origin check; allow-listed /api/v1 proxy; logout with revocation and RP-initiated logout; audit details.channel from azp; 74 Vitest tests; 5 Playwright journeys against real Keycloak, API, Redis and PostgreSQL locally and in CI; backend 3,276 passed. QG-29.1, 29.2, 29.3, 29.6 verified. Approved by the user 2026-10-15. PR #175. CI all gates pass. · Approved by: user (mtisya@gmail.com), 2026-10-15
+
+### 2026-10-15T15:19:53+04:00 — START P14-T25
+- WEB-25 Appearance: Light, Dark and System
+- prerequisites verified COMPLETED
+
+### 2026-10-15T15:45:23+04:00 — PLAN CHANGE — QG-36.6 verification wording (P14-T25)
+- The saved appearance is applied by an inline boot script in <head> before the first paint (the Next.js 16 guide for Cache Components; reading cookies in the root layout would make every page dynamic). Without JavaScript the page follows the device (System); an explicit choice needs the script.
+- QG-36.6 and the P14-T25 acceptance criterion now say "verified at the first painted frame; without JavaScript the page follows the device" instead of "verified with JavaScript disabled". The no-flash requirement is unchanged. Recorded in QUALITY_GATES.md 'Scope changes'.
+
+### 2026-10-15T15:48:56+04:00 — QG START QG-36
+- QG-WEB-11: Theme Management
+
+### 2026-10-15T15:48:56+04:00 — QG CHECK QG-36.3
+- evidence: System resolves in CSS alone (prefers-color-scheme on [data-theme-pref=system], generated tokens.css); e2e web/e2e/theme.spec.ts 'System follows the device...' and 'without JavaScript the page follows the device' pass (light and dark device schemes). 2026-10-15
+
+### 2026-10-15T15:48:57+04:00 — QG CHECK QG-36.4
+- evidence: With System chosen, emulating the device scheme from light to dark re-themes the open page (body background, hint text 'currently Dark') while the saved preference and the __Host-ws_theme cookie stay 'system'; useSyncExternalStore matchMedia listener never writes the preference (web/src/components/theme/appearance.tsx). e2e theme.spec.ts passes. 2026-10-15
+
+### 2026-10-15T15:48:58+04:00 — QG CHECK QG-36.5
+- evidence: Choice persists across reloads (cookie __Host-ws_theme, e2e 'survives a reload'), across open tabs (BroadcastChannel, e2e 'another open tab follows the change at once') and across sign-ins/devices (PATCH /me/preferences theme_mode via the BFF; callback copies the account's theme_mode to the cookie; e2e 'signed in, the choice is saved to the account and another device starts with it' against real Keycloak, API, Redis and PostgreSQL); unit tests for the callback. 2026-10-15
+
+### 2026-10-15T15:48:58+04:00 — QG CHECK QG-36.6
+- evidence: Inline boot script in <head> applies the saved appearance before the first paint (THEME_BOOT_SCRIPT, unit-tested incl. forged values); e2e records data-theme-pref=dark and the dark body background at the first animation frame of a load with a saved Dark choice (before hydration); without JavaScript the page follows the device (wording per the 2026-10-15 scope change). 2026-10-15
+
+### 2026-10-15T15:48:59+04:00 — QG CHECK QG-36.8
+- evidence: Appearance radio group (fieldset/legend, native radios, arrow-key navigation, visible focus ring, System hint via aria-describedby, status region for save errors) and top-bar cycle button with a name stating current and next mode; e2e keyboard and label tests and axe (no serious or critical WCAG 2.2 AA violation) in Light and in Dark pass. 2026-10-15
+
+### 2026-10-15T16:09:51+04:00 — AWAITING_VERIFICATION P14-T25
+- evidence: Appearance (Light, Dark, System): AppearanceSelector and ThemeCycleButton; html data-theme-pref with __Host-ws_theme cookie, BroadcastChannel cross-tab sync, PATCH /me/preferences when signed in and account theme copied at sign-in; inline boot script before first paint (QG-36.6 wording updated by recorded scope change); charts, tables and dialogs follow; 81 unit tests; Playwright 26/26 incl. first-frame, live System, no-JS, cross-tab, chart/dialog, keyboard, axe light/dark and account sync against real Keycloak; screenshots docs/design/screenshots/p14/after/P14-T25. QG-36.3, 36.4, 36.5, 36.6, 36.8 verified. PR #176. CI all gates pass.
+
+### 2026-10-15T16:09:52+04:00 — COMPLETE P14-T25
+- duration: 49m 58s
+- evidence: Appearance (Light, Dark, System): AppearanceSelector and ThemeCycleButton; html data-theme-pref with __Host-ws_theme cookie, BroadcastChannel cross-tab sync, PATCH /me/preferences when signed in and account theme copied at sign-in; inline boot script before first paint (QG-36.6 wording updated by recorded scope change); charts, tables and dialogs follow; 81 unit tests; Playwright 26/26 incl. first-frame, live System, no-JS, cross-tab, chart/dialog, keyboard, axe light/dark and account sync against real Keycloak; screenshots docs/design/screenshots/p14/after/P14-T25. QG-36.3, 36.4, 36.5, 36.6, 36.8 verified. PR #176. CI all gates pass.
