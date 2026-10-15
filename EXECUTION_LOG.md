@@ -2270,3 +2270,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-16T00:02:46+04:00 — QG CHECK QG-28.5
 - evidence: Web AI pages (P14-T12): streamed Copilot via the BFF with checks, sources and the four answer parts; Doctor, opportunities, universe, research, compare and simulate; e2e covers unavailable, streamed answer, refusal, text-only rendering, cross-user 404 and axe. Compare, simulate and non-empty universe were not exercised on the test stack (empty universe); no live model was run.
+
+### 2026-10-16T00:09:48+04:00 — AWAITING_VERIFICATION P14-T12
+- evidence: Unit 117 pass (SSE parser, turns); AI e2e 8 pass vs Keycloak+API (unavailable, streamed answer, refusal, no HTML injection, docked panel scope, Doctor equals API, universe/research, cross-user 404, axe light/dark); tsc, eslint clean. Compare and simulate not exercised (empty universe on the test stack); no live model. PR #183. CI all gates pass.
+
+### 2026-10-16T00:09:49+04:00 — COMPLETE P14-T12
+- duration: 56m 08s
+- evidence: Unit 117 pass (SSE parser, turns); AI e2e 8 pass vs Keycloak+API (unavailable, streamed answer, refusal, no HTML injection, docked panel scope, Doctor equals API, universe/research, cross-user 404, axe light/dark); tsc, eslint clean. Compare and simulate not exercised (empty universe on the test stack); no live model. PR #183. CI all gates pass.
