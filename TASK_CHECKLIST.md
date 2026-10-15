@@ -1451,10 +1451,10 @@
   - [x] P14-T06.3 Top-bar controls
   - [x] P14-T06.4 Right panel
   - [x] P14-T06.5 Responsive and keyboard tests
-- [ ] **P14-T07** · WEB-07 Home and executive dashboards · `IN_PROGRESS` 🔄
+- [x] **P14-T07** · WEB-07 Home and executive dashboards · `COMPLETED` ✅
   - Deps: P14-T05, P14-T06 · Wave: W6 · Track: WEB · Size: L · Approval: no
-  - Started: 2026-10-15T17:45:03+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-15T17:45:03+04:00 · Completed: 2026-10-15T19:35:54+04:00 · Duration: 1h 50m 51s · Blocker: —
+  - Evidence: GET /api/v1/search (owner-scoped; Bob never finds Alice records; wildcards literal) with OpenAPI/Spectral and regenerated web client; Home dashboard: wealth summary with allocation, key figures, recent activity, Portfolio Doctor insights, goals; states loading/error/stale/empty/offline; customisable layout saved to the shared dashboard_layout preference; Ctrl/Cmd+K command palette; 92 unit tests; 48 Playwright tests on the real stack incl. figure reconciliation with the API, cross-user search, layout persistence and axe light/dark; screenshots docs/design/screenshots/p14/after/P14-T07. PR #178. CI all gates pass.
   - [x] P14-T07.1 KPI row and charts
   - [x] P14-T07.2 Recent activity and AI insights
   - [x] P14-T07.3 Search endpoint and command palette
