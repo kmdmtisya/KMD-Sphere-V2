@@ -1395,10 +1395,10 @@
 - Exit gates: QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33, QG-34, QG-35, QG-36 — required by `P14-GATE` (Gates-done)
 - Release gates: P14-T23 starts only after QG-26..QG-33, QG-35 and QG-36 are satisfied
 
-- [ ] **P14-T01** · WEB-01 Repository audit and requirements · `IN_PROGRESS` 🔄
+- [x] **P14-T01** · WEB-01 Repository audit and requirements · `COMPLETED` ✅
   - Deps: P09-GATE, P10-GATE, P11-GATE, P12-GATE · Wave: W1 · Track: DOC · Size: S · Approval: no
-  - Started: 2026-10-15T11:14:56+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-15T11:14:56+04:00 · Completed: 2026-10-15T11:18:40+04:00 · Duration: 3m 44s · Blocker: —
+  - Evidence: docs/web/WEB_REPOSITORY_AUDIT.md: mobile route, mobile API-use and backend API inventories (98 paths, 124 operations + WS); 10 parity-baseline rows corrected to API only (no mobile screen); backend gap list; web constraints (bearer-only API, CORS off, plugins without web equivalent, forex flag, decimal money); component audit; every mobile route mapped to a matrix row and API. Parity matrix updated. Design reference catalogue and mapping (docs/web/WEB_DESIGN_REFERENCE_ANALYSIS.md) approved with PR #170; QG-35.1 and QG-35.2 verified. track.py validate OK. PR #171. CI all gates pass.
   - [x] P14-T01.1 Mobile capability inventory
   - [x] P14-T01.2 API contract inventory
   - [x] P14-T01.3 Gap and constraint list
