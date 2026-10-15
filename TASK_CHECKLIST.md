@@ -1487,14 +1487,14 @@
   - [x] P14-T10.2 Forecast scenarios
   - [x] P14-T10.3 Goals
   - [x] P14-T10.4 Tests
-- [ ] **P14-T11** · WEB-11 Net worth and passive income · `NOT_STARTED` ⬜
+- [x] **P14-T11** · WEB-11 Net worth and passive income · `COMPLETED` ✅
   - Deps: P14-T05, P14-T06 · Wave: W7 · Track: WEB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P14-T11.1 Net worth and liabilities
-  - [ ] P14-T11.2 Passive income
-  - [ ] P14-T11.3 Net-worth history endpoint
-  - [ ] P14-T11.4 Tests
+  - Started: 2026-10-15T21:52:31+04:00 · Completed: 2026-10-15T22:56:30+04:00 · Duration: 1h 03m 59s · Blocker: —
+  - Evidence: Backend: 9 new tests (pure rules + API incl. FX conversion, cross-user, empty, future end), ruff, mypy, openapi contract pass; web: unit 110 pass, 5 e2e vs Keycloak+API (totals equal API, liability CRUD, income equal API, cross-user 404, axe light/dark); tsc, eslint clean. PR #182. CI all gates pass.
+  - [x] P14-T11.1 Net worth and liabilities
+  - [x] P14-T11.2 Passive income
+  - [x] P14-T11.3 Net-worth history endpoint
+  - [x] P14-T11.4 Tests
 - [ ] **P14-T12** · WEB-12 AI Wealth Copilot and intelligence · `NOT_STARTED` ⬜
   - Deps: P14-T05, P14-T06 · Wave: W6 · Track: AI · Size: XL · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

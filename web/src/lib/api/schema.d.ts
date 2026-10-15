@@ -1551,6 +1551,28 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/net-worth/history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Net Worth History
+         * @description Net worth at the end of each date: the user's active portfolios, rebuilt from the ledger,
+         *     valuations and that day's exchange rates, minus the liabilities whose balance was recorded by
+         *     then. Dates before a liability was recorded are marked incomplete (docs/design/net-worth.md).
+         */
+        get: operations["get_net_worth_history_api_v1_net_worth_history_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/portfolios": {
         parameters: {
             query?: never;
@@ -6386,6 +6408,45 @@ export interface components {
             /** Unpriced Assets */
             unpriced_assets: number;
         };
+        /** NetWorthHistoryOut */
+        NetWorthHistoryOut: {
+            /**
+             * As Of
+             * Format: date-time
+             */
+            as_of: string;
+            /**
+             * Complete
+             * @description True when no point is incomplete
+             */
+            complete: boolean;
+            /** Currency */
+            currency: string;
+            /**
+             * End
+             * Format: date
+             */
+            end: string;
+            frequency: components["schemas"]["SeriesFrequency"];
+            /** Incomplete Points */
+            incomplete_points: number;
+            /** Liability Count */
+            liability_count: number;
+            /** Notice */
+            notice: string;
+            /** Points */
+            points: components["schemas"]["NetWorthPoint"][];
+            /**
+             * Portfolio Count
+             * @description Active portfolios behind the series
+             */
+            portfolio_count: number;
+            /**
+             * Start
+             * Format: date
+             */
+            start: string;
+        };
         /** NetWorthOut */
         NetWorthOut: {
             /**
@@ -6415,6 +6476,26 @@ export interface components {
             net_worth: components["schemas"]["Money"];
             /** @description The rate snapshot the figures were converted with (P11-T06) */
             reporting?: components["schemas"]["ReportingOut"] | null;
+        };
+        /** NetWorthPoint */
+        NetWorthPoint: {
+            /** @description Active portfolios' value on the date, at that day's rates */
+            assets: components["schemas"]["Money"];
+            /**
+             * Complete
+             * @description False when a value could not be priced or converted, or a liability's balance on the date is not known (it was recorded later)
+             */
+            complete: boolean;
+            /** @description Liabilities whose balance was recorded by the date */
+            liabilities: components["schemas"]["Money"];
+            /** @description assets - liabilities */
+            net_worth: components["schemas"]["Money"];
+            /**
+             * On
+             * Format: date
+             * @description The end of this date
+             */
+            on: string;
         };
         /** OpportunitiesRequest */
         OpportunitiesRequest: {
@@ -12670,6 +12751,58 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
                 };
+            };
+            /** @description Rate limit exceeded (docs/security.md, API protection) */
+            429: {
+                headers: {
+                    /** @description Seconds to wait before retrying */
+                    "Retry-After"?: number;
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_net_worth_history_api_v1_net_worth_history_get: {
+        parameters: {
+            query?: {
+                /** @description Defaults to the user's reporting-currency setting */
+                currency?: string | null;
+                /** @description Spacing of the series */
+                frequency?: components["schemas"]["SeriesFrequency"];
+                /** @description Default: the first entry, valuation or liability */
+                start?: string | null;
+                /** @description Default: today */
+                end?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NetWorthHistoryOut"];
+                };
+            };
+            /** @description Missing, invalid or expired access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Invalid range (after today, or too many points) */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Rate limit exceeded (docs/security.md, API protection) */
             429: {

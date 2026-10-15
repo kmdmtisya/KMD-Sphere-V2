@@ -26,7 +26,7 @@ A liability is something the user owes. The user enters it with the date its bal
 - Create, update and delete write audit events (type and changed fields, never amounts).
 - A user has at most 100 liabilities.
 
-**Balance history** is not kept yet. The historical net-worth series would need it, so it is future work.
+**Balance history** is not kept: a liability holds its latest balance and the date it applied. The net-worth history (`GET /api/v1/net-worth/history`, P14-T11) therefore counts a liability only from its `balance_as_of` date. Earlier dates leave it out and are marked incomplete; nothing is guessed. Assets on each date are the sum of the active portfolios' historical value (the risk series, rebuilt from the ledger, valuations and the historical FX rule), converted at that date's rate; a date with an unpriced position or a missing rate is marked incomplete too.
 
 ## 2. Assets
 

@@ -1,7 +1,7 @@
 """/api/v1/liabilities and /api/v1/net-worth (P06-T07)."""
 
 import uuid
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Query, Request, Response
@@ -13,13 +13,16 @@ from app.core.money import CURRENCY_PATTERN
 from app.db.session import get_session
 from app.modules.fx.reporting import ReportingDep
 from app.modules.identity.dependencies import CurrentUserDep
+from app.modules.networth.history_service import NetWorthHistoryService
 from app.modules.networth.schemas import (
     LiabilityCreate,
     LiabilityOut,
     LiabilityUpdate,
+    NetWorthHistoryOut,
     NetWorthOut,
 )
 from app.modules.networth.service import LiabilityService, NetWorthService
+from app.modules.portfolio.history import SeriesFrequency
 
 router = APIRouter(prefix="/api/v1/liabilities", tags=["net worth"])
 networth_router = APIRouter(prefix="/api/v1/net-worth", tags=["net worth"])
@@ -114,3 +117,41 @@ async def get_net_worth(
 
     cache: ResponseCache = request.app.state.response_cache
     return await cache.cached(user.id, "net-worth", {"currency": currency}, NetWorthOut, compute)
+
+
+@networth_router.get(
+    "/history",
+    response_model=NetWorthHistoryOut,
+    responses={**UNAUTHORIZED, **invalid("range (after today, or too many points)")},
+)
+async def get_net_worth_history(
+    request: Request,
+    user: CurrentUserDep,
+    session: SessionDep,
+    currency: Annotated[
+        str | None,
+        Query(
+            pattern=CURRENCY_PATTERN,
+            description="Defaults to the user's reporting-currency setting",
+        ),
+    ] = None,
+    frequency: Annotated[SeriesFrequency, Query(description="Spacing of the series")] = (
+        SeriesFrequency.MONTHLY
+    ),
+    start: Annotated[
+        date | None, Query(description="Default: the first entry, valuation or liability")
+    ] = None,
+    end: Annotated[date | None, Query(description="Default: today")] = None,
+) -> NetWorthHistoryOut:
+    """Net worth at the end of each date: the user's active portfolios, rebuilt from the ledger,
+    valuations and that day's exchange rates, minus the liabilities whose balance was recorded by
+    then. Dates before a liability was recorded are marked incomplete (docs/design/net-worth.md)."""
+
+    async def compute() -> NetWorthHistoryOut:
+        return await NetWorthHistoryService(session).user(
+            user.id, currency, frequency, start, end, _now()
+        )
+
+    params = {"currency": currency, "frequency": frequency, "start": start, "end": end}
+    cache: ResponseCache = request.app.state.response_cache
+    return await cache.cached(user.id, "net-worth-history", params, NetWorthHistoryOut, compute)

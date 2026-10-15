@@ -11,6 +11,7 @@ from app.core.money import DecimalString, Money, decimals_of
 from app.modules.forecasting.limits import TARGET, Limit
 from app.modules.forecasting.schemas import check_money
 from app.modules.fx.schemas import ReportingOut
+from app.modules.portfolio.history import SeriesFrequency
 
 LiabilityType = Literal[
     "mortgage",
@@ -162,3 +163,28 @@ class NetWorthOut(BaseModel):
     reporting: ReportingOut | None = Field(
         default=None, description="The rate snapshot the figures were converted with (P11-T06)"
     )
+
+
+class NetWorthPoint(BaseModel):
+    on: date = Field(description="The end of this date")
+    assets: Money = Field(description="Active portfolios' value on the date, at that day's rates")
+    liabilities: Money = Field(description="Liabilities whose balance was recorded by the date")
+    net_worth: Money = Field(description="assets - liabilities")
+    complete: bool = Field(
+        description="False when a value could not be priced or converted, or a liability's "
+        "balance on the date is not known (it was recorded later)"
+    )
+
+
+class NetWorthHistoryOut(BaseModel):
+    currency: str
+    frequency: SeriesFrequency
+    start: date
+    end: date
+    points: list[NetWorthPoint]
+    portfolio_count: int = Field(description="Active portfolios behind the series")
+    liability_count: int
+    incomplete_points: int
+    complete: bool = Field(description="True when no point is incomplete")
+    notice: str
+    as_of: datetime

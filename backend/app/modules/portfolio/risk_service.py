@@ -80,7 +80,7 @@ class RiskService:
         base = portfolio.base_currency
         currencies = {e.currency for e in entries} | {v.currency for v in valued}
         stored = await self._fx.history(currencies, base, end_of_day(start), end_of_day(end))
-        rate = _RateBook(base, stored, moment)
+        rate = RateBook(base, stored, moment)
         points = history.build(entries, valued, rate, days)
         risk = measure(
             [Observation(p.on, p.value, p.flow_next, p.complete, p.flows) for p in points],
@@ -89,7 +89,7 @@ class RiskService:
         return PortfolioRisk(base, frequency, start, end, points, risk, len(assumed))
 
 
-class _RateBook:
+class RateBook:
     """Historical rates into the base currency by the P05-T06 rule (the newest rate at or
     before the end of the day, at most 7 days old, the opposite pair inverted only when there
     is no direct rate), looked up over a bounded window of stored rates."""
