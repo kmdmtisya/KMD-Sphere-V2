@@ -59,7 +59,7 @@ These are new capabilities, not parity gaps. Each needs backend work first (or a
 | 30 | Saved table views | None | The same preference store, or per-browser convenience only | P14-T08 |
 | 31 | Active session management (list, sign out others) | None in the apps | Keycloak account console (linked), or an account API through the BFF | P14-T16 |
 | 32 | Account deletion workflow | Planned (P16-T05) | P16-T05 | P14-T16 shows it when available |
-| 33 | Administration and operator views | **None exist.** The `support` realm role exists but no endpoint uses it | Decide the scope (DEC-34); role-gated, read-only operator endpoints | P14-T17 |
+| 33 | Administration and operator views | **None exist.** The `support` realm role exists but no endpoint uses it | **Built (P14-T17):** `GET /operator/status` and `GET /operator/audit` behind the `support` role (aggregate and read-only, no account data, access audited); web Operator views page; scope in docs/design/operator-views.md | P14-T17 |
 | 34 | Optimistic concurrency for cross-channel edits | Last write wins on PATCH | `ETag`/`If-Match` or `version` with 409 | P14-T18 |
 | 35 | Performance attribution | Not computed | Out of scope unless approved; listed for completeness | — |
 

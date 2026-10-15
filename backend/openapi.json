@@ -2182,6 +2182,24 @@
         "title": "Costs",
         "type": "object"
       },
+      "CountOut": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "count"
+        ],
+        "title": "CountOut",
+        "type": "object"
+      },
       "CurrencyOut": {
         "properties": {
           "code": {
@@ -10338,6 +10356,163 @@
           "complete"
         ],
         "title": "NetWorthPoint",
+        "type": "object"
+      },
+      "OperatorAuditItem": {
+        "properties": {
+          "action": {
+            "title": "Action",
+            "type": "string"
+          },
+          "actor_type": {
+            "title": "Actor Type",
+            "type": "string"
+          },
+          "channel": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Channel"
+          },
+          "correlation_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Correlation Id"
+          },
+          "occurred_at": {
+            "format": "date-time",
+            "title": "Occurred At",
+            "type": "string"
+          },
+          "outcome": {
+            "title": "Outcome",
+            "type": "string"
+          },
+          "resource_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resource Type"
+          }
+        },
+        "required": [
+          "occurred_at",
+          "action",
+          "outcome",
+          "actor_type",
+          "resource_type",
+          "channel",
+          "correlation_id"
+        ],
+        "title": "OperatorAuditItem",
+        "type": "object"
+      },
+      "OperatorStatusOut": {
+        "properties": {
+          "audit_by_outcome": {
+            "items": {
+              "$ref": "#/components/schemas/CountOut"
+            },
+            "title": "Audit By Outcome",
+            "type": "array"
+          },
+          "audit_top_actions": {
+            "items": {
+              "$ref": "#/components/schemas/CountOut"
+            },
+            "title": "Audit Top Actions",
+            "type": "array"
+          },
+          "checks": {
+            "additionalProperties": {
+              "enum": [
+                "ok",
+                "failed"
+              ],
+              "type": "string"
+            },
+            "description": "Readiness of each dependency",
+            "title": "Checks",
+            "type": "object"
+          },
+          "environment": {
+            "title": "Environment",
+            "type": "string"
+          },
+          "features": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Which optional modules are switched on",
+            "title": "Features",
+            "type": "object"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "job_failures_by_job": {
+            "items": {
+              "$ref": "#/components/schemas/CountOut"
+            },
+            "title": "Job Failures By Job",
+            "type": "array"
+          },
+          "jobs_by_status": {
+            "items": {
+              "$ref": "#/components/schemas/CountOut"
+            },
+            "title": "Jobs By Status",
+            "type": "array"
+          },
+          "notice": {
+            "title": "Notice",
+            "type": "string"
+          },
+          "users": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "description": "Accounts by status (counts only)",
+            "title": "Users",
+            "type": "object"
+          },
+          "window_hours": {
+            "title": "Window Hours",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "generated_at",
+          "environment",
+          "checks",
+          "features",
+          "users",
+          "window_hours",
+          "audit_by_outcome",
+          "audit_top_actions",
+          "jobs_by_status",
+          "job_failures_by_job",
+          "notice"
+        ],
+        "title": "OperatorStatusOut",
         "type": "object"
       },
       "OpportunitiesRequest": {
@@ -20876,6 +21051,165 @@
         ]
       }
     },
+    "/api/v1/operator/audit": {
+      "get": {
+        "description": "The newest audit events, newest first, without who or which record: action, outcome, kind of\nactor and resource, channel, time and correlation id.",
+        "operationId": "operator_audit_api_v1_operator_audit_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 200,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "outcome",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "success",
+                    "failure",
+                    "denied"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Outcome"
+            }
+          },
+          {
+            "description": "e.g. reports.",
+            "in": "query",
+            "name": "action_prefix",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 60,
+                  "pattern": "^[a-z][a-z0-9_.]*$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "e.g. reports.",
+              "title": "Action Prefix"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/OperatorAuditItem"
+                  },
+                  "title": "Response Operator Audit Api V1 Operator Audit Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "403": {
+            "description": "The support role is required"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Operator Audit",
+        "tags": [
+          "operator"
+        ]
+      }
+    },
+    "/api/v1/operator/status": {
+      "get": {
+        "description": "Dependency health, optional modules, account counts, and the last day's audit, job and\nfailure counts. No account is named.",
+        "operationId": "operator_status_api_v1_operator_status_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperatorStatusOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "403": {
+            "description": "The support role is required"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Operator Status",
+        "tags": [
+          "operator"
+        ]
+      }
+    },
     "/api/v1/portfolios": {
       "get": {
         "description": "The signed-in user's portfolios, oldest first.",
@@ -23797,6 +24131,10 @@
     {
       "description": "Goals and their progress under stated assumptions (estimates)",
       "name": "goals"
+    },
+    {
+      "description": "Read-only operational views for the support role: status and aggregate counts, never a user's data (P14-T17)",
+      "name": "operator"
     },
     {
       "description": "PDF, CSV and XLSX files of the user's own figures (P14-T15)",

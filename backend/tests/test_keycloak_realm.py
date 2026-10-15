@@ -114,3 +114,11 @@ def test_no_credentials_or_secrets_are_committed(realm: dict[str, Any]) -> None:
         assert "secret" not in c, c["clientId"]
     assert '"secret"' not in text and '"value"' not in text
     assert all(u["email"].endswith("@example.test") for u in realm["users"])
+
+
+def test_only_the_demo_operator_holds_the_support_role(realm: dict[str, Any]) -> None:
+    """`support` gives read-only operator views (P14-T17, DEC-34). It is never a default role and
+    only the demo operator account in this development realm has it."""
+    assert "support" not in realm["defaultRole"]["composites"]["realm"]
+    holders = [u["username"] for u in realm["users"] if "support" in u.get("realmRoles", [])]
+    assert holders == ["ops@example.test"]

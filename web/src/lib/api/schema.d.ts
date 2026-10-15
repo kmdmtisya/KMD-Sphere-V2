@@ -1595,6 +1595,48 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/operator/audit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Operator Audit
+         * @description The newest audit events, newest first, without who or which record: action, outcome, kind of
+         *     actor and resource, channel, time and correlation id.
+         */
+        get: operations["operator_audit_api_v1_operator_audit_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/operator/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Operator Status
+         * @description Dependency health, optional modules, account counts, and the last day's audit, job and
+         *     failure counts. No account is named.
+         */
+        get: operations["operator_status_api_v1_operator_status_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/portfolios": {
         parameters: {
             query?: never;
@@ -3089,6 +3131,13 @@ export interface components {
             spread_pips: string | null;
             /** Spread Share Of Risk */
             spread_share_of_risk: string | null;
+        };
+        /** CountOut */
+        CountOut: {
+            /** Count */
+            count: number;
+            /** Name */
+            name: string;
         };
         /** CurrencyOut */
         CurrencyOut: {
@@ -6559,6 +6608,69 @@ export interface components {
              * @description The end of this date
              */
             on: string;
+        };
+        /** OperatorAuditItem */
+        OperatorAuditItem: {
+            /** Action */
+            action: string;
+            /** Actor Type */
+            actor_type: string;
+            /** Channel */
+            channel: string | null;
+            /** Correlation Id */
+            correlation_id: string | null;
+            /**
+             * Occurred At
+             * Format: date-time
+             */
+            occurred_at: string;
+            /** Outcome */
+            outcome: string;
+            /** Resource Type */
+            resource_type: string | null;
+        };
+        /** OperatorStatusOut */
+        OperatorStatusOut: {
+            /** Audit By Outcome */
+            audit_by_outcome: components["schemas"]["CountOut"][];
+            /** Audit Top Actions */
+            audit_top_actions: components["schemas"]["CountOut"][];
+            /**
+             * Checks
+             * @description Readiness of each dependency
+             */
+            checks: {
+                [key: string]: "ok" | "failed";
+            };
+            /** Environment */
+            environment: string;
+            /**
+             * Features
+             * @description Which optional modules are switched on
+             */
+            features: {
+                [key: string]: string;
+            };
+            /**
+             * Generated At
+             * Format: date-time
+             */
+            generated_at: string;
+            /** Job Failures By Job */
+            job_failures_by_job: components["schemas"]["CountOut"][];
+            /** Jobs By Status */
+            jobs_by_status: components["schemas"]["CountOut"][];
+            /** Notice */
+            notice: string;
+            /**
+             * Users
+             * @description Accounts by status (counts only)
+             */
+            users: {
+                [key: string]: number;
+            };
+            /** Window Hours */
+            window_hours: number;
         };
         /** OpportunitiesRequest */
         OpportunitiesRequest: {
@@ -12931,6 +13043,106 @@ export interface operations {
             };
             /** @description Invalid range (after today, or too many points) */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Rate limit exceeded (docs/security.md, API protection) */
+            429: {
+                headers: {
+                    /** @description Seconds to wait before retrying */
+                    "Retry-After"?: number;
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    operator_audit_api_v1_operator_audit_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                outcome?: ("success" | "failure" | "denied") | null;
+                /** @description e.g. reports. */
+                action_prefix?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OperatorAuditItem"][];
+                };
+            };
+            /** @description Missing, invalid or expired access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The support role is required */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+            /** @description Rate limit exceeded (docs/security.md, API protection) */
+            429: {
+                headers: {
+                    /** @description Seconds to wait before retrying */
+                    "Retry-After"?: number;
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    operator_status_api_v1_operator_status_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OperatorStatusOut"];
+                };
+            };
+            /** @description Missing, invalid or expired access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The support role is required */
+            403: {
                 headers: {
                     [name: string]: unknown;
                 };

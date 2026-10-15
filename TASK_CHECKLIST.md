@@ -1538,14 +1538,14 @@
   - [x] P14-T16.3 Watchlist and alerts
   - [x] P14-T16.4 Notification centre
   - [x] P14-T16.5 Tests
-- [ ] **P14-T17** · WEB-17 Administration and permissions · `NOT_STARTED` ⬜
+- [ ] **P14-T17** · WEB-17 Administration and permissions · `IN_PROGRESS` 🔄
   - Deps: P14-T05, P14-T06 · Wave: W8 · Track: SEC · Size: M · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-16T03:12:04+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T17.1 Scope decision
-  - [ ] P14-T17.2 Role-gated endpoints
-  - [ ] P14-T17.3 Operator views
-  - [ ] P14-T17.4 Tests
+  - [x] P14-T17.1 Scope decision
+  - [x] P14-T17.2 Role-gated endpoints
+  - [x] P14-T17.3 Operator views
+  - [x] P14-T17.4 Tests
 - [ ] **P14-T18** · WEB-18 Cross-platform synchronisation testing · `NOT_STARTED` ⬜
   - Deps: P14-T07, P14-T08, P14-T10, P14-T11, P14-T12, P14-T14, P14-T16 · Wave: W9 · Track: QA · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
