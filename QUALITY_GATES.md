@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-15T10:08:42+04:00 by `scripts/track.py`._
+_Generated at 2026-10-15T11:15:24+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -45,13 +45,13 @@ _Generated at 2026-10-15T10:08:42+04:00 by `scripts/track.py`._
 | QG-32 | QG-WEB-07: Browser Compatibility | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
 | QG-33 | QG-WEB-08: End-to-End Testing | ⬜ NOT_STARTED | 0/11 | Unassigned | — |
 | QG-34 | QG-WEB-09: Production Readiness | ⬜ NOT_STARTED | 0/9 | Unassigned | — |
-| QG-35 | QG-WEB-10: Design Reference Compliance | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
+| QG-35 | QG-WEB-10: Design Reference Compliance | 🔄 IN_PROGRESS | 2/5 | Unassigned | — |
 | QG-36 | QG-WEB-11: Theme Management | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 115/228.
+Criteria satisfied overall: 117/228.
 
-Current phase **P14** exit-gate criteria outstanding: QG-26.1, QG-26.2, QG-26.3, QG-26.4, QG-26.5, QG-27.1, QG-27.2, QG-27.3, QG-27.4, QG-27.5, QG-27.6, QG-27.7, QG-27.8, QG-27.9, QG-28.1, QG-28.2, QG-28.3, QG-28.4, QG-28.5, QG-28.6, QG-28.7, QG-28.8, QG-28.9, QG-29.1, QG-29.2, QG-29.3, QG-29.4, QG-29.5, QG-29.6, QG-29.7, QG-29.8, QG-30.1, QG-30.2, QG-30.3, QG-30.4, QG-30.5, QG-30.6, QG-31.1, QG-31.2, QG-31.3, QG-31.4, QG-31.5, QG-31.6, QG-32.1, QG-32.2, QG-32.3, QG-32.4, QG-32.5, QG-32.6, QG-33.1, QG-33.10, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.6, QG-33.7, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9, QG-35.1, QG-35.2, QG-35.3, QG-35.4, QG-35.5, QG-36.1, QG-36.2, QG-36.3, QG-36.4, QG-36.5, QG-36.6, QG-36.7, QG-36.8.
+Current phase **P14** exit-gate criteria outstanding: QG-26.1, QG-26.2, QG-26.3, QG-26.4, QG-26.5, QG-27.1, QG-27.2, QG-27.3, QG-27.4, QG-27.5, QG-27.6, QG-27.7, QG-27.8, QG-27.9, QG-28.1, QG-28.2, QG-28.3, QG-28.4, QG-28.5, QG-28.6, QG-28.7, QG-28.8, QG-28.9, QG-29.1, QG-29.2, QG-29.3, QG-29.4, QG-29.5, QG-29.6, QG-29.7, QG-29.8, QG-30.1, QG-30.2, QG-30.3, QG-30.4, QG-30.5, QG-30.6, QG-31.1, QG-31.2, QG-31.3, QG-31.4, QG-31.5, QG-31.6, QG-32.1, QG-32.2, QG-32.3, QG-32.4, QG-32.5, QG-32.6, QG-33.1, QG-33.10, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.6, QG-33.7, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9, QG-35.3, QG-35.4, QG-35.5, QG-36.1, QG-36.2, QG-36.3, QG-36.4, QG-36.5, QG-36.6, QG-36.7, QG-36.8.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -713,18 +713,18 @@ Approved By: —
 
 ### QG-35: QG-WEB-10: Design Reference Compliance
 
-- [ ] QG-35.1 Reference images inspected and catalogued (every image opened; limits reported) · Required: P14 · By: P14-T01
-- [ ] QG-35.2 Reference-to-screen mapping documented, with conflicts and the recommended approach · Required: P14 · By: P14-T01
+- [x] QG-35.1 Reference images inspected and catalogued (every image opened; limits reported) · Required: P14 · By: P14-T01 · Evidence: docs/web/WEB_DESIGN_REFERENCE_ANALYSIS.md section 1: both images in docs/design/references (executive-wealth-dashboard.png 994x774, forex-intelligence-workspace.png 1062x664; no JPG/JPEG/WebP present) opened and analysed (layout, components, palette, type, spacing); limits reported (low resolution, no light-mode or source files); approved with the P14 plan change 2026-10-15 (PR #170) · Verified: 2026-10-15T11:15:24+04:00
+- [x] QG-35.2 Reference-to-screen mapping documented, with conflicts and the recommended approach · Required: P14 · By: P14-T01 · Evidence: docs/web/WEB_DESIGN_REFERENCE_ANALYSIS.md sections 4-7: common patterns, 11 conflicts (palette, dark-only, density/contrast, colour-only signals, trading, advice, ticker, branding, binary theme switch, crypto, placeholder figures) each with a recommended approach, and a reference-to-screen mapping for shell, dashboard, allocation, charts, net worth, AI insights, forex workspace, settings and notifications; approved by the user 2026-10-15 (PR #170); component mapping in docs/web/WEB_REPOSITORY_AUDIT.md section 5 · Verified: 2026-10-15T11:15:24+04:00
 - [ ] QG-35.3 Shared design tokens implement the reference visual language in light and dark · Required: P14 · By: P14-T03
 - [ ] QG-35.4 Portal layout reviewed against the reference images (side-by-side and before-and-after screenshots) · Required: P14 · By: P14-T20
 - [ ] QG-35.5 Major visual inconsistencies resolved or accepted by the user · Required: P14 · By: P14-T20
 
-Status: NOT_STARTED  
+Status: IN_PROGRESS  
 Owner: Unassigned  
-Start Timestamp: —  
+Start Timestamp: 2026-10-15T11:15:24+04:00  
 End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Verification Timestamp: 2026-10-15T11:15:24+04:00  
+Evidence: 2/5 criteria verified; latest QG-35.2 at 2026-10-15T11:15:24+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —

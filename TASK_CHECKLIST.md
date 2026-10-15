@@ -1395,17 +1395,17 @@
 - Exit gates: QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33, QG-34, QG-35, QG-36 — required by `P14-GATE` (Gates-done)
 - Release gates: P14-T23 starts only after QG-26..QG-33, QG-35 and QG-36 are satisfied
 
-- [ ] **P14-T01** · WEB-01 Repository audit and requirements · `NOT_STARTED` ⬜
+- [ ] **P14-T01** · WEB-01 Repository audit and requirements · `IN_PROGRESS` 🔄
   - Deps: P09-GATE, P10-GATE, P11-GATE, P12-GATE · Wave: W1 · Track: DOC · Size: S · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-15T11:14:56+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T01.1 Mobile capability inventory
-  - [ ] P14-T01.2 API contract inventory
-  - [ ] P14-T01.3 Gap and constraint list
-  - [ ] P14-T01.4 Parity matrix baseline
-  - [ ] P14-T01.5 Design reference catalogue
-  - [ ] P14-T01.6 Reference-to-screen mapping
-  - [ ] P14-T01.7 Component audit
+  - [x] P14-T01.1 Mobile capability inventory
+  - [x] P14-T01.2 API contract inventory
+  - [x] P14-T01.3 Gap and constraint list
+  - [x] P14-T01.4 Parity matrix baseline
+  - [x] P14-T01.5 Design reference catalogue
+  - [x] P14-T01.6 Reference-to-screen mapping
+  - [x] P14-T01.7 Component audit
 - [ ] **P14-T02** · WEB-02 Architecture evaluation and ADR · `NOT_STARTED` ⬜
   - Deps: P14-T01 · Wave: W2 · Track: DOC · Size: M · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —
