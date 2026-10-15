@@ -11719,6 +11719,42 @@
         "title": "ReasonOut",
         "type": "object"
       },
+      "ReportInfo": {
+        "properties": {
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "formats": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Formats",
+            "type": "array"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "needs_portfolio": {
+            "title": "Needs Portfolio",
+            "type": "boolean"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "title",
+          "needs_portfolio",
+          "description",
+          "formats"
+        ],
+        "title": "ReportInfo",
+        "type": "object"
+      },
       "ReportingOut": {
         "description": "Which rates the figures of this response were converted with.",
         "properties": {
@@ -22674,6 +22710,164 @@
         ]
       }
     },
+    "/api/v1/reports": {
+      "get": {
+        "description": "The reports that can be generated, and the formats of each.",
+        "operationId": "list_reports_api_v1_reports_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ReportInfo"
+                  },
+                  "title": "Response List Reports Api V1 Reports Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1.0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "List Reports",
+        "tags": [
+          "reports"
+        ]
+      }
+    },
+    "/api/v1/reports/{kind}": {
+      "get": {
+        "description": "A file of the user's own figures with the time they were generated, the currency, the\ndata as-of time and the disclosures. The figures equal the screens' for the same request.",
+        "operationId": "get_report_api_v1_reports__kind__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "kind",
+            "required": true,
+            "schema": {
+              "title": "Kind",
+              "type": "string"
+            }
+          },
+          {
+            "description": "File format",
+            "in": "query",
+            "name": "format",
+            "required": false,
+            "schema": {
+              "default": "pdf",
+              "description": "File format",
+              "enum": [
+                "csv",
+                "xlsx",
+                "pdf"
+              ],
+              "title": "Format",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Required for portfolio and performance",
+            "in": "query",
+            "name": "portfolio_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Required for portfolio and performance",
+              "title": "Portfolio Id"
+            }
+          },
+          {
+            "description": "Report currency where the report converts; default: the account's",
+            "in": "query",
+            "name": "currency",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Z]{3}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Report currency where the report converts; default: the account's",
+              "title": "Currency"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/pdf": {},
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {},
+              "text/csv; charset=utf-8": {}
+            },
+            "description": "The report file"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "404": {
+            "description": "No such report or portfolio for this user"
+          },
+          "422": {
+            "description": "Invalid portfolio or currency"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Report",
+        "tags": [
+          "reports"
+        ]
+      }
+    },
     "/api/v1/research": {
       "get": {
         "description": "With `q`: the most relevant items (embedding similarity and full-text rank), optionally for\none instrument. Without `q`: an instrument's research, newest first (`asset_id` required).\nEvery item carries its source, licence status and times.",
@@ -23603,6 +23797,10 @@
     {
       "description": "Goals and their progress under stated assumptions (estimates)",
       "name": "goals"
+    },
+    {
+      "description": "PDF, CSV and XLSX files of the user's own figures (P14-T15)",
+      "name": "reports"
     },
     {
       "description": "Search across the signed-in user's own portfolios, goals, liabilities and assets (P14-T07)",

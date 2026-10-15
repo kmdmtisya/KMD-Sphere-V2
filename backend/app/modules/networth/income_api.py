@@ -105,6 +105,74 @@ def _percent(fraction: Decimal | None) -> Decimal | None:
     return None if fraction is None else round_half_up(fraction * 100, 2)
 
 
+async def portfolio_income_out(
+    session: AsyncSession, user_id: uuid.UUID, portfolio_id: uuid.UUID
+) -> PortfolioIncomeOut:
+    """One portfolio's income as the endpoint returns it (also used by the reports)."""
+    i = await IncomeService(session).portfolio(user_id, portfolio_id)
+    money = _money(i.currency)
+
+    def periods(items: list[Period]) -> list[PeriodOut]:
+        return [PeriodOut(period=p.period, totals=_totals(p.totals, money)) for p in items]
+
+    return PortfolioIncomeOut(
+        portfolio_id=portfolio_id,
+        currency=i.currency,
+        as_of=i.as_of,
+        trailing_12m=_totals(i.trailing_12m, money),
+        monthly=money(i.monthly_average),
+        yearly=money(i.yearly),
+        portfolio_yield_percent=_percent(i.portfolio_yield),
+        months=periods(i.months),
+        years=periods(i.years),
+        by_asset=[
+            AssetIncomeOut(
+                asset_id=a.asset_id,
+                trailing_12m=_totals(a.trailing_12m, money),
+                all_time=_totals(a.all_time, money),
+                current_yield_percent=_percent(a.current_yield),
+                yield_on_cost_percent=_percent(a.yield_on_cost),
+            )
+            for a in i.by_asset
+        ],
+        by_type=[
+            TypeIncomeOut(
+                income_type=t.income_type,
+                trailing_12m=_totals(t.trailing_12m, money),
+                all_time=_totals(t.all_time, money),
+            )
+            for t in i.by_type
+        ],
+        complete=i.complete,
+    )
+
+
+async def income_summary_out(
+    session: AsyncSession, user_id: uuid.UUID, currency: str | None
+) -> IncomeSummaryOut:
+    """Passive income across the user's portfolios as the endpoint returns it (also used by the
+    reports); the endpoint adds the rate snapshot."""
+    u = await IncomeService(session).user(user_id, currency)
+    money = _money(u.currency)
+    return IncomeSummaryOut(
+        currency=u.currency,
+        monthly=money(u.monthly_average),
+        yearly=money(u.yearly),
+        yearly_gross=money(u.yearly_gross),
+        portfolios=[
+            PortfolioIncomeLine(
+                portfolio_id=line.portfolio_id,
+                yearly=_money(line.currency)(line.trailing_12m.net),
+                value=None if line.converted_net is None else money(line.converted_net),
+            )
+            for line in u.portfolios
+        ],
+        unconverted_currencies=sorted(u.unconverted),
+        complete=not u.unconverted,
+        as_of=u.as_of,
+    )
+
+
 def _cache(request: Request) -> ResponseCache:
     cache: ResponseCache = request.app.state.response_cache
     return cache
@@ -122,42 +190,7 @@ async def portfolio_income(
     asset and type, and yields."""
 
     async def compute() -> PortfolioIncomeOut:
-        i = await IncomeService(session).portfolio(user.id, portfolio_id)
-        money = _money(i.currency)
-
-        def periods(items: list[Period]) -> list[PeriodOut]:
-            return [PeriodOut(period=p.period, totals=_totals(p.totals, money)) for p in items]
-
-        return PortfolioIncomeOut(
-            portfolio_id=portfolio_id,
-            currency=i.currency,
-            as_of=i.as_of,
-            trailing_12m=_totals(i.trailing_12m, money),
-            monthly=money(i.monthly_average),
-            yearly=money(i.yearly),
-            portfolio_yield_percent=_percent(i.portfolio_yield),
-            months=periods(i.months),
-            years=periods(i.years),
-            by_asset=[
-                AssetIncomeOut(
-                    asset_id=a.asset_id,
-                    trailing_12m=_totals(a.trailing_12m, money),
-                    all_time=_totals(a.all_time, money),
-                    current_yield_percent=_percent(a.current_yield),
-                    yield_on_cost_percent=_percent(a.yield_on_cost),
-                )
-                for a in i.by_asset
-            ],
-            by_type=[
-                TypeIncomeOut(
-                    income_type=t.income_type,
-                    trailing_12m=_totals(t.trailing_12m, money),
-                    all_time=_totals(t.all_time, money),
-                )
-                for t in i.by_type
-            ],
-            complete=i.complete,
-        )
+        return await portfolio_income_out(session, user.id, portfolio_id)
 
     return await _cache(request).cached(
         user.id, "income", {"portfolio": portfolio_id}, PortfolioIncomeOut, compute
@@ -181,26 +214,9 @@ async def income_summary(
     """Passive income across all active portfolios, each converted at the latest rate."""
 
     async def compute() -> IncomeSummaryOut:
-        u = await IncomeService(session).user(user.id, currency)
-        money = _money(u.currency)
-        return IncomeSummaryOut(
-            currency=u.currency,
-            monthly=money(u.monthly_average),
-            yearly=money(u.yearly),
-            yearly_gross=money(u.yearly_gross),
-            portfolios=[
-                PortfolioIncomeLine(
-                    portfolio_id=line.portfolio_id,
-                    yearly=_money(line.currency)(line.trailing_12m.net),
-                    value=None if line.converted_net is None else money(line.converted_net),
-                )
-                for line in u.portfolios
-            ],
-            unconverted_currencies=sorted(u.unconverted),
-            complete=not u.unconverted,
-            as_of=u.as_of,
-            reporting=reporting.out(u.currency),
-        )
+        out = await income_summary_out(session, user.id, currency)
+        out.reporting = reporting.out(out.currency)
+        return out
 
     return await _cache(request).cached(
         user.id, "income-summary", {"currency": currency}, IncomeSummaryOut, compute

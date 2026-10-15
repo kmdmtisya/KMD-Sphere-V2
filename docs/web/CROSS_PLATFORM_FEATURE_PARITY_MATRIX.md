@@ -52,7 +52,7 @@ These are new capabilities, not parity gaps. Each needs backend work first (or a
 
 | # | Capability | Status today | Needs | Task |
 |---|---|---|---|---|
-| 26 | Reports and exports (PDF, CSV, XLSX): portfolio, performance, net worth, income, FX exposure, goals, forecast; forex strategy reports after P13-T08 | No endpoint on any channel | Backend report service from the same engines, with as-of times and currency on every file (DEC-33) | P14-T15 |
+| 26 | Reports and exports (PDF, CSV, XLSX): portfolio, performance, net worth, income, FX exposure, goals, forecast; forex strategy reports after P13-T08 | No endpoint on any channel | **Built (P14-T15):** `GET /reports`, `GET /reports/{kind}` (PDF, XLSX, CSV; portfolio, performance and allocation, net worth, income, goals) from the same services, owner-scoped and audited; web Reports page. No forecast, FX-exposure or forex strategy report yet (docs/design/reports.md) | P14-T15 |
 | 27 | Global search across own portfolios, assets, transactions, goals, reports and watchlist | **Built (P14-T07):** `GET /api/v1/search`, owner-scoped: portfolios, goals, liabilities, and the assets you hold, watch or created; command palette (Ctrl/⌘+K) on the web | — | P14-T07 |
 | 28 | Net-worth history chart | Current net worth only | **Built (P14-T11):** `GET /net-worth/history`, owner-scoped; assets rebuilt per date, liabilities from the date recorded | P14-T11 |
 | 29 | Dashboard customisation (order, visibility, default dashboard) | **Built (P14-T07):** section order and visibility use the existing `dashboard_layout` preference, shared with the mobile Home (DEC-35) | — | P14-T07 |

@@ -2314,3 +2314,13 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-16T01:21:32+04:00 — COMPLETE P14-T14
 - duration: 21m 48s
 - evidence: Unit 127 pass; e2e vs Keycloak+API: currency spec 5 pass (switch persisted, converter equals API with a seeded rate, malformed amount, status/history, axe light/dark), full suite no failures, forex spec passes with forex off and on; tsc, eslint clean. QG-28.7, QG-30.2, QG-30.6 checked. PR #185. CI all gates pass.
+
+### 2026-10-16T01:27:10+04:00 — START P14-T15
+- WEB-15 Reports and exports
+- prerequisites verified COMPLETED
+
+### 2026-10-16T01:38:27+04:00 — QG CHECK QG-28.8
+- evidence: Reports and exports (P14-T15): backend PDF, XLSX and CSV for portfolio, performance and allocation, net worth, income and goals; web Reports page downloads them; API tests cover every kind and format, owner scoping (404), validation and audit; e2e downloads CSV, PDF and XLSX. Forecast, FX-exposure and forex strategy reports are not in v1 (docs/design/reports.md).
+
+### 2026-10-16T01:38:28+04:00 — QG CHECK QG-30.5
+- evidence: API tests compare the report figures with the API responses for the same request (portfolio total value and cash, net worth, performance total value, income per year); e2e compares a downloaded CSV's total with GET /portfolios/{id}/summary. Reports reuse the screens' builders and write money exactly as the API does.

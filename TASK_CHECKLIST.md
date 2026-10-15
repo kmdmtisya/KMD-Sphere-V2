@@ -1521,14 +1521,14 @@
   - [x] P14-T14.2 Converter
   - [x] P14-T14.3 FX status and history
   - [x] P14-T14.4 Tests
-- [ ] **P14-T15** · WEB-15 Reports and exports · `NOT_STARTED` ⬜
+- [ ] **P14-T15** · WEB-15 Reports and exports · `IN_PROGRESS` 🔄
   - Deps: P14-T08, P14-T09, P14-T10, P14-T11, P14-T14 · Wave: W8 · Track: BE · Size: XL · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-16T01:27:10+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T15.1 Report formats decision
-  - [ ] P14-T15.2 Report service and endpoints
-  - [ ] P14-T15.3 Web report catalogue
-  - [ ] P14-T15.4 Tests
+  - [x] P14-T15.1 Report formats decision
+  - [x] P14-T15.2 Report service and endpoints
+  - [x] P14-T15.3 Web report catalogue
+  - [x] P14-T15.4 Tests
 - [ ] **P14-T16** · WEB-16 Profile, settings and notifications · `NOT_STARTED` ⬜
   - Deps: P14-T05, P14-T06 · Wave: W7 · Track: WEB · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

@@ -38,11 +38,11 @@ test("the shell has landmarks, grouped navigation with the active page marked, a
   await expect(nav.getByRole("link", { name: "Operator views" })).toHaveCount(0);
   await expect(page.getByRole("main")).toBeVisible();
 
-  await nav.getByRole("link", { name: "Reports" }).click();
-  await expect(page).toHaveURL(/\/reports/);
-  await expect(page.getByRole("heading", { level: 1, name: "Reports" })).toBeVisible();
-  await expect(page.getByText("built in P14-T15")).toBeVisible();
-  await expect(nav.getByRole("link", { name: "Reports" })).toHaveAttribute("aria-current", "page");
+  await nav.getByRole("link", { name: "Alerts" }).click();
+  await expect(page).toHaveURL(/\/alerts/);
+  await expect(page.getByRole("heading", { level: 1, name: "Alerts" })).toBeVisible();
+  await expect(page.getByText("built in P14-T16")).toBeVisible();
+  await expect(nav.getByRole("link", { name: "Alerts" })).toHaveAttribute("aria-current", "page");
 });
 
 test("an unknown portal page is a 404", async ({ browser }) => {
