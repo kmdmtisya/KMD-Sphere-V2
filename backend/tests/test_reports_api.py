@@ -161,7 +161,7 @@ async def test_net_worth_income_goals_and_performance_reports_build(
     assert r.status_code == 200 and r.content.startswith(b"%PDF")
 
 
-async def test_reports_are_the_users_own_and_validated(
+async def test_bob_cannot_report_on_alices_portfolio(
     http: httpx.AsyncClient,
     two_users: TwoUsers,  # noqa: F811
 ) -> None:
