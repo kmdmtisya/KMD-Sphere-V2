@@ -2127,3 +2127,18 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-15T13:54:21+04:00 — START P14-T05
 - WEB-05 Authentication and session integration
 - prerequisites verified COMPLETED
+
+### 2026-10-15T14:44:34+04:00 — QG START QG-29
+- QG-WEB-04: Authentication and Security
+
+### 2026-10-15T14:44:34+04:00 — QG CHECK QG-29.1
+- evidence: OIDC Authorization Code with PKCE (S256), state and nonce through the BFF (web/src/lib/server/auth/oidc.ts, /api/auth/login and /api/auth/callback) with the confidential wealthsphere-web client (realm export, test_keycloak_realm). Verified against a real Keycloak, API, Redis and PostgreSQL: web/e2e/auth.spec.ts passed locally and in CI (PR #175, web e2e run 38720281552, 18 Playwright tests incl. 5 auth journeys); API accepts azp wealthsphere-web. Approved by the user 2026-10-15
+
+### 2026-10-15T14:44:35+04:00 — QG CHECK QG-29.2
+- evidence: Logout: POST /api/auth/logout with CSRF deletes the server-side session, revokes the refresh token and ends the Keycloak session (RP-initiated); e2e: after sign-out the replayed session cookie gets 401 and /api/auth/session reports signed out (PR #175, CI run 38720281552). Expiry: idle 30 min and absolute 10 h from the realm, refresh 30 s before expiry, failed refresh ends the session: unit tests in web/src/lib/server/auth/auth.test.ts (fake clock). Approved by the user 2026-10-15
+
+### 2026-10-15T14:44:35+04:00 — QG CHECK QG-29.3
+- evidence: MFA applies as the realm requires: e2e journey signs in mfa@example.test, which must enrol TOTP at Keycloak (CONFIGURE_TOTP) before the portal creates the session, then calls the API through the BFF (web/e2e/auth.spec.ts, PR #175, CI run 38720281552). Approved by the user 2026-10-15
+
+### 2026-10-15T14:44:35+04:00 — QG CHECK QG-29.6
+- evidence: Tokens stay server-side in Redis sealed with AES-256-GCM under a hashed key; the browser holds only __Host-ws_session (HttpOnly, Secure, SameSite=Lax, path /) and the non-credential CSRF token. e2e asserts no JWT in any portal cookie, document.cookie, localStorage or sessionStorage and the session cookie flags; unit tests assert sealed store values and no token in Set-Cookie or /api/auth/session (PR #175, CI run 38720281552). Approved by the user 2026-10-15
