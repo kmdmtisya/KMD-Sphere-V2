@@ -2217,3 +2217,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-15T20:36:51+04:00 — QG CHECK QG-30.3
 - evidence: Historical valuation rules stay in the backend: the web shows each holding's value with the API's value_source, value_as_of and stale flag (stale shown with a chip), and valuations are created with an as_of timestamp that the API applies (latest valuation on or before the date asked for); e2e shows a manual valuation entered on the web is the value the API returns and the web displays for the holding. No valuation rule exists in web/. 2026-10-15
+
+### 2026-10-15T20:41:30+04:00 — AWAITING_VERIFICATION P14-T08
+- evidence: Portfolios list/create/edit/archive; portfolio page with API summary figures, holdings grid with saved column view, ledger with 14-type add form, idempotent posting, append-only reversal, valuations CRUD, asset search and custom assets; API client PUT/DELETE/Idempotency-Key and field errors; 99 unit tests; 8 Playwright journeys on the real stack incl. totals equal to API, cross-user 404, axe light/dark; screenshots docs/design/screenshots/p14/after/P14-T08. QG-28.3, 30.1, 30.3 verified. PR #179. CI all gates pass.
+
+### 2026-10-15T20:41:31+04:00 — COMPLETE P14-T08
+- duration: 35m 16s
+- evidence: Portfolios list/create/edit/archive; portfolio page with API summary figures, holdings grid with saved column view, ledger with 14-type add form, idempotent posting, append-only reversal, valuations CRUD, asset search and custom assets; API client PUT/DELETE/Idempotency-Key and field errors; 99 unit tests; 8 Playwright journeys on the real stack incl. totals equal to API, cross-user 404, axe light/dark; screenshots docs/design/screenshots/p14/after/P14-T08. QG-28.3, 30.1, 30.3 verified. PR #179. CI all gates pass.
