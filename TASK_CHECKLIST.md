@@ -1606,16 +1606,16 @@
   - [ ] P14-T24.4 Paper trading and journal
   - [ ] P14-T24.5 Forex Copilot and alerts
   - [ ] P14-T24.6 Tests
-- [ ] **P14-T25** · WEB-25 Appearance: Light, Dark and System · `NOT_STARTED` ⬜
+- [ ] **P14-T25** · WEB-25 Appearance: Light, Dark and System · `IN_PROGRESS` 🔄
   - Deps: P14-T03, P14-T05 · Wave: W5 · Track: WEB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-15T15:19:53+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T25.1 Light theme
-  - [ ] P14-T25.2 Dark theme
-  - [ ] P14-T25.3 System mode and persistence
-  - [ ] P14-T25.4 Theme-aware charts, tables and dialogs
-  - [ ] P14-T25.5 Appearance controls
-  - [ ] P14-T25.6 Tests and screenshots
+  - [x] P14-T25.1 Light theme
+  - [x] P14-T25.2 Dark theme
+  - [x] P14-T25.3 System mode and persistence
+  - [x] P14-T25.4 Theme-aware charts, tables and dialogs
+  - [x] P14-T25.5 Appearance controls
+  - [x] P14-T25.6 Tests and screenshots
 - [ ] **P14-GATE** · Phase P14 exit gate · `NOT_STARTED` ⬜
   - Deps: P14-T01, P14-T02, P14-T03, P14-T04, P14-T05, P14-T06, P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17, P14-T18, P14-T19, P14-T20, P14-T21, P14-T22, P14-T23, P14-T24, P14-T25 · Wave: W12 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33, QG-34, QG-35, QG-36
   - Started: — · Completed: — · Duration: — · Blocker: —

@@ -75,6 +75,9 @@ describe("sign-in", () => {
   });
 
   it("completes sign-in: a server-side session, HttpOnly session cookie, CSRF cookie, no token to the browser", async () => {
+    const fetchSpy = vi
+      .spyOn(globalThis, "fetch")
+      .mockResolvedValue(Response.json({ preferences: { theme_mode: "dark" } }));
     const tx: SignInTransaction = { state: "st", nonce: "no", verifier: "ve", returnTo: "/portfolio", startedAt: Date.now() };
     const r = await callback(
       new Request(`${PUBLIC}/api/auth/callback?code=abc&state=st`, { headers: { cookie: `__Host-ws_signin=${seal(tx, KEY)}` } }),
@@ -89,6 +92,23 @@ describe("sign-in", () => {
     expect(store.entries.size).toBe(1);
     const current = vi.mocked(runtime.oidc.finishSignIn).mock.calls[0][1] as URL;
     expect(current.href).toBe(`${PUBLIC}/api/auth/callback?code=abc&state=st`);
+    // The account's appearance (P14-T25) is copied to this browser, read with the new access token.
+    expect(cookie(r, "__Host-ws_theme")).toMatch(/^__Host-ws_theme=dark;/);
+    expect(cookie(r, "__Host-ws_theme")).not.toMatch(/HttpOnly/i);
+    const [meUrl, meInit] = fetchSpy.mock.calls[0] as [URL, RequestInit];
+    expect(String(meUrl)).toBe("http://127.0.0.1:8000/api/v1/me");
+    expect(new Headers(meInit.headers).get("authorization")).toBe("Bearer access-1");
+  });
+
+  it("keeps this browser's appearance when the account has none or the API is unreachable", async () => {
+    const tx = () => seal({ state: "st", nonce: "no", verifier: "ve", returnTo: "/", startedAt: Date.now() }, KEY);
+    vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(Response.json({ preferences: { theme_mode: null } }));
+    const none = await callback(new Request(`${PUBLIC}/api/auth/callback?code=a&state=st`, { headers: { cookie: `__Host-ws_signin=${tx()}` } }));
+    expect(cookie(none, "__Host-ws_theme")).toBe("");
+    vi.spyOn(globalThis, "fetch").mockRejectedValueOnce(new TypeError("fetch failed"));
+    const down = await callback(new Request(`${PUBLIC}/api/auth/callback?code=a&state=st`, { headers: { cookie: `__Host-ws_signin=${tx()}` } }));
+    expect(down.status).toBe(303);
+    expect(cookie(down, "__Host-ws_theme")).toBe("");
   });
 
   it("refuses a callback without its transaction, or a cancelled one", async () => {
@@ -103,6 +123,7 @@ describe("sign-in", () => {
   });
 
   it("replaces an existing session at sign-in (no fixation)", async () => {
+    vi.spyOn(globalThis, "fetch").mockRejectedValue(new TypeError("fetch failed"));
     const { id } = await signedIn();
     const tx = seal({ state: "st", nonce: "no", verifier: "ve", returnTo: "/", startedAt: Date.now() }, KEY);
     const r = await callback(

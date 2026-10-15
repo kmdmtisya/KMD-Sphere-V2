@@ -1,6 +1,6 @@
 # Web portal: appearance (Light, Dark, System) design (P14, alias P14-UI-07 to P14-UI-10)
 
-**Status:** Approved with the P14 plan change by the user on 2026-10-15. It assumes the proposed stack (Next.js with a Backend-for-Frontend, ADR-0018). If P14-T02 chooses Flutter Web, the preference, its storage and the behaviour below stay the same, and only §4 changes (Flutter `ThemeMode` plus a bootstrap in `index.html`).
+**Status:** Approved with the P14 plan change by the user on 2026-10-15; built in P14-T25 (2026-10-15), with the first-paint mechanism changed as recorded in §4. It assumes the proposed stack (Next.js with a Backend-for-Frontend, ADR-0018). If P14-T02 chooses Flutter Web, the preference, its storage and the behaviour below stay the same, and only §4 changes (Flutter `ThemeMode` plus a bootstrap in `index.html`).
 
 ## 1. Requirements
 
@@ -25,19 +25,23 @@
 - **Resolved value (the "theme"):** `light` or `dark`. It equals the preference, or the browser's `prefers-color-scheme` when the preference is `system`.
 - **Precedence when signed in:**
   1. the server value from `/me/preferences`;
-  2. the `ws_theme` cookie;
+  2. the `__Host-ws_theme` cookie;
   3. `system`.
 - **Signed out** (sign-in and error pages): the cookie, otherwise `system`.
-- **The `ws_theme` cookie:**
+- **The `__Host-ws_theme` cookie** (built in P14-T25):
   - holds only the preference word;
-  - `Path=/`, `SameSite=Lax`, `Secure`, valid for one year;
-  - **not** HttpOnly, so the page can update it instantly;
+  - `Path=/`, `SameSite=Lax`, `Secure`, host-only (`__Host-`), valid for one year;
+  - **not** HttpOnly, so the boot script can read it and the page can update it instantly;
   - no session data or token ever goes into it, or into any other browser storage (DEC-31);
   - any value other than the three words is treated as `system`.
 
 ## 4. Rendering without a flash
 
-1. The server renders `<html data-theme-pref="{preference}">` from the cookie, or from the session's preferences at the sign-in callback. The BFF fetches `/me/preferences` once at sign-in and sets the cookie before the first page is rendered.
+1. The server renders `<html data-theme-pref="system">`. A small inline script in `<head>` runs while the HTML is parsed, before the first paint. It copies the saved choice from the `__Host-ws_theme` cookie onto the attribute (`src/lib/theme/theme.ts`, `THEME_BOOT_SCRIPT`).
+   - At sign-in the BFF reads `theme_mode` from `/me` with the new access token and sets the cookie, so a new device starts with the account's choice.
+   - **Changed in P14-T25:** the first draft had the server read the cookie. Under Next.js 16 Cache Components, reading cookies in the root layout blocks every page. Next's own guide ("Preventing flash before hydration") recommends the inline script instead.
+   - **Without JavaScript:** the page follows the device (System). An explicit Light or Dark choice needs the script.
+   - **CSP:** the script is static, so the Content-Security-Policy (P14-T19) allows it by its hash.
 2. The generated CSS defines the tokens per resolved theme:
 
    ```css
@@ -48,8 +52,8 @@
    }
    ```
 
-   The **System mode resolves in CSS alone**, so the first paint is correct with or without JavaScript. Native controls and scrollbars follow `color-scheme`.
-3. `<meta name="theme-color">` is emitted twice, once per `media` query, so the browser chrome matches too.
+   The **System mode resolves in CSS alone**. Native controls and scrollbars follow `color-scheme`.
+3. `color-scheme: light dark` in the viewport metadata lets the browser chrome follow. A per-theme `theme-color` meta would need colour literals outside the tokens, so it is left out for now.
 4. There is no theme transition animation, so nothing fades between themes or flashes on load.
 
 ## 5. Changing the theme
@@ -59,7 +63,7 @@
    - If the call fails, the local choice stays and a non-blocking notice says "Saved on this browser only". The next change retries.
    - Cross-device updates arrive at the next sign-in or page load. There is no push in v1 (DEC-35).
 3. A `BroadcastChannel("ws-theme")` message updates other open tabs at once.
-4. A `matchMedia("(prefers-color-scheme: dark)")` listener updates only the **resolved** theme in a React context, which charts use (§6). It never writes the preference.
+4. A `matchMedia("(prefers-color-scheme: dark)")` listener updates only the **resolved** theme, through `useSyncExternalStore` hooks (`src/components/theme/appearance.tsx`). Charts read the tokens through `useChartTheme` (§6). It never writes the preference.
 
 ## 6. Theme-aware components
 
@@ -88,7 +92,7 @@ The mobile app keeps its choice on the device only. For one preference across de
 | Check | How |
 |---|---|
 | Resolution logic | Unit tests: preference × system value → resolved theme; unknown cookie value → system |
-| No flash | Playwright with JavaScript disabled: the first paint has the expected background for each preference × `colorScheme` (light, dark), checked by computed style and a screenshot |
+| No flash | Playwright records the attribute and the body background at the first animation frame of a load with a saved Dark choice, so before React hydrates. With JavaScript disabled, the page follows the device's scheme (`web/e2e/theme.spec.ts`) |
 | Live system change | Playwright `page.emulateMedia({ colorScheme })` while open: the resolved theme changes and the stored preference stays `system` |
 | Persistence | Choose Dark, reload, then sign out and in again: Dark. Two tabs: the change propagates |
 | Server sync | API contract test: the PATCH sends `theme_mode`; a failed PATCH keeps the local choice and shows the notice |

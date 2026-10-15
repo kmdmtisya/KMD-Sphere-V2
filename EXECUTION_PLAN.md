@@ -3335,7 +3335,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
   - Light, Dark and System apply at once without a reload, on every screen and component in the gallery.
   - System follows `prefers-color-scheme` live and never overwrites the saved choice.
   - The choice survives a reload, a new tab and a new sign-in; when signed in it is stored as `theme_mode` (no backend change).
-  - No wrong-theme flash on first paint, verified with JavaScript disabled.
+  - No wrong-theme flash on first paint, verified at the first painted frame; without JavaScript the page follows the device (System).
   - Charts, tables, dialogs, tooltips and menus switch correctly; no colour literal in `web/src` outside generated tokens (lint).
   - The selector is keyboard and screen-reader accessible in every mode, and text and controls meet contrast in both themes.
   - Before-and-after screenshots of the gallery and shell in light and dark at 1440, 1280, 1024, 768 and 375 px are stored in `docs/design/screenshots/p14/after/P14-T25/`.
