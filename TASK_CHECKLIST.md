@@ -1442,10 +1442,10 @@
   - [x] P14-T05.3 Session store and cookies
   - [x] P14-T05.4 CSRF and proxy allow-list
   - [x] P14-T05.5 Security tests
-- [ ] **P14-T06** · WEB-06 Application shell and navigation · `IN_PROGRESS` 🔄
+- [x] **P14-T06** · WEB-06 Application shell and navigation · `COMPLETED` ✅
   - Deps: P14-T03, P14-T05 · Wave: W5 · Track: WEB · Size: M · Approval: no
-  - Started: 2026-10-15T16:46:09+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-15T16:46:09+04:00 · Completed: 2026-10-15T17:30:08+04:00 · Duration: 43m 59s · Blocker: —
+  - Evidence: Application shell: skip link, top bar (portfolio, reporting currency saved to account, data-status chip, notifications, appearance, panel toggle, profile menu), collapsible sidebar, Copilot panel; nav defined once with a parity test for mobile routes; forex shown only when the API enables it, operator only for support; responsive wide/medium/narrow; keyboard shortcuts; 89 unit tests; 42 Playwright tests against the real stack incl. overflow at 5 widths and axe light/dark; screenshots docs/design/screenshots/p14/after/P14-T06. PR #177. CI all gates pass.
   - [x] P14-T06.1 Shell layout
   - [x] P14-T06.2 Navigation and routes
   - [x] P14-T06.3 Top-bar controls
