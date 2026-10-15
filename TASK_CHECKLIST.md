@@ -1414,16 +1414,16 @@
   - [x] P14-T02.2 Session and security model
   - [x] P14-T02.3 Stack and licence review
   - [x] P14-T02.4 ADR-0018
-- [ ] **P14-T03** · WEB-03 Web design system and UX specification · `NOT_STARTED` ⬜
+- [ ] **P14-T03** · WEB-03 Web design system and UX specification · `IN_PROGRESS` 🔄
   - Deps: P14-T02 · Wave: W3 · Track: WEB · Size: L · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-15T12:02:37+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T03.1 Token source and generators
-  - [ ] P14-T03.2 Web component library
-  - [ ] P14-T03.3 Charts and data grid
-  - [ ] P14-T03.4 Component gallery and visual tests
+  - [x] P14-T03.1 Token source and generators
+  - [x] P14-T03.2 Web component library
+  - [x] P14-T03.3 Charts and data grid
+  - [x] P14-T03.4 Component gallery and visual tests
   - [ ] P14-T03.5 UX specification review
-  - [ ] P14-T03.6 Reference comparison sheets
+  - [x] P14-T03.6 Reference comparison sheets
 - [x] **P14-T04** · WEB-04 Web application foundation · `COMPLETED` ✅
   - Deps: P14-T02 · Wave: W3 · Track: WEB · Size: L · Approval: no
   - Started: 2026-10-15T11:52:14+04:00 · Completed: 2026-10-15T11:59:15+04:00 · Duration: 7m 01s · Blocker: —

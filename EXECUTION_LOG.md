@@ -2100,3 +2100,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-15T11:59:15+04:00 — COMPLETE P14-T04
 - duration: 7m 01s
 - evidence: web/ foundation: Next.js 16.4.1 standalone app with baseline security headers; BFF skeleton (health route calling the API server to server; /api/v1 allow-listed proxy answering 401 until sessions); typed client generated from backend/openapi.json with drift check; lint guards no-money-arithmetic and no-colour-literals plus CSS colour check and seeded self-test; 39 Vitest tests; Playwright smoke 4/4 locally (with and without the API); web CI workflow with web gate; npm audit (production) in the security gate (0 found), TD-12 for a dev-only tooling advisory. QG-26.3 verified. PR #173. CI all gates pass.
+
+### 2026-10-15T12:02:37+04:00 — START P14-T03
+- WEB-03 Web design system and UX specification
+- prerequisites verified COMPLETED
