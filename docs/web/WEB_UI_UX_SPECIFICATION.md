@@ -1,6 +1,6 @@
 # WealthSphere Web Portal: UI/UX specification
 
-**Status:** Proposed (2026-10-14). It is reviewed at the web UX gate (P14-T03), as the mobile design system was at UX Gate 1. The mobile specification remains the [UI/UX Design Specification v1.1](../SOLUTION_INTENT.md#uiux-design-specification--approved-product-direction-v11). This document adds the desktop and web rules and changes no mobile behaviour.
+**Status:** Proposed (2026-10-14). It is reviewed at the web UX gate (P14-T03), as the mobile design system was at UX Gate 1. The mobile specification remains the [UI/UX Design Specification v1.1](../SOLUTION_INTENT.md#uiux-design-specification--approved-product-direction-v11). This document adds the desktop and web rules and changes no mobile behaviour. **Visual direction (proposed 2026-10-15):** the reference images in [docs/design/references](../design/references) govern the portal's composition and visual language, as analysed and mapped to screens in [WEB_DESIGN_REFERENCE_ANALYSIS.md](WEB_DESIGN_REFERENCE_ANALYSIS.md); their labels, figures, trading features and branding are not used.
 
 ## 1. Principles
 
@@ -22,8 +22,14 @@
   - `--ws-surface`, `--ws-surface-raised`, `--ws-surface-sunken`;
   - `--ws-border`, `--ws-focus`, `--ws-text`, `--ws-text-muted`;
   - eight chart series (`--ws-series-1..8`), checked for 3:1 contrast against the surface and for colour-vision safety.
-- **Themes.** Light and dark, plus "system" by default. The choice is the same preference as mobile (`/me/preferences`).
-- **Scales.** Spacing on a 4 px base (4 to 64). Radius 8 px for cards and 6 px for controls. Elevation uses borders plus one subtle shadow. Desktop density is a compact row height of 36 px for tables and 44 px for touch layouts.
+- **Themes.** Light, Dark and System (the default), stored as `theme_mode` in `/me/preferences` and mirrored in a cookie for a flash-free first paint. The design is in [WEB_THEME_SYSTEM.md](WEB_THEME_SYSTEM.md).
+- **Visual language from the references** ([analysis](WEB_DESIGN_REFERENCE_ANALYSIS.md) §4, §7):
+  - layered surfaces: a dark base, raised cards one step lighter, 1 px low-contrast borders and no heavy shadows;
+  - card anatomy: a title bar with an optional info icon and compact icon actions on the right (chart type, full screen, export);
+  - figures: large tabular numerals, the minor part (cents) in the muted text token, and a change pill (sign, arrow, text, colour) followed by the period delta;
+  - chart chrome: muted gridlines, a crosshair with a tooltip card, an inline legend, and range selectors as a segmented control;
+  - the palette stays the shared WealthSphere tokens (decision DEC-39).
+- **Scales.** Spacing on a 4 px base (4 to 64). Radius 12 px for cards (the mobile `AppRadii.small` and the references) and 8 px for controls. Elevation uses borders plus one subtle shadow. Desktop density is a compact row height of 36 px for tables and 44 px for touch layouts.
 - **Type.** System font stack (no web-font download) with tabular figures for amounts, a 14 px desktop body and a 16 px body below 768 px. Zoom to 200% and text spacing overrides must not lose content (WCAG 1.4.4, 1.4.12).
 - **No hard-coded styles.** A lint rule forbids colour literals and raw pixel spacing outside the tokens, mirroring the Flutter style guard.
 
@@ -70,7 +76,7 @@
 - Portfolio selector, "All portfolios" included.
 - Reporting-currency selector: this is the global preference, so changing it re-renders every figure with the server's conversion (FXCUR).
 - Market-data status chip: current, delayed or stale with its age, linking to FX status.
-- Notification centre, theme toggle and the profile menu (profile, security, sessions, sign out).
+- Notification centre, an appearance button that cycles Light, Dark and System, and the profile menu (profile, security, sessions, the Appearance choice, sign out).
 
 **Main workspace:** breadcrumb, page title, contextual filters (period, portfolio, asset class), then the content.
 
@@ -86,7 +92,7 @@
 | 768–1279px (laptop and tablet) | Sidebar collapsed to icons (expands as an overlay); 8 columns; KPI rows of 2; charts stacked; grids with fewer default columns; right panel as an overlay sheet |
 | Under 768px (phone browser) | Top bar with a menu button; navigation in a drawer; one column; **tables become card lists** (not shrunken tables); touch targets at least 44 px; copilot full screen |
 
-Every core workflow (sign in, view the dashboard, add a transaction, change the currency, ask the copilot) is tested at 1440, 1024 and 390 px wide (QG-27).
+Every core workflow (sign in, view the dashboard, add a transaction, change the currency, ask the copilot) is tested at 1440, 1280, 1024, 768 and 375 px wide, in light and dark (QG-27, QG-36). There is no horizontal page scroll at any of these widths; only wide data grids scroll inside their own container, with the first column pinned.
 
 ## 5. Components (web design system, P14-T03)
 
@@ -135,7 +141,7 @@ The mobile behaviour is unchanged; these are the desktop forms.
   - There is no order button of any kind for real money.
 - **Reports and exports (P14-T15).** A report catalogue: choose a report and period, preview it, then download PDF, CSV or XLSX generated by the backend, with as-of times and the currency on every file.
 - **Settings.**
-  - Profile, reporting currency, theme, notifications and privacy.
+  - Profile, reporting currency, Appearance (Light, Dark, System), notifications and privacy.
   - Security: password and MFA through the Keycloak account console, and active sessions with "sign out other sessions".
   - Account deletion request: the P16 workflow, shown when available.
 

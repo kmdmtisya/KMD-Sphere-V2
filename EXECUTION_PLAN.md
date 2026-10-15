@@ -114,10 +114,10 @@ Conflicts and resolutions found in the documents:
 | P11 | Multi-Currency Reporting & FX Management (FXCUR workstream) | CORE | P05, P06, P08, P09, P10 | 13 | 11 |
 | P12 | AI Investment Intelligence & Portfolio Doctor | AI | P08, P10, P11 | 11 | 6 |
 | P13 | Forex Trading Intelligence (FX workstream) | FX | P08, P09, P10, P11, P12 | 15 | 13 |
-| P14 | Enterprise Web Portal (WEB workstream) | WEB | P09, P10, P11, P12 (P14-T24 needs P13-T10; P14-T21/T22 need P15 tasks) | 25 | 12 |
+| P14 | Enterprise Web Portal (WEB workstream) | WEB | P09, P10, P11, P12 (P14-T24 needs P13-T10; P14-T21/T22 need P15 tasks) | 26 | 12 |
 | P15 | Cloud Infrastructure & Deployment Pipeline | INFRA | P01 (early start allowed); deployment tasks need P04-T01 | 12 | 8 |
 | P16 | Production Hardening & Quality Assurance | HARDENING | P09, P10, P11, P12, P14, P15 | 12 | 6 |
-| P17 | Release & Production Deployment | RELEASE | P16 | 9 | 7 |
+| P17 | Release & Production Deployment | RELEASE | P16 | 10 | 7 |
 
 **Valid single-lane order:** the numeric order P00 → … → P13 → P14 → P15 → P16 → P17, with one exception: P14-T21 and P14-T22 (web CI/CD and staging) need the P15 pipeline tasks, so they run after those. Per the user's decision of 2026-10-14, P13 runs in full before the web work (DEC-38).
 
@@ -243,7 +243,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | P11 | P05, P06, P08, P09, P10 | QG-21 … QG-25 (every criterion) | P11-T11, P11-T12 (QG-21..QG-25 satisfied before start) |
 | P12 | P08, P10, P11 | QG-07.4,7 | — |
 | P13 | P08, P09, P10, P11, P12 | QG-13 … QG-19 (every criterion); QG-20.3, 20.4, 20.5 (QG-20.1, 20.2 moved to P17-T09) | P13-T13, P13-T14 (QG-13..QG-19 satisfied before start) |
-| P14 | P09, P10, P11, P12 | QG-26 … QG-34 (every criterion) | P14-T23 (QG-26..QG-33 satisfied before start) |
+| P14 | P09, P10, P11, P12 | QG-26 … QG-36 (every criterion) | P14-T23 (QG-26..QG-33, QG-35, QG-36 satisfied before start) |
 | P15 | P01 | QG-08.4,5,7; QG-10.2,4,5,6,7,8 | P15-T11 |
 | P16 | P09, P10, P11, P12, P14, P15 | QG-01.4; QG-04.6; QG-05.5; QG-08.2,8; QG-09.1,2,3,4,6; QG-12.1,3,4,7 | — |
 | P17 | P16 | QG-04.7; QG-05.6; QG-12.2,5,6,8 | P17-T03, P17-T07 |
@@ -291,6 +291,8 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | DEC-36 | Web performance budgets and supported browsers (proposed: Lighthouse performance at least 85 and accessibility at least 95; LCP at most 2.5 s, INP at most 200 ms, CLS at most 0.1 at p75; dashboard API p95 at most 500 ms; the two latest major versions of Chrome, Edge and Firefox, and Safari 17 or later) | P14-T20 | User | Open |
 | DEC-37 | Web portal in the v1 release with core gates (proposed) or after v1 behind its own release | P14-T01 | User | Open |
 | DEC-38 | Execution order: Forex P13 runs in full before the web portal P14 (decided by the user 2026-10-14; the earlier proposal to run the web core first is withdrawn) | P14-T01 | User | Resolved (2026-10-14) |
+| DEC-39 | Brand accent for the reference-driven portal: keep the shared WealthSphere tokens (blue interactive, navy, teal, gold; violet as a chart series) and adopt only the references' composition (proposed), or adopt the references' violet accent on every channel | P14-T03 | User | Open (proposed 2026-10-15) |
+| DEC-40 | One appearance setting across devices: the mobile app also reads and writes `theme_mode` in `/me/preferences` (proposed), or mobile keeps its device-only setting | P14-T18 | User | Open (proposed 2026-10-15) |
 
 ## 9. Key risks
 
@@ -2913,14 +2915,15 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 
 - **Goal:** A desktop-grade web portal with functional parity with the Android and iOS apps, on the same backend, identity and data (docs/web/WEB_PORTAL_ARCHITECTURE.md, ADR-0018).
 - **Entry criteria:** P09-GATE, P10-GATE, P11-GATE and P12-GATE complete; the user approves the phase and ADR-0018 (P14-T02).
-- **Exit criteria:** QG-26..QG-34 (QG-WEB-01..09) satisfied; parity matrix complete with exceptions recorded; no financial logic in the web client; the user approves readiness.
+- **Exit criteria:** QG-26..QG-36 (QG-WEB-01..11) satisfied; parity matrix complete with exceptions recorded; no financial logic in the web client; the user approves readiness.
 - **Prerequisite phases:** P09, P10, P11, P12 · **Lane:** WEB. It can start as soon as it is approved; it does not wait for P13 or P15. P14-T13 uses the P13-T02 forex APIs; P14-T21 and P14-T22 need the P15 pipeline, compute, Keycloak and observability tasks.
-- **Task alias:** WEB-nn = P14-Tnn (WEB-01 = P14-T01 … WEB-24 = P14-T24). WEB-13 covers the Forex entry and live markets; WEB-24 is the advanced Forex workspace. P13 is complete before P14 starts (DEC-38), so the web builds on finished Forex APIs. QG-WEB-nn are the gates QG-(25+nn).
+- **Task alias:** WEB-nn = P14-Tnn (WEB-01 = P14-T01 … WEB-25 = P14-T25). WEB-13 covers the Forex entry and live markets; WEB-24 is the advanced Forex workspace. P13 is complete before P14 starts (DEC-38), so the web builds on finished Forex APIs. QG-WEB-nn are the gates QG-(25+nn).
 - **Order (DEC-38, decided by the user 2026-10-14):** P13 runs in full first. Then P14 waves 1 to 6 (foundation, authentication, shell, then the priority modules: dashboard, portfolio and Copilot), waves 7 and 8, P15 where P14-T21/T22 need it, then P14 waves 9 to 12, P16 and P17.
 - **Entry gates:** prerequisite phase gates completed (P09, P10, P11, P12); user approval of the phase.
 - **Task-level gates:** each task's CK suites (CK-W for web, plus CK-B, CK-API, CK-DB where the backend changes) and acceptance criteria.
-- **Exit gates:** QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33, QG-34 (every criterion) required by `P14-GATE` plus user review.
-- **Release gates:** `Gates-start` on P14-T23: QG-26..QG-33 satisfied. The production rollout of the web container is part of P17.
+- **Exit gates:** QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33, QG-34, QG-35, QG-36 (every criterion) required by `P14-GATE` plus user review.
+- **UI aliases (P14-UI-nn, approved by the user 2026-10-15):** the reference-driven UI work maps onto these tasks, so nothing is planned twice. UI-01 reference catalogue → P14-T01.5; UI-02 reference-to-screen mapping → P14-T01.6; UI-03 component audit → P14-T01.7; UI-04 tokens → P14-T03.1; UI-05 dashboard components → P14-T03.2, T03.3; UI-06 layout and navigation → P14-T06; UI-07 Light → P14-T25.1; UI-08 Dark → P14-T25.2; UI-09 System and persistence → P14-T25.3; UI-10 theme-aware charts, tables and dialogs → P14-T25.4; UI-11 backend data → P14-T07 to P14-T17 and P14-T24; UI-12 visual regression, responsive and before/after screenshots → P14-T03.4, P14-T20.5, P14-T20.6; UI-13 accessibility and browsers → P14-T19.3, P14-T20.4; UI-14 gates and approval → P14-T23, P14-GATE. Visual direction: [docs/web/WEB_DESIGN_REFERENCE_ANALYSIS.md](docs/web/WEB_DESIGN_REFERENCE_ANALYSIS.md); appearance: [docs/web/WEB_THEME_SYSTEM.md](docs/web/WEB_THEME_SYSTEM.md). QG-P14-01 = QG-35, QG-P14-02 = QG-36; QG-P14-03 and QG-P14-04 are criteria in QG-27, QG-33 and QG-34 (see QUALITY_GATES.md 'Scope changes').
+- **Release gates:** `Gates-start` on P14-T23: QG-26..QG-33, QG-35 and QG-36 satisfied. The production rollout of the web container is part of P17.
 
 | Wave | Tasks | Mode | Entry condition | Conflict notes |
 |---|---|---|---|---|
@@ -2928,7 +2931,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | P14.W2 | P14-T02 | Single task | Phase approved and all dependencies complete | — |
 | P14.W3 | P14-T03, P14-T04 | Parallel-safe | Phase approved and all dependencies complete | T03 writes design/ and web/src/components; T04 writes the web/ scaffold. Agree the folder split first. |
 | P14.W4 | P14-T05 | Single task | Phase approved and all dependencies complete | — |
-| P14.W5 | P14-T06 | Single task | Phase approved and all dependencies complete | — |
+| P14.W5 | P14-T06, P14-T25 | Parallel-safe | Phase approved and all dependencies complete | T25 owns the theme provider, token theme switch and appearance controls; T06 places them in the top bar and profile menu. Agree the component boundary first. |
 | P14.W6 | P14-T07, P14-T08, P14-T12 | Parallel-safe | Phase approved and all dependencies complete | Priority wave (user, 2026-10-14). Different routes; shared components change only through T03's library. |
 | P14.W7 | P14-T09, P14-T10, P14-T11, P14-T14, P14-T16 | Parallel-safe | Phase approved and all dependencies complete | Different routes and features; T11 adds one backend endpoint (no migration expected). |
 | P14.W8 | P14-T13, P14-T15, P14-T17 | Parallel-safe | Phase approved and all dependencies complete | T15 is backend-heavy (report service); T13 adds the ticket endpoint; T17 adds operator endpoints. Coordinate any migration ids. |
@@ -2944,13 +2947,15 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Objective:** Establish from repository evidence what each channel has today and what the web brief adds.
 - **Depends on:** P09-GATE, P10-GATE, P11-GATE, P12-GATE
 - **Unblocks:** P14-T02
-- **Deliverables:** Feature parity matrix baseline (docs/web/CROSS_PLATFORM_FEATURE_PARITY_MATRIX.md), backend gap list, web deployment constraints.
+- **Deliverables:** Feature parity matrix baseline (docs/web/CROSS_PLATFORM_FEATURE_PARITY_MATRIX.md), backend gap list, web deployment constraints; the design reference analysis and reference-to-screen mapping (docs/web/WEB_DESIGN_REFERENCE_ANALYSIS.md); an audit of the components to mirror (mobile design system; no web components exist yet).
 - **Acceptance criteria:**
   - Every mobile route and live repository is mapped to its backend API.
   - Capabilities no platform has today are listed as planned dependencies, never as parity.
   - Constraints affecting the web (plugins without web support, bearer-only API, CORS policy) are recorded.
+  - Every image in docs/design/references is inspected (not only named), catalogued and mapped to portal screens; conflicts with project rules and between images are listed with a recommendation; images that cannot be inspected are reported as such.
 - **Verification:** CK-TRK; review
-- **Subtasks:** `P14-T01.1` Mobile capability inventory · `P14-T01.2` API contract inventory · `P14-T01.3` Gap and constraint list · `P14-T01.4` Parity matrix baseline
+- **Quality criteria evidenced here:** QG-35.1, QG-35.2
+- **Subtasks:** `P14-T01.1` Mobile capability inventory · `P14-T01.2` API contract inventory · `P14-T01.3` Gap and constraint list · `P14-T01.4` Parity matrix baseline · `P14-T01.5` Design reference catalogue · `P14-T01.6` Reference-to-screen mapping · `P14-T01.7` Component audit
 
 #### P14-T02 — WEB-02 Architecture evaluation and ADR
 
@@ -2980,10 +2985,11 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Acceptance criteria:**
   - The generated Dart palette equals today's values (mobile goldens unchanged).
   - Every web component renders in light and dark, at 200% zoom and in RTL, with measured contrast and no serious axe violation.
+  - Tokens and components implement the reference visual language (surface layering, card anatomy, figure styling, chart chrome) within the shared palette (DEC-39); the gallery is compared side by side with the reference images in light and dark.
   - The user approves the gallery and the specification (web UX gate).
 - **Verification:** CK-W
-- **Quality criteria evidenced here:** QG-27.1, QG-27.5
-- **Subtasks:** `P14-T03.1` Token source and generators · `P14-T03.2` Web component library · `P14-T03.3` Charts and data grid · `P14-T03.4` Component gallery and visual tests · `P14-T03.5` UX specification review
+- **Quality criteria evidenced here:** QG-27.1, QG-27.5, QG-35.3
+- **Subtasks:** `P14-T03.1` Token source and generators · `P14-T03.2` Web component library · `P14-T03.3` Charts and data grid · `P14-T03.4` Component gallery and visual tests · `P14-T03.5` UX specification review · `P14-T03.6` Reference comparison sheets
 
 #### P14-T04 — WEB-04 Web application foundation
 
@@ -3028,7 +3034,8 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Deliverables:** Shell, routes, top-bar controls, right panel, responsive layouts.
 - **Acceptance criteria:**
   - Every mobile destination has a web route or a recorded exception.
-  - The shell works at 1440, 1024 and 390 px, by keyboard, with a skip link and visible focus.
+  - The shell follows the reference layout (WEB_DESIGN_REFERENCE_ANALYSIS.md §6) and works at 1440, 1280, 1024, 768 and 375 px, by keyboard, with a skip link and visible focus, in light and dark.
+  - The appearance controls from P14-T25 sit in the top bar and the profile menu.
   - The Forex entry shows only when the server flag is on; operator entries only for the support role (server-checked).
 - **Verification:** CK-W
 - **Subtasks:** `P14-T06.1` Shell layout · `P14-T06.2` Navigation and routes · `P14-T06.3` Top-bar controls · `P14-T06.4` Right panel · `P14-T06.5` Responsive and keyboard tests
@@ -3216,7 +3223,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
   - A concurrent edit gets 409 and a reload prompt; no silent overwrite.
   - Every mobile route maps to a web route or a recorded exception (CI).
 - **Verification:** CK-W, CK-B, CK-API
-- **Quality criteria evidenced here:** QG-26.2, QG-26.4, QG-28.1, QG-28.2, QG-33.7
+- **Quality criteria evidenced here:** QG-26.2, QG-26.4, QG-28.1, QG-28.2, QG-33.7, QG-33.10
 - **Subtasks:** `P14-T18.1` Optimistic concurrency · `P14-T18.2` Cross-channel journey tests · `P14-T18.3` Route parity check · `P14-T18.4` Parity matrix update
 
 #### P14-T19 — WEB-19 Security and accessibility testing
@@ -3224,15 +3231,15 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 `SEC` · Size L · Wave P14.W9 · Approval: none
 
 - **Objective:** Security tests (session, CSRF, XSS, CSP, cross-user through the web, dependencies, secrets) and a WCAG 2.2 AA audit.
-- **Depends on:** P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17
+- **Depends on:** P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17, P14-T25
 - **Unblocks:** P14-T22
-- **Deliverables:** Updated threat model, test results, accessibility report.
+- **Deliverables:** Updated threat model, test results, accessibility report (in light and dark).
 - **Acceptance criteria:**
   - No open high-severity finding.
   - axe reports no serious or critical violation on any page; manual NVDA and VoiceOver passes of the key journeys.
   - CSP is enforced.
 - **Verification:** CK-W, CK-B, CK-API
-- **Quality criteria evidenced here:** QG-27.6, QG-29.5, QG-29.7, QG-29.8
+- **Quality criteria evidenced here:** QG-27.6, QG-27.7, QG-27.9, QG-29.5, QG-29.7, QG-29.8
 - **Subtasks:** `P14-T19.1` Web threat model update · `P14-T19.2` Security tests and scans · `P14-T19.3` Accessibility audit · `P14-T19.4` Remediation
 
 #### P14-T20 — WEB-20 Performance and browser testing
@@ -3240,16 +3247,17 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 `QA` · Size L · Wave P14.W9 · Approval: none
 
 - **Objective:** Measure against the approved targets (DEC-36) and test the supported browsers and breakpoints.
-- **Depends on:** P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17
+- **Depends on:** P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17, P14-T25
 - **Unblocks:** P14-T22
-- **Deliverables:** Measurements and the supported-browser list.
+- **Deliverables:** Measurements, the supported-browser list, and before-and-after screenshot sets of every key screen in light and dark at 1440, 1280, 1024, 768 and 375 px with the reference comparison sheets (docs/design/screenshots/p14/after/).
 - **Acceptance criteria:**
   - Lighthouse and web vitals are measured; failures against the budget are recorded, never hidden.
   - A seeded large book stays usable; charts stay responsive while updating.
-  - Chrome, Edge, Firefox and Safari pass the journeys at the three breakpoints.
+  - Chrome, Edge, Firefox and Safari pass the journeys at 1440, 1280, 1024, 768 and 375 px, in light and dark, with no unintended horizontal overflow.
+  - Every key screen is reviewed against the reference images; remaining visual inconsistencies are listed and closed or accepted by the user.
 - **Verification:** CK-W, CK-B, CK-API
-- **Quality criteria evidenced here:** QG-27.2, QG-27.3, QG-27.4, QG-31.1, QG-31.2, QG-31.3, QG-31.4, QG-31.5, QG-31.6, QG-32.1, QG-32.2, QG-32.3, QG-32.4, QG-32.5, QG-32.6
-- **Subtasks:** `P14-T20.1` Budgets and Lighthouse CI · `P14-T20.2` Large-data and chart tests · `P14-T20.3` API latency · `P14-T20.4` Browser matrix · `P14-T20.5` Layout verification
+- **Quality criteria evidenced here:** QG-27.2, QG-27.3, QG-27.4, QG-27.8, QG-31.1, QG-31.2, QG-31.3, QG-31.4, QG-31.5, QG-31.6, QG-32.1, QG-32.2, QG-32.3, QG-32.4, QG-32.5, QG-32.6, QG-35.4, QG-35.5, QG-36.1, QG-36.2, QG-36.7
+- **Subtasks:** `P14-T20.1` Budgets and Lighthouse CI · `P14-T20.2` Large-data and chart tests · `P14-T20.3` API latency · `P14-T20.4` Browser matrix · `P14-T20.5` Layout verification · `P14-T20.6` Theme and reference review with before-and-after screenshots
 
 #### P14-T21 — WEB-21 CI/CD and deployment
 
@@ -3263,7 +3271,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
   - The image is built and scanned; deploy and rollback are scripted.
   - Configuration is validated at start; secrets come from the secret store.
 - **Verification:** CK-W
-- **Quality criteria evidenced here:** QG-34.1, QG-34.2
+- **Quality criteria evidenced here:** QG-34.1, QG-34.2, QG-33.11
 - **Subtasks:** `P14-T21.1` Image and scan · `P14-T21.2` CD to staging and production · `P14-T21.3` Configuration validation · `P14-T21.4` Required check
 
 #### P14-T22 — WEB-22 Staging and end-to-end validation
@@ -3294,8 +3302,8 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
   - Every web gate is passed; open items are listed with owners.
   - The user's approval is recorded.
 - **Verification:** CK-W
-- **Quality criteria evidenced here:** QG-34.8
-- **Quality gates required before start:** QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33
+- **Quality criteria evidenced here:** QG-34.8, QG-34.9
+- **Quality gates required before start:** QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33, QG-35, QG-36
 - **Subtasks:** `P14-T23.1` Readiness review · `P14-T23.2` Open items · `P14-T23.3` Approval
 
 #### P14-T24 — WEB-24 Forex web workspace (advanced)
@@ -3314,12 +3322,33 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 - **Quality criteria evidenced here:** QG-28.9, QG-33.9
 - **Subtasks:** `P14-T24.1` Analysis and forecast panels · `P14-T24.2` Scanner and opportunity ranking · `P14-T24.3` Risk calculator and backtests · `P14-T24.4` Paper trading and journal · `P14-T24.5` Forex Copilot and alerts · `P14-T24.6` Tests
 
+#### P14-T25 — WEB-25 Appearance: Light, Dark and System
+
+`WEB` · Size M · Wave P14.W5 · Approval: none
+
+- **Objective:** A persistent, application-wide appearance setting with Light, Dark and System, flash-free on first paint, synchronised through `/me/preferences`, and applied to every surface including charts, tables and dialogs (docs/web/WEB_THEME_SYSTEM.md).
+- **Depends on:** P14-T03, P14-T05
+- **Parallel with:** P14-T06 (T25 owns the theme provider, the token theme switch and the appearance controls; T06 places them in the top bar and profile menu)
+- **Unblocks:** P14-T19, P14-T20, P14-GATE
+- **Deliverables:** Generated light and dark token sets with the System media query; theme provider (resolved theme, system listener, tab sync); `ws_theme` cookie set by the BFF at sign-in; `PATCH /me/preferences` call; appearance radio group and top-bar cycle button; chart theme hook; tests.
+- **Acceptance criteria:**
+  - Light, Dark and System apply at once without a reload, on every screen and component in the gallery.
+  - System follows `prefers-color-scheme` live and never overwrites the saved choice.
+  - The choice survives a reload, a new tab and a new sign-in; when signed in it is stored as `theme_mode` (no backend change).
+  - No wrong-theme flash on first paint, verified with JavaScript disabled.
+  - Charts, tables, dialogs, tooltips and menus switch correctly; no colour literal in `web/src` outside generated tokens (lint).
+  - The selector is keyboard and screen-reader accessible in every mode, and text and controls meet contrast in both themes.
+  - Before-and-after screenshots of the gallery and shell in light and dark at 1440, 1280, 1024, 768 and 375 px are stored in `docs/design/screenshots/p14/after/P14-T25/`.
+- **Verification:** CK-W
+- **Quality criteria evidenced here:** QG-36.3, QG-36.4, QG-36.5, QG-36.6, QG-36.8
+- **Subtasks:** `P14-T25.1` Light theme · `P14-T25.2` Dark theme · `P14-T25.3` System mode and persistence · `P14-T25.4` Theme-aware charts, tables and dialogs · `P14-T25.5` Appearance controls · `P14-T25.6` Tests and screenshots
+
 #### P14-GATE — Phase P14 exit gate
 
 `GATE` · Size S · Wave P14.W12 · Approval: **USER REVIEW REQUIRED**
 
 - **Objective:** Confirm the web portal.
-- **Depends on:** P14-T01, P14-T02, P14-T03, P14-T04, P14-T05, P14-T06, P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17, P14-T18, P14-T19, P14-T20, P14-T21, P14-T22, P14-T23, P14-T24
+- **Depends on:** P14-T01, P14-T02, P14-T03, P14-T04, P14-T05, P14-T06, P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17, P14-T18, P14-T19, P14-T20, P14-T21, P14-T22, P14-T23, P14-T24, P14-T25
 - **Unblocks:** P16 wave 1
 - **Deliverables:** Gate summary.
 - **Acceptance criteria:**

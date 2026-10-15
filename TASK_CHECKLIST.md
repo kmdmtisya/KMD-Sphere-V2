@@ -1392,8 +1392,8 @@
 
 - Phase approval: `APPROVED by user (mtisya@gmail.com), 2026-10-14 at 2026-10-15T00:21:39+04:00`
 - Entry gates: prerequisite phase gates completed (P09, P10, P11, P12) — enforced as dependencies of every wave-1 task
-- Exit gates: QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33, QG-34 — required by `P14-GATE` (Gates-done)
-- Release gates: P14-T23 starts only after QG-26..QG-33 are satisfied
+- Exit gates: QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33, QG-34, QG-35, QG-36 — required by `P14-GATE` (Gates-done)
+- Release gates: P14-T23 starts only after QG-26..QG-33, QG-35 and QG-36 are satisfied
 
 - [ ] **P14-T01** · WEB-01 Repository audit and requirements · `NOT_STARTED` ⬜
   - Deps: P09-GATE, P10-GATE, P11-GATE, P12-GATE · Wave: W1 · Track: DOC · Size: S · Approval: no
@@ -1403,6 +1403,9 @@
   - [ ] P14-T01.2 API contract inventory
   - [ ] P14-T01.3 Gap and constraint list
   - [ ] P14-T01.4 Parity matrix baseline
+  - [ ] P14-T01.5 Design reference catalogue
+  - [ ] P14-T01.6 Reference-to-screen mapping
+  - [ ] P14-T01.7 Component audit
 - [ ] **P14-T02** · WEB-02 Architecture evaluation and ADR · `NOT_STARTED` ⬜
   - Deps: P14-T01 · Wave: W2 · Track: DOC · Size: M · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —
@@ -1420,6 +1423,7 @@
   - [ ] P14-T03.3 Charts and data grid
   - [ ] P14-T03.4 Component gallery and visual tests
   - [ ] P14-T03.5 UX specification review
+  - [ ] P14-T03.6 Reference comparison sheets
 - [ ] **P14-T04** · WEB-04 Web application foundation · `NOT_STARTED` ⬜
   - Deps: P14-T02 · Wave: W3 · Track: WEB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
@@ -1551,7 +1555,7 @@
   - [ ] P14-T18.3 Route parity check
   - [ ] P14-T18.4 Parity matrix update
 - [ ] **P14-T19** · WEB-19 Security and accessibility testing · `NOT_STARTED` ⬜
-  - Deps: P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17 · Wave: W9 · Track: SEC · Size: L · Approval: no
+  - Deps: P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17, P14-T25 · Wave: W9 · Track: SEC · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P14-T19.1 Web threat model update
@@ -1559,7 +1563,7 @@
   - [ ] P14-T19.3 Accessibility audit
   - [ ] P14-T19.4 Remediation
 - [ ] **P14-T20** · WEB-20 Performance and browser testing · `NOT_STARTED` ⬜
-  - Deps: P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17 · Wave: W9 · Track: QA · Size: L · Approval: no
+  - Deps: P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17, P14-T25 · Wave: W9 · Track: QA · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P14-T20.1 Budgets and Lighthouse CI
@@ -1567,6 +1571,7 @@
   - [ ] P14-T20.3 API latency
   - [ ] P14-T20.4 Browser matrix
   - [ ] P14-T20.5 Layout verification
+  - [ ] P14-T20.6 Theme and reference review with before-and-after screenshots
 - [ ] **P14-T21** · WEB-21 CI/CD and deployment · `NOT_STARTED` ⬜
   - Deps: P14-T04, P15-T04, P15-T08 · Wave: W9 · Track: INF · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
@@ -1585,7 +1590,7 @@
   - [ ] P14-T22.4 Monitoring and error reporting
   - [ ] P14-T22.5 Rollback drill
 - [ ] **P14-T23** · WEB-23 Production readiness and approval · `NOT_STARTED` ⬜
-  - Deps: P14-T22 · Wave: W11 · Track: REL · Size: M · Approval: yes · Gates-start: QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33
+  - Deps: P14-T22 · Wave: W11 · Track: REL · Size: M · Approval: yes · Gates-start: QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33, QG-35, QG-36
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P14-T23.1 Readiness review
@@ -1601,8 +1606,18 @@
   - [ ] P14-T24.4 Paper trading and journal
   - [ ] P14-T24.5 Forex Copilot and alerts
   - [ ] P14-T24.6 Tests
+- [ ] **P14-T25** · WEB-25 Appearance: Light, Dark and System · `NOT_STARTED` ⬜
+  - Deps: P14-T03, P14-T05 · Wave: W5 · Track: WEB · Size: M · Approval: no
+  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Evidence: —
+  - [ ] P14-T25.1 Light theme
+  - [ ] P14-T25.2 Dark theme
+  - [ ] P14-T25.3 System mode and persistence
+  - [ ] P14-T25.4 Theme-aware charts, tables and dialogs
+  - [ ] P14-T25.5 Appearance controls
+  - [ ] P14-T25.6 Tests and screenshots
 - [ ] **P14-GATE** · Phase P14 exit gate · `NOT_STARTED` ⬜
-  - Deps: P14-T01, P14-T02, P14-T03, P14-T04, P14-T05, P14-T06, P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17, P14-T18, P14-T19, P14-T20, P14-T21, P14-T22, P14-T23, P14-T24 · Wave: W12 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33, QG-34
+  - Deps: P14-T01, P14-T02, P14-T03, P14-T04, P14-T05, P14-T06, P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17, P14-T18, P14-T19, P14-T20, P14-T21, P14-T22, P14-T23, P14-T24, P14-T25 · Wave: W12 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33, QG-34, QG-35, QG-36
   - Started: — · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P14-GATE.1 Run gates

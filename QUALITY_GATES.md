@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-15T00:24:46+04:00 by `scripts/track.py`._
+_Generated at 2026-10-15T10:08:42+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -37,19 +37,21 @@ _Generated at 2026-10-15T00:24:46+04:00 by `scripts/track.py`._
 | QG-24 | QG-FXCUR-04: Android and iOS | ✅ PASSED | 7/7 | Unassigned | — |
 | QG-25 | QG-FXCUR-05: AI Integration | ✅ PASSED | 5/5 | Unassigned | — |
 | QG-26 | QG-WEB-01: Architecture and Integration | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
-| QG-27 | QG-WEB-02: UI/UX and Design System | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
+| QG-27 | QG-WEB-02: UI/UX and Design System | ⬜ NOT_STARTED | 0/9 | Unassigned | — |
 | QG-28 | QG-WEB-03: Functional Parity | ⬜ NOT_STARTED | 0/9 | Unassigned | — |
 | QG-29 | QG-WEB-04: Authentication and Security | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
 | QG-30 | QG-WEB-05: Financial Accuracy | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
 | QG-31 | QG-WEB-06: Performance | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
 | QG-32 | QG-WEB-07: Browser Compatibility | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
-| QG-33 | QG-WEB-08: End-to-End Testing | ⬜ NOT_STARTED | 0/9 | Unassigned | — |
-| QG-34 | QG-WEB-09: Production Readiness | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
+| QG-33 | QG-WEB-08: End-to-End Testing | ⬜ NOT_STARTED | 0/11 | Unassigned | — |
+| QG-34 | QG-WEB-09: Production Readiness | ⬜ NOT_STARTED | 0/9 | Unassigned | — |
+| QG-35 | QG-WEB-10: Design Reference Compliance | ⬜ NOT_STARTED | 0/5 | Unassigned | — |
+| QG-36 | QG-WEB-11: Theme Management | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 115/209.
+Criteria satisfied overall: 115/228.
 
-Current phase **P14** exit-gate criteria outstanding: QG-26.1, QG-26.2, QG-26.3, QG-26.4, QG-26.5, QG-27.1, QG-27.2, QG-27.3, QG-27.4, QG-27.5, QG-27.6, QG-28.1, QG-28.2, QG-28.3, QG-28.4, QG-28.5, QG-28.6, QG-28.7, QG-28.8, QG-28.9, QG-29.1, QG-29.2, QG-29.3, QG-29.4, QG-29.5, QG-29.6, QG-29.7, QG-29.8, QG-30.1, QG-30.2, QG-30.3, QG-30.4, QG-30.5, QG-30.6, QG-31.1, QG-31.2, QG-31.3, QG-31.4, QG-31.5, QG-31.6, QG-32.1, QG-32.2, QG-32.3, QG-32.4, QG-32.5, QG-32.6, QG-33.1, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.6, QG-33.7, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8.
+Current phase **P14** exit-gate criteria outstanding: QG-26.1, QG-26.2, QG-26.3, QG-26.4, QG-26.5, QG-27.1, QG-27.2, QG-27.3, QG-27.4, QG-27.5, QG-27.6, QG-27.7, QG-27.8, QG-27.9, QG-28.1, QG-28.2, QG-28.3, QG-28.4, QG-28.5, QG-28.6, QG-28.7, QG-28.8, QG-28.9, QG-29.1, QG-29.2, QG-29.3, QG-29.4, QG-29.5, QG-29.6, QG-29.7, QG-29.8, QG-30.1, QG-30.2, QG-30.3, QG-30.4, QG-30.5, QG-30.6, QG-31.1, QG-31.2, QG-31.3, QG-31.4, QG-31.5, QG-31.6, QG-32.1, QG-32.2, QG-32.3, QG-32.4, QG-32.5, QG-32.6, QG-33.1, QG-33.10, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.6, QG-33.7, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9, QG-35.1, QG-35.2, QG-35.3, QG-35.4, QG-35.5, QG-36.1, QG-36.2, QG-36.3, QG-36.4, QG-36.5, QG-36.6, QG-36.7, QG-36.8.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -549,6 +551,9 @@ Approved By: —
 - [ ] QG-27.4 Mobile browser layout verified (under 768 px) · Required: P14 · By: P14-T20
 - [ ] QG-27.5 Dark and light themes verified · Required: P14 · By: P14-T03
 - [ ] QG-27.6 Accessibility checks completed (WCAG 2.2 AA: automated and manual) · Required: P14 · By: P14-T19
+- [ ] QG-27.7 Keyboard navigation verified (shell, appearance selector, grids, dialogs) · Required: P14 · By: P14-T19
+- [ ] QG-27.8 No unintended horizontal overflow at 1440, 1280, 1024, 768 and 375 px · Required: P14 · By: P14-T20
+- [ ] QG-27.9 Reduced-motion preference respected · Required: P14 · By: P14-T19
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -671,6 +676,8 @@ Approved By: —
 - [ ] QG-33.7 Cross-platform synchronisation passes · Required: P14 · By: P14-T18 · CRITICAL
 - [ ] QG-33.8 Export and reporting journeys pass · Required: P14 · By: P14-T22
 - [ ] QG-33.9 Web paper-trading journey passes (Chromium, Firefox, WebKit) · Required: P14 · By: P14-T24
+- [ ] QG-33.10 Navigation and routing tests pass · Required: P14 · By: P14-T18
+- [ ] QG-33.11 Frontend unit and component tests pass in CI · Required: P14 · By: P14-T21
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -692,6 +699,46 @@ Approved By: —
 - [ ] QG-34.6 Deployment and rollback tested · Required: P14 · By: P14-T22
 - [ ] QG-34.7 Backup and recovery dependencies verified · Required: P14 · By: P14-T22
 - [ ] QG-34.8 Required release approvals recorded · Required: P14 · By: P14-T23 · CRITICAL
+- [ ] QG-34.9 No unresolved critical or high-severity issues · Required: P14 · By: P14-T23
+
+Status: NOT_STARTED  
+Owner: Unassigned  
+Start Timestamp: —  
+End Timestamp: —  
+Verification Timestamp: —  
+Evidence: —  
+Blocking Issues: —  
+Blocks: —  
+Approved By: —
+
+### QG-35: QG-WEB-10: Design Reference Compliance
+
+- [ ] QG-35.1 Reference images inspected and catalogued (every image opened; limits reported) · Required: P14 · By: P14-T01
+- [ ] QG-35.2 Reference-to-screen mapping documented, with conflicts and the recommended approach · Required: P14 · By: P14-T01
+- [ ] QG-35.3 Shared design tokens implement the reference visual language in light and dark · Required: P14 · By: P14-T03
+- [ ] QG-35.4 Portal layout reviewed against the reference images (side-by-side and before-and-after screenshots) · Required: P14 · By: P14-T20
+- [ ] QG-35.5 Major visual inconsistencies resolved or accepted by the user · Required: P14 · By: P14-T20
+
+Status: NOT_STARTED  
+Owner: Unassigned  
+Start Timestamp: —  
+End Timestamp: —  
+Verification Timestamp: —  
+Evidence: —  
+Blocking Issues: —  
+Blocks: —  
+Approved By: —
+
+### QG-36: QG-WEB-11: Theme Management
+
+- [ ] QG-36.1 Light Mode works across all portal screens · Required: P14 · By: P14-T20
+- [ ] QG-36.2 Dark Mode works across all portal screens · Required: P14 · By: P14-T20
+- [ ] QG-36.3 System Mode follows the browser or OS preference · Required: P14 · By: P14-T25
+- [ ] QG-36.4 System changes update the UI while open, without overwriting the saved choice · Required: P14 · By: P14-T25
+- [ ] QG-36.5 The preference persists across reloads, tabs and sign-ins (stored as theme_mode when signed in) · Required: P14 · By: P14-T25
+- [ ] QG-36.6 No wrong-theme flash on the first render (verified with JavaScript disabled) · Required: P14 · By: P14-T25
+- [ ] QG-36.7 Charts, tables, dialogs and tooltips respond correctly to theme changes · Required: P14 · By: P14-T20
+- [ ] QG-36.8 The appearance selector is accessible (keyboard, screen reader, contrast) in every mode · Required: P14 · By: P14-T25
 
 Status: NOT_STARTED  
 Owner: Unassigned  
@@ -722,3 +769,4 @@ Changes to when a criterion is required are decisions, recorded here and in EXEC
 | 2026-10-09 | QG-13…QG-20 | Eight Forex gates (QG-FX-01…08, 38 criteria, all required at P13) added to the register | Forex Trading Intelligence module requested as workstream P13; mapping QG-FX-nn = QG-(12+nn). Additive: no existing criterion changed. Approved with phase P13. | user |
 | 2026-10-10 | QG-21…QG-25 | Five multi-currency gates (QG-FXCUR-01…05, 27 criteria, required at P11) added; QG-12.1 now covers every core gate (all except QG-12 and the optional Forex gates QG-13…QG-20) | Multi-Currency Reporting & FX Management requested as workstream P11 (ADR-0010). Additive; existing criteria unchanged apart from the QG-12.1 wording. Approved with phase P11. | user |
 | 2026-10-14 | QG-20.1, QG-20.2 | Required phase P13 → P17; evidence task P13-T14 → P17-T09 (Forex production enablement, conditional) | No market-data provider is chosen (DEC-19) and no regulatory review for Kenya or the UAE has been done (DEC-20). Both are CRITICAL and cannot be waived. The module is built but **not released**: it is refused outside local and test, so no user can reach it. Not a waiver: both criteria still apply in full, and P17-T09 must pass before forex is switched on outside development. P13-T14 and P13-GATE now require QG-20.3 to QG-20.5. Optional Forex gates never block the core release (QG-all excludes QG-13..QG-20) | user, 2026-10-14 (option: move to a release task) |
+| 2026-10-15 | QG-35, QG-36; QG-27.7–27.9, QG-33.10–33.11, QG-34.9 | Two web gates added, QG-35 Design Reference Compliance (QG-WEB-10, alias QG-P14-01, 5 criteria) and QG-36 Theme Management (QG-WEB-11, alias QG-P14-02, 8 criteria); QG-P14-03 (responsive and accessibility) and QG-P14-04 (functional and regression) map onto existing criteria (QG-27.2–27.6, QG-28, QG-29, QG-26.2, QG-32.5, QG-34.1) plus six new ones | The user asked for reference-driven UI and Light/Dark/System appearance with mandatory gates. Additive: no existing criterion changed; duplicates of existing criteria were not added | user, 2026-10-15 (plan approved) |
