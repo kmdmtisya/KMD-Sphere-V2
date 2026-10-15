@@ -32,7 +32,8 @@ ROOT = Path(__file__).resolve().parent.parent
 REALM = "wealthsphere"
 CLIENT = "wealthsphere-mobile"
 REDIRECT = "com.kmdmtisya.wealthsphere:/oauth2redirect"
-USERS = ["alice@example.test", "bob@example.test", "mfa@example.test"]
+# ops@example.test is the demo operator: it alone holds the `support` realm role (P14-T17).
+USERS = ["alice@example.test", "bob@example.test", "mfa@example.test", "ops@example.test"]
 
 
 ENV_KEYS = (

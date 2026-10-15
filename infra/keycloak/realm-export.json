@@ -181,6 +181,15 @@
       "emailVerified": true,
       "requiredActions": ["CONFIGURE_TOTP"],
       "realmRoles": ["default-roles-wealthsphere"]
+    },
+    {
+      "username": "ops@example.test",
+      "email": "ops@example.test",
+      "firstName": "Ops",
+      "lastName": "Demo",
+      "enabled": true,
+      "emailVerified": true,
+      "realmRoles": ["default-roles-wealthsphere", "support"]
     }
   ]
 }

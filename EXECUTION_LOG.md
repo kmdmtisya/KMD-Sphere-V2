@@ -2342,3 +2342,17 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-16T03:06:04+04:00 — COMPLETE P14-T16
 - duration: 18m 31s
 - evidence: Unit 135 pass; e2e settings spec 8 pass + shell spec 15 pass vs Keycloak+API; tsc, eslint clean. Per-alert delivery preferences, account deletion and multi-session management are not on the web yet. PR #187. CI all gates pass.
+
+### 2026-10-16T03:12:04+04:00 — START P14-T17
+- WEB-17 Administration and permissions
+- prerequisites verified COMPLETED
+
+### 2026-10-16T03:20:20+04:00 — QG CHECK QG-29.4
+- evidence: Operator endpoints (P14-T17) check the support realm role from the verified token on the server: 403 without it (API tests incl. forged role headers and query), refused attempts audited as denied, every view audited; the menu entry and page are hidden for others, but e2e shows the API refuses them anyway (normal user gets 403 on both endpoints). Responses contain no emails, user ids or financial data (tests). Resource authorisation of existing routes is covered by the IDOR registry and sweep.
+
+### 2026-10-16T03:37:54+04:00 — AWAITING_VERIFICATION P14-T17
+- evidence: Backend: 7 operator API tests + realm test pass (ruff, mypy clean); e2e operator spec 4 pass against Keycloak (with the new realm) and the API. QG-29.4 checked. DEC-34 resolved under the advance approval. PR #188. CI all gates pass.
+
+### 2026-10-16T03:37:54+04:00 — COMPLETE P14-T17
+- duration: 25m 50s
+- evidence: Backend: 7 operator API tests + realm test pass (ruff, mypy clean); e2e operator spec 4 pass against Keycloak (with the new realm) and the API. QG-29.4 checked. DEC-34 resolved under the advance approval. PR #188. CI all gates pass. · Approved by: user (mtisya@gmail.com), advance approval 2026-10-15 (P14 sequence)

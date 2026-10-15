@@ -60,6 +60,7 @@ from app.modules.market_data import api as market_data_api
 from app.modules.networth import api as networth_api
 from app.modules.networth import income_api
 from app.modules.notifications import api as notifications_api
+from app.modules.operator import api as operator_api
 from app.modules.opportunities import api as opportunities_api
 from app.modules.portfolio import analytics_api, summary_api
 from app.modules.portfolio import api as portfolio_api
@@ -196,6 +197,11 @@ def create_app(
                 "description": "Goals and their progress under stated assumptions (estimates)",
             },
             {
+                "name": "operator",
+                "description": "Read-only operational views for the support role: status and "
+                "aggregate counts, never a user's data (P14-T17)",
+            },
+            {
                 "name": "reports",
                 "description": "PDF, CSV and XLSX files of the user's own figures (P14-T15)",
             },
@@ -289,6 +295,7 @@ def create_app(
     app.include_router(valuations_api.router)
     app.include_router(search_api.router)
     app.include_router(reports_api.router)
+    app.include_router(operator_api.router)
     app.include_router(forecasting_api.router)
     app.include_router(goals_api.router)
     app.include_router(networth_api.router)
