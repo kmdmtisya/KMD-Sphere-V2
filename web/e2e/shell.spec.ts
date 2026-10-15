@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 
-import { signIn } from "./helpers";
+import { signIn, settled } from "./helpers";
 
 /**
  * The application shell (P14-T06): signed in, against the real stack. Needs WS_E2E_AUTH=1.
@@ -159,6 +159,7 @@ test("the shell passes axe in Light and in Dark", async ({ browser }) => {
   const page = await signedInPage(browser);
   for (const mode of ["light", "dark"] as const) {
     await page.evaluate((m) => document.documentElement.setAttribute("data-theme-pref", m), mode);
+    await settled(page);
     const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
     const serious = results.violations.filter((v) => v.impact === "serious" || v.impact === "critical");
     expect(serious.map((v) => `${mode}: ${v.id} (${v.nodes.length})`)).toEqual([]);

@@ -1,6 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
+import { settled } from "./helpers";
+
 /**
  * The design-system gallery (P14-T03): accessibility in both themes, behaviour of the interactive
  * components, no horizontal overflow at the five reference widths, and screenshots for review
@@ -16,6 +18,7 @@ test.beforeEach(async ({ page }) => {
 
 test("no serious or critical axe violations in the light and dark panels", async ({ page }) => {
   for (const theme of ["light", "dark"]) {
+    await settled(page);
     const results = await new AxeBuilder({ page })
       .include(`section[data-theme-pref="${theme}"]`)
       .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])

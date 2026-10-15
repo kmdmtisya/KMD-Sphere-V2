@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 
-import { api, signIn } from "./helpers";
+import { api, signIn, settled } from "./helpers";
 
 /**
  * Calculator, forecast scenarios and goals (P14-T10), signed in against the real stack. Needs
@@ -196,6 +196,7 @@ test("both pages pass axe in Light and Dark", async () => {
         (m) => document.documentElement.setAttribute("data-theme-pref", m),
         mode,
       );
+      await settled(page);
       const results = await new AxeBuilder({ page })
         .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
         .analyze();
