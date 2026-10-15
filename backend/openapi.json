@@ -10152,6 +10152,76 @@
         "title": "NetWorthFreshness",
         "type": "object"
       },
+      "NetWorthHistoryOut": {
+        "properties": {
+          "as_of": {
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "complete": {
+            "description": "True when no point is incomplete",
+            "title": "Complete",
+            "type": "boolean"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "end": {
+            "format": "date",
+            "title": "End",
+            "type": "string"
+          },
+          "frequency": {
+            "$ref": "#/components/schemas/SeriesFrequency"
+          },
+          "incomplete_points": {
+            "title": "Incomplete Points",
+            "type": "integer"
+          },
+          "liability_count": {
+            "title": "Liability Count",
+            "type": "integer"
+          },
+          "notice": {
+            "title": "Notice",
+            "type": "string"
+          },
+          "points": {
+            "items": {
+              "$ref": "#/components/schemas/NetWorthPoint"
+            },
+            "title": "Points",
+            "type": "array"
+          },
+          "portfolio_count": {
+            "description": "Active portfolios behind the series",
+            "title": "Portfolio Count",
+            "type": "integer"
+          },
+          "start": {
+            "format": "date",
+            "title": "Start",
+            "type": "string"
+          }
+        },
+        "required": [
+          "currency",
+          "frequency",
+          "start",
+          "end",
+          "points",
+          "portfolio_count",
+          "liability_count",
+          "incomplete_points",
+          "complete",
+          "notice",
+          "as_of"
+        ],
+        "title": "NetWorthHistoryOut",
+        "type": "object"
+      },
       "NetWorthOut": {
         "properties": {
           "as_of": {
@@ -10232,6 +10302,42 @@
           "as_of"
         ],
         "title": "NetWorthOut",
+        "type": "object"
+      },
+      "NetWorthPoint": {
+        "properties": {
+          "assets": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Active portfolios' value on the date, at that day's rates"
+          },
+          "complete": {
+            "description": "False when a value could not be priced or converted, or a liability's balance on the date is not known (it was recorded later)",
+            "title": "Complete",
+            "type": "boolean"
+          },
+          "liabilities": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Liabilities whose balance was recorded by the date"
+          },
+          "net_worth": {
+            "$ref": "#/components/schemas/Money",
+            "description": "assets - liabilities"
+          },
+          "on": {
+            "description": "The end of this date",
+            "format": "date",
+            "title": "On",
+            "type": "string"
+          }
+        },
+        "required": [
+          "on",
+          "assets",
+          "liabilities",
+          "net_worth",
+          "complete"
+        ],
+        "title": "NetWorthPoint",
         "type": "object"
       },
       "OpportunitiesRequest": {
@@ -20549,6 +20655,121 @@
           }
         ],
         "summary": "Get Net Worth",
+        "tags": [
+          "net worth"
+        ]
+      }
+    },
+    "/api/v1/net-worth/history": {
+      "get": {
+        "description": "Net worth at the end of each date: the user's active portfolios, rebuilt from the ledger,\nvaluations and that day's exchange rates, minus the liabilities whose balance was recorded by\nthen. Dates before a liability was recorded are marked incomplete (docs/design/net-worth.md).",
+        "operationId": "get_net_worth_history_api_v1_net_worth_history_get",
+        "parameters": [
+          {
+            "description": "Defaults to the user's reporting-currency setting",
+            "in": "query",
+            "name": "currency",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Z]{3}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Defaults to the user's reporting-currency setting",
+              "title": "Currency"
+            }
+          },
+          {
+            "description": "Spacing of the series",
+            "in": "query",
+            "name": "frequency",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/SeriesFrequency",
+              "default": "monthly",
+              "description": "Spacing of the series"
+            }
+          },
+          {
+            "description": "Default: the first entry, valuation or liability",
+            "in": "query",
+            "name": "start",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Default: the first entry, valuation or liability",
+              "title": "Start"
+            }
+          },
+          {
+            "description": "Default: today",
+            "in": "query",
+            "name": "end",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Default: today",
+              "title": "End"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NetWorthHistoryOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "422": {
+            "description": "Invalid range (after today, or too many points)"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Net Worth History",
         "tags": [
           "net worth"
         ]

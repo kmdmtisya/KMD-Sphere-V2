@@ -2252,3 +2252,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-15T21:47:17+04:00 — COMPLETE P14-T10
 - duration: 43m 05s
 - evidence: Unit tests (107 pass); full e2e suite 57 pass against Keycloak and API incl. 6 new for the calculator and goals (scenario and goal figures equal the API, validation, CRUD, cross-user 404, axe light/dark); tsc, eslint clean. QG-30.4 checked. PR #181. CI all gates pass.
+
+### 2026-10-15T21:52:31+04:00 — START P14-T11
+- WEB-11 Net worth and passive income
+- prerequisites verified COMPLETED
