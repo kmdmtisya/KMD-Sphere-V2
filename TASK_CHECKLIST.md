@@ -1538,10 +1538,10 @@
   - [x] P14-T16.3 Watchlist and alerts
   - [x] P14-T16.4 Notification centre
   - [x] P14-T16.5 Tests
-- [ ] **P14-T17** · WEB-17 Administration and permissions · `IN_PROGRESS` 🔄
+- [x] **P14-T17** · WEB-17 Administration and permissions · `COMPLETED` ✅
   - Deps: P14-T05, P14-T06 · Wave: W8 · Track: SEC · Size: M · Approval: yes
-  - Started: 2026-10-16T03:12:04+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-16T03:12:04+04:00 · Completed: 2026-10-16T03:37:54+04:00 · Duration: 25m 50s · Blocker: —
+  - Evidence: Backend: 7 operator API tests + realm test pass (ruff, mypy clean); e2e operator spec 4 pass against Keycloak (with the new realm) and the API. QG-29.4 checked. DEC-34 resolved under the advance approval. PR #188. CI all gates pass. · Approved by: user (mtisya@gmail.com), advance approval 2026-10-15 (P14 sequence)
   - [x] P14-T17.1 Scope decision
   - [x] P14-T17.2 Role-gated endpoints
   - [x] P14-T17.3 Operator views
