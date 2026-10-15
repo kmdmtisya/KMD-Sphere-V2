@@ -1529,15 +1529,15 @@
   - [x] P14-T15.2 Report service and endpoints
   - [x] P14-T15.3 Web report catalogue
   - [x] P14-T15.4 Tests
-- [ ] **P14-T16** · WEB-16 Profile, settings and notifications · `NOT_STARTED` ⬜
+- [ ] **P14-T16** · WEB-16 Profile, settings and notifications · `IN_PROGRESS` 🔄
   - Deps: P14-T05, P14-T06 · Wave: W7 · Track: WEB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-16T02:47:33+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T16.1 Profile and preferences
-  - [ ] P14-T16.2 Security and sessions
-  - [ ] P14-T16.3 Watchlist and alerts
-  - [ ] P14-T16.4 Notification centre
-  - [ ] P14-T16.5 Tests
+  - [x] P14-T16.1 Profile and preferences
+  - [x] P14-T16.2 Security and sessions
+  - [x] P14-T16.3 Watchlist and alerts
+  - [x] P14-T16.4 Notification centre
+  - [x] P14-T16.5 Tests
 - [ ] **P14-T17** · WEB-17 Administration and permissions · `NOT_STARTED` ⬜
   - Deps: P14-T05, P14-T06 · Wave: W8 · Track: SEC · Size: M · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —

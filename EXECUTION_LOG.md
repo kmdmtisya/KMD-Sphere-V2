@@ -2331,3 +2331,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-16T02:33:27+04:00 — COMPLETE P14-T15
 - duration: 1h 06m 17s
 - evidence: Backend: 7 renderer + 5 API tests pass (ruff, mypy clean); web unit 127 pass; e2e reports spec 5 pass, shell spec 15 pass. QG-28.8 and QG-30.5 checked. DEC-33 resolved under the advance approval. PR #186. CI all gates pass. · Approved by: user (mtisya@gmail.com), advance approval 2026-10-15 (P14 sequence)
+
+### 2026-10-16T02:47:33+04:00 — START P14-T16
+- WEB-16 Profile, settings and notifications
+- prerequisites verified COMPLETED
