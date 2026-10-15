@@ -2224,3 +2224,17 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-15T20:41:31+04:00 — COMPLETE P14-T08
 - duration: 35m 16s
 - evidence: Portfolios list/create/edit/archive; portfolio page with API summary figures, holdings grid with saved column view, ledger with 14-type add form, idempotent posting, append-only reversal, valuations CRUD, asset search and custom assets; API client PUT/DELETE/Idempotency-Key and field errors; 99 unit tests; 8 Playwright journeys on the real stack incl. totals equal to API, cross-user 404, axe light/dark; screenshots docs/design/screenshots/p14/after/P14-T08. QG-28.3, 30.1, 30.3 verified. PR #179. CI all gates pass.
+
+### 2026-10-15T20:46:51+04:00 — START P14-T09
+- WEB-09 Financial analytics
+- prerequisites verified COMPLETED
+
+### 2026-10-15T20:54:56+04:00 — QG CHECK QG-28.4
+- evidence: Web analytics page (P14-T09): performance, value series with periods, risk, allocation by four dimensions with drill-down and comparison; every figure is the API's; e2e reconciles with the API and passes axe in Light and Dark; another user receives 404.
+
+### 2026-10-15T20:59:15+04:00 — AWAITING_VERIFICATION P14-T09
+- evidence: Unit tests (range), 5 e2e against Keycloak and API (reconciliation, periods, allocation, cross-user 404, axe light/dark); tsc, eslint clean. QG-28.4 checked. PR #180. CI all gates pass.
+
+### 2026-10-15T20:59:15+04:00 — COMPLETE P14-T09
+- duration: 12m 24s
+- evidence: Unit tests (range), 5 e2e against Keycloak and API (reconciliation, periods, allocation, cross-user 404, axe light/dark); tsc, eslint clean. QG-28.4 checked. PR #180. CI all gates pass.

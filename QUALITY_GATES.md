@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-15T20:41:31+04:00 by `scripts/track.py`._
+_Generated at 2026-10-15T20:59:15+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -38,7 +38,7 @@ _Generated at 2026-10-15T20:41:31+04:00 by `scripts/track.py`._
 | QG-25 | QG-FXCUR-05: AI Integration | ✅ PASSED | 5/5 | Unassigned | — |
 | QG-26 | QG-WEB-01: Architecture and Integration | 🔄 IN_PROGRESS | 3/5 | Unassigned | — |
 | QG-27 | QG-WEB-02: UI/UX and Design System | 🔄 IN_PROGRESS | 2/9 | Unassigned | — |
-| QG-28 | QG-WEB-03: Functional Parity | 🔄 IN_PROGRESS | 1/9 | Unassigned | — |
+| QG-28 | QG-WEB-03: Functional Parity | 🔄 IN_PROGRESS | 2/9 | Unassigned | — |
 | QG-29 | QG-WEB-04: Authentication and Security | 🔄 IN_PROGRESS | 4/8 | Unassigned | — |
 | QG-30 | QG-WEB-05: Financial Accuracy | 🔄 IN_PROGRESS | 2/6 | Unassigned | — |
 | QG-31 | QG-WEB-06: Performance | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
@@ -49,9 +49,9 @@ _Generated at 2026-10-15T20:41:31+04:00 by `scripts/track.py`._
 | QG-36 | QG-WEB-11: Theme Management | 🔄 IN_PROGRESS | 5/8 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 135/228.
+Criteria satisfied overall: 136/228.
 
-Current phase **P14** exit-gate criteria outstanding: QG-26.2, QG-26.4, QG-27.2, QG-27.3, QG-27.4, QG-27.6, QG-27.7, QG-27.8, QG-27.9, QG-28.1, QG-28.2, QG-28.4, QG-28.5, QG-28.6, QG-28.7, QG-28.8, QG-28.9, QG-29.4, QG-29.5, QG-29.7, QG-29.8, QG-30.2, QG-30.4, QG-30.5, QG-30.6, QG-31.1, QG-31.2, QG-31.3, QG-31.4, QG-31.5, QG-31.6, QG-32.1, QG-32.2, QG-32.3, QG-32.4, QG-32.5, QG-32.6, QG-33.1, QG-33.10, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.6, QG-33.7, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9, QG-35.4, QG-35.5, QG-36.1, QG-36.2, QG-36.7.
+Current phase **P14** exit-gate criteria outstanding: QG-26.2, QG-26.4, QG-27.2, QG-27.3, QG-27.4, QG-27.6, QG-27.7, QG-27.8, QG-27.9, QG-28.1, QG-28.2, QG-28.5, QG-28.6, QG-28.7, QG-28.8, QG-28.9, QG-29.4, QG-29.5, QG-29.7, QG-29.8, QG-30.2, QG-30.4, QG-30.5, QG-30.6, QG-31.1, QG-31.2, QG-31.3, QG-31.4, QG-31.5, QG-31.6, QG-32.1, QG-32.2, QG-32.3, QG-32.4, QG-32.5, QG-32.6, QG-33.1, QG-33.10, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.6, QG-33.7, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9, QG-35.4, QG-35.5, QG-36.1, QG-36.2, QG-36.7.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -570,7 +570,7 @@ Approved By: —
 - [ ] QG-28.1 All implemented mobile modules mapped in the parity matrix · Required: P14 · By: P14-T18
 - [ ] QG-28.2 All applicable mobile capabilities available on the web (exceptions recorded with reasons) · Required: P14 · By: P14-T18
 - [x] QG-28.3 Create, read, update and delete workflows verified · Required: P14 · By: P14-T08 · Evidence: Create, read, update and delete workflows on the web (P14-T08, web/e2e/portfolio.spec.ts against real Keycloak, API, Redis and PostgreSQL): portfolio create (with duplicate-name refusal), read (list, detail), update (edit) and archive; transactions create (all 14 types supported by the form, per-type validation, server refusal shown) with append-only reversal instead of delete; valuations create, edit and delete; custom assets created from the picker. 8 journeys pass; Bob gets 404 for Alice's portfolio. 2026-10-15 · Verified: 2026-10-15T20:36:51+04:00
-- [ ] QG-28.4 Financial analytics verified · Required: P14 · By: P14-T09
+- [x] QG-28.4 Financial analytics verified · Required: P14 · By: P14-T09 · Evidence: Web analytics page (P14-T09): performance, value series with periods, risk, allocation by four dimensions with drill-down and comparison; every figure is the API's; e2e reconciles with the API and passes axe in Light and Dark; another user receives 404. · Verified: 2026-10-15T20:54:56+04:00
 - [ ] QG-28.5 AI modules verified · Required: P14 · By: P14-T12
 - [ ] QG-28.6 Forex entry verified: hidden when the flag is off; live markets labelled when on (advanced workspace: QG-28.9) · Required: P14 · By: P14-T13
 - [ ] QG-28.7 Currency conversion verified · Required: P14 · By: P14-T14
@@ -581,8 +581,8 @@ Status: IN_PROGRESS
 Owner: Unassigned  
 Start Timestamp: 2026-10-15T20:36:51+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-15T20:36:51+04:00  
-Evidence: 1/9 criteria verified; latest QG-28.3 at 2026-10-15T20:36:51+04:00  
+Verification Timestamp: 2026-10-15T20:54:56+04:00  
+Evidence: 2/9 criteria verified; latest QG-28.4 at 2026-10-15T20:54:56+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
