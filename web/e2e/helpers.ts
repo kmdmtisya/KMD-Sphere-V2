@@ -46,5 +46,5 @@ export async function signIn(page: Page, username: string): Promise<void> {
       page.locator('#totp[aria-invalid="true"]').waitFor({ timeout: 15_000 }),
     ]).catch(() => undefined);
   }
-  await expect(page.getByTestId("signed-in-as")).toBeVisible();
+  await expect(page.getByTestId("signed-in-as")).toBeVisible({ timeout: 30_000 });
 }

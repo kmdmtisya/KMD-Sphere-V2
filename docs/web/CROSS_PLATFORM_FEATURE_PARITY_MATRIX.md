@@ -7,6 +7,8 @@
 
 Android and iOS share one Flutter codebase, so their columns match unless stated. "Web" is the task that delivers the capability; nothing on the web is implemented yet.
 
+**Navigation (P14-T06).** Every web route and the mobile destination it answers are defined in `web/src/lib/nav/nav.ts`, and a unit test checks that every mobile route maps to a web route or one of the recorded exceptions (`MOBILE_EXCEPTIONS`: welcome, sign-in, the More hub, the debug gallery). P14-T18 adds the CI check against the app's own route list.
+
 **Rules**
 - **No false claims.** A capability that no platform has today is listed as a **planned dependency** (with its task), never as parity already reached.
 - **New features record web status.** A new mobile capability is not done until this matrix records its web status, whether delivered or an exception with a reason. P14-T18 adds a CI check that every mobile route maps to a web route or a recorded exception.

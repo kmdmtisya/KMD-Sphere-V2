@@ -1,5 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
+import { serverConfig } from "@/lib/server/config";
+
 import { GET as health } from "./health/route";
 import { DELETE, GET, POST } from "./proxy/[...path]/route";
 
@@ -30,7 +32,7 @@ describe("health", () => {
     const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response("{}", { status: 200 }));
     const response = await health();
     expect(await response.json()).toEqual({ web: "ok", api: "ok" });
-    expect(String(fetchSpy.mock.calls[0][0])).toBe("http://127.0.0.1:8000/health/live");
+    expect(String(fetchSpy.mock.calls[0][0])).toBe(new URL("/health/live", serverConfig().apiBaseUrl).href);
   });
 
   it("reports the API as unavailable when it cannot be reached", async () => {

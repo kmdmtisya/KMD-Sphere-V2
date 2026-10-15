@@ -84,6 +84,14 @@
 - The AI Copilot docked beside any page and scoped to that page (as mobile's "Ask about this" scope), plus contextual explanations.
 - It is resizable from 320 to 560 px, can be collapsed, and closes with `Esc`.
 
+**Built in P14-T06.** The shell follows this section, with these decisions:
+- Routes are defined once in `web/src/lib/nav/nav.ts`: every route names the task that builds it and the mobile screens it answers, and a unit test checks that every mobile route maps to a web route or a recorded exception (parity, QG-28.1).
+- Pages not built yet show a placeholder naming their task and no figures.
+- **Top bar:** portfolio selector (the account's portfolios; the choice is kept per browser), reporting currency (saved to the account), a data-status chip from `/fx/status` (the weakest rate status; "stale" is never shown as current), notifications (unseen alert count, linking to Alerts), the appearance button, the Copilot panel toggle and the profile menu (appearance, settings, sign out). Global search is a visible but disabled control until P14-T07 builds the search endpoint and command palette.
+- **Forex** appears only when the API answers (the module's endpoints return 404 while the flag is off). **Operator views** appear only for the `support` role, read from the access token for display only; the API enforces access.
+- **Keyboard:** a skip link is the first tab stop, `Ctrl/⌘+J` toggles the Copilot panel, `Esc` closes a menu, overlay or the panel, and the panel resizes with the arrow keys. The remaining shortcuts in section 8 arrive with the command palette.
+- The panel's Copilot content arrives with P14-T12.
+
 ## 4. Responsive behaviour
 
 | Width | Layout |
