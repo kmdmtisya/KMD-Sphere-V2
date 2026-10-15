@@ -2231,3 +2231,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-15T20:54:56+04:00 — QG CHECK QG-28.4
 - evidence: Web analytics page (P14-T09): performance, value series with periods, risk, allocation by four dimensions with drill-down and comparison; every figure is the API's; e2e reconciles with the API and passes axe in Light and Dark; another user receives 404.
+
+### 2026-10-15T20:59:15+04:00 — AWAITING_VERIFICATION P14-T09
+- evidence: Unit tests (range), 5 e2e against Keycloak and API (reconciliation, periods, allocation, cross-user 404, axe light/dark); tsc, eslint clean. QG-28.4 checked. PR #180. CI all gates pass.
+
+### 2026-10-15T20:59:15+04:00 — COMPLETE P14-T09
+- duration: 12m 24s
+- evidence: Unit tests (range), 5 e2e against Keycloak and API (reconciliation, periods, allocation, cross-user 404, axe light/dark); tsc, eslint clean. QG-28.4 checked. PR #180. CI all gates pass.

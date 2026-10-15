@@ -1470,10 +1470,10 @@
   - [x] P14-T08.4 Valuations and assets
   - [x] P14-T08.5 Saved table views
   - [x] P14-T08.6 Tests
-- [ ] **P14-T09** · WEB-09 Financial analytics · `IN_PROGRESS` 🔄
+- [x] **P14-T09** · WEB-09 Financial analytics · `COMPLETED` ✅
   - Deps: P14-T08 · Wave: W7 · Track: WEB · Size: L · Approval: no
-  - Started: 2026-10-15T20:46:51+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-15T20:46:51+04:00 · Completed: 2026-10-15T20:59:15+04:00 · Duration: 12m 24s · Blocker: —
+  - Evidence: Unit tests (range), 5 e2e against Keycloak and API (reconciliation, periods, allocation, cross-user 404, axe light/dark); tsc, eslint clean. QG-28.4 checked. PR #180. CI all gates pass.
   - [x] P14-T09.1 Performance
   - [x] P14-T09.2 Allocation and exposure
   - [x] P14-T09.3 Risk
