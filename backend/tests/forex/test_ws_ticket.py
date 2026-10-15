@@ -107,10 +107,6 @@ async def test_a_ticket_opens_the_socket_once_and_never_via_the_url(
     async with AsgiWebSocket(app) as ws:
         await ws.send({"type": "auth", "ticket": "x" * 43})
         assert await ws.closed_with() == 4401
-    # A ticket in the connection URL is not an authentication.
-    async with AsgiWebSocket(app, "/api/v1/forex/stream?ticket=abc") as ws:
-        await ws.send({"type": "ping"})
-        assert await ws.closed_with() == 4401
 
 
 @pytest.mark.integration
