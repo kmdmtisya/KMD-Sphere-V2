@@ -2065,3 +2065,17 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-15T11:21:38+04:00 — START P14-T02
 - WEB-02 Architecture evaluation and ADR
 - prerequisites verified COMPLETED
+
+### 2026-10-15T11:23:42+04:00 — DECISION — ADR-0018 accepted; DEC-30, DEC-31, DEC-39, DEC-40 resolved
+- DEC-30 and DEC-31 (user, 2026-10-15): Next.js with a Backend-for-Frontend (ADR-0018 Option B) and the BFF session model. ADR-0018 is accepted; CLAUDE.md, SOLUTION_INTENT, the project brief and the web architecture document are updated.
+- DEC-39: keep the shared WealthSphere tokens; adopt only the references' composition.
+- DEC-40: one appearance setting across devices; the mobile app syncs `theme_mode` with `/me/preferences` in P14-T18.
+
+### 2026-10-15T11:23:42+04:00 — QG START QG-26
+- QG-WEB-01: Architecture and Integration
+
+### 2026-10-15T11:23:43+04:00 — QG CHECK QG-26.1
+- evidence: docs/web/WEB_PORTAL_ARCHITECTURE.md approved with ADR-0018 on 2026-10-15: Next.js App Router with a BFF, rendering split, session and CSRF model, proxy allow-list, streaming, tokens and parity controls; links to theme, reference analysis, UX, parity and deployment documents
+
+### 2026-10-15T11:23:43+04:00 — QG CHECK QG-26.5
+- evidence: ADR-0018 accepted by the user on 2026-10-15 (DEC-30 Next.js with BFF, DEC-31 BFF session model): repository evidence refreshed after P13, comparison across code reuse, parity, maintenance, desktop UX, charts, grids, authentication, accessibility, performance, testing, cost, security, productivity, scalability and theming; stack with npm-registry licences (all runtime MIT/Apache-2.0)

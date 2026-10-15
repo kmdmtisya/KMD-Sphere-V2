@@ -79,9 +79,9 @@
 - **Top bar** (P14-T06): a compact icon button that cycles Light → Dark → System. Its accessible name states the current and next mode ("Appearance: Dark. Switch to System"). Its tooltip says the same.
 - The same words are used on mobile: Light, Dark, System.
 
-## 8. Mobile alignment (proposal DEC-40)
+## 8. Mobile alignment (DEC-40, approved 2026-10-15)
 
-The mobile app keeps its choice on the device only. For one preference across devices, P14-T18 (cross-platform synchronisation) would make the app read `theme_mode` from `/me/preferences` at sign-in and write it on change, keeping the device copy for offline start. This changes mobile behaviour, so it needs the user's approval.
+The mobile app keeps its choice on the device only. For one preference across devices, P14-T18 (cross-platform synchronisation) would make the app read `theme_mode` from `/me/preferences` at sign-in and write it on change, keeping the device copy for offline start. The user approved this on 2026-10-15. It is built in P14-T18.
 
 ## 9. Verification (QG-36)
 

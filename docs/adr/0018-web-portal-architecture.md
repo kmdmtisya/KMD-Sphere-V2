@@ -1,6 +1,6 @@
 # ADR-0018: Web portal frontend architecture (DEC-30, DEC-31)
 
-**Status:** Proposed (2026-10-14), refreshed for P14-T02 on 2026-10-15 (repository evidence after P13, scalability and theming criteria, licence review). Not accepted until the user approves it (DEC-30, DEC-31); until then no web application code is written.
+**Status:** **Accepted** by the user on 2026-10-15 (P14-T02): Option B, Next.js with a Backend-for-Frontend (DEC-30), and the BFF session model (DEC-31). Proposed 2026-10-14; refreshed on 2026-10-15 (repository evidence after P13, scalability and theming criteria, licence review).
 
 **Context**
 
@@ -43,7 +43,7 @@ Each option is scored for this repository: ++ strong, + adequate, − weak.
 | Scalability | + static assets scale on a CDN; the BFF still needs servers | + stateless Next.js containers scale horizontally behind the ingress; sessions live in Redis, not in the process |
 | Light, Dark and System themes (P14-T25) | + `ThemeMode` exists; a flash-free first paint needs a bootstrap script before the engine loads | ++ CSS variables plus `prefers-color-scheme`; the server renders the saved choice, so there is no flash and no script is needed |
 
-## Decision (proposed)
+## Decision
 
 **Option B: a dedicated Next.js (App Router) / React / TypeScript web portal with a Backend-for-Frontend, in `web/` beside `backend/` and `mobile/`.** The reasons, in order:
 

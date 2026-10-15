@@ -1413,7 +1413,7 @@
   - [x] P14-T02.1 Option comparison
   - [x] P14-T02.2 Session and security model
   - [x] P14-T02.3 Stack and licence review
-  - [ ] P14-T02.4 ADR-0018
+  - [x] P14-T02.4 ADR-0018
 - [ ] **P14-T03** · WEB-03 Web design system and UX specification · `NOT_STARTED` ⬜
   - Deps: P14-T02 · Wave: W3 · Track: WEB · Size: L · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —

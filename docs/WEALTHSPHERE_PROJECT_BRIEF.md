@@ -430,7 +430,7 @@ WealthSphere becomes one platform with three channels: Android, iOS and Web.
 
 **The portal.** A desktop-grade browser application with functional parity with the apps. It uses the same APIs, identity, data, business rules and financial engines, and has no logic of its own.
 
-**Proposed technology (ADR-0018).** Next.js and TypeScript, with a Backend-for-Frontend that keeps tokens server-side and gives the browser an HttpOnly session cookie. Design tokens are shared with the Flutter apps.
+**Technology (ADR-0018, accepted 2026-10-15).** Next.js and TypeScript, with a Backend-for-Frontend that keeps tokens server-side and gives the browser an HttpOnly session cookie. Design tokens are shared with the Flutter apps.
 
 **Order of work** (the user's decisions of 2026-10-14):
 0. The Forex module (P13) is completed in full before the web work.
