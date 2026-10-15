@@ -3,9 +3,11 @@ subscribes to, fanned out from the backend's single upstream subscription.
 
 Protocol (JSON text frames):
 
-- client, first, within `forex_stream_auth_timeout_seconds`: `{"type": "auth", "token": "..."}`.
-  The token is the same OIDC access token as for REST. It is never accepted in the URL, where it
-  would end up in logs. The account must exist and be enabled.
+- client, first, within `forex_stream_auth_timeout_seconds`: `{"type": "auth", "token": "..."}`
+  (the same OIDC access token as for REST) or `{"type": "auth", "ticket": "..."}` (a single-use
+  ticket from `POST /api/v1/forex/stream-ticket`, valid 30 seconds, for browsers that never hold
+  the token: P14-T13). Neither is ever accepted in the URL, where it would end up in logs. The
+  account must exist and be enabled.
 - server: `{"type": "ready", "max_instruments": n, "notice": "..."}`.
 - client: `{"type": "subscribe" | "unsubscribe", "instruments": ["EUR_USD", ...]}` or
   `{"type": "ping"}`.
@@ -24,13 +26,17 @@ import logging
 import time
 from collections import deque
 from datetime import UTC, datetime, timedelta
-from typing import Any
+from typing import Annotated, Any
 
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, Depends, Request, WebSocket, WebSocketDisconnect
+from fastapi.security import HTTPAuthorizationCredentials
+from pydantic import BaseModel, Field
 from starlette.concurrency import run_in_threadpool
 
+from app.core.api_responses import UNAUTHORIZED, not_found
 from app.core.auth import AuthenticationError, TokenClaims
 from app.core.config import Settings
+from app.modules.forex.api import require_forex
 from app.modules.forex.instruments.registry import active_instruments
 from app.modules.forex.marketdata.factory import quality_policy
 from app.modules.forex.marketdata.gateway import LimitExceeded, QuoteHub, Subscriber
@@ -42,7 +48,9 @@ from app.modules.forex.marketdata.service import (
     quote_out,
 )
 from app.modules.forex.marketdata.types import check_instrument
-from app.modules.identity.service import IdentityService, UserDisabledError
+from app.modules.forex.ws_ticket import TTL_SECONDS, TicketIssuer
+from app.modules.identity.dependencies import bearer
+from app.modules.identity.service import CurrentUser, IdentityService, UserDisabledError
 from app.modules.market_data.providers.errors import ProviderDataError
 
 logger = logging.getLogger(__name__)
@@ -89,7 +97,21 @@ async def authenticate(connection: Connection, settings: Settings) -> TokenClaim
     except TimeoutError:
         raise Close(4401, "authentication timed out") from None
     token = message.get("token")
-    if message["type"] != "auth" or not isinstance(token, str) or not token:
+    ticket = message.get("ticket")
+    if message["type"] != "auth":
+        raise Close(4401, "authenticate first")
+    if isinstance(ticket, str) and ticket:
+        issuer: TicketIssuer = app.state.forex_ticket_issuer
+        redeemed = await issuer.redeem(ticket)
+        if redeemed is None:
+            raise Close(4401, "not authenticated")
+        try:
+            async with app.state.db.session_factory() as session:
+                await IdentityService(session).provision(redeemed)
+        except UserDisabledError:
+            raise Close(4401, "not authenticated") from None
+        return redeemed
+    if not isinstance(token, str) or not token:
         raise Close(4401, "authenticate first")
     verifier = app.state.token_verifier
     if verifier is None:
@@ -246,3 +268,30 @@ async def stream(websocket: WebSocket) -> None:
     finally:
         if subscriber is not None:
             hub.close(subscriber)
+
+
+class StreamTicketOut(BaseModel):
+    ticket: str = Field(description='Send as {"type": "auth", "ticket": ...} on the socket')
+    expires_in: int = Field(description="Seconds the ticket can still be used (one use only)")
+
+
+@router.post(
+    "/api/v1/forex/stream-ticket",
+    response_model=StreamTicketOut,
+    tags=["forex"],
+    responses={**UNAUTHORIZED, **not_found("forex (switched off)")},
+)
+async def mint_stream_ticket(
+    request: Request,
+    _user: Annotated[CurrentUser, Depends(require_forex)],
+    credentials: Annotated[HTTPAuthorizationCredentials | None, Depends(bearer)],
+) -> StreamTicketOut:
+    """A single-use ticket (30 seconds) that stands for the caller on the live-quotes WebSocket,
+    for clients that must not hold the access token, such as the web portal's browser. The ticket
+    carries the token's own expiry and is never accepted in a URL."""
+    verifier = request.app.state.token_verifier
+    if credentials is None or verifier is None:  # unreachable once require_forex has passed
+        raise AuthenticationError("not authenticated")
+    claims: TokenClaims = await run_in_threadpool(verifier.verify, credentials.credentials)
+    ticket = await request.app.state.forex_ticket_issuer.mint(claims)
+    return StreamTicketOut(ticket=ticket, expires_in=TTL_SECONDS)

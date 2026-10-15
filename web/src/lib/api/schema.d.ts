@@ -1124,6 +1124,28 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/forex/stream-ticket": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Mint Stream Ticket
+         * @description A single-use ticket (30 seconds) that stands for the caller on the live-quotes WebSocket,
+         *     for clients that must not hold the access token, such as the web portal's browser. The ticket
+         *     carries the token's own expiry and is never accepted in a URL.
+         */
+        post: operations["mint_stream_ticket_api_v1_forex_stream_ticket_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/forex/structure": {
         parameters: {
             query?: never;
@@ -7681,6 +7703,19 @@ export interface components {
              */
             status: "current" | "cached" | "stale" | "unavailable";
         };
+        /** StreamTicketOut */
+        StreamTicketOut: {
+            /**
+             * Expires In
+             * @description Seconds the ticket can still be used (one use only)
+             */
+            expires_in: number;
+            /**
+             * Ticket
+             * @description Send as {"type": "auth", "ticket": ...} on the socket
+             */
+            ticket: string;
+        };
         /** StructureOut */
         StructureOut: {
             /**
@@ -11472,6 +11507,49 @@ export interface operations {
             };
             /** @description Invalid trade or no stored conversion rate */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Rate limit exceeded (docs/security.md, API protection) */
+            429: {
+                headers: {
+                    /** @description Seconds to wait before retrying */
+                    "Retry-After"?: number;
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    mint_stream_ticket_api_v1_forex_stream_ticket_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StreamTicketOut"];
+                };
+            };
+            /** @description Missing, invalid or expired access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description No such forex (switched off) for this user */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };

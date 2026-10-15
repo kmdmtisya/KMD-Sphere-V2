@@ -2277,3 +2277,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-16T00:09:49+04:00 — COMPLETE P14-T12
 - duration: 56m 08s
 - evidence: Unit 117 pass (SSE parser, turns); AI e2e 8 pass vs Keycloak+API (unavailable, streamed answer, refusal, no HTML injection, docked panel scope, Doctor equals API, universe/research, cross-user 404, axe light/dark); tsc, eslint clean. Compare and simulate not exercised (empty universe on the test stack); no live model. PR #183. CI all gates pass.
+
+### 2026-10-16T00:22:26+04:00 — START P14-T13
+- WEB-13 Forex live markets entry
+- prerequisites verified COMPLETED

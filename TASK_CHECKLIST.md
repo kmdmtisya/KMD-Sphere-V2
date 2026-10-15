@@ -1505,12 +1505,12 @@
   - [x] P14-T12.4 Opportunities, compare and simulate
   - [x] P14-T12.5 Universe and research
   - [x] P14-T12.6 Tests
-- [ ] **P14-T13** · WEB-13 Forex live markets entry · `NOT_STARTED` ⬜
+- [ ] **P14-T13** · WEB-13 Forex live markets entry · `IN_PROGRESS` 🔄
   - Deps: P14-T06 · Wave: W8 · Track: WEB · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-16T00:22:26+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T13.1 Flag-aware entry
-  - [ ] P14-T13.2 WebSocket ticket (API and BFF)
+  - [x] P14-T13.1 Flag-aware entry
+  - [x] P14-T13.2 WebSocket ticket (API and BFF)
   - [ ] P14-T13.3 Live markets page
   - [ ] P14-T13.4 Tests
 - [ ] **P14-T14** · WEB-14 Multi-currency conversion · `NOT_STARTED` ⬜
