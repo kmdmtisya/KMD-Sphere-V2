@@ -1424,15 +1424,15 @@
   - [ ] P14-T03.4 Component gallery and visual tests
   - [ ] P14-T03.5 UX specification review
   - [ ] P14-T03.6 Reference comparison sheets
-- [ ] **P14-T04** · WEB-04 Web application foundation · `NOT_STARTED` ⬜
+- [ ] **P14-T04** · WEB-04 Web application foundation · `IN_PROGRESS` 🔄
   - Deps: P14-T02 · Wave: W3 · Track: WEB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-15T11:52:14+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T04.1 App scaffold and tooling
-  - [ ] P14-T04.2 Generated API client and drift check
-  - [ ] P14-T04.3 Lint guards
-  - [ ] P14-T04.4 Test harness
-  - [ ] P14-T04.5 Web CI workflow
+  - [x] P14-T04.1 App scaffold and tooling
+  - [x] P14-T04.2 Generated API client and drift check
+  - [x] P14-T04.3 Lint guards
+  - [x] P14-T04.4 Test harness
+  - [x] P14-T04.5 Web CI workflow
 - [ ] **P14-T05** · WEB-05 Authentication and session integration · `NOT_STARTED` ⬜
   - Deps: P14-T04 · Wave: W4 · Track: SEC · Size: L · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —

@@ -1,0 +1,41 @@
+/*
+ * Placeholder tokens for the P14-T04 foundation. P14-T03 replaces this file with tokens generated
+ * from design/tokens/wealthsphere.tokens.json (the same values as the mobile BrandPalette).
+ * The theme mechanism is the final one (docs/web/WEB_THEME_SYSTEM.md): the server sets
+ * data-theme-pref on <html>; "system" follows prefers-color-scheme in CSS alone.
+ */
+:root,
+[data-theme-pref="light"] {
+  --ws-surface: #f5f7fa; /* surfaceSubtle */
+  --ws-surface-raised: #ffffff; /* surfaceLight */
+  --ws-text: #102a43; /* navy900 */
+  --ws-text-muted: #64748b; /* textMuted */
+  --ws-border: #e2e8f0; /* slate200 */
+  --ws-accent: #2563eb; /* blue600 */
+  --ws-focus: #2563eb;
+  color-scheme: light;
+}
+
+[data-theme-pref="dark"] {
+  --ws-surface: #0b1b2b; /* navy950 */
+  --ws-surface-raised: #14304c; /* navy800 */
+  --ws-text: #f1f5f9; /* slate100 */
+  --ws-text-muted: #94a3b8; /* slate400 */
+  --ws-border: #14304c; /* navy800 */
+  --ws-accent: #60a5fa; /* blue400 */
+  --ws-focus: #60a5fa;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-theme-pref="system"] {
+    --ws-surface: #0b1b2b;
+    --ws-surface-raised: #14304c;
+    --ws-text: #f1f5f9;
+    --ws-text-muted: #94a3b8;
+    --ws-border: #14304c;
+    --ws-accent: #60a5fa;
+    --ws-focus: #60a5fa;
+    color-scheme: dark;
+  }
+}

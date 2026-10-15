@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-15T11:34:50+04:00 by `scripts/track.py`._
+_Generated at 2026-10-15T11:56:27+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -36,7 +36,7 @@ _Generated at 2026-10-15T11:34:50+04:00 by `scripts/track.py`._
 | QG-23 | QG-FXCUR-03: Data Reliability | ✅ PASSED | 5/5 | Unassigned | — |
 | QG-24 | QG-FXCUR-04: Android and iOS | ✅ PASSED | 7/7 | Unassigned | — |
 | QG-25 | QG-FXCUR-05: AI Integration | ✅ PASSED | 5/5 | Unassigned | — |
-| QG-26 | QG-WEB-01: Architecture and Integration | 🔄 IN_PROGRESS | 2/5 | Unassigned | — |
+| QG-26 | QG-WEB-01: Architecture and Integration | 🔄 IN_PROGRESS | 3/5 | Unassigned | — |
 | QG-27 | QG-WEB-02: UI/UX and Design System | ⬜ NOT_STARTED | 0/9 | Unassigned | — |
 | QG-28 | QG-WEB-03: Functional Parity | ⬜ NOT_STARTED | 0/9 | Unassigned | — |
 | QG-29 | QG-WEB-04: Authentication and Security | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
@@ -49,9 +49,9 @@ _Generated at 2026-10-15T11:34:50+04:00 by `scripts/track.py`._
 | QG-36 | QG-WEB-11: Theme Management | ⬜ NOT_STARTED | 0/8 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 119/228.
+Criteria satisfied overall: 120/228.
 
-Current phase **P14** exit-gate criteria outstanding: QG-26.2, QG-26.3, QG-26.4, QG-27.1, QG-27.2, QG-27.3, QG-27.4, QG-27.5, QG-27.6, QG-27.7, QG-27.8, QG-27.9, QG-28.1, QG-28.2, QG-28.3, QG-28.4, QG-28.5, QG-28.6, QG-28.7, QG-28.8, QG-28.9, QG-29.1, QG-29.2, QG-29.3, QG-29.4, QG-29.5, QG-29.6, QG-29.7, QG-29.8, QG-30.1, QG-30.2, QG-30.3, QG-30.4, QG-30.5, QG-30.6, QG-31.1, QG-31.2, QG-31.3, QG-31.4, QG-31.5, QG-31.6, QG-32.1, QG-32.2, QG-32.3, QG-32.4, QG-32.5, QG-32.6, QG-33.1, QG-33.10, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.6, QG-33.7, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9, QG-35.3, QG-35.4, QG-35.5, QG-36.1, QG-36.2, QG-36.3, QG-36.4, QG-36.5, QG-36.6, QG-36.7, QG-36.8.
+Current phase **P14** exit-gate criteria outstanding: QG-26.2, QG-26.4, QG-27.1, QG-27.2, QG-27.3, QG-27.4, QG-27.5, QG-27.6, QG-27.7, QG-27.8, QG-27.9, QG-28.1, QG-28.2, QG-28.3, QG-28.4, QG-28.5, QG-28.6, QG-28.7, QG-28.8, QG-28.9, QG-29.1, QG-29.2, QG-29.3, QG-29.4, QG-29.5, QG-29.6, QG-29.7, QG-29.8, QG-30.1, QG-30.2, QG-30.3, QG-30.4, QG-30.5, QG-30.6, QG-31.1, QG-31.2, QG-31.3, QG-31.4, QG-31.5, QG-31.6, QG-32.1, QG-32.2, QG-32.3, QG-32.4, QG-32.5, QG-32.6, QG-33.1, QG-33.10, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.6, QG-33.7, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9, QG-35.3, QG-35.4, QG-35.5, QG-36.1, QG-36.2, QG-36.3, QG-36.4, QG-36.5, QG-36.6, QG-36.7, QG-36.8.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -529,7 +529,7 @@ Approved By: —
 
 - [x] QG-26.1 Approved web architecture documented · Required: P14 · By: P14-T02 · Evidence: docs/web/WEB_PORTAL_ARCHITECTURE.md approved with ADR-0018 on 2026-10-15: Next.js App Router with a BFF, rendering split, session and CSRF model, proxy allow-list, streaming, tokens and parity controls; links to theme, reference analysis, UX, parity and deployment documents · Verified: 2026-10-15T11:23:43+04:00
 - [ ] QG-26.2 Shared backend API integration verified (no web-only backend, no second data store) · Required: P14 · By: P14-T18 · CRITICAL
-- [ ] QG-26.3 No duplicated financial business logic (lint guard and review: no money arithmetic in web/) · Required: P14 · By: P14-T04 · CRITICAL
+- [x] QG-26.3 No duplicated financial business logic (lint guard and review: no money arithmetic in web/) · Required: P14 · By: P14-T04 · Evidence: web/eslint-rules/no-money-arithmetic.mjs (wealthsphere/no-money-arithmetic) is an error on web/src (eslint.config.mjs): it rejects arithmetic and compound assignment on money-named values and binary-float conversion (Number, parseFloat, parseInt, unary +, Math.*). npm run lint passes on the web app (no money arithmetic); npm run lint:selftest proves the rule fires on the seeded fixture (3 violations); RuleTester and isMoneyName unit tests pass (39 web tests). The web CI (.github/workflows/web.yml) runs lint and the self-test on every change; review: web/ contains no financial calculation (foundation page, BFF allow-list, health route). 2026-10-15 · Verified: 2026-10-15T11:56:27+04:00 · CRITICAL
 - [ ] QG-26.4 Cross-platform data consistency verified · Required: P14 · By: P14-T18 · CRITICAL
 - [x] QG-26.5 Architecture Decision Record completed (ADR-0018 accepted) · Required: P14 · By: P14-T02 · Evidence: ADR-0018 accepted by the user on 2026-10-15 (DEC-30 Next.js with BFF, DEC-31 BFF session model): repository evidence refreshed after P13, comparison across code reuse, parity, maintenance, desktop UX, charts, grids, authentication, accessibility, performance, testing, cost, security, productivity, scalability and theming; stack with npm-registry licences (all runtime MIT/Apache-2.0) · Verified: 2026-10-15T11:23:43+04:00
 
@@ -537,8 +537,8 @@ Status: IN_PROGRESS
 Owner: Unassigned  
 Start Timestamp: 2026-10-15T11:23:42+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-15T11:23:43+04:00  
-Evidence: 2/5 criteria verified; latest QG-26.5 at 2026-10-15T11:23:43+04:00  
+Verification Timestamp: 2026-10-15T11:56:27+04:00  
+Evidence: 3/5 criteria verified; latest QG-26.3 at 2026-10-15T11:56:27+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
