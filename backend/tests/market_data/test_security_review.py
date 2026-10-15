@@ -148,6 +148,10 @@ class TestNoUnreviewedProviderDataLeavesTheApi:
         # the DEMO calendar only (fictional, labelled); a real calendar source is blocked like the
         # feed.
         "/api/v1/forex/policy-rates/differential",
+        # P14-T11: per user, authenticated, the user's own net worth by date. The response holds
+        # only the user's totals (converted with stored rates); no provider price or rate is
+        # returned, so no market data is redistributed. Listed because the path says "history".
+        "/api/v1/net-worth/history",
     }
     MARKET_WORDS: ClassVar[tuple[str, ...]] = (
         "price",
