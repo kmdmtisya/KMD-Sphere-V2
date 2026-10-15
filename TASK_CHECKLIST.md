@@ -1406,13 +1406,13 @@
   - [x] P14-T01.5 Design reference catalogue
   - [x] P14-T01.6 Reference-to-screen mapping
   - [x] P14-T01.7 Component audit
-- [ ] **P14-T02** · WEB-02 Architecture evaluation and ADR · `NOT_STARTED` ⬜
+- [ ] **P14-T02** · WEB-02 Architecture evaluation and ADR · `IN_PROGRESS` 🔄
   - Deps: P14-T01 · Wave: W2 · Track: DOC · Size: M · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-15T11:21:38+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T02.1 Option comparison
-  - [ ] P14-T02.2 Session and security model
-  - [ ] P14-T02.3 Stack and licence review
+  - [x] P14-T02.1 Option comparison
+  - [x] P14-T02.2 Session and security model
+  - [x] P14-T02.3 Stack and licence review
   - [ ] P14-T02.4 ADR-0018
 - [ ] **P14-T03** · WEB-03 Web design system and UX specification · `NOT_STARTED` ⬜
   - Deps: P14-T02 · Wave: W3 · Track: WEB · Size: L · Approval: yes

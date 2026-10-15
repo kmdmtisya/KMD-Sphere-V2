@@ -1,6 +1,8 @@
 # WealthSphere Web Portal: architecture
 
-**Status:** Proposed (2026-10-14), pending the user's approval of [ADR-0018](../adr/0018-web-portal-architecture.md) and phase P14. Related documents:
+**Status:** Proposed (2026-10-14). Phase P14 was approved on 2026-10-14; this document is pending the user's approval of [ADR-0018](../adr/0018-web-portal-architecture.md) (P14-T02, 2026-10-15). Related documents:
+- Appearance: [WEB_THEME_SYSTEM.md](WEB_THEME_SYSTEM.md)
+- Design references: [WEB_DESIGN_REFERENCE_ANALYSIS.md](WEB_DESIGN_REFERENCE_ANALYSIS.md)
 - UX: [WEB_UI_UX_SPECIFICATION.md](WEB_UI_UX_SPECIFICATION.md)
 - Parity: [CROSS_PLATFORM_FEATURE_PARITY_MATRIX.md](CROSS_PLATFORM_FEATURE_PARITY_MATRIX.md)
 - Deployment: [WEB_DEPLOYMENT_PLAN.md](WEB_DEPLOYMENT_PLAN.md)

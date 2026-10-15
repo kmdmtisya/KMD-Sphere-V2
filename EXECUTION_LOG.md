@@ -2061,3 +2061,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-15T11:18:40+04:00 — COMPLETE P14-T01
 - duration: 3m 44s
 - evidence: docs/web/WEB_REPOSITORY_AUDIT.md: mobile route, mobile API-use and backend API inventories (98 paths, 124 operations + WS); 10 parity-baseline rows corrected to API only (no mobile screen); backend gap list; web constraints (bearer-only API, CORS off, plugins without web equivalent, forex flag, decimal money); component audit; every mobile route mapped to a matrix row and API. Parity matrix updated. Design reference catalogue and mapping (docs/web/WEB_DESIGN_REFERENCE_ANALYSIS.md) approved with PR #170; QG-35.1 and QG-35.2 verified. track.py validate OK. PR #171. CI all gates pass.
+
+### 2026-10-15T11:21:38+04:00 — START P14-T02
+- WEB-02 Architecture evaluation and ADR
+- prerequisites verified COMPLETED

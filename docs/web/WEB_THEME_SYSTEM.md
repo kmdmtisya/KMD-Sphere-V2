@@ -64,8 +64,7 @@
 ## 6. Theme-aware components
 
 - **Tokens only.** Components use CSS variables (`--ws-surface`, `--ws-text`, `--ws-series-1..8`, …). A lint rule rejects colour literals in `web/src` outside the generated token files, mirroring the Flutter style guard.
-- **SVG charts:** fills and strokes reference CSS variables directly, so they change with no JavaScript. This covers performance, allocation, currency exposure, net worth, forecast, compounding and forex sparklines.
-- **Canvas charts** (the forex candle chart, if canvas-based): a `useChartTheme()` hook reads the computed token values and redraws when the resolved theme changes.
+- **Charts:** ECharts (portfolio, allocation, currency exposure, net worth, forecast and compounding) and Lightweight Charts (forex candles) take colours as values, per ADR-0018. A `useChartTheme()` hook reads the computed token values and redraws when the resolved theme changes. Small SVG pieces drawn by our own components, such as sparklines and the distribution bar, use CSS variables directly.
 - **Axes, gridlines, legends and tooltips** have their own tokens (`--ws-chart-axis`, `--ws-chart-grid`, `--ws-tooltip-surface`). The dark tooltip card follows the reference (image 1) in both themes.
 - **Gains and losses** always pair colour with a sign, an arrow and text (`ChangeIndicator`). Series are told apart by markers or patterns as well as hue.
 - **Dialogs, menus, toasts and tooltips** render through portals inside `<html>`, so they inherit the theme; none sets its own colours.
