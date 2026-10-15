@@ -23,7 +23,7 @@ Android and iOS share one Flutter codebase, so their columns match unless stated
 | 1 | Sign in (OIDC, PKCE), MFA (TOTP), sign out | Live (P04, P09) | Keycloak; `GET /me` | Signed in | **Built (P14-T05):** BFF sign-in with the `wealthsphere-web` client, server-side sessions, CSRF, sign-out | e2e against Keycloak: login, no token in the browser, CSRF, cross-user 404, logout and cookie replay, TOTP enrolment; unit tests for idle, absolute expiry and refresh | QG-29 |
 | 2 | Profile and preferences (theme, notifications) | Live | `GET /me`, `PATCH /me/preferences` | Owner | P14-T16; **Appearance built (P14-T25):** Light, Dark, System, saved to `theme_mode` and applied at sign-in on any browser (mobile saves it on the device only until P14-T18 adds the approved sync, DEC-40) | component, e2e | QG-28, QG-36 |
 | 3 | Risk profile | API only (no mobile screen) | `GET/POST/PATCH /risk-profiles` | Owner | P14-T16 | API-contract, e2e | QG-28 |
-| 4 | Home dashboard (wealth, net worth, income, goals) | Live (P09) | `GET /dashboard`, `/net-worth`, `/income/summary`, `/goals/summary` | Owner | **P14-T07 (priority)** | reconciliation with the API, e2e | QG-28, QG-30 |
+| 4 | Home dashboard (wealth, net worth, income, goals) | Live (P09) | `GET /dashboard`, `/net-worth`, `/income/summary`, `/goals/summary` | Owner | **Built (P14-T07):** net worth, assets, liabilities, portfolio value, unrealised P/L, income, goals, allocation, recent activity, Portfolio Doctor insights | every headline figure compared with the API's response (e2e, real stack); states: loading, error, stale, empty, offline | QG-28, QG-30 |
 | 5 | Portfolios: list, create, edit, archive; all-portfolio summary | Live (archive: API only) | `GET/POST /portfolios`, `PATCH /portfolios/{id}`, `POST /…/archive`, `/portfolios/consolidated/summary`, `/portfolios/{id}/summary` | Owner | **P14-T08 (priority)** | CRUD e2e, IDOR via API | QG-28, QG-30 |
 | 6 | Holdings | Live | `GET /portfolios/{id}/holdings` | Owner | **P14-T08** | grid, reconciliation | QG-28, QG-30 |
 | 7 | Transactions: list, add (all types, multi-currency), reverse | Live | `GET/POST /portfolios/{id}/transactions`, `GET …/{tid}`, `POST …/{tid}/reversal` | Owner | **P14-T08** | e2e add and reverse, cross-channel sync | QG-28, QG-30, QG-33 |
@@ -53,9 +53,9 @@ These are new capabilities, not parity gaps. Each needs backend work first (or a
 | # | Capability | Status today | Needs | Task |
 |---|---|---|---|---|
 | 26 | Reports and exports (PDF, CSV, XLSX): portfolio, performance, net worth, income, FX exposure, goals, forecast; forex strategy reports after P13-T08 | No endpoint on any channel | Backend report service from the same engines, with as-of times and currency on every file (DEC-33) | P14-T15 |
-| 27 | Global search across own portfolios, assets, transactions, goals, reports and watchlist | Catalogue asset search only | Owner-scoped search endpoint | P14-T07 |
+| 27 | Global search across own portfolios, assets, transactions, goals, reports and watchlist | **Built (P14-T07):** `GET /api/v1/search`, owner-scoped: portfolios, goals, liabilities, and the assets you hold, watch or created; command palette (Ctrl/⌘+K) on the web | — | P14-T07 |
 | 28 | Net-worth history chart | Current net worth only | History endpoint, from valuations and snapshots | P14-T11 |
-| 29 | Dashboard customisation (order, visibility, default dashboard) | None | A preference shape for layouts (DEC-35) | P14-T07 |
+| 29 | Dashboard customisation (order, visibility, default dashboard) | **Built (P14-T07):** section order and visibility use the existing `dashboard_layout` preference, shared with the mobile Home (DEC-35) | — | P14-T07 |
 | 30 | Saved table views | None | The same preference store, or per-browser convenience only | P14-T08 |
 | 31 | Active session management (list, sign out others) | None in the apps | Keycloak account console (linked), or an account API through the BFF | P14-T16 |
 | 32 | Account deletion workflow | Planned (P16-T05) | P16-T05 | P14-T16 shows it when available |

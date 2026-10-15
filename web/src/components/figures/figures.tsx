@@ -163,3 +163,21 @@ export function RiskLabel({ level }: { level: keyof typeof RISK }) {
     </span>
   );
 }
+
+/**
+ * A signed amount (profit or loss) shown with a sign, an arrow and a word as well as colour. The
+ * value is the API's decimal string; nothing is calculated here.
+ */
+export function SignedAmount({ value, currency }: { value: string; currency: string }) {
+  const sign = signOf(value);
+  const s = SIGN_STYLE[sign];
+  const text = formatMoney(absoluteOf(value), currency).text;
+  return (
+    <span className={`inline-flex items-center gap-1 font-semibold tabular-nums ${sign === "zero" ? "text-fg-muted" : sign === "positive" ? "text-positive-text" : "text-negative-text"}`}>
+      <Icon name={s.icon} size={14} />
+      <span className="sr-only">{s.word} </span>
+      {s.symbol}
+      {text}
+    </span>
+  );
+}

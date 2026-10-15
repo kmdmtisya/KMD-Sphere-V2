@@ -176,12 +176,14 @@ export function TopBar({
   showMenu,
   onMenu,
   onPanel,
+  onSearch,
   panelOpen,
 }: {
   user: { name: string; email?: string };
   showMenu: boolean;
   onMenu: () => void;
   onPanel: () => void;
+  onSearch: () => void;
   panelOpen: boolean;
 }) {
   return (
@@ -192,14 +194,15 @@ export function TopBar({
       </Link>
       <button
         type="button"
-        disabled
-        title="Search across your portfolios, assets and goals arrives with the dashboard (P14-T07)"
-        className="hidden min-h-9 min-w-48 items-center gap-2 rounded-[var(--ws-radius-control)] border border-divider px-3 text-fg-muted opacity-70 lg:inline-flex"
+        onClick={onSearch}
+        aria-keyshortcuts="Control+K Meta+K"
+        className="hidden min-h-9 min-w-48 items-center gap-2 rounded-[var(--ws-radius-control)] border border-divider px-3 text-fg-muted hover:bg-divider/60 lg:inline-flex"
       >
         <Icon name="sort" size={14} />
         <span className="flex-1 text-start">Search</span>
         <kbd className="text-[length:var(--ws-font-size-caption)]">Ctrl K</kbd>
       </button>
+      <IconButton icon="sort" label="Search" onClick={onSearch} className="lg:hidden" />
       <div className="ms-auto flex flex-wrap items-center gap-2">
         <PortfolioSelect />
         <CurrencySelect />

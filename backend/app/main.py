@@ -64,6 +64,7 @@ from app.modules.portfolio import analytics_api, summary_api
 from app.modules.portfolio import api as portfolio_api
 from app.modules.research import api as research_api
 from app.modules.scoring import api as scoring_api
+from app.modules.search import api as search_api
 from app.modules.transactions import api as transactions_api
 from app.modules.transactions import valuations_api
 from app.modules.universe import api as universe_api
@@ -193,6 +194,11 @@ def create_app(
                 "description": "Goals and their progress under stated assumptions (estimates)",
             },
             {
+                "name": "search",
+                "description": "Search across the signed-in user's own portfolios, goals, "
+                "liabilities and assets (P14-T07)",
+            },
+            {
                 "name": "forex",
                 "description": "Forex Intelligence (P13): currency pairs, quotes with their type "
                 "and age, and candles. Information only; behind a feature flag. The live stream is "
@@ -271,6 +277,7 @@ def create_app(
     app.include_router(fx_api.me_router)
     app.include_router(market_data_api.prices_router)
     app.include_router(valuations_api.router)
+    app.include_router(search_api.router)
     app.include_router(forecasting_api.router)
     app.include_router(goals_api.router)
     app.include_router(networth_api.router)

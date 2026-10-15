@@ -2193,3 +2193,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-15T17:30:09+04:00 — COMPLETE P14-T06
 - duration: 43m 59s
 - evidence: Application shell: skip link, top bar (portfolio, reporting currency saved to account, data-status chip, notifications, appearance, panel toggle, profile menu), collapsible sidebar, Copilot panel; nav defined once with a parity test for mobile routes; forex shown only when the API enables it, operator only for support; responsive wide/medium/narrow; keyboard shortcuts; 89 unit tests; 42 Playwright tests against the real stack incl. overflow at 5 widths and axe light/dark; screenshots docs/design/screenshots/p14/after/P14-T06. PR #177. CI all gates pass.
+
+### 2026-10-15T17:45:03+04:00 — START P14-T07
+- WEB-07 Home and executive dashboards
+- prerequisites verified COMPLETED

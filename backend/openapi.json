@@ -12685,6 +12685,69 @@
         "title": "ScoresOut",
         "type": "object"
       },
+      "SearchHit": {
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "portfolio",
+              "goal",
+              "liability",
+              "asset"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "subtitle": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Type, symbol or currency, for display",
+            "title": "Subtitle"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "id",
+          "title"
+        ],
+        "title": "SearchHit",
+        "type": "object"
+      },
+      "SearchOut": {
+        "properties": {
+          "query": {
+            "title": "Query",
+            "type": "string"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/SearchHit"
+            },
+            "title": "Results",
+            "type": "array"
+          }
+        },
+        "required": [
+          "query",
+          "results"
+        ],
+        "title": "SearchOut",
+        "type": "object"
+      },
       "SeriesFrequency": {
         "enum": [
           "daily",
@@ -22671,6 +22734,73 @@
         ]
       }
     },
+    "/api/v1/search": {
+      "get": {
+        "description": "Portfolios, goals, liabilities and the assets you hold, watch or created. Only the signed-in user's records are ever returned.",
+        "operationId": "search_api_v1_search_get",
+        "parameters": [
+          {
+            "description": "Text to find",
+            "in": "query",
+            "name": "q",
+            "required": true,
+            "schema": {
+              "description": "Text to find",
+              "maxLength": 80,
+              "minLength": 1,
+              "title": "Q",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Missing, invalid or expired access token"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "description": "Rate limit exceeded (docs/security.md, API protection)",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Search your own records",
+        "tags": [
+          "search"
+        ]
+      }
+    },
     "/api/v1/universe": {
       "get": {
         "description": "Every active instrument with the outcome of each eligibility rule (jurisdiction, risk,\nliquidity, active) for the signed-in user, and the facts used. Eligibility filters what\nanalysis may consider; it is not a recommendation. Jurisdiction rules are not legally\nreviewed yet (P12-T10).",
@@ -23187,6 +23317,10 @@
     {
       "description": "Goals and their progress under stated assumptions (estimates)",
       "name": "goals"
+    },
+    {
+      "description": "Search across the signed-in user's own portfolios, goals, liabilities and assets (P14-T07)",
+      "name": "search"
     },
     {
       "description": "Forex Intelligence (P13): currency pairs, quotes with their type and age, and candles. Information only; behind a feature flag. The live stream is the WebSocket /api/v1/forex/stream",

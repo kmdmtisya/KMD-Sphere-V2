@@ -46,5 +46,28 @@ export async function signIn(page: Page, username: string): Promise<void> {
       page.locator('#totp[aria-invalid="true"]').waitFor({ timeout: 15_000 }),
     ]).catch(() => undefined);
   }
-  await expect(page.getByTestId("signed-in-as")).toBeVisible({ timeout: 30_000 });
+  try {
+    await expect(page.getByTestId("signed-in-as")).toBeVisible({ timeout: 30_000 });
+  } catch (error) {
+    const text = (await page.locator("body").innerText().catch(() => "")).replace(/\s+/g, " ").slice(0, 300);
+    throw new Error(`sign-in of ${username} did not reach the portal. URL: ${page.url()}. Page: ${text}`, { cause: error });
+  }
+}
+
+/** Calls the API through the portal's proxy from the page, with the CSRF token for writes. */
+export async function api(page: Page, path: string, init: { method?: string; body?: unknown } = {}) {
+  return page.evaluate(
+    async ({ path, init }) => {
+      const csrf = document.cookie.match(/(?:^|; )__Host-ws_csrf=([^;]+)/)?.[1];
+      const headers: Record<string, string> = { "content-type": "application/json" };
+      if (init.method && init.method !== "GET" && csrf) headers["x-csrf-token"] = decodeURIComponent(csrf);
+      const r = await fetch(`/api/proxy/${path}`, {
+        method: init.method ?? "GET",
+        headers,
+        body: init.body === undefined ? undefined : JSON.stringify(init.body),
+      });
+      return { status: r.status, body: await r.json().catch(() => null) };
+    },
+    { path, init },
+  );
 }

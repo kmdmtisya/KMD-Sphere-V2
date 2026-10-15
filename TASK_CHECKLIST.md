@@ -1451,15 +1451,15 @@
   - [x] P14-T06.3 Top-bar controls
   - [x] P14-T06.4 Right panel
   - [x] P14-T06.5 Responsive and keyboard tests
-- [ ] **P14-T07** · WEB-07 Home and executive dashboards · `NOT_STARTED` ⬜
+- [ ] **P14-T07** · WEB-07 Home and executive dashboards · `IN_PROGRESS` 🔄
   - Deps: P14-T05, P14-T06 · Wave: W6 · Track: WEB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-15T17:45:03+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T07.1 KPI row and charts
-  - [ ] P14-T07.2 Recent activity and AI insights
-  - [ ] P14-T07.3 Search endpoint and command palette
-  - [ ] P14-T07.4 Layout customisation
-  - [ ] P14-T07.5 Tests
+  - [x] P14-T07.1 KPI row and charts
+  - [x] P14-T07.2 Recent activity and AI insights
+  - [x] P14-T07.3 Search endpoint and command palette
+  - [x] P14-T07.4 Layout customisation
+  - [x] P14-T07.5 Tests
 - [ ] **P14-T08** · WEB-08 Portfolio and investment management · `NOT_STARTED` ⬜
   - Deps: P14-T05, P14-T06 · Wave: W6 · Track: WEB · Size: XL · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
