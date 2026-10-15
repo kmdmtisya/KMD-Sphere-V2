@@ -2086,3 +2086,17 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-15T11:34:50+04:00 — COMPLETE P14-T02
 - duration: 13m 12s
 - evidence: ADR-0018 accepted by the user 2026-10-15 (DEC-30 Next.js with BFF, DEC-31 BFF session model); comparison refreshed with repository evidence after P13 plus scalability and theming; stack and licence review from the npm registry (all runtime MIT or Apache-2.0, axe-core MPL-2.0 test-only); docs/web/WEB_PORTAL_ARCHITECTURE.md approved; DEC-39 and DEC-40 resolved; QG-26.1 and QG-26.5 verified. PR #172. CI all gates pass. · Approved by: user (mtisya@gmail.com), 2026-10-15
+
+### 2026-10-15T11:52:14+04:00 — START P14-T04
+- WEB-04 Web application foundation
+- prerequisites verified COMPLETED
+
+### 2026-10-15T11:56:27+04:00 — QG CHECK QG-26.3
+- evidence: web/eslint-rules/no-money-arithmetic.mjs (wealthsphere/no-money-arithmetic) is an error on web/src (eslint.config.mjs): it rejects arithmetic and compound assignment on money-named values and binary-float conversion (Number, parseFloat, parseInt, unary +, Math.*). npm run lint passes on the web app (no money arithmetic); npm run lint:selftest proves the rule fires on the seeded fixture (3 violations); RuleTester and isMoneyName unit tests pass (39 web tests). The web CI (.github/workflows/web.yml) runs lint and the self-test on every change; review: web/ contains no financial calculation (foundation page, BFF allow-list, health route). 2026-10-15
+
+### 2026-10-15T11:59:15+04:00 — AWAITING_VERIFICATION P14-T04
+- evidence: web/ foundation: Next.js 16.4.1 standalone app with baseline security headers; BFF skeleton (health route calling the API server to server; /api/v1 allow-listed proxy answering 401 until sessions); typed client generated from backend/openapi.json with drift check; lint guards no-money-arithmetic and no-colour-literals plus CSS colour check and seeded self-test; 39 Vitest tests; Playwright smoke 4/4 locally (with and without the API); web CI workflow with web gate; npm audit (production) in the security gate (0 found), TD-12 for a dev-only tooling advisory. QG-26.3 verified. PR #173. CI all gates pass.
+
+### 2026-10-15T11:59:15+04:00 — COMPLETE P14-T04
+- duration: 7m 01s
+- evidence: web/ foundation: Next.js 16.4.1 standalone app with baseline security headers; BFF skeleton (health route calling the API server to server; /api/v1 allow-listed proxy answering 401 until sessions); typed client generated from backend/openapi.json with drift check; lint guards no-money-arithmetic and no-colour-literals plus CSS colour check and seeded self-test; 39 Vitest tests; Playwright smoke 4/4 locally (with and without the API); web CI workflow with web gate; npm audit (production) in the security gate (0 found), TD-12 for a dev-only tooling advisory. QG-26.3 verified. PR #173. CI all gates pass.

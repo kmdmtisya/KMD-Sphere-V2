@@ -34,7 +34,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   dependencies:
-    name: dependency audit (pip-audit, OSV)
+    name: dependency audit (pip-audit, npm audit, OSV)
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
@@ -48,6 +48,16 @@ jobs:
         run: |
           uv export --locked --no-hashes --no-emit-project --all-groups > "$RUNNER_TEMP/requirements.txt"
           uvx pip-audit -r "$RUNNER_TEMP/requirements.txt" --disable-pip --no-deps --strict
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: "24"
+
+      # Production dependencies of the web portal (P14-T04), from the lockfile only. Trivy also scans
+      # the lockfile below; dev-only tooling advisories are tracked in docs/tech-debt.md (TD-12).
+      - name: npm audit (web, production dependencies, locked versions)
+        working-directory: web
+        run: npm audit --package-lock-only --omit=dev --audit-level=high
 
       - name: Install OSV-Scanner (checksum verified)
         run: |

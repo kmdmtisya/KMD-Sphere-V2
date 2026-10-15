@@ -1424,15 +1424,15 @@
   - [ ] P14-T03.4 Component gallery and visual tests
   - [ ] P14-T03.5 UX specification review
   - [ ] P14-T03.6 Reference comparison sheets
-- [ ] **P14-T04** · WEB-04 Web application foundation · `NOT_STARTED` ⬜
+- [x] **P14-T04** · WEB-04 Web application foundation · `COMPLETED` ✅
   - Deps: P14-T02 · Wave: W3 · Track: WEB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P14-T04.1 App scaffold and tooling
-  - [ ] P14-T04.2 Generated API client and drift check
-  - [ ] P14-T04.3 Lint guards
-  - [ ] P14-T04.4 Test harness
-  - [ ] P14-T04.5 Web CI workflow
+  - Started: 2026-10-15T11:52:14+04:00 · Completed: 2026-10-15T11:59:15+04:00 · Duration: 7m 01s · Blocker: —
+  - Evidence: web/ foundation: Next.js 16.4.1 standalone app with baseline security headers; BFF skeleton (health route calling the API server to server; /api/v1 allow-listed proxy answering 401 until sessions); typed client generated from backend/openapi.json with drift check; lint guards no-money-arithmetic and no-colour-literals plus CSS colour check and seeded self-test; 39 Vitest tests; Playwright smoke 4/4 locally (with and without the API); web CI workflow with web gate; npm audit (production) in the security gate (0 found), TD-12 for a dev-only tooling advisory. QG-26.3 verified. PR #173. CI all gates pass.
+  - [x] P14-T04.1 App scaffold and tooling
+  - [x] P14-T04.2 Generated API client and drift check
+  - [x] P14-T04.3 Lint guards
+  - [x] P14-T04.4 Test harness
+  - [x] P14-T04.5 Web CI workflow
 - [ ] **P14-T05** · WEB-05 Authentication and session integration · `NOT_STARTED` ⬜
   - Deps: P14-T04 · Wave: W4 · Track: SEC · Size: L · Approval: yes
   - Started: — · Completed: — · Duration: — · Blocker: —

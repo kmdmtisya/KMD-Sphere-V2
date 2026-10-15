@@ -51,6 +51,20 @@ flutter build apk --debug && flutter install -d emulator-5554
 ```
 The first Android build also needs NDK 28.2.13676358 (`sdkmanager --install "ndk;28.2.13676358"`).
 
+## Web portal (P14-T04)
+
+The web portal is in `web/` (Next.js with a Backend-for-Frontend, ADR-0018); its commands are in [web/README.md](../web/README.md). It needs Node.js 20.9 or newer (CI uses Node 24).
+
+```
+cd web
+npm ci
+npm run dev                       # http://localhost:3000; the BFF calls WS_API_BASE_URL (default http://127.0.0.1:8000)
+npm run lint && npm run typecheck && npm test
+npm run build && npm run e2e      # Playwright against the standalone server
+```
+
+If Playwright cannot download its browser (for example behind TLS interception), run the e2e tests with an installed Google Chrome: `WS_PLAYWRIGHT_CHANNEL=chrome npm run e2e`. After changing the API, run `npm run api:generate` so the typed client matches `backend/openapi.json`; CI fails on drift.
+
 ## Keycloak development realm
 
 `docker compose up` imports `infra/keycloak/realm-export.json` (realm `wealthsphere`) on first start. Import skips a realm that already exists: after changing realm-level settings in the file, run `python scripts/keycloak_dev.py sync-realm` (applies policies, lifetimes and brute-force settings; not clients, roles or users). For other changes, remove the realm in the admin console (or recreate the Keycloak database) and restart the container.

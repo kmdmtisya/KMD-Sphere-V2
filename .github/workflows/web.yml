@@ -1,0 +1,207 @@
+name: web
+
+# The web portal (P14-T04, ADR-0018): lint (including the money-arithmetic and colour-literal
+# guards and their self-test), type check, unit tests, the generated API client's drift check and
+# the production build; then Playwright against the standalone server with the seeded backend e2e
+# server beside it. "web gate" becomes a required check in P14-T21.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: web-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: "24"
+
+defaults:
+  run:
+    working-directory: web
+
+jobs:
+  changes:
+    name: detect changes
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}
+    outputs:
+      run: ${{ steps.diff.outputs.run }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+      - id: diff
+        env:
+          EVENT: ${{ github.event_name }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+        run: |
+          set -euo pipefail
+          run=true # fail safe: run the checks unless we can prove nothing relevant changed
+          base=""
+          if [ "$EVENT" = "pull_request" ]; then base="$PR_BASE"; elif [ "$EVENT" = "push" ]; then base="$PUSH_BEFORE"; fi
+          if [ -n "$base" ] && ! echo "$base" | grep -qE '^0+$' && git cat-file -e "$base^{commit}" 2>/dev/null; then
+            # The API contract is part of the web build (the generated client), so it triggers the checks too.
+            if git diff --name-only "$base" "$GITHUB_SHA" | grep -qE '^(web/|backend/openapi\.json|backend/app/|backend/tests/e2e_server\.py|\.github/workflows/web\.yml)'; then run=true; else run=false; fi
+          fi
+          echo "run=$run" >> "$GITHUB_OUTPUT"
+          echo "Relevant changes: $run"
+
+  check:
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
+    name: lint, types, tests, build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install dependencies (locked)
+        run: npm ci
+
+      - name: Generated API client matches backend/openapi.json
+        run: npm run api:check
+
+      - name: Lint (ESLint with the WealthSphere guards, CSS colour check)
+        run: npm run lint
+
+      - name: Lint guards fire on their seeded violations
+        run: npm run lint:selftest
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Production build
+        run: npm run build
+
+  e2e:
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
+    name: end-to-end (Playwright, Chromium)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env:
+          # Throwaway credentials for an ephemeral service container reachable only from this job.
+          POSTGRES_USER: ci_user
+          POSTGRES_PASSWORD: ci-only-not-a-secret
+          POSTGRES_DB: wealthsphere_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ci_user -d wealthsphere_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+
+    env:
+      ENVIRONMENT: test
+      POSTGRES_USER: ci_user
+      POSTGRES_PASSWORD: ci-only-not-a-secret
+      POSTGRES_DB: wealthsphere_ci
+      POSTGRES_HOST: 127.0.0.1
+      POSTGRES_PORT: "5432"
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+          python-version: "3.13"
+
+      - name: Install backend dependencies (locked)
+        working-directory: backend
+        run: uv sync --locked
+
+      - name: Start the backend with seeded data
+        working-directory: backend
+        run: |
+          nohup uv run python -m tests.e2e_server --port 8765 --out "$RUNNER_TEMP/e2e.json" > "$RUNNER_TEMP/e2e_server.log" 2>&1 &
+          for i in $(seq 1 60); do
+            if [ -s "$RUNNER_TEMP/e2e.json" ] && curl -sf http://127.0.0.1:8765/health/live > /dev/null; then echo "backend ready"; exit 0; fi
+            sleep 2
+          done
+          echo "backend did not start"; tail -50 "$RUNNER_TEMP/e2e_server.log"; exit 1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install dependencies (locked)
+        run: npm ci
+
+      - name: Install Chromium for Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Production build
+        run: npm run build
+
+      - name: Playwright
+        env:
+          CI: "true"
+          WS_API_BASE_URL: http://127.0.0.1:8765
+          WS_E2E_EXPECT_API: "1"
+        run: npm run e2e
+
+      - name: Playwright report (on failure)
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: playwright-report
+          path: web/playwright-report
+          retention-days: 7
+
+      - name: Backend log (on failure)
+        if: failure()
+        run: tail -100 "$RUNNER_TEMP/e2e_server.log" || true
+
+  gate:
+    name: web gate
+    if: always()
+    needs: [changes, check, e2e]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }} # this job does not check out the repository
+    steps:
+      - name: Require every job to have passed (skipped is only acceptable when nothing relevant changed)
+        env:
+          RUN: ${{ needs.changes.outputs.run }}
+          R_CHANGES: ${{ needs.changes.result }}
+          R_CHECK: ${{ needs.check.result }}
+          R_E2E: ${{ needs.e2e.result }}
+        run: |
+          set -eu
+          if [ "$R_CHANGES" != "success" ]; then echo "::error::change detection did not succeed"; exit 1; fi
+          for pair in "check:$R_CHECK" "e2e:$R_E2E"; do
+            job="${pair%%:*}"; result="${pair#*:}"
+            if [ "$result" = "skipped" ] && [ "$RUN" = "true" ]; then echo "::error::$job was skipped although relevant files changed"; exit 1; fi
+            if [ "$result" != "success" ] && [ "$result" != "skipped" ]; then echo "::error::$job finished with $result"; exit 1; fi
+          done
+          echo "web gate passed"

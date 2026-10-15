@@ -1,0 +1,23 @@
+@import "tailwindcss";
+@import "../tokens/tokens.css";
+
+@theme inline {
+  --color-surface: var(--ws-surface);
+  --color-surface-raised: var(--ws-surface-raised);
+  --color-fg: var(--ws-text);
+  --color-fg-muted: var(--ws-text-muted);
+  --color-line: var(--ws-border);
+  --color-accent: var(--ws-accent);
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  background: var(--ws-surface);
+  color: var(--ws-text);
+  font-family: var(--font-sans);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ws-focus);
+  outline-offset: 2px;
+}

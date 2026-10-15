@@ -1,0 +1,31 @@
+import "server-only";
+
+/** Hosts where plain HTTP is acceptable: the local stack only (as on mobile debug builds). */
+const LOOPBACK = new Set(["127.0.0.1", "localhost", "[::1]"]);
+
+export type ServerConfig = {
+  /** The FastAPI base URL the BFF calls server to server. The browser never sees it. */
+  apiBaseUrl: URL;
+};
+
+/**
+ * Reads the BFF configuration from the environment. `WS_API_BASE_URL` must be https, or http to a
+ * loopback address for local development. P14-T21 adds the full start-up validation.
+ */
+export function serverConfig(env: Record<string, string | undefined> = process.env): ServerConfig {
+  const raw = env.WS_API_BASE_URL ?? "http://127.0.0.1:8000";
+  let url: URL;
+  try {
+    url = new URL(raw);
+  } catch {
+    throw new Error("WS_API_BASE_URL is not a valid URL");
+  }
+  const local = url.protocol === "http:" && LOOPBACK.has(url.hostname);
+  if (url.protocol !== "https:" && !local) {
+    throw new Error("WS_API_BASE_URL must use https (plain http is allowed only to a loopback address)");
+  }
+  if (url.username || url.password) {
+    throw new Error("WS_API_BASE_URL must not contain credentials");
+  }
+  return { apiBaseUrl: url };
+}
