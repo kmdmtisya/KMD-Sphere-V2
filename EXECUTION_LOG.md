@@ -2245,3 +2245,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-15T21:10:42+04:00 — QG CHECK QG-30.4
 - evidence: Web calculator, scenarios, target planner and goals show backend figures only; e2e compares the three scenarios' final values and a goal's gap with the API's responses for the same request; inputs validated and sent as decimal strings.
+
+### 2026-10-15T21:47:16+04:00 — AWAITING_VERIFICATION P14-T10
+- evidence: Unit tests (107 pass); full e2e suite 57 pass against Keycloak and API incl. 6 new for the calculator and goals (scenario and goal figures equal the API, validation, CRUD, cross-user 404, axe light/dark); tsc, eslint clean. QG-30.4 checked. PR #181. CI all gates pass.
+
+### 2026-10-15T21:47:17+04:00 — COMPLETE P14-T10
+- duration: 43m 05s
+- evidence: Unit tests (107 pass); full e2e suite 57 pass against Keycloak and API incl. 6 new for the calculator and goals (scenario and goal figures equal the API, validation, CRUD, cross-user 404, axe light/dark); tsc, eslint clean. QG-30.4 checked. PR #181. CI all gates pass.
