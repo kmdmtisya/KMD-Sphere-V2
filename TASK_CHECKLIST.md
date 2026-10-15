@@ -1529,10 +1529,10 @@
   - [x] P14-T15.2 Report service and endpoints
   - [x] P14-T15.3 Web report catalogue
   - [x] P14-T15.4 Tests
-- [ ] **P14-T16** · WEB-16 Profile, settings and notifications · `IN_PROGRESS` 🔄
+- [x] **P14-T16** · WEB-16 Profile, settings and notifications · `COMPLETED` ✅
   - Deps: P14-T05, P14-T06 · Wave: W7 · Track: WEB · Size: M · Approval: no
-  - Started: 2026-10-16T02:47:33+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-16T02:47:33+04:00 · Completed: 2026-10-16T03:06:04+04:00 · Duration: 18m 31s · Blocker: —
+  - Evidence: Unit 135 pass; e2e settings spec 8 pass + shell spec 15 pass vs Keycloak+API; tsc, eslint clean. Per-alert delivery preferences, account deletion and multi-session management are not on the web yet. PR #187. CI all gates pass.
   - [x] P14-T16.1 Profile and preferences
   - [x] P14-T16.2 Security and sessions
   - [x] P14-T16.3 Watchlist and alerts

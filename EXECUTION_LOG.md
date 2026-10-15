@@ -2335,3 +2335,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-16T02:47:33+04:00 — START P14-T16
 - WEB-16 Profile, settings and notifications
 - prerequisites verified COMPLETED
+
+### 2026-10-16T03:06:04+04:00 — AWAITING_VERIFICATION P14-T16
+- evidence: Unit 135 pass; e2e settings spec 8 pass + shell spec 15 pass vs Keycloak+API; tsc, eslint clean. Per-alert delivery preferences, account deletion and multi-session management are not on the web yet. PR #187. CI all gates pass.
+
+### 2026-10-16T03:06:04+04:00 — COMPLETE P14-T16
+- duration: 18m 31s
+- evidence: Unit 135 pass; e2e settings spec 8 pass + shell spec 15 pass vs Keycloak+API; tsc, eslint clean. Per-alert delivery preferences, account deletion and multi-session management are not on the web yet. PR #187. CI all gates pass.
