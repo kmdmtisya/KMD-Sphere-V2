@@ -207,7 +207,7 @@ export function Calculator() {
 
         <div className="flex flex-col gap-4">
           {run.isPending ? <LoadingState label="Calculating" /> : null}
-          {out ? <Results out={out} /> : null}
+          {out ? <ScenarioResults out={out} /> : null}
           {!out && !run.isPending ? (
             <Card title="Results">
               <p className="text-fg-muted">
@@ -227,7 +227,7 @@ export function Calculator() {
   );
 }
 
-function Results({ out }: { out: S["ScenarioForecastOut"] }) {
+export function ScenarioResults({ out }: { out: S["ScenarioForecastOut"] }) {
   const lines = KINDS.map((k) => ({
     name: k.label,
     points: (out.scenarios[k.key] as Projection).nominal,

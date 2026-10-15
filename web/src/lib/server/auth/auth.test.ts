@@ -16,7 +16,10 @@ describe("seal", () => {
     expect(sealed).not.toContain("secret");
     expect(unseal(sealed, KEY)).toEqual({ a: 1, token: "secret" });
     expect(unseal(sealed, OTHER_KEY)).toBeNull();
-    const tampered = sealed.slice(0, -2) + (sealed.endsWith("A") ? "BB" : "AA");
+    // Change a character in the middle: the last base64 character holds unused bits, so altering
+    // only the end would sometimes leave the decoded bytes unchanged.
+    const at = Math.floor(sealed.length / 2);
+    const tampered = sealed.slice(0, at) + (sealed[at] === "A" ? "B" : "A") + sealed.slice(at + 1);
     expect(unseal(tampered, KEY)).toBeNull();
     expect(unseal("", KEY)).toBeNull();
     expect(unseal("not-base64!", KEY)).toBeNull();

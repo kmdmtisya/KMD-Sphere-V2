@@ -2263,3 +2263,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-15T22:56:30+04:00 — COMPLETE P14-T11
 - duration: 1h 03m 59s
 - evidence: Backend: 9 new tests (pure rules + API incl. FX conversion, cross-user, empty, future end), ruff, mypy, openapi contract pass; web: unit 110 pass, 5 e2e vs Keycloak+API (totals equal API, liability CRUD, income equal API, cross-user 404, axe light/dark); tsc, eslint clean. PR #182. CI all gates pass.
+
+### 2026-10-15T23:13:41+04:00 — START P14-T12
+- WEB-12 AI Wealth Copilot and intelligence
+- prerequisites verified COMPLETED
+
+### 2026-10-16T00:02:46+04:00 — QG CHECK QG-28.5
+- evidence: Web AI pages (P14-T12): streamed Copilot via the BFF with checks, sources and the four answer parts; Doctor, opportunities, universe, research, compare and simulate; e2e covers unavailable, streamed answer, refusal, text-only rendering, cross-user 404 and axe. Compare, simulate and non-empty universe were not exercised on the test stack (empty universe); no live model was run.

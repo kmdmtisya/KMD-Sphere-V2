@@ -1495,16 +1495,16 @@
   - [x] P14-T11.2 Passive income
   - [x] P14-T11.3 Net-worth history endpoint
   - [x] P14-T11.4 Tests
-- [ ] **P14-T12** · WEB-12 AI Wealth Copilot and intelligence · `NOT_STARTED` ⬜
+- [ ] **P14-T12** · WEB-12 AI Wealth Copilot and intelligence · `IN_PROGRESS` 🔄
   - Deps: P14-T05, P14-T06 · Wave: W6 · Track: AI · Size: XL · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-15T23:13:41+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T12.1 Chat streaming through the BFF
-  - [ ] P14-T12.2 Copilot page and docked panel
-  - [ ] P14-T12.3 Portfolio Doctor
-  - [ ] P14-T12.4 Opportunities, compare and simulate
-  - [ ] P14-T12.5 Universe and research
-  - [ ] P14-T12.6 Tests
+  - [x] P14-T12.1 Chat streaming through the BFF
+  - [x] P14-T12.2 Copilot page and docked panel
+  - [x] P14-T12.3 Portfolio Doctor
+  - [x] P14-T12.4 Opportunities, compare and simulate
+  - [x] P14-T12.5 Universe and research
+  - [x] P14-T12.6 Tests
 - [ ] **P14-T13** · WEB-13 Forex live markets entry · `NOT_STARTED` ⬜
   - Deps: P14-T06 · Wave: W8 · Track: WEB · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

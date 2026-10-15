@@ -15,7 +15,7 @@ export class ApiError extends Error {
   }
 }
 
-function csrf(): string | undefined {
+export function csrf(): string | undefined {
   const raw = /(?:^|; )__Host-ws_csrf=([^;]+)/.exec(document.cookie)?.[1];
   return raw ? decodeURIComponent(raw) : undefined;
 }
