@@ -2307,3 +2307,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-16T01:16:07+04:00 — QG CHECK QG-30.6
 - evidence: Converter and rate history show the API's decimal strings; amounts are validated as decimal strings and sent as such; the money-arithmetic lint rule stays on and no float conversion of money was added.
+
+### 2026-10-16T01:21:32+04:00 — AWAITING_VERIFICATION P14-T14
+- evidence: Unit 127 pass; e2e vs Keycloak+API: currency spec 5 pass (switch persisted, converter equals API with a seeded rate, malformed amount, status/history, axe light/dark), full suite no failures, forex spec passes with forex off and on; tsc, eslint clean. QG-28.7, QG-30.2, QG-30.6 checked. PR #185. CI all gates pass.
+
+### 2026-10-16T01:21:32+04:00 — COMPLETE P14-T14
+- duration: 21m 48s
+- evidence: Unit 127 pass; e2e vs Keycloak+API: currency spec 5 pass (switch persisted, converter equals API with a seeded rate, malformed amount, status/history, axe light/dark), full suite no failures, forex spec passes with forex off and on; tsc, eslint clean. QG-28.7, QG-30.2, QG-30.6 checked. PR #185. CI all gates pass.

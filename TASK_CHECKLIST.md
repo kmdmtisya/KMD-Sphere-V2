@@ -1513,10 +1513,10 @@
   - [x] P14-T13.2 WebSocket ticket (API and BFF)
   - [x] P14-T13.3 Live markets page
   - [x] P14-T13.4 Tests
-- [ ] **P14-T14** · WEB-14 Multi-currency conversion · `IN_PROGRESS` 🔄
+- [x] **P14-T14** · WEB-14 Multi-currency conversion · `COMPLETED` ✅
   - Deps: P14-T05, P14-T06 · Wave: W7 · Track: WEB · Size: M · Approval: no
-  - Started: 2026-10-16T00:59:44+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-16T00:59:44+04:00 · Completed: 2026-10-16T01:21:32+04:00 · Duration: 21m 48s · Blocker: —
+  - Evidence: Unit 127 pass; e2e vs Keycloak+API: currency spec 5 pass (switch persisted, converter equals API with a seeded rate, malformed amount, status/history, axe light/dark), full suite no failures, forex spec passes with forex off and on; tsc, eslint clean. QG-28.7, QG-30.2, QG-30.6 checked. PR #185. CI all gates pass.
   - [x] P14-T14.1 Reporting-currency switch
   - [x] P14-T14.2 Converter
   - [x] P14-T14.3 FX status and history
