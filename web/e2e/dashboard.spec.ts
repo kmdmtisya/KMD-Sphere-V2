@@ -135,7 +135,7 @@ test("the layout can be reordered and hidden, saved to the account, and restored
 
 test("search finds your own records, never another user's, and the palette is keyboard-operable", async ({ browser }) => {
   await page.goto("/home");
-  await expect(page.getByLabel("Reporting currency")).toHaveValue(/^[A-Z]{3}$/, { timeout: 20_000 }); // the shell has hydrated
+  await expect(page.getByLabel("Reporting currency").first()).toHaveValue(/^[A-Z]{3}$/, { timeout: 20_000 }); // the shell has hydrated
   await page.keyboard.press("Control+k");
   const dialog = page.getByRole("dialog", { name: "Search and commands" });
   await expect(dialog).toBeVisible();
@@ -164,7 +164,7 @@ test("search finds your own records, never another user's, and the palette is ke
   expect(found.body.results).toEqual([]);
   await bob.goto("/home");
   await expect(bob.getByRole("heading", { level: 1, name: "Home" })).toBeVisible();
-  await expect(bob.getByLabel("Reporting currency")).toHaveValue(/^[A-Z]{3}$/, { timeout: 20_000 }); // the shell has hydrated
+  await expect(bob.getByLabel("Reporting currency").first()).toHaveValue(/^[A-Z]{3}$/, { timeout: 20_000 }); // the shell has hydrated
   await bob.keyboard.press("Control+k");
   const bobDialog = bob.getByRole("dialog", { name: "Search and commands" });
   await bobDialog.getByRole("combobox").fill(TAG);
