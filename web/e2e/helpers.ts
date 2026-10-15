@@ -77,5 +77,13 @@ export async function api(page: Page, path: string, init: { method?: string; bod
  * so a scan right after a theme switch would catch a colour half-way through its transition.
  */
 export async function settled(page: Page): Promise<void> {
-  await page.evaluate(() => Promise.all(document.getAnimations().map((a) => a.finished.catch(() => undefined))));
+  await page.evaluate(() =>
+    Promise.all(
+      document
+        .getAnimations()
+        // A looping animation (a skeleton pulse) never finishes; only finite ones are waited for.
+        .filter((a) => a.effect?.getComputedTiming().iterations !== Infinity)
+        .map((a) => a.finished.catch(() => undefined)),
+    ),
+  );
 }
