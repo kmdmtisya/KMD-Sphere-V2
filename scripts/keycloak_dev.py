@@ -3,9 +3,11 @@
     python scripts/keycloak_dev.py seed-users   # set dev passwords from .env, reset MFA enrolment
     python scripts/keycloak_dev.py smoke        # verify PKCE, rejected grants, TOTP, lockout
     python scripts/keycloak_dev.py sync-realm   # apply realm-level settings from the export
+    python scripts/keycloak_dev.py web-client   # register the web BFF client, write web/.env.local
 
 Reads KEYCLOAK_PORT, KEYCLOAK_ADMIN, KEYCLOAK_ADMIN_PASSWORD and KEYCLOAK_TEST_USER_PASSWORD from
-`.env` (git-ignored). Nothing secret is printed. For the local development stack only.
+`.env` (git-ignored); the same names in the environment take precedence (CI). Nothing secret is
+printed. For the local development stack and CI only.
 """
 
 from __future__ import annotations
@@ -33,15 +35,31 @@ REDIRECT = "com.kmdmtisya.wealthsphere:/oauth2redirect"
 USERS = ["alice@example.test", "bob@example.test", "mfa@example.test"]
 
 
+ENV_KEYS = (
+    "KEYCLOAK_PORT",
+    "KEYCLOAK_ADMIN",
+    "KEYCLOAK_ADMIN_PASSWORD",
+    "KEYCLOAK_TEST_USER_PASSWORD",
+    "REDIS_PASSWORD",
+    "REDIS_PORT",
+)
+
+
 def env() -> dict[str, str]:
+    """Settings from `.env`, overridden by the same names in the process environment (CI, or a
+    throwaway Keycloak on another port)."""
+    import os
+
     values: dict[str, str] = {}
     path = ROOT / ".env"
-    if not path.exists():
+    if path.exists():
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if "=" in line and not line.lstrip().startswith("#"):
+                key, _, value = line.partition("=")
+                values[key.strip()] = value.strip()
+    values.update({k: os.environ[k] for k in ENV_KEYS if os.environ.get(k)})
+    if not values:
         sys.exit(".env not found; copy .env.example and fill it in")
-    for line in path.read_text(encoding="utf-8").splitlines():
-        if "=" in line and not line.lstrip().startswith("#"):
-            key, _, value = line.partition("=")
-            values[key.strip()] = value.strip()
     return values
 
 
@@ -189,6 +207,63 @@ def sync_realm() -> None:
     if status != 204:
         sys.exit(f"updating the realm failed ({status}): {str(body)[:200]}")
     print(f"applied {len(settings)} realm settings")
+
+
+# -------------------------------------------------------------------------- web client
+WEB_CLIENT = "wealthsphere-web"
+WEB_ENV_DEFAULT = ROOT / "web" / ".env.local"
+
+
+def web_client() -> None:
+    """Creates or updates the web portal's confidential client (P14-T05) in the running realm from
+    the export, then writes the BFF's local settings to web/.env.local (git-ignored): the issuer,
+    the client id and its Keycloak-generated secret, a new session-encryption key when there is
+    none, and the Redis URL from .env. The secret is never printed."""
+    import os
+
+    web_env = Path(os.environ.get("WEB_ENV_FILE") or WEB_ENV_DEFAULT)
+    export = json.loads((ROOT / "infra/keycloak/realm-export.json").read_text(encoding="utf-8"))
+    wanted = next(c for c in export["clients"] if c["clientId"] == WEB_CLIENT)
+    token = admin_token()
+    status, found = admin("GET", f"/clients?clientId={WEB_CLIENT}", token)
+    if status != 200:
+        sys.exit(f"listing clients failed ({status})")
+    if found:
+        cid = found[0]["id"]
+        status, body = admin("PUT", f"/clients/{cid}", token, {**found[0], **wanted})
+        if status != 204:
+            sys.exit(f"updating {WEB_CLIENT} failed ({status}): {str(body)[:200]}")
+    else:
+        status, body = admin("POST", "/clients", token, wanted)
+        if status != 201:
+            sys.exit(f"creating {WEB_CLIENT} failed ({status}): {str(body)[:200]}")
+        cid = admin("GET", f"/clients?clientId={WEB_CLIENT}", token)[1][0]["id"]
+    status, secret = admin("GET", f"/clients/{cid}/client-secret", token)
+    if status != 200 or not secret.get("value"):
+        sys.exit(f"reading the {WEB_CLIENT} secret failed ({status})")
+
+    current: dict[str, str] = {}
+    if web_env.exists():
+        for line in web_env.read_text(encoding="utf-8").splitlines():
+            key, sep, value = line.partition("=")
+            if sep and not line.lstrip().startswith("#"):
+                current[key.strip()] = value.strip()
+    redis_password = E.get("REDIS_PASSWORD", "")
+    auth = f":{urllib.parse.quote(redis_password, safe='')}@" if redis_password else ""
+    values = {
+        **current,
+        "WS_OIDC_ISSUER": f"{BASE}/realms/{REALM}",
+        "WS_OIDC_CLIENT_ID": WEB_CLIENT,
+        "WS_OIDC_CLIENT_SECRET": secret["value"],
+        "WS_SESSION_KEY": current.get("WS_SESSION_KEY")
+        or base64.urlsafe_b64encode(secrets.token_bytes(32)).decode().rstrip("="),
+        "WS_REDIS_URL": f"redis://{auth}127.0.0.1:{E.get('REDIS_PORT', '6380')}/1",
+        "WS_PUBLIC_URL": current.get("WS_PUBLIC_URL", "http://localhost:3000"),
+    }
+    lines = ["# Local web BFF settings, written by scripts/keycloak_dev.py web-client. Never commit."]
+    lines += [f"{k}={v}" for k, v in values.items()]
+    web_env.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"{WEB_CLIENT} is registered; wrote {web_env.name} ({len(values)} settings, secret not shown)")
 
 
 # ------------------------------------------------------------------------------- smoke
@@ -467,7 +542,12 @@ def smoke() -> None:
 
 
 if __name__ == "__main__":
-    commands = {"seed-users": seed_users, "smoke": smoke, "sync-realm": sync_realm}
+    commands = {
+        "seed-users": seed_users,
+        "smoke": smoke,
+        "sync-realm": sync_realm,
+        "web-client": web_client,
+    }
     if len(sys.argv) != 2 or sys.argv[1] not in commands:
         sys.exit(__doc__)
     commands[sys.argv[1]]()

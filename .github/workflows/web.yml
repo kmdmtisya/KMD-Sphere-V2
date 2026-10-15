@@ -51,7 +51,7 @@ jobs:
           if [ "$EVENT" = "pull_request" ]; then base="$PR_BASE"; elif [ "$EVENT" = "push" ]; then base="$PUSH_BEFORE"; fi
           if [ -n "$base" ] && ! echo "$base" | grep -qE '^0+$' && git cat-file -e "$base^{commit}" 2>/dev/null; then
             # The API contract is part of the web build (the generated client), so it triggers the checks too.
-            if git diff --name-only "$base" "$GITHUB_SHA" | grep -qE '^(web/|design/tokens/|scripts/generate_tokens\.py|mobile/wealthsphere_app/lib/shared/design_system/tokens/brand_palette\.dart|backend/openapi\.json|backend/app/|backend/tests/e2e_server\.py|\.github/workflows/web\.yml)'; then run=true; else run=false; fi
+            if git diff --name-only "$base" "$GITHUB_SHA" | grep -qE '^(web/|design/tokens/|scripts/generate_tokens\.py|scripts/keycloak_dev\.py|infra/keycloak/|mobile/wealthsphere_app/lib/shared/design_system/tokens/brand_palette\.dart|backend/openapi\.json|backend/app/|backend/tests/e2e_server\.py|\.github/workflows/web\.yml)'; then run=true; else run=false; fi
           fi
           echo "run=$run" >> "$GITHUB_OUTPUT"
           echo "Relevant changes: $run"
@@ -103,11 +103,13 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
 
+    # The whole stack: PostgreSQL and Redis services, a throwaway Keycloak with the development realm,
+    # the API verifying real Keycloak tokens, and the web BFF (P14-T05). Every credential below is
+    # generated for this run or is a fixed throwaway value for containers reachable only from it.
     services:
       postgres:
         image: pgvector/pgvector:pg17
         env:
-          # Throwaway credentials for an ephemeral service container reachable only from this job.
           POSTGRES_USER: ci_user
           POSTGRES_PASSWORD: ci-only-not-a-secret
           POSTGRES_DB: wealthsphere_ci
@@ -115,6 +117,15 @@ jobs:
           - 5432:5432
         options: >-
           --health-cmd "pg_isready -U ci_user -d wealthsphere_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 20
@@ -126,9 +137,30 @@ jobs:
       POSTGRES_DB: wealthsphere_ci
       POSTGRES_HOST: 127.0.0.1
       POSTGRES_PORT: "5432"
+      REDIS_HOST: 127.0.0.1
+      REDIS_PORT: "6379"
+      KEYCLOAK_PORT: "8081"
+      KEYCLOAK_ADMIN: admin
+      OIDC_ISSUER: http://127.0.0.1:8081/realms/wealthsphere
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Generate throwaway passwords for this run
+        working-directory: ${{ github.workspace }}
+        run: |
+          set -euo pipefail
+          admin="$(openssl rand -hex 24)"
+          user="Aa1!$(openssl rand -hex 12)"
+          echo "::add-mask::$admin"
+          echo "::add-mask::$user"
+          { echo "KEYCLOAK_ADMIN_PASSWORD=$admin"; echo "KEYCLOAK_TEST_USER_PASSWORD=$user"; echo "WS_E2E_PASSWORD=$user"; } >> "$GITHUB_ENV"
+
+      - name: Start Keycloak with the development realm
+        working-directory: ${{ github.workspace }}
+        run: |
+          set -euo pipefail
+          docker run -d --name keycloak -p 127.0.0.1:8081:8080 -p 127.0.0.1:9001:9000             -v "$GITHUB_WORKSPACE/infra/keycloak:/opt/keycloak/data/import:ro"             -e KC_BOOTSTRAP_ADMIN_USERNAME=admin -e KC_BOOTSTRAP_ADMIN_PASSWORD="$KEYCLOAK_ADMIN_PASSWORD"             -e KC_HEALTH_ENABLED=true             quay.io/keycloak/keycloak:26.4 start-dev --import-realm
 
       - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
         with:
@@ -140,15 +172,22 @@ jobs:
         working-directory: backend
         run: uv sync --locked
 
-      - name: Start the backend with seeded data
+      - name: Migrate the database and start the API
         working-directory: backend
         run: |
-          nohup uv run python -m tests.e2e_server --port 8765 --out "$RUNNER_TEMP/e2e.json" > "$RUNNER_TEMP/e2e_server.log" 2>&1 &
-          for i in $(seq 1 60); do
-            if [ -s "$RUNNER_TEMP/e2e.json" ] && curl -sf http://127.0.0.1:8765/health/live > /dev/null; then echo "backend ready"; exit 0; fi
-            sleep 2
-          done
-          echo "backend did not start"; tail -50 "$RUNNER_TEMP/e2e_server.log"; exit 1
+          set -euo pipefail
+          uv run alembic upgrade head
+          nohup uv run uvicorn app.main:app --port 8000 > "$RUNNER_TEMP/api.log" 2>&1 &
+          for i in $(seq 1 60); do curl -sf http://127.0.0.1:8000/health/ready > /dev/null && exit 0; sleep 2; done
+          echo "API did not start"; tail -50 "$RUNNER_TEMP/api.log"; exit 1
+
+      - name: Wait for Keycloak, seed the test users, register the web client
+        working-directory: ${{ github.workspace }}
+        run: |
+          set -euo pipefail
+          for i in $(seq 1 90); do curl -sf http://127.0.0.1:9001/health/ready > /dev/null && break; sleep 2; done
+          python3 scripts/keycloak_dev.py seed-users
+          python3 scripts/keycloak_dev.py web-client
 
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
@@ -168,11 +207,12 @@ jobs:
           WS_ENABLE_GALLERY: "1"
         run: npm run build
 
-      - name: Playwright
+      - name: Playwright (smoke, gallery, sign-in and sessions)
         env:
           CI: "true"
-          WS_API_BASE_URL: http://127.0.0.1:8765
+          WS_API_BASE_URL: http://127.0.0.1:8000
           WS_E2E_EXPECT_API: "1"
+          WS_E2E_AUTH: "1"
         run: npm run e2e
 
       - name: Playwright report (on failure)
@@ -183,9 +223,12 @@ jobs:
           path: web/playwright-report
           retention-days: 7
 
-      - name: Backend log (on failure)
+      - name: API and Keycloak logs (on failure)
         if: failure()
-        run: tail -100 "$RUNNER_TEMP/e2e_server.log" || true
+        working-directory: ${{ github.workspace }}
+        run: |
+          tail -100 "$RUNNER_TEMP/api.log" || true
+          docker logs --tail 100 keycloak || true
 
   gate:
     name: web gate

@@ -36,9 +36,9 @@ def public_jwk(key: rsa.RSAPrivateKey | None = None, kid: str = KID) -> dict[str
     return jwk
 
 
-def verifier(leeway: int = 30) -> TokenVerifier:
+def verifier(leeway: int = 30, parties: frozenset[str] = frozenset({CLIENT})) -> TokenVerifier:
     keys = StaticKeySource({KID: PyJWK(public_jwk())})
-    return TokenVerifier(keys, ISSUER, AUDIENCE, frozenset({CLIENT}), leeway_seconds=leeway)
+    return TokenVerifier(keys, ISSUER, AUDIENCE, parties, leeway_seconds=leeway)
 
 
 def claims(subject: str | None = None, **overrides: Any) -> dict[str, Any]:

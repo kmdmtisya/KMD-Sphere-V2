@@ -7,6 +7,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.concurrency import run_in_threadpool
 
+from app.core.audit import set_request_channel
 from app.core.auth import AuthenticationError, TokenVerifier
 from app.core.ratelimit import enforce_user_limit
 from app.db.session import get_session
@@ -27,6 +28,8 @@ async def current_user(
         raise AuthenticationError("authentication is not configured")
     # Fetching signing keys may do blocking HTTP: keep it off the event loop.
     claims = await run_in_threadpool(verifier.verify, credentials.credentials)
+    # Audit events of this request record the channel (mobile app or web portal).
+    set_request_channel(claims.authorized_party)
     await enforce_user_limit(request, f"{claims.issuer}|{claims.subject}")
     try:
         user = await IdentityService(session).provision(claims)
