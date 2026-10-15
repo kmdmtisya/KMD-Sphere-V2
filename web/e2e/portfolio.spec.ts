@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 
-import { api, signIn } from "./helpers";
+import { api, signIn, settled } from "./helpers";
 
 /**
  * Portfolios, holdings, transactions, valuations and custom assets (P14-T08), signed in against the
@@ -166,6 +166,7 @@ test("pages pass axe in Light and Dark; an archived portfolio is read-only", asy
   await expect(page.getByRole("tab", { name: "Holdings" })).toBeVisible();
   for (const mode of ["light", "dark"] as const) {
     await page.evaluate((m) => document.documentElement.setAttribute("data-theme-pref", m), mode);
+    await settled(page);
     const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
     const serious = results.violations.filter((v) => v.impact === "serious" || v.impact === "critical");
     expect(serious.map((x) => `${mode}: ${x.id} (${x.nodes.length})`)).toEqual([]);

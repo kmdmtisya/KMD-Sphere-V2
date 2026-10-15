@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 
-import { signIn } from "./helpers";
+import { signIn, settled } from "./helpers";
 
 /**
  * Appearance: Light, Dark and System (P14-T25, QG-36). The scaffold colours are the generated
@@ -128,6 +128,7 @@ test("the appearance controls pass axe in Light and in Dark", async ({ page }) =
   await page.goto("/");
   for (const mode of ["Light", "Dark"] as const) {
     await choose(page, mode);
+    await settled(page);
     const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
     const serious = results.violations.filter((v) => v.impact === "serious" || v.impact === "critical");
     expect(serious.map((v) => `${mode}: ${v.id}`)).toEqual([]);

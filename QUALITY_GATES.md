@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-15T20:59:15+04:00 by `scripts/track.py`._
+_Generated at 2026-10-15T21:47:17+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -40,7 +40,7 @@ _Generated at 2026-10-15T20:59:15+04:00 by `scripts/track.py`._
 | QG-27 | QG-WEB-02: UI/UX and Design System | 🔄 IN_PROGRESS | 2/9 | Unassigned | — |
 | QG-28 | QG-WEB-03: Functional Parity | 🔄 IN_PROGRESS | 2/9 | Unassigned | — |
 | QG-29 | QG-WEB-04: Authentication and Security | 🔄 IN_PROGRESS | 4/8 | Unassigned | — |
-| QG-30 | QG-WEB-05: Financial Accuracy | 🔄 IN_PROGRESS | 2/6 | Unassigned | — |
+| QG-30 | QG-WEB-05: Financial Accuracy | 🔄 IN_PROGRESS | 3/6 | Unassigned | — |
 | QG-31 | QG-WEB-06: Performance | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
 | QG-32 | QG-WEB-07: Browser Compatibility | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
 | QG-33 | QG-WEB-08: End-to-End Testing | ⬜ NOT_STARTED | 0/11 | Unassigned | — |
@@ -49,9 +49,9 @@ _Generated at 2026-10-15T20:59:15+04:00 by `scripts/track.py`._
 | QG-36 | QG-WEB-11: Theme Management | 🔄 IN_PROGRESS | 5/8 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 136/228.
+Criteria satisfied overall: 137/228.
 
-Current phase **P14** exit-gate criteria outstanding: QG-26.2, QG-26.4, QG-27.2, QG-27.3, QG-27.4, QG-27.6, QG-27.7, QG-27.8, QG-27.9, QG-28.1, QG-28.2, QG-28.5, QG-28.6, QG-28.7, QG-28.8, QG-28.9, QG-29.4, QG-29.5, QG-29.7, QG-29.8, QG-30.2, QG-30.4, QG-30.5, QG-30.6, QG-31.1, QG-31.2, QG-31.3, QG-31.4, QG-31.5, QG-31.6, QG-32.1, QG-32.2, QG-32.3, QG-32.4, QG-32.5, QG-32.6, QG-33.1, QG-33.10, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.6, QG-33.7, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9, QG-35.4, QG-35.5, QG-36.1, QG-36.2, QG-36.7.
+Current phase **P14** exit-gate criteria outstanding: QG-26.2, QG-26.4, QG-27.2, QG-27.3, QG-27.4, QG-27.6, QG-27.7, QG-27.8, QG-27.9, QG-28.1, QG-28.2, QG-28.5, QG-28.6, QG-28.7, QG-28.8, QG-28.9, QG-29.4, QG-29.5, QG-29.7, QG-29.8, QG-30.2, QG-30.5, QG-30.6, QG-31.1, QG-31.2, QG-31.3, QG-31.4, QG-31.5, QG-31.6, QG-32.1, QG-32.2, QG-32.3, QG-32.4, QG-32.5, QG-32.6, QG-33.1, QG-33.10, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.6, QG-33.7, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9, QG-35.4, QG-35.5, QG-36.1, QG-36.2, QG-36.7.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -613,7 +613,7 @@ Approved By: —
 - [x] QG-30.1 Web and mobile portfolio totals reconcile (both equal the API for the same request) · Required: P14 · By: P14-T08 · Evidence: Web side: the portfolio detail totals (total value, cash) are asserted equal to the API response for the same request (GET /portfolios/{id}/summary) after a deposit, after a reversal, and for the holding value after a manual valuation (web/e2e/portfolio.spec.ts), and the dashboard's portfolio value equals /portfolios/consolidated/summary (dashboard.spec.ts); the web formats the API's decimal strings and calculates nothing (lint guard). Mobile side: the app's live repositories read the same endpoints and are tested against the API (P09-T10 e2e). Both equal the API for the same request. 2026-10-15 · Verified: 2026-10-15T20:36:51+04:00 · CRITICAL
 - [ ] QG-30.2 FX conversion matches backend calculations for the same snapshot · Required: P14 · By: P14-T14 · CRITICAL
 - [x] QG-30.3 Historical valuation rules match · Required: P14 · By: P14-T08 · Evidence: Historical valuation rules stay in the backend: the web shows each holding's value with the API's value_source, value_as_of and stale flag (stale shown with a chip), and valuations are created with an as_of timestamp that the API applies (latest valuation on or before the date asked for); e2e shows a manual valuation entered on the web is the value the API returns and the web displays for the holding. No valuation rule exists in web/. 2026-10-15 · Verified: 2026-10-15T20:36:51+04:00
-- [ ] QG-30.4 Compound-growth outputs match · Required: P14 · By: P14-T10
+- [x] QG-30.4 Compound-growth outputs match · Required: P14 · By: P14-T10 · Evidence: Web calculator, scenarios, target planner and goals show backend figures only; e2e compares the three scenarios' final values and a goal's gap with the API's responses for the same request; inputs validated and sent as decimal strings. · Verified: 2026-10-15T21:10:42+04:00
 - [ ] QG-30.5 Reporting figures reconcile (screens, reports and exports) · Required: P14 · By: P14-T15 · CRITICAL
 - [ ] QG-30.6 Decimal precision and rounding verified (decimal strings only; ADR-0003, ADR-0006) · Required: P14 · By: P14-T14 · CRITICAL
 
@@ -621,8 +621,8 @@ Status: IN_PROGRESS
 Owner: Unassigned  
 Start Timestamp: 2026-10-15T20:36:51+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-15T20:36:51+04:00  
-Evidence: 2/6 criteria verified; latest QG-30.3 at 2026-10-15T20:36:51+04:00  
+Verification Timestamp: 2026-10-15T21:10:42+04:00  
+Evidence: 3/6 criteria verified; latest QG-30.4 at 2026-10-15T21:10:42+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —

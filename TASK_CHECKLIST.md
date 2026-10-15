@@ -1479,14 +1479,14 @@
   - [x] P14-T09.3 Risk
   - [x] P14-T09.4 Comparisons and drill-down
   - [x] P14-T09.5 Tests
-- [ ] **P14-T10** · WEB-10 Compounding, forecasting and goals · `NOT_STARTED` ⬜
+- [x] **P14-T10** · WEB-10 Compounding, forecasting and goals · `COMPLETED` ✅
   - Deps: P14-T05, P14-T06 · Wave: W7 · Track: WEB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P14-T10.1 Compounding calculator
-  - [ ] P14-T10.2 Forecast scenarios
-  - [ ] P14-T10.3 Goals
-  - [ ] P14-T10.4 Tests
+  - Started: 2026-10-15T21:04:12+04:00 · Completed: 2026-10-15T21:47:17+04:00 · Duration: 43m 05s · Blocker: —
+  - Evidence: Unit tests (107 pass); full e2e suite 57 pass against Keycloak and API incl. 6 new for the calculator and goals (scenario and goal figures equal the API, validation, CRUD, cross-user 404, axe light/dark); tsc, eslint clean. QG-30.4 checked. PR #181. CI all gates pass.
+  - [x] P14-T10.1 Compounding calculator
+  - [x] P14-T10.2 Forecast scenarios
+  - [x] P14-T10.3 Goals
+  - [x] P14-T10.4 Tests
 - [ ] **P14-T11** · WEB-11 Net worth and passive income · `NOT_STARTED` ⬜
   - Deps: P14-T05, P14-T06 · Wave: W7 · Track: WEB · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

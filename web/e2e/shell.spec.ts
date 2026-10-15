@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 
-import { signIn } from "./helpers";
+import { signIn, settled } from "./helpers";
 
 /**
  * The application shell (P14-T06): signed in, against the real stack. Needs WS_E2E_AUTH=1.
@@ -38,11 +38,11 @@ test("the shell has landmarks, grouped navigation with the active page marked, a
   await expect(nav.getByRole("link", { name: "Operator views" })).toHaveCount(0);
   await expect(page.getByRole("main")).toBeVisible();
 
-  await nav.getByRole("link", { name: "Goals" }).click();
-  await expect(page).toHaveURL(/\/goals$/);
-  await expect(page.getByRole("heading", { level: 1, name: "Goals" })).toBeVisible();
-  await expect(page.getByText("built in P14-T10")).toBeVisible();
-  await expect(nav.getByRole("link", { name: "Goals" })).toHaveAttribute("aria-current", "page");
+  await nav.getByRole("link", { name: "Reports" }).click();
+  await expect(page).toHaveURL(/\/reports/);
+  await expect(page.getByRole("heading", { level: 1, name: "Reports" })).toBeVisible();
+  await expect(page.getByText("built in P14-T15")).toBeVisible();
+  await expect(nav.getByRole("link", { name: "Reports" })).toHaveAttribute("aria-current", "page");
 });
 
 test("an unknown portal page is a 404", async ({ browser }) => {
@@ -159,6 +159,7 @@ test("the shell passes axe in Light and in Dark", async ({ browser }) => {
   const page = await signedInPage(browser);
   for (const mode of ["light", "dark"] as const) {
     await page.evaluate((m) => document.documentElement.setAttribute("data-theme-pref", m), mode);
+    await settled(page);
     const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
     const serious = results.violations.filter((v) => v.impact === "serious" || v.impact === "critical");
     expect(serious.map((v) => `${mode}: ${v.id} (${v.nodes.length})`)).toEqual([]);
