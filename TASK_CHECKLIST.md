@@ -1460,16 +1460,16 @@
   - [x] P14-T07.3 Search endpoint and command palette
   - [x] P14-T07.4 Layout customisation
   - [x] P14-T07.5 Tests
-- [ ] **P14-T08** · WEB-08 Portfolio and investment management · `NOT_STARTED` ⬜
+- [x] **P14-T08** · WEB-08 Portfolio and investment management · `COMPLETED` ✅
   - Deps: P14-T05, P14-T06 · Wave: W6 · Track: WEB · Size: XL · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P14-T08.1 Portfolio list and detail
-  - [ ] P14-T08.2 Holdings grid
-  - [ ] P14-T08.3 Transaction workflows
-  - [ ] P14-T08.4 Valuations and assets
-  - [ ] P14-T08.5 Saved table views
-  - [ ] P14-T08.6 Tests
+  - Started: 2026-10-15T20:06:15+04:00 · Completed: 2026-10-15T20:41:31+04:00 · Duration: 35m 16s · Blocker: —
+  - Evidence: Portfolios list/create/edit/archive; portfolio page with API summary figures, holdings grid with saved column view, ledger with 14-type add form, idempotent posting, append-only reversal, valuations CRUD, asset search and custom assets; API client PUT/DELETE/Idempotency-Key and field errors; 99 unit tests; 8 Playwright journeys on the real stack incl. totals equal to API, cross-user 404, axe light/dark; screenshots docs/design/screenshots/p14/after/P14-T08. QG-28.3, 30.1, 30.3 verified. PR #179. CI all gates pass.
+  - [x] P14-T08.1 Portfolio list and detail
+  - [x] P14-T08.2 Holdings grid
+  - [x] P14-T08.3 Transaction workflows
+  - [x] P14-T08.4 Valuations and assets
+  - [x] P14-T08.5 Saved table views
+  - [x] P14-T08.6 Tests
 - [ ] **P14-T09** · WEB-09 Financial analytics · `NOT_STARTED` ⬜
   - Deps: P14-T08 · Wave: W7 · Track: WEB · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

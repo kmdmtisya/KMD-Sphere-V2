@@ -2204,3 +2204,23 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-15T19:35:54+04:00 — COMPLETE P14-T07
 - duration: 1h 50m 51s
 - evidence: GET /api/v1/search (owner-scoped; Bob never finds Alice records; wildcards literal) with OpenAPI/Spectral and regenerated web client; Home dashboard: wealth summary with allocation, key figures, recent activity, Portfolio Doctor insights, goals; states loading/error/stale/empty/offline; customisable layout saved to the shared dashboard_layout preference; Ctrl/Cmd+K command palette; 92 unit tests; 48 Playwright tests on the real stack incl. figure reconciliation with the API, cross-user search, layout persistence and axe light/dark; screenshots docs/design/screenshots/p14/after/P14-T07. PR #178. CI all gates pass.
+
+### 2026-10-15T20:06:15+04:00 — START P14-T08
+- WEB-08 Portfolio and investment management
+- prerequisites verified COMPLETED
+
+### 2026-10-15T20:36:51+04:00 — QG CHECK QG-28.3
+- evidence: Create, read, update and delete workflows on the web (P14-T08, web/e2e/portfolio.spec.ts against real Keycloak, API, Redis and PostgreSQL): portfolio create (with duplicate-name refusal), read (list, detail), update (edit) and archive; transactions create (all 14 types supported by the form, per-type validation, server refusal shown) with append-only reversal instead of delete; valuations create, edit and delete; custom assets created from the picker. 8 journeys pass; Bob gets 404 for Alice's portfolio. 2026-10-15
+
+### 2026-10-15T20:36:51+04:00 — QG CHECK QG-30.1
+- evidence: Web side: the portfolio detail totals (total value, cash) are asserted equal to the API response for the same request (GET /portfolios/{id}/summary) after a deposit, after a reversal, and for the holding value after a manual valuation (web/e2e/portfolio.spec.ts), and the dashboard's portfolio value equals /portfolios/consolidated/summary (dashboard.spec.ts); the web formats the API's decimal strings and calculates nothing (lint guard). Mobile side: the app's live repositories read the same endpoints and are tested against the API (P09-T10 e2e). Both equal the API for the same request. 2026-10-15
+
+### 2026-10-15T20:36:51+04:00 — QG CHECK QG-30.3
+- evidence: Historical valuation rules stay in the backend: the web shows each holding's value with the API's value_source, value_as_of and stale flag (stale shown with a chip), and valuations are created with an as_of timestamp that the API applies (latest valuation on or before the date asked for); e2e shows a manual valuation entered on the web is the value the API returns and the web displays for the holding. No valuation rule exists in web/. 2026-10-15
+
+### 2026-10-15T20:41:30+04:00 — AWAITING_VERIFICATION P14-T08
+- evidence: Portfolios list/create/edit/archive; portfolio page with API summary figures, holdings grid with saved column view, ledger with 14-type add form, idempotent posting, append-only reversal, valuations CRUD, asset search and custom assets; API client PUT/DELETE/Idempotency-Key and field errors; 99 unit tests; 8 Playwright journeys on the real stack incl. totals equal to API, cross-user 404, axe light/dark; screenshots docs/design/screenshots/p14/after/P14-T08. QG-28.3, 30.1, 30.3 verified. PR #179. CI all gates pass.
+
+### 2026-10-15T20:41:31+04:00 — COMPLETE P14-T08
+- duration: 35m 16s
+- evidence: Portfolios list/create/edit/archive; portfolio page with API summary figures, holdings grid with saved column view, ledger with 14-type add form, idempotent posting, append-only reversal, valuations CRUD, asset search and custom assets; API client PUT/DELETE/Idempotency-Key and field errors; 99 unit tests; 8 Playwright journeys on the real stack incl. totals equal to API, cross-user 404, axe light/dark; screenshots docs/design/screenshots/p14/after/P14-T08. QG-28.3, 30.1, 30.3 verified. PR #179. CI all gates pass.
