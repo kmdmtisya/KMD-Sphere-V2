@@ -2142,3 +2142,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-15T14:44:35+04:00 — QG CHECK QG-29.6
 - evidence: Tokens stay server-side in Redis sealed with AES-256-GCM under a hashed key; the browser holds only __Host-ws_session (HttpOnly, Secure, SameSite=Lax, path /) and the non-credential CSRF token. e2e asserts no JWT in any portal cookie, document.cookie, localStorage or sessionStorage and the session cookie flags; unit tests assert sealed store values and no token in Set-Cookie or /api/auth/session (PR #175, CI run 38720281552). Approved by the user 2026-10-15
+
+### 2026-10-15T15:02:48+04:00 — AWAITING_VERIFICATION P14-T05
+- evidence: BFF sign-in (Authorization Code + PKCE, state, nonce) with the confidential wealthsphere-web client; server-side sessions in Redis sealed with AES-256-GCM (idle 30 min, absolute 10 h, refresh before expiry); __Host- HttpOnly session cookie and double-submit CSRF with Origin check; allow-listed /api/v1 proxy; logout with revocation and RP-initiated logout; audit details.channel from azp; 74 Vitest tests; 5 Playwright journeys against real Keycloak, API, Redis and PostgreSQL locally and in CI; backend 3,276 passed. QG-29.1, 29.2, 29.3, 29.6 verified. Approved by the user 2026-10-15. PR #175. CI all gates pass.
+
+### 2026-10-15T15:02:49+04:00 — COMPLETE P14-T05
+- duration: 1h 08m 27s
+- evidence: BFF sign-in (Authorization Code + PKCE, state, nonce) with the confidential wealthsphere-web client; server-side sessions in Redis sealed with AES-256-GCM (idle 30 min, absolute 10 h, refresh before expiry); __Host- HttpOnly session cookie and double-submit CSRF with Origin check; allow-listed /api/v1 proxy; logout with revocation and RP-initiated logout; audit details.channel from azp; 74 Vitest tests; 5 Playwright journeys against real Keycloak, API, Redis and PostgreSQL locally and in CI; backend 3,276 passed. QG-29.1, 29.2, 29.3, 29.6 verified. Approved by the user 2026-10-15. PR #175. CI all gates pass. · Approved by: user (mtisya@gmail.com), 2026-10-15

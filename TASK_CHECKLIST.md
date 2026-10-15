@@ -1433,10 +1433,10 @@
   - [x] P14-T04.3 Lint guards
   - [x] P14-T04.4 Test harness
   - [x] P14-T04.5 Web CI workflow
-- [ ] **P14-T05** · WEB-05 Authentication and session integration · `IN_PROGRESS` 🔄
+- [x] **P14-T05** · WEB-05 Authentication and session integration · `COMPLETED` ✅
   - Deps: P14-T04 · Wave: W4 · Track: SEC · Size: L · Approval: yes
-  - Started: 2026-10-15T13:54:21+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-15T13:54:21+04:00 · Completed: 2026-10-15T15:02:48+04:00 · Duration: 1h 08m 27s · Blocker: —
+  - Evidence: BFF sign-in (Authorization Code + PKCE, state, nonce) with the confidential wealthsphere-web client; server-side sessions in Redis sealed with AES-256-GCM (idle 30 min, absolute 10 h, refresh before expiry); __Host- HttpOnly session cookie and double-submit CSRF with Origin check; allow-listed /api/v1 proxy; logout with revocation and RP-initiated logout; audit details.channel from azp; 74 Vitest tests; 5 Playwright journeys against real Keycloak, API, Redis and PostgreSQL locally and in CI; backend 3,276 passed. QG-29.1, 29.2, 29.3, 29.6 verified. Approved by the user 2026-10-15. PR #175. CI all gates pass. · Approved by: user (mtisya@gmail.com), 2026-10-15
   - [x] P14-T05.1 Keycloak web client
   - [x] P14-T05.2 BFF sign-in, refresh and logout
   - [x] P14-T05.3 Session store and cookies
