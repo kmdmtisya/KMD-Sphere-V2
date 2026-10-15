@@ -1495,16 +1495,16 @@
   - [x] P14-T11.2 Passive income
   - [x] P14-T11.3 Net-worth history endpoint
   - [x] P14-T11.4 Tests
-- [ ] **P14-T12** · WEB-12 AI Wealth Copilot and intelligence · `NOT_STARTED` ⬜
+- [x] **P14-T12** · WEB-12 AI Wealth Copilot and intelligence · `COMPLETED` ✅
   - Deps: P14-T05, P14-T06 · Wave: W6 · Track: AI · Size: XL · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P14-T12.1 Chat streaming through the BFF
-  - [ ] P14-T12.2 Copilot page and docked panel
-  - [ ] P14-T12.3 Portfolio Doctor
-  - [ ] P14-T12.4 Opportunities, compare and simulate
-  - [ ] P14-T12.5 Universe and research
-  - [ ] P14-T12.6 Tests
+  - Started: 2026-10-15T23:13:41+04:00 · Completed: 2026-10-16T00:09:49+04:00 · Duration: 56m 08s · Blocker: —
+  - Evidence: Unit 117 pass (SSE parser, turns); AI e2e 8 pass vs Keycloak+API (unavailable, streamed answer, refusal, no HTML injection, docked panel scope, Doctor equals API, universe/research, cross-user 404, axe light/dark); tsc, eslint clean. Compare and simulate not exercised (empty universe on the test stack); no live model. PR #183. CI all gates pass.
+  - [x] P14-T12.1 Chat streaming through the BFF
+  - [x] P14-T12.2 Copilot page and docked panel
+  - [x] P14-T12.3 Portfolio Doctor
+  - [x] P14-T12.4 Opportunities, compare and simulate
+  - [x] P14-T12.5 Universe and research
+  - [x] P14-T12.6 Tests
 - [ ] **P14-T13** · WEB-13 Forex live markets entry · `NOT_STARTED` ⬜
   - Deps: P14-T06 · Wave: W8 · Track: WEB · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —

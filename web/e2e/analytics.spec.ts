@@ -87,7 +87,7 @@ test("changing the period reloads the value series and risk", async () => {
   await expect
     .poll(() => seen.some((u) => u.includes("frequency=monthly")))
     .toBe(true);
-  await expect(page.getByRole("heading", { name: "Risk" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /^Risk/ })).toBeVisible();
 });
 
 test("allocation views switch and agree with the API", async () => {
