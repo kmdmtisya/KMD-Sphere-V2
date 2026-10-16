@@ -90,9 +90,9 @@ export function DataAsOfLabel({ asOf, locale = "en" }: { asOf: string; locale?: 
   const date = new Date(asOf);
   const text = new Intl.DateTimeFormat(locale, { dateStyle: "medium", timeStyle: "short" }).format(date);
   return (
-    <span className="inline-flex items-center gap-1 text-[length:var(--ws-font-size-caption)] text-fg-muted">
+    <span className="inline-flex max-w-full items-center gap-1 text-[length:var(--ws-font-size-caption)] text-fg-muted">
       <Icon name="clock" size={12} />
-      <span>
+      <span className="min-w-0">
         As of <time dateTime={asOf}>{text}</time>
       </span>
     </span>

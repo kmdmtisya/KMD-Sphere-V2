@@ -15,7 +15,15 @@ const eslintConfig = defineConfig([
     rules: {
       "wealthsphere/no-money-arithmetic": "error",
       "wealthsphere/no-colour-literals": "error",
+      // Text from users, assets and the assistant is never rendered as HTML (XSS, QG-29.5). The
+      // CSP allows inline scripts, so this rule is one of the controls that keep them out.
+      "react/no-danger": "error",
     },
+  },
+  {
+    // The one reviewed use: the app's own constant theme script, which has no user input.
+    files: ["src/app/layout.tsx"],
+    rules: { "react/no-danger": "off" },
   },
   {
     // Generated token files are the one place colour values may appear.

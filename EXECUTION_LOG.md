@@ -2385,3 +2385,22 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-16T05:04:10+04:00 — COMPLETE P14-T18
 - duration: 1h 13m 25s
 - evidence: Backend full suite 3361 pass (10 new concurrency tests); web unit 135 pass; sync e2e 4 pass vs Keycloak+API; mobile full suite 1803 pass (5 new theme sync tests); route parity OK. Mobile If-Match and a live-phone sync pass are follow-up. PR #189. CI all gates pass.
+
+### 2026-10-16T05:22:29+04:00 — START P14-T19
+- WEB-19 Security and accessibility testing
+- prerequisites verified COMPLETED
+
+### 2026-10-16T05:49:10+04:00 — QG CHECK QG-27.7
+- evidence: Keyboard e2e (a11y spec): a drawer dialog takes and keeps focus, Escape closes it and focus returns to the opener; the appearance choice works with Space and arrow keys; a data grid column sorts with Enter and exposes aria-sort; the skip link is the first tab stop with a visible focus ring; landmarks present. Command palette and Copilot panel open and close from the keyboard (shell spec).
+
+### 2026-10-16T05:49:10+04:00 — QG CHECK QG-27.9
+- evidence: With prefers-reduced-motion: reduce, computed transition and animation durations are effectively zero and smooth scrolling is off (a11y spec); the stylesheet's reduced-motion block applies globally.
+
+### 2026-10-16T05:49:11+04:00 — QG CHECK QG-29.5
+- evidence: CSRF: no token, wrong token and a foreign Origin are all refused (403) while the legitimate call works (security spec, auth spec). XSS: hostile markup in portfolio, goal and asset names runs nothing and is shown as text on the pages that show them; react/no-danger is a lint error with one reviewed exception and a self-test fixture; assistant text is rendered as text (ai spec). CSP is enforced with a recorded residual risk (inline scripts allowed; docs/web/WEB_THREAT_MODEL.md).
+
+### 2026-10-16T05:49:11+04:00 — QG CHECK QG-29.7
+- evidence: Through the portal, a second signed-in user gets 404 for 13 of the first user's resources (portfolio, summary, holdings, transactions, performance, allocation, risk, income, goal, goal progress, asset, asset prices, report) and their lists and pages show nothing of them (security spec); per-module e2e specs add cross-user checks; the backend IDOR registry and sweep cover every id route.
+
+### 2026-10-16T05:49:12+04:00 — QG CHECK QG-29.8
+- evidence: npm audit --omit=dev: 0 vulnerabilities (the dev-only advisory in the lint toolchain is recorded as TD-12); gitleaks over all 389 commits: no leaks; the CI security gate (dependency audit with pip-audit, npm audit and OSV, Trivy, CodeQL, gitleaks) passes on every pull request.

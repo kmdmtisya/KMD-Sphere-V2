@@ -8,6 +8,7 @@ import wealthsphere from "../eslint-rules/index.mjs";
 const expectations = [
   { file: "lint-fixtures/money-violation.ts", rule: "wealthsphere/no-money-arithmetic", atLeast: 3 },
   { file: "lint-fixtures/colour-violation.tsx", rule: "wealthsphere/no-colour-literals", atLeast: 3 },
+  { file: "lint-fixtures/danger-violation.tsx", rule: "react/no-danger", atLeast: 2 },
 ];
 
 const eslint = new ESLint({
@@ -18,6 +19,7 @@ const eslint = new ESLint({
     rules: {
       "wealthsphere/no-money-arithmetic": "error",
       "wealthsphere/no-colour-literals": "error",
+      "react/no-danger": "error",
     },
   },
 });

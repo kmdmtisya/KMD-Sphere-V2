@@ -136,11 +136,11 @@ export function DataGrid<T extends Row>({
       <ul aria-label={caption} className="flex flex-col gap-2 md:hidden">
         {sortedRows.map((row) => (
           <li key={row.id} className="rounded-[var(--ws-radius-control)] border border-divider p-3">
-            <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1">
+            <dl className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-3 gap-y-1">
               {columns.map((c) => (
                 <div key={c.key} className="contents">
                   <dt className="text-[length:var(--ws-font-size-caption)] text-fg-muted">{c.header}</dt>
-                  <dd className={`text-end ${c.kind === "money" ? "tabular-nums font-medium" : ""}`}>
+                  <dd className={`min-w-0 break-words text-end ${c.kind === "money" ? "tabular-nums font-medium" : ""}`}>
                     {display(row.original as T, c, locale)}
                   </dd>
                 </div>
