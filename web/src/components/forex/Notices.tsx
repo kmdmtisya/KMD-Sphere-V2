@@ -101,8 +101,8 @@ export function Notices() {
             </li>
           ) : (
             <li key={`p-${n.id}`}>
-              Paper trading · simulated money: your {n.instrument.replace("_", "/")}{" "}
-              position closed
+              Paper trading · simulated money: your{" "}
+              {n.instrument.replace("_", "/")} position closed
               {n.reason ? ` (${n.reason})` : ""}.
             </li>
           ),

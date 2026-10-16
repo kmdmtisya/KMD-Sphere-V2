@@ -8,18 +8,36 @@ import type { components } from "@/lib/api";
 type S = components["schemas"];
 
 export type NoticePrefs = { eventReminders: boolean; paperExits: boolean };
-export const DEFAULT_PREFS: NoticePrefs = { eventReminders: true, paperExits: true };
+export const DEFAULT_PREFS: NoticePrefs = {
+  eventReminders: true,
+  paperExits: true,
+};
 export const NOTICES_KEY = "ws.forex.notices";
 
 export type Notice =
-  | { kind: "event"; id: string; name: string; currencies: string[]; minutes: number }
-  | { kind: "paper"; id: string; instrument: string; reason: string | null; exitAt: string };
+  | {
+      kind: "event";
+      id: string;
+      name: string;
+      currencies: string[];
+      minutes: number;
+    }
+  | {
+      kind: "paper";
+      id: string;
+      instrument: string;
+      reason: string | null;
+      exitAt: string;
+    };
 
 export function decodePrefs(raw: string | null): NoticePrefs {
   if (!raw) return DEFAULT_PREFS;
   try {
     const m = JSON.parse(raw) as Record<string, unknown>;
-    return { eventReminders: m.eventReminders !== false, paperExits: m.paperExits !== false };
+    return {
+      eventReminders: m.eventReminders !== false,
+      paperExits: m.paperExits !== false,
+    };
   } catch {
     return DEFAULT_PREFS;
   }
@@ -46,7 +64,13 @@ export function noticesFor(input: {
     for (const e of events) {
       const until = new Date(e.scheduled_at).getTime() - now.getTime();
       if (e.importance === "high" && until >= 0 && until <= eventWindow)
-        out.push({ kind: "event", id: e.id, name: e.name, currencies: e.currencies, minutes: Math.floor(until / MINUTE) });
+        out.push({
+          kind: "event",
+          id: e.id,
+          name: e.name,
+          currencies: e.currencies,
+          minutes: Math.floor(until / MINUTE),
+        });
     }
   }
   if (prefs.paperExits) {
@@ -54,7 +78,13 @@ export function noticesFor(input: {
       if (!p.exit_at) continue;
       const age = now.getTime() - new Date(p.exit_at).getTime();
       if (age >= 0 && age <= closedWindow)
-        out.push({ kind: "paper", id: p.id, instrument: p.instrument, reason: p.exit_reason, exitAt: p.exit_at });
+        out.push({
+          kind: "paper",
+          id: p.id,
+          instrument: p.instrument,
+          reason: p.exit_reason,
+          exitAt: p.exit_at,
+        });
     }
   }
   return out;

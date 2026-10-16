@@ -6,8 +6,21 @@ import { decodePrefs, DEFAULT_PREFS, encodePrefs, noticesFor } from "./notices";
 
 type S = components["schemas"];
 const now = new Date("2026-10-16T10:00:00Z");
-const ev = (id: string, importance: "low" | "medium" | "high", at: string) => ({ id, name: `Event ${id}`, importance, scheduled_at: at, currencies: ["USD"] }) as unknown as S["EventOut"];
-const pos = (id: string, exit: string | null) => ({ id, instrument: "EUR_USD", exit_at: exit, exit_reason: "stop" }) as unknown as S["ForexPaperPositionOut"];
+const ev = (id: string, importance: "low" | "medium" | "high", at: string) =>
+  ({
+    id,
+    name: `Event ${id}`,
+    importance,
+    scheduled_at: at,
+    currencies: ["USD"],
+  }) as unknown as S["EventOut"];
+const pos = (id: string, exit: string | null) =>
+  ({
+    id,
+    instrument: "EUR_USD",
+    exit_at: exit,
+    exit_reason: "stop",
+  }) as unknown as S["ForexPaperPositionOut"];
 
 describe("forex notices", () => {
   it("reminds only of high-importance events that start within the hour", () => {
@@ -31,20 +44,40 @@ describe("forex notices", () => {
       prefs: DEFAULT_PREFS,
       now,
       events: [],
-      positions: [pos("fresh", "2026-10-16T08:00:00Z"), pos("old", "2026-10-14T08:00:00Z"), pos("open", null)],
+      positions: [
+        pos("fresh", "2026-10-16T08:00:00Z"),
+        pos("old", "2026-10-14T08:00:00Z"),
+        pos("open", null),
+      ],
     });
     expect(out.map((n) => n.id)).toEqual(["fresh"]);
   });
 
   it("respects what the person turned off", () => {
-    const input = { now, events: [ev("soon", "high", "2026-10-16T10:30:00Z")], positions: [pos("fresh", "2026-10-16T08:00:00Z")] };
-    expect(noticesFor({ ...input, prefs: { eventReminders: false, paperExits: true } }).map((n) => n.kind)).toEqual(["paper"]);
-    expect(noticesFor({ ...input, prefs: { eventReminders: true, paperExits: false } }).map((n) => n.kind)).toEqual(["event"]);
+    const input = {
+      now,
+      events: [ev("soon", "high", "2026-10-16T10:30:00Z")],
+      positions: [pos("fresh", "2026-10-16T08:00:00Z")],
+    };
+    expect(
+      noticesFor({
+        ...input,
+        prefs: { eventReminders: false, paperExits: true },
+      }).map((n) => n.kind),
+    ).toEqual(["paper"]);
+    expect(
+      noticesFor({
+        ...input,
+        prefs: { eventReminders: true, paperExits: false },
+      }).map((n) => n.kind),
+    ).toEqual(["event"]);
   });
 
   it("reads and writes the saved choice, and falls back to both on when it is missing or damaged", () => {
     expect(decodePrefs(null)).toEqual(DEFAULT_PREFS);
     expect(decodePrefs("not json")).toEqual(DEFAULT_PREFS);
-    expect(decodePrefs(encodePrefs({ eventReminders: false, paperExits: true }))).toEqual({ eventReminders: false, paperExits: true });
+    expect(
+      decodePrefs(encodePrefs({ eventReminders: false, paperExits: true })),
+    ).toEqual({ eventReminders: false, paperExits: true });
   });
 });

@@ -34,7 +34,9 @@ test("notices: both reminders are on by default, can be turned off, and the choi
   await hydrated(page);
   const card = page.getByRole("region", { name: /^Notices/ });
   await expect(card).toBeVisible({ timeout: 30_000 });
-  const events = card.getByLabel("Remind me of high-impact events in the next hour");
+  const events = card.getByLabel(
+    "Remind me of high-impact events in the next hour",
+  );
   const paper = card.getByLabel("Tell me when a paper position closes");
   await expect(events).toBeChecked();
   await expect(paper).toBeChecked();
@@ -43,8 +45,12 @@ test("notices: both reminders are on by default, can be turned off, and the choi
   await page.reload();
   await hydrated(page);
   const again = page.getByRole("region", { name: /^Notices/ });
-  await expect(again.getByLabel("Tell me when a paper position closes")).not.toBeChecked();
-  await expect(again.getByLabel("Remind me of high-impact events in the next hour")).toBeChecked();
+  await expect(
+    again.getByLabel("Tell me when a paper position closes"),
+  ).not.toBeChecked();
+  await expect(
+    again.getByLabel("Remind me of high-impact events in the next hour"),
+  ).toBeChecked();
   // Put it back so the next run starts from the default.
   await again.getByLabel("Tell me when a paper position closes").check();
 });
@@ -73,7 +79,10 @@ test("the candle chart draws the candles the API returns, with the API's own las
   );
   // Compare the page with the very response it was given, so an hour closing in between cannot matter.
   const answered = page.waitForResponse(
-    (r) => r.url().includes("/forex/candles") && r.url().includes("timeframe=1H") && r.ok(),
+    (r) =>
+      r.url().includes("/forex/candles") &&
+      r.url().includes("timeframe=1H") &&
+      r.ok(),
   );
   await page.goto("/forex/workspace");
   await hydrated(page);
@@ -86,7 +95,9 @@ test("the candle chart draws the candles the API returns, with the API's own las
     chart.getByText(`${items.length} 1H candles`, { exact: false }),
   ).toBeVisible();
   await expect(
-    chart.getByText(`last close ${items[items.length - 1].close}`, { exact: false }),
+    chart.getByText(`last close ${items[items.length - 1].close}`, {
+      exact: false,
+    }),
   ).toBeVisible();
   // The chart is drawn, not just described: the SVG holds the candle and axis shapes.
   await expect
@@ -94,17 +105,24 @@ test("the candle chart draws the candles the API returns, with the API's own las
     .toBeGreaterThan(items.length);
   // And the table alternative lists the same last close.
   await chart.getByRole("button", { name: /as a table/ }).click();
-  await expect(chart.getByRole("table")).toContainText(items[items.length - 1].close);
+  await expect(chart.getByRole("table")).toContainText(
+    items[items.length - 1].close,
+  );
 });
 
 test("the page stays responsive while quotes stream in", async () => {
   await page.goto("/forex");
   await hydrated(page);
-  await expect(page.getByRole("status")).toContainText("Live quotes connected", {
-    timeout: 30_000,
-  });
+  await expect(page.getByRole("status")).toContainText(
+    "Live quotes connected",
+    {
+      timeout: 30_000,
+    },
+  );
   const table = page.getByRole("table", { name: "Live quotes" });
-  await expect(table.getByRole("cell", { name: "simulated" }).first()).toBeVisible({
+  await expect(
+    table.getByRole("cell", { name: "simulated" }).first(),
+  ).toBeVisible({
     timeout: 30_000,
   });
   await page.evaluate(() => {
@@ -113,24 +131,41 @@ test("the page stays responsive while quotes stream in", async () => {
     w.__lt = 0;
     new PerformanceObserver((list) =>
       list.getEntries().forEach((e) => w.__ev.push(e.duration)),
-    ).observe({ type: "event", durationThreshold: 16, buffered: false } as PerformanceObserverInit);
-    new PerformanceObserver((list) => (w.__lt += list.getEntries().length)).observe({
+    ).observe({
+      type: "event",
+      durationThreshold: 16,
+      buffered: false,
+    } as PerformanceObserverInit);
+    new PerformanceObserver(
+      (list) => (w.__lt += list.getEntries().length),
+    ).observe({
       type: "longtask",
       buffered: false,
     });
   });
-  const nodesBefore = await page.evaluate(() => document.getElementsByTagName("*").length);
+  const nodesBefore = await page.evaluate(
+    () => document.getElementsByTagName("*").length,
+  );
   // Interact for a while: the appearance cycle and the keyboard, as quotes keep arriving.
   for (let i = 0; i < 6; i++) {
-    await page.getByRole("button", { name: /appearance|theme/i }).first().click().catch(() => undefined);
+    await page
+      .getByRole("button", { name: /appearance|theme/i })
+      .first()
+      .click()
+      .catch(() => undefined);
     await page.keyboard.press("Tab");
     await page.waitForTimeout(700);
   }
   const { maxEventMs, longTasks } = await page.evaluate(() => {
     const w = window as unknown as { __ev: number[]; __lt: number };
-    return { maxEventMs: Math.round(Math.max(0, ...w.__ev)), longTasks: w.__lt };
+    return {
+      maxEventMs: Math.round(Math.max(0, ...w.__ev)),
+      longTasks: w.__lt,
+    };
   });
-  const nodesAfter = await page.evaluate(() => document.getElementsByTagName("*").length);
+  const nodesAfter = await page.evaluate(
+    () => document.getElementsByTagName("*").length,
+  );
   test.info().annotations.push({
     type: "measured",
     description: `max event ${maxEventMs} ms, ${longTasks} long tasks, DOM ${nodesBefore} -> ${nodesAfter} elements`,
