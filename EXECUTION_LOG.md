@@ -2493,3 +2493,14 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-16T09:40:22+04:00 — COMPLETE P15-T01
 - duration: 0m 14s
 - evidence: User approved DEC-02 on 2026-10-16: AWS, one EU region. ADR-0019; DEC-02 resolved in EXECUTION_PLAN.md · Approved by: user (mtisya@gmail.com), 2026-10-16
+
+### 2026-10-16T10:25:12+04:00 — START P15-T04
+- Container images and registry
+- prerequisites verified COMPLETED
+
+### 2026-10-16T10:25:13+04:00 — AWAITING_VERIFICATION P15-T04
+- evidence: images workflow green on PR #197 and on main (run for 7a12fb1): both images build, run as non-root, Trivy image scan clean of fixable HIGH/CRITICAL, CycloneDX SBOM per image, push to the repository registry ghcr.io from main succeeded. Local docker build not possible (engine unresponsive); ECR push moves with P15-T08
+
+### 2026-10-16T10:25:13+04:00 — COMPLETE P15-T04
+- duration: 0m 01s
+- evidence: Acceptance met in CI: image scan has no unwaived high/critical findings (unfixed ones ignored by policy). Interim registry is GHCR; ECR follows P15-T02/T03/T08
