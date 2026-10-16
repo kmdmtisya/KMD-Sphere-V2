@@ -254,7 +254,7 @@ Tool choices (ruff, mypy, uv, Spectral, k6) are proposals recorded in ADR-0004/0
 | ID | Decision / input needed | Needed by | Owner | State |
 |---|---|---|---|---|
 | DEC-01 | App identifiers (organisation reverse-domain, Android applicationId, iOS bundle ID) | P01-T06 | User | Resolved: com.kmdmtisya |
-| DEC-02 | Cloud provider (AWS / GCP / OCI), region(s) and data-residency approach (UAE/Kenya users) | P15-T01 | User | Open |
+| DEC-02 | Cloud provider (AWS / GCP / OCI), region(s) and data-residency approach (UAE/Kenya users) | P15-T01 | User | Resolved (2026-10-16): AWS, one EU region (eu-central-1 as the working choice), no cross-region replication in v1; UAE/Kenya residency law is left to the legal review (DEC-10). ADR-0019 |
 | DEC-03 | Forecast numbers in the demo UI. Resolved by structure: canned fixtures in P03 (no maths in Dart), real engine from P06-T01 wired in P09-T03. User may pull P06-T01/T02 earlier. | P03-T04 | Plan | Resolved (override allowed) |
 | DEC-04 | Market-data and research providers, budget and licence terms | P08-T01 | User | Open |
 | DEC-05 | LLM provider, model, monthly budget and API-key custody (docs name OpenAI first) | P10-T01 | User | Resolved: OpenAI and Anthropic adapters behind one interface, key per environment, USD 50 a month cap, 90-day chat retention (ADR-0017, 2026-10-12); model ids are configuration; provider terms to be reviewed before first real use |

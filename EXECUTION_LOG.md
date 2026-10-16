@@ -2482,3 +2482,14 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-16T09:36:18+04:00 — PHASE APPROVED P15
 - approved by user (mtisya@gmail.com), approval 2026-10-16 (approve all)
 - Cloud Infrastructure & Deployment Pipeline
+
+### 2026-10-16T09:40:08+04:00 — START P15-T01
+- Cloud provider, region and residency decision
+- prerequisites verified COMPLETED
+
+### 2026-10-16T09:40:21+04:00 — AWAITING_VERIFICATION P15-T01
+- evidence: ADR-0019 written; user chose AWS and one EU region on 2026-10-16
+
+### 2026-10-16T09:40:22+04:00 — COMPLETE P15-T01
+- duration: 0m 14s
+- evidence: User approved DEC-02 on 2026-10-16: AWS, one EU region. ADR-0019; DEC-02 resolved in EXECUTION_PLAN.md · Approved by: user (mtisya@gmail.com), 2026-10-16
