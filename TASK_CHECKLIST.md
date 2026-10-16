@@ -1546,10 +1546,10 @@
   - [x] P14-T17.2 Role-gated endpoints
   - [x] P14-T17.3 Operator views
   - [x] P14-T17.4 Tests
-- [ ] **P14-T18** · WEB-18 Cross-platform synchronisation testing · `IN_PROGRESS` 🔄
+- [x] **P14-T18** · WEB-18 Cross-platform synchronisation testing · `COMPLETED` ✅
   - Deps: P14-T07, P14-T08, P14-T10, P14-T11, P14-T12, P14-T14, P14-T16 · Wave: W9 · Track: QA · Size: L · Approval: no
-  - Started: 2026-10-16T03:50:45+04:00 · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
+  - Started: 2026-10-16T03:50:45+04:00 · Completed: 2026-10-16T05:04:10+04:00 · Duration: 1h 13m 25s · Blocker: —
+  - Evidence: Backend full suite 3361 pass (10 new concurrency tests); web unit 135 pass; sync e2e 4 pass vs Keycloak+API; mobile full suite 1803 pass (5 new theme sync tests); route parity OK. Mobile If-Match and a live-phone sync pass are follow-up. PR #189. CI all gates pass.
   - [x] P14-T18.1 Optimistic concurrency
   - [x] P14-T18.2 Cross-channel journey tests
   - [x] P14-T18.3 Route parity check

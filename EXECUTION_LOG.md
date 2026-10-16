@@ -2378,3 +2378,10 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-16T04:16:34+04:00 — QG CHECK QG-33.10
 - evidence: Navigation and routing: nav unit tests (mobile route mapping, active item, role/flag visibility), the route-parity script in CI, and the shell e2e (landmarks, grouped navigation, active page marked, drawer/overlay at breakpoints, skip link).
+
+### 2026-10-16T05:04:09+04:00 — AWAITING_VERIFICATION P14-T18
+- evidence: Backend full suite 3361 pass (10 new concurrency tests); web unit 135 pass; sync e2e 4 pass vs Keycloak+API; mobile full suite 1803 pass (5 new theme sync tests); route parity OK. Mobile If-Match and a live-phone sync pass are follow-up. PR #189. CI all gates pass.
+
+### 2026-10-16T05:04:10+04:00 — COMPLETE P14-T18
+- duration: 1h 13m 25s
+- evidence: Backend full suite 3361 pass (10 new concurrency tests); web unit 135 pass; sync e2e 4 pass vs Keycloak+API; mobile full suite 1803 pass (5 new theme sync tests); route parity OK. Mobile If-Match and a live-phone sync pass are follow-up. PR #189. CI all gates pass.
