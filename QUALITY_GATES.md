@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-16T14:36:07+04:00 by `scripts/track.py`._
+_Generated at 2026-10-16T17:26:18+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -38,20 +38,20 @@ _Generated at 2026-10-16T14:36:07+04:00 by `scripts/track.py`._
 | QG-25 | QG-FXCUR-05: AI Integration | ✅ PASSED | 5/5 | Unassigned | — |
 | QG-26 | QG-WEB-01: Architecture and Integration | 🔄 IN_PROGRESS | 5/5 | Unassigned | — |
 | QG-27 | QG-WEB-02: UI/UX and Design System | 🔄 IN_PROGRESS | 8/9 | Unassigned | — |
-| QG-28 | QG-WEB-03: Functional Parity | 🔄 IN_PROGRESS | 8/9 | Unassigned | — |
+| QG-28 | QG-WEB-03: Functional Parity | 🔄 IN_PROGRESS | 9/9 | Unassigned | — |
 | QG-29 | QG-WEB-04: Authentication and Security | 🔄 IN_PROGRESS | 8/8 | Unassigned | — |
 | QG-30 | QG-WEB-05: Financial Accuracy | 🔄 IN_PROGRESS | 6/6 | Unassigned | — |
 | QG-31 | QG-WEB-06: Performance | 🔄 IN_PROGRESS | 6/6 | Unassigned | — |
-| QG-32 | QG-WEB-07: Browser Compatibility | 🔄 IN_PROGRESS | 4/6 | Unassigned | — |
+| QG-32 | QG-WEB-07: Browser Compatibility | 🔄 IN_PROGRESS | 5/6 | Unassigned | — |
 | QG-33 | QG-WEB-08: End-to-End Testing | 🔄 IN_PROGRESS | 3/11 | Unassigned | — |
 | QG-34 | QG-WEB-09: Production Readiness | ⬜ NOT_STARTED | 0/9 | Unassigned | — |
 | QG-35 | QG-WEB-10: Design Reference Compliance | 🔄 IN_PROGRESS | 5/5 | Unassigned | — |
 | QG-36 | QG-WEB-11: Theme Management | 🔄 IN_PROGRESS | 8/8 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 176/228.
+Criteria satisfied overall: 178/228.
 
-Current phase **P14** exit-gate criteria outstanding: QG-27.6, QG-28.9, QG-32.4, QG-32.6, QG-33.1, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9.
+Current phase **P14** exit-gate criteria outstanding: QG-27.6, QG-32.4, QG-33.1, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -575,14 +575,14 @@ Approved By: —
 - [x] QG-28.6 Forex entry verified: hidden when the flag is off; live markets labelled when on (advanced workspace: QG-28.9) · Required: P14 · By: P14-T13 · Evidence: Forex entry (P14-T13): with the module off the nav entry, the /forex page and the ticket route are absent (e2e, CI); with the API started with FOREX_ENABLED and the simulated feed, /forex connects with a single-use ticket and shows quotes labelled by data type and freshness plus a Simulated badge (local live run, WS_E2E_FOREX=1). · Verified: 2026-10-16T01:16:05+04:00
 - [x] QG-28.7 Currency conversion verified · Required: P14 · By: P14-T14 · Evidence: Currency page (P14-T14): reporting-currency switch saved to the account, converter, FX status and history; e2e verifies the switch persists and the converted amount and rate equal the API's response for the same request. · Verified: 2026-10-16T01:16:06+04:00
 - [x] QG-28.8 Reports and exports verified · Required: P14 · By: P14-T15 · Evidence: Reports and exports (P14-T15): backend PDF, XLSX and CSV for portfolio, performance and allocation, net worth, income and goals; web Reports page downloads them; API tests cover every kind and format, owner scoping (404), validation and audit; e2e downloads CSV, PDF and XLSX. Forecast, FX-exposure and forex strategy reports are not in v1 (docs/design/reports.md). · Verified: 2026-10-16T01:38:27+04:00
-- [ ] QG-28.9 Advanced Forex web workspace: charts responsive while streaming; data type, feed status and PAPER TRADING labels always shown; no order affordance · Required: P14 · By: P14-T24
+- [x] QG-28.9 Advanced Forex web workspace: charts responsive while streaming; data type, feed status and PAPER TRADING labels always shown; no order affordance · Required: P14 · By: P14-T24 · Evidence: e2e in CI (PR #204, Chromium and Firefox): forex-live.spec (page stays responsive while quotes stream; guard rails max event under 500 ms, DOM does not grow), forex-workspace.spec (data type, feed status and PAPER TRADING labels always shown; no real-money order affordance on any panel; paper results never change wealth figures; axe Light and Dark); candle chart checked against the API response · Verified: 2026-10-16T17:26:18+04:00
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
 Start Timestamp: 2026-10-15T20:36:51+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-16T04:16:34+04:00  
-Evidence: 8/9 criteria verified; latest QG-28.2 at 2026-10-16T04:16:34+04:00  
+Verification Timestamp: 2026-10-16T17:26:18+04:00  
+Evidence: 9/9 criteria verified; latest QG-28.9 at 2026-10-16T17:26:18+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -653,14 +653,14 @@ Approved By: —
 - [x] QG-32.3 Firefox tested · Required: P14 · By: P14-T20 · Evidence: Firefox (Playwright's build, CI): the cross-browser journeys at 1440, 1280, 1024, 768 and 375 px in Light and Dark pass (13 tests) in the web workflow's end-to-end job. · Verified: 2026-10-16T08:13:46+04:00
 - [ ] QG-32.4 Safari tested · Required: P14 · By: P14-T20
 - [x] QG-32.5 Responsive layouts verified · Required: P14 · By: P14-T20 · Evidence: Responsive layouts verified at five widths in both themes in Chrome, Edge (local) and Firefox (CI): content shown, theme applied, no horizontal overflow. · Verified: 2026-10-16T08:13:46+04:00
-- [ ] QG-32.6 Browser-specific defects resolved and supported versions documented · Required: P14 · By: P14-T20
+- [x] QG-32.6 Browser-specific defects resolved and supported versions documented · Required: P14 · By: P14-T20 · Evidence: docs/web/WEB_BROWSER_SUPPORT.md lists the supported versions approved by the user (DEC-36, 2026-10-16) and the browser-specific findings: none open for Chrome, Edge or Firefox; WebKit is a test-environment limit (HTTPS needed), not a defect. Firefox runs the cross-browser and forex journeys in CI (PR #204, web gate green). QG-32.4 (Safari) stays open · Verified: 2026-10-16T17:26:13+04:00
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
 Start Timestamp: 2026-10-16T07:18:09+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-16T08:13:46+04:00  
-Evidence: 4/6 criteria verified; latest QG-32.5 at 2026-10-16T08:13:46+04:00  
+Verification Timestamp: 2026-10-16T17:26:13+04:00  
+Evidence: 5/6 criteria verified; latest QG-32.6 at 2026-10-16T17:26:13+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —

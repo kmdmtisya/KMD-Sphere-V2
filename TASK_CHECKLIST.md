@@ -1604,7 +1604,7 @@
   - [x] P14-T24.2 Scanner and opportunity ranking
   - [x] P14-T24.3 Risk calculator and backtests
   - [x] P14-T24.4 Paper trading and journal
-  - [ ] P14-T24.5 Forex Copilot and alerts
+  - [x] P14-T24.5 Forex Copilot and alerts
   - [x] P14-T24.6 Tests
 - [x] **P14-T25** · WEB-25 Appearance: Light, Dark and System · `COMPLETED` ✅
   - Deps: P14-T03, P14-T05 · Wave: W5 · Track: WEB · Size: M · Approval: no
