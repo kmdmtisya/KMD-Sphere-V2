@@ -1638,9 +1638,9 @@
   - [x] P15-T01.1 Options and cost
   - [x] P15-T01.2 Residency/regulatory notes
   - [x] P15-T01.3 ADR
-- [ ] **P15-T02** · Terraform foundation · `IN_PROGRESS` 🔄
+- [ ] **P15-T02** · Terraform foundation · `BLOCKED` ⛔
   - Deps: P15-T01 · Wave: W2 · Track: INF · Size: L · Approval: no
-  - Started: 2026-10-16T10:27:46+04:00 · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-16T10:27:46+04:00 · Completed: — · Duration: — · Blocker: Built, merged (PR #199), terraform fmt and validate pass in CI and the security gate is clean, but the acceptance needs a clean terraform plan, which needs an AWS account and credentials that do not exist yet. Unblock when the user provides an AWS account with a plan-only role; then run plan and complete. T03 and later P15 tasks depend on the same account.
   - Evidence: —
   - [ ] P15-T02.1 State backend
   - [ ] P15-T02.2 Network
