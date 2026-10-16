@@ -1,0 +1,82 @@
+name: images
+
+on:
+  push:
+    branches: [main]
+    paths: ["backend/**", "web/**", ".github/workflows/images.yml"]
+  pull_request:
+    paths: ["backend/Dockerfile", "backend/.dockerignore", "web/Dockerfile", "web/.dockerignore", ".github/workflows/images.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: images-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  TRIVY_VERSION: "0.75.0"
+  SYFT_VERSION: "1.54.1"
+
+jobs:
+  image:
+    name: image (${{ matrix.name }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      packages: write # push to the repository registry from main only
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: backend, context: backend }
+          - { name: web, context: web }
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Build
+        run: docker build -t "wealthsphere-${{ matrix.name }}:${{ github.sha }}" "${{ matrix.context }}"
+      - name: The image runs as a non-root user
+        run: |
+          uid=$(docker image inspect --format '{{.Config.User}}' "wealthsphere-${{ matrix.name }}:${{ github.sha }}")
+          echo "user: $uid"
+          case "$uid" in ""|0|root|0:*|root:*) echo "image runs as root"; exit 1;; esac
+      - name: Install Trivy and Syft (checksum verified)
+        run: |
+          set -euo pipefail
+          t="https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}"
+          tf="trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz"
+          curl -fsSL -o "$tf" "$t/$tf"
+          curl -fsSL -o trivy.sums "$t/trivy_${TRIVY_VERSION}_checksums.txt"
+          grep " $tf$" trivy.sums | sha256sum -c -
+          tar -xzf "$tf" trivy
+          s="https://github.com/anchore/syft/releases/download/v${SYFT_VERSION}"
+          sf="syft_${SYFT_VERSION}_linux_amd64.tar.gz"
+          curl -fsSL -o "$sf" "$s/$sf"
+          curl -fsSL -o syft.sums "$s/syft_${SYFT_VERSION}_checksums.txt"
+          grep " $sf$" syft.sums | sha256sum -c -
+          tar -xzf "$sf" syft
+      - name: Scan the image (unwaived HIGH and CRITICAL with a fix available fail the build)
+        run: ./trivy image --scanners vuln,secret --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 --quiet "wealthsphere-${{ matrix.name }}:${{ github.sha }}"
+      - name: SBOM of the image
+        run: |
+          ./syft "docker:wealthsphere-${{ matrix.name }}:${{ github.sha }}" -o cyclonedx-json=sbom-${{ matrix.name }}.cdx.json -q
+          python3 -c "import json,sys; d=json.load(open('sbom-${{ matrix.name }}.cdx.json')); n=len(d.get('components',[])); print('components:', n); sys.exit(0 if n > 0 else 1)"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: sbom-image-${{ matrix.name }}
+          path: sbom-${{ matrix.name }}.cdx.json
+          retention-days: 90
+      # Interim registry: the repository's own (private) registry. The AWS registry (ECR) is created by
+      # P15-T02/T03 and the push moves there with the CD pipeline (P15-T08). Images are pushed from main only.
+      - name: Push to the repository registry (main only)
+        if: github.ref == 'refs/heads/main'
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          repo="ghcr.io/$(echo "${{ github.repository }}" | tr 'A-Z' 'a-z')/${{ matrix.name }}"
+          echo "$TOKEN" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          docker tag "wealthsphere-${{ matrix.name }}:${{ github.sha }}" "$repo:${{ github.sha }}"
+          docker push "$repo:${{ github.sha }}"
