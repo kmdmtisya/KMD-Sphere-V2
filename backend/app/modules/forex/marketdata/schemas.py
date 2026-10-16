@@ -15,8 +15,8 @@ NOTICE = (
     "price is never shown as current, and a missing one is never filled in."
 )
 CANDLE_NOTICE = (
-    "Candles as the provider published them. A period with no candle is absent, never filled "
-    "in. Forming candles are not stored."
+    "Candles as the provider published them, or built from stored one-minute candles for larger "
+    "sizes. A period with no candle is absent, never filled in. Forming candles are not shown."
 )
 DataTypeName = Literal["tradable_quote", "indicative_rate", "delayed", "simulated"]
 FeedStatusName = Literal["connected", "degraded", "disconnected"]

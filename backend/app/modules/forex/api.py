@@ -14,9 +14,9 @@ from app.core.api_responses import UNAUTHORIZED, invalid, not_found
 from app.core.authz import ResourceNotFoundError
 from app.core.errors import InvalidValueError
 from app.db.session import get_session
+from app.modules.forex.analysis.service import load
 from app.modules.forex.instruments.registry import active_instruments
 from app.modules.forex.marketdata.factory import quality_policy
-from app.modules.forex.marketdata.repository import stored_candles
 from app.modules.forex.marketdata.schemas import (
     CandleOut,
     CandlesOut,
@@ -115,10 +115,12 @@ async def quotes(
 @router.get(
     "/candles",
     response_model=CandlesOut,
-    summary="Stored candles of a pair, oldest first",
+    summary="Candles of a pair, oldest first",
     description="Complete candles in [start, end), at most `forex_candles_max` of them "
-    "(`truncated` says when more exist). A period without a candle is absent, never filled in; "
-    "a forming candle is not stored. Times are UTC and must carry a time zone.",
+    "(`truncated` says when more exist). Candles of the requested size are served as the provider "
+    "published them; where it published none, they are built from the stored one-minute candles on "
+    "the session calendar. A period without a candle is absent, never filled in; a forming candle "
+    "is not served. Times are UTC and must carry a time zone.",
     responses={
         **UNAUTHORIZED,
         **invalid("range"),
@@ -142,8 +144,7 @@ async def candles(
         raise InvalidValueError("start must be before end, at most 366 days apart")
     if instrument not in {r.code for r in await active_instruments(session)}:
         raise ResourceNotFoundError("forex instrument")
-    limit = settings.forex_candles_max
-    rows = await stored_candles(
+    loaded = await load(
         session,
         settings.forex_provider,
         instrument,
@@ -151,7 +152,9 @@ async def candles(
         PriceBasis(price_basis),
         start,
         end,
-        limit + 1,
+        datetime.now(UTC),
+        settings.forex_candles_max,
+        settings.forex_analysis_source_cap,
     )
     return CandlesOut(
         instrument=instrument,
@@ -170,7 +173,7 @@ async def candles(
                 volume=r.volume,
                 data_type=r.data_type,
             )
-            for r in rows[:limit]
+            for r in loaded.bars
         ],
-        truncated=len(rows) > limit,
+        truncated=loaded.truncated,
     )

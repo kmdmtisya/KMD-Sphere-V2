@@ -161,16 +161,17 @@ test("at 375 px the top bar is two rows and every filter control stays visible",
   const currency = header.getByLabel("Reporting currency");
   await expect(portfolio).toBeVisible();
   await expect(currency).toBeVisible();
-  const [bar, p, c, menu] = await Promise.all([
-    header.boundingBox(),
+  const [p, c, menu, bell] = await Promise.all([
     portfolio.boundingBox(),
     currency.boundingBox(),
     header.getByRole("button", { name: "Open the menu" }).boundingBox(),
+    header.getByRole("link", { name: /^Notifications/ }).boundingBox(),
   ]);
   // The two selectors share one row, below the row that holds the menu and the actions.
   expect(Math.abs((p?.y ?? 0) - (c?.y ?? 99))).toBeLessThan(4);
   expect(p!.y).toBeGreaterThan(menu!.y + menu!.height - 1);
-  expect(bar!.height).toBeLessThan(120);
+  // The menu button and the actions share the first row, so the bar is two rows, not three.
+  expect(Math.abs(bell!.y - menu!.y)).toBeLessThan(4);
 });
 
 test("the shell passes axe in Light and in Dark", async ({ browser }) => {

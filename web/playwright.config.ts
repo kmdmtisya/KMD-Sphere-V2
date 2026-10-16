@@ -44,7 +44,8 @@ export default defineConfig({
   },
   // Chromium runs the whole suite. WS_BROWSERS (comma separated: msedge, firefox, webkit) adds the
   // other supported browsers (P14-T20.4), which run the cross-browser journeys only
-  // (e2e/browsers.spec.ts) at five widths in both themes. WS_PLAYWRIGHT_CHANNEL=chrome uses an installed
+  // (e2e/browsers.spec.ts) at five widths in both themes, plus the forex workspace journeys (paper trading,
+  // notices, candle chart) when the forex module is on (P14-T24). WS_PLAYWRIGHT_CHANNEL=chrome uses an installed
   // Google Chrome where the bundled browser cannot be downloaded (for example behind TLS
   // interception); CI uses the bundled browsers. WebKit (Safari's engine) works only over HTTPS here,
   // because it will not store the portal's __Host- Secure cookies over plain HTTP; it is not in CI yet.
@@ -69,7 +70,7 @@ export default defineConfig({
               : devices["Desktop Safari"];
         return {
           name,
-          testMatch: /browsers\.spec\.ts/,
+          testMatch: /(browsers|forex-workspace|forex-live)\.spec\.ts/,
           use: {
             ...device,
             ...(name === "msedge" ? { channel: "msedge" } : {}),

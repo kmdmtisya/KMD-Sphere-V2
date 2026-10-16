@@ -369,6 +369,36 @@ async def test_candles_are_served_with_gaps_left_absent_and_forming_ones_not_sto
     assert len(r.json()["items"]) == 2 and r.json()["truncated"] is True
 
 
+async def test_larger_candles_are_built_from_stored_minutes_when_the_provider_published_none(
+    http: httpx.AsyncClient,
+    user: TestUser,
+    sessions: async_sessionmaker[AsyncSession],
+) -> None:
+    # A Tuesday in the past: the whole hour is inside the trading week and every period is closed.
+    t0 = datetime(2026, 10, 13, 10, 0, tzinfo=UTC)
+    rows = [candle("EUR_GBP", t0 + timedelta(minutes=m), f"0.85{500 + m:03d}") for m in range(60)]
+    async with sessions() as s:
+        await store_candles(s, rows, now())
+    params = {
+        "instrument": "EUR_GBP",
+        "timeframe": "15m",
+        "start": t0.isoformat(),
+        "end": (t0 + timedelta(hours=1)).isoformat(),
+    }
+    r = await http.get("/api/v1/forex/candles", params=params, headers=user.headers)
+    assert r.status_code == 200, r.text
+    body = r.json()
+    assert body["timeframe"] == "15m"
+    stamps = [datetime.fromisoformat(c["ts"]) for c in body["items"]]
+    assert stamps == [t0 + timedelta(minutes=15 * i) for i in range(4)]
+    first = body["items"][0]
+    # Built from minutes 0-14: open of the first, close of the last, extremes of all.
+    assert D(first["open"]) == D("0.85500") and D(first["close"]) == D("0.85514")
+    assert D(first["high"]) == D("0.85514") + D("0.0002")
+    assert D(first["low"]) == D("0.85500") - D("0.0002")
+    assert {c["data_type"] for c in body["items"]} == {"simulated"}
+
+
 async def test_bad_candle_requests_are_refused(http: httpx.AsyncClient, user: TestUser) -> None:
     t = now()
     cases = [

@@ -232,6 +232,35 @@ jobs:
           WS_BROWSERS: firefox
         run: npx playwright test --project=firefox
 
+      # The forex workspace (P14-T24): the API is restarted with the forex module on and the simulated
+      # feed, one-minute candles are stored, and the forex journeys run in Chromium and Firefox
+      # (paper trading, notices, candle chart, streaming responsiveness, no real-money order).
+      - name: Restart the API with the forex module on and store candles
+        working-directory: backend
+        env:
+          FOREX_ENABLED: "true"
+          FOREX_FEED_ENABLED: "true"
+          FOREX_CANDLE_SYNC_MAX_HOURS: "168"
+          RATE_LIMIT_ENABLED: "false"
+        run: |
+          set -euo pipefail
+          pkill -f "uvicorn app.main:app" || true
+          sleep 2
+          nohup uv run uvicorn app.main:app --port 8000 > "$RUNNER_TEMP/api-forex.log" 2>&1 &
+          for i in $(seq 1 60); do curl -sf http://127.0.0.1:8000/health/ready > /dev/null && break; sleep 2; done
+          curl -sf http://127.0.0.1:8000/health/ready > /dev/null || { tail -50 "$RUNNER_TEMP/api-forex.log"; exit 1; }
+          uv run python -c "from app.worker.tasks import forex_candle_sync_job; print(forex_candle_sync_job())"
+
+      - name: Playwright (forex workspace, Chromium and Firefox)
+        env:
+          CI: "true"
+          WS_API_BASE_URL: http://127.0.0.1:8000
+          WS_E2E_EXPECT_API: "1"
+          WS_E2E_AUTH: "1"
+          WS_E2E_FOREX: "1"
+          WS_BROWSERS: firefox
+        run: npx playwright test e2e/forex.spec.ts e2e/forex-workspace.spec.ts e2e/forex-live.spec.ts --project=chromium --project=firefox
+
       - name: Playwright report (on failure)
         if: failure()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
