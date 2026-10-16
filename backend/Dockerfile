@@ -12,6 +12,9 @@ RUN uv sync --locked --no-dev
 FROM python:3.13-slim AS runtime
 ENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 PATH="/srv/.venv/bin:$PATH"
 RUN groupadd --system --gid 10001 app && useradd --system --uid 10001 --gid app --no-create-home --shell /usr/sbin/nologin app
+# The app runs from its own virtualenv; the base image's pip and setuptools (and the copies they vendor)
+# are build tools only, so they are removed to keep their advisories out of the image.
+RUN python -m pip uninstall -y pip setuptools wheel 2>/dev/null; rm -rf /usr/local/lib/python3.13/site-packages/pip* /usr/local/lib/python3.13/site-packages/setuptools* /usr/local/lib/python3.13/site-packages/wheel*
 WORKDIR /srv
 COPY --from=build --chown=app:app /srv /srv
 USER 10001:10001
