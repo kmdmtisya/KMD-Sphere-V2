@@ -106,7 +106,7 @@ jobs:
           tar -xzf "$file" trivy
       - name: Scan repository (HIGH and CRITICAL fail the build)
         run: ./trivy fs --scanners vuln,secret,misconfig --severity HIGH,CRITICAL --exit-code 1 --quiet .
-      # Container image scanning is added with the Dockerfiles in P15-T04.
+      # Container images are scanned in images.yml (P15-T04).
 
   sbom:
     name: SBOM (CycloneDX)
