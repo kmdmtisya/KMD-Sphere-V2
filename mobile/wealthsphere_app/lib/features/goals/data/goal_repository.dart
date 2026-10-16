@@ -8,7 +8,7 @@ import '../domain/goal_models.dart';
 import 'live_goal_repository.dart';
 
 /// Why a goal could not be saved.
-enum GoalRule { notFound, nameTaken, tooMany }
+enum GoalRule { notFound, nameTaken, tooMany, changedElsewhere }
 
 class GoalRuleException implements Exception {
   const GoalRuleException(this.rule);
@@ -26,7 +26,10 @@ abstract interface class GoalRepository {
   Future<List<GoalEntry>> goals();
   Future<GoalEntry> goal(String id);
   Future<GoalEntry> create(GoalInput input);
-  Future<GoalEntry> update(String id, GoalInput input);
+
+  /// [ifMatch] is the version being edited (`Goal.etag`); when the goal has changed elsewhere since,
+  /// this throws [GoalRule.changedElsewhere] instead of overwriting it.
+  Future<GoalEntry> update(String id, GoalInput input, {String? ifMatch});
 }
 
 /// Reads `assets/demo/goals.json`. Goals that are added or changed live in memory for the
@@ -97,7 +100,11 @@ class DemoGoalRepository implements GoalRepository {
   }
 
   @override
-  Future<GoalEntry> update(String id, GoalInput input) async {
+  Future<GoalEntry> update(
+    String id,
+    GoalInput input, {
+    String? ifMatch,
+  }) async {
     final all = await _all();
     if (!all.any((e) => e.goal.id == id)) {
       throw const GoalRuleException(GoalRule.notFound);

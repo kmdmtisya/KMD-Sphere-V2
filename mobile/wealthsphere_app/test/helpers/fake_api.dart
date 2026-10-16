@@ -26,6 +26,15 @@ class ApiCall {
   String toString() => '$method $path';
 }
 
+/// An answer with response headers, for example an `ETag`.
+class WithHeaders {
+  const WithHeaders(this.status, this.body, this.headers);
+
+  final int status;
+  final Object? body;
+  final Map<String, String> headers;
+}
+
 /// A raw response body, for example a server-sent event stream, delivered in the given chunks
 /// (a chunk can end anywhere, even inside a frame or a character).
 class RawBody {
@@ -95,7 +104,12 @@ class FakeApi implements HttpClientAdapter {
     if (answer is DioExceptionType) {
       throw DioException(requestOptions: options, type: answer);
     }
-    final (status, body) = answer as (int, Object?);
+    final extra = answer is WithHeaders
+        ? answer.headers
+        : const <String, String>{};
+    final (status, body) = answer is WithHeaders
+        ? (answer.status, answer.body)
+        : answer as (int, Object?);
     if (body is RawBody) {
       return ResponseBody(
         Stream.fromIterable([
@@ -112,6 +126,7 @@ class FakeApi implements HttpClientAdapter {
       body == null ? '' : jsonEncode(body),
       status,
       headers: {
+        for (final e in extra.entries) e.key: [e.value],
         Headers.contentTypeHeader: [
           status >= 400 ? 'application/problem+json' : Headers.jsonContentType,
         ],

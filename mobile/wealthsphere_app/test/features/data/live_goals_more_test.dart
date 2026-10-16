@@ -197,6 +197,56 @@ void main() {
       expect(e.goal.name, 'House+');
       expect(e.figures, isNotNull);
     });
+
+    test(
+      'a goal read on its own carries the version the server sent',
+      () async {
+        api
+          ..on(
+            'GET /api/v1/goals/g1',
+            (_) => WithHeaders(200, goalJson('g1', 'House', '2029-06-01'), {
+              'etag': '"v1"',
+            }),
+          )
+          ..json('GET /api/v1/goals/g1/progress', progressJson('g1'));
+        final e = await goals.goal('g1');
+        expect(e.goal.etag, '"v1"');
+      },
+    );
+
+    test('update sends the version being edited as If-Match', () async {
+      api
+        ..json('PATCH /api/v1/goals/g1', goalJson('g1', 'House+', '2029-06-01'))
+        ..json('GET /api/v1/goals/g1/progress', progressJson('g1'));
+      await goals.update('g1', input('House+'), ifMatch: '"v1"');
+      expect(
+        api.callsTo('PATCH', '/api/v1/goals/g1').single.header('if-match'),
+        '"v1"',
+      );
+      await goals.update('g1', input('House+'));
+      expect(
+        api.callsTo('PATCH', '/api/v1/goals/g1').last.header('if-match'),
+        isNull,
+      );
+    });
+
+    test('a goal changed elsewhere is refused with its own rule', () async {
+      api.json('PATCH /api/v1/goals/g1', {
+        'title': 'Conflict',
+        'status': 409,
+        'detail': 'This record was changed somewhere else. Reload it and try your change again.',
+      }, status: 409);
+      await expectLater(
+        goals.update('g1', input('House+'), ifMatch: '"old"'),
+        throwsA(
+          isA<GoalRuleException>().having(
+            (x) => x.rule,
+            'rule',
+            GoalRule.changedElsewhere,
+          ),
+        ),
+      );
+    });
   });
 
   group('net worth and income', () {

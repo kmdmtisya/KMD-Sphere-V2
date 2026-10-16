@@ -3211,6 +3211,10 @@
   "@goalErrNotFound": {
     "description": "Save refused"
   },
+  "goalErrChangedElsewhere": "This goal was changed on another device or on the web. Go back and open it again to see the latest version, then repeat your change.",
+  "@goalErrChangedElsewhere": {
+    "description": "Save refused because the goal was edited somewhere else after this form was opened"
+  },
   "doctorTitle": "Portfolio Doctor",
   "@doctorTitle": {
     "description": "Title of the Portfolio Doctor screen"

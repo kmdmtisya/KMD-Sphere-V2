@@ -23,7 +23,10 @@ class LiveGoalRepository extends LiveRepository implements GoalRepository {
   Future<GoalEntry> goal(String id) async {
     final Goal goal;
     try {
-      goal = await getObject('/api/v1/goals/$id', Goal.fromJson);
+      goal = await getObjectWithEtag(
+        '/api/v1/goals/$id',
+        (json, etag) => Goal.fromJson(json, etag: etag),
+      );
     } on ApiException catch (e) {
       if (e.kind == ApiErrorKind.notFound) {
         throw const GoalRuleException(GoalRule.notFound);
@@ -45,15 +48,17 @@ class LiveGoalRepository extends LiveRepository implements GoalRepository {
   });
 
   @override
-  Future<GoalEntry> update(String id, GoalInput input) => _ruled(() async {
-    final goal = await send(
-      'PATCH',
-      '/api/v1/goals/$id',
-      Goal.fromJson,
-      body: toApi(input),
-    );
-    return _withFigures(goal);
-  });
+  Future<GoalEntry> update(String id, GoalInput input, {String? ifMatch}) =>
+      _ruled(() async {
+        final goal = await send(
+          'PATCH',
+          '/api/v1/goals/$id',
+          Goal.fromJson,
+          body: toApi(input),
+          ifMatch: ifMatch,
+        );
+        return _withFigures(goal);
+      });
 
   Future<GoalEntry> _withFigures(Goal goal) async {
     try {
@@ -82,6 +87,9 @@ class LiveGoalRepository extends LiveRepository implements GoalRepository {
         throw const GoalRuleException(GoalRule.notFound);
       }
       if (e.status == 409) {
+        if ((e.detail ?? '').contains('changed somewhere else')) {
+          throw const GoalRuleException(GoalRule.changedElsewhere);
+        }
         final tooMany = (e.detail ?? '').contains('at most');
         throw GoalRuleException(
           tooMany ? GoalRule.tooMany : GoalRule.nameTaken,

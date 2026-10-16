@@ -189,7 +189,11 @@ class _GoalFormState extends ConsumerState<_GoalForm> {
       final repo = ref.read(goalRepositoryProvider);
       final entry = widget.editing == null
           ? await repo.create(input)
-          : await repo.update(widget.editing!.id, input);
+          : await repo.update(
+              widget.editing!.id,
+              input,
+              ifMatch: widget.editing!.etag,
+            );
       refreshGoals(ref);
       if (!mounted) return;
       setState(() => _saving = false);
@@ -211,6 +215,8 @@ class _GoalFormState extends ConsumerState<_GoalForm> {
             _banner = l10n.goalErrTooMany;
           case GoalRule.notFound:
             _banner = l10n.goalErrNotFound;
+          case GoalRule.changedElsewhere:
+            _banner = l10n.goalErrChangedElsewhere;
         }
       });
     } on Object {
