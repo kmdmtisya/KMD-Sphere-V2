@@ -154,6 +154,25 @@ for (const width of WIDTHS) {
   });
 }
 
+test("at 375 px the top bar is two rows and every filter control stays visible", async ({ browser }) => {
+  const page = await signedInPage(browser, 375);
+  const header = page.getByRole("banner");
+  const portfolio = header.getByLabel("Portfolio");
+  const currency = header.getByLabel("Reporting currency");
+  await expect(portfolio).toBeVisible();
+  await expect(currency).toBeVisible();
+  const [bar, p, c, menu] = await Promise.all([
+    header.boundingBox(),
+    portfolio.boundingBox(),
+    currency.boundingBox(),
+    header.getByRole("button", { name: "Open the menu" }).boundingBox(),
+  ]);
+  // The two selectors share one row, below the row that holds the menu and the actions.
+  expect(Math.abs((p?.y ?? 0) - (c?.y ?? 99))).toBeLessThan(4);
+  expect(p!.y).toBeGreaterThan(menu!.y + menu!.height - 1);
+  expect(bar!.height).toBeLessThan(120);
+});
+
 test("the shell passes axe in Light and in Dark", async ({ browser }) => {
   const page = await signedInPage(browser);
   for (const mode of ["light", "dark"] as const) {

@@ -23,7 +23,7 @@ const FRESH = 60_000;
 export const PORTFOLIO_KEY = "ws.portfolio";
 
 const selectClass =
-  "min-h-9 max-w-44 rounded-[var(--ws-radius-control)] border border-line bg-surface px-2 text-[length:var(--ws-font-size-label)] font-semibold text-fg";
+  "min-h-9 max-w-44 max-md:w-full max-md:max-w-none rounded-[var(--ws-radius-control)] border border-line bg-surface px-2 text-[length:var(--ws-font-size-label)] font-semibold text-fg";
 
 function PortfolioSelect() {
   const portfolios = useQuery({ queryKey: ["portfolios"], queryFn: () => apiGet<Portfolio[]>("portfolios"), staleTime: FRESH });
@@ -31,7 +31,7 @@ function PortfolioSelect() {
   const selected = stored ?? "all";
   const active = (portfolios.data ?? []).filter((p) => !p.archived_at);
   return (
-    <label className="flex items-center gap-2">
+    <label className="flex items-center gap-2 max-md:min-w-0 max-md:flex-1">
       <span className="sr-only">Portfolio</span>
       <select
         className={selectClass}
@@ -65,7 +65,7 @@ function CurrencySelect() {
   });
   const current = prefs.data?.reporting_currency;
   return (
-    <label className="flex items-center gap-2">
+    <label className="flex items-center gap-2 max-md:min-w-0 max-md:flex-1">
       <span className="sr-only">Reporting currency</span>
       <select
         className={selectClass}
@@ -203,10 +203,13 @@ export function TopBar({
         <kbd className="text-[length:var(--ws-font-size-caption)]">Ctrl K</kbd>
       </button>
       <IconButton icon="sort" label="Search" onClick={onSearch} className="lg:hidden" />
-      <div className="ms-auto flex flex-wrap items-center gap-2">
+      {/* Below 768 px the filters take a row of their own so the bar is two tidy rows, not three. */}
+      <div className="flex items-center gap-2 md:ms-auto max-md:order-last max-md:w-full max-md:flex-wrap">
         <PortfolioSelect />
         <CurrencySelect />
         <DataStatusChip />
+      </div>
+      <div className="flex items-center gap-2 max-md:ms-auto">
         <Notifications />
         <ThemeCycleButton />
         <IconButton icon="info" label={panelOpen ? "Close the Copilot panel" : "Open the Copilot panel"} aria-pressed={panelOpen} onClick={onPanel} />
