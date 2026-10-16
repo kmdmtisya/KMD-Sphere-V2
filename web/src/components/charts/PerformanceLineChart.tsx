@@ -38,7 +38,7 @@ export function PerformanceLineChart({
 }) {
   const dateLabel = useMemo(() => new Intl.DateTimeFormat(locale, { day: "numeric", month: "short" }), [locale]);
   const axisLabel = useMemo(
-    () => new Intl.NumberFormat(locale, { style: "currency", currency, notation: "compact", maximumFractionDigits: 1 }),
+    () => new Intl.NumberFormat(locale, { style: "currency", currency, notation: "compact", maximumFractionDigits: 2 }),
     [locale, currency],
   );
 

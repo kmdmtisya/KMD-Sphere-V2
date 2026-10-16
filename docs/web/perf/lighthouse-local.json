@@ -1,0 +1,181 @@
+{
+  "measuredAt": "2026-10-16T03:09:04.092Z",
+  "browser": "chrome",
+  "base": "http://127.0.0.1:3100",
+  "pages": [
+    {
+      "path": "/home",
+      "performance": 97,
+      "accessibility": 100,
+      "bestPractices": 81,
+      "lcpMs": 1168,
+      "fcpMs": 616,
+      "cls": 0.034,
+      "tbtMs": 0,
+      "speedIndexMs": 1127,
+      "transferKb": 347,
+      "finalUrl": "/home",
+      "shifts": [
+        "div.relative > main#main > div.mx-auto > div.flex (0.033)",
+        "main#main > div.mx-auto > div.flex > section.rounded-[var(--ws-radius- (0.003)",
+        "body.min-h-dvh > div.flex > header.flex > div.ms-auto (0.001)"
+      ],
+      "bestPracticeFailures": [
+        "is-on-https",
+        "valid-source-maps"
+      ]
+    },
+    {
+      "path": "/portfolio",
+      "performance": 99,
+      "accessibility": 100,
+      "bestPractices": 81,
+      "lcpMs": 991,
+      "fcpMs": 621,
+      "cls": 0.002,
+      "tbtMs": 7,
+      "speedIndexMs": 621,
+      "transferKb": 331,
+      "finalUrl": "/portfolio",
+      "shifts": [
+        "body.min-h-dvh > div.flex > header.flex > div.ms-auto (0.001)",
+        "body.min-h-dvh > div.flex > header.flex > div.ms-auto (0.001)"
+      ],
+      "bestPracticeFailures": [
+        "is-on-https",
+        "valid-source-maps"
+      ]
+    },
+    {
+      "path": "/portfolio/analytics",
+      "performance": 98,
+      "accessibility": 100,
+      "bestPractices": 81,
+      "lcpMs": 955,
+      "fcpMs": 607,
+      "cls": 0.069,
+      "tbtMs": 5,
+      "speedIndexMs": 607,
+      "transferKb": 345,
+      "finalUrl": "/portfolio/analytics",
+      "shifts": [
+        "section.rounded-[var(--ws-radius-card)] (0.067)",
+        "body.min-h-dvh > div.flex > header.flex > div.ms-auto (0.001)",
+        "body.min-h-dvh > div.flex > header.flex > div.ms-auto (0.001)"
+      ],
+      "bestPracticeFailures": [
+        "is-on-https",
+        "valid-source-maps"
+      ]
+    },
+    {
+      "path": "/goals",
+      "performance": 99,
+      "accessibility": 100,
+      "bestPractices": 81,
+      "lcpMs": 939,
+      "fcpMs": 608,
+      "cls": 0.018,
+      "tbtMs": 3,
+      "speedIndexMs": 641,
+      "transferKb": 336,
+      "finalUrl": "/goals",
+      "shifts": [
+        "main#main > div.mx-auto > ul.grid > li (0.016)",
+        "body.min-h-dvh > div.flex > header.flex > div.ms-auto (0.001)",
+        "body.min-h-dvh > div.flex > header.flex > div.ms-auto (0.001)"
+      ],
+      "bestPracticeFailures": [
+        "is-on-https",
+        "valid-source-maps"
+      ]
+    },
+    {
+      "path": "/planning/calculator",
+      "performance": 99,
+      "accessibility": 100,
+      "bestPractices": 81,
+      "lcpMs": 933,
+      "fcpMs": 608,
+      "cls": 0.002,
+      "tbtMs": 4,
+      "speedIndexMs": 608,
+      "transferKb": 316,
+      "finalUrl": "/planning/calculator",
+      "shifts": [
+        "body.min-h-dvh > div.flex > header.flex > div.ms-auto (0.001)",
+        "body.min-h-dvh > div.flex > header.flex > div.ms-auto (0.001)"
+      ],
+      "bestPracticeFailures": [
+        "is-on-https",
+        "valid-source-maps"
+      ]
+    },
+    {
+      "path": "/ai",
+      "performance": 99,
+      "accessibility": 100,
+      "bestPractices": 81,
+      "lcpMs": 756,
+      "fcpMs": 674,
+      "cls": 0.002,
+      "tbtMs": 10,
+      "speedIndexMs": 674,
+      "transferKb": 320,
+      "finalUrl": "/ai",
+      "shifts": [
+        "body.min-h-dvh > div.flex > header.flex > div.ms-auto (0.001)",
+        "body.min-h-dvh > div.flex > header.flex > div.ms-auto (0.001)",
+        "body.min-h-dvh > div.flex > header.flex > div.ms-auto (0.000)"
+      ],
+      "bestPracticeFailures": [
+        "is-on-https",
+        "valid-source-maps"
+      ]
+    },
+    {
+      "path": "/reports",
+      "performance": 100,
+      "accessibility": 100,
+      "bestPractices": 81,
+      "lcpMs": 718,
+      "fcpMs": 602,
+      "cls": 0.002,
+      "tbtMs": 0,
+      "speedIndexMs": 602,
+      "transferKb": 324,
+      "finalUrl": "/reports",
+      "shifts": [
+        "body.min-h-dvh > div.flex > header.flex > div.ms-auto (0.001)",
+        "body.min-h-dvh > div.flex > header.flex > div.ms-auto (0.001)",
+        "body.min-h-dvh > div.flex > header.flex > div.ms-auto (0.000)"
+      ],
+      "bestPracticeFailures": [
+        "is-on-https",
+        "valid-source-maps"
+      ]
+    },
+    {
+      "path": "/settings",
+      "performance": 98,
+      "accessibility": 100,
+      "bestPractices": 81,
+      "lcpMs": 1028,
+      "fcpMs": 650,
+      "cls": 0.013,
+      "tbtMs": 16,
+      "speedIndexMs": 650,
+      "transferKb": 326,
+      "finalUrl": "/settings",
+      "shifts": [
+        "div.relative > main#main > div.mx-auto > section.rounded-[var(--ws-rad (0.011)",
+        "body.min-h-dvh > div.flex > header.flex > div.ms-auto (0.001)",
+        "body.min-h-dvh > div.flex > header.flex > div.ms-auto (0.001)"
+      ],
+      "bestPracticeFailures": [
+        "is-on-https",
+        "valid-source-maps"
+      ]
+    }
+  ]
+}

@@ -2404,3 +2404,55 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-16T05:49:12+04:00 — QG CHECK QG-29.8
 - evidence: npm audit --omit=dev: 0 vulnerabilities (the dev-only advisory in the lint toolchain is recorded as TD-12); gitleaks over all 389 commits: no leaks; the CI security gate (dependency audit with pip-audit, npm audit and OSV, Trivy, CodeQL, gitleaks) passes on every pull request.
+
+### 2026-10-16T06:29:46+04:00 — BLOCKED P14-T19
+- reason: All automated security and accessibility work is merged (PR #190). Remaining: manual NVDA and VoiceOver passes of the key journeys, which need a person with those tools (record in docs/web/WEB_ACCESSIBILITY_REPORT.md); QG-27.6 stays unchecked until then.
+
+### 2026-10-16T06:29:53+04:00 — START P14-T20
+- WEB-20 Performance and browser testing
+- prerequisites verified COMPLETED
+
+### 2026-10-16T07:18:06+04:00 — QG CHECK QG-27.2
+- evidence: Desktop layouts at 1440 and 1280 px verified: the cross-browser spec checks every key page for content, theme background and no horizontal overflow in Chrome and Edge, in Light and Dark; screenshots of eight key screens in docs/design/screenshots/p14/after/P14-T20.
+
+### 2026-10-16T07:18:07+04:00 — QG CHECK QG-27.3
+- evidence: Tablet and laptop layouts at 1024 and 768 px verified the same way (Chrome and Edge, Light and Dark, no overflow; navigation collapses to icons and then a drawer; screenshots).
+
+### 2026-10-16T07:18:07+04:00 — QG CHECK QG-27.4
+- evidence: Mobile-browser layout at 375 px verified the same way, plus the 320 px reflow sweep of every page (a11y spec). The top bar wrapping to three rows at 375 px is recorded as an open visual inconsistency (docs/web/WEB_REFERENCE_REVIEW_T20.md).
+
+### 2026-10-16T07:18:07+04:00 — QG CHECK QG-27.8
+- evidence: No unintended horizontal overflow at 1440, 1280, 1024, 768 and 375 px on Home, Portfolios, Goals, Calculator, Copilot and Settings in Light and Dark (cross-browser spec, Chrome and Edge); every page at 320 px with widened letter spacing (a11y spec); 200% text at 1280 px.
+
+### 2026-10-16T07:18:08+04:00 — QG CHECK QG-31.2
+- evidence: Lab Core Web Vitals on the production build, signed in (docs/web/WEB_PERFORMANCE_REPORT.md): LCP 0.72 to 1.17 s (budget 2.5 s), CLS 0.002 to 0.069 on every page (budget 0.1; layout shifts above it were found and fixed), slowest interaction on a large book 112 ms (INP budget 200 ms, lab event timing). Field data does not exist yet; DEC-36 budgets are the proposed values.
+
+### 2026-10-16T07:18:08+04:00 — QG CHECK QG-31.3
+- evidence: Large book test (perf spec): 80 assets, 81 holdings, 1,500 postings seeded through the API; holdings, ledger, analytics and Home each usable in under 1 second; sorting, drawer and chart-period interactions at most 112 ms.
+
+### 2026-10-16T07:18:08+04:00 — QG CHECK QG-31.4
+- evidence: Chart performance: changing the analytics chart period four times on the large book had a slowest event of 40 ms and no long task; charts redraw on theme change (theme spec); each chart has a table alternative.
+
+### 2026-10-16T07:18:08+04:00 — QG CHECK QG-31.5
+- evidence: API latency through the portal on the large book, 30 calls per endpoint: dashboard workload p95 between 33 and 420 ms (budget 500 ms); first (cold-cache) calls up to 879 ms for the dashboard (docs/web/WEB_PERFORMANCE_REPORT.md).
+
+### 2026-10-16T07:18:09+04:00 — QG CHECK QG-31.6
+- evidence: Production JavaScript 499 KB gzip across all routes (largest chunk, the chart library, 184 KB gzip), CSS 6 KB gzip, 316 to 347 KB transferred per page, JS heap 30 MB after interactions on the large book.
+
+### 2026-10-16T07:18:09+04:00 — QG CHECK QG-32.1
+- evidence: Chrome 155 (Windows): the whole e2e suite and the cross-browser journeys at five widths in both themes pass.
+
+### 2026-10-16T07:18:09+04:00 — QG CHECK QG-32.2
+- evidence: Edge 155 (Windows): the cross-browser journeys at five widths in both themes pass (13 tests).
+
+### 2026-10-16T07:18:09+04:00 — QG CHECK QG-35.4
+- evidence: Reviewed against the reference image: docs/web/WEB_REFERENCE_REVIEW_T20.md lists what matches, the deliberate differences and the remaining inconsistencies; 80 screenshots of eight key screens at five widths in both themes (docs/design/screenshots/p14/after/P14-T20). Home gained the wealth-over-time chart as a result.
+
+### 2026-10-16T07:18:10+04:00 — QG CHECK QG-36.1
+- evidence: Light mode across all portal screens: axe on all 15 pages plus operator and overlays (a11y spec), the cross-browser theme-background check on six pages at five widths, and screenshots of eight key screens.
+
+### 2026-10-16T07:18:10+04:00 — QG CHECK QG-36.2
+- evidence: Dark mode across all portal screens: the same checks in Dark (axe, theme background, screenshots); the theme boot script prevents a flash (theme spec).
+
+### 2026-10-16T07:18:11+04:00 — QG CHECK QG-36.7
+- evidence: Charts, tables, dialogs and tooltips follow the theme: chart colours come from theme tokens and redraw on a theme change (theme and gallery specs), tables and drawers and the command palette pass axe in both themes (a11y spec), and screenshots of charts and dialogs in both themes.

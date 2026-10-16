@@ -69,7 +69,7 @@ export function Goals() {
     })),
   });
 
-  if (goals.isPending) return <LoadingState label="Loading goals" />;
+  if (goals.isPending) return <LoadingState label="Loading goals" reserve="30rem" />;
   if (goals.isError)
     return (
       <ErrorState
@@ -159,7 +159,7 @@ function GoalCard({
         </p>
       ) : null}
       {!p && !progress?.isError ? (
-        <LoadingState label={`Loading progress of ${goal.name}`} lines={2} />
+        <LoadingState label={`Loading progress of ${goal.name}`} lines={2} reserve="17rem" />
       ) : null}
       {p ? <Progress p={p} /> : null}
     </Card>

@@ -1554,24 +1554,24 @@
   - [x] P14-T18.2 Cross-channel journey tests
   - [x] P14-T18.3 Route parity check
   - [x] P14-T18.4 Parity matrix update
-- [ ] **P14-T19** · WEB-19 Security and accessibility testing · `IN_PROGRESS` 🔄
+- [ ] **P14-T19** · WEB-19 Security and accessibility testing · `BLOCKED` ⛔
   - Deps: P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17, P14-T25 · Wave: W9 · Track: SEC · Size: L · Approval: no
-  - Started: 2026-10-16T05:22:29+04:00 · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-16T05:22:29+04:00 · Completed: — · Duration: — · Blocker: All automated security and accessibility work is merged (PR #190). Remaining: manual NVDA and VoiceOver passes of the key journeys, which need a person with those tools (record in docs/web/WEB_ACCESSIBILITY_REPORT.md); QG-27.6 stays unchecked until then.
   - Evidence: —
   - [x] P14-T19.1 Web threat model update
   - [x] P14-T19.2 Security tests and scans
   - [x] P14-T19.3 Accessibility audit
   - [x] P14-T19.4 Remediation
-- [ ] **P14-T20** · WEB-20 Performance and browser testing · `NOT_STARTED` ⬜
+- [ ] **P14-T20** · WEB-20 Performance and browser testing · `IN_PROGRESS` 🔄
   - Deps: P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17, P14-T25 · Wave: W9 · Track: QA · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-16T06:29:53+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P14-T20.1 Budgets and Lighthouse CI
-  - [ ] P14-T20.2 Large-data and chart tests
-  - [ ] P14-T20.3 API latency
+  - [x] P14-T20.2 Large-data and chart tests
+  - [x] P14-T20.3 API latency
   - [ ] P14-T20.4 Browser matrix
-  - [ ] P14-T20.5 Layout verification
-  - [ ] P14-T20.6 Theme and reference review with before-and-after screenshots
+  - [x] P14-T20.5 Layout verification
+  - [x] P14-T20.6 Theme and reference review with before-and-after screenshots
 - [ ] **P14-T21** · WEB-21 CI/CD and deployment · `NOT_STARTED` ⬜
   - Deps: P14-T04, P15-T04, P15-T08 · Wave: W9 · Track: INF · Size: M · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
