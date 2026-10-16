@@ -2504,3 +2504,7 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-16T10:25:13+04:00 — COMPLETE P15-T04
 - duration: 0m 01s
 - evidence: Acceptance met in CI: image scan has no unwaived high/critical findings (unfixed ones ignored by policy). Interim registry is GHCR; ECR follows P15-T02/T03/T08
+
+### 2026-10-16T10:27:46+04:00 — START P15-T02
+- Terraform foundation
+- prerequisites verified COMPLETED

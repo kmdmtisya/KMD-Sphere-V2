@@ -1,0 +1,47 @@
+name: infra
+
+on:
+  push:
+    branches: [main]
+    paths: ["infrastructure/**", ".github/workflows/infra.yml"]
+  pull_request:
+    paths: ["infrastructure/**", ".github/workflows/infra.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: infra-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  TERRAFORM_VERSION: "1.16.5"
+
+jobs:
+  terraform:
+    name: terraform (fmt, validate)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Install Terraform (checksum verified)
+        run: |
+          set -euo pipefail
+          base="https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}"
+          file="terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
+          curl -fsSL -o "$file" "$base/$file"
+          curl -fsSL -o terraform.sums "$base/terraform_${TERRAFORM_VERSION}_SHA256SUMS"
+          grep " $file$" terraform.sums | sha256sum -c -
+          unzip -q "$file" terraform -d "$RUNNER_TEMP/bin"
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+      - name: Format check
+        run: terraform fmt -check -recursive -diff infrastructure/terraform
+      - name: Validate every root module (no credentials, no state)
+        run: |
+          set -euo pipefail
+          for dir in infrastructure/terraform/bootstrap infrastructure/terraform/envs/*; do
+            echo "== $dir"
+            terraform -chdir="$dir" init -backend=false -input=false -lockfile=readonly
+            terraform -chdir="$dir" validate
+          done
