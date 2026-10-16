@@ -3,10 +3,11 @@
 import uuid
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Header, Query, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.api_responses import UNAUTHORIZED, conflict, invalid, not_found
+from app.core.concurrency import etag_of
 from app.db.session import get_session
 from app.modules.identity.dependencies import CurrentUserDep
 from app.modules.portfolio.schemas import PortfolioCreate, PortfolioOut, PortfolioUpdate
@@ -48,10 +49,12 @@ async def list_portfolios(
     "/{portfolio_id}", response_model=PortfolioOut, responses={**UNAUTHORIZED, **_NOT_FOUND}
 )
 async def get_portfolio(
-    portfolio_id: uuid.UUID, user: CurrentUserDep, session: SessionDep
+    portfolio_id: uuid.UUID, user: CurrentUserDep, session: SessionDep, response: Response
 ) -> PortfolioOut:
-    """One of the signed-in user's portfolios."""
-    return await PortfolioService(session).get(user.id, portfolio_id)
+    """One of the signed-in user's portfolios (the ETag names this version, for If-Match)."""
+    out = await PortfolioService(session).get(user.id, portfolio_id)
+    response.headers["ETag"] = etag_of(out.updated_at)
+    return out
 
 
 @router.patch(
@@ -65,10 +68,24 @@ async def get_portfolio(
     },
 )
 async def update_portfolio(
-    portfolio_id: uuid.UUID, change: PortfolioUpdate, user: CurrentUserDep, session: SessionDep
+    portfolio_id: uuid.UUID,
+    change: PortfolioUpdate,
+    user: CurrentUserDep,
+    session: SessionDep,
+    response: Response,
+    if_match: Annotated[
+        str | None,
+        Header(
+            alias="If-Match",
+            description="The ETag of the version being changed; a changed record answers 409",
+        ),
+    ] = None,
 ) -> PortfolioOut:
-    """Renames or re-describes a portfolio. The base currency cannot change."""
-    return await PortfolioService(session).update(user.id, portfolio_id, change)
+    """Renames or re-describes a portfolio. The base currency cannot change. With `If-Match`, a
+    portfolio changed since that version answers 409 instead of being overwritten."""
+    out = await PortfolioService(session).update(user.id, portfolio_id, change, if_match)
+    response.headers["ETag"] = etag_of(out.updated_at)
+    return out
 
 
 @router.post(

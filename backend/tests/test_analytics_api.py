@@ -401,7 +401,8 @@ def fresh_currency() -> str:
 
     while True:
         code = "U" + "".join(secrets.choice(string.ascii_uppercase) for _ in range(2))
-        if minor_units(code) == 2:
+        # Never USD: the tests pair this code with USD, and a rate needs two different currencies.
+        if code != "USD" and minor_units(code) == 2:
             return code
 
 

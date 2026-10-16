@@ -1,13 +1,13 @@
 # Cross-platform feature parity matrix
 
-**Status:** Baseline (2026-10-14, commit 23d0903), re-verified for P14-T01 on 2026-10-15 at `main` 3b3c6b1 ([repository audit](WEB_REPOSITORY_AUDIT.md)). Built from:
+**Status:** Baseline (2026-10-14, commit 23d0903), re-verified for P14-T01 on 2026-10-15 at `main` 3b3c6b1 ([repository audit](WEB_REPOSITORY_AUDIT.md)); rows updated as each web module was built, and reconciled in P14-T18 (below). Built from:
 - the mobile live repositories under `mobile/wealthsphere_app/lib/features/*/data`;
 - the mobile routes (`lib/app/app_routes.dart`);
 - the API (`backend/openapi.json`).
 
 Android and iOS share one Flutter codebase, so their columns match unless stated. "Web" is the task that delivers the capability; nothing on the web is implemented yet.
 
-**Navigation (P14-T06).** Every web route and the mobile destination it answers are defined in `web/src/lib/nav/nav.ts`, and a unit test checks that every mobile route maps to a web route or one of the recorded exceptions (`MOBILE_EXCEPTIONS`: welcome, sign-in, the More hub, the debug gallery). P14-T18 adds the CI check against the app's own route list.
+**Navigation (P14-T06).** Every web route and the mobile destination it answers are defined in `web/src/lib/nav/nav.ts`, and a unit test checks that every mobile route maps to a web route or one of the recorded exceptions (`MOBILE_EXCEPTIONS`: welcome, sign-in, the More hub, the debug gallery). `scripts/check_route_parity.py` (run by the web workflow, P14-T18) compares the app's own destinations (`AppRoutes`) with that list, so a mobile screen added without a web mapping fails CI.
 
 **Rules**
 - **No false claims.** A capability that no platform has today is listed as a **planned dependency** (with its task), never as parity already reached.
@@ -21,7 +21,7 @@ Android and iOS share one Flutter codebase, so their columns match unless stated
 | # | Capability | Android / iOS | Backend API | Permission | Web | Web tests | QG |
 |---|---|---|---|---|---|---|---|
 | 1 | Sign in (OIDC, PKCE), MFA (TOTP), sign out | Live (P04, P09) | Keycloak; `GET /me` | Signed in | **Built (P14-T05):** BFF sign-in with the `wealthsphere-web` client, server-side sessions, CSRF, sign-out | e2e against Keycloak: login, no token in the browser, CSRF, cross-user 404, logout and cookie replay, TOTP enrolment; unit tests for idle, absolute expiry and refresh | QG-29 |
-| 2 | Profile and preferences (theme, notifications) | Live | `GET /me`, `PATCH /me/preferences` | Owner | **Profile built (P14-T16):** display name, time zone, language, home currency and country of residence saved to the account. **Appearance built (P14-T25):** Light, Dark, System, saved to `theme_mode` and applied at sign-in on any browser (mobile saves it on the device only until P14-T18 adds the approved sync, DEC-40) | component, e2e | QG-28, QG-36 |
+| 2 | Profile and preferences (theme, notifications) | Live | `GET /me`, `PATCH /me/preferences` | Owner | **Profile built (P14-T16):** display name, time zone, language, home currency and country of residence saved to the account. **Appearance built (P14-T25):** Light, Dark, System, saved to `theme_mode` and applied at sign-in on any browser (the mobile app reads it after sign-in and saves its changes to the account, DEC-40, P14-T18) | component, e2e | QG-28, QG-36 |
 | 3 | Risk profile | API only (no mobile screen) | `GET/POST/PATCH /risk-profiles` | Owner | **Built (P14-T16):** record and review a risk self-assessment (a new assessment each time) | API-contract, e2e | QG-28 |
 | 4 | Home dashboard (wealth, net worth, income, goals) | Live (P09) | `GET /dashboard`, `/net-worth`, `/income/summary`, `/goals/summary` | Owner | **Built (P14-T07):** net worth, assets, liabilities, portfolio value, unrealised P/L, income, goals, allocation, recent activity, Portfolio Doctor insights | every headline figure compared with the API's response (e2e, real stack); states: loading, error, stale, empty, offline | QG-28, QG-30 |
 | 5 | Portfolios: list, create, edit, archive; all-portfolio summary | Live (archive: API only) | `GET/POST /portfolios`, `PATCH /portfolios/{id}`, `POST /…/archive`, `/portfolios/consolidated/summary`, `/portfolios/{id}/summary` | Owner | **Built (P14-T08)** | CRUD e2e, IDOR via API | QG-28, QG-30 |
@@ -68,3 +68,11 @@ These are new capabilities, not parity gaps. Each needs backend work first (or a
 - **In each web task.** When a web task is completed, its rows are updated with the PR, the tests and the gate evidence.
 - **Cross-channel test (P14-T18).** The same user adds an investment through the API, as the mobile app does, then reads and edits it through the web BFF and reads it back. Run against the real backend in CI.
 - **Reconciliation (QG-30).** For a seeded book, every figure on the web's dashboard, portfolio and net-worth pages equals the API response for the same request and currency. The mobile apps are already tested against those responses.
+
+## Reconciliation (P14-T18, 2026-10-16)
+
+- **Every mobile destination is mapped.** `scripts/check_route_parity.py` finds 27 destinations in `AppRoutes`; each maps to a web page or one of four recorded exceptions (welcome, sign-in, the More hub, the debug gallery), checked in CI and by `web/src/lib/nav/nav.test.ts` (QG-28.1, QG-33.10).
+- **Shared backend, no second store.** The web calls only `/api/v1/*` through the BFF; the only web-side state is the session in Redis and per-browser conveniences (sidebar, panel width, selected portfolio, saved table views) that hold no account data (QG-26.2).
+- **Editable records carry a version.** Goals, liabilities and portfolios return an `ETag`; an update that sends `If-Match` for an older version gets 409 and the web prompts to load the latest version. Clients that send no `If-Match` (older mobile builds) keep last-write-wins. The mobile app does not send `If-Match` yet; adding it is follow-up work.
+- **Preferences follow the user.** `theme_mode` and `dashboard_layout` are read and written by both channels through `/me/preferences`.
+- **Not yet available on the web (recorded, not hidden):** per-alert delivery preferences, account deletion (P16-T05), a list of active sessions beyond the current browser, forex advanced workspace (P14-T24), forecast/FX-exposure/forex-strategy reports.

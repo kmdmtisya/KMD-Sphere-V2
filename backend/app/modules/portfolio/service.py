@@ -14,6 +14,7 @@ from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core import concurrency
 from app.core.audit import Actor, AuditWriter
 from app.core.authz import require_found
 from app.core.errors import ConflictError, InvalidValueError
@@ -57,21 +58,35 @@ class PortfolioService:
         return _out(await self._owned(user_id, portfolio_id))
 
     async def update(
-        self, user_id: uuid.UUID, portfolio_id: uuid.UUID, change: PortfolioUpdate
+        self,
+        user_id: uuid.UUID,
+        portfolio_id: uuid.UUID,
+        change: PortfolioUpdate,
+        if_match: str | None = None,
     ) -> PortfolioOut:
         values: dict[str, Any] = change.model_dump(exclude_unset=True)
         for key in ("name", "portfolio_type"):
             if key in values and values[key] is None:
                 raise InvalidValueError(f"{key} cannot be cleared")
-        await self._owned(user_id, portfolio_id)  # 404 for a missing or foreign portfolio
+        current = await self._owned(user_id, portfolio_id)  # 404 for a missing or foreign portfolio
+        concurrency.check(if_match, current.updated_at)
         if values:
             try:
-                changed = await self._repo.update(user_id, portfolio_id, values)
+                changed = await self._repo.update(
+                    user_id,
+                    portfolio_id,
+                    values,
+                    expected_updated_at=concurrency.expected_version(if_match, current.updated_at),
+                )
             except IntegrityError as e:
                 await self._session.rollback()
                 raise self._conflict(e) from e
-            if not changed:  # the repository refuses archived portfolios
-                raise ConflictError("An archived portfolio cannot be changed.")
+            if not changed:  # archived, or another edit won the race between check and write
+                raise ConflictError(
+                    "An archived portfolio cannot be changed."
+                    if current.archived_at is not None
+                    else concurrency.STALE
+                )
             await self._audit.record(
                 "portfolio.portfolio.updated",
                 Actor.user(user_id),

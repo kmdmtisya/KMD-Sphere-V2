@@ -51,7 +51,7 @@ jobs:
           if [ "$EVENT" = "pull_request" ]; then base="$PR_BASE"; elif [ "$EVENT" = "push" ]; then base="$PUSH_BEFORE"; fi
           if [ -n "$base" ] && ! echo "$base" | grep -qE '^0+$' && git cat-file -e "$base^{commit}" 2>/dev/null; then
             # The API contract is part of the web build (the generated client), so it triggers the checks too.
-            if git diff --name-only "$base" "$GITHUB_SHA" | grep -qE '^(web/|design/tokens/|scripts/generate_tokens\.py|scripts/keycloak_dev\.py|infra/keycloak/|mobile/wealthsphere_app/lib/shared/design_system/tokens/brand_palette\.dart|backend/openapi\.json|backend/app/|backend/tests/e2e_server\.py|\.github/workflows/web\.yml)'; then run=true; else run=false; fi
+            if git diff --name-only "$base" "$GITHUB_SHA" | grep -qE '^(web/|design/tokens/|scripts/generate_tokens\.py|scripts/keycloak_dev\.py|infra/keycloak/|mobile/wealthsphere_app/lib/shared/design_system/tokens/brand_palette\.dart|mobile/wealthsphere_app/lib/app/app_routes\.dart|scripts/check_route_parity\.py|backend/openapi\.json|backend/app/|backend/tests/e2e_server\.py|\.github/workflows/web\.yml)'; then run=true; else run=false; fi
           fi
           echo "run=$run" >> "$GITHUB_OUTPUT"
           echo "Relevant changes: $run"
@@ -73,6 +73,10 @@ jobs:
 
       - name: Install dependencies (locked)
         run: npm ci
+
+      - name: Mobile and web destinations agree (route parity, QG-28.1)
+        working-directory: ${{ github.workspace }}
+        run: python3 scripts/check_route_parity.py
 
       - name: Design tokens (Dart and CSS) match design/tokens and pass the contrast check
         working-directory: ${{ github.workspace }}

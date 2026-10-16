@@ -32,6 +32,7 @@ import {
 import { Card } from "../cards/cards";
 import { Button } from "../controls/controls";
 import { Drawer, Field } from "../controls/forms";
+import { isStale, STALE_MESSAGE, Versioned } from "../controls/Versioned";
 import { DataAsOfLabel } from "../figures/figures";
 import {
   DisclosurePanel,
@@ -277,18 +278,36 @@ function GoalDrawer({
       title={editing === "new" ? "New goal" : "Edit goal"}
       onClose={onClose}
     >
-      {editing ? (
-        <GoalForm
-          key={editing === "new" ? "new" : editing.id}
-          goal={editing === "new" ? null : editing}
-          onDone={onClose}
-        />
+      {editing === "new" ? (
+        <GoalForm key="new" goal={null} onDone={onClose} />
+      ) : null}
+      {editing && editing !== "new" ? (
+        <Versioned<Goal> path={`goals/${editing.id}`}>
+          {(record, etag, reload) => (
+            <GoalForm
+              goal={record}
+              etag={etag}
+              onStale={reload}
+              onDone={onClose}
+            />
+          )}
+        </Versioned>
       ) : null}
     </Drawer>
   );
 }
 
-function GoalForm({ goal, onDone }: { goal: Goal | null; onDone: () => void }) {
+function GoalForm({
+  goal,
+  etag = null,
+  onStale,
+  onDone,
+}: {
+  goal: Goal | null;
+  etag?: string | null;
+  onStale?: () => void;
+  onDone: () => void;
+}) {
   const queryClient = useQueryClient();
   const [values, setValues] = useState<GoalValues>(() =>
     goal ? goalFromApi(goal) : emptyGoal(),
@@ -312,12 +331,17 @@ function GoalForm({ goal, onDone }: { goal: Goal | null; onDone: () => void }) {
     goal?.target.currency ?? prefs.data?.reporting_currency ?? "USD";
   const set = <K extends keyof GoalValues>(key: K, value: GoalValues[K]) =>
     setValues((v) => ({ ...v, [key]: value }));
-  const fail = (e: unknown) =>
+  const [stale, setStale] = useState(false);
+  const fail = (e: unknown) => {
+    setStale(isStale(e));
     setMessage(
-      e instanceof ApiError
-        ? (e.detail ?? `The server refused this (${e.status}).`)
-        : "This could not be sent. Try again.",
+      isStale(e)
+        ? STALE_MESSAGE
+        : e instanceof ApiError
+          ? (e.detail ?? `The server refused this (${e.status}).`)
+          : "This could not be sent. Try again.",
     );
+  };
   const done = async () => {
     await queryClient.invalidateQueries();
     onDone();
@@ -325,7 +349,9 @@ function GoalForm({ goal, onDone }: { goal: Goal | null; onDone: () => void }) {
   const save = useMutation({
     mutationFn: () =>
       goal
-        ? apiPatch(`goals/${goal.id}`, goalRequest(values, currency))
+        ? apiPatch(`goals/${goal.id}`, goalRequest(values, currency), {
+            ifMatch: etag ?? undefined,
+          })
         : apiPost("goals", goalRequest(values, currency)),
     onSuccess: done,
     onError: fail,
@@ -477,6 +503,9 @@ function GoalForm({ goal, onDone }: { goal: Goal | null; onDone: () => void }) {
         <p role="alert" className="font-semibold text-negative-text">
           {message}
         </p>
+      ) : null}
+      {stale && onStale ? (
+        <Button onClick={onStale}>Load the latest version</Button>
       ) : null}
       <div className="flex flex-wrap gap-2">
         <Button type="submit" variant="primary" disabled={save.isPending}>

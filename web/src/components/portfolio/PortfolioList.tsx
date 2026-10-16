@@ -9,6 +9,7 @@ import { apiGet, apiPatch, apiPost, ApiError } from "@/lib/client/api";
 
 import { Button } from "../controls/controls";
 import { Drawer, Field } from "../controls/forms";
+import { isStale, STALE_MESSAGE } from "../controls/Versioned";
 import { DataGrid } from "../data/DataGrid";
 import { EmptyState, ErrorState, LoadingState } from "../states/states";
 
@@ -72,7 +73,7 @@ export function PortfolioList() {
 }
 
 /** Create (no `existing`) or edit a portfolio. The currency is fixed once it exists. */
-export function PortfolioForm({ existing, onDone }: { existing?: Portfolio; onDone: () => void }) {
+export function PortfolioForm({ existing, etag, onStale, onDone }: { existing?: Portfolio; etag?: string | null; onStale?: () => void; onDone: () => void }) {
   const queryClient = useQueryClient();
   const currencies = useQuery({ queryKey: ["currencies"], queryFn: () => apiGet<components["schemas"]["CurrencyOut"][]>("currencies"), staleTime: 3_600_000 });
   const reporting = useQuery({ queryKey: ["currency-prefs"], queryFn: () => apiGet<{ reporting_currency: string }>("me/currency-preferences"), staleTime: 60_000, enabled: !existing });
@@ -82,18 +83,22 @@ export function PortfolioForm({ existing, onDone }: { existing?: Portfolio; onDo
   const [description, setDescription] = useState(existing?.description ?? "");
   const [tried, setTried] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const [stale, setStale] = useState(false);
   const chosenCurrency = currency || reporting.data?.reporting_currency || "USD";
   const problem = name.trim() ? undefined : "Give the portfolio a name.";
   const save = useMutation({
     mutationFn: () =>
       existing
-        ? apiPatch<Portfolio>(`portfolios/${existing.id}`, { name: name.trim(), portfolio_type: type, description: description.trim() || null })
+        ? apiPatch<Portfolio>(`portfolios/${existing.id}`, { name: name.trim(), portfolio_type: type, description: description.trim() || null }, { ifMatch: etag ?? undefined })
         : apiPost<Portfolio>("portfolios", { name: name.trim(), base_currency: chosenCurrency, portfolio_type: type, ...(description.trim() ? { description: description.trim() } : {}) }),
     onSuccess: async () => {
       await queryClient.invalidateQueries();
       onDone();
     },
-    onError: (e) => setMessage(e instanceof ApiError ? (e.status === 409 ? "You already have a portfolio with this name." : (e.detail ?? "The portfolio could not be saved.")) : "The portfolio could not be saved."),
+    onError: (e) => {
+      setStale(isStale(e));
+      setMessage(isStale(e) ? STALE_MESSAGE : e instanceof ApiError ? (e.status === 409 ? "You already have a portfolio with this name." : (e.detail ?? "The portfolio could not be saved.")) : "The portfolio could not be saved.");
+    },
   });
   return (
     <form
@@ -123,6 +128,7 @@ export function PortfolioForm({ existing, onDone }: { existing?: Portfolio; onDo
       </Field>
       <Field label="Description (optional)">{(p) => <input {...p} maxLength={500} value={description} onChange={(e) => setDescription(e.target.value)} />}</Field>
       {message ? <p role="alert" className="font-semibold text-negative-text">{message}</p> : null}
+      {stale && onStale ? <Button onClick={onStale}>Load the latest version</Button> : null}
       <div className="flex gap-2">
         <Button type="submit" variant="primary" disabled={save.isPending}>{existing ? "Save the changes" : "Create the portfolio"}</Button>
         <Button onClick={onDone}>Cancel</Button>

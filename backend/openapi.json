@@ -20097,7 +20097,7 @@
         ]
       },
       "get": {
-        "description": "One of the signed-in user's goals.",
+        "description": "One of the signed-in user's goals (the ETag names this version, for If-Match).",
         "operationId": "get_goal_api_v1_goals__goal_id__get",
         "parameters": [
           {
@@ -20162,7 +20162,7 @@
         ]
       },
       "patch": {
-        "description": "Changes any part of a goal; `assumptions` replaces all assumptions.",
+        "description": "Changes any part of a goal; `assumptions` replaces all assumptions. With `If-Match`, a goal\nchanged since that version answers 409 instead of being overwritten.",
         "operationId": "update_goal_api_v1_goals__goal_id__patch",
         "parameters": [
           {
@@ -20173,6 +20173,24 @@
               "format": "uuid",
               "title": "Goal Id",
               "type": "string"
+            }
+          },
+          {
+            "description": "The ETag of the version being changed; a changed record answers 409",
+            "in": "header",
+            "name": "If-Match",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The ETag of the version being changed; a changed record answers 409",
+              "title": "If-Match"
             }
           }
         ],
@@ -20535,7 +20553,7 @@
         ]
       },
       "get": {
-        "description": "One of the signed-in user's liabilities.",
+        "description": "One of the signed-in user's liabilities (the ETag names this version, for If-Match).",
         "operationId": "get_liability_api_v1_liabilities__liability_id__get",
         "parameters": [
           {
@@ -20600,7 +20618,7 @@
         ]
       },
       "patch": {
-        "description": "Updates a liability, for example its latest balance.",
+        "description": "Updates a liability, for example its latest balance. With `If-Match`, a liability changed\nsince that version answers 409 instead of being overwritten.",
         "operationId": "update_liability_api_v1_liabilities__liability_id__patch",
         "parameters": [
           {
@@ -20611,6 +20629,24 @@
               "format": "uuid",
               "title": "Liability Id",
               "type": "string"
+            }
+          },
+          {
+            "description": "The ETag of the version being changed; a changed record answers 409",
+            "in": "header",
+            "name": "If-Match",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The ETag of the version being changed; a changed record answers 409",
+              "title": "If-Match"
             }
           }
         ],
@@ -21404,7 +21440,7 @@
     },
     "/api/v1/portfolios/{portfolio_id}": {
       "get": {
-        "description": "One of the signed-in user's portfolios.",
+        "description": "One of the signed-in user's portfolios (the ETag names this version, for If-Match).",
         "operationId": "get_portfolio_api_v1_portfolios__portfolio_id__get",
         "parameters": [
           {
@@ -21469,7 +21505,7 @@
         ]
       },
       "patch": {
-        "description": "Renames or re-describes a portfolio. The base currency cannot change.",
+        "description": "Renames or re-describes a portfolio. The base currency cannot change. With `If-Match`, a\nportfolio changed since that version answers 409 instead of being overwritten.",
         "operationId": "update_portfolio_api_v1_portfolios__portfolio_id__patch",
         "parameters": [
           {
@@ -21480,6 +21516,24 @@
               "format": "uuid",
               "title": "Portfolio Id",
               "type": "string"
+            }
+          },
+          {
+            "description": "The ETag of the version being changed; a changed record answers 409",
+            "in": "header",
+            "name": "If-Match",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The ETag of the version being changed; a changed record answers 409",
+              "title": "If-Match"
             }
           }
         ],

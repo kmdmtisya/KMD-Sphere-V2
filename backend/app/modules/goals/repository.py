@@ -1,6 +1,7 @@
 """Goal persistence. Every query is scoped to the owner (ADR-0011)."""
 
 import uuid
+from datetime import datetime
 from decimal import Decimal
 from typing import Any
 
@@ -37,12 +38,22 @@ class GoalRepository:
         )
         return list(result.scalars())
 
-    async def update(self, user_id: uuid.UUID, goal_id: uuid.UUID, values: dict[str, Any]) -> None:
-        await self._session.execute(
-            update(Goal)
-            .where(Goal.id == goal_id, Goal.user_id == user_id)
-            .values(**values, updated_at=func.now())
+    async def update(
+        self,
+        user_id: uuid.UUID,
+        goal_id: uuid.UUID,
+        values: dict[str, Any],
+        expected_updated_at: datetime | None = None,
+    ) -> bool:
+        """Returns whether a row changed; with `expected_updated_at`, only if it is still that
+        version (optimistic concurrency, app/core/concurrency.py)."""
+        statement = update(Goal).where(Goal.id == goal_id, Goal.user_id == user_id)
+        if expected_updated_at is not None:
+            statement = statement.where(Goal.updated_at == expected_updated_at)
+        result = await self._session.execute(
+            statement.values(**values, updated_at=func.now()).returning(Goal.id)
         )
+        return result.scalar_one_or_none() is not None
 
     async def delete(self, user_id: uuid.UUID, goal_id: uuid.UUID) -> None:
         await self._session.execute(delete(Goal).where(Goal.id == goal_id, Goal.user_id == user_id))

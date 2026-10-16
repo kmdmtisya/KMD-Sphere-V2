@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-16T03:37:55+04:00 by `scripts/track.py`._
+_Generated at 2026-10-16T05:04:10+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -36,22 +36,22 @@ _Generated at 2026-10-16T03:37:55+04:00 by `scripts/track.py`._
 | QG-23 | QG-FXCUR-03: Data Reliability | ✅ PASSED | 5/5 | Unassigned | — |
 | QG-24 | QG-FXCUR-04: Android and iOS | ✅ PASSED | 7/7 | Unassigned | — |
 | QG-25 | QG-FXCUR-05: AI Integration | ✅ PASSED | 5/5 | Unassigned | — |
-| QG-26 | QG-WEB-01: Architecture and Integration | 🔄 IN_PROGRESS | 3/5 | Unassigned | — |
+| QG-26 | QG-WEB-01: Architecture and Integration | 🔄 IN_PROGRESS | 5/5 | Unassigned | — |
 | QG-27 | QG-WEB-02: UI/UX and Design System | 🔄 IN_PROGRESS | 2/9 | Unassigned | — |
-| QG-28 | QG-WEB-03: Functional Parity | 🔄 IN_PROGRESS | 6/9 | Unassigned | — |
+| QG-28 | QG-WEB-03: Functional Parity | 🔄 IN_PROGRESS | 8/9 | Unassigned | — |
 | QG-29 | QG-WEB-04: Authentication and Security | 🔄 IN_PROGRESS | 5/8 | Unassigned | — |
 | QG-30 | QG-WEB-05: Financial Accuracy | 🔄 IN_PROGRESS | 6/6 | Unassigned | — |
 | QG-31 | QG-WEB-06: Performance | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
 | QG-32 | QG-WEB-07: Browser Compatibility | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
-| QG-33 | QG-WEB-08: End-to-End Testing | 🔄 IN_PROGRESS | 1/11 | Unassigned | — |
+| QG-33 | QG-WEB-08: End-to-End Testing | 🔄 IN_PROGRESS | 3/11 | Unassigned | — |
 | QG-34 | QG-WEB-09: Production Readiness | ⬜ NOT_STARTED | 0/9 | Unassigned | — |
 | QG-35 | QG-WEB-10: Design Reference Compliance | 🔄 IN_PROGRESS | 3/5 | Unassigned | — |
 | QG-36 | QG-WEB-11: Theme Management | 🔄 IN_PROGRESS | 5/8 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 146/228.
+Criteria satisfied overall: 152/228.
 
-Current phase **P14** exit-gate criteria outstanding: QG-26.2, QG-26.4, QG-27.2, QG-27.3, QG-27.4, QG-27.6, QG-27.7, QG-27.8, QG-27.9, QG-28.1, QG-28.2, QG-28.9, QG-29.5, QG-29.7, QG-29.8, QG-31.1, QG-31.2, QG-31.3, QG-31.4, QG-31.5, QG-31.6, QG-32.1, QG-32.2, QG-32.3, QG-32.4, QG-32.5, QG-32.6, QG-33.1, QG-33.10, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.7, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9, QG-35.4, QG-35.5, QG-36.1, QG-36.2, QG-36.7.
+Current phase **P14** exit-gate criteria outstanding: QG-27.2, QG-27.3, QG-27.4, QG-27.6, QG-27.7, QG-27.8, QG-27.9, QG-28.9, QG-29.5, QG-29.7, QG-29.8, QG-31.1, QG-31.2, QG-31.3, QG-31.4, QG-31.5, QG-31.6, QG-32.1, QG-32.2, QG-32.3, QG-32.4, QG-32.5, QG-32.6, QG-33.1, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9, QG-35.4, QG-35.5, QG-36.1, QG-36.2, QG-36.7.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -528,17 +528,17 @@ Approved By: —
 ### QG-26: QG-WEB-01: Architecture and Integration
 
 - [x] QG-26.1 Approved web architecture documented · Required: P14 · By: P14-T02 · Evidence: docs/web/WEB_PORTAL_ARCHITECTURE.md approved with ADR-0018 on 2026-10-15: Next.js App Router with a BFF, rendering split, session and CSRF model, proxy allow-list, streaming, tokens and parity controls; links to theme, reference analysis, UX, parity and deployment documents · Verified: 2026-10-15T11:23:43+04:00
-- [ ] QG-26.2 Shared backend API integration verified (no web-only backend, no second data store) · Required: P14 · By: P14-T18 · CRITICAL
+- [x] QG-26.2 Shared backend API integration verified (no web-only backend, no second data store) · Required: P14 · By: P14-T18 · Evidence: The web calls only /api/v1/* through the BFF proxy (allow-list); every endpoint added for it (reports, net-worth history, operator, forex stream ticket, ETag/If-Match) is a shared API endpoint any channel can use; the web's only server state is the session in Redis and per-browser conveniences with no account data. · Verified: 2026-10-16T04:16:33+04:00 · CRITICAL
 - [x] QG-26.3 No duplicated financial business logic (lint guard and review: no money arithmetic in web/) · Required: P14 · By: P14-T04 · Evidence: web/eslint-rules/no-money-arithmetic.mjs (wealthsphere/no-money-arithmetic) is an error on web/src (eslint.config.mjs): it rejects arithmetic and compound assignment on money-named values and binary-float conversion (Number, parseFloat, parseInt, unary +, Math.*). npm run lint passes on the web app (no money arithmetic); npm run lint:selftest proves the rule fires on the seeded fixture (3 violations); RuleTester and isMoneyName unit tests pass (39 web tests). The web CI (.github/workflows/web.yml) runs lint and the self-test on every change; review: web/ contains no financial calculation (foundation page, BFF allow-list, health route). 2026-10-15 · Verified: 2026-10-15T11:56:27+04:00 · CRITICAL
-- [ ] QG-26.4 Cross-platform data consistency verified · Required: P14 · By: P14-T18 · CRITICAL
+- [x] QG-26.4 Cross-platform data consistency verified · Required: P14 · By: P14-T18 · Evidence: Cross-channel e2e (sync spec): a goal added through the API shows on the web, a web edit reads back through the API, a stale edit from a second window is refused with a reload prompt and succeeds after reloading; preferences (theme_mode, dashboard_layout) are read and written by both channels (mobile sync covered by unit tests with a fake account, not run on a device in this pass); per-module e2e specs compare screen figures with the API's responses. · Verified: 2026-10-16T04:16:33+04:00 · CRITICAL
 - [x] QG-26.5 Architecture Decision Record completed (ADR-0018 accepted) · Required: P14 · By: P14-T02 · Evidence: ADR-0018 accepted by the user on 2026-10-15 (DEC-30 Next.js with BFF, DEC-31 BFF session model): repository evidence refreshed after P13, comparison across code reuse, parity, maintenance, desktop UX, charts, grids, authentication, accessibility, performance, testing, cost, security, productivity, scalability and theming; stack with npm-registry licences (all runtime MIT/Apache-2.0) · Verified: 2026-10-15T11:23:43+04:00
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
 Start Timestamp: 2026-10-15T11:23:42+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-15T11:56:27+04:00  
-Evidence: 3/5 criteria verified; latest QG-26.3 at 2026-10-15T11:56:27+04:00  
+Verification Timestamp: 2026-10-16T04:16:33+04:00  
+Evidence: 5/5 criteria verified; latest QG-26.4 at 2026-10-16T04:16:33+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -567,8 +567,8 @@ Approved By: —
 
 ### QG-28: QG-WEB-03: Functional Parity
 
-- [ ] QG-28.1 All implemented mobile modules mapped in the parity matrix · Required: P14 · By: P14-T18
-- [ ] QG-28.2 All applicable mobile capabilities available on the web (exceptions recorded with reasons) · Required: P14 · By: P14-T18
+- [x] QG-28.1 All implemented mobile modules mapped in the parity matrix · Required: P14 · By: P14-T18 · Evidence: scripts/check_route_parity.py (run by the web workflow when mobile routes or web files change) finds 27 destinations in the mobile AppRoutes, all present in the web MOBILE_ROUTES list, each mapped to a web page or one of four recorded exceptions (nav.test.ts); the parity matrix rows are updated and reconciled. · Verified: 2026-10-16T04:16:33+04:00
+- [x] QG-28.2 All applicable mobile capabilities available on the web (exceptions recorded with reasons) · Required: P14 · By: P14-T18 · Evidence: Every mobile destination maps to a web page or a recorded exception with a reason (welcome, sign-in, More hub, debug gallery); mobile capabilities are built on the web per the parity matrix; capabilities not yet on the web are listed in its reconciliation section (per-alert delivery preferences, account deletion, multi-session list, forex advanced workspace P14-T24, extra report kinds). · Verified: 2026-10-16T04:16:34+04:00
 - [x] QG-28.3 Create, read, update and delete workflows verified · Required: P14 · By: P14-T08 · Evidence: Create, read, update and delete workflows on the web (P14-T08, web/e2e/portfolio.spec.ts against real Keycloak, API, Redis and PostgreSQL): portfolio create (with duplicate-name refusal), read (list, detail), update (edit) and archive; transactions create (all 14 types supported by the form, per-type validation, server refusal shown) with append-only reversal instead of delete; valuations create, edit and delete; custom assets created from the picker. 8 journeys pass; Bob gets 404 for Alice's portfolio. 2026-10-15 · Verified: 2026-10-15T20:36:51+04:00
 - [x] QG-28.4 Financial analytics verified · Required: P14 · By: P14-T09 · Evidence: Web analytics page (P14-T09): performance, value series with periods, risk, allocation by four dimensions with drill-down and comparison; every figure is the API's; e2e reconciles with the API and passes axe in Light and Dark; another user receives 404. · Verified: 2026-10-15T20:54:56+04:00
 - [x] QG-28.5 AI modules verified · Required: P14 · By: P14-T12 · Evidence: Web AI pages (P14-T12): streamed Copilot via the BFF with checks, sources and the four answer parts; Doctor, opportunities, universe, research, compare and simulate; e2e covers unavailable, streamed answer, refusal, text-only rendering, cross-user 404 and axe. Compare, simulate and non-empty universe were not exercised on the test stack (empty universe); no live model was run. · Verified: 2026-10-16T00:02:46+04:00
@@ -581,8 +581,8 @@ Status: IN_PROGRESS
 Owner: Unassigned  
 Start Timestamp: 2026-10-15T20:36:51+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-16T01:38:27+04:00  
-Evidence: 6/9 criteria verified; latest QG-28.8 at 2026-10-16T01:38:27+04:00  
+Verification Timestamp: 2026-10-16T04:16:34+04:00  
+Evidence: 8/9 criteria verified; latest QG-28.2 at 2026-10-16T04:16:34+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -673,18 +673,18 @@ Approved By: —
 - [ ] QG-33.4 Currency switching passes · Required: P14 · By: P14-T22
 - [ ] QG-33.5 AI Copilot interaction passes · Required: P14 · By: P14-T22
 - [x] QG-33.6 Forex journeys pass where implemented (live markets and the advanced workspace) · Required: P14 · By: P14-T13 · Evidence: Live-markets journey passes where implemented (P14-T13): ticket minted through the proxy, socket authenticated by ticket, quotes shown, axe clean; the advanced workspace (P14-T24) is not yet built, so only the live-markets part is covered. · Verified: 2026-10-16T01:16:05+04:00
-- [ ] QG-33.7 Cross-platform synchronisation passes · Required: P14 · By: P14-T18 · CRITICAL
+- [x] QG-33.7 Cross-platform synchronisation passes · Required: P14 · By: P14-T18 · Evidence: Cross-platform synchronisation e2e passes (4 tests: API-created goal visible and web edit read back, concurrent-edit 409 with reload for goals and liabilities, version header and stale refusal); backend tests cover 409, no-precondition compatibility, an atomic race and cross-user safety. The mobile side was verified by unit tests and the full mobile suite (1803 pass), not by a live phone session. · Verified: 2026-10-16T04:16:34+04:00 · CRITICAL
 - [ ] QG-33.8 Export and reporting journeys pass · Required: P14 · By: P14-T22
 - [ ] QG-33.9 Web paper-trading journey passes (Chromium, Firefox, WebKit) · Required: P14 · By: P14-T24
-- [ ] QG-33.10 Navigation and routing tests pass · Required: P14 · By: P14-T18
+- [x] QG-33.10 Navigation and routing tests pass · Required: P14 · By: P14-T18 · Evidence: Navigation and routing: nav unit tests (mobile route mapping, active item, role/flag visibility), the route-parity script in CI, and the shell e2e (landmarks, grouped navigation, active page marked, drawer/overlay at breakpoints, skip link). · Verified: 2026-10-16T04:16:34+04:00
 - [ ] QG-33.11 Frontend unit and component tests pass in CI · Required: P14 · By: P14-T21
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
 Start Timestamp: 2026-10-16T01:16:05+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-16T01:16:05+04:00  
-Evidence: 1/11 criteria verified; latest QG-33.6 at 2026-10-16T01:16:05+04:00  
+Verification Timestamp: 2026-10-16T04:16:34+04:00  
+Evidence: 3/11 criteria verified; latest QG-33.10 at 2026-10-16T04:16:34+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
