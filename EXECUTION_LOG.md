@@ -2475,3 +2475,6 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-16T08:31:31+04:00 — START P14-T24
 - WEB-24 Forex web workspace (advanced)
 - prerequisites verified COMPLETED
+
+### 2026-10-16T08:53:15+04:00 — BLOCKED P14-GATE
+- reason: Cannot complete: P14-T19 (manual screen-reader passes), P14-T20 (user approval of DEC-36 and of the remaining visual inconsistencies; a real Safari), P14-T21, T22 and T23 (blocked on phase P15, which is not started or approved) and P14-T24 (alerts, Firefox/WebKit paper journey, streaming chart check) are not complete, and gates QG-27.6, QG-28.9, QG-31.1, QG-32.4, QG-32.6, QG-33.9 and others remain open.
