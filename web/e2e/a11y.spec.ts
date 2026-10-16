@@ -281,6 +281,12 @@ test("content reflows at 320 px wide (400% zoom) on every page, with no horizont
     await narrow.goto(path);
     await hydrated(narrow);
     await settle(narrow);
+    // Wider letter spacing stands in for the wider fonts of other systems, so the result does not
+    // depend on which fonts this machine has.
+    await narrow.addStyleTag({
+      content: "* { letter-spacing: 0.06em !important; }",
+    });
+    await narrow.waitForTimeout(200);
     const overflow = await narrow.evaluate(
       () =>
         document.documentElement.scrollWidth -

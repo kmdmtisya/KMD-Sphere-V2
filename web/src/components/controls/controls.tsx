@@ -62,7 +62,7 @@ export function SegmentedControl<T extends string>({
 }) {
   const name = useId();
   return (
-    <fieldset className="inline-flex rounded-[var(--ws-radius-control)] border border-line p-0.5">
+    <fieldset className="inline-flex max-w-full min-w-0 flex-wrap rounded-[var(--ws-radius-control)] border border-line p-0.5">
       <legend className="sr-only">{label}</legend>
       {options.map((o) => (
         <label
