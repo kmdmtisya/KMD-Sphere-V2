@@ -1,0 +1,98 @@
+{
+  "measuredAt": "2026-10-16T02:54:44.121Z",
+  "seededAssets": 80,
+  "seededPostings": 1500,
+  "seeded": {
+    "assets": 80,
+    "postings": 1500,
+    "seconds": 76
+  },
+  "holdingRows": 81,
+  "timings": {
+    "holdingsPageMs": 768,
+    "ledgerPageMs": 610,
+    "analyticsPageMs": 1444,
+    "homePageMs": 1286
+  },
+  "sort": {
+    "maxEventMs": 56,
+    "longTasks": 0
+  },
+  "drawer": {
+    "maxEventMs": 104,
+    "longTasks": 2
+  },
+  "periodChange": {
+    "maxEventMs": 40,
+    "longTasks": 0
+  },
+  "jsHeapMb": 32,
+  "apiLatency": {
+    "dashboard": {
+      "coldMs": 879,
+      "p50Ms": 41,
+      "p95Ms": 58,
+      "samples": 29
+    },
+    "net-worth": {
+      "coldMs": 373,
+      "p50Ms": 38,
+      "p95Ms": 44,
+      "samples": 29
+    },
+    "portfolios/consolidated/summary": {
+      "coldMs": 255,
+      "p50Ms": 181,
+      "p95Ms": 420,
+      "samples": 29
+    },
+    "income/summary": {
+      "coldMs": 270,
+      "p50Ms": 79,
+      "p95Ms": 102,
+      "samples": 29
+    },
+    "goals/summary": {
+      "coldMs": 61,
+      "p50Ms": 36,
+      "p95Ms": 42,
+      "samples": 29
+    },
+    "portfolios/{id}/summary": {
+      "coldMs": 128,
+      "p50Ms": 116,
+      "p95Ms": 317,
+      "samples": 29
+    },
+    "portfolios/{id}/holdings": {
+      "coldMs": 69,
+      "p50Ms": 53,
+      "p95Ms": 65,
+      "samples": 29
+    },
+    "portfolios/{id}/performance": {
+      "coldMs": 37,
+      "p50Ms": 29,
+      "p95Ms": 33,
+      "samples": 29
+    },
+    "portfolios/{id}/allocation": {
+      "coldMs": 76,
+      "p50Ms": 27,
+      "p95Ms": 33,
+      "samples": 29
+    },
+    "portfolios/{id}/risk?frequency=monthly": {
+      "coldMs": 276,
+      "p50Ms": 39,
+      "p95Ms": 57,
+      "samples": 29
+    },
+    "portfolios/{id}/transactions?limit=25": {
+      "coldMs": 86,
+      "p50Ms": 46,
+      "p95Ms": 74,
+      "samples": 29
+    }
+  }
+}

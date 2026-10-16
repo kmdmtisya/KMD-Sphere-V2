@@ -11,10 +11,14 @@ export function Skeleton({ className = "h-4 w-full" }: { className?: string }) {
   return <span aria-hidden="true" className={`block animate-pulse rounded-md bg-divider ${className}`} />;
 }
 
-/** A loading region: skeleton lines plus a polite status message for screen readers. */
-export function LoadingState({ label = "Loading", lines = 3 }: { label?: string; lines?: number }) {
+/**
+ * A loading region: skeleton lines plus a polite status message for screen readers. `reserve` is
+ * the height (a CSS length such as "26rem") the content will take, kept while loading so the page
+ * does not jump when the data arrives (Cumulative Layout Shift, QG-31.2).
+ */
+export function LoadingState({ label = "Loading", lines = 3, reserve }: { label?: string; lines?: number; reserve?: string }) {
   return (
-    <div role="status" aria-live="polite" className="flex flex-col gap-2">
+    <div role="status" aria-live="polite" className="flex flex-col gap-2" style={reserve ? { minHeight: reserve } : undefined}>
       <span className="sr-only">{label}…</span>
       {Array.from({ length: lines }, (_, i) => (
         <Skeleton key={i} className={i === 0 ? "h-8 w-1/2" : "h-4 w-full"} />

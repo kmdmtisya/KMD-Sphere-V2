@@ -46,7 +46,7 @@ export function ScenarioLineChart({
         style: "currency",
         currency,
         notation: "compact",
-        maximumFractionDigits: 1,
+        maximumFractionDigits: 2,
       }),
     [locale, currency],
   );

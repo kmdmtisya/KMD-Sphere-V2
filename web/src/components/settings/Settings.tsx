@@ -90,7 +90,7 @@ function Profile() {
   if (me.isPending)
     return (
       <Card title="Profile">
-        <LoadingState label="Loading your profile" lines={3} />
+        <LoadingState label="Loading your profile" lines={3} reserve="24rem" />
       </Card>
     );
   if (me.isError)
@@ -365,7 +365,7 @@ function Devices() {
       info="Phones that receive your alerts as push notifications"
     >
       {devices.isPending ? (
-        <LoadingState label="Loading devices" lines={2} />
+        <LoadingState label="Loading devices" lines={2} reserve="6rem" />
       ) : null}
       {devices.isError ? (
         <ErrorState
@@ -499,7 +499,7 @@ function RiskProfile() {
   if (profiles.isPending)
     return (
       <Card title="Risk profile">
-        <LoadingState label="Loading" lines={2} />
+        <LoadingState label="Loading" lines={2} reserve="25rem" />
       </Card>
     );
   if (profiles.isError)

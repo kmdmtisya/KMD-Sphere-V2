@@ -23,7 +23,8 @@ function serverEnv(): Record<string, string> {
       if (match) env[match[1]] = match[2];
     }
   }
-  for (const [k, v] of Object.entries(process.env)) if (k.startsWith("WS_") && v) env[k] = v;
+  for (const [k, v] of Object.entries(process.env))
+    if (k.startsWith("WS_") && v) env[k] = v;
   env.WS_PUBLIC_URL = `http://127.0.0.1:${PORT}`;
   return env;
 }
@@ -41,14 +42,40 @@ export default defineConfig({
     baseURL: `http://127.0.0.1:${PORT}`,
     trace: "retain-on-failure",
   },
-  // Chromium on every run; the full browser matrix (Firefox, WebKit, Edge) arrives with P14-T20.
-  // WS_PLAYWRIGHT_CHANNEL=chrome uses an installed Google Chrome where the bundled browser cannot be
-  // downloaded (for example behind TLS interception); CI uses the bundled Chromium.
+  // Chromium runs the whole suite. WS_BROWSERS (comma separated: msedge, firefox, webkit) adds the
+  // other supported browsers (P14-T20.4), which run the cross-browser journeys only
+  // (e2e/browsers.spec.ts) at five widths in both themes. WS_PLAYWRIGHT_CHANNEL=chrome uses an installed
+  // Google Chrome where the bundled browser cannot be downloaded (for example behind TLS
+  // interception); CI uses the bundled browsers. WebKit (Safari's engine) works only over HTTPS here,
+  // because it will not store the portal's __Host- Secure cookies over plain HTTP; it is not in CI yet.
   projects: [
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"], channel: process.env.WS_PLAYWRIGHT_CHANNEL || undefined },
+      use: {
+        ...devices["Desktop Chrome"],
+        channel: process.env.WS_PLAYWRIGHT_CHANNEL || undefined,
+      },
     },
+    ...(process.env.WS_BROWSERS ?? "")
+      .split(",")
+      .map((b) => b.trim())
+      .filter(Boolean)
+      .map((name) => {
+        const device =
+          name === "msedge"
+            ? devices["Desktop Edge"]
+            : name === "firefox"
+              ? devices["Desktop Firefox"]
+              : devices["Desktop Safari"];
+        return {
+          name,
+          testMatch: /browsers\.spec\.ts/,
+          use: {
+            ...device,
+            ...(name === "msedge" ? { channel: "msedge" } : {}),
+          },
+        };
+      }),
   ],
   webServer: {
     command: `npm run start:standalone -- --port ${PORT} --hostname 127.0.0.1`,

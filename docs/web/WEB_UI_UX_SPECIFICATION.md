@@ -94,7 +94,7 @@
 
 **Built in P14-T07.** The Home dashboard follows section 6, with these decisions:
 - **What it shows:** net worth, assets and liabilities; the allocation by asset class (the API's `share_percent`); portfolio value, unrealised profit or loss and income; goals; recent activity; and the Portfolio Doctor's flagged observations with the server's notice. Every figure is the API's decimal string in the reporting currency.
-- **Not shown yet:** the wealth-over-time chart. No endpoint provides a history today; it arrives with the net-worth history in P14-T11, and no series is invented before then.
+- **Wealth over time (P14-T20):** a net-worth line chart for the last year, from the backend's history endpoint (`GET /net-worth/history`, P14-T11). It is shown only when there are at least two dates; dates that could not be fully valued are counted in the chart's description, and no series is invented.
 - **Recent activity** reads the ledgers of the three most recently created portfolios.
 - **Layout:** the four sections of the existing `dashboard_layout` preference (`wealthSummary`, `metrics`, `insight`, `goals`) can be moved with buttons (no drag-only action) and hidden; the choice is saved to the account and shared with the mobile Home.
 - **Search and commands (Ctrl/⌘+K):** a native modal dialog; pages are commands, and your own records come from `GET /api/v1/search`. Records open their module page for now; detail pages arrive with their tasks.

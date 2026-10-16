@@ -203,7 +203,7 @@ function Performance({
   if (perf.isPending)
     return (
       <Card title="Performance">
-        <LoadingState label="Loading performance" />
+        <LoadingState label="Loading performance" reserve="18rem" />
       </Card>
     );
   if (perf.isError)
@@ -300,7 +300,7 @@ function Performance({
 
       {risk.isPending ? (
         <Card title="Value over time">
-          <LoadingState label="Loading the value series" />
+          <LoadingState label="Loading the value series" reserve="20rem" />
         </Card>
       ) : null}
       {risk.isError ? (

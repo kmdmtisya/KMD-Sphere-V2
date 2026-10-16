@@ -9,8 +9,10 @@ import { apiGet, apiPatch, apiPost } from "@/lib/client/api";
 import { moveSection, normaliseLayout, SECTION_LABELS, toggleSection, visibleSections, type Layout, type Section } from "@/lib/dashboard/layout";
 import { formatMoney, formatPercent } from "@/lib/format/decimal";
 
+import { rangeParams } from "../analytics/Analytics";
 import { Card, KpiCard } from "../cards/cards";
 import { AllocationDonutChart } from "../charts/AllocationDonutChart";
+import { PerformanceLineChart } from "../charts/PerformanceLineChart";
 import { Button, IconButton } from "../controls/controls";
 import { DataGrid } from "../data/DataGrid";
 import { DataAsOfLabel, SignedAmount, StaleChip } from "../figures/figures";
@@ -35,8 +37,8 @@ function useOnline(): boolean {
   );
 }
 
-function Section({ title, query, children }: { title: string; query: { isPending: boolean; isError: boolean; refetch: () => unknown }; children: React.ReactNode }) {
-  if (query.isPending) return <Card title={title}><LoadingState label={`Loading ${title}`} /></Card>;
+function Section({ title, query, reserve, children }: { title: string; query: { isPending: boolean; isError: boolean; refetch: () => unknown }; reserve?: string; children: React.ReactNode }) {
+  if (query.isPending) return <Card title={title}><LoadingState label={`Loading ${title}`} reserve={reserve} /></Card>;
   if (query.isError) return <Card title={title}><ErrorState message={`${title} could not be loaded.`} onRetry={() => void query.refetch()} /></Card>;
   return <>{children}</>;
 }
@@ -48,7 +50,7 @@ function WealthSummary() {
   const d = dashboard.data;
   const n = netWorth.data;
   return (
-    <Section title="Wealth summary" query={query}>
+    <Section title="Wealth summary" query={query} reserve="46rem">
       {d && n ? (
         <div className="flex flex-col gap-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
@@ -61,6 +63,7 @@ function WealthSummary() {
             <KpiCard label="Assets" value={d.net_worth.assets.amount} currency={d.currency} />
             <KpiCard label="Liabilities" value={d.net_worth.liabilities.amount} currency={d.currency} />
           </div>
+          <WealthTrend />
           {n.assets_by_class.length ? (
             <AllocationDonutChart
               title="Assets by class"
@@ -80,6 +83,25 @@ function WealthSummary() {
   );
 }
 
+/** Net worth over the last year, from the backend's history (P14-T11); nothing is shown until there are two dates. */
+function WealthTrend() {
+  const start = rangeParams("1Y", new Date()).start;
+  const history = useQuery({ queryKey: ["net-worth-history", "1Y"], queryFn: () => apiGet<S["NetWorthHistoryOut"]>(`net-worth/history?frequency=monthly${start ? `&start=${start}` : ""}`), staleTime: STALE_MS });
+  if (history.isPending) return <Card title="Net worth over time"><LoadingState label="Loading the history" lines={1} reserve="18rem" /></Card>;
+  if (history.isError || history.data.points.length < 2) return null;
+  const h = history.data;
+  const last = h.points[h.points.length - 1];
+  return (
+    <PerformanceLineChart
+      title="Net worth over time"
+      info={`Monthly values from ${h.start} to ${h.end}, in ${h.currency}${h.incomplete_points ? `; ${h.incomplete_points} of ${h.points.length} dates are incomplete` : ""}`}
+      points={h.points.map((p) => ({ date: p.on, value: p.net_worth.amount }))}
+      currency={h.currency}
+      summary={`Net worth from ${formatMoney(h.points[0].net_worth.amount, h.currency).text} on ${h.points[0].on} to ${formatMoney(last.net_worth.amount, h.currency).text} on ${last.on}.`}
+    />
+  );
+}
+
 function Metrics() {
   const summary = useQuery({ queryKey: ["portfolio-summary"], queryFn: () => apiGet<S["SummaryOut"]>("portfolios/consolidated/summary"), staleTime: STALE_MS });
   const income = useQuery({ queryKey: ["income-summary"], queryFn: () => apiGet<S["IncomeSummaryOut"]>("income/summary"), staleTime: STALE_MS });
@@ -90,7 +112,7 @@ function Metrics() {
   const g = goals.data;
   return (
     <div className="flex flex-col gap-4">
-      <Section title="Key figures" query={query}>
+      <Section title="Key figures" query={query} reserve="11rem">
         {sm && inc && g ? (
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             <KpiCard label="Portfolio value" info="Holdings and cash across all your portfolios" value={sm.total_value.amount} currency={sm.currency} footer={sm.unpriced_assets.length ? <StaleChip /> : undefined} />
@@ -126,7 +148,7 @@ function RecentActivity() {
       staleTime: STALE_MS,
     })),
   });
-  if (portfolios.isPending || ledgers.some((l) => l.isPending)) return <Card title="Recent activity"><LoadingState label="Loading recent activity" /></Card>;
+  if (portfolios.isPending || ledgers.some((l) => l.isPending)) return <Card title="Recent activity"><LoadingState label="Loading recent activity" reserve="9rem" /></Card>;
   if (portfolios.isError || ledgers.some((l) => l.isError)) return <Card title="Recent activity"><ErrorState message="Recent activity could not be loaded." onRetry={() => { void portfolios.refetch(); ledgers.forEach((l) => void l.refetch()); }} /></Card>;
   const rows = ledgers
     .flatMap((l, i) => (l.data?.items ?? []).map((t) => ({ t, portfolio: active[i].name })))
@@ -170,7 +192,7 @@ function Insights() {
     enabled: Boolean(first),
     staleTime: 5 * STALE_MS,
   });
-  if (portfolios.isPending || (first && doctor.isPending)) return <Card title="Portfolio Doctor"><LoadingState label="Loading insights" /></Card>;
+  if (portfolios.isPending || (first && doctor.isPending)) return <Card title="Portfolio Doctor"><LoadingState label="Loading insights" reserve="10rem" /></Card>;
   if (portfolios.isError || doctor.isError) return <Card title="Portfolio Doctor"><ErrorState message="Insights could not be loaded." onRetry={() => { void portfolios.refetch(); void doctor.refetch(); }} /></Card>;
   const d = doctor.data;
   const flagged = (d?.findings ?? []).filter((f) => f.status === "flagged").slice(0, 3);
@@ -203,7 +225,7 @@ function Insights() {
 function GoalsSection() {
   const goals = useQuery({ queryKey: ["goals-summary"], queryFn: () => apiGet<S["GoalsSummaryOut"]>("goals/summary"), staleTime: STALE_MS });
   return (
-    <Section title="Goals" query={goals}>
+    <Section title="Goals" query={goals} reserve="15rem">
       <Card title="Goals" actions={<Link href="/goals" className="font-semibold text-primary underline">All goals</Link>}>
         {goals.data?.items.length ? (
           <ul className="flex flex-col gap-3">

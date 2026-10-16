@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-16T05:49:12+04:00 by `scripts/track.py`._
+_Generated at 2026-10-16T08:13:46+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -37,21 +37,21 @@ _Generated at 2026-10-16T05:49:12+04:00 by `scripts/track.py`._
 | QG-24 | QG-FXCUR-04: Android and iOS | ✅ PASSED | 7/7 | Unassigned | — |
 | QG-25 | QG-FXCUR-05: AI Integration | ✅ PASSED | 5/5 | Unassigned | — |
 | QG-26 | QG-WEB-01: Architecture and Integration | 🔄 IN_PROGRESS | 5/5 | Unassigned | — |
-| QG-27 | QG-WEB-02: UI/UX and Design System | 🔄 IN_PROGRESS | 4/9 | Unassigned | — |
+| QG-27 | QG-WEB-02: UI/UX and Design System | 🔄 IN_PROGRESS | 8/9 | Unassigned | — |
 | QG-28 | QG-WEB-03: Functional Parity | 🔄 IN_PROGRESS | 8/9 | Unassigned | — |
 | QG-29 | QG-WEB-04: Authentication and Security | 🔄 IN_PROGRESS | 8/8 | Unassigned | — |
 | QG-30 | QG-WEB-05: Financial Accuracy | 🔄 IN_PROGRESS | 6/6 | Unassigned | — |
-| QG-31 | QG-WEB-06: Performance | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
-| QG-32 | QG-WEB-07: Browser Compatibility | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
+| QG-31 | QG-WEB-06: Performance | 🔄 IN_PROGRESS | 5/6 | Unassigned | — |
+| QG-32 | QG-WEB-07: Browser Compatibility | 🔄 IN_PROGRESS | 4/6 | Unassigned | — |
 | QG-33 | QG-WEB-08: End-to-End Testing | 🔄 IN_PROGRESS | 3/11 | Unassigned | — |
 | QG-34 | QG-WEB-09: Production Readiness | ⬜ NOT_STARTED | 0/9 | Unassigned | — |
-| QG-35 | QG-WEB-10: Design Reference Compliance | 🔄 IN_PROGRESS | 3/5 | Unassigned | — |
-| QG-36 | QG-WEB-11: Theme Management | 🔄 IN_PROGRESS | 5/8 | Unassigned | — |
+| QG-35 | QG-WEB-10: Design Reference Compliance | 🔄 IN_PROGRESS | 4/5 | Unassigned | — |
+| QG-36 | QG-WEB-11: Theme Management | 🔄 IN_PROGRESS | 8/8 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 157/228.
+Criteria satisfied overall: 174/228.
 
-Current phase **P14** exit-gate criteria outstanding: QG-27.2, QG-27.3, QG-27.4, QG-27.6, QG-27.8, QG-28.9, QG-31.1, QG-31.2, QG-31.3, QG-31.4, QG-31.5, QG-31.6, QG-32.1, QG-32.2, QG-32.3, QG-32.4, QG-32.5, QG-32.6, QG-33.1, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9, QG-35.4, QG-35.5, QG-36.1, QG-36.2, QG-36.7.
+Current phase **P14** exit-gate criteria outstanding: QG-27.6, QG-28.9, QG-31.1, QG-32.4, QG-32.6, QG-33.1, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9, QG-35.5.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -546,21 +546,21 @@ Approved By: —
 ### QG-27: QG-WEB-02: UI/UX and Design System
 
 - [x] QG-27.1 WealthSphere design tokens implemented from the shared token source · Required: P14 · By: P14-T03 · Evidence: design/tokens/wealthsphere.tokens.json is the single source; scripts/generate_tokens.py generates the mobile BrandPalette (identical values, goldens unaffected) and web/src/tokens/tokens.css; --check runs in the web CI and fails on drift; mobile token_source_sync_test proves WealthColors roles and chart series match; web components use only token classes and variables (no-colour-literals lint + CSS check). Approved at the web UX gate by the user 2026-10-15 (PR #174) · Verified: 2026-10-15T13:26:10+04:00
-- [ ] QG-27.2 Desktop dashboard layout verified (1280 px and wider) · Required: P14 · By: P14-T20
-- [ ] QG-27.3 Tablet and laptop layout verified (768 to 1279 px) · Required: P14 · By: P14-T20
-- [ ] QG-27.4 Mobile browser layout verified (under 768 px) · Required: P14 · By: P14-T20
+- [x] QG-27.2 Desktop dashboard layout verified (1280 px and wider) · Required: P14 · By: P14-T20 · Evidence: Desktop layouts at 1440 and 1280 px verified: the cross-browser spec checks every key page for content, theme background and no horizontal overflow in Chrome and Edge, in Light and Dark; screenshots of eight key screens in docs/design/screenshots/p14/after/P14-T20. · Verified: 2026-10-16T07:18:06+04:00
+- [x] QG-27.3 Tablet and laptop layout verified (768 to 1279 px) · Required: P14 · By: P14-T20 · Evidence: Tablet and laptop layouts at 1024 and 768 px verified the same way (Chrome and Edge, Light and Dark, no overflow; navigation collapses to icons and then a drawer; screenshots). · Verified: 2026-10-16T07:18:07+04:00
+- [x] QG-27.4 Mobile browser layout verified (under 768 px) · Required: P14 · By: P14-T20 · Evidence: Mobile-browser layout at 375 px verified the same way, plus the 320 px reflow sweep of every page (a11y spec). The top bar wrapping to three rows at 375 px is recorded as an open visual inconsistency (docs/web/WEB_REFERENCE_REVIEW_T20.md). · Verified: 2026-10-16T07:18:07+04:00
 - [x] QG-27.5 Dark and light themes verified · Required: P14 · By: P14-T03 · Evidence: Light and dark verified: generated tokens for light, dark and system (prefers-color-scheme in CSS); generator contrast check passes every text pair at 4.5:1 and non-text at 3:1 in both themes; gallery shows every component in both themes, axe finds no serious or critical WCAG 2.2 AA violation in either (web/e2e/gallery.spec.ts), smoke test proves System follows the browser scheme live; screenshots at five widths in docs/design/screenshots/p14/after/P14-T03; approved at the web UX gate 2026-10-15 · Verified: 2026-10-15T13:26:10+04:00
 - [ ] QG-27.6 Accessibility checks completed (WCAG 2.2 AA: automated and manual) · Required: P14 · By: P14-T19
 - [x] QG-27.7 Keyboard navigation verified (shell, appearance selector, grids, dialogs) · Required: P14 · By: P14-T19 · Evidence: Keyboard e2e (a11y spec): a drawer dialog takes and keeps focus, Escape closes it and focus returns to the opener; the appearance choice works with Space and arrow keys; a data grid column sorts with Enter and exposes aria-sort; the skip link is the first tab stop with a visible focus ring; landmarks present. Command palette and Copilot panel open and close from the keyboard (shell spec). · Verified: 2026-10-16T05:49:10+04:00
-- [ ] QG-27.8 No unintended horizontal overflow at 1440, 1280, 1024, 768 and 375 px · Required: P14 · By: P14-T20
+- [x] QG-27.8 No unintended horizontal overflow at 1440, 1280, 1024, 768 and 375 px · Required: P14 · By: P14-T20 · Evidence: No unintended horizontal overflow at 1440, 1280, 1024, 768 and 375 px on Home, Portfolios, Goals, Calculator, Copilot and Settings in Light and Dark (cross-browser spec, Chrome and Edge); every page at 320 px with widened letter spacing (a11y spec); 200% text at 1280 px. · Verified: 2026-10-16T07:18:07+04:00
 - [x] QG-27.9 Reduced-motion preference respected · Required: P14 · By: P14-T19 · Evidence: With prefers-reduced-motion: reduce, computed transition and animation durations are effectively zero and smooth scrolling is off (a11y spec); the stylesheet's reduced-motion block applies globally. · Verified: 2026-10-16T05:49:10+04:00
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
 Start Timestamp: 2026-10-15T13:26:09+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-16T05:49:10+04:00  
-Evidence: 4/9 criteria verified; latest QG-27.9 at 2026-10-16T05:49:10+04:00  
+Verification Timestamp: 2026-10-16T07:18:07+04:00  
+Evidence: 8/9 criteria verified; latest QG-27.8 at 2026-10-16T07:18:07+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -630,37 +630,37 @@ Approved By: —
 ### QG-31: QG-WEB-06: Performance
 
 - [ ] QG-31.1 Lighthouse tests completed against the approved budgets · Required: P14 · By: P14-T20
-- [ ] QG-31.2 Core Web Vitals assessed (LCP, INP, CLS) · Required: P14 · By: P14-T20
-- [ ] QG-31.3 Large portfolio data tested · Required: P14 · By: P14-T20
-- [ ] QG-31.4 Chart performance tested · Required: P14 · By: P14-T20
-- [ ] QG-31.5 API latency measured for the dashboard workloads · Required: P14 · By: P14-T20
-- [ ] QG-31.6 Resource usage reviewed (bundle size, memory) · Required: P14 · By: P14-T20
+- [x] QG-31.2 Core Web Vitals assessed (LCP, INP, CLS) · Required: P14 · By: P14-T20 · Evidence: Lab Core Web Vitals on the production build, signed in (docs/web/WEB_PERFORMANCE_REPORT.md): LCP 0.72 to 1.17 s (budget 2.5 s), CLS 0.002 to 0.069 on every page (budget 0.1; layout shifts above it were found and fixed), slowest interaction on a large book 112 ms (INP budget 200 ms, lab event timing). Field data does not exist yet; DEC-36 budgets are the proposed values. · Verified: 2026-10-16T07:18:08+04:00
+- [x] QG-31.3 Large portfolio data tested · Required: P14 · By: P14-T20 · Evidence: Large book test (perf spec): 80 assets, 81 holdings, 1,500 postings seeded through the API; holdings, ledger, analytics and Home each usable in under 1 second; sorting, drawer and chart-period interactions at most 112 ms. · Verified: 2026-10-16T07:18:08+04:00
+- [x] QG-31.4 Chart performance tested · Required: P14 · By: P14-T20 · Evidence: Chart performance: changing the analytics chart period four times on the large book had a slowest event of 40 ms and no long task; charts redraw on theme change (theme spec); each chart has a table alternative. · Verified: 2026-10-16T07:18:08+04:00
+- [x] QG-31.5 API latency measured for the dashboard workloads · Required: P14 · By: P14-T20 · Evidence: API latency through the portal on the large book, 30 calls per endpoint: dashboard workload p95 between 33 and 420 ms (budget 500 ms); first (cold-cache) calls up to 879 ms for the dashboard (docs/web/WEB_PERFORMANCE_REPORT.md). · Verified: 2026-10-16T07:18:08+04:00
+- [x] QG-31.6 Resource usage reviewed (bundle size, memory) · Required: P14 · By: P14-T20 · Evidence: Production JavaScript 499 KB gzip across all routes (largest chunk, the chart library, 184 KB gzip), CSS 6 KB gzip, 316 to 347 KB transferred per page, JS heap 30 MB after interactions on the large book. · Verified: 2026-10-16T07:18:09+04:00
 
-Status: NOT_STARTED  
+Status: IN_PROGRESS  
 Owner: Unassigned  
-Start Timestamp: —  
+Start Timestamp: 2026-10-16T07:18:08+04:00  
 End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Verification Timestamp: 2026-10-16T07:18:09+04:00  
+Evidence: 5/6 criteria verified; latest QG-31.6 at 2026-10-16T07:18:09+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
 
 ### QG-32: QG-WEB-07: Browser Compatibility
 
-- [ ] QG-32.1 Chrome tested · Required: P14 · By: P14-T20
-- [ ] QG-32.2 Edge tested · Required: P14 · By: P14-T20
-- [ ] QG-32.3 Firefox tested · Required: P14 · By: P14-T20
+- [x] QG-32.1 Chrome tested · Required: P14 · By: P14-T20 · Evidence: Chrome 155 (Windows): the whole e2e suite and the cross-browser journeys at five widths in both themes pass. · Verified: 2026-10-16T07:18:09+04:00
+- [x] QG-32.2 Edge tested · Required: P14 · By: P14-T20 · Evidence: Edge 155 (Windows): the cross-browser journeys at five widths in both themes pass (13 tests). · Verified: 2026-10-16T07:18:09+04:00
+- [x] QG-32.3 Firefox tested · Required: P14 · By: P14-T20 · Evidence: Firefox (Playwright's build, CI): the cross-browser journeys at 1440, 1280, 1024, 768 and 375 px in Light and Dark pass (13 tests) in the web workflow's end-to-end job. · Verified: 2026-10-16T08:13:46+04:00
 - [ ] QG-32.4 Safari tested · Required: P14 · By: P14-T20
-- [ ] QG-32.5 Responsive layouts verified · Required: P14 · By: P14-T20
+- [x] QG-32.5 Responsive layouts verified · Required: P14 · By: P14-T20 · Evidence: Responsive layouts verified at five widths in both themes in Chrome, Edge (local) and Firefox (CI): content shown, theme applied, no horizontal overflow. · Verified: 2026-10-16T08:13:46+04:00
 - [ ] QG-32.6 Browser-specific defects resolved and supported versions documented · Required: P14 · By: P14-T20
 
-Status: NOT_STARTED  
+Status: IN_PROGRESS  
 Owner: Unassigned  
-Start Timestamp: —  
+Start Timestamp: 2026-10-16T07:18:09+04:00  
 End Timestamp: —  
-Verification Timestamp: —  
-Evidence: —  
+Verification Timestamp: 2026-10-16T08:13:46+04:00  
+Evidence: 4/6 criteria verified; latest QG-32.5 at 2026-10-16T08:13:46+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -716,36 +716,36 @@ Approved By: —
 - [x] QG-35.1 Reference images inspected and catalogued (every image opened; limits reported) · Required: P14 · By: P14-T01 · Evidence: docs/web/WEB_DESIGN_REFERENCE_ANALYSIS.md section 1: both images in docs/design/references (executive-wealth-dashboard.png 994x774, forex-intelligence-workspace.png 1062x664; no JPG/JPEG/WebP present) opened and analysed (layout, components, palette, type, spacing); limits reported (low resolution, no light-mode or source files); approved with the P14 plan change 2026-10-15 (PR #170) · Verified: 2026-10-15T11:15:24+04:00
 - [x] QG-35.2 Reference-to-screen mapping documented, with conflicts and the recommended approach · Required: P14 · By: P14-T01 · Evidence: docs/web/WEB_DESIGN_REFERENCE_ANALYSIS.md sections 4-7: common patterns, 11 conflicts (palette, dark-only, density/contrast, colour-only signals, trading, advice, ticker, branding, binary theme switch, crypto, placeholder figures) each with a recommended approach, and a reference-to-screen mapping for shell, dashboard, allocation, charts, net worth, AI insights, forex workspace, settings and notifications; approved by the user 2026-10-15 (PR #170); component mapping in docs/web/WEB_REPOSITORY_AUDIT.md section 5 · Verified: 2026-10-15T11:15:24+04:00
 - [x] QG-35.3 Shared design tokens implement the reference visual language in light and dark · Required: P14 · By: P14-T03 · Evidence: The shared tokens and components implement the reference visual language in light and dark (layered surfaces with 1 px borders, card title bar with info and actions, large tabular figures with muted minor part, change pill with period delta, distribution bar and list, chart chrome with tooltip card and segmented range), within the WealthSphere palette (DEC-39); docs/web/WEB_REFERENCE_COMPARISON.md compares reference image 1 with the gallery in both themes; approved by the user at the web UX gate 2026-10-15 · Verified: 2026-10-15T13:26:10+04:00
-- [ ] QG-35.4 Portal layout reviewed against the reference images (side-by-side and before-and-after screenshots) · Required: P14 · By: P14-T20
+- [x] QG-35.4 Portal layout reviewed against the reference images (side-by-side and before-and-after screenshots) · Required: P14 · By: P14-T20 · Evidence: Reviewed against the reference image: docs/web/WEB_REFERENCE_REVIEW_T20.md lists what matches, the deliberate differences and the remaining inconsistencies; 80 screenshots of eight key screens at five widths in both themes (docs/design/screenshots/p14/after/P14-T20). Home gained the wealth-over-time chart as a result. · Verified: 2026-10-16T07:18:09+04:00
 - [ ] QG-35.5 Major visual inconsistencies resolved or accepted by the user · Required: P14 · By: P14-T20
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
 Start Timestamp: 2026-10-15T11:15:24+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-15T13:26:10+04:00  
-Evidence: 3/5 criteria verified; latest QG-35.3 at 2026-10-15T13:26:10+04:00  
+Verification Timestamp: 2026-10-16T07:18:09+04:00  
+Evidence: 4/5 criteria verified; latest QG-35.4 at 2026-10-16T07:18:09+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
 
 ### QG-36: QG-WEB-11: Theme Management
 
-- [ ] QG-36.1 Light Mode works across all portal screens · Required: P14 · By: P14-T20
-- [ ] QG-36.2 Dark Mode works across all portal screens · Required: P14 · By: P14-T20
+- [x] QG-36.1 Light Mode works across all portal screens · Required: P14 · By: P14-T20 · Evidence: Light mode across all portal screens: axe on all 15 pages plus operator and overlays (a11y spec), the cross-browser theme-background check on six pages at five widths, and screenshots of eight key screens. · Verified: 2026-10-16T07:18:10+04:00
+- [x] QG-36.2 Dark Mode works across all portal screens · Required: P14 · By: P14-T20 · Evidence: Dark mode across all portal screens: the same checks in Dark (axe, theme background, screenshots); the theme boot script prevents a flash (theme spec). · Verified: 2026-10-16T07:18:10+04:00
 - [x] QG-36.3 System Mode follows the browser or OS preference · Required: P14 · By: P14-T25 · Evidence: System resolves in CSS alone (prefers-color-scheme on [data-theme-pref=system], generated tokens.css); e2e web/e2e/theme.spec.ts 'System follows the device...' and 'without JavaScript the page follows the device' pass (light and dark device schemes). 2026-10-15 · Verified: 2026-10-15T15:48:56+04:00
 - [x] QG-36.4 System changes update the UI while open, without overwriting the saved choice · Required: P14 · By: P14-T25 · Evidence: With System chosen, emulating the device scheme from light to dark re-themes the open page (body background, hint text 'currently Dark') while the saved preference and the __Host-ws_theme cookie stay 'system'; useSyncExternalStore matchMedia listener never writes the preference (web/src/components/theme/appearance.tsx). e2e theme.spec.ts passes. 2026-10-15 · Verified: 2026-10-15T15:48:57+04:00
 - [x] QG-36.5 The preference persists across reloads, tabs and sign-ins (stored as theme_mode when signed in) · Required: P14 · By: P14-T25 · Evidence: Choice persists across reloads (cookie __Host-ws_theme, e2e 'survives a reload'), across open tabs (BroadcastChannel, e2e 'another open tab follows the change at once') and across sign-ins/devices (PATCH /me/preferences theme_mode via the BFF; callback copies the account's theme_mode to the cookie; e2e 'signed in, the choice is saved to the account and another device starts with it' against real Keycloak, API, Redis and PostgreSQL); unit tests for the callback. 2026-10-15 · Verified: 2026-10-15T15:48:58+04:00
 - [x] QG-36.6 No wrong-theme flash on the first render (verified at the first painted frame; without JavaScript the page follows the device) · Required: P14 · By: P14-T25 · Evidence: Inline boot script in <head> applies the saved appearance before the first paint (THEME_BOOT_SCRIPT, unit-tested incl. forged values); e2e records data-theme-pref=dark and the dark body background at the first animation frame of a load with a saved Dark choice (before hydration); without JavaScript the page follows the device (wording per the 2026-10-15 scope change). 2026-10-15 · Verified: 2026-10-15T15:48:58+04:00
-- [ ] QG-36.7 Charts, tables, dialogs and tooltips respond correctly to theme changes · Required: P14 · By: P14-T20
+- [x] QG-36.7 Charts, tables, dialogs and tooltips respond correctly to theme changes · Required: P14 · By: P14-T20 · Evidence: Charts, tables, dialogs and tooltips follow the theme: chart colours come from theme tokens and redraw on a theme change (theme and gallery specs), tables and drawers and the command palette pass axe in both themes (a11y spec), and screenshots of charts and dialogs in both themes. · Verified: 2026-10-16T07:18:11+04:00
 - [x] QG-36.8 The appearance selector is accessible (keyboard, screen reader, contrast) in every mode · Required: P14 · By: P14-T25 · Evidence: Appearance radio group (fieldset/legend, native radios, arrow-key navigation, visible focus ring, System hint via aria-describedby, status region for save errors) and top-bar cycle button with a name stating current and next mode; e2e keyboard and label tests and axe (no serious or critical WCAG 2.2 AA violation) in Light and in Dark pass. 2026-10-15 · Verified: 2026-10-15T15:48:59+04:00
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
 Start Timestamp: 2026-10-15T15:48:56+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-15T15:48:59+04:00  
-Evidence: 5/8 criteria verified; latest QG-36.8 at 2026-10-15T15:48:59+04:00  
+Verification Timestamp: 2026-10-16T07:18:11+04:00  
+Evidence: 8/8 criteria verified; latest QG-36.7 at 2026-10-16T07:18:11+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
