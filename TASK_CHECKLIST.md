@@ -1616,9 +1616,9 @@
   - [x] P14-T25.4 Theme-aware charts, tables and dialogs
   - [x] P14-T25.5 Appearance controls
   - [x] P14-T25.6 Tests and screenshots
-- [ ] **P14-GATE** · Phase P14 exit gate · `NOT_STARTED` ⬜
+- [ ] **P14-GATE** · Phase P14 exit gate · `BLOCKED` ⛔
   - Deps: P14-T01, P14-T02, P14-T03, P14-T04, P14-T05, P14-T06, P14-T07, P14-T08, P14-T09, P14-T10, P14-T11, P14-T12, P14-T13, P14-T14, P14-T15, P14-T16, P14-T17, P14-T18, P14-T19, P14-T20, P14-T21, P14-T22, P14-T23, P14-T24, P14-T25 · Wave: W12 · Track: GATE · Size: S · Approval: yes · Gates-done: QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33, QG-34, QG-35, QG-36
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: — · Completed: — · Duration: — · Blocker: Cannot complete: P14-T19 (manual screen-reader passes), P14-T20 (user approval of DEC-36 and of the remaining visual inconsistencies; a real Safari), P14-T21, T22 and T23 (blocked on phase P15, which is not started or approved) and P14-T24 (alerts, Firefox/WebKit paper journey, streaming chart check) are not complete, and gates QG-27.6, QG-28.9, QG-31.1, QG-32.4, QG-32.6, QG-33.9 and others remain open.
   - Evidence: —
   - [ ] P14-GATE.1 Run gates
   - [ ] P14-GATE.2 Present summary
