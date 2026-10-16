@@ -56,3 +56,15 @@ export const notices = [
   "DEMO: example figures for the component gallery, not your accounts.",
   "Informational only, not financial advice. WealthSphere never places trades.",
 ];
+
+/** Sample candles for the gallery's candle chart (DEMO, not market data). */
+export const candles = [
+  { ts: "2026-10-09T08:00:00Z", open: "1.0840", high: "1.0846", low: "1.0836", close: "1.0842" },
+  { ts: "2026-10-09T09:00:00Z", open: "1.0842", high: "1.0848", low: "1.0839", close: "1.0845" },
+  { ts: "2026-10-09T10:00:00Z", open: "1.0845", high: "1.0851", low: "1.0841", close: "1.0838" },
+  { ts: "2026-10-09T11:00:00Z", open: "1.0838", high: "1.0849", low: "1.0835", close: "1.0847" },
+  { ts: "2026-10-09T12:00:00Z", open: "1.0847", high: "1.0856", low: "1.0844", close: "1.0855" },
+  { ts: "2026-10-09T13:00:00Z", open: "1.0855", high: "1.0859", low: "1.0846", close: "1.0848" },
+  { ts: "2026-10-09T14:00:00Z", open: "1.0848", high: "1.0852", low: "1.0842", close: "1.0844" },
+  { ts: "2026-10-09T15:00:00Z", open: "1.0844", high: "1.0853", low: "1.0840", close: "1.0850" },
+];
