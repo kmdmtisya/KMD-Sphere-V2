@@ -85,9 +85,10 @@ class Goal {
     required this.targetInTodaysMoney,
     required this.assumptions,
     this.portfolioId,
+    this.etag,
   });
 
-  factory Goal.fromJson(JsonReader r) => Goal(
+  factory Goal.fromJson(JsonReader r, {String? etag}) => Goal(
     id: r.string('id'),
     name: r.string('name'),
     type: GoalType.parse(r.string('goal_type')),
@@ -96,6 +97,7 @@ class Goal {
     targetInTodaysMoney: r.boolean('target_in_todays_money'),
     portfolioId: r.stringOrNull('portfolio_id'),
     assumptions: GoalAssumptions.fromJson(r.object('assumptions')),
+    etag: etag,
   );
 
   final String id;
@@ -108,6 +110,10 @@ class Goal {
   /// The portfolio that funds the goal, or null for all portfolios.
   final String? portfolioId;
   final GoalAssumptions assumptions;
+
+  /// The server's version of this goal when it was read (its `ETag`); null when it came from a list
+  /// or from the demo. Sent as `If-Match` when the goal is edited.
+  final String? etag;
 }
 
 @immutable
