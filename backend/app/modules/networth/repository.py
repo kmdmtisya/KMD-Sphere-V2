@@ -1,6 +1,7 @@
 """Liability persistence. Every query and write is scoped to the owner (ADR-0011)."""
 
 import uuid
+from datetime import datetime
 from typing import Any
 
 from sqlalchemy import delete, func, select, update
@@ -39,13 +40,23 @@ class LiabilityRepository:
         return list(result.scalars())
 
     async def update(
-        self, user_id: uuid.UUID, liability_id: uuid.UUID, values: dict[str, Any]
-    ) -> None:
-        await self._session.execute(
-            update(Liability)
-            .where(Liability.id == liability_id, Liability.user_id == user_id)
-            .values(**values, updated_at=func.now())
+        self,
+        user_id: uuid.UUID,
+        liability_id: uuid.UUID,
+        values: dict[str, Any],
+        expected_updated_at: datetime | None = None,
+    ) -> bool:
+        """Returns whether a row changed; with `expected_updated_at`, only if it is still that
+        version (optimistic concurrency, app/core/concurrency.py)."""
+        statement = update(Liability).where(
+            Liability.id == liability_id, Liability.user_id == user_id
         )
+        if expected_updated_at is not None:
+            statement = statement.where(Liability.updated_at == expected_updated_at)
+        result = await self._session.execute(
+            statement.values(**values, updated_at=func.now()).returning(Liability.id)
+        )
+        return result.scalar_one_or_none() is not None
 
     async def delete(self, user_id: uuid.UUID, liability_id: uuid.UUID) -> None:
         await self._session.execute(

@@ -7,11 +7,12 @@ import uuid
 from datetime import UTC, datetime
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, Request, Response
+from fastapi import APIRouter, Depends, Header, Request, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.api_responses import UNAUTHORIZED, conflict, invalid, not_found
 from app.core.cache import ResponseCache
+from app.core.concurrency import etag_of
 from app.db.session import get_session
 from app.modules.fx.reporting import CurrencyPreferenceService, ReportingDep, translate
 from app.modules.fx.snapshot import SnapshotService
@@ -83,9 +84,13 @@ async def _reporting(
 
 
 @router.get("/{goal_id}", response_model=GoalOut, responses={**UNAUTHORIZED, **_NOT_FOUND})
-async def get_goal(goal_id: uuid.UUID, user: CurrentUserDep, session: SessionDep) -> GoalOut:
-    """One of the signed-in user's goals."""
-    return await GoalService(session).get(user.id, goal_id)
+async def get_goal(
+    goal_id: uuid.UUID, user: CurrentUserDep, session: SessionDep, response: Response
+) -> GoalOut:
+    """One of the signed-in user's goals (the ETag names this version, for If-Match)."""
+    out = await GoalService(session).get(user.id, goal_id)
+    response.headers["ETag"] = etag_of(out.updated_at)
+    return out
 
 
 @router.patch(
@@ -94,10 +99,24 @@ async def get_goal(goal_id: uuid.UUID, user: CurrentUserDep, session: SessionDep
     responses={**UNAUTHORIZED, **_NOT_FOUND, **invalid("change"), **conflict("Name already used")},
 )
 async def update_goal(
-    goal_id: uuid.UUID, change: GoalUpdate, user: CurrentUserDep, session: SessionDep
+    goal_id: uuid.UUID,
+    change: GoalUpdate,
+    user: CurrentUserDep,
+    session: SessionDep,
+    response: Response,
+    if_match: Annotated[
+        str | None,
+        Header(
+            alias="If-Match",
+            description="The ETag of the version being changed; a changed record answers 409",
+        ),
+    ] = None,
 ) -> GoalOut:
-    """Changes any part of a goal; `assumptions` replaces all assumptions."""
-    return await GoalService(session).update(user.id, goal_id, change, _now().date())
+    """Changes any part of a goal; `assumptions` replaces all assumptions. With `If-Match`, a goal
+    changed since that version answers 409 instead of being overwritten."""
+    out = await GoalService(session).update(user.id, goal_id, change, _now().date(), if_match)
+    response.headers["ETag"] = etag_of(out.updated_at)
+    return out
 
 
 @router.delete(

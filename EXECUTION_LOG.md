@@ -2356,3 +2356,25 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-16T03:37:54+04:00 — COMPLETE P14-T17
 - duration: 25m 50s
 - evidence: Backend: 7 operator API tests + realm test pass (ruff, mypy clean); e2e operator spec 4 pass against Keycloak (with the new realm) and the API. QG-29.4 checked. DEC-34 resolved under the advance approval. PR #188. CI all gates pass. · Approved by: user (mtisya@gmail.com), advance approval 2026-10-15 (P14 sequence)
+
+### 2026-10-16T03:50:45+04:00 — START P14-T18
+- WEB-18 Cross-platform synchronisation testing
+- prerequisites verified COMPLETED
+
+### 2026-10-16T04:16:33+04:00 — QG CHECK QG-26.2
+- evidence: The web calls only /api/v1/* through the BFF proxy (allow-list); every endpoint added for it (reports, net-worth history, operator, forex stream ticket, ETag/If-Match) is a shared API endpoint any channel can use; the web's only server state is the session in Redis and per-browser conveniences with no account data.
+
+### 2026-10-16T04:16:33+04:00 — QG CHECK QG-26.4
+- evidence: Cross-channel e2e (sync spec): a goal added through the API shows on the web, a web edit reads back through the API, a stale edit from a second window is refused with a reload prompt and succeeds after reloading; preferences (theme_mode, dashboard_layout) are read and written by both channels (mobile sync covered by unit tests with a fake account, not run on a device in this pass); per-module e2e specs compare screen figures with the API's responses.
+
+### 2026-10-16T04:16:33+04:00 — QG CHECK QG-28.1
+- evidence: scripts/check_route_parity.py (run by the web workflow when mobile routes or web files change) finds 27 destinations in the mobile AppRoutes, all present in the web MOBILE_ROUTES list, each mapped to a web page or one of four recorded exceptions (nav.test.ts); the parity matrix rows are updated and reconciled.
+
+### 2026-10-16T04:16:34+04:00 — QG CHECK QG-28.2
+- evidence: Every mobile destination maps to a web page or a recorded exception with a reason (welcome, sign-in, More hub, debug gallery); mobile capabilities are built on the web per the parity matrix; capabilities not yet on the web are listed in its reconciliation section (per-alert delivery preferences, account deletion, multi-session list, forex advanced workspace P14-T24, extra report kinds).
+
+### 2026-10-16T04:16:34+04:00 — QG CHECK QG-33.7
+- evidence: Cross-platform synchronisation e2e passes (4 tests: API-created goal visible and web edit read back, concurrent-edit 409 with reload for goals and liabilities, version header and stale refusal); backend tests cover 409, no-precondition compatibility, an atomic race and cross-user safety. The mobile side was verified by unit tests and the full mobile suite (1803 pass), not by a live phone session.
+
+### 2026-10-16T04:16:34+04:00 — QG CHECK QG-33.10
+- evidence: Navigation and routing: nav unit tests (mobile route mapping, active item, role/flag visibility), the route-parity script in CI, and the shell e2e (landmarks, grouped navigation, active page marked, drawer/overlay at breakpoints, skip link).

@@ -4,11 +4,12 @@ import uuid
 from datetime import UTC, date, datetime
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, Query, Request, Response
+from fastapi import APIRouter, Depends, Header, Query, Request, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.api_responses import UNAUTHORIZED, conflict, invalid, not_found
 from app.core.cache import ResponseCache
+from app.core.concurrency import etag_of
 from app.core.money import CURRENCY_PATTERN
 from app.db.session import get_session
 from app.modules.fx.reporting import ReportingDep
@@ -61,10 +62,12 @@ async def list_liabilities(user: CurrentUserDep, session: SessionDep) -> list[Li
     "/{liability_id}", response_model=LiabilityOut, responses={**UNAUTHORIZED, **_NOT_FOUND}
 )
 async def get_liability(
-    liability_id: uuid.UUID, user: CurrentUserDep, session: SessionDep
+    liability_id: uuid.UUID, user: CurrentUserDep, session: SessionDep, response: Response
 ) -> LiabilityOut:
-    """One of the signed-in user's liabilities."""
-    return await LiabilityService(session).get(user.id, liability_id)
+    """One of the signed-in user's liabilities (the ETag names this version, for If-Match)."""
+    out = await LiabilityService(session).get(user.id, liability_id)
+    response.headers["ETag"] = etag_of(out.updated_at)
+    return out
 
 
 @router.patch(
@@ -73,10 +76,26 @@ async def get_liability(
     responses={**UNAUTHORIZED, **_NOT_FOUND, **invalid("change"), **conflict("Name already used")},
 )
 async def update_liability(
-    liability_id: uuid.UUID, change: LiabilityUpdate, user: CurrentUserDep, session: SessionDep
+    liability_id: uuid.UUID,
+    change: LiabilityUpdate,
+    user: CurrentUserDep,
+    session: SessionDep,
+    response: Response,
+    if_match: Annotated[
+        str | None,
+        Header(
+            alias="If-Match",
+            description="The ETag of the version being changed; a changed record answers 409",
+        ),
+    ] = None,
 ) -> LiabilityOut:
-    """Updates a liability, for example its latest balance."""
-    return await LiabilityService(session).update(user.id, liability_id, change, _now().date())
+    """Updates a liability, for example its latest balance. With `If-Match`, a liability changed
+    since that version answers 409 instead of being overwritten."""
+    out = await LiabilityService(session).update(
+        user.id, liability_id, change, _now().date(), if_match
+    )
+    response.headers["ETag"] = etag_of(out.updated_at)
+    return out
 
 
 @router.delete(

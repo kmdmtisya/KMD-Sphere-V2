@@ -16,6 +16,7 @@ from typing import Any
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core import concurrency
 from app.core.audit import Actor, AuditWriter
 from app.core.authz import ResourceNotFoundError, require_found
 from app.core.errors import ConflictError, InvalidValueError
@@ -92,9 +93,15 @@ class GoalService:
         return _out(row, (await self._repo.returns([row.id]))[row.id])
 
     async def update(
-        self, user_id: uuid.UUID, goal_id: uuid.UUID, change: GoalUpdate, today: date
+        self,
+        user_id: uuid.UUID,
+        goal_id: uuid.UUID,
+        change: GoalUpdate,
+        today: date,
+        if_match: str | None = None,
     ) -> GoalOut:
         current = await self.get(user_id, goal_id)  # 404 for a missing or foreign goal
+        concurrency.check(if_match, current.updated_at)
         given = change.model_dump(exclude_unset=True)
         for key in ("name", "goal_type", "target", "target_date", "target_in_todays_money",
                     "assumptions"):  # fmt: skip
@@ -119,10 +126,17 @@ class GoalService:
             values |= _assumption_values(change.assumptions)
         if values:
             try:
-                await self._repo.update(user_id, goal_id, values)
+                changed = await self._repo.update(
+                    user_id,
+                    goal_id,
+                    values,
+                    expected_updated_at=concurrency.expected_version(if_match, current.updated_at),
+                )
             except IntegrityError as e:
                 await self._session.rollback()
                 raise _conflict(e) from e
+            if not changed:  # another edit won the race between the check and the write
+                raise ConflictError(concurrency.STALE)
             if change.assumptions is not None:
                 await self._repo.set_returns(goal_id, change.assumptions.returns.as_dict())
             await self._audit.record(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/security/app_lock_gate.dart';
+import '../features/account/data/theme_mode_sync.dart';
 import '../features/notifications/deep_link_host.dart';
 import '../l10n/generated/app_localizations.dart';
 import '../shared/design_system/theme/theme.dart';
@@ -15,6 +16,8 @@ class WealthSphereApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Keeps Light, Dark or System in step with the account (DEC-40, P14-T18).
+    ref.watch(themeModeSyncWiringProvider);
     return MaterialApp.router(
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       routerConfig: ref.watch(routerProvider),

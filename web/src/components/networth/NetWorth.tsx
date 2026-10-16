@@ -27,6 +27,7 @@ import { AllocationDonutChart } from "../charts/AllocationDonutChart";
 import { PerformanceLineChart } from "../charts/PerformanceLineChart";
 import { Button, SegmentedControl } from "../controls/controls";
 import { Drawer, Field } from "../controls/forms";
+import { isStale, STALE_MESSAGE, Versioned } from "../controls/Versioned";
 import { DataGrid } from "../data/DataGrid";
 import { DataAsOfLabel } from "../figures/figures";
 import {
@@ -328,13 +329,26 @@ function LiabilityDrawer({
       title={editing === "new" ? "Add a liability" : "Edit liability"}
       onClose={onClose}
     >
-      {editing ? (
+      {editing === "new" ? (
         <LiabilityForm
-          key={editing === "new" ? "new" : editing.id}
-          liability={editing === "new" ? null : editing}
+          key="new"
+          liability={null}
           currency={currency}
           onDone={onClose}
         />
+      ) : null}
+      {editing && editing !== "new" ? (
+        <Versioned<Liability> path={`liabilities/${editing.id}`}>
+          {(record, etag, reload) => (
+            <LiabilityForm
+              liability={record}
+              currency={currency}
+              etag={etag}
+              onStale={reload}
+              onDone={onClose}
+            />
+          )}
+        </Versioned>
       ) : null}
     </Drawer>
   );
@@ -343,10 +357,14 @@ function LiabilityDrawer({
 function LiabilityForm({
   liability,
   currency,
+  etag = null,
+  onStale,
   onDone,
 }: {
   liability: Liability | null;
   currency: string;
+  etag?: string | null;
+  onStale?: () => void;
   onDone: () => void;
 }) {
   const queryClient = useQueryClient();
@@ -368,12 +386,17 @@ function LiabilityForm({
     key: K,
     value: LiabilityValues[K],
   ) => setValues((v) => ({ ...v, [key]: value }));
-  const fail = (e: unknown) =>
+  const [stale, setStale] = useState(false);
+  const fail = (e: unknown) => {
+    setStale(isStale(e));
     setMessage(
-      e instanceof ApiError
-        ? (e.detail ?? `The server refused this (${e.status}).`)
-        : "This could not be sent. Try again.",
+      isStale(e)
+        ? STALE_MESSAGE
+        : e instanceof ApiError
+          ? (e.detail ?? `The server refused this (${e.status}).`)
+          : "This could not be sent. Try again.",
     );
+  };
   const done = async () => {
     await queryClient.invalidateQueries();
     onDone();
@@ -381,7 +404,9 @@ function LiabilityForm({
   const save = useMutation({
     mutationFn: () =>
       liability
-        ? apiPatch(`liabilities/${liability.id}`, liabilityRequest(values))
+        ? apiPatch(`liabilities/${liability.id}`, liabilityRequest(values), {
+            ifMatch: etag ?? undefined,
+          })
         : apiPost("liabilities", liabilityRequest(values)),
     onSuccess: done,
     onError: fail,
@@ -489,6 +514,9 @@ function LiabilityForm({
         <p role="alert" className="font-semibold text-negative-text">
           {message}
         </p>
+      ) : null}
+      {stale && onStale ? (
+        <Button onClick={onStale}>Load the latest version</Button>
       ) : null}
       <div className="flex flex-wrap gap-2">
         <Button type="submit" variant="primary" disabled={save.isPending}>

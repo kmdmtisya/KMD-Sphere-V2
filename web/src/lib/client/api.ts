@@ -34,7 +34,8 @@ async function failure(response: Response): Promise<ApiError> {
   return new ApiError(response.status, detail);
 }
 
-export type WriteOptions = { idempotencyKey?: string };
+/** `ifMatch` is the ETag of the version being changed: an edit made elsewhere since then answers 409. */
+export type WriteOptions = { idempotencyKey?: string; ifMatch?: string };
 
 async function send<T>(method: string, path: string, body: unknown, options: WriteOptions = {}): Promise<T> {
   const headers: Record<string, string> = { accept: "application/json" };
@@ -44,6 +45,7 @@ async function send<T>(method: string, path: string, body: unknown, options: Wri
     if (token) headers["x-csrf-token"] = token;
   }
   if (options.idempotencyKey) headers["idempotency-key"] = options.idempotencyKey;
+  if (options.ifMatch) headers["if-match"] = options.ifMatch;
   const response = await fetch(`/api/proxy/${path}`, { method, headers, body: body === undefined ? undefined : JSON.stringify(body) });
   if (!response.ok) throw await failure(response);
   return response.status === 204 ? (undefined as T) : ((await response.json()) as T);
@@ -51,6 +53,13 @@ async function send<T>(method: string, path: string, body: unknown, options: Wri
 
 export const apiGet = <T>(path: string) => send<T>("GET", path, undefined);
 export const apiPost = <T>(path: string, body: unknown, options?: WriteOptions) => send<T>("POST", path, body, options);
-export const apiPatch = <T>(path: string, body: unknown) => send<T>("PATCH", path, body);
+export const apiPatch = <T>(path: string, body: unknown, options?: WriteOptions) => send<T>("PATCH", path, body, options);
+
+/** A record with the ETag of this version, to send back as `If-Match` when it is edited. */
+export async function apiGetVersioned<T>(path: string): Promise<{ data: T; etag: string | null }> {
+  const response = await fetch(`/api/proxy/${path}`, { headers: { accept: "application/json" } });
+  if (!response.ok) throw await failure(response);
+  return { data: (await response.json()) as T, etag: response.headers.get("etag") };
+}
 export const apiPut = <T>(path: string, body: unknown) => send<T>("PUT", path, body);
 export const apiDelete = (path: string) => send<void>("DELETE", path, undefined);

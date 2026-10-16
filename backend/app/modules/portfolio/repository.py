@@ -2,6 +2,7 @@
 WHERE clause (ADR-0011)."""
 
 import uuid
+from datetime import datetime
 from typing import Any
 
 from sqlalchemy import func, select, text, update
@@ -45,17 +46,22 @@ class PortfolioRepository:
         return result.scalar_one_or_none()
 
     async def update(
-        self, user_id: uuid.UUID, portfolio_id: uuid.UUID, values: dict[str, Any]
+        self,
+        user_id: uuid.UUID,
+        portfolio_id: uuid.UUID,
+        values: dict[str, Any],
+        expected_updated_at: datetime | None = None,
     ) -> bool:
-        """Updates only an active portfolio owned by `user_id`. Returns whether a row changed."""
+        """Updates only an active portfolio owned by `user_id`. Returns whether a row changed;
+        with `expected_updated_at`, only if it is still that version."""
+        statement = update(Portfolio).where(
+            Portfolio.id == portfolio_id,
+            Portfolio.user_id == user_id,
+            Portfolio.archived_at.is_(None),
+        )
+        if expected_updated_at is not None:
+            statement = statement.where(Portfolio.updated_at == expected_updated_at)
         result = await self._session.execute(
-            update(Portfolio)
-            .where(
-                Portfolio.id == portfolio_id,
-                Portfolio.user_id == user_id,
-                Portfolio.archived_at.is_(None),
-            )
-            .values(**values, updated_at=text("now()"))
-            .returning(Portfolio.id)
+            statement.values(**values, updated_at=text("now()")).returning(Portfolio.id)
         )
         return result.scalar_one_or_none() is not None

@@ -14,6 +14,7 @@ import { Drawer } from "../controls/forms";
 import { DataGrid, type GridColumn } from "../data/DataGrid";
 import { CurrencyAmount, SignedAmount, StaleChip } from "../figures/figures";
 import { EmptyState, ErrorState, LoadingState, StatusBanner } from "../states/states";
+import { Versioned } from "../controls/Versioned";
 import { PortfolioForm } from "./PortfolioList";
 import { TransactionDrawer } from "./TransactionDrawer";
 import { TransactionsTable } from "./TransactionsTable";
@@ -115,7 +116,11 @@ export function PortfolioDetail({ id }: { id: string }) {
 
       <TransactionDrawer portfolio={p} open={adding} onClose={() => setAdding(false)} />
       <Drawer open={editing} title="Edit the portfolio" onClose={() => setEditing(false)}>
-        {editing ? <PortfolioForm existing={p} onDone={() => setEditing(false)} /> : null}
+        {editing ? (
+          <Versioned<components["schemas"]["PortfolioOut"]> path={`portfolios/${p.id}`}>
+            {(record, etag, reload) => <PortfolioForm existing={record} etag={etag} onStale={reload} onDone={() => setEditing(false)} />}
+          </Versioned>
+        ) : null}
       </Drawer>
     </div>
   );

@@ -1373,7 +1373,7 @@ export interface paths {
         };
         /**
          * Get Goal
-         * @description One of the signed-in user's goals.
+         * @description One of the signed-in user's goals (the ETag names this version, for If-Match).
          */
         get: operations["get_goal_api_v1_goals__goal_id__get"];
         put?: never;
@@ -1387,7 +1387,8 @@ export interface paths {
         head?: never;
         /**
          * Update Goal
-         * @description Changes any part of a goal; `assumptions` replaces all assumptions.
+         * @description Changes any part of a goal; `assumptions` replaces all assumptions. With `If-Match`, a goal
+         *     changed since that version answers 409 instead of being overwritten.
          */
         patch: operations["update_goal_api_v1_goals__goal_id__patch"];
         trace?: never;
@@ -1467,7 +1468,7 @@ export interface paths {
         };
         /**
          * Get Liability
-         * @description One of the signed-in user's liabilities.
+         * @description One of the signed-in user's liabilities (the ETag names this version, for If-Match).
          */
         get: operations["get_liability_api_v1_liabilities__liability_id__get"];
         put?: never;
@@ -1481,7 +1482,8 @@ export interface paths {
         head?: never;
         /**
          * Update Liability
-         * @description Updates a liability, for example its latest balance.
+         * @description Updates a liability, for example its latest balance. With `If-Match`, a liability changed
+         *     since that version answers 409 instead of being overwritten.
          */
         patch: operations["update_liability_api_v1_liabilities__liability_id__patch"];
         trace?: never;
@@ -1691,7 +1693,7 @@ export interface paths {
         };
         /**
          * Get Portfolio
-         * @description One of the signed-in user's portfolios.
+         * @description One of the signed-in user's portfolios (the ETag names this version, for If-Match).
          */
         get: operations["get_portfolio_api_v1_portfolios__portfolio_id__get"];
         put?: never;
@@ -1701,7 +1703,8 @@ export interface paths {
         head?: never;
         /**
          * Update Portfolio
-         * @description Renames or re-describes a portfolio. The base currency cannot change.
+         * @description Renames or re-describes a portfolio. The base currency cannot change. With `If-Match`, a
+         *     portfolio changed since that version answers 409 instead of being overwritten.
          */
         patch: operations["update_portfolio_api_v1_portfolios__portfolio_id__patch"];
         trace?: never;
@@ -12372,7 +12375,10 @@ export interface operations {
     update_goal_api_v1_goals__goal_id__patch: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description The ETag of the version being changed; a changed record answers 409 */
+                "If-Match"?: string | null;
+            };
             path: {
                 goal_id: string;
             };
@@ -12733,7 +12739,10 @@ export interface operations {
     update_liability_api_v1_liabilities__liability_id__patch: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description The ETag of the version being changed; a changed record answers 409 */
+                "If-Match"?: string | null;
+            };
             path: {
                 liability_id: string;
             };
@@ -13364,7 +13373,10 @@ export interface operations {
     update_portfolio_api_v1_portfolios__portfolio_id__patch: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description The ETag of the version being changed; a changed record answers 409 */
+                "If-Match"?: string | null;
+            };
             path: {
                 portfolio_id: string;
             };

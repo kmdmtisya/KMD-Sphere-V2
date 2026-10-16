@@ -17,6 +17,7 @@ from typing import Any
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core import concurrency
 from app.core.audit import Actor, AuditWriter
 from app.core.authz import require_found
 from app.core.errors import ConflictError, InvalidValueError
@@ -88,9 +89,15 @@ class LiabilityService:
         return _out(await self._owned(user_id, liability_id))
 
     async def update(
-        self, user_id: uuid.UUID, liability_id: uuid.UUID, change: LiabilityUpdate, today: date
+        self,
+        user_id: uuid.UUID,
+        liability_id: uuid.UUID,
+        change: LiabilityUpdate,
+        today: date,
+        if_match: str | None = None,
     ) -> LiabilityOut:
-        await self._owned(user_id, liability_id)
+        current = await self._owned(user_id, liability_id)
+        concurrency.check(if_match, current.updated_at)
         given = change.model_dump(exclude_unset=True)
         for key in ("name", "liability_type", "balance", "balance_as_of"):
             if key in given and given[key] is None:
@@ -114,10 +121,17 @@ class LiabilityService:
             values |= {"balance": change.balance.amount, "currency": change.balance.currency}
         if values:
             try:
-                await self._repo.update(user_id, liability_id, values)
+                changed = await self._repo.update(
+                    user_id,
+                    liability_id,
+                    values,
+                    expected_updated_at=concurrency.expected_version(if_match, current.updated_at),
+                )
             except IntegrityError as e:
                 await self._session.rollback()
                 raise _conflict(e) from e
+            if not changed:  # another edit won the race between the check and the write
+                raise ConflictError(concurrency.STALE)
             await self._audit.record(
                 "networth.liability.updated",
                 Actor.user(user_id),
