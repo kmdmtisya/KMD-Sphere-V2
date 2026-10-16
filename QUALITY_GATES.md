@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-16T05:04:10+04:00 by `scripts/track.py`._
+_Generated at 2026-10-16T05:49:12+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -37,9 +37,9 @@ _Generated at 2026-10-16T05:04:10+04:00 by `scripts/track.py`._
 | QG-24 | QG-FXCUR-04: Android and iOS | ✅ PASSED | 7/7 | Unassigned | — |
 | QG-25 | QG-FXCUR-05: AI Integration | ✅ PASSED | 5/5 | Unassigned | — |
 | QG-26 | QG-WEB-01: Architecture and Integration | 🔄 IN_PROGRESS | 5/5 | Unassigned | — |
-| QG-27 | QG-WEB-02: UI/UX and Design System | 🔄 IN_PROGRESS | 2/9 | Unassigned | — |
+| QG-27 | QG-WEB-02: UI/UX and Design System | 🔄 IN_PROGRESS | 4/9 | Unassigned | — |
 | QG-28 | QG-WEB-03: Functional Parity | 🔄 IN_PROGRESS | 8/9 | Unassigned | — |
-| QG-29 | QG-WEB-04: Authentication and Security | 🔄 IN_PROGRESS | 5/8 | Unassigned | — |
+| QG-29 | QG-WEB-04: Authentication and Security | 🔄 IN_PROGRESS | 8/8 | Unassigned | — |
 | QG-30 | QG-WEB-05: Financial Accuracy | 🔄 IN_PROGRESS | 6/6 | Unassigned | — |
 | QG-31 | QG-WEB-06: Performance | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
 | QG-32 | QG-WEB-07: Browser Compatibility | ⬜ NOT_STARTED | 0/6 | Unassigned | — |
@@ -49,9 +49,9 @@ _Generated at 2026-10-16T05:04:10+04:00 by `scripts/track.py`._
 | QG-36 | QG-WEB-11: Theme Management | 🔄 IN_PROGRESS | 5/8 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 152/228.
+Criteria satisfied overall: 157/228.
 
-Current phase **P14** exit-gate criteria outstanding: QG-27.2, QG-27.3, QG-27.4, QG-27.6, QG-27.7, QG-27.8, QG-27.9, QG-28.9, QG-29.5, QG-29.7, QG-29.8, QG-31.1, QG-31.2, QG-31.3, QG-31.4, QG-31.5, QG-31.6, QG-32.1, QG-32.2, QG-32.3, QG-32.4, QG-32.5, QG-32.6, QG-33.1, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9, QG-35.4, QG-35.5, QG-36.1, QG-36.2, QG-36.7.
+Current phase **P14** exit-gate criteria outstanding: QG-27.2, QG-27.3, QG-27.4, QG-27.6, QG-27.8, QG-28.9, QG-31.1, QG-31.2, QG-31.3, QG-31.4, QG-31.5, QG-31.6, QG-32.1, QG-32.2, QG-32.3, QG-32.4, QG-32.5, QG-32.6, QG-33.1, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9, QG-35.4, QG-35.5, QG-36.1, QG-36.2, QG-36.7.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -551,16 +551,16 @@ Approved By: —
 - [ ] QG-27.4 Mobile browser layout verified (under 768 px) · Required: P14 · By: P14-T20
 - [x] QG-27.5 Dark and light themes verified · Required: P14 · By: P14-T03 · Evidence: Light and dark verified: generated tokens for light, dark and system (prefers-color-scheme in CSS); generator contrast check passes every text pair at 4.5:1 and non-text at 3:1 in both themes; gallery shows every component in both themes, axe finds no serious or critical WCAG 2.2 AA violation in either (web/e2e/gallery.spec.ts), smoke test proves System follows the browser scheme live; screenshots at five widths in docs/design/screenshots/p14/after/P14-T03; approved at the web UX gate 2026-10-15 · Verified: 2026-10-15T13:26:10+04:00
 - [ ] QG-27.6 Accessibility checks completed (WCAG 2.2 AA: automated and manual) · Required: P14 · By: P14-T19
-- [ ] QG-27.7 Keyboard navigation verified (shell, appearance selector, grids, dialogs) · Required: P14 · By: P14-T19
+- [x] QG-27.7 Keyboard navigation verified (shell, appearance selector, grids, dialogs) · Required: P14 · By: P14-T19 · Evidence: Keyboard e2e (a11y spec): a drawer dialog takes and keeps focus, Escape closes it and focus returns to the opener; the appearance choice works with Space and arrow keys; a data grid column sorts with Enter and exposes aria-sort; the skip link is the first tab stop with a visible focus ring; landmarks present. Command palette and Copilot panel open and close from the keyboard (shell spec). · Verified: 2026-10-16T05:49:10+04:00
 - [ ] QG-27.8 No unintended horizontal overflow at 1440, 1280, 1024, 768 and 375 px · Required: P14 · By: P14-T20
-- [ ] QG-27.9 Reduced-motion preference respected · Required: P14 · By: P14-T19
+- [x] QG-27.9 Reduced-motion preference respected · Required: P14 · By: P14-T19 · Evidence: With prefers-reduced-motion: reduce, computed transition and animation durations are effectively zero and smooth scrolling is off (a11y spec); the stylesheet's reduced-motion block applies globally. · Verified: 2026-10-16T05:49:10+04:00
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
 Start Timestamp: 2026-10-15T13:26:09+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-15T13:26:10+04:00  
-Evidence: 2/9 criteria verified; latest QG-27.5 at 2026-10-15T13:26:10+04:00  
+Verification Timestamp: 2026-10-16T05:49:10+04:00  
+Evidence: 4/9 criteria verified; latest QG-27.9 at 2026-10-16T05:49:10+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -593,17 +593,17 @@ Approved By: —
 - [x] QG-29.2 Logout and session expiry verified · Required: P14 · By: P14-T05 · Evidence: Logout: POST /api/auth/logout with CSRF deletes the server-side session, revokes the refresh token and ends the Keycloak session (RP-initiated); e2e: after sign-out the replayed session cookie gets 401 and /api/auth/session reports signed out (PR #175, CI run 38720281552). Expiry: idle 30 min and absolute 10 h from the realm, refresh 30 s before expiry, failed refresh ends the session: unit tests in web/src/lib/server/auth/auth.test.ts (fake clock). Approved by the user 2026-10-15 · Verified: 2026-10-15T14:44:35+04:00
 - [x] QG-29.3 MFA integration verified · Required: P14 · By: P14-T05 · Evidence: MFA applies as the realm requires: e2e journey signs in mfa@example.test, which must enrol TOTP at Keycloak (CONFIGURE_TOTP) before the portal creates the session, then calls the API through the BFF (web/e2e/auth.spec.ts, PR #175, CI run 38720281552). Approved by the user 2026-10-15 · Verified: 2026-10-15T14:44:35+04:00
 - [x] QG-29.4 Role and resource authorisation verified (server-side; hidden UI is never the control) · Required: P14 · By: P14-T17 · Evidence: Operator endpoints (P14-T17) check the support realm role from the verified token on the server: 403 without it (API tests incl. forged role headers and query), refused attempts audited as denied, every view audited; the menu entry and page are hidden for others, but e2e shows the API refuses them anyway (normal user gets 403 on both endpoints). Responses contain no emails, user ids or financial data (tests). Resource authorisation of existing routes is covered by the IDOR registry and sweep. · Verified: 2026-10-16T03:20:20+04:00 · CRITICAL
-- [ ] QG-29.5 CSRF and XSS protections tested · Required: P14 · By: P14-T19 · CRITICAL
+- [x] QG-29.5 CSRF and XSS protections tested · Required: P14 · By: P14-T19 · Evidence: CSRF: no token, wrong token and a foreign Origin are all refused (403) while the legitimate call works (security spec, auth spec). XSS: hostile markup in portfolio, goal and asset names runs nothing and is shown as text on the pages that show them; react/no-danger is a lint error with one reviewed exception and a self-test fixture; assistant text is rendered as text (ai spec). CSP is enforced with a recorded residual risk (inline scripts allowed; docs/web/WEB_THREAT_MODEL.md). · Verified: 2026-10-16T05:49:11+04:00 · CRITICAL
 - [x] QG-29.6 Secure session storage verified (no token in browser storage or script-readable cookies) · Required: P14 · By: P14-T05 · Evidence: Tokens stay server-side in Redis sealed with AES-256-GCM under a hashed key; the browser holds only __Host-ws_session (HttpOnly, Secure, SameSite=Lax, path /) and the non-credential CSRF token. e2e asserts no JWT in any portal cookie, document.cookie, localStorage or sessionStorage and the session cookie flags; unit tests assert sealed store values and no token in Set-Cookie or /api/auth/session (PR #175, CI run 38720281552). Approved by the user 2026-10-15 · Verified: 2026-10-15T14:44:35+04:00 · CRITICAL
-- [ ] QG-29.7 Cross-user data isolation tested through the web · Required: P14 · By: P14-T19 · CRITICAL
-- [ ] QG-29.8 Dependency and secret scans passed · Required: P14 · By: P14-T19
+- [x] QG-29.7 Cross-user data isolation tested through the web · Required: P14 · By: P14-T19 · Evidence: Through the portal, a second signed-in user gets 404 for 13 of the first user's resources (portfolio, summary, holdings, transactions, performance, allocation, risk, income, goal, goal progress, asset, asset prices, report) and their lists and pages show nothing of them (security spec); per-module e2e specs add cross-user checks; the backend IDOR registry and sweep cover every id route. · Verified: 2026-10-16T05:49:11+04:00 · CRITICAL
+- [x] QG-29.8 Dependency and secret scans passed · Required: P14 · By: P14-T19 · Evidence: npm audit --omit=dev: 0 vulnerabilities (the dev-only advisory in the lint toolchain is recorded as TD-12); gitleaks over all 389 commits: no leaks; the CI security gate (dependency audit with pip-audit, npm audit and OSV, Trivy, CodeQL, gitleaks) passes on every pull request. · Verified: 2026-10-16T05:49:12+04:00
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
 Start Timestamp: 2026-10-15T14:44:34+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-16T03:20:20+04:00  
-Evidence: 5/8 criteria verified; latest QG-29.4 at 2026-10-16T03:20:20+04:00  
+Verification Timestamp: 2026-10-16T05:49:12+04:00  
+Evidence: 8/8 criteria verified; latest QG-29.8 at 2026-10-16T05:49:12+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —

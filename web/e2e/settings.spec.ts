@@ -78,7 +78,15 @@ test("a risk assessment is recorded to the account", async () => {
   await expect(card.getByRole("radio", { name: /Growth/ })).toBeVisible({
     timeout: 15_000,
   });
-  await card.getByRole("radio", { name: /Growth/ }).check();
+  // Pick a tolerance different from the latest one, so a repeated run still has a change to record.
+  const before = (
+    (await api(page, "risk-profiles")).body as { risk_tolerance: string }[]
+  )[0]?.risk_tolerance;
+  const choice =
+    before === "growth"
+      ? { radio: /Balanced/, value: "balanced" }
+      : { radio: /Growth/, value: "growth" };
+  await card.getByRole("radio", { name: choice.radio }).check();
   await card.getByLabel("Investment horizon, in years (optional)").fill("12");
   await card.getByRole("button", { name: /Record/ }).click();
   await expect(card.getByRole("status")).toHaveText("Recorded.");
@@ -88,7 +96,7 @@ test("a risk assessment is recorded to the account", async () => {
       horizon_years: number;
     }[]
   )[0];
-  expect(latest.risk_tolerance).toBe("growth");
+  expect(latest.risk_tolerance).toBe(choice.value);
   expect(latest.horizon_years).toBe(12);
   await card.getByLabel("Investment horizon, in years (optional)").fill("101");
   await expect(

@@ -209,7 +209,7 @@ function GoalsSection() {
           <ul className="flex flex-col gap-3">
             {goals.data.items.slice(0, 4).map((g) => (
               <li key={g.id}>
-                <div className="flex items-center justify-between gap-2">
+                <div className="flex flex-wrap items-center justify-between gap-x-2">
                   <span className="font-medium">{g.name}</span>
                   <span className="text-[length:var(--ws-font-size-caption)] text-fg-muted">
                     {g.status.replaceAll("_", " ")} · {formatPercent(g.progress_percent, "en", 1)} of {formatMoney(g.target.amount, g.target.currency).text}

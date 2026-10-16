@@ -44,7 +44,7 @@ export function Card({
           ) : (
             <span />
           )}
-          {actions ? <div className="flex items-center gap-1">{actions}</div> : null}
+          {actions ? <div className="flex min-w-0 max-w-full flex-wrap items-center gap-1">{actions}</div> : null}
         </header>
       ) : null}
       {children}
