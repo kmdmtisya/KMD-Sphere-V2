@@ -1631,13 +1631,13 @@
 - Exit gates: QG-08.4,5,7; QG-10.2,4,5,6,7,8 — required by `P15-GATE` (Gates-done)
 - Release gates: P15-T11 (Gates-start)
 
-- [ ] **P15-T01** · Cloud provider, region and residency decision · `NOT_STARTED` ⬜
+- [x] **P15-T01** · Cloud provider, region and residency decision · `COMPLETED` ✅
   - Deps: P01-GATE · Wave: W1 · Track: DOC · Size: S · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P15-T01.1 Options and cost
-  - [ ] P15-T01.2 Residency/regulatory notes
-  - [ ] P15-T01.3 ADR
+  - Started: 2026-10-16T09:40:08+04:00 · Completed: 2026-10-16T09:40:22+04:00 · Duration: 0m 14s · Blocker: —
+  - Evidence: User approved DEC-02 on 2026-10-16: AWS, one EU region. ADR-0019; DEC-02 resolved in EXECUTION_PLAN.md · Approved by: user (mtisya@gmail.com), 2026-10-16
+  - [x] P15-T01.1 Options and cost
+  - [x] P15-T01.2 Residency/regulatory notes
+  - [x] P15-T01.3 ADR
 - [ ] **P15-T02** · Terraform foundation · `NOT_STARTED` ⬜
   - Deps: P15-T01 · Wave: W2 · Track: INF · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
