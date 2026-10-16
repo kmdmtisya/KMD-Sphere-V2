@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-16T10:54:53+04:00 by `scripts/track.py`._
+_Generated at 2026-10-16T14:36:07+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -41,17 +41,17 @@ _Generated at 2026-10-16T10:54:53+04:00 by `scripts/track.py`._
 | QG-28 | QG-WEB-03: Functional Parity | 🔄 IN_PROGRESS | 8/9 | Unassigned | — |
 | QG-29 | QG-WEB-04: Authentication and Security | 🔄 IN_PROGRESS | 8/8 | Unassigned | — |
 | QG-30 | QG-WEB-05: Financial Accuracy | 🔄 IN_PROGRESS | 6/6 | Unassigned | — |
-| QG-31 | QG-WEB-06: Performance | 🔄 IN_PROGRESS | 5/6 | Unassigned | — |
+| QG-31 | QG-WEB-06: Performance | 🔄 IN_PROGRESS | 6/6 | Unassigned | — |
 | QG-32 | QG-WEB-07: Browser Compatibility | 🔄 IN_PROGRESS | 4/6 | Unassigned | — |
 | QG-33 | QG-WEB-08: End-to-End Testing | 🔄 IN_PROGRESS | 3/11 | Unassigned | — |
 | QG-34 | QG-WEB-09: Production Readiness | ⬜ NOT_STARTED | 0/9 | Unassigned | — |
-| QG-35 | QG-WEB-10: Design Reference Compliance | 🔄 IN_PROGRESS | 4/5 | Unassigned | — |
+| QG-35 | QG-WEB-10: Design Reference Compliance | 🔄 IN_PROGRESS | 5/5 | Unassigned | — |
 | QG-36 | QG-WEB-11: Theme Management | 🔄 IN_PROGRESS | 8/8 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 174/228.
+Criteria satisfied overall: 176/228.
 
-Current phase **P14** exit-gate criteria outstanding: QG-27.6, QG-28.9, QG-31.1, QG-32.4, QG-32.6, QG-33.1, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9, QG-35.5.
+Current phase **P14** exit-gate criteria outstanding: QG-27.6, QG-28.9, QG-32.4, QG-32.6, QG-33.1, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -629,7 +629,7 @@ Approved By: —
 
 ### QG-31: QG-WEB-06: Performance
 
-- [ ] QG-31.1 Lighthouse tests completed against the approved budgets · Required: P14 · By: P14-T20
+- [x] QG-31.1 Lighthouse tests completed against the approved budgets · Required: P14 · By: P14-T20 · Evidence: Lighthouse run against the budgets the user approved on 2026-10-16 (DEC-36); results and the budget table are in docs/web/WEB_PERFORMANCE_REPORT.md and docs/web/perf/*.json; every page meets them in the lab · Verified: 2026-10-16T14:36:06+04:00
 - [x] QG-31.2 Core Web Vitals assessed (LCP, INP, CLS) · Required: P14 · By: P14-T20 · Evidence: Lab Core Web Vitals on the production build, signed in (docs/web/WEB_PERFORMANCE_REPORT.md): LCP 0.72 to 1.17 s (budget 2.5 s), CLS 0.002 to 0.069 on every page (budget 0.1; layout shifts above it were found and fixed), slowest interaction on a large book 112 ms (INP budget 200 ms, lab event timing). Field data does not exist yet; DEC-36 budgets are the proposed values. · Verified: 2026-10-16T07:18:08+04:00
 - [x] QG-31.3 Large portfolio data tested · Required: P14 · By: P14-T20 · Evidence: Large book test (perf spec): 80 assets, 81 holdings, 1,500 postings seeded through the API; holdings, ledger, analytics and Home each usable in under 1 second; sorting, drawer and chart-period interactions at most 112 ms. · Verified: 2026-10-16T07:18:08+04:00
 - [x] QG-31.4 Chart performance tested · Required: P14 · By: P14-T20 · Evidence: Chart performance: changing the analytics chart period four times on the large book had a slowest event of 40 ms and no long task; charts redraw on theme change (theme spec); each chart has a table alternative. · Verified: 2026-10-16T07:18:08+04:00
@@ -640,8 +640,8 @@ Status: IN_PROGRESS
 Owner: Unassigned  
 Start Timestamp: 2026-10-16T07:18:08+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-16T07:18:09+04:00  
-Evidence: 5/6 criteria verified; latest QG-31.6 at 2026-10-16T07:18:09+04:00  
+Verification Timestamp: 2026-10-16T14:36:06+04:00  
+Evidence: 6/6 criteria verified; latest QG-31.1 at 2026-10-16T14:36:06+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
@@ -717,14 +717,14 @@ Approved By: —
 - [x] QG-35.2 Reference-to-screen mapping documented, with conflicts and the recommended approach · Required: P14 · By: P14-T01 · Evidence: docs/web/WEB_DESIGN_REFERENCE_ANALYSIS.md sections 4-7: common patterns, 11 conflicts (palette, dark-only, density/contrast, colour-only signals, trading, advice, ticker, branding, binary theme switch, crypto, placeholder figures) each with a recommended approach, and a reference-to-screen mapping for shell, dashboard, allocation, charts, net worth, AI insights, forex workspace, settings and notifications; approved by the user 2026-10-15 (PR #170); component mapping in docs/web/WEB_REPOSITORY_AUDIT.md section 5 · Verified: 2026-10-15T11:15:24+04:00
 - [x] QG-35.3 Shared design tokens implement the reference visual language in light and dark · Required: P14 · By: P14-T03 · Evidence: The shared tokens and components implement the reference visual language in light and dark (layered surfaces with 1 px borders, card title bar with info and actions, large tabular figures with muted minor part, change pill with period delta, distribution bar and list, chart chrome with tooltip card and segmented range), within the WealthSphere palette (DEC-39); docs/web/WEB_REFERENCE_COMPARISON.md compares reference image 1 with the gallery in both themes; approved by the user at the web UX gate 2026-10-15 · Verified: 2026-10-15T13:26:10+04:00
 - [x] QG-35.4 Portal layout reviewed against the reference images (side-by-side and before-and-after screenshots) · Required: P14 · By: P14-T20 · Evidence: Reviewed against the reference image: docs/web/WEB_REFERENCE_REVIEW_T20.md lists what matches, the deliberate differences and the remaining inconsistencies; 80 screenshots of eight key screens at five widths in both themes (docs/design/screenshots/p14/after/P14-T20). Home gained the wealth-over-time chart as a result. · Verified: 2026-10-16T07:18:09+04:00
-- [ ] QG-35.5 Major visual inconsistencies resolved or accepted by the user · Required: P14 · By: P14-T20
+- [x] QG-35.5 Major visual inconsistencies resolved or accepted by the user · Required: P14 · By: P14-T20 · Evidence: User decision 2026-10-16 (docs/web/P14_DECISIONS_2026-10-16.md): narrow top bar fixed in PR #201 (two rows at 375 px, e2e test added); the other three differences (no Home profit-by-period chart, stale-looking demo data, no gradient bar charts) accepted by the user · Verified: 2026-10-16T14:36:07+04:00
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
 Start Timestamp: 2026-10-15T11:15:24+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-16T07:18:09+04:00  
-Evidence: 4/5 criteria verified; latest QG-35.4 at 2026-10-16T07:18:09+04:00  
+Verification Timestamp: 2026-10-16T14:36:07+04:00  
+Evidence: 5/5 criteria verified; latest QG-35.5 at 2026-10-16T14:36:07+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —
