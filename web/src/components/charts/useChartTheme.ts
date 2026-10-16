@@ -18,6 +18,8 @@ export type ChartTheme = {
   onTooltip: string;
   growth: string;
   contributions: string;
+  positive: string;
+  negative: string;
 };
 
 const SERIES_COUNT = 6;
@@ -35,6 +37,8 @@ function readTheme(el: Element): string {
     onTooltip: v("on-tooltip"),
     growth: v("chart-growth"),
     contributions: v("chart-contributions"),
+    positive: v("positive"),
+    negative: v("negative"),
   };
   return JSON.stringify(theme);
 }

@@ -1572,40 +1572,40 @@
   - [x] P14-T20.4 Browser matrix
   - [x] P14-T20.5 Layout verification
   - [x] P14-T20.6 Theme and reference review with before-and-after screenshots
-- [ ] **P14-T21** · WEB-21 CI/CD and deployment · `NOT_STARTED` ⬜
+- [ ] **P14-T21** · WEB-21 CI/CD and deployment · `BLOCKED` ⛔
   - Deps: P14-T04, P15-T04, P15-T08 · Wave: W9 · Track: INF · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: — · Completed: — · Duration: — · Blocker: Needs P15-T04 (container images and registry) and P15-T08 (CD pipelines), which are not started: phase P15 is not approved. The web is already containerisable (standalone build) and its CI is in place; deployment pipelines cannot be built or verified without P15.
   - Evidence: —
   - [ ] P14-T21.1 Image and scan
   - [ ] P14-T21.2 CD to staging and production
   - [ ] P14-T21.3 Configuration validation
   - [ ] P14-T21.4 Required check
-- [ ] **P14-T22** · WEB-22 Staging and end-to-end validation · `NOT_STARTED` ⬜
+- [ ] **P14-T22** · WEB-22 Staging and end-to-end validation · `BLOCKED` ⛔
   - Deps: P14-T18, P14-T19, P14-T20, P14-T21, P14-T24, P15-T05, P15-T07, P15-T09 · Wave: W10 · Track: QA · Size: M · Approval: yes
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: — · Completed: — · Duration: — · Blocker: Needs P15-T05 (compute platform and ingress), P15-T07 (production Keycloak) and P15-T09 (observability), none started, and P14-T21. A staging environment does not exist; end-to-end validation there cannot be done or claimed. Advance approval was given by the user and is recorded for when it can run.
   - Evidence: —
   - [ ] P14-T22.1 Staging deployment
   - [ ] P14-T22.2 Journey run
   - [ ] P14-T22.3 Headers and TLS
   - [ ] P14-T22.4 Monitoring and error reporting
   - [ ] P14-T22.5 Rollback drill
-- [ ] **P14-T23** · WEB-23 Production readiness and approval · `NOT_STARTED` ⬜
+- [ ] **P14-T23** · WEB-23 Production readiness and approval · `BLOCKED` ⛔
   - Deps: P14-T22 · Wave: W11 · Track: REL · Size: M · Approval: yes · Gates-start: QG-26, QG-27, QG-28, QG-29, QG-30, QG-31, QG-32, QG-33, QG-35, QG-36
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: — · Completed: — · Duration: — · Blocker: Depends on P14-T22 (staging validation), which is blocked on P15. Production readiness cannot be approved without it. Advance approval was given by the user and is recorded for when it can run.
   - Evidence: —
   - [ ] P14-T23.1 Readiness review
   - [ ] P14-T23.2 Open items
   - [ ] P14-T23.3 Approval
-- [ ] **P14-T24** · WEB-24 Forex web workspace (advanced) · `NOT_STARTED` ⬜
+- [ ] **P14-T24** · WEB-24 Forex web workspace (advanced) · `IN_PROGRESS` 🔄
   - Deps: P13-T10, P14-T13 · Wave: W9 · Track: WEB · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-16T08:31:31+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
-  - [ ] P14-T24.1 Analysis and forecast panels
-  - [ ] P14-T24.2 Scanner and opportunity ranking
-  - [ ] P14-T24.3 Risk calculator and backtests
-  - [ ] P14-T24.4 Paper trading and journal
+  - [x] P14-T24.1 Analysis and forecast panels
+  - [x] P14-T24.2 Scanner and opportunity ranking
+  - [x] P14-T24.3 Risk calculator and backtests
+  - [x] P14-T24.4 Paper trading and journal
   - [ ] P14-T24.5 Forex Copilot and alerts
-  - [ ] P14-T24.6 Tests
+  - [x] P14-T24.6 Tests
 - [x] **P14-T25** · WEB-25 Appearance: Light, Dark and System · `COMPLETED` ✅
   - Deps: P14-T03, P14-T05 · Wave: W5 · Track: WEB · Size: M · Approval: no
   - Started: 2026-10-15T15:19:53+04:00 · Completed: 2026-10-15T16:09:51+04:00 · Duration: 49m 58s · Blocker: —

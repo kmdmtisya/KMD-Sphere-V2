@@ -57,9 +57,11 @@ function turnsFrom(detail: S["ConversationDetailOut"]): Turn[] {
 export function ChatPane({
   portfolioId = null,
   compact = false,
+  suggestions = SUGGESTIONS,
 }: {
   portfolioId?: string | null;
   compact?: boolean;
+  suggestions?: string[];
 }) {
   const queryClient = useQueryClient();
   const [turns, setTurns] = useState<Turn[]>([]);
@@ -207,7 +209,7 @@ export function ChatPane({
               className="flex flex-wrap gap-2"
               aria-label="Suggested questions"
             >
-              {SUGGESTIONS.map((q) => (
+              {suggestions.map((q) => (
                 <li key={q}>
                   <Button onClick={() => void send(q)}>{q}</Button>
                 </li>

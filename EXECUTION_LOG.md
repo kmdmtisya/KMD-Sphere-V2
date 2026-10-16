@@ -2462,3 +2462,16 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-16T08:13:46+04:00 — QG CHECK QG-32.5
 - evidence: Responsive layouts verified at five widths in both themes in Chrome, Edge (local) and Firefox (CI): content shown, theme applied, no horizontal overflow.
+
+### 2026-10-16T08:31:23+04:00 — BLOCKED P14-T21
+- reason: Needs P15-T04 (container images and registry) and P15-T08 (CD pipelines), which are not started: phase P15 is not approved. The web is already containerisable (standalone build) and its CI is in place; deployment pipelines cannot be built or verified without P15.
+
+### 2026-10-16T08:31:23+04:00 — BLOCKED P14-T22
+- reason: Needs P15-T05 (compute platform and ingress), P15-T07 (production Keycloak) and P15-T09 (observability), none started, and P14-T21. A staging environment does not exist; end-to-end validation there cannot be done or claimed. Advance approval was given by the user and is recorded for when it can run.
+
+### 2026-10-16T08:31:23+04:00 — BLOCKED P14-T23
+- reason: Depends on P14-T22 (staging validation), which is blocked on P15. Production readiness cannot be approved without it. Advance approval was given by the user and is recorded for when it can run.
+
+### 2026-10-16T08:31:31+04:00 — START P14-T24
+- WEB-24 Forex web workspace (advanced)
+- prerequisites verified COMPLETED

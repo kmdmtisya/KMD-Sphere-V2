@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { KpiCard, Card } from "@/components/cards/cards";
 import { AllocationDonutChart } from "@/components/charts/AllocationDonutChart";
+import { CandleChart } from "@/components/charts/CandleChart";
 import { PerformanceLineChart } from "@/components/charts/PerformanceLineChart";
 import { Button, IconButton, SegmentedControl } from "@/components/controls/controls";
 import { DataGrid } from "@/components/data/DataGrid";
@@ -167,6 +168,13 @@ export function FollowingPanel() {
           summary="DEMO: total wealth went from $138,520.10 on 9 September to $139,986.35 on 9 October."
         />
       </div>
+      <CandleChart
+        title="Candles with indicators (sample)"
+        info="DEMO data: eight sample candles and one moving average"
+        candles={demo.candles}
+        indicators={[{ name: "SMA 3", values: [null, null, "1.0841", "1.0846", "1.0850", "1.0852", "1.0850", "1.0848"] }]}
+        summary="DEMO: eight sample hourly candles from 1.0840 to 1.0850."
+      />
       <dialog open aria-label="Example dialog" className="relative rounded-[var(--ws-radius-card)] border border-divider bg-surface-elevated p-4 text-fg">
         <p className="font-semibold">Example dialog</p>
         <p className="text-fg-muted">Dialogs use the same tokens, so they follow the appearance too.</p>
