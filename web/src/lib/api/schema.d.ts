@@ -660,8 +660,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Stored candles of a pair, oldest first
-         * @description Complete candles in [start, end), at most `forex_candles_max` of them (`truncated` says when more exist). A period without a candle is absent, never filled in; a forming candle is not stored. Times are UTC and must carry a time zone.
+         * Candles of a pair, oldest first
+         * @description Complete candles in [start, end), at most `forex_candles_max` of them (`truncated` says when more exist). Candles of the requested size are served as the provider published them; where it published none, they are built from the stored one-minute candles on the session calendar. A period without a candle is absent, never filled in; a forming candle is not served. Times are UTC and must carry a time zone.
          */
         get: operations["candles_api_v1_forex_candles_get"];
         put?: never;
@@ -2707,7 +2707,7 @@ export interface components {
             items: components["schemas"]["CandleOut"][];
             /**
              * Notice
-             * @default Candles as the provider published them. A period with no candle is absent, never filled in. Forming candles are not stored.
+             * @default Candles as the provider published them, or built from stored one-minute candles for larger sizes. A period with no candle is absent, never filled in. Forming candles are not shown.
              */
             notice: string;
             /**

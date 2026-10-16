@@ -32,6 +32,7 @@ import {
   LoadingState,
   StatusBanner,
 } from "../states/states";
+import { Notices } from "./Notices";
 import { Paper } from "./Paper";
 
 type S = components["schemas"];
@@ -102,6 +103,7 @@ export function Workspace() {
           Forecasts and scores are model outputs, not predictions or guarantees.
         </span>
       </StatusBanner>
+      <Notices />
       {tab === "analysis" ? <Analysis /> : null}
       {tab === "opportunities" ? <Opportunities /> : null}
       {tab === "risk" ? <RiskCalculator /> : null}

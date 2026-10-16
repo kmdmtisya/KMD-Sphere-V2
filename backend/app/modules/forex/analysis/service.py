@@ -25,6 +25,7 @@ class Bar:
     volume: int | None
     missing: int  # one-minute candles missing from this bar (0 for provider candles)
     source: str  # "provider" or "aggregated"
+    data_type: str = "simulated"  # of the candle, or the weakest of the minutes it was built from
 
 
 @dataclass(frozen=True)
@@ -53,7 +54,7 @@ async def load(
     if native or timeframe is Timeframe.M1:
         types = sorted({r.data_type for r in native})
         bars = [
-            Bar(r.ts, r.open, r.high, r.low, r.close, r.volume, 0, "provider")
+            Bar(r.ts, r.open, r.high, r.low, r.close, r.volume, 0, "provider", r.data_type)
             for r in native[:max_bars]
         ]
         return Loaded(bars, types, len(native) > max_bars, 0)
@@ -82,12 +83,22 @@ async def load(
         )
         for r in rows
     ]
+    types = sorted({m.data_type.value for m in minutes})
     result = aggregate(minutes, timeframe, now)
     closed = [c for c in result.candles if not c.forming and start <= c.ts < end]
     forming = sum(1 for c in result.candles if c.forming and start <= c.ts < end)
     bars = [
-        Bar(c.ts, c.open, c.high, c.low, c.close, c.volume, c.missing, "aggregated")
+        Bar(
+            c.ts,
+            c.open,
+            c.high,
+            c.low,
+            c.close,
+            c.volume,
+            c.missing,
+            "aggregated",
+            types[0] if types else "simulated",  # the minutes share one data type
+        )
         for c in closed[:max_bars]
     ]
-    types = sorted({m.data_type.value for m in minutes})
     return Loaded(bars, types, len(closed) > max_bars, forming)
