@@ -34,7 +34,8 @@ test("the shell has landmarks, grouped navigation with the active page marked, a
   for (const label of ["Portfolios", "Transactions", "Goals", "Copilot", "Doctor", "Alerts", "Reports", "Settings"]) {
     await expect(nav.getByRole("link", { name: label })).toBeVisible();
   }
-  await expect(nav.getByRole("link", { name: "Live markets" })).toHaveCount(0);
+  // The entry exists only while the forex module is on (WS_E2E_FOREX=1 runs against such an API).
+  await expect(nav.getByRole("link", { name: "Live markets" })).toHaveCount(process.env.WS_E2E_FOREX === "1" ? 1 : 0);
   await expect(nav.getByRole("link", { name: "Operator views" })).toHaveCount(0);
   await expect(page.getByRole("main")).toBeVisible();
 
