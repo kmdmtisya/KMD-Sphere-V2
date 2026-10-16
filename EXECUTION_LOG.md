@@ -2517,3 +2517,9 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-16T14:36:07+04:00 — QG CHECK QG-35.5
 - evidence: User decision 2026-10-16 (docs/web/P14_DECISIONS_2026-10-16.md): narrow top bar fixed in PR #201 (two rows at 375 px, e2e test added); the other three differences (no Home profit-by-period chart, stale-looking demo data, no gradient bar charts) accepted by the user
+
+### 2026-10-16T17:26:13+04:00 — QG CHECK QG-32.6
+- evidence: docs/web/WEB_BROWSER_SUPPORT.md lists the supported versions approved by the user (DEC-36, 2026-10-16) and the browser-specific findings: none open for Chrome, Edge or Firefox; WebKit is a test-environment limit (HTTPS needed), not a defect. Firefox runs the cross-browser and forex journeys in CI (PR #204, web gate green). QG-32.4 (Safari) stays open
+
+### 2026-10-16T17:26:18+04:00 — QG CHECK QG-28.9
+- evidence: e2e in CI (PR #204, Chromium and Firefox): forex-live.spec (page stays responsive while quotes stream; guard rails max event under 500 ms, DOM does not grow), forex-workspace.spec (data type, feed status and PAPER TRADING labels always shown; no real-money order affordance on any panel; paper results never change wealth figures; axe Light and Dark); candle chart checked against the API response
