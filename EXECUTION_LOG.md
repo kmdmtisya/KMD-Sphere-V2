@@ -2508,3 +2508,6 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 ### 2026-10-16T10:27:46+04:00 — START P15-T02
 - Terraform foundation
 - prerequisites verified COMPLETED
+
+### 2026-10-16T10:54:53+04:00 — BLOCKED P15-T02
+- reason: Built, merged (PR #199), terraform fmt and validate pass in CI and the security gate is clean, but the acceptance needs a clean terraform plan, which needs an AWS account and credentials that do not exist yet. Unblock when the user provides an AWS account with a plan-only role; then run plan and complete. T03 and later P15 tasks depend on the same account.
