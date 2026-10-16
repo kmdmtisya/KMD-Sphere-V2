@@ -2511,3 +2511,9 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-16T10:54:53+04:00 — BLOCKED P15-T02
 - reason: Built, merged (PR #199), terraform fmt and validate pass in CI and the security gate is clean, but the acceptance needs a clean terraform plan, which needs an AWS account and credentials that do not exist yet. Unblock when the user provides an AWS account with a plan-only role; then run plan and complete. T03 and later P15 tasks depend on the same account.
+
+### 2026-10-16T14:36:06+04:00 — QG CHECK QG-31.1
+- evidence: Lighthouse run against the budgets the user approved on 2026-10-16 (DEC-36); results and the budget table are in docs/web/WEB_PERFORMANCE_REPORT.md and docs/web/perf/*.json; every page meets them in the lab
+
+### 2026-10-16T14:36:07+04:00 — QG CHECK QG-35.5
+- evidence: User decision 2026-10-16 (docs/web/P14_DECISIONS_2026-10-16.md): narrow top bar fixed in PR #201 (two rows at 375 px, e2e test added); the other three differences (no Home profit-by-period chart, stale-looking demo data, no gradient bar charts) accepted by the user
