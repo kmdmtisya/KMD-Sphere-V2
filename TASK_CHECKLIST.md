@@ -1638,9 +1638,9 @@
   - [x] P15-T01.1 Options and cost
   - [x] P15-T01.2 Residency/regulatory notes
   - [x] P15-T01.3 ADR
-- [ ] **P15-T02** · Terraform foundation · `NOT_STARTED` ⬜
+- [ ] **P15-T02** · Terraform foundation · `IN_PROGRESS` 🔄
   - Deps: P15-T01 · Wave: W2 · Track: INF · Size: L · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
+  - Started: 2026-10-16T10:27:46+04:00 · Completed: — · Duration: — · Blocker: —
   - Evidence: —
   - [ ] P15-T02.1 State backend
   - [ ] P15-T02.2 Network
