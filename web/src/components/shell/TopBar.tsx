@@ -189,7 +189,7 @@ export function TopBar({
   return (
     <header className="flex flex-wrap items-center gap-2 border-b border-divider bg-surface px-3 py-2">
       {showMenu ? <IconButton icon="table" label="Open the menu" onClick={onMenu} /> : null}
-      <Link href="/home" className="me-2 font-semibold">
+      <Link href="/home" className="me-2 font-semibold max-[480px]:sr-only">
         WealthSphere
       </Link>
       <button
@@ -203,7 +203,7 @@ export function TopBar({
         <kbd className="text-[length:var(--ws-font-size-caption)]">Ctrl K</kbd>
       </button>
       <IconButton icon="sort" label="Search" onClick={onSearch} className="lg:hidden" />
-      {/* Below 768 px the filters take a row of their own so the bar is two tidy rows, not three. */}
+      {/* Below 768 px the filters take a row of their own, and below 480 px the name leaves room for the actions, so the bar is two tidy rows, not three. */}
       <div className="flex items-center gap-2 md:ms-auto max-md:order-last max-md:w-full max-md:flex-wrap">
         <PortfolioSelect />
         <CurrencySelect />
