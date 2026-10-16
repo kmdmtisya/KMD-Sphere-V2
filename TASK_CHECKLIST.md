@@ -1654,13 +1654,13 @@
   - [ ] P15-T03.2 Redis
   - [ ] P15-T03.3 Object storage
   - [ ] P15-T03.4 Queue
-- [ ] **P15-T04** · Container images and registry · `NOT_STARTED` ⬜
+- [x] **P15-T04** · Container images and registry · `COMPLETED` ✅
   - Deps: P01-T07, P01-T11, P01-GATE · Wave: W1 · Track: INF · Size: M · Approval: no
-  - Started: — · Completed: — · Duration: — · Blocker: —
-  - Evidence: —
-  - [ ] P15-T04.1 Dockerfiles
-  - [ ] P15-T04.2 Registry push
-  - [ ] P15-T04.3 Scan and SBOM
+  - Started: 2026-10-16T10:25:12+04:00 · Completed: 2026-10-16T10:25:13+04:00 · Duration: 0m 01s · Blocker: —
+  - Evidence: Acceptance met in CI: image scan has no unwaived high/critical findings (unfixed ones ignored by policy). Interim registry is GHCR; ECR follows P15-T02/T03/T08
+  - [x] P15-T04.1 Dockerfiles
+  - [x] P15-T04.2 Registry push
+  - [x] P15-T04.3 Scan and SBOM
 - [ ] **P15-T05** · Compute platform and ingress · `NOT_STARTED` ⬜
   - Deps: P15-T03, P15-T04 · Wave: W4 · Track: INF · Size: L · Approval: no
   - Started: — · Completed: — · Duration: — · Blocker: —
