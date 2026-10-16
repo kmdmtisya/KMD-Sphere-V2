@@ -14,6 +14,8 @@ RUN mkdir -p public && npm run build
 
 FROM node:24-alpine AS runtime
 ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3000 HOSTNAME=0.0.0.0
+# The server needs only node: npm, npx and corepack (and the packages they bundle) are build tools.
+RUN rm -rf /usr/local/lib/node_modules /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack /opt/yarn*
 WORKDIR /app
 RUN addgroup -S -g 10001 app && adduser -S -u 10001 -G app app
 COPY --from=build --chown=app:app /app/.next/standalone ./
