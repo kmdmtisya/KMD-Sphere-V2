@@ -7,7 +7,7 @@ Gate statuses: `NOT_STARTED` · `IN_PROGRESS` · `BLOCKED` · `FAILED` · `PASSE
 ## Summary
 
 <!-- QG-AUTO:BEGIN -->
-_Generated at 2026-10-16T07:18:11+04:00 by `scripts/track.py`._
+_Generated at 2026-10-16T08:13:46+04:00 by `scripts/track.py`._
 
 | Gate | Name | Status | Criteria satisfied | Owner | Blocking issues |
 |---|---|---|---|---|---|
@@ -42,16 +42,16 @@ _Generated at 2026-10-16T07:18:11+04:00 by `scripts/track.py`._
 | QG-29 | QG-WEB-04: Authentication and Security | 🔄 IN_PROGRESS | 8/8 | Unassigned | — |
 | QG-30 | QG-WEB-05: Financial Accuracy | 🔄 IN_PROGRESS | 6/6 | Unassigned | — |
 | QG-31 | QG-WEB-06: Performance | 🔄 IN_PROGRESS | 5/6 | Unassigned | — |
-| QG-32 | QG-WEB-07: Browser Compatibility | 🔄 IN_PROGRESS | 2/6 | Unassigned | — |
+| QG-32 | QG-WEB-07: Browser Compatibility | 🔄 IN_PROGRESS | 4/6 | Unassigned | — |
 | QG-33 | QG-WEB-08: End-to-End Testing | 🔄 IN_PROGRESS | 3/11 | Unassigned | — |
 | QG-34 | QG-WEB-09: Production Readiness | ⬜ NOT_STARTED | 0/9 | Unassigned | — |
 | QG-35 | QG-WEB-10: Design Reference Compliance | 🔄 IN_PROGRESS | 4/5 | Unassigned | — |
 | QG-36 | QG-WEB-11: Theme Management | 🔄 IN_PROGRESS | 8/8 | Unassigned | — |
 
 Waivers: 1 active (0 expired — must be resolved), 0 closed.
-Criteria satisfied overall: 172/228.
+Criteria satisfied overall: 174/228.
 
-Current phase **P14** exit-gate criteria outstanding: QG-27.6, QG-28.9, QG-31.1, QG-32.3, QG-32.4, QG-32.5, QG-32.6, QG-33.1, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9, QG-35.5.
+Current phase **P14** exit-gate criteria outstanding: QG-27.6, QG-28.9, QG-31.1, QG-32.4, QG-32.6, QG-33.1, QG-33.11, QG-33.2, QG-33.3, QG-33.4, QG-33.5, QG-33.8, QG-33.9, QG-34.1, QG-34.2, QG-34.3, QG-34.4, QG-34.5, QG-34.6, QG-34.7, QG-34.8, QG-34.9, QG-35.5.
 <!-- QG-AUTO:END -->
 
 ### QG-01: Architecture and Design
@@ -650,17 +650,17 @@ Approved By: —
 
 - [x] QG-32.1 Chrome tested · Required: P14 · By: P14-T20 · Evidence: Chrome 155 (Windows): the whole e2e suite and the cross-browser journeys at five widths in both themes pass. · Verified: 2026-10-16T07:18:09+04:00
 - [x] QG-32.2 Edge tested · Required: P14 · By: P14-T20 · Evidence: Edge 155 (Windows): the cross-browser journeys at five widths in both themes pass (13 tests). · Verified: 2026-10-16T07:18:09+04:00
-- [ ] QG-32.3 Firefox tested · Required: P14 · By: P14-T20
+- [x] QG-32.3 Firefox tested · Required: P14 · By: P14-T20 · Evidence: Firefox (Playwright's build, CI): the cross-browser journeys at 1440, 1280, 1024, 768 and 375 px in Light and Dark pass (13 tests) in the web workflow's end-to-end job. · Verified: 2026-10-16T08:13:46+04:00
 - [ ] QG-32.4 Safari tested · Required: P14 · By: P14-T20
-- [ ] QG-32.5 Responsive layouts verified · Required: P14 · By: P14-T20
+- [x] QG-32.5 Responsive layouts verified · Required: P14 · By: P14-T20 · Evidence: Responsive layouts verified at five widths in both themes in Chrome, Edge (local) and Firefox (CI): content shown, theme applied, no horizontal overflow. · Verified: 2026-10-16T08:13:46+04:00
 - [ ] QG-32.6 Browser-specific defects resolved and supported versions documented · Required: P14 · By: P14-T20
 
 Status: IN_PROGRESS  
 Owner: Unassigned  
 Start Timestamp: 2026-10-16T07:18:09+04:00  
 End Timestamp: —  
-Verification Timestamp: 2026-10-16T07:18:09+04:00  
-Evidence: 2/6 criteria verified; latest QG-32.2 at 2026-10-16T07:18:09+04:00  
+Verification Timestamp: 2026-10-16T08:13:46+04:00  
+Evidence: 4/6 criteria verified; latest QG-32.5 at 2026-10-16T08:13:46+04:00  
 Blocking Issues: —  
 Blocks: —  
 Approved By: —

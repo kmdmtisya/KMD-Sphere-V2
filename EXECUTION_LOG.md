@@ -2456,3 +2456,9 @@ Timestamps below the baseline entries come from the system clock. Baseline entri
 
 ### 2026-10-16T07:18:11+04:00 — QG CHECK QG-36.7
 - evidence: Charts, tables, dialogs and tooltips follow the theme: chart colours come from theme tokens and redraw on a theme change (theme and gallery specs), tables and drawers and the command palette pass axe in both themes (a11y spec), and screenshots of charts and dialogs in both themes.
+
+### 2026-10-16T08:13:46+04:00 — QG CHECK QG-32.3
+- evidence: Firefox (Playwright's build, CI): the cross-browser journeys at 1440, 1280, 1024, 768 and 375 px in Light and Dark pass (13 tests) in the web workflow's end-to-end job.
+
+### 2026-10-16T08:13:46+04:00 — QG CHECK QG-32.5
+- evidence: Responsive layouts verified at five widths in both themes in Chrome, Edge (local) and Firefox (CI): content shown, theme applied, no horizontal overflow.

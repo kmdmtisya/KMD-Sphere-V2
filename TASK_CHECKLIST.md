@@ -1569,7 +1569,7 @@
   - [ ] P14-T20.1 Budgets and Lighthouse CI
   - [x] P14-T20.2 Large-data and chart tests
   - [x] P14-T20.3 API latency
-  - [ ] P14-T20.4 Browser matrix
+  - [x] P14-T20.4 Browser matrix
   - [x] P14-T20.5 Layout verification
   - [x] P14-T20.6 Theme and reference review with before-and-after screenshots
 - [ ] **P14-T21** · WEB-21 CI/CD and deployment · `NOT_STARTED` ⬜

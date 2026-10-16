@@ -46,8 +46,8 @@ export default defineConfig({
   // other supported browsers (P14-T20.4), which run the cross-browser journeys only
   // (e2e/browsers.spec.ts) at five widths in both themes. WS_PLAYWRIGHT_CHANNEL=chrome uses an installed
   // Google Chrome where the bundled browser cannot be downloaded (for example behind TLS
-  // interception); CI uses the bundled browsers. WebKit is Playwright's build of Safari's engine: it
-  // is the closest automated stand-in for Safari, not Safari itself.
+  // interception); CI uses the bundled browsers. WebKit (Safari's engine) works only over HTTPS here,
+  // because it will not store the portal's __Host- Secure cookies over plain HTTP; it is not in CI yet.
   projects: [
     {
       name: "chromium",

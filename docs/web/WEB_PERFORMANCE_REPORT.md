@@ -78,8 +78,8 @@ Production JavaScript: 33 files, 1.5 MB raw, 499 KB gzip across all routes; the 
 |---|---|---|---|
 | Chrome | 155.0.8059.41 (Windows) | Whole e2e suite and the cross-browser journeys at 1440, 1280, 1024, 768 and 375 px, Light and Dark | Pass |
 | Edge | 155.0.4283.45 (Windows) | The cross-browser journeys at the same widths and themes | Pass |
-| Firefox | Playwright's Firefox | The cross-browser journeys, in CI (the bundled browsers cannot be downloaded on this machine) | See the CI result in the pull request |
-| Safari | Playwright's WebKit, in CI | The cross-browser journeys. WebKit is Safari's engine, not Safari: a real Safari on macOS and iOS has not been tested | Not claimed (QG-32.4 stays open) |
+| Firefox | Playwright's Firefox (CI) | The cross-browser journeys at five widths in both themes (13 tests; the bundled browsers cannot be downloaded on this machine) | Pass in CI |
+| Safari | Not tested | WebKit (Safari's engine) cannot sign in over the plain-HTTP test server: it will not store the portal's `__Host-` Secure session cookies, as Safari would not. It needs an HTTPS test deployment (staging, P14-T22), and a real Safari on macOS and iOS | Not tested (QG-32.4 stays open) |
 
 **Supported browsers (proposed with DEC-36):** the latest two major versions of Chrome, Edge and Firefox, and Safari 17 or later. The sign-in uses `__Host-` Secure cookies, which need HTTPS in deployments (loopback HTTP is treated as secure by Chromium and Firefox).
 

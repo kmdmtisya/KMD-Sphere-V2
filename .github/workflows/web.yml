@@ -203,8 +203,8 @@ jobs:
       - name: Install dependencies (locked)
         run: npm ci
 
-      - name: Install the browsers for Playwright (Chromium, Firefox, WebKit)
-        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Install the browsers for Playwright (Chromium, Firefox)
+        run: npx playwright install --with-deps chromium firefox
 
       # This build is for the tests only and includes the component gallery; deployed builds never do.
       - name: Production build (with the component gallery)
@@ -221,15 +221,16 @@ jobs:
         run: npm run e2e
 
       # The cross-browser journeys (P14-T20.4, QG-32): five widths, both themes, the main interactions.
-      # WebKit is Playwright's build of Safari's engine, the closest automated stand-in for Safari.
-      - name: Playwright (Firefox and WebKit journeys)
+      # WebKit (Safari's engine) is not run here: the portal's __Host- Secure session cookies are not
+      # stored over plain HTTP by WebKit, so it needs an HTTPS test deployment (staging, P14-T22).
+      - name: Playwright (Firefox journeys)
         env:
           CI: "true"
           WS_API_BASE_URL: http://127.0.0.1:8000
           WS_E2E_EXPECT_API: "1"
           WS_E2E_AUTH: "1"
-          WS_BROWSERS: firefox,webkit
-        run: npx playwright test --project=firefox --project=webkit
+          WS_BROWSERS: firefox
+        run: npx playwright test --project=firefox
 
       - name: Playwright report (on failure)
         if: failure()
