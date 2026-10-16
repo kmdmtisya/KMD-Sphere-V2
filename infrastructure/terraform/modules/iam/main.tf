@@ -156,7 +156,7 @@ resource "aws_iam_role_policy" "apply_state" {
 data "aws_iam_policy_document" "apply_permissions" {
   statement {
     actions = [
-      "ec2:*", "elasticloadbalancing:*", "ecs:*", "ecr:*", "rds:*", "elasticache:*", "s3:*", "sqs:*",
+      "ec2:*", "elasticloadbalancing:*", "ecs:*", "ecr:*", "rds:*", "elasticache:*", "sqs:*",
       "mq:*", "kms:*", "logs:*", "cloudwatch:*", "secretsmanager:*", "route53:*", "acm:*",
       "autoscaling:*", "application-autoscaling:*", "events:*", "ssm:*", "backup:*", "wafv2:*",
     ]
@@ -166,6 +166,17 @@ data "aws_iam_policy_document" "apply_permissions" {
       variable = "aws:RequestedRegion"
       values   = [var.region]
     }
+  }
+  statement {
+    # Buckets and their settings, and the objects the stack itself stores (not blanket s3:*).
+    actions = [
+      "s3:CreateBucket", "s3:DeleteBucket", "s3:ListBucket", "s3:ListAllMyBuckets", "s3:GetBucket*",
+      "s3:PutBucket*", "s3:DeleteBucketPolicy", "s3:GetEncryptionConfiguration", "s3:PutEncryptionConfiguration",
+      "s3:GetLifecycleConfiguration", "s3:PutLifecycleConfiguration", "s3:GetReplicationConfiguration",
+      "s3:GetAccelerateConfiguration", "s3:GetObject", "s3:PutObject", "s3:DeleteObject", "s3:GetObjectVersion",
+      "s3:DeleteObjectVersion", "s3:ListBucketVersions", "s3:PutObjectTagging", "s3:GetObjectTagging",
+    ]
+    resources = ["arn:aws:s3:::${var.name}-*", "arn:aws:s3:::${var.name}-*/*"]
   }
   statement {
     actions = [
