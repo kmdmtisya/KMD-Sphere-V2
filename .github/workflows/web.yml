@@ -166,7 +166,7 @@ jobs:
           set -euo pipefail
           docker run -d --name keycloak -p 127.0.0.1:8081:8080 -p 127.0.0.1:9001:9000             -v "$GITHUB_WORKSPACE/infra/keycloak:/opt/keycloak/data/import:ro"             -e KC_BOOTSTRAP_ADMIN_USERNAME=admin -e KC_BOOTSTRAP_ADMIN_PASSWORD="$KEYCLOAK_ADMIN_PASSWORD"             -e KC_HEALTH_ENABLED=true             quay.io/keycloak/keycloak:26.4 start-dev --import-realm
 
-      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
         with:
           enable-cache: true
           cache-dependency-glob: backend/uv.lock
