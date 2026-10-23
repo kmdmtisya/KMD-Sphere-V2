@@ -86,7 +86,7 @@ services:
   # Optional: docker compose --profile observability up -d otel-collector
   otel-collector:
     profiles: ["observability"]
-    image: otel/opentelemetry-collector-contrib:0.162.0
+    image: otel/opentelemetry-collector-contrib:0.163.1-386
     restart: unless-stopped
     command: ["--config=/etc/otelcol/config.yaml"]
     volumes:
