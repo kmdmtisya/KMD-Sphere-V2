@@ -38,7 +38,7 @@ dependencies:
   go_router: ^18.0.2
   decimal: ^3.2.6
   intl: ^0.20.3
-  fl_chart: ^1.2.0
+  fl_chart: ^1.3.0
   shared_preferences: ^2.5.6
   flutter_localizations:
     sdk: flutter
@@ -49,7 +49,7 @@ dependencies:
   url_launcher: ^6.3.3
   cryptography: ^2.9.0
   path_provider: ^2.1.6
-  crypto: ^3.0.7
+  crypto: ^3.0.8
 
 dev_dependencies:
   flutter_test:
