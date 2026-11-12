@@ -17,6 +17,12 @@ variable "github_repository" {
   description = "owner/repo allowed to assume the deploy roles."
 }
 
+variable "github_subject_repos" {
+  type        = list(string)
+  default     = []
+  description = "Extra repository forms GitHub may put in the token subject. This repository's tokens use the immutable form owner@ownerId/repo@repoId, so list it here (for example kmdmtisya@123/KMD-Sphere-V2@456). The plain owner/repo form is always allowed."
+}
+
 variable "create_oidc_provider" {
   type        = bool
   default     = true
@@ -81,7 +87,7 @@ data "aws_iam_policy_document" "plan_trust" {
     condition {
       test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_repository}:pull_request"]
+      values   = [for r in concat([var.github_repository], var.github_subject_repos) : "repo:${r}:pull_request"]
     }
   }
 }
@@ -102,7 +108,7 @@ data "aws_iam_policy_document" "apply_trust" {
     condition {
       test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_repository}:environment:${var.github_environment}"]
+      values   = [for r in concat([var.github_repository], var.github_subject_repos) : "repo:${r}:environment:${var.github_environment}"]
     }
   }
 }
