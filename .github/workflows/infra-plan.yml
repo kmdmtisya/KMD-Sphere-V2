@@ -1,0 +1,78 @@
+name: infra-plan
+
+# terraform plan for the dev environment (P15-T02), using GitHub's OIDC token: no stored AWS keys.
+# The plan role trusts only pull_request workflows of this repository and is read-only (plus its own
+# state object), so this job can show what would change but cannot change anything.
+
+on:
+  pull_request:
+    paths: ["infrastructure/**", ".github/workflows/infra-plan.yml"]
+
+permissions:
+  contents: read
+  id-token: write # to request the OIDC token
+
+concurrency:
+  group: infra-plan-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  TERRAFORM_VERSION: "1.16.5"
+  AWS_REGION: ${{ vars.AWS_REGION }}
+
+jobs:
+  plan-dev:
+    name: terraform plan (dev)
+    # Only where the cloud variables exist (not on forks).
+    if: ${{ vars.AWS_PLAN_ROLE_ARN != '' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Install Terraform (checksum verified)
+        run: |
+          set -euo pipefail
+          base="https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}"
+          file="terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
+          curl -fsSL -o "$file" "$base/$file"
+          curl -fsSL -o terraform.sums "$base/terraform_${TERRAFORM_VERSION}_SHA256SUMS"
+          grep " $file$" terraform.sums | sha256sum -c -
+          unzip -q "$file" terraform -d "$RUNNER_TEMP/bin"
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+      # The AWS CLI on the runner exchanges the job's OIDC token for short-lived credentials.
+      - name: Assume the plan role (OIDC)
+        env:
+          ROLE_ARN: ${{ vars.AWS_PLAN_ROLE_ARN }}
+        run: |
+          set -euo pipefail
+          token=$(curl -fsSL -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" | python3 -c "import json,sys; print(json.load(sys.stdin)['value'])")
+          echo "::add-mask::$token"
+          creds=$(aws sts assume-role-with-web-identity --role-arn "$ROLE_ARN" --role-session-name "gha-plan-${GITHUB_RUN_ID}" --web-identity-token "$token" --duration-seconds 3600 --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]' --output text)
+          read -r ak sk st <<< "$creds"
+          echo "::add-mask::$sk"
+          echo "::add-mask::$st"
+          { echo "AWS_ACCESS_KEY_ID=$ak"; echo "AWS_SECRET_ACCESS_KEY=$sk"; echo "AWS_SESSION_TOKEN=$st"; } >> "$GITHUB_ENV"
+          aws sts get-caller-identity --query Arn --output text
+      - name: Find the state key
+        run: |
+          set -euo pipefail
+          key=$(aws s3api get-bucket-encryption --bucket "${{ vars.AWS_STATE_BUCKET }}" --query 'ServerSideEncryptionConfiguration.Rules[0].ApplyServerSideEncryptionByDefault.KMSMasterKeyID' --output text)
+          echo "STATE_KMS_KEY_ARN=$key" >> "$GITHUB_ENV"
+      - name: Init (remote state, locked provider versions)
+        working-directory: infrastructure/terraform/envs/dev
+        run: |
+          terraform init -input=false -lockfile=readonly \
+            -backend-config="bucket=${{ vars.AWS_STATE_BUCKET }}" \
+            -backend-config="key=dev/terraform.tfstate" \
+            -backend-config="region=${{ vars.AWS_REGION }}"
+      - name: Plan
+        working-directory: infrastructure/terraform/envs/dev
+        run: |
+          set -o pipefail
+          terraform plan -input=false -no-color \
+            -var "state_bucket_arn=arn:aws:s3:::${{ vars.AWS_STATE_BUCKET }}" \
+            -var "state_kms_key_arn=${STATE_KMS_KEY_ARN}" | tee "$RUNNER_TEMP/plan.txt"
+      - name: Show the plan in the job summary
+        if: always()
+        run: |
+          { echo '### terraform plan (dev)'; echo '```'; tail -n 200 "$RUNNER_TEMP/plan.txt" 2>/dev/null || echo "no plan output"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
