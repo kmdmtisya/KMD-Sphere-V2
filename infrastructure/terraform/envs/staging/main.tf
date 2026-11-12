@@ -23,6 +23,12 @@ variable "github_repository" {
   default = "kmdmtisya/KMD-Sphere-V2"
 }
 
+variable "github_subject_repos" {
+  type        = list(string)
+  default     = ["kmdmtisya@89873990/KMD-Sphere-V2@1411626729"]
+  description = "The immutable form of this repository in GitHub token subjects (owner id and repository id)."
+}
+
 variable "create_oidc_provider" {
   type        = bool
   default     = false
@@ -58,6 +64,7 @@ module "iam" {
   name                 = "ws-staging"
   region               = var.region
   github_repository    = var.github_repository
+  github_subject_repos = var.github_subject_repos
   github_environment   = "staging"
   create_oidc_provider = var.create_oidc_provider
   state_bucket_arn     = var.state_bucket_arn
