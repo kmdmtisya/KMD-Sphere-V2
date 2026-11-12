@@ -47,6 +47,8 @@ jobs:
           set -euo pipefail
           token=$(curl -fsSL -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" | python3 -c "import json,sys; print(json.load(sys.stdin)['value'])")
           echo "::add-mask::$token"
+          # The claims are not secret; show which issuer, audience and subject AWS is asked to trust.
+          python3 -c "import base64,json,sys; p=sys.argv[1].split('.')[1]; p+='='*(-len(p)%4); c=json.loads(base64.urlsafe_b64decode(p)); print({k:c.get(k) for k in ('iss','aud','sub')})" "$token"
           creds=$(aws sts assume-role-with-web-identity --role-arn "$ROLE_ARN" --role-session-name "gha-plan-${GITHUB_RUN_ID}" --web-identity-token "$token" --duration-seconds 3600 --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]' --output text)
           read -r ak sk st <<< "$creds"
           echo "::add-mask::$sk"
